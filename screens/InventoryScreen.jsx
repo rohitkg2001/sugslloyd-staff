@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Image, FlatList, TouchableOpacity, Text } from "react-native";
-import { inventoryData } from "../utils/faker"; 
+import { inventoryData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import { styles } from "../styles/components.styles";
@@ -16,7 +16,6 @@ const InventoryScreen = () => {
   const filteredOrders = inventoryData.filter((item) =>
     item.name.toLowerCase().includes(searchText.toLowerCase())
   );
-
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);

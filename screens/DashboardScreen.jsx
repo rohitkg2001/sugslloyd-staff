@@ -40,6 +40,22 @@ export default function DashboardScreen() {
     navigation.navigate("NoRecord");
   };
 
+  const navigateToTotalProjectsScreen = () =>{
+    navigation.navigate( "TotalProjectsScreen" );
+  };
+  const navigateToTotalEarningScreen = () => {
+    navigation.navigate("TotalEarningScreen")
+  }
+  const navigateToTotalSitesScreen = () =>{
+    navigation.navigate("TotalSitesScreen")
+  }
+  const navigateToInventoryScreen = () =>
+  {
+    navigation.navigate("InventoryScreen")
+  }
+  
+
+
   
   const firstFourTasks = tasks.slice(0, 4);
   const lastTwoTasks = tasks.slice(4, 6);
@@ -112,17 +128,39 @@ export default function DashboardScreen() {
 
        
         <MyFlatList
-          data={firstFourTasks}
-          renderItem={({ item }) => (
-            <StatCard
-              key={item.id}
-              backgroundColor={item.backgroundColor}
-              tasks={item.count}
-              status={item.status}
-              onPress={item.id === 1 ? navigateToTaskList : null}
-            />
-          )}
-          keyExtractor={(item) => item.id.toString()}
+        data={firstFourTasks}
+          renderItem={ ( { item, index } ) =>
+          {
+            const isRightColumn = index % 2 !== 0;
+            const marginTop = isRightColumn ? 20 : 0;
+
+            const handlePress = () =>
+            {
+              if ( item.id === 1 )
+              {
+                navigateToTotalProjectsScreen();
+              } else if ( index === 1 )
+              {
+                navigateToTotalEarningScreen();
+              } else if ( index === 2 )
+              {
+                navigateToTotalSitesScreen();
+              } else if ( index === 3 )
+              {
+                navigateToInventoryScreen();
+              }
+            };
+            return (
+              <StatCard
+                key={item.id}
+                backgroundColor={item.backgroundColor}
+                tasks={item.count}
+                status={item.status}
+                onPress={handlePress}
+              />
+            );
+          } }
+         keyExtractor={(item) => item.id.toString()}
           numColumns={2}
         />
 

@@ -28,7 +28,7 @@ export const tasks = [
     description: "This is task 3",
     count: 24,
     status: "Total Sites",
-    backgroundColor: "#E1BEE7",
+    backgroundColor: "#f9caa7",
   },
   {
     id: 4,
@@ -36,23 +36,23 @@ export const tasks = [
     description: "This is task 4",
     count: 7,
     status: "Inventory",
-    backgroundColor: "#F8BBD0",
+    backgroundColor: "#ffeead",
   },
   {
     id: 5,
     title: "Task 5",
     description: "This is task 5",
-    count: 12,
-    status: "Inventory",
-    backgroundColor: "#FFF9C4",
+    count: 24,
+    status: "In Review",
+    backgroundColor: "#bdeaee",
   },
   {
     id: 6,
     title: "Task 6",
     description: "This is task 5",
-    count: 12,
-    status: "Inventory",
-    backgroundColor: "#FFABAB",
+    count: 7,
+    status: "Events",
+    backgroundColor: "#ffbbee",
   },
 ];
 export const categories = [
@@ -133,7 +133,7 @@ export const tasksData = [
 
 
 
-export const orders = [
+export const inventoryData = [
   {
     id: "1",
     name: "Solar LED Street Light",
@@ -767,7 +767,7 @@ export const taskslist = [
   },
 ];
 
-export const requirementsData = [
+export const totalsitesData = [
   {
     id: "1",
     siteName: "P S SHIKSHA NAGAR BANMANKHI",
