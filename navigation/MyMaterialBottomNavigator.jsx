@@ -49,9 +49,13 @@ export default function MyMaterialBottomNavigator() {
         name="settingsScreen"
         component={SettingsScreen}
         options={{
-          tabBarLabel: "Me",
+          tabBarLabel: "More",
           tabBarIcon: ({ color }) => (
-            <Icon name="person-outline" size={26} color={color} />
+            <Icon
+              name="ellipsis-vertical-circle"
+              size={26}
+              color={color}
+            />
           ),
         }}
       />

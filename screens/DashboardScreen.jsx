@@ -40,25 +40,23 @@ export default function DashboardScreen() {
     navigation.navigate("NoRecord");
   };
 
-  const navigateToTotalProjectsScreen = () =>{
-    navigation.navigate( "TotalProjectsScreen" );
+  const navigateToTotalProjectsScreen = () => {
+    navigation.navigate("TotalProjectsScreen");
   };
   const navigateToTotalEarningScreen = () => {
-    navigation.navigate("TotalEarningScreen")
-  }
-  const navigateToTotalSitesScreen = () =>{
-    navigation.navigate("TotalSitesScreen")
-  }
-  const navigateToInventoryScreen = () =>
-  {
-    navigation.navigate("InventoryScreen")
-  }
-  
-
+    navigation.navigate("TotalEarningScreen");
+  };
+  const navigateToTotalSitesScreen = () => {
+    navigation.navigate("TotalSitesScreen");
+  };
+  const navigateToInventoryScreen = () => {
+    navigation.navigate("InventoryScreen");
+  };
 
   
-  const firstFourTasks = tasks.slice(0, 4);
-  const lastTwoTasks = tasks.slice(4, 6);
+  const firstTwoTasks = tasks.slice(0, 2); 
+  const firstFourTasks = tasks.slice(2, 6); 
+  const secondFourTasks = tasks.slice(6, 10); 
 
   return (
     <ContainerComponent>
@@ -80,6 +78,32 @@ export default function DashboardScreen() {
       </View>
       {/* Welcome message */}
       <ScrollView>
+        <View>
+          <MyFlatList
+            data={firstTwoTasks}
+            renderItem={({ item }) => {
+              const handlePress = () => {
+                if (item.id === 1) {
+                  navigateToTotalProjectsScreen();
+                } else if (item.id === 2) {
+                  navigateToTotalEarningScreen();
+                }
+              };
+              return (
+                <StatCard
+                  key={item.id}
+                  backgroundColor={item.backgroundColor}
+                  tasks={item.count}
+                  status={item.status}
+                  onPress={handlePress}
+                />
+              );
+            }}
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={2}
+          />
+        </View>
+
         <View
           style={[
             spacing.mt2,
@@ -126,30 +150,25 @@ export default function DashboardScreen() {
           </CardFullWidth>
         </View>
 
-       
         <MyFlatList
-        data={firstFourTasks}
-          renderItem={ ( { item, index } ) =>
-          {
+          data={firstFourTasks}
+          renderItem={({ item, index }) => {
+          
             const isRightColumn = index % 2 !== 0;
-            const marginTop = isRightColumn ? 20 : 0;
+            const marginTop = isRightColumn ? 20 : 0; 
 
-            const handlePress = () =>
-            {
-              if ( item.id === 1 )
-              {
-                navigateToTotalProjectsScreen();
-              } else if ( index === 1 )
-              {
-                navigateToTotalEarningScreen();
-              } else if ( index === 2 )
-              {
-                navigateToTotalSitesScreen();
-              } else if ( index === 3 )
-              {
-                navigateToInventoryScreen();
-              }
+            const handlePress = () => {
+              // if (item.id === 1) {
+              //   navigateToTotalProjectsScreen();
+              // } else if (index === 1) {
+              //   navigateToTotalEarningScreen();
+              // } else if (index === 2) {
+              //   navigateToTotalSitesScreen();
+              // } else if (index === 3) {
+              //   navigateToInventoryScreen();
+              // }
             };
+
             return (
               <StatCard
                 key={item.id}
@@ -157,11 +176,14 @@ export default function DashboardScreen() {
                 tasks={item.count}
                 status={item.status}
                 onPress={handlePress}
+                style={{
+                  marginTop: marginTop, 
+                }}
               />
             );
-          } }
-         keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
+          }}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2} // 2 columns for layout
         />
 
         <View
@@ -201,23 +223,37 @@ export default function DashboardScreen() {
           </CardFullWidth>
         </View>
 
-       
         <MyFlatList
-          data={lastTwoTasks}
-          renderItem={({ item }) => (
-            <StatCard
-              key={item.id}
-              backgroundColor={item.backgroundColor}
-              tasks={item.count}
-              status={item.status}
-              onPress={item.id === 1 ? navigateToTaskList : null}
-            />
-          )}
+          data={secondFourTasks}
+          renderItem={({ item, index }) => {
+            const isRightColumn = index % 2 !== 0;
+            const marginTop = isRightColumn ? 20 : 0;
+
+            const handlePress = () => {
+              if (item.id === 5) {
+                navigateToTotalProjectsScreen();
+              } else if (index === 5) {
+                navigateToTotalEarningScreen();
+              } else if (index === 6) {
+                navigateToTotalSitesScreen();
+              } else if (index === 7) {
+                navigateToInventoryScreen();
+              }
+            };
+
+            return (
+              <StatCard
+                key={item.id}
+                backgroundColor={item.backgroundColor}
+                tasks={item.count}
+                status={item.status}
+                onPress={handlePress}
+              />
+            );
+          }}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
         />
-
-       
       </ScrollView>
     </ContainerComponent>
   );
