@@ -29,11 +29,15 @@ import ToDoTaskCardScreen from "../screens/ToDoTaskCardScreen";
 import NoRecord from "../screens/NoRecord";
 import FileUploadScreen from "../screens/FileUploadScreen";
 import OrderScreen from "../screens/OrderScreen";
+import TotalEarningScreen from "../screens/TotalEarningScreen";
+import TotalProjectsScreen from "../screens/TotalProjectsScreen";
+import TotalSitesScreen from "../screens/TotaSitesScreen";
+import InventoryScreen from "../screens/InventoryScreen";
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="orderScreen"
+      initialRouteName="loginScreen"
       screenOptions={{
         headerShown: false,
       }}
@@ -70,6 +74,13 @@ export default function MyStackNavigator() {
       <Stack.Screen name="NoRecord" component={NoRecord} />
       <Stack.Screen name="fileUploadScreen" component={FileUploadScreen} />
       <Stack.Screen name="orderScreen" component={OrderScreen} />
+      <Stack.Screen name="TotalEarningScreen" component={TotalEarningScreen} />
+      <Stack.Screen
+        name="TotalProjectsScreen"
+        component={TotalProjectsScreen}
+      />
+      <Stack.Screen name="TotalSitesScreen" component={ TotalSitesScreen } />
+      <Stack.Screen name="InventoryScreen" component={InventoryScreen} />
     </Stack.Navigator>
   );
 }

@@ -50,10 +50,8 @@ export default function SettingsScreen() {
             onPress={() => {
               if (item.label === "Settings") {
                 handleInternalSetting();
-              } else if (item.label === "My Purchases") {
-                handlerequisitions();
               } else if (item.label === "Events") {
-                handleHolidayList(); // Navigate to HolidayListScreen
+                handleHolidayList(); 
               } else {
                 navigation.navigate(item.page);
               }

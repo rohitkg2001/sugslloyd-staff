@@ -39,7 +39,20 @@ export default function DashboardScreen() {
   const navigateToNoRecord = () => {
     navigation.navigate("NoRecord");
   };
-
+   const navigateToTotalEarningScreen = () => {
+    navigation.navigate("TotalEarningScreen");
+  };
+   const navigateToTotalProjectsScreen = () => {
+     navigation.navigate("TotalProjectsScreen");
+   };
+  const navigateToTotalSitesScreen = () =>
+  {
+  navigation.navigate("TotalSitesScreen");
+  }
+  const navigateToInventoryScreen = () =>
+  {
+    navigation.navigate("InventoryScreen");
+  }
   
   const firstFourTasks = tasks.slice(0, 4);
   const lastTwoTasks = tasks.slice(4, 6);
@@ -64,25 +77,6 @@ export default function DashboardScreen() {
       </View>
       {/* Welcome message */}
       <ScrollView>
-        <View
-          style={[
-            spacing.mt2,
-            { width: SCREEN_WIDTH - 18, alignSelf: "center" },
-            spacing.pv3,
-          ]}
-        >
-          <CardFullWidth backgroundColor={LIGHT}>
-            <View style={[styles.row, { alignItems: "center" }]}>
-              <Icon name="alarm" size={64} color={PRIMARY_COLOR} />
-              <TouchableOpacity style={layouts.center}>
-                <Icon name="log-out-outline" size={32} color={PRIMARY_COLOR} />
-                <H4>Clock Out</H4>
-              </TouchableOpacity>
-            </View>
-            <H5>Clock started at: {moment().format("HH:mm:ss A")}</H5>
-          </CardFullWidth>
-        </View>
-
         <View
           style={[
             spacing.mt2,
@@ -129,18 +123,35 @@ export default function DashboardScreen() {
           </CardFullWidth>
         </View>
 
-       
         <MyFlatList
           data={firstFourTasks}
-          renderItem={({ item }) => (
-            <StatCard
-              key={item.id}
-              backgroundColor={item.backgroundColor}
-              tasks={item.count}
-              status={item.status}
-              onPress={item.id === 1 ? navigateToTaskList : null}
-            />
-          )}
+          renderItem={({ item, index }) => {
+            const isRightColumn = index % 2 !== 0;
+            const marginTop = isRightColumn ? 20 : 0;
+
+            const handlePress = () => {
+              if (item.id === 6) {
+                navigateToTotalProjectsScreen();
+              } else if (item.id === 1) {
+                navigateToTotalEarningScreen();
+              } else if (item.id === 5) {
+                navigateToTotalSitesScreen();
+              } else if (item.id === 2) {
+                navigateToInventoryScreen();
+              }
+            };
+
+            return (
+              <StatCard
+                key={item.id}
+                backgroundColor={item.backgroundColor}
+                tasks={item.count}
+                status={item.status}
+                onPress={handlePress}
+                style={{ marginTop }}
+              />
+            );
+          }}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
         />
@@ -182,7 +193,6 @@ export default function DashboardScreen() {
           </CardFullWidth>
         </View>
 
-       
         <MyFlatList
           data={lastTwoTasks}
           renderItem={({ item }) => (
@@ -197,24 +207,6 @@ export default function DashboardScreen() {
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
         />
-
-        <View
-          style={[
-            spacing.mt2,
-            { width: SCREEN_WIDTH - 18, alignSelf: "center" },
-            spacing.pv3,
-          ]}
-        >
-          <CardFullWidth backgroundColor={LIGHT}>
-            <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
-              <Icon name="document-text" size={34} color={PRIMARY_COLOR} />
-              <H5 style={[typography.textBold, { marginRight: 150 }]}>
-                My timeSheet
-              </H5>
-            </View>
-            <View style={[spacing.bbw05, spacing.mv1]} />
-          </CardFullWidth>
-        </View>
       </ScrollView>
     </ContainerComponent>
   );

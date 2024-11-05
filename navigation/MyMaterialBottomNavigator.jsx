@@ -1,7 +1,6 @@
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import Icon from "react-native-vector-icons/Ionicons";
 import DashboardScreen from "../screens/DashboardScreen";
-import ChatScreen from "../screens/ChatScreen";
 import SettingsScreen from "../screens/SettingScreen";
 import TaskList from "../screens/TaskList";
 
@@ -45,17 +44,7 @@ export default function MyMaterialBottomNavigator() {
           ),
         }}
       />
-      <BottomTab.Screen
-        name="chatScreen"
-        component={ChatScreen}
-        options={{
-          tabBarLabel: "Messages",
-          tabBarBadge: "2",
-          tabBarIcon: ({ color }) => (
-            <Icon name="chatbubbles-outline" size={26} color={color} />
-          ),
-        }}
-      />
+     
       <BottomTab.Screen
         name="settingsScreen"
         component={SettingsScreen}
