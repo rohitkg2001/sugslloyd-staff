@@ -5,7 +5,7 @@ import moment from "moment";
 import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import MyFlatList from "../components/utility/MyFlatList";
-import { H3, H5, H6, P } from "../components/text";
+import { H2, H3, H4, H5, P } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
 
@@ -13,21 +13,19 @@ import {
   layouts,
   LIGHT,
   PRIMARY_COLOR,
-  PRIMARY_COLOR_TRANSPARENT,
-  DARK,
   SCREEN_WIDTH,
   spacing,
   styles,
   typography,
 } from "../styles";
-import { staff, tasks, categories } from "../utils/faker";
+import { staff, tasks } from "../utils/faker"; //TODO: This will come from reducer store
 
 export default function DashboardScreen() {
   const navigation = useNavigation();
   const today = useState(moment().format("DD MMM YYYY"));
 
-  const navigateToTotalProjectsScreen = () => {
-    navigation.navigate("TotalProjectsScreen");
+  const navigateToTaskList = () => {
+    navigation.navigate("taskList");
   };
 
   const navigateToTaskCardScreen = () => {
@@ -41,20 +39,7 @@ export default function DashboardScreen() {
   const navigateToNoRecord = () => {
     navigation.navigate("NoRecord");
   };
-   const navigateToTotalEarningScreen = () => {
-    navigation.navigate("TotalEarningScreen");
-  };
-   const navigateToTotalProjectsScreen = () => {
-     navigation.navigate("TotalProjectsScreen");
-   };
-  const navigateToTotalSitesScreen = () =>
-  {
-  navigation.navigate("TotalSitesScreen");
-  }
-  const navigateToInventoryScreen = () =>
-  {
-    navigation.navigate("InventoryScreen");
-  }
+
   
   const firstFourTasks = tasks.slice(0, 4);
   const lastTwoTasks = tasks.slice(4, 6);
@@ -77,7 +62,7 @@ export default function DashboardScreen() {
           style={[layouts.circle12, spacing.mv3, layouts.center]}
         />
       </View>
-
+      {/* Welcome message */}
       <ScrollView>
         <View
           style={[
@@ -125,36 +110,18 @@ export default function DashboardScreen() {
           </CardFullWidth>
         </View>
 
-
+       
         <MyFlatList
           data={firstFourTasks}
-          renderItem={({ item, index }) => {
-            const isRightColumn = index % 2 !== 0;
-            const marginTop = isRightColumn ? 20 : 0;
-
-            const handlePress = () => {
-              if (item.id === 6) {
-                navigateToTotalProjectsScreen();
-              } else if (item.id === 1) {
-                navigateToTotalEarningScreen();
-              } else if (item.id === 5) {
-                navigateToTotalSitesScreen();
-              } else if (item.id === 2) {
-                navigateToInventoryScreen();
-              }
-            };
-
-            return (
-              <StatCard
-                key={item.id}
-                backgroundColor={item.backgroundColor}
-                tasks={item.count}
-                status={item.status}
-                onPress={handlePress}
-                style={{ marginTop }}
-              />
-            );
-          }}
+          renderItem={({ item }) => (
+            <StatCard
+              key={item.id}
+              backgroundColor={item.backgroundColor}
+              tasks={item.count}
+              status={item.status}
+              onPress={item.id === 1 ? navigateToTaskList : null}
+            />
+          )}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
         />
@@ -196,6 +163,7 @@ export default function DashboardScreen() {
           </CardFullWidth>
         </View>
 
+       
         <MyFlatList
           data={lastTwoTasks}
           renderItem={({ item }) => (
@@ -210,6 +178,8 @@ export default function DashboardScreen() {
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
         />
+
+       
       </ScrollView>
     </ContainerComponent>
   );
