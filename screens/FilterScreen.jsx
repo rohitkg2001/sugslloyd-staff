@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Modal, ScrollView } from "react-native";
 import { RadioButton, Button, Chip } from "react-native-paper";
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, LIGHT, typography } from "../styles";
+import { SCREEN_WIDTH, LIGHT, typography, spacing } from "../styles";
 import { H4, H5 } from "../components/text";
 import { styles } from "../styles/components.styles";
 import { filterOptions } from "../utils/faker";
@@ -48,6 +48,7 @@ const FilterScreen = () => {
         >
           <Chip
             style={{ backgroundColor: "#C3D1C0", marginHorizontal: 4 }}
+            //style={[styles.bgPrimaryTransParent, { marginHorizontal: 4 }]}
             onPress={() => openModal("Budget")}
           >
             Budget
