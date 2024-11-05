@@ -578,8 +578,8 @@ export const styles = StyleSheet.create({
     maxHeight: 100,
   },
   textInput: {
-    width: 310,
-    color: "#020409",
+   // width: 310,
+    //color: "#020409",
   },
 
   leaveCard: {
