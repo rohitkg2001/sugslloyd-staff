@@ -15,12 +15,14 @@ import TotalProjectsScreen from "../screens/TotalProjectsScreen";
 import TotalEarningScreen from "../screens/TotalEarningScreen";
 import TotalSitesScreen from "../screens/TotalSitesScreen";
 import InventoryScreen from "../screens/InventoryScreen";
+import VendorScreen from "../screens/VendorScreen";
+import FormScreen from "../screens/FormScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="loginScreen"
+      initialRouteName="formScreen"
       screenOptions={{
         headerShown: false,
       }}
@@ -37,10 +39,15 @@ export default function MyStackNavigator() {
       <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
       <Stack.Screen name="InternalSetting" component={InternalSetting} />
       <Stack.Screen name="NoRecord" component={NoRecord} />
-      <Stack.Screen name="TotalProjectsScreen" component={ TotalProjectsScreen } />
-      <Stack.Screen name="TotalEarningScreen" component={ TotalEarningScreen } />
-      <Stack.Screen name="TotalSitesScreen" component={ TotalSitesScreen } />
-      <Stack.Screen name="InventoryScreen" component={ InventoryScreen } />
-          </Stack.Navigator>
+      <Stack.Screen
+        name="TotalProjectsScreen"
+        component={TotalProjectsScreen}
+      />
+      <Stack.Screen name="TotalEarningScreen" component={TotalEarningScreen} />
+      <Stack.Screen name="TotalSitesScreen" component={TotalSitesScreen} />
+      <Stack.Screen name="InventoryScreen" component={InventoryScreen} />
+      <Stack.Screen name="vendorScreen" component={VendorScreen} />
+      <Stack.Screen name="formScreen" component={FormScreen} />
+    </Stack.Navigator>
   );
 }
