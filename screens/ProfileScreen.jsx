@@ -1,29 +1,22 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import PersonalInfo from "../components/PersonalInfo";
-import JobInfo from "../components/JobInfo";
 import DocumentsList from "../components/DocumentsList";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { H4, Span } from "../components/text";
 import { staff } from "../utils/faker";
 import { layouts, LIGHT, PRIMARY_COLOR, styles, typography } from "../styles";
 import TabNavigation from "../components/TabNavigation";
 import CardFullWidth from "../components/card/CardFullWidth";
 import Avatar from "../components/Avatar";
-import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
 
 const ProfileScreen = () => {
   const [activeTab, setActiveTab] = useState("Personal");
-  const navigation = useNavigation();
 
   const renderContent = () => {
     if (activeTab === "Personal") {
       return <PersonalInfo data={staff} />;
-    } else if (activeTab === "Job Info") {
-      return <JobInfo jobData={staff} />;
-    } else if (activeTab === "Documents") {
+    } else if (activeTab === "Document") {
       return <DocumentsList documentData={staff} />;
     }
     return null;
@@ -39,17 +32,11 @@ const ProfileScreen = () => {
             name={`${staff.first_name} ${staff.last_name}`}
             online={false}
           />
-          <TouchableOpacity
-            style={layouts.center}
-            onPress={() => navigation.navigate("EditProfileScreen")}
-          >
-            <Icon name="pencil" size={24} color={LIGHT} />
-            <Span style={typography.textLight}>EDIT</Span>
-          </TouchableOpacity>
+          {/* Removed the Edit Profile button */}
         </View>
       </CardFullWidth>
       <TabNavigation
-        tabs={["Personal", "Job Info", "Document"]}
+        tabs={["Personal", "Document"]} // Removed "Job Info"
         currentTab={activeTab}
         setCurrentTab={setActiveTab}
       />

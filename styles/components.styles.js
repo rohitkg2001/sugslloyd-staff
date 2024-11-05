@@ -408,6 +408,11 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexWrap: "wrap",
   },
+  gridItem: {
+    alignItems: "center",
+    width: "30%",
+    marginVertical: 10,
+  },
   attendanceCard: {
     width: "48%",
     padding: 16,
@@ -589,7 +594,7 @@ export const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     right: 10,
-    backgroundColor: SUCCESS_COLOR, // Color of the Approved badge
+    backgroundColor: SUCCESS_COLOR,
     borderRadius: 4,
     paddingVertical: 4,
     paddingHorizontal: 8,
@@ -616,11 +621,11 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     borderBottomWidth: 2,
     borderBottomColor: PRIMARY_COLOR,
-    paddingVertical: 8, // Ensure there's some padding around the text
+    paddingVertical: 8,
   },
   tabButton: {
     color: "#888",
-    paddingVertical: 8, // Same padding as active tab
+    paddingVertical: 8,
     paddingHorizontal: 16,
   },
 
@@ -791,5 +796,48 @@ export const styles = StyleSheet.create({
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
+  },
+  //pupop
+  popupMenu: {
+    position: "absolute",
+    top: 50,
+    right: 8,
+    width: 120,
+    paddingVertical: 18,
+    backgroundColor: "#ffffff",
+    borderRadius: 8,
+    elevation: 5,
+  },
+  //camera
+  actions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  photoRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 16,
+  },
+  photoContainer: {
+    position: "relative",
+    marginRight: 10,
+    marginBottom: 10,
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 10,
+  },
+  removeButton: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    backgroundColor: "red",
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

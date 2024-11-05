@@ -7,78 +7,133 @@ import {
 
 export const tasks = [
   {
-    id: 5,
-    backgroundColor: "#FFCCCB",
-    title: "Dashboard design for admin",
-    description: "Create the admin dashboard for the app",
-    status: "Sticky Note(Private)",
-
-    date: "14 Oct 2022",
-    commentsCount: 5,
-    attachmentsCount: 2,
-    teamMembers: [
-      { image: "https://randomuser.me/api/portraits/men/1.jpg" },
-      { image: "https://randomuser.me/api/portraits/women/1.jpg" },
-    ],
-  },
-  {
-    id: 6,
-    backgroundColor: "#D1E7DD",
-    title: "Konom web application",
-    description: "Develop the Konom web application",
-    status: " Open Projects",
-    count: 2,
-    date: "14 Nov 2022",
-    commentsCount: 2,
-    attachmentsCount: 1,
-    teamMembers: [
-      { image: "https://randomuser.me/api/portraits/men/2.jpg" },
-      { image: "https://randomuser.me/api/portraits/women/2.jpg" },
-    ],
-  },
-  {
     id: 1,
     title: "Task 1",
     description: "This is task 1",
     count: 28,
-    status: "In Progress",
-    backgroundColor: INFO_COLOR,
+    status: "Total Projects ",
+    backgroundColor: "#A0D3E8",
   },
   {
     id: 2,
     title: "Task 2",
     description: "This is task 2",
     count: 31,
-    status: "Done",
-    backgroundColor: SUCCESS_COLOR,
+    status: "Total Earning",
+    backgroundColor: "#C8E6C9",
   },
   {
     id: 3,
     title: "Task 3",
     description: "This is task 3",
     count: 24,
-    status: "In Review",
-    backgroundColor: WARNING_COLOR,
+    status: "Total Sites",
+    backgroundColor: "#f9caa7",
   },
   {
     id: 4,
     title: "Task 4",
     description: "This is task 4",
     count: 7,
-    status: "Events",
-    backgroundColor: DANGER_COLOR,
+    status: "Inventory",
+    backgroundColor: "#ffeead",
   },
   {
     id: 5,
     title: "Task 5",
     description: "This is task 5",
-    count: 12,
-    status: "Total Project",
-    backgroundColor: INFO_COLOR,
+    count: 24,
+    status: "In Review",
+    backgroundColor: "#bdeaee",
+  },
+  {
+    id: 6,
+    title: "Task 6",
+    description: "This is task 5",
+    count: 7,
+    status: "Events",
+    backgroundColor: "#ffbbee",
+  },
+];
+export const categories = [
+  {
+    id: "1",
+    label: "Installation",
+    icon: "layers-outline",
+    count: 5, 
+  },
+  {
+    id: "2",
+    label: "Fixing Slip",
+    icon: "grid-outline",
+    count: 3, 
+  },
+  {
+    id: "3",
+    label: "RMS Status",
+    icon: "cart-outline",
+    count: 2,
+  },
+  {
+    id: "4",
+    label: "Final Inspection",
+    icon: "document-text-outline",
+    count: 1,
+  },
+  {
+    id: "5",
+    label: "Report",
+    icon: "pie-chart-outline",
+    count: 4,
   },
 ];
 
-export const orders = [
+export const project = [
+  { id: 1, projectName: "Project 01A", duration: "2 days", status: "ongoing" },
+  { id: 2, projectName: "Project 02B", duration: "5 days", status: "completed" },
+  { id: 3, projectName: "Project 03C", duration: "3 days", status: "ongoing" },
+  { id: 4, projectName: "Project 04D", duration: "7 days", status: "completed" },
+  { id: 5, projectName: "Project 05E", duration: "4 days", status: "ongoing" },
+  { id: 6, projectName: "Project 06F", duration: "6 days", status: "ongoing" },
+  { id: 7, projectName: "Project 07G", duration: "1 day", status: "completed" },
+  { id: 8, projectName: "Project 08H", duration: "8 days", status: "ongoing" },
+  { id: 9, projectName: "Project 09I", duration: "10 days", status: "completed" },
+  { id: 10, projectName: "Project 10J", duration: "3 days", status: "ongoing" },
+];
+
+export const projecttask = [
+  {
+    id: 1,
+    projectName: "Project 01A",
+    siteName: " SBI Bank , Rampur School , Lakhisarai",
+  
+  },
+  {
+    id: 2,
+    projectName: "Project 02B",
+    siteName: "Block Office, Shershah Road ,Madhepura",
+   
+  },
+  {
+    id: 3,
+    projectName: "Project 03C",
+    siteName: "Purnea Mahila College , Sipahi Tola , Purnea",
+    
+  },
+];
+export const tasksData = [
+  {
+    id: "1",
+    taskName: "Solar Panel Installlation at railway station.",
+    installation: "Install the panel on top of the platform of 5kw of power.",
+  },
+];
+
+
+
+
+
+export const inventoryData = [
   {
     id: "1",
     name: "Solar LED Street Light",
@@ -91,30 +146,28 @@ export const orders = [
     name: "Smart Street Light System",
     description: "Automated street light system with IoT connectivity.",
     quantity: 2,
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
   },
   {
     id: "3",
     name: "LED Floodlight for Streets",
     description: "High brightness LED floodlight for outdoor use.",
     quantity: 3,
-    image:
-      "https://m.media-amazon.com/images/I/81hIbQn03RL._AC_UF1000,1000_QL80_.jpg",
+    url: "https://m.media-amazon.com/images/I/81hIbQn03RL._AC_UF1000,1000_QL80_.jpg",
   },
   {
     id: "4",
     name: "Solar Street Light with Camera",
     description: "Integrated street light with a security camera.",
     quantity: 1,
-    image: "https://randomuser.me/api/portraits/men/4.jpg",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfaVettxgHxUSbCpPamGNdUB8g_9t_qYFhgQ&s",
   },
   {
     id: "5",
     name: "Street Light Pole",
     description: "Durable street light pole for various applications.",
     quantity: 5,
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
+    url: "https://th.bing.com/th?id=OPAC.9GyQh8O0Qccugw474C474&w=592&h=550&o=5&dpr=1.1&pid=21.1",
   },
   {
     id: "6",
@@ -122,7 +175,40 @@ export const orders = [
     description:
       "Street light with a built-in motion sensor for energy savings.",
     quantity: 2,
-    image: "https://randomuser.me/api/portraits/men/6.jpg",
+    url: "  https://th.bing.com/th?id=OPAC.CS1gpu%2fn0Pggmw474C474&w=592&h=550&o=5&dpr=1.1&pid=21.1 ",
+  },
+];
+
+export const earnings = [
+  {
+    id: 1,
+    projectName: "Solar Lighting Installation for Homes",
+    totalEarnings: 12034,
+    completionDate: "2023-10-10",
+  },
+  {
+    id: 2,
+    projectName: "Community Solar Street Lights Project",
+    totalEarnings: 8500.0,
+    completionDate: "2023-09-15",
+  },
+  {
+    id: 3,
+    projectName: "Solar Panel Setup for Schools",
+    totalEarnings: 4730.75,
+    completionDate: "2023-08-20",
+  },
+  {
+    id: 4,
+    projectName: "Solar Energy Solutions for Farms",
+    totalEarnings: 20500.0,
+    completionDate: "2023-07-30",
+  },
+  {
+    id: 5,
+    projectName: "Solar Roof Panels for Businesses",
+    totalEarnings: 13500.25,
+    completionDate: "2023-06-12",
   },
 ];
 
@@ -165,14 +251,7 @@ export const leaveTypes = [
   },
 ];
 
-export const dummyMessages = [
-  {
-    id: "1",
-    message: "Come in cabin",
-    isSent: false,
-    time: "12:53:42 pm",
-  },
-];
+
 
 export const items = [
   { label: "JavaScript", value: "javascript" },
@@ -319,12 +398,10 @@ export const contactsData = [
 ];
 
 export const menuItems = [
+  { label: "Site Inventory", icon: "cart-outline" },
   { label: "Reports", page: "", icon: "pie-chart-outline" },
-  { label: "Events", page: "", icon: "calendar-outline" },
-  { label: "My Purchases", icon: "cart-outline" },
   { label: "My Projects", page: "", icon: "grid-outline" },
   { label: "My Tasks", page: "", icon: "grid-outline" },
-  { label: "My Notes", page: "NotificationScreen", icon: "reader-outline" },
   { label: "Settings", page: "", icon: "cog-outline" },
 ];
 export const internal = [
@@ -365,51 +442,6 @@ export const notifications = [
     description: "Please update to the newest app for a better experience.",
     icon: "cellphone-information",
     time: "25 sept,21:22 Pm",
-  },
-];
-
-export const holidays = [
-  {
-    id: "1",
-    title: "Republic Day",
-    date: "January 26, 2024",
-    day: "Thursday",
-    icon: "calendar",
-  },
-  {
-    id: "2",
-    title: "Holi",
-    date: "March 26, 2024",
-    day: "Friday",
-    icon: "calendar",
-  },
-  {
-    id: "3",
-    title: "Independence Day",
-    date: "August 15, 2024",
-    day: "Tuesday",
-    icon: "calendar",
-  },
-  {
-    id: "4",
-    title: "Raksha Bandhan",
-    date: "August 20, 2024",
-    day: "Wednesday",
-    icon: "calendar",
-  },
-  {
-    id: "5",
-    title: "Janmashtami",
-    date: "September 26, 2024",
-    day: "Thursday",
-    icon: "calendar",
-  },
-  {
-    id: "6",
-    title: "Diwali",
-    date: "November 12, 2024",
-    day: "Sunday",
-    icon: "calendar",
   },
 ];
 
@@ -735,51 +767,35 @@ export const taskslist = [
   },
 ];
 
-// filterOptions.js
-
-export const filterOptions = {
-  Budget: [
-    { label: "Budget high to low", value: "low" },
-    { label: "Budget low to high", value: "high" },
-  ],
-  Project: [
-    { label: "Residential", value: "Residential" },
-    { label: "Commercial", value: "Commercial" },
-    { label: "Industrial", value: "Industrial" },
-  ],
-  Location: [
-    { label: "Patna", value: "Patna" },
-    { label: "Hajipur", value: "Hajipur" },
-    { label: "muzaffarpur", value: "muzaffarpur" },
-  ],
-  State: [
-    { label: "Andhra Pradesh", value: "AndhraPradesh" },
-    { label: "Arunachal Pradesh", value: "ArunachalPradesh" },
-    { label: "Assam", value: "Assam" },
-    { label: "Bihar", value: "Bihar" },
-    { label: "Chhattisgarh", value: "Chhattisgarh" },
-    { label: "Goa", value: "Goa" },
-    { label: "Gujarat", value: "Gujarat" },
-    { label: "Haryana", value: "Haryana" },
-    { label: "Himachal Pradesh", value: "HimachalPradesh" },
-    { label: "Jharkhand", value: "Jharkhand" },
-    { label: "Karnataka", value: "Karnataka" },
-    { label: "Kerala", value: "Kerala" },
-    { label: "Madhya Pradesh", value: "MadhyaPradesh" },
-    { label: "Maharashtra", value: "Maharashtra" },
-    { label: "Manipur", value: "Manipur" },
-    { label: "Meghalaya", value: "Meghalaya" },
-    { label: "Mizoram", value: "Mizoram" },
-    { label: "Nagaland", value: "Nagaland" },
-    { label: "Odisha", value: "Odisha" },
-    { label: "Punjab", value: "Punjab" },
-    { label: "Rajasthan", value: "Rajasthan" },
-    { label: "Sikkim", value: "Sikkim" },
-    { label: "Tamil Nadu", value: "TamilNadu" },
-    { label: "Telangana", value: "Telangana" },
-    { label: "Tripura", value: "Tripura" },
-    { label: "Uttar Pradesh", value: "UttarPradesh" },
-    { label: "Uttarakhand", value: "Uttarakhand" },
-    { label: "West Bengal", value: "WestBengal" },
-  ],
-};
+export const totalsitesData = [
+  {
+    id: "1",
+    siteName: "P S SHIKSHA NAGAR BANMANKHI",
+    dist: "Purnia",
+    location: "BANMANKHI",
+  },
+  {
+    id: "2",
+    siteName: "P S MIRCHAIBARI UTTAR",
+    dist: "Purnia",
+    location: "BANMANKHI",
+  },
+  {
+    id: "3",
+    siteName: "P S MIRCHAIBARI UTTAR",
+    dist: "Purnia",
+    location: "BANMANKHI",
+  },
+  {
+    id: "4",
+    siteName: "P S MIRCHAIBARI UTTAR",
+    dist: "Purnia",
+    location: "BANMANKHI",
+  },
+  {
+    id: "5",
+    siteName: "P S MIRCHAIBARI UTTAR",
+    dist: "Purnia",
+    location: "BANMANKHI",
+  },
+];
