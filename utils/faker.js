@@ -748,9 +748,9 @@ export const filterOptions = {
     { label: "Industrial", value: "Industrial" },
   ],
   Location: [
-    { label: "Bihar", value: "Bihar" },
-    { label: "Uttar Pradesh", value: "Uttar Pradesh" },
-    { label: "Gujarat", value: "Gujarat" },
+    { label: "Patna", value: "Patna" },
+    { label: "Hajipur", value: "Hajipur" },
+    { label: "muzaffarpur", value: "muzaffarpur" },
   ],
   State: [
     { label: "Andhra Pradesh", value: "AndhraPradesh" },
