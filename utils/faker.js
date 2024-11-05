@@ -78,7 +78,6 @@ export const tasks = [
   },
 ];
 
-
 export const orders = [
   {
     id: "1",
@@ -92,14 +91,16 @@ export const orders = [
     name: "Smart Street Light System",
     description: "Automated street light system with IoT connectivity.",
     quantity: 2,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
   },
   {
     id: "3",
     name: "LED Floodlight for Streets",
     description: "High brightness LED floodlight for outdoor use.",
     quantity: 3,
-    image: "https://m.media-amazon.com/images/I/81hIbQn03RL._AC_UF1000,1000_QL80_.jpg",
+    image:
+      "https://m.media-amazon.com/images/I/81hIbQn03RL._AC_UF1000,1000_QL80_.jpg",
   },
   {
     id: "4",
@@ -124,9 +125,6 @@ export const orders = [
     image: "https://randomuser.me/api/portraits/men/6.jpg",
   },
 ];
-
-
-
 
 export const leaveReasons = [
   {
@@ -706,7 +704,6 @@ export const staff = {
   created_date: "",
 };
 
-
 // taskData.js
 export const taskslist = [
   {
@@ -738,3 +735,51 @@ export const taskslist = [
   },
 ];
 
+// filterOptions.js
+
+export const filterOptions = {
+  Budget: [
+    { label: "Budget high to low", value: "low" },
+    { label: "Budget low to high", value: "high" },
+  ],
+  Project: [
+    { label: "Residential", value: "Residential" },
+    { label: "Commercial", value: "Commercial" },
+    { label: "Industrial", value: "Industrial" },
+  ],
+  Location: [
+    { label: "Bihar", value: "Bihar" },
+    { label: "Uttar Pradesh", value: "Uttar Pradesh" },
+    { label: "Gujarat", value: "Gujarat" },
+  ],
+  State: [
+    { label: "Andhra Pradesh", value: "AndhraPradesh" },
+    { label: "Arunachal Pradesh", value: "ArunachalPradesh" },
+    { label: "Assam", value: "Assam" },
+    { label: "Bihar", value: "Bihar" },
+    { label: "Chhattisgarh", value: "Chhattisgarh" },
+    { label: "Goa", value: "Goa" },
+    { label: "Gujarat", value: "Gujarat" },
+    { label: "Haryana", value: "Haryana" },
+    { label: "Himachal Pradesh", value: "HimachalPradesh" },
+    { label: "Jharkhand", value: "Jharkhand" },
+    { label: "Karnataka", value: "Karnataka" },
+    { label: "Kerala", value: "Kerala" },
+    { label: "Madhya Pradesh", value: "MadhyaPradesh" },
+    { label: "Maharashtra", value: "Maharashtra" },
+    { label: "Manipur", value: "Manipur" },
+    { label: "Meghalaya", value: "Meghalaya" },
+    { label: "Mizoram", value: "Mizoram" },
+    { label: "Nagaland", value: "Nagaland" },
+    { label: "Odisha", value: "Odisha" },
+    { label: "Punjab", value: "Punjab" },
+    { label: "Rajasthan", value: "Rajasthan" },
+    { label: "Sikkim", value: "Sikkim" },
+    { label: "Tamil Nadu", value: "TamilNadu" },
+    { label: "Telangana", value: "Telangana" },
+    { label: "Tripura", value: "Tripura" },
+    { label: "Uttar Pradesh", value: "UttarPradesh" },
+    { label: "Uttarakhand", value: "Uttarakhand" },
+    { label: "West Bengal", value: "WestBengal" },
+  ],
+};
