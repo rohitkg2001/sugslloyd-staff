@@ -29,11 +29,16 @@ import ToDoTaskCardScreen from "../screens/ToDoTaskCardScreen";
 import NoRecord from "../screens/NoRecord";
 import FileUploadScreen from "../screens/FileUploadScreen";
 import OrderScreen from "../screens/OrderScreen";
+import FilterScreen from "../screens/FilterScreen";
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
+<<<<<<< HEAD
       initialRouteName="loginScreen"
+=======
+      initialRouteName="filterScreen"
+>>>>>>> 97d8c412bc7e07b24c54a4c343daaadcf64287b9
       screenOptions={{
         headerShown: false,
       }}
@@ -70,6 +75,7 @@ export default function MyStackNavigator() {
       <Stack.Screen name="NoRecord" component={NoRecord} />
       <Stack.Screen name="fileUploadScreen" component={FileUploadScreen} />
       <Stack.Screen name="orderScreen" component={OrderScreen} />
+      <Stack.Screen name="filterScreen" component={FilterScreen}/>
     </Stack.Navigator>
   );
 }
