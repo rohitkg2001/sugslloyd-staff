@@ -50,6 +50,8 @@ export default function SettingsScreen() {
             onPress={() => {
               if (item.label === "Settings") {
                 handleInternalSetting();
+              } else if (item.label === "Site Inventory") {
+                handlerequisitions();
               } else if (item.label === "Events") {
                 handleHolidayList(); 
               } else {

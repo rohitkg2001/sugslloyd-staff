@@ -1,6 +1,8 @@
+
 import React, { useState } from "react";
-import { View, Image, FlatList, TouchableOpacity, Text } from "react-native";
-import { orders } from "../utils/faker"; // Your orders data
+import { View, FlatList, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { projecttask } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import { styles } from "../styles/components.styles";
@@ -9,15 +11,14 @@ import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
 
-const OrderScreen = () => {
+const CurrentProjectsScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const navigation = useNavigation(); 
 
-
-  const filteredOrders = orders.filter((order) =>
-    order.name.toLowerCase().includes(searchText.toLowerCase())
+  const filteredProjects = projecttask.filter((item) =>
+    item.projectName.toLowerCase().includes(searchText.toLowerCase())
   );
-
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
@@ -33,54 +34,42 @@ const OrderScreen = () => {
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
         <MyHeader
-          title="Orders"
+          title="Current Projects"
           hasIcon={true}
           icon={"ellipsis-vertical"}
-          onIconPress={toggleMenu} 
+          onIconPress={toggleMenu}
         />
 
-   
         <SearchBar
-          placeholder="Search orders..."
+          placeholder="Search current projects..."
           value={searchText}
           onChangeText={setSearchText}
         />
 
         <FlatList
-          data={filteredOrders}
+          data={filteredProjects}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.card}>
-              <Image
-                source={{ uri: item.url }}
-                loadingIndicatorSource={require('../assets/img15.png')}
-                style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 8,
-                  marginRight: 16,
-                }}
-              />
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => navigation.navigate("taskScreen")} 
+            >
               <View style={{ flex: 1 }}>
-                <H5>{item.name}</H5>
-                <P>{item.description}</P>
-                <View style={styles.quantityContainer}>
-                  <P style={styles.productQuantity}>Qty: {item.quantity}</P>
-                </View>
+                <H5>{item.projectName}</H5>
+                <P>{` ${item.siteName}`}</P>
               </View>
             </TouchableOpacity>
           )}
         />
 
-      
         <Filter
           visible={isMenuVisible}
           onClose={toggleMenu}
-          options={menuOptions} 
+          options={menuOptions}
         />
       </View>
     </ContainerComponent>
   );
 };
 
-export default OrderScreen;
+export default CurrentProjectsScreen;

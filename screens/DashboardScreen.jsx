@@ -5,7 +5,7 @@ import moment from "moment";
 import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import MyFlatList from "../components/utility/MyFlatList";
-import { H2, H3, H4, H5, P } from "../components/text";
+import { H3, H5, H6, P } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
 
@@ -13,19 +13,21 @@ import {
   layouts,
   LIGHT,
   PRIMARY_COLOR,
+  PRIMARY_COLOR_TRANSPARENT,
+  DARK,
   SCREEN_WIDTH,
   spacing,
   styles,
   typography,
 } from "../styles";
-import { staff, tasks } from "../utils/faker"; //TODO: This will come from reducer store
+import { staff, tasks, categories } from "../utils/faker";
 
 export default function DashboardScreen() {
   const navigation = useNavigation();
   const today = useState(moment().format("DD MMM YYYY"));
 
-  const navigateToTaskList = () => {
-    navigation.navigate("taskList");
+  const navigateToTotalProjectsScreen = () => {
+    navigation.navigate("TotalProjectsScreen");
   };
 
   const navigateToTaskCardScreen = () => {
@@ -75,7 +77,7 @@ export default function DashboardScreen() {
           style={[layouts.circle12, spacing.mv3, layouts.center]}
         />
       </View>
-      {/* Welcome message */}
+
       <ScrollView>
         <View
           style={[
@@ -122,6 +124,7 @@ export default function DashboardScreen() {
             </View>
           </CardFullWidth>
         </View>
+
 
         <MyFlatList
           data={firstFourTasks}
