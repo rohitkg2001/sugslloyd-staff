@@ -156,16 +156,15 @@ export default function DashboardScreen() {
             const marginTop = isRightColumn ? 20 : 0;
 
             const handlePress = () => {
-              // if (item.id === 1) {
-              //   navigateToTotalProjectsScreen();
-              // } else if (index === 1) {
-              //   navigateToTotalEarningScreen();
-              // } else if (index === 2) {
-              //   navigateToTotalSitesScreen();
-              // } else if (index === 3) {
-              //   navigateToInventoryScreen();
-              // }
+              if (item.id === 1) {
+                navigateToTotalProjectsScreen();
+              } else if (item.status === "Total Sites") {
+                navigateToTotalSitesScreen(); 
+              } else if (item.status === "Pending Sites") {
+                navigateToPendingSitesScreen(); 
+              }
             };
+
 
             return (
               <StatCard
