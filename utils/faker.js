@@ -870,3 +870,37 @@ export const totalsitesData = [
     location: "BANMANKHI",
   },
 ];
+
+export const totalVendorsData = [
+  {
+    id: "1",
+    name: "Raju Das",
+    location: "Patna",
+    contactNumber: "123-456-7890",
+  },
+  {
+    id: "2",
+    name: "Md. Sohail Ansari",
+    location: "Saharanpur",
+    contactNumber: "987-654-3210",
+  },
+  {
+    id: "3",
+    name: "Ayush Ranjan",
+    location: "Kanpur",
+    contactNumber: "456-789-1230",
+  },
+  {
+    id: "4",
+    name: "Md Munna",
+    location: "Purniea",
+    contactNumber: "321-654-9870",
+  },
+  {
+    id: "5",
+    name: "Suresh Tripathy",
+    location: "Betiah",
+    contactNumber: "789-123-4560",
+  },
+  // Add more vendor data here
+];
