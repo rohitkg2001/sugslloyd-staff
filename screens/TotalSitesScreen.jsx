@@ -37,14 +37,6 @@ const TotalSitesScreen = () => {
             Location: {item.location}
           </P>
         </View>
-        <IconButton
-          icon="triangle-outline"
-          size={20}
-          color="#020409"
-          style={{
-            marginRight: 0,
-          }}
-        />
       </View>
     </Card>
   );
