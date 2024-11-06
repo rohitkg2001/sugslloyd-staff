@@ -41,7 +41,7 @@ const TotalSitesScreen = () => {
     setFilteredSites(sortedSites);
   };
 
-  // Toggle menu visibility for sorting and filtering
+ 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
