@@ -578,7 +578,7 @@ export const styles = StyleSheet.create({
     maxHeight: 100,
   },
   textInput: {
-   // width: 310,
+    // width: 310,
     //color: "#020409",
   },
 
@@ -837,6 +837,16 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     width: 20,
     height: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  addButton: {
+    position: "absolute",
+    top: 660,
+    right: 20,
+    backgroundColor: "#76885B",
+    borderRadius: 50,
+    padding: 10,
     justifyContent: "center",
     alignItems: "center",
   },

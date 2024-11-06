@@ -92,13 +92,13 @@ export const categories = [
     id: "1",
     label: "Installation",
     icon: "layers-outline",
-    count: 5, 
+    count: 5,
   },
   {
     id: "2",
     label: "Fixing Slip",
     icon: "grid-outline",
-    count: 3, 
+    count: 3,
   },
   {
     id: "3",
@@ -122,14 +122,29 @@ export const categories = [
 
 export const project = [
   { id: 1, projectName: "Project 01A", duration: "2 days", status: "ongoing" },
-  { id: 2, projectName: "Project 02B", duration: "5 days", status: "completed" },
+  {
+    id: 2,
+    projectName: "Project 02B",
+    duration: "5 days",
+    status: "completed",
+  },
   { id: 3, projectName: "Project 03C", duration: "3 days", status: "ongoing" },
-  { id: 4, projectName: "Project 04D", duration: "7 days", status: "completed" },
+  {
+    id: 4,
+    projectName: "Project 04D",
+    duration: "7 days",
+    status: "completed",
+  },
   { id: 5, projectName: "Project 05E", duration: "4 days", status: "ongoing" },
   { id: 6, projectName: "Project 06F", duration: "6 days", status: "ongoing" },
   { id: 7, projectName: "Project 07G", duration: "1 day", status: "completed" },
   { id: 8, projectName: "Project 08H", duration: "8 days", status: "ongoing" },
-  { id: 9, projectName: "Project 09I", duration: "10 days", status: "completed" },
+  {
+    id: 9,
+    projectName: "Project 09I",
+    duration: "10 days",
+    status: "completed",
+  },
   { id: 10, projectName: "Project 10J", duration: "3 days", status: "ongoing" },
 ];
 
@@ -138,19 +153,16 @@ export const projecttask = [
     id: 1,
     projectName: "Project 01A",
     siteName: " SBI Bank , Rampur School , Lakhisarai",
-  
   },
   {
     id: 2,
     projectName: "Project 02B",
     siteName: "Block Office, Shershah Road ,Madhepura",
-   
   },
   {
     id: 3,
     projectName: "Project 03C",
     siteName: "Purnea Mahila College , Sipahi Tola , Purnea",
-    
   },
 ];
 export const tasksData = [
@@ -160,10 +172,6 @@ export const tasksData = [
     installation: "Install the panel on top of the platform of 5kw of power.",
   },
 ];
-
-
-
-
 
 export const inventoryData = [
   {
@@ -242,6 +250,36 @@ export const earnings = [
     totalEarnings: 13500.25,
     completionDate: "2023-06-12",
   },
+  {
+    id: 6,
+    projectName: "Solar Roof Panels for Businesses",
+    totalEarnings: 13500.25,
+    completionDate: "2023-06-12",
+  },
+  {
+    id: 7,
+    projectName: "Solar Roof Panels for Businesses",
+    totalEarnings: 13500.25,
+    completionDate: "2023-06-12",
+  },
+  {
+    id: 8,
+    projectName: "Solar Roof Panels for Businesses",
+    totalEarnings: 13500.25,
+    completionDate: "2023-06-12",
+  },
+  {
+    id: 9,
+    projectName: "Solar Roof Panels for Businesses",
+    totalEarnings: 13500.25,
+    completionDate: "2023-06-12",
+  },
+  {
+    id: 10,
+    projectName: "Solar Roof Panels for Businesses",
+    totalEarnings: 13500.25,
+    completionDate: "2023-06-12",
+  },
 ];
 
 export const leaveReasons = [
@@ -282,8 +320,6 @@ export const leaveTypes = [
     icon: "clock",
   },
 ];
-
-
 
 export const items = [
   { label: "JavaScript", value: "javascript" },
