@@ -52,6 +52,15 @@ export default function DashboardScreen() {
   const navigateToInventoryScreen = () => {
     navigation.navigate("InventoryScreen");
   };
+  const navigateToCompletedSitesScreen = () => {
+    navigation.navigate("completedSitesScreen");
+  };
+  const navigateToProgressSitesScreen = () => {
+    navigation.navigate("progressSitesScreen");
+  };
+  const navigateToPendingSitesScreen = () => {
+    navigation.navigate("pendingSitesScreen");
+  };
 
   const firstTwoTasks = tasks.slice(0, 2);
   const firstFourTasks = tasks.slice(2, 6);
@@ -159,12 +168,17 @@ export default function DashboardScreen() {
               if (item.id === 1) {
                 navigateToTotalProjectsScreen();
               } else if (item.status === "Total Sites") {
-                navigateToTotalSitesScreen(); 
+                navigateToTotalSitesScreen();
               } else if (item.status === "Pending Sites") {
-                navigateToPendingSitesScreen(); 
+                navigateToPendingSitesScreen();
+              } else if (item.status === "Completed Sites") {
+                navigateToCompletedSitesScreen();
+              } else if (item.status === "Sites in Progress") {
+                navigateToProgressSitesScreen();
+              } else if (item.status === "Pending Sites") {
+                navigateToPendingSitesScreen;
               }
             };
-
 
             return (
               <StatCard

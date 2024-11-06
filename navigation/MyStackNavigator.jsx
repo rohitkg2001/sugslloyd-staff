@@ -15,14 +15,16 @@ import TotalProjectsScreen from "../screens/TotalProjectsScreen";
 import TotalEarningScreen from "../screens/TotalEarningScreen";
 import TotalSitesScreen from "../screens/TotalSitesScreen";
 import InventoryScreen from "../screens/InventoryScreen";
-
+import CompletedSitesScreen from "../screens/CompletedSitesScreen";
 import FormScreen from "../screens/FormScreen";
+import ProgressSitesScreen from "../screens/ProgressSitesScreen";
+import PendingSitesScreen from "../screens/PendingSitesScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="loginScreen"
+      initialRouteName="dashboardScreen"
       screenOptions={{
         headerShown: false,
       }}
@@ -47,6 +49,15 @@ export default function MyStackNavigator() {
       <Stack.Screen name="TotalSitesScreen" component={TotalSitesScreen} />
       <Stack.Screen name="InventoryScreen" component={InventoryScreen} />
       <Stack.Screen name="formScreen" component={FormScreen} />
+      <Stack.Screen
+        name="completedSitesScreen"
+        component={CompletedSitesScreen}
+      />
+      <Stack.Screen
+        name="progressSitesScreen"
+        component={ProgressSitesScreen}
+      />
+      <Stack.Screen name="pendingSitesScreen" component={PendingSitesScreen} />
     </Stack.Navigator>
   );
 }
