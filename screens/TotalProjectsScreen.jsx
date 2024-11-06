@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, FlatList, TouchableOpacity } from "react-native";
-import { project } from "../utils/faker"; 
+import { project } from "../utils/faker";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import { styles } from "../styles/components.styles";
@@ -32,16 +33,41 @@ const TotalProjectsScreen = () => {
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
         <MyHeader
           title="Total Projects"
+          isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
           onIconPress={toggleMenu}
         />
 
-        <SearchBar
-          placeholder="Search projects..."
-          value={searchText}
-          onChangeText={setSearchText}
-        />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginVertical: 8,
+          }}
+        >
+          <View style={{ width: "80%" }}>
+            <SearchBar
+              placeholder="Search projects..."
+              value={searchText}
+              onChangeText={(text) => setSearchText(text)}
+            />
+          </View>
+
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => console.log("Filter Pressed")}
+          >
+            <Ionicons name="filter" size={24} color="black" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => console.log("Sort Pressed")}
+          >
+            <Ionicons name="swap-vertical" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
 
         <FlatList
           data={filteredProjects}
@@ -62,6 +88,12 @@ const TotalProjectsScreen = () => {
           onClose={toggleMenu}
           options={menuOptions}
         />
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => console.log("Add Pressed")}
+        >
+          <Ionicons name="add" size={32} color="white" />
+        </TouchableOpacity>
       </View>
     </ContainerComponent>
   );

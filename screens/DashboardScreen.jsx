@@ -53,10 +53,9 @@ export default function DashboardScreen() {
     navigation.navigate("InventoryScreen");
   };
 
-  
-  const firstTwoTasks = tasks.slice(0, 2); 
-  const firstFourTasks = tasks.slice(2, 6); 
-  const secondFourTasks = tasks.slice(6, 10); 
+  const firstTwoTasks = tasks.slice(0, 2);
+  const firstFourTasks = tasks.slice(2, 6);
+  const secondFourTasks = tasks.slice(6, 10);
 
   return (
     <ContainerComponent>
@@ -153,9 +152,8 @@ export default function DashboardScreen() {
         <MyFlatList
           data={firstFourTasks}
           renderItem={({ item, index }) => {
-          
             const isRightColumn = index % 2 !== 0;
-            const marginTop = isRightColumn ? 20 : 0; 
+            const marginTop = isRightColumn ? 20 : 0;
 
             const handlePress = () => {
               // if (item.id === 1) {
@@ -177,7 +175,7 @@ export default function DashboardScreen() {
                 status={item.status}
                 onPress={handlePress}
                 style={{
-                  marginTop: marginTop, 
+                  marginTop: marginTop,
                 }}
               />
             );

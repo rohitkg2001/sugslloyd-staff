@@ -8,25 +8,13 @@ import { styles } from "../styles/components.styles";
 import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
-import Filter from "../components/filters";
 
 const TotalEarningScreen = () => {
   const [searchText, setSearchText] = useState("");
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const filteredEarnings = earnings.filter((earning) =>
     earning.projectName.toLowerCase().includes(searchText.toLowerCase())
   );
-
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
-  };
-
-  const menuOptions = [
-    { label: "Search", onPress: () => console.log("Search clicked") },
-    { label: "Sort", onPress: () => console.log("Sort clicked") },
-    { label: "Filter", onPress: () => console.log("Filter clicked") },
-  ];
 
   return (
     <ContainerComponent>
@@ -36,8 +24,9 @@ const TotalEarningScreen = () => {
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
-          onIconPress={toggleMenu}
+          onIconPress={() => console.log("Menu pressed")}
         />
+
         <View
           style={{
             flexDirection: "row",
@@ -80,12 +69,6 @@ const TotalEarningScreen = () => {
               </View>
             </TouchableOpacity>
           )}
-        />
-
-        <Filter
-          visible={isMenuVisible}
-          onClose={toggleMenu}
-          options={menuOptions}
         />
 
         <TouchableOpacity
