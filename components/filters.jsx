@@ -1,9 +1,11 @@
 import React from "react";
-import { Modal, TouchableOpacity, View } from "react-native";
+import { Modal, TouchableOpacity, View, StyleSheet } from "react-native";
 import { P } from "./text";
 import { spacing, typography } from "../styles";
 import { styles } from "../styles/components.styles";
-const Filter = ({ visible, onClose, options }) => {
+
+// Updated Filter component
+const Filter = ({ visible, onClose, options, optionTextStyle }) => {
   return (
     <Modal
       transparent={true}
@@ -11,23 +13,39 @@ const Filter = ({ visible, onClose, options }) => {
       animationType="fade"
       onRequestClose={onClose}
     >
-      <TouchableOpacity style={{ flex: 1 }} onPress={onClose}>
+      {/* Background overlay - Close modal when clicked anywhere outside */}
+      <TouchableOpacity
+        style={styles.overlay}
+        onPress={onClose} // Close modal when clicked outside
+        activeOpacity={1}
+      >
+        {/* Modal Content */}
         <View style={styles.popupMenu}>
           {options.map((option, index) => (
             <TouchableOpacity
               key={index}
               onPress={() => {
-                option.onPress();
-                onClose();
+                if (option.onPress) {
+                  option.onPress(); // Execute option action
+                }
+                onClose(); // Close modal after selecting option
               }}
+              style={styles.option}
             >
-              <P style={(typography.textDark, spacing.p3)}>{option.label}</P>
+              <P style={[typography.textDark, spacing.p3, optionTextStyle]}>
+                {option.label}
+              </P>
             </TouchableOpacity>
           ))}
         </View>
       </TouchableOpacity>
     </Modal>
   );
+};
+
+// Default props for better flexibility
+Filter.defaultProps = {
+  optionTextStyle: {},
 };
 
 export default Filter;
