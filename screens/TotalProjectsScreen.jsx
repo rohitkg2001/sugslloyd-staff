@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, FlatList, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { project } from "../utils/faker"; 
+import { project } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import { styles } from "../styles/components.styles";
@@ -10,12 +10,11 @@ import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
 
-const TotalProjectsScreen = () => {
+const TotalProjectsScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredProjects, setFilteredProjects] = useState(project);
 
-  // Filter function based on search text
   const filterProjects = (text) => {
     setSearchText(text);
     const filtered = project.filter((item) =>
@@ -24,40 +23,31 @@ const TotalProjectsScreen = () => {
     setFilteredProjects(filtered);
   };
 
-
   const sortProjects = (sortOrder) => {
-    console.log(`Sorting by: ${sortOrder}`); 
+    console.log(`Sorting by: ${sortOrder}`);
     let sortedProjects = [...filteredProjects];
 
     if (sortOrder === "alphabetical") {
-      
       sortedProjects.sort((a, b) => a.projectName.localeCompare(b.projectName));
     } else if (sortOrder === "status") {
-    
       const statusOrder = ["Completed", "Ongoing"];
       sortedProjects.sort((a, b) => {
-        const statusA = (a.status || "").trim().toLowerCase(); 
-        const statusB = (b.status || "").trim().toLowerCase(); 
-
-    
+        const statusA = (a.status || "").trim().toLowerCase();
+        const statusB = (b.status || "").trim().toLowerCase();
         const indexA = statusOrder.indexOf(
           statusA.charAt(0).toUpperCase() + statusA.slice(1)
-        ); 
+        );
         const indexB = statusOrder.indexOf(
           statusB.charAt(0).toUpperCase() + statusB.slice(1)
-        ); 
-
-    
+        );
         if (indexA === -1) return 1;
         if (indexB === -1) return -1;
-
-        return indexA - indexB; 
+        return indexA - indexB;
       });
     } else if (sortOrder === "duration") {
-      
       sortedProjects.sort((a, b) => {
-        const durationA = parseInt(a.duration, 10); 
-        const durationB = parseInt(b.duration, 10); 
+        const durationA = parseInt(a.duration, 10);
+        const durationB = parseInt(b.duration, 10);
         return durationA - durationB;
       });
     }
@@ -67,6 +57,16 @@ const TotalProjectsScreen = () => {
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
+  };
+
+  const handleEdit = (item) => {
+    console.log("Edit project:", item);
+    // Add navigation or edit function logic here
+  };
+
+  const handleDelete = (item) => {
+    console.log("Delete project:", item);
+    // Add delete function logic here
   };
 
   const menuOptions = [
@@ -115,21 +115,15 @@ const TotalProjectsScreen = () => {
             <SearchBar
               placeholder="Search projects..."
               value={searchText}
-              onChangeText={filterProjects} 
+              onChangeText={filterProjects}
             />
           </View>
 
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => toggleMenu()} 
-          >
+          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
             <Ionicons name="filter" size={24} color="black" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => toggleMenu()} 
-          >
+          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
             <Ionicons name="swap-vertical" size={24} color="black" />
           </TouchableOpacity>
         </View>
@@ -138,26 +132,36 @@ const TotalProjectsScreen = () => {
           data={filteredProjects}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.card}>
+            <View style={styles.card}>
               <View style={{ flex: 1 }}>
                 <H5>{item.projectName}</H5>
                 <P>{`Duration: ${item.duration}`}</P>
                 <P>{`Status: ${item.status}`}</P>
               </View>
-            </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity onPress={() => handleEdit(item)}>
+                  <Ionicons name="create-outline" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handleDelete(item)}
+                  style={{ marginLeft: 16 }}
+                >
+                  <Ionicons name="trash-outline" size={24} color="red" />
+                </TouchableOpacity>
+              </View>
+            </View>
           )}
         />
 
-        {/* Filter Modal */}
         <Filter
           visible={isMenuVisible}
           onClose={toggleMenu}
-          options={menuOptions} 
+          options={menuOptions}
         />
 
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() => console.log("Add Pressed")}
+          onPress={() => navigation.navigate("formScreen")}
         >
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>

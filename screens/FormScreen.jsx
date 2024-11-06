@@ -74,9 +74,9 @@ const FormScreen = () => {
           value={state}
           onChange={setState}
           options={[
-            { label: "California", value: "CA" },
-            { label: "Texas", value: "TX" },
-            { label: "New York", value: "NY" },
+            { label: "Andhra Pradesh", value: "CA" },
+            { label: "Bihar", value: "TX" },
+            { label: "Chattishgarh", value: "NY" },
           ]}
         />
 
@@ -85,9 +85,9 @@ const FormScreen = () => {
           value={city}
           onChange={setCity}
           options={[
-            { label: "Los Angeles", value: "LA" },
-            { label: "Houston", value: "HOU" },
-            { label: "New York City", value: "NYC" },
+            { label: "Patna", value: "LA" },
+            { label: "Purniea", value: "HOU" },
+            { label: "Gaya", value: "NYC" },
           ]}
         />
 
