@@ -24,7 +24,7 @@ const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="loginScreen"
+      initialRouteName="dashboardScreen"
       screenOptions={{
         headerShown: false,
       }}

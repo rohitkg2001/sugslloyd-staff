@@ -15,7 +15,6 @@ const TotalSitesScreen = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredSites, setFilteredSites] = useState(totalsitesData);
 
-  // Filter function based on search text
   const filterSites = (text) => {
     setSearchText(text);
     const filtered = totalsitesData.filter((item) =>
@@ -24,24 +23,20 @@ const TotalSitesScreen = () => {
     setFilteredSites(filtered);
   };
 
-  // Sorting function
   const sortSites = (sortOrder) => {
-    
     let sortedSites = [...filteredSites];
 
     if (sortOrder === "alphabetical") {
-      
       sortedSites.sort((a, b) => a.siteName.localeCompare(b.siteName));
     } else if (sortOrder === "siteNameAsc") {
       sortedSites.sort((a, b) => a.siteName.localeCompare(b.siteName));
     } else if (sortOrder === "locationAsc") {
       sortedSites.sort((a, b) => a.location.localeCompare(b.location));
-    } 
+    }
 
     setFilteredSites(sortedSites);
   };
 
-  // Toggle menu visibility for sorting and filtering
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
@@ -71,6 +66,16 @@ const TotalSitesScreen = () => {
     },
   ];
 
+  const handleEdit = (item) => {
+    console.log(`Edit pressed for: ${item.siteName}`);
+    // Add edit functionality here
+  };
+
+  const handleDelete = (item) => {
+    console.log(`Delete pressed for: ${item.siteName}`);
+    // Add delete functionality here
+  };
+
   const renderListItem = ({ item }) => (
     <Card
       style={[
@@ -79,12 +84,24 @@ const TotalSitesScreen = () => {
       ]}
     >
       <View style={{ flexDirection: "row", alignItems: "center", padding: 16 }}>
-        <View style={{ flex: 1, marginLeft: 16 }}>
+        <View style={{ flex: 1 }}>
           <H6 style={[typography.textBold]}>{item.siteName}</H6>
           <P style={{ fontSize: 14, color: "#020409" }}>Dist: {item.dist}</P>
           <P style={{ fontSize: 14, color: "#020409" }}>
             Location: {item.location}
           </P>
+        </View>
+        {/* Edit and Delete Icons */}
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity
+            onPress={() => handleEdit(item)}
+            style={{ marginRight: 12 }}
+          >
+            <Ionicons name="create-outline" size={24} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleDelete(item)}>
+            <Ionicons name="trash-outline" size={24} color="black" />
+          </TouchableOpacity>
         </View>
       </View>
     </Card>
@@ -110,20 +127,20 @@ const TotalSitesScreen = () => {
           <SearchBar
             placeholder="Search sites..."
             value={searchText}
-            onChangeText={filterSites} 
+            onChangeText={filterSites}
           />
         </View>
 
         <TouchableOpacity
           style={styles.iconButton}
-          onPress={() => toggleMenu()} 
+          onPress={() => toggleMenu()}
         >
           <Ionicons name="filter" size={24} color="black" />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.iconButton}
-          onPress={() => toggleMenu()} 
+          onPress={() => toggleMenu()}
         >
           <Ionicons name="swap-vertical" size={24} color="black" />
         </TouchableOpacity>
@@ -143,11 +160,10 @@ const TotalSitesScreen = () => {
         <Ionicons name="add" size={32} color="white" />
       </TouchableOpacity>
 
-      {/* Filter Modal */}
       <Filter
         visible={isMenuVisible}
         onClose={toggleMenu}
-        options={menuOptions} 
+        options={menuOptions}
       />
     </ContainerComponent>
   );
