@@ -9,11 +9,33 @@ import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
+import VendorForm from "../components/VendorForm";
 
 const TotalVendorsScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredVendors, setFilteredVendors] = useState(totalVendorsData);
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [currentVendor, setCurrentVendor] = useState(null);
+
+  // Define menuOptions here
+  const menuOptions = [
+    { label: "Search", onPress: () => console.log("Search clicked") },
+    {
+      label: "Sort Alphabetically",
+      onPress: () => {
+        sortVendors("alphabetical");
+        toggleMenu();
+      },
+    },
+    {
+      label: "Sort by Location",
+      onPress: () => {
+        sortVendors("locationAsc");
+        toggleMenu();
+      },
+    },
+  ];
 
   const filterVendors = (text) => {
     setSearchText(text);
@@ -39,32 +61,27 @@ const TotalVendorsScreen = () => {
     setIsMenuVisible(!isMenuVisible);
   };
 
-  const menuOptions = [
-    { label: "Search", onPress: () => console.log("Search clicked") },
-    {
-      label: "Sort Alphabetically",
-      onPress: () => {
-        sortVendors("alphabetical");
-        toggleMenu();
-      },
-    },
-    {
-      label: "Sort by Location",
-      onPress: () => {
-        sortVendors("locationAsc");
-        toggleMenu();
-      },
-    },
-  ];
-
   const handleEdit = (item) => {
-    console.log(`Edit pressed for: ${item.name}`);
-    // Add edit functionality here
+    setCurrentVendor(item);
+    setIsFormVisible(true);
   };
 
   const handleDelete = (item) => {
     console.log(`Delete pressed for: ${item.name}`);
-    // Add delete functionality here
+    // Implement delete functionality here
+    // For example, you can filter out the deleted vendor from the list
+    setFilteredVendors((prevVendors) =>
+      prevVendors.filter((vendor) => vendor.id !== item.id)
+    );
+  };
+
+  const handleFormSave = (updatedVendor) => {
+    setFilteredVendors((prevVendors) =>
+      prevVendors.map((vendor) =>
+        vendor.id === updatedVendor.id ? updatedVendor : vendor
+      )
+    );
+    setIsFormVisible(false);
   };
 
   const renderListItem = ({ item }) => (
@@ -114,6 +131,7 @@ const TotalVendorsScreen = () => {
           flexDirection: "row",
           alignItems: "center",
           marginVertical: 8,
+          paddingHorizontal: 8,
         }}
       >
         <View style={{ width: "80%" }}>
@@ -142,17 +160,30 @@ const TotalVendorsScreen = () => {
       <FlatList
         data={filteredVendors}
         renderItem={renderListItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()} // Ensure id is a string
         contentContainerStyle={styles.list}
       />
 
+      {/* Add Vendor Button */}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => console.log("Add Pressed")}
+        onPress={() => {
+          setCurrentVendor(null); // Clear current vendor
+          setIsFormVisible(true);
+        }}
       >
         <Ionicons name="add" size={32} color="white" />
       </TouchableOpacity>
 
+      {/* Vendor Form Modal */}
+      <VendorForm
+        visible={isFormVisible}
+        onClose={() => setIsFormVisible(false)}
+        onSave={handleFormSave}
+        initialData={currentVendor}
+      />
+
+      {/* Filter Menu */}
       <Filter
         visible={isMenuVisible}
         onClose={toggleMenu}
