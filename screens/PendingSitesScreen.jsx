@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, FlatList, TouchableOpacity } from "react-native";
-import { Card, IconButton } from "react-native-paper";
+import { Card } from "react-native-paper";
 import { totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
@@ -8,15 +8,47 @@ import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
 import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import VendorForm from "../components/VendorForm"; // Import your VendorForm component for editing
 
 const PendingSitesScreen = () => {
   const [searchText, setSearchText] = useState("");
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [filteredSites, setFilteredSites] = useState(totalsitesData);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [selectedSite, setSelectedSite] = useState(null);
 
-  const filteredsitesData = totalsitesData.filter((item) =>
-    item.siteName.toLowerCase().includes(searchText.toLowerCase())
-  );
+  // Filter sites based on search text
+  const filterSites = (text) => {
+    setSearchText(text);
+    const filtered = totalsitesData.filter((item) =>
+      item.siteName.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredSites(filtered);
+  };
 
+  // Handle edit functionality
+  const handleEdit = (site) => {
+    setSelectedSite(site);
+    setIsEditModalVisible(true); // Open the edit modal
+  };
+
+  // Handle save functionality from the modal
+  const handleSave = (updatedSite) => {
+    const updatedSites = filteredSites.map((item) =>
+      item.id === updatedSite.id ? updatedSite : item
+    );
+    setFilteredSites(updatedSites);
+    setIsEditModalVisible(false); // Close the modal after saving
+  };
+
+  // Handle delete functionality
+  const handleDelete = (siteToDelete) => {
+    const updatedSites = filteredSites.filter(
+      (item) => item.id !== siteToDelete.id
+    );
+    setFilteredSites(updatedSites);
+  };
+
+  // Render each list item
   const renderListItem = ({ item }) => (
     <Card
       style={[
@@ -25,17 +57,27 @@ const PendingSitesScreen = () => {
       ]}
     >
       <View style={{ flexDirection: "row", alignItems: "center", padding: 16 }}>
-        <View
-          style={{
-            flex: 1,
-            marginLeft: 16,
-          }}
-        >
+        <View style={{ flex: 1, marginLeft: 16 }}>
           <H6 style={[typography.textBold]}>{item.siteName}</H6>
           <P style={{ fontSize: 14, color: "#020409" }}>Dist: {item.dist}</P>
           <P style={{ fontSize: 14, color: "#020409" }}>
             Location: {item.location}
           </P>
+        </View>
+
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          {/* Edit button */}
+          <TouchableOpacity
+            onPress={() => handleEdit(item)}
+            style={{ marginRight: 12 }}
+          >
+            <Ionicons name="create-outline" size={24} color="black" />
+          </TouchableOpacity>
+
+          {/* Delete button */}
+          <TouchableOpacity onPress={() => handleDelete(item)}>
+            <Ionicons name="trash-outline" size={24} color="red" />
+          </TouchableOpacity>
         </View>
       </View>
     </Card>
@@ -47,8 +89,10 @@ const PendingSitesScreen = () => {
         title="Pending Sites"
         isBack={true}
         hasIcon={true}
-        icon={"ellipsis-vertical"}
+        icon="ellipsis-vertical"
       />
+
+      {/* Search and filter section */}
       <View
         style={{
           flexDirection: "row",
@@ -60,7 +104,7 @@ const PendingSitesScreen = () => {
           <SearchBar
             placeholder="Search Pending Sites..."
             value={searchText}
-            onChangeText={(text) => setSearchText(text)}
+            onChangeText={filterSites}
           />
         </View>
 
@@ -78,18 +122,31 @@ const PendingSitesScreen = () => {
           <Ionicons name="swap-vertical" size={24} color="black" />
         </TouchableOpacity>
       </View>
+
+      {/* List of filtered sites */}
       <FlatList
-        data={filteredsitesData}
+        data={filteredSites}
         renderItem={renderListItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.list}
       />
+
+      {/* Add new site button */}
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => console.log("Add Pressed")}
       >
         <Ionicons name="add" size={32} color="white" />
       </TouchableOpacity>
+
+      {/* Edit modal */}
+      <VendorForm
+        visible={isEditModalVisible}
+        onClose={() => setIsEditModalVisible(false)}
+        onSave={handleSave}
+        initialData={selectedSite}
+        formType="site" // Specify the form type
+      />
     </ContainerComponent>
   );
 };

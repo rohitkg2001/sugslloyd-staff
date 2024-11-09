@@ -11,7 +11,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
 import VendorForm from "../components/VendorForm";
 
-const BlocklistedVendorsScreen = () => {
+const BlockListedVendorsScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredVendors, setFilteredVendors] = useState(
@@ -27,18 +27,19 @@ const BlocklistedVendorsScreen = () => {
       label: "Sort Alphabetically",
       onPress: () => {
         sortVendors("alphabetical");
-        toggleMenu();
+        toggleMenu(); // Close menu after sorting
       },
     },
     {
       label: "Sort by Location",
       onPress: () => {
         sortVendors("locationAsc");
-        toggleMenu();
+        toggleMenu(); // Close menu after sorting
       },
     },
   ];
 
+  // Function to filter vendors based on search text
   const filterVendors = (text) => {
     setSearchText(text);
     const filtered = blocklistedVendorsData.filter((item) =>
@@ -47,6 +48,7 @@ const BlocklistedVendorsScreen = () => {
     setFilteredVendors(filtered);
   };
 
+  // Sorting function based on selected criteria
   const sortVendors = (sortOrder) => {
     let sortedVendors = [...filteredVendors];
 
@@ -59,15 +61,18 @@ const BlocklistedVendorsScreen = () => {
     setFilteredVendors(sortedVendors);
   };
 
+  // Toggle the visibility of the menu
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
 
+  // Handle editing of a vendor
   const handleEdit = (item) => {
     setCurrentVendor(item);
     setIsFormVisible(true);
   };
 
+  // Handle deletion of a vendor
   const handleDelete = (item) => {
     console.log(`Delete pressed for: ${item.name}`);
     setFilteredVendors((prevVendors) =>
@@ -75,6 +80,7 @@ const BlocklistedVendorsScreen = () => {
     );
   };
 
+  // Save the updated vendor data after editing
   const handleFormSave = (updatedVendor) => {
     setFilteredVendors((prevVendors) =>
       prevVendors.map((vendor) =>
@@ -84,6 +90,7 @@ const BlocklistedVendorsScreen = () => {
     setIsFormVisible(false);
   };
 
+  // Render each vendor item
   const renderListItem = ({ item }) => (
     <Card
       style={[
@@ -118,60 +125,62 @@ const BlocklistedVendorsScreen = () => {
 
   return (
     <ContainerComponent>
-      <MyHeader
-        title="Blocklisted Vendors"
-        isBack={true}
-        hasIcon={true}
-        icon={"ellipsis-vertical"}
-        onIconPress={toggleMenu}
-      />
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginVertical: 8,
-          paddingHorizontal: 8,
-        }}
-      >
-        <View style={{ width: "80%" }}>
-          <SearchBar
-            placeholder="Search blocklisted vendors..."
-            value={searchText}
-            onChangeText={filterVendors}
-          />
+      <View>
+        <MyHeader
+          title="Blocklisted Vendors"
+          isBack={true}
+          hasIcon={true}
+          icon={"ellipsis-vertical"}
+          onIconPress={toggleMenu}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginVertical: 8,
+            paddingHorizontal: 8,
+          }}
+        >
+          <View style={{ width: "80%" }}>
+            <SearchBar
+              placeholder="Search blocklisted vendors..."
+              value={searchText}
+              onChangeText={filterVendors}
+            />
+          </View>
+          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+            <Ionicons name="filter" size={24} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+            <Ionicons name="swap-vertical" size={24} color="black" />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
-          <Ionicons name="filter" size={24} color="black" />
+
+        <FlatList
+          data={filteredVendors}
+          renderItem={renderListItem}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles.list}
+        />
+
+        <TouchableOpacity style={styles.addButton} onPress={() => {}}>
+          <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
-          <Ionicons name="swap-vertical" size={24} color="black" />
-        </TouchableOpacity>
+
+        <VendorForm
+          visible={isFormVisible}
+          onClose={() => setIsFormVisible(false)}
+          onSave={handleFormSave}
+          initialData={currentVendor}
+        />
+        <Filter
+          visible={isMenuVisible}
+          onClose={toggleMenu}
+          options={menuOptions}
+        />
       </View>
-
-      <FlatList
-        data={filteredVendors}
-        renderItem={renderListItem}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={styles.list}
-      />
-
-      <TouchableOpacity style={styles.addButton} onPress={() => {}}>
-        <Ionicons name="add" size={32} color="white" />
-      </TouchableOpacity>
-
-      <VendorForm
-        visible={isFormVisible}
-        onClose={() => setIsFormVisible(false)}
-        onSave={handleFormSave}
-        initialData={currentVendor}
-      />
-      <Filter
-        visible={isMenuVisible}
-        onClose={toggleMenu}
-        options={menuOptions}
-      />
     </ContainerComponent>
   );
 };
 
-export default BlocklistedVendorsScreen;
+export default BlockListedVendorsScreen;

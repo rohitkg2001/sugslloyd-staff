@@ -22,7 +22,7 @@ import PendingSitesScreen from "../screens/PendingSitesScreen";
 import TotalVendorsScreen from "../screens/TotalVendorsScreen";
 import InactiveVendorsScreen from "../screens/InactiveVendorsScreen";
 import ActiveVendorsScreen from "../screens/ActiveVendorsScreen";
-import BlocklistedVendorsScreen from "../screens/BlockListedVendorsScreen";
+import BlockListedVendorsScreen from "../screens/BlockListedVendorsScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
@@ -72,8 +72,8 @@ export default function MyStackNavigator() {
         component={ActiveVendorsScreen}
       />
       <Stack.Screen
-        name="blocklistedVendorsScreen"
-        component={BlocklistedVendorsScreen}
+        name="blockListedVendorScreen"
+        component={BlockListedVendorsScreen}
       />
     </Stack.Navigator>
   );
