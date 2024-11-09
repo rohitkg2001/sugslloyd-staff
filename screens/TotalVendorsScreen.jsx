@@ -169,8 +169,7 @@ const TotalVendorsScreen = () => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => {
-            setCurrentVendor(null); // Clear current vendor
-            setIsFormVisible(true);
+           
           }}
         >
           <Ionicons name="add" size={32} color="white" />

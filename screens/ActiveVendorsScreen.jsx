@@ -68,6 +68,8 @@ const ActiveVendorsScreen = () => {
 
   const handleDelete = (item) => {
     console.log(`Delete pressed for: ${item.name}`);
+    // Implement delete functionality here
+    // For example, you can filter out the deleted vendor from the list
     setFilteredVendors((prevVendors) =>
       prevVendors.filter((vendor) => vendor.id !== item.id)
     );
@@ -99,6 +101,7 @@ const ActiveVendorsScreen = () => {
             Contact: {item.contactNumber}
           </P>
         </View>
+        {/* Edit and Delete Icons */}
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
             onPress={() => handleEdit(item)}
@@ -118,7 +121,7 @@ const ActiveVendorsScreen = () => {
     <ContainerComponent>
       <View>
         <MyHeader
-          title="Active Vendors"
+          title="Total Vendors"
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
@@ -134,15 +137,23 @@ const ActiveVendorsScreen = () => {
         >
           <View style={{ width: "80%" }}>
             <SearchBar
-              placeholder="Search active vendors..."
+              placeholder="Search vendors..."
               value={searchText}
               onChangeText={filterVendors}
             />
           </View>
-          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => toggleMenu()}
+          >
             <Ionicons name="filter" size={24} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => toggleMenu()}
+          >
             <Ionicons name="swap-vertical" size={24} color="black" />
           </TouchableOpacity>
         </View>
@@ -150,20 +161,25 @@ const ActiveVendorsScreen = () => {
         <FlatList
           data={filteredVendors}
           renderItem={renderListItem}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.id.toString()} // Ensure id is a string
           contentContainerStyle={styles.list}
         />
 
+        {/* Add Vendor Button */}
         <TouchableOpacity style={styles.addButton} onPress={() => {}}>
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
 
+        {/* Vendor Form Modal */}
         <VendorForm
           visible={isFormVisible}
           onClose={() => setIsFormVisible(false)}
           onSave={handleFormSave}
+          formType="vendor"
           initialData={currentVendor}
         />
+
+        {/* Filter Menu */}
         <Filter
           visible={isMenuVisible}
           onClose={toggleMenu}

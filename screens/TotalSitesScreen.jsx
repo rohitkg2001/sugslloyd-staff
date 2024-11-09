@@ -43,6 +43,14 @@ const TotalSitesScreen = () => {
     setFilteredSites(updatedSites);
   };
 
+  // Handle deleting a site
+  const handleDelete = (siteToDelete) => {
+    const updatedSites = filteredSites.filter(
+      (item) => item.id !== siteToDelete.id
+    );
+    setFilteredSites(updatedSites);
+  };
+
   const menuOptions = [
     { label: "Search", onPress: () => console.log("Search clicked") },
     {
