@@ -119,76 +119,79 @@ const TotalVendorsScreen = () => {
 
   return (
     <ContainerComponent>
-      <MyHeader
-        title="Total Vendors"
-        isBack={true}
-        hasIcon={true}
-        icon={"ellipsis-vertical"}
-        onIconPress={toggleMenu}
-      />
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginVertical: 8,
-          paddingHorizontal: 8,
-        }}
-      >
-        <View style={{ width: "80%" }}>
-          <SearchBar
-            placeholder="Search vendors..."
-            value={searchText}
-            onChangeText={filterVendors}
-          />
+      <View>
+        <MyHeader
+          title="Total Vendors"
+          isBack={true}
+          hasIcon={true}
+          icon={"ellipsis-vertical"}
+          onIconPress={toggleMenu}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginVertical: 8,
+            paddingHorizontal: 8,
+          }}
+        >
+          <View style={{ width: "80%" }}>
+            <SearchBar
+              placeholder="Search vendors..."
+              value={searchText}
+              onChangeText={filterVendors}
+            />
+          </View>
+
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => toggleMenu()}
+          >
+            <Ionicons name="filter" size={24} color="black" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => toggleMenu()}
+          >
+            <Ionicons name="swap-vertical" size={24} color="black" />
+          </TouchableOpacity>
         </View>
 
+        <FlatList
+          data={filteredVendors}
+          renderItem={renderListItem}
+          keyExtractor={(item) => item.id.toString()} // Ensure id is a string
+          contentContainerStyle={styles.list}
+        />
+
+        {/* Add Vendor Button */}
         <TouchableOpacity
-          style={styles.iconButton}
-          onPress={() => toggleMenu()}
+          style={styles.addButton}
+          onPress={() => {
+            setCurrentVendor(null); // Clear current vendor
+            setIsFormVisible(true);
+          }}
         >
-          <Ionicons name="filter" size={24} color="black" />
+          <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={() => toggleMenu()}
-        >
-          <Ionicons name="swap-vertical" size={24} color="black" />
-        </TouchableOpacity>
+        {/* Vendor Form Modal */}
+        <VendorForm
+          visible={isFormVisible}
+          onClose={() => setIsFormVisible(false)}
+          onSave={handleFormSave}
+          formType="vendor"
+          initialData={currentVendor}
+        />
+
+        {/* Filter Menu */}
+        <Filter
+          visible={isMenuVisible}
+          onClose={toggleMenu}
+          options={menuOptions}
+        />
       </View>
-
-      <FlatList
-        data={filteredVendors}
-        renderItem={renderListItem}
-        keyExtractor={(item) => item.id.toString()} // Ensure id is a string
-        contentContainerStyle={styles.list}
-      />
-
-      {/* Add Vendor Button */}
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => {
-          setCurrentVendor(null); // Clear current vendor
-          setIsFormVisible(true);
-        }}
-      >
-        <Ionicons name="add" size={32} color="white" />
-      </TouchableOpacity>
-
-      {/* Vendor Form Modal */}
-      <VendorForm
-        visible={isFormVisible}
-        onClose={() => setIsFormVisible(false)}
-        onSave={handleFormSave}
-        initialData={currentVendor}
-      />
-
-      {/* Filter Menu */}
-      <Filter
-        visible={isMenuVisible}
-        onClose={toggleMenu}
-        options={menuOptions}
-      />
     </ContainerComponent>
   );
 };

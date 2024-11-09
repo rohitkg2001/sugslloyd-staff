@@ -9,11 +9,19 @@ import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
+import VendorForm from "../components/VendorForm"; // Import VendorForm component
 
 const TotalSitesScreen = () => {
   const [searchText, setSearchText] = useState("");
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false); // State to manage menu visibility
   const [filteredSites, setFilteredSites] = useState(totalsitesData);
+  const [selectedSite, setSelectedSite] = useState(null);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+
+  // Toggle the menu visibility
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
 
   const filterSites = (text) => {
     setSearchText(text);
@@ -23,22 +31,16 @@ const TotalSitesScreen = () => {
     setFilteredSites(filtered);
   };
 
-  const sortSites = (sortOrder) => {
-    let sortedSites = [...filteredSites];
-
-    if (sortOrder === "alphabetical") {
-      sortedSites.sort((a, b) => a.siteName.localeCompare(b.siteName));
-    } else if (sortOrder === "siteNameAsc") {
-      sortedSites.sort((a, b) => a.siteName.localeCompare(b.siteName));
-    } else if (sortOrder === "locationAsc") {
-      sortedSites.sort((a, b) => a.location.localeCompare(b.location));
-    }
-
-    setFilteredSites(sortedSites);
+  const handleEdit = (site) => {
+    setSelectedSite(site);
+    setIsEditModalVisible(true);
   };
 
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
+  const handleSave = (updatedSite) => {
+    const updatedSites = filteredSites.map((item) =>
+      item.id === updatedSite.id ? updatedSite : item
+    );
+    setFilteredSites(updatedSites);
   };
 
   const menuOptions = [
@@ -46,35 +48,25 @@ const TotalSitesScreen = () => {
     {
       label: "Sort Alphabetically",
       onPress: () => {
-        sortSites("alphabetical");
+        sortProjects("alphabetical");
         toggleMenu();
       },
     },
     {
-      label: "Sort by Site Name",
+      label: "Sort by Status (Completed, Ongoing)",
       onPress: () => {
-        sortSites("siteNameAsc");
+        sortProjects("status");
         toggleMenu();
       },
     },
     {
-      label: "Sort by Location",
+      label: "Sort by Duration",
       onPress: () => {
-        sortSites("locationAsc");
+        sortProjects("duration");
         toggleMenu();
       },
     },
   ];
-
-  const handleEdit = (item) => {
-    console.log(`Edit pressed for: ${item.siteName}`);
-    // Add edit functionality here
-  };
-
-  const handleDelete = (item) => {
-    console.log(`Delete pressed for: ${item.siteName}`);
-    // Add delete functionality here
-  };
 
   const renderListItem = ({ item }) => (
     <Card
@@ -91,7 +83,7 @@ const TotalSitesScreen = () => {
             Location: {item.location}
           </P>
         </View>
-        {/* Edit and Delete Icons */}
+
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
             onPress={() => handleEdit(item)}
@@ -109,62 +101,50 @@ const TotalSitesScreen = () => {
 
   return (
     <ContainerComponent>
-      <MyHeader
-        title="Total Sites"
-        isBack={true}
-        hasIcon={true}
-        icon={"ellipsis-vertical"}
-        onIconPress={toggleMenu}
-      />
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginVertical: 8,
-        }}
-      >
-        <View style={{ width: "80%" }}>
-          <SearchBar
-            placeholder="Search sites..."
-            value={searchText}
-            onChangeText={filterSites}
-          />
+      <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
+        <MyHeader
+          title="Total Sites"
+          isBack={true}
+          hasIcon={true}
+          icon={"ellipsis-vertical"}
+          onIconPress={toggleMenu} // Toggle menu on icon press
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginVertical: 8,
+          }}
+        >
+          <View style={{ width: "80%" }}>
+            <SearchBar
+              placeholder="Search sites..."
+              value={searchText}
+              onChangeText={filterSites}
+            />
+          </View>
+          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+            <Ionicons name="filter" size={24} color="black" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+            <Ionicons name="swap-vertical" size={24} color="black" />
+          </TouchableOpacity>
         </View>
-
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={() => toggleMenu()}
-        >
-          <Ionicons name="filter" size={24} color="black" />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={() => toggleMenu()}
-        >
-          <Ionicons name="swap-vertical" size={24} color="black" />
-        </TouchableOpacity>
+        <FlatList
+          data={filteredSites}
+          renderItem={renderListItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.list}
+        />
+        <VendorForm
+          visible={isEditModalVisible}
+          onClose={() => setIsEditModalVisible(false)}
+          onSave={handleSave}
+          initialData={selectedSite}
+          formType="site" // Pass form type here
+        />
       </View>
-
-      <FlatList
-        data={filteredSites}
-        renderItem={renderListItem}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.list}
-      />
-
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => console.log("Add Pressed")}
-      >
-        <Ionicons name="add" size={32} color="white" />
-      </TouchableOpacity>
-
-      <Filter
-        visible={isMenuVisible}
-        onClose={toggleMenu}
-        options={menuOptions}
-      />
     </ContainerComponent>
   );
 };
