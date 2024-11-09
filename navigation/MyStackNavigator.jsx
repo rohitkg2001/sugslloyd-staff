@@ -20,12 +20,16 @@ import FormScreen from "../screens/FormScreen";
 import ProgressSitesScreen from "../screens/ProgressSitesScreen";
 import PendingSitesScreen from "../screens/PendingSitesScreen";
 import TotalVendorsScreen from "../screens/TotalVendorsScreen";
+import InactiveVendorsScreen from "../screens/InactiveVendorsScreen";
+import ActiveVendorsScreen from "../screens/ActiveVendorsScreen";
+//import BlocklistedVendorsScreen from "../screens/BlockListedVendorsScreen";
+import BlockListedVendorsScreen from "../screens/BlockListedVendorsScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="dashboardScreen"
+      initialRouteName="loginScreen"
       screenOptions={{
         headerShown: false,
       }}
@@ -60,6 +64,18 @@ export default function MyStackNavigator() {
       />
       <Stack.Screen name="pendingSitesScreen" component={PendingSitesScreen} />
       <Stack.Screen name="totalVendorsScreen" component={TotalVendorsScreen} />
+      <Stack.Screen
+        name="inactiveVendorsScreen"
+        component={InactiveVendorsScreen}
+      />
+      <Stack.Screen
+        name="activeVendorsScreen"
+        component={ActiveVendorsScreen}
+      />
+      <Stack.Screen
+        name="blockListedVendorScreen"
+        component={BlockListedVendorsScreen}
+      />
     </Stack.Navigator>
   );
 }

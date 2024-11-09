@@ -61,9 +61,18 @@ export default function DashboardScreen() {
   const navigateToPendingSitesScreen = () => {
     navigation.navigate("pendingSitesScreen");
   };
-   const navigateToTotalVendorsScreen = () => {
-     navigation.navigate("totalVendorsScreen");
-   };
+  const navigateToTotalVendorsScreen = () => {
+    navigation.navigate("totalVendorsScreen");
+  };
+  const navigateToinactiveVendorsScreen = () => {
+    navigation.navigate("inactiveVendorsScreen");
+  };
+  const navigateToactiveVendorsScreen = () => {
+    navigation.navigate("activeVendorsScreen");
+  };
+  const navigateToBlockListedVendorsScreen = () => {
+    navigation.navigate("blockListedVendorScreen");
+  };
 
   const firstTwoTasks = tasks.slice(0, 2);
   const firstFourTasks = tasks.slice(2, 6);
@@ -197,7 +206,7 @@ export default function DashboardScreen() {
             );
           }}
           keyExtractor={(item) => item.id.toString()}
-          numColumns={2} // 2 columns for layout
+          numColumns={2}
         />
 
         <View
@@ -244,15 +253,17 @@ export default function DashboardScreen() {
             const marginTop = isRightColumn ? 20 : 0;
 
             const handlePress = () => {
-               if (item.id === 1) {
-                 navigateToTotalProjectsScreen();
-               } else if (item.status === "Total Vendors") {
-                 navigateToTotalVendorsScreen();
-               } else if (index === 6) {
-                 navigateToTotalSitesScreen();
-               } else if (index === 7) {
-                 navigateToInventoryScreen();
-               }
+              if (item.id === 1) {
+                navigateToTotalProjectsScreen();
+              } else if (item.status === "Total Vendors") {
+                navigateToTotalVendorsScreen();
+              } else if (item.status === "Inactive Vendors") {
+                navigateToinactiveVendorsScreen();
+              } else if (item.status === "Active Vendors") {
+                navigateToactiveVendorsScreen();
+              } else if (item.status === "Blocklisted Vendor") {
+                navigateToBlockListedVendorsScreen();
+              }
             };
 
             return (
