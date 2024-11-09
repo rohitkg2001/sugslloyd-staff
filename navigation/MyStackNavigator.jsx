@@ -22,7 +22,6 @@ import PendingSitesScreen from "../screens/PendingSitesScreen";
 import TotalVendorsScreen from "../screens/TotalVendorsScreen";
 import InactiveVendorsScreen from "../screens/InactiveVendorsScreen";
 import ActiveVendorsScreen from "../screens/ActiveVendorsScreen";
-//import BlocklistedVendorsScreen from "../screens/BlockListedVendorsScreen";
 import BlockListedVendorsScreen from "../screens/BlockListedVendorsScreen";
 
 const Stack = createNativeStackNavigator();
