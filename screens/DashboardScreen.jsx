@@ -255,7 +255,7 @@ export default function DashboardScreen() {
             const marginTop = isRightColumn ? 20 : 0;
 
             const handlePress = () => {
-               if (item.id === 1) {
+               if (item.status === 1) {
                  navigateToTotalProjectsScreen();
                } else if (item.status === "Total Vendors") {
                  navigateToTotalVendorsScreen();
