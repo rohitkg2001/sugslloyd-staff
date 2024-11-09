@@ -66,7 +66,14 @@ const TotalProjectsScreen = ({ navigation }) => {
 
   const handleDelete = (item) => {
     console.log("Delete project:", item);
-    // Add delete function logic here
+
+    // Remove the item from filteredProjects state
+    const updatedProjects = filteredProjects.filter(
+      (project) => project.id !== item.id
+    );
+
+    // Update the filteredProjects state to reflect the deletion
+    setFilteredProjects(updatedProjects);
   };
 
   const menuOptions = [

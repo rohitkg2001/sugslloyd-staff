@@ -6,7 +6,7 @@ import {
   Platform,
 } from "react-native";
 import { Modal, Portal, Text, Card, Button } from "react-native-paper";
-import { H6 } from "../components/text"; // Adjust the path as necessary
+import { H6 } from "../components/text";
 
 const VendorForm = ({ visible, onClose, onSave, initialData }) => {
   const [name, setName] = useState("");

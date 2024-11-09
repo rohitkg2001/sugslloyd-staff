@@ -902,5 +902,125 @@ export const totalVendorsData = [
     location: "Betiah",
     contactNumber: "789-123-4560",
   },
-  // Add more vendor data here
 ];
+export const inactiveVendorsData = [
+  {
+    id: 1,
+    name: "Ramesh Chaurasiya",
+    location: "Saharanpur",
+    contactNumber: "+91 234 567 890",
+    status: "Inactive",
+  },
+  {
+    id: 2,
+    name: "Danish akhtar",
+    location: "Muradabad",
+    contactNumber: "+91 345 678 901",
+    status: "Inactive",
+  },
+];
+export const activeVendorsData = [
+  {
+    id: 1,
+    name: "Ahmad",
+    location: "Lucknow",
+    contactNumber: "(123) 456-7890",
+    status: "active",
+  },
+  {
+    id: 2,
+    name: "Vinay Tiwary",
+    location: "Patna",
+    contactNumber: "(987) 654-3210",
+    status: "active",
+  },
+  {
+    id: 3,
+    name: "Ravi Singh",
+    location: "Varanasi",
+    contactNumber: "(312) 555-1234",
+    status: "active",
+  },
+  {
+    id: 4,
+    name: "Priya Chaturvedi",
+    location: "Gaya",
+    contactNumber: "(424) 555-5678",
+    status: "active",
+  },
+  {
+    id: 5,
+    name: "Suresh Kumar",
+    location: "Agra",
+    contactNumber: "(512) 555-9012",
+    status: "active",
+  },
+  {
+    id: 6,
+    name: "Neha Devi",
+    location: "Patna",
+    contactNumber: "(206) 555-3456",
+    status: "active",
+  },
+  {
+    id: 7,
+    name: "Vikram Yadav",
+    location: "Kanpur",
+    contactNumber: "(305) 555-7890",
+    status: "active",
+  },
+];
+
+export const blocklistedVendorsData = [
+  {
+    id: 1,
+    name: "Amit Kumar",
+    location: "Muzaffarpur",
+    contactNumber: "(305) 555-1234",
+    status: "blocklisted",
+  },
+  {
+    id: 2,
+    name: "Rajeev Singh",
+    location: "Aligarh",
+    contactNumber: "(323) 555-6789",
+    status: "blocklisted",
+  },
+  {
+    id: 3,
+    name: "Pooja Sharma",
+    location: "Jhansi",
+    contactNumber: "(212) 555-9876",
+    status: "blocklisted",
+  },
+  {
+    id: 4,
+    name: "Rakesh Yadav",
+    location: "Bhagalpur",
+    contactNumber: "(312) 555-2468",
+    status: "blocklisted",
+  },
+  {
+    id: 5,
+    name: "Kiran Patel",
+    location: "Bareilly",
+    contactNumber: "(713) 555-1357",
+    status: "blocklisted",
+  },
+  {
+    id: 6,
+    name: "Manoj Jha",
+    location: "Darbhanga",
+    contactNumber: "(206) 555-8642",
+    status: "blocklisted",
+  },
+  {
+    id: 7,
+    name: "Neelam Rani",
+    location: "Sultanpur",
+    contactNumber: "(415) 555-4200",
+    status: "blocklisted",
+  },
+];
+
+

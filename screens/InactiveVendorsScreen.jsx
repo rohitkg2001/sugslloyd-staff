@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, FlatList, TouchableOpacity } from "react-native";
 import { Card } from "react-native-paper";
-import { totalVendorsData } from "../utils/faker"; // Import vendor data
+import { inactiveVendorsData } from "../utils/faker"; // Import inactive vendor data
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
@@ -11,10 +11,10 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
 import VendorForm from "../components/VendorForm";
 
-const TotalVendorsScreen = () => {
+const InactiveVendorsScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
-  const [filteredVendors, setFilteredVendors] = useState(totalVendorsData);
+  const [filteredVendors, setFilteredVendors] = useState(inactiveVendorsData);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [currentVendor, setCurrentVendor] = useState(null);
 
@@ -39,7 +39,7 @@ const TotalVendorsScreen = () => {
 
   const filterVendors = (text) => {
     setSearchText(text);
-    const filtered = totalVendorsData.filter((item) =>
+    const filtered = inactiveVendorsData.filter((item) =>
       item.name.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredVendors(filtered);
@@ -118,7 +118,7 @@ const TotalVendorsScreen = () => {
   return (
     <ContainerComponent>
       <MyHeader
-        title="Total Vendors"
+        title="Inactive Vendors"
         isBack={true}
         hasIcon={true}
         icon={"ellipsis-vertical"}
@@ -134,23 +134,17 @@ const TotalVendorsScreen = () => {
       >
         <View style={{ width: "80%" }}>
           <SearchBar
-            placeholder="Search vendors..."
+            placeholder="Search inactive vendors..."
             value={searchText}
             onChangeText={filterVendors}
           />
         </View>
 
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={() => toggleMenu()}
-        >
+        <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
           <Ionicons name="filter" size={24} color="black" />
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={() => toggleMenu()}
-        >
+        <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
           <Ionicons name="swap-vertical" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -161,17 +155,11 @@ const TotalVendorsScreen = () => {
         keyExtractor={(item) => item.id.toString()} // Ensure id is a string
         contentContainerStyle={styles.list}
       />
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => {
-          setCurrentVendor(null); // Clear current vendor
-          setIsFormVisible(true);
-        }}
-      >
+
+      <TouchableOpacity style={styles.addButton} onPress={() => {}}>
         <Ionicons name="add" size={32} color="white" />
       </TouchableOpacity>
 
-      {/* Vendor Form Modal */}
       <VendorForm
         visible={isFormVisible}
         onClose={() => setIsFormVisible(false)}
@@ -187,4 +175,4 @@ const TotalVendorsScreen = () => {
   );
 };
 
-export default TotalVendorsScreen;
+export default InactiveVendorsScreen;
