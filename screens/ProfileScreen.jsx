@@ -32,7 +32,6 @@ const ProfileScreen = () => {
             name={`${staff.first_name} ${staff.last_name}`}
             online={false}
           />
-          {/* Removed the Edit Profile button */}
         </View>
       </CardFullWidth>
       <TabNavigation
