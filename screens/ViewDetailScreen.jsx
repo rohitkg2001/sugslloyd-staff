@@ -6,6 +6,27 @@ import { SCREEN_WIDTH, spacing } from "../styles";
 const ViewDetailScreen = ({ route }) => {
   const { site } = route.params;
 
+  const renderSiteDetails = () => (
+    <>
+      <Text style={styles.title}>{site.siteName}</Text>
+      <Text style={styles.detail}>Dist: {site.dist}</Text>
+      <Text style={styles.detail}>Location: {site.location}</Text>
+      <Text style={styles.detail}>Sanction Load: {site.Sanctionload}</Text>
+      <Text style={styles.detail}>
+        Project Capacity: {site.ProjectCapacity}
+      </Text>
+      <Text style={styles.detail}>Contact No: {site.ContactNo}</Text>
+    </>
+  );
+
+  const renderProjectDetails = () => (
+    <>
+      <Text style={styles.title}>{site.projectName}</Text>
+      <Text style={styles.detail}>Duration: {site.duration}</Text>
+      <Text style={styles.detail}>Status: {site.status}</Text>
+    </>
+  );
+
   return (
     <View
       style={[
@@ -17,14 +38,7 @@ const ViewDetailScreen = ({ route }) => {
       ]}
     >
       <Card style={styles.card}>
-        <Text style={styles.title}>{site.siteName}</Text>
-        <Text style={styles.detail}>Dist: {site.dist}</Text>
-        <Text style={styles.detail}>Location: {site.location}</Text>
-        <Text style={styles.detail}>Sanction Load: {site.Sanctionload}</Text>
-        <Text style={styles.detail}>
-          Project Capacity: {site.ProjectCapacity}
-        </Text>
-        <Text style={styles.detail}>Contact No: {site.ContactNo}</Text>
+        {site.projectName ? renderProjectDetails() : renderSiteDetails()}
       </Card>
     </View>
   );
