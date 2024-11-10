@@ -20,18 +20,17 @@ const ViewDetailScreen = ({ route }) => {
         <Text style={styles.title}>{site.siteName}</Text>
         <Text style={styles.detail}>Dist: {site.dist}</Text>
         <Text style={styles.detail}>Location: {site.location}</Text>
-        {/* Add more details as needed */}
+        <Text style={styles.detail}>Sanction Load: {site.Sanctionload}</Text>
+        <Text style={styles.detail}>
+          Project Capacity: {site.ProjectCapacity}
+        </Text>
+        <Text style={styles.detail}>Contact No: {site.ContactNo}</Text>
       </Card>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  //   container: {
-  //     flex: 1,
-  //     padding: 16,
-  //     backgroundColor: "#f5f5f5",
-  //   },
   card: {
     padding: 16,
     backgroundColor: "#ffffff",

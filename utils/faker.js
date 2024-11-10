@@ -844,6 +844,9 @@ export const totalsitesData = [
     siteName: "P S SHIKSHA NAGAR BANMANKHI",
     dist: "Purnia",
     location: "BANMANKHI",
+    Sanctionload: "5",
+    ProjectCapacity: "4",
+    ContactNo: "9199502622",
   },
   {
     id: "2",
@@ -1022,5 +1025,3 @@ export const blocklistedVendorsData = [
     status: "blocklisted",
   },
 ];
-
-
