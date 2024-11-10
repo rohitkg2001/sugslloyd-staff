@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity, Alert } from "react-native";
 import { Card } from "react-native-paper";
 import { activeVendorsData } from "../utils/faker"; // Import active vendor data
 import ContainerComponent from "../components/ContainerComponent";
@@ -18,7 +18,6 @@ const ActiveVendorsScreen = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [currentVendor, setCurrentVendor] = useState(null);
 
-  // Define menuOptions here
   const menuOptions = [
     { label: "Search", onPress: () => console.log("Search clicked") },
     {
@@ -47,13 +46,11 @@ const ActiveVendorsScreen = () => {
 
   const sortVendors = (sortOrder) => {
     let sortedVendors = [...filteredVendors];
-
     if (sortOrder === "alphabetical") {
       sortedVendors.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortOrder === "locationAsc") {
       sortedVendors.sort((a, b) => a.location.localeCompare(b.location));
     }
-
     setFilteredVendors(sortedVendors);
   };
 
@@ -67,11 +64,22 @@ const ActiveVendorsScreen = () => {
   };
 
   const handleDelete = (item) => {
-    console.log(`Delete pressed for: ${item.name}`);
-    // Implement delete functionality here
-    // For example, you can filter out the deleted vendor from the list
-    setFilteredVendors((prevVendors) =>
-      prevVendors.filter((vendor) => vendor.id !== item.id)
+    Alert.alert(
+      "Confirm Delete",
+      `Are you sure you want to delete ${item.name}?`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            const updatedVendors = filteredVendors.filter(
+              (vendor) => vendor.id !== item.id
+            );
+            setFilteredVendors(updatedVendors);
+          },
+        },
+      ]
     );
   };
 
@@ -101,7 +109,6 @@ const ActiveVendorsScreen = () => {
             Contact: {item.contactNumber}
           </P>
         </View>
-        {/* Edit and Delete Icons */}
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
             onPress={() => handleEdit(item)}
@@ -121,7 +128,7 @@ const ActiveVendorsScreen = () => {
     <ContainerComponent>
       <View>
         <MyHeader
-          title="Total Vendors"
+          title="Active Vendors"
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
@@ -143,17 +150,11 @@ const ActiveVendorsScreen = () => {
             />
           </View>
 
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => toggleMenu()}
-          >
+          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
             <Ionicons name="filter" size={24} color="black" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => toggleMenu()}
-          >
+          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
             <Ionicons name="swap-vertical" size={24} color="black" />
           </TouchableOpacity>
         </View>
@@ -161,16 +162,14 @@ const ActiveVendorsScreen = () => {
         <FlatList
           data={filteredVendors}
           renderItem={renderListItem}
-          keyExtractor={(item) => item.id.toString()} // Ensure id is a string
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
         />
 
-        {/* Add Vendor Button */}
         <TouchableOpacity style={styles.addButton} onPress={() => {}}>
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
 
-        {/* Vendor Form Modal */}
         <VendorForm
           visible={isFormVisible}
           onClose={() => setIsFormVisible(false)}
@@ -179,7 +178,6 @@ const ActiveVendorsScreen = () => {
           initialData={currentVendor}
         />
 
-        {/* Filter Menu */}
         <Filter
           visible={isMenuVisible}
           onClose={toggleMenu}

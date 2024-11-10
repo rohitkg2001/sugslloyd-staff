@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity, Alert } from "react-native";
 import { Card } from "react-native-paper";
-import { blocklistedVendorsData } from "../utils/faker"; 
+import { blocklistedVendorsData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
@@ -27,28 +27,26 @@ const BlockListedVendorsScreen = () => {
       label: "Sort Alphabetically",
       onPress: () => {
         sortVendors("alphabetical");
-        toggleMenu(); // Close menu after sorting
+        toggleMenu();
       },
     },
     {
       label: "Sort by Location",
       onPress: () => {
         sortVendors("locationAsc");
-        toggleMenu(); // Close menu after sorting
+        toggleMenu();
       },
     },
   ];
 
-  // Function to filter vendors based on search text
   const filterVendors = (text) => {
     setSearchText(text);
-    const filtered = blocklistedVendorsData.filter((item) =>
+    const filtered = inactiveVendorsData.filter((item) =>
       item.name.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredVendors(filtered);
   };
 
-  // Sorting function based on selected criteria
   const sortVendors = (sortOrder) => {
     let sortedVendors = [...filteredVendors];
 
@@ -61,26 +59,34 @@ const BlockListedVendorsScreen = () => {
     setFilteredVendors(sortedVendors);
   };
 
-  // Toggle the visibility of the menu
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
 
-  // Handle editing of a vendor
   const handleEdit = (item) => {
     setCurrentVendor(item);
     setIsFormVisible(true);
   };
 
-  // Handle deletion of a vendor
   const handleDelete = (item) => {
-    console.log(`Delete pressed for: ${item.name}`);
-    setFilteredVendors((prevVendors) =>
-      prevVendors.filter((vendor) => vendor.id !== item.id)
+    Alert.alert(
+      "Confirm Delete",
+      `Are you sure you want to delete ${item.name}?`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            setFilteredVendors((prevVendors) =>
+              prevVendors.filter((vendor) => vendor.id !== item.id)
+            );
+          },
+        },
+      ]
     );
   };
 
-  // Save the updated vendor data after editing
   const handleFormSave = (updatedVendor) => {
     setFilteredVendors((prevVendors) =>
       prevVendors.map((vendor) =>
@@ -90,7 +96,6 @@ const BlockListedVendorsScreen = () => {
     setIsFormVisible(false);
   };
 
-  // Render each vendor item
   const renderListItem = ({ item }) => (
     <Card
       style={[
@@ -127,7 +132,7 @@ const BlockListedVendorsScreen = () => {
     <ContainerComponent>
       <View>
         <MyHeader
-          title="Blocklisted Vendors"
+          title="Total Vendors"
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
@@ -143,34 +148,38 @@ const BlockListedVendorsScreen = () => {
         >
           <View style={{ width: "80%" }}>
             <SearchBar
-              placeholder="Search blocklisted vendors..."
+              placeholder="Search vendors..."
               value={searchText}
               onChangeText={filterVendors}
             />
           </View>
-          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => toggleMenu()}
+          >
             <Ionicons name="filter" size={24} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => toggleMenu()}
+          >
             <Ionicons name="swap-vertical" size={24} color="black" />
           </TouchableOpacity>
         </View>
-
         <FlatList
           data={filteredVendors}
           renderItem={renderListItem}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
         />
-
         <TouchableOpacity style={styles.addButton} onPress={() => {}}>
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
-
         <VendorForm
           visible={isFormVisible}
           onClose={() => setIsFormVisible(false)}
           onSave={handleFormSave}
+          formType="vendor"
           initialData={currentVendor}
         />
         <Filter

@@ -23,6 +23,7 @@ import TotalVendorsScreen from "../screens/TotalVendorsScreen";
 import InactiveVendorsScreen from "../screens/InactiveVendorsScreen";
 import ActiveVendorsScreen from "../screens/ActiveVendorsScreen";
 import BlockListedVendorsScreen from "../screens/BlockListedVendorsScreen";
+import ViewDetailScreen from "../screens/ViewDetailScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
@@ -75,6 +76,7 @@ export default function MyStackNavigator() {
         name="blockListedVendorScreen"
         component={BlockListedVendorsScreen}
       />
+      <Stack.Screen name="ViewDetailScreen" component={ViewDetailScreen} />
     </Stack.Navigator>
   );
 }

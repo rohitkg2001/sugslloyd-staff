@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity, Alert } from "react-native";
 import { Card } from "react-native-paper";
 import { totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
@@ -42,10 +42,23 @@ const ProgressSitesScreen = () => {
 
   // Handle delete functionality
   const handleDelete = (siteToDelete) => {
-    const updatedSites = filteredSites.filter(
-      (item) => item.id !== siteToDelete.id
+    Alert.alert(
+      "Confirm Delete",
+      "Are you sure you want to delete this site?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            const updatedSites = filteredSites.filter(
+              (item) => item.id !== siteToDelete.id
+            );
+            setFilteredSites(updatedSites);
+          },
+        },
+      ]
     );
-    setFilteredSites(updatedSites);
   };
 
   // Render each list item

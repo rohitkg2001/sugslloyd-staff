@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity, Alert } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { project } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
@@ -24,7 +24,6 @@ const TotalProjectsScreen = ({ navigation }) => {
   };
 
   const sortProjects = (sortOrder) => {
-    console.log(`Sorting by: ${sortOrder}`);
     let sortedProjects = [...filteredProjects];
 
     if (sortOrder === "alphabetical") {
@@ -32,24 +31,14 @@ const TotalProjectsScreen = ({ navigation }) => {
     } else if (sortOrder === "status") {
       const statusOrder = ["Completed", "Ongoing"];
       sortedProjects.sort((a, b) => {
-        const statusA = (a.status || "").trim().toLowerCase();
-        const statusB = (b.status || "").trim().toLowerCase();
-        const indexA = statusOrder.indexOf(
-          statusA.charAt(0).toUpperCase() + statusA.slice(1)
-        );
-        const indexB = statusOrder.indexOf(
-          statusB.charAt(0).toUpperCase() + statusB.slice(1)
-        );
-        if (indexA === -1) return 1;
-        if (indexB === -1) return -1;
+        const indexA = statusOrder.indexOf(a.status);
+        const indexB = statusOrder.indexOf(b.status);
         return indexA - indexB;
       });
     } else if (sortOrder === "duration") {
-      sortedProjects.sort((a, b) => {
-        const durationA = parseInt(a.duration, 10);
-        const durationB = parseInt(b.duration, 10);
-        return durationA - durationB;
-      });
+      sortedProjects.sort(
+        (a, b) => parseInt(a.duration, 10) - parseInt(b.duration, 10)
+      );
     }
 
     setFilteredProjects(sortedProjects);
@@ -65,15 +54,22 @@ const TotalProjectsScreen = ({ navigation }) => {
   };
 
   const handleDelete = (item) => {
-    console.log("Delete project:", item);
-
-    // Remove the item from filteredProjects state
-    const updatedProjects = filteredProjects.filter(
-      (project) => project.id !== item.id
+    Alert.alert(
+      "Confirm Delete",
+      `Are you sure you want to delete the project "${item.projectName}"?`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            setFilteredProjects((prevProjects) =>
+              prevProjects.filter((project) => project.id !== item.id)
+            );
+          },
+        },
+      ]
     );
-
-    // Update the filteredProjects state to reflect the deletion
-    setFilteredProjects(updatedProjects);
   };
 
   const menuOptions = [
