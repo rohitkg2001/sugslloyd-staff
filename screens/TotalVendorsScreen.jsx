@@ -9,14 +9,13 @@ import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
-import VendorForm from "../components/VendorForm";
+import { useNavigation } from "@react-navigation/native";
 
 const TotalVendorsScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredVendors, setFilteredVendors] = useState(totalVendorsData);
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [currentVendor, setCurrentVendor] = useState(null);
+  const navigation = useNavigation();
 
   const menuOptions = [
     { label: "Search", onPress: () => console.log("Search clicked") },
@@ -61,8 +60,10 @@ const TotalVendorsScreen = () => {
   };
 
   const handleEdit = (item) => {
-    setCurrentVendor(item);
-    setIsFormVisible(true);
+    navigation.navigate("EditDetailsScreen", {
+      site: item,
+      formType: "vendor",
+    });
   };
 
   const handleDelete = (vendorToDelete) => {
@@ -83,15 +84,6 @@ const TotalVendorsScreen = () => {
         },
       ]
     );
-  };
-
-  const handleFormSave = (updatedVendor) => {
-    setFilteredVendors((prevVendors) =>
-      prevVendors.map((vendor) =>
-        vendor.id === updatedVendor.id ? updatedVendor : vendor
-      )
-    );
-    setIsFormVisible(false);
   };
 
   const renderListItem = ({ item }) => (
@@ -177,14 +169,6 @@ const TotalVendorsScreen = () => {
         <TouchableOpacity style={styles.addButton} onPress={() => {}}>
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
-
-        <VendorForm
-          visible={isFormVisible}
-          onClose={() => setIsFormVisible(false)}
-          onSave={handleFormSave}
-          formType="vendor"
-          initialData={currentVendor}
-        />
 
         <Filter
           visible={isMenuVisible}
