@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity, Alert } from "react-native";
 import { Card } from "react-native-paper";
 import { inactiveVendorsData } from "../utils/faker"; // Import inactive vendor data
 import ContainerComponent from "../components/ContainerComponent";
@@ -18,7 +18,6 @@ const InactiveVendorsScreen = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [currentVendor, setCurrentVendor] = useState(null);
 
-  // Define menuOptions here
   const menuOptions = [
     { label: "Search", onPress: () => console.log("Search clicked") },
     {
@@ -67,9 +66,21 @@ const InactiveVendorsScreen = () => {
   };
 
   const handleDelete = (item) => {
-    console.log(`Delete pressed for: ${item.name}`);
-    setFilteredVendors((prevVendors) =>
-      prevVendors.filter((vendor) => vendor.id !== item.id)
+    Alert.alert(
+      "Confirm Delete",
+      `Are you sure you want to delete ${item.name}?`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            setFilteredVendors((prevVendors) =>
+              prevVendors.filter((vendor) => vendor.id !== item.id)
+            );
+          },
+        },
+      ]
     );
   };
 
@@ -99,7 +110,6 @@ const InactiveVendorsScreen = () => {
             Contact: {item.contactNumber}
           </P>
         </View>
-        {/* Edit and Delete Icons */}
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
             onPress={() => handleEdit(item)}
@@ -119,7 +129,7 @@ const InactiveVendorsScreen = () => {
     <ContainerComponent>
       <View>
         <MyHeader
-          title="Inactive Vendors"
+          title="Total Vendors"
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
@@ -135,36 +145,38 @@ const InactiveVendorsScreen = () => {
         >
           <View style={{ width: "80%" }}>
             <SearchBar
-              placeholder="Search inactive vendors..."
+              placeholder="Search vendors..."
               value={searchText}
               onChangeText={filterVendors}
             />
           </View>
-
-          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => toggleMenu()}
+          >
             <Ionicons name="filter" size={24} color="black" />
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => toggleMenu()}
+          >
             <Ionicons name="swap-vertical" size={24} color="black" />
           </TouchableOpacity>
         </View>
-
         <FlatList
           data={filteredVendors}
           renderItem={renderListItem}
-          keyExtractor={(item) => item.id.toString()} // Ensure id is a string
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
         />
-
         <TouchableOpacity style={styles.addButton} onPress={() => {}}>
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
-
         <VendorForm
           visible={isFormVisible}
           onClose={() => setIsFormVisible(false)}
           onSave={handleFormSave}
+          formType="vendor"
           initialData={currentVendor}
         />
         <Filter

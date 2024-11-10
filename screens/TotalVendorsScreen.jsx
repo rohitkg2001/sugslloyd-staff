@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity, Alert } from "react-native";
 import { Card } from "react-native-paper";
-import { totalVendorsData } from "../utils/faker"; // Import vendor data
+import { totalVendorsData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
@@ -18,7 +18,6 @@ const TotalVendorsScreen = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [currentVendor, setCurrentVendor] = useState(null);
 
-  // Define menuOptions here
   const menuOptions = [
     { label: "Search", onPress: () => console.log("Search clicked") },
     {
@@ -66,12 +65,23 @@ const TotalVendorsScreen = () => {
     setIsFormVisible(true);
   };
 
-  const handleDelete = (item) => {
-    console.log(`Delete pressed for: ${item.name}`);
-    // Implement delete functionality here
-    // For example, you can filter out the deleted vendor from the list
-    setFilteredVendors((prevVendors) =>
-      prevVendors.filter((vendor) => vendor.id !== item.id)
+  const handleDelete = (vendorToDelete) => {
+    Alert.alert(
+      "Confirm Delete",
+      `Are you sure you want to delete ${vendorToDelete.name}?`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            const updatedVendors = filteredVendors.filter(
+              (item) => item.id !== vendorToDelete.id
+            );
+            setFilteredVendors(updatedVendors);
+          },
+        },
+      ]
     );
   };
 
@@ -101,7 +111,6 @@ const TotalVendorsScreen = () => {
             Contact: {item.contactNumber}
           </P>
         </View>
-        {/* Edit and Delete Icons */}
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
             onPress={() => handleEdit(item)}
@@ -161,21 +170,14 @@ const TotalVendorsScreen = () => {
         <FlatList
           data={filteredVendors}
           renderItem={renderListItem}
-          keyExtractor={(item) => item.id.toString()} // Ensure id is a string
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
         />
 
-        {/* Add Vendor Button */}
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => {
-           
-          }}
-        >
+        <TouchableOpacity style={styles.addButton} onPress={() => {}}>
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
 
-        {/* Vendor Form Modal */}
         <VendorForm
           visible={isFormVisible}
           onClose={() => setIsFormVisible(false)}
@@ -184,7 +186,6 @@ const TotalVendorsScreen = () => {
           initialData={currentVendor}
         />
 
-        {/* Filter Menu */}
         <Filter
           visible={isMenuVisible}
           onClose={toggleMenu}

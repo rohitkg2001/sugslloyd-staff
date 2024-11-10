@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity, Alert } from "react-native";
 import { Card } from "react-native-paper";
 import { activeVendorsData } from "../utils/faker"; // Import active vendor data
 import ContainerComponent from "../components/ContainerComponent";
@@ -18,7 +18,6 @@ const ActiveVendorsScreen = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [currentVendor, setCurrentVendor] = useState(null);
 
-  // Define menuOptions here
   const menuOptions = [
     { label: "Search", onPress: () => console.log("Search clicked") },
     {
@@ -47,13 +46,11 @@ const ActiveVendorsScreen = () => {
 
   const sortVendors = (sortOrder) => {
     let sortedVendors = [...filteredVendors];
-
     if (sortOrder === "alphabetical") {
       sortedVendors.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortOrder === "locationAsc") {
       sortedVendors.sort((a, b) => a.location.localeCompare(b.location));
     }
-
     setFilteredVendors(sortedVendors);
   };
 
@@ -67,9 +64,22 @@ const ActiveVendorsScreen = () => {
   };
 
   const handleDelete = (item) => {
-    console.log(`Delete pressed for: ${item.name}`);
-    setFilteredVendors((prevVendors) =>
-      prevVendors.filter((vendor) => vendor.id !== item.id)
+    Alert.alert(
+      "Confirm Delete",
+      `Are you sure you want to delete ${item.name}?`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            const updatedVendors = filteredVendors.filter(
+              (vendor) => vendor.id !== item.id
+            );
+            setFilteredVendors(updatedVendors);
+          },
+        },
+      ]
     );
   };
 
@@ -134,14 +144,16 @@ const ActiveVendorsScreen = () => {
         >
           <View style={{ width: "80%" }}>
             <SearchBar
-              placeholder="Search active vendors..."
+              placeholder="Search vendors..."
               value={searchText}
               onChangeText={filterVendors}
             />
           </View>
+
           <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
             <Ionicons name="filter" size={24} color="black" />
           </TouchableOpacity>
+
           <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
             <Ionicons name="swap-vertical" size={24} color="black" />
           </TouchableOpacity>
@@ -162,8 +174,10 @@ const ActiveVendorsScreen = () => {
           visible={isFormVisible}
           onClose={() => setIsFormVisible(false)}
           onSave={handleFormSave}
+          formType="vendor"
           initialData={currentVendor}
         />
+
         <Filter
           visible={isMenuVisible}
           onClose={toggleMenu}
