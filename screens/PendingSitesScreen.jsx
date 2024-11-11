@@ -8,7 +8,7 @@ import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
 import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import VendorForm from "../components/VendorForm"; // Import your VendorForm component for editing
+import VendorForm from "../components/VendorForm"; 
 
 const PendingSitesScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -16,7 +16,7 @@ const PendingSitesScreen = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [selectedSite, setSelectedSite] = useState(null);
 
-  // Filter sites based on search text
+ 
   const filterSites = (text) => {
     setSearchText(text);
     const filtered = totalsitesData.filter((item) =>
@@ -25,22 +25,21 @@ const PendingSitesScreen = () => {
     setFilteredSites(filtered);
   };
 
-  // Handle edit functionality
   const handleEdit = (site) => {
     setSelectedSite(site);
-    setIsEditModalVisible(true); // Open the edit modal
+    setIsEditModalVisible(true); 
   };
 
-  // Handle save functionality from the modal
+  
   const handleSave = (updatedSite) => {
     const updatedSites = filteredSites.map((item) =>
       item.id === updatedSite.id ? updatedSite : item
     );
     setFilteredSites(updatedSites);
-    setIsEditModalVisible(false); // Close the modal after saving
+    setIsEditModalVisible(false);
   };
 
-  // Handle delete functionality
+
   const handleDelete = (siteToDelete) => {
     Alert.alert(
       "Confirm Delete",
@@ -61,7 +60,7 @@ const PendingSitesScreen = () => {
     );
   };
 
-  // Render each list item
+  
   const renderListItem = ({ item }) => (
     <Card
       style={[
@@ -79,7 +78,7 @@ const PendingSitesScreen = () => {
         </View>
 
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          {/* Edit button */}
+        
           <TouchableOpacity
             onPress={() => handleEdit(item)}
             style={{ marginRight: 12 }}
@@ -105,7 +104,7 @@ const PendingSitesScreen = () => {
         icon="ellipsis-vertical"
       />
 
-      {/* Search and filter section */}
+     
       <View
         style={{
           flexDirection: "row",
@@ -136,7 +135,6 @@ const PendingSitesScreen = () => {
         </TouchableOpacity>
       </View>
 
-      {/* List of filtered sites */}
       <FlatList
         data={filteredSites}
         renderItem={renderListItem}
@@ -144,7 +142,7 @@ const PendingSitesScreen = () => {
         contentContainerStyle={styles.list}
       />
 
-      {/* Add new site button */}
+  
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => console.log("Add Pressed")}
@@ -158,7 +156,7 @@ const PendingSitesScreen = () => {
         onClose={() => setIsEditModalVisible(false)}
         onSave={handleSave}
         initialData={selectedSite}
-        formType="site" // Specify the form type
+        formType="site" 
       />
     </ContainerComponent>
   );

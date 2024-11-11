@@ -166,7 +166,10 @@ const TotalVendorsScreen = () => {
           contentContainerStyle={styles.list}
         />
 
-        <TouchableOpacity style={styles.addButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate("VendorFormScreen")}
+        >
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
 
