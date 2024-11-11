@@ -1,45 +1,56 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Card } from "react-native-paper";
 import { SCREEN_WIDTH, spacing } from "../styles";
 
 const ViewDetailScreen = ({ route }) => {
   const { site } = route.params;
 
+  const renderDetailRow = (label, value) => (
+    <View style={styles.row}>
+      <Text style={styles.title}>{label}</Text>
+      <Text style={styles.detail}>{value}</Text>
+    </View>
+  );
+
   const renderSiteDetails = () => (
     <>
-      <Text style={styles.title}>{site.siteName}</Text>
-      <Text style={styles.detail}>State: {site.state}</Text>
-      <Text style={styles.detail}>Dist: {site.dist}</Text>
-      <Text style={styles.detail}>Location: {site.location}</Text>
-      <Text style={styles.detail}>
-        Project Serial Code: {site.projectSerialCode}
-      </Text>
-      <Text style={styles.detail}>
-        Project Capacity: {site.ProjectCapacity}
-      </Text>
-      <Text style={styles.detail}>CANumber: {site.cANumber}</Text>
-      <Text style={styles.detail}>I&C VendorName: {site.iCVendorName}</Text>
-      <Text style={styles.detail}>Contact No: {site.ContactNo}</Text>
+      {renderDetailRow("Site Name:", site.siteName)}
+      {renderDetailRow("State:", site.state)}
+      {renderDetailRow("Dist:", site.dist)}
+      {renderDetailRow("Location:", site.location)}
+      {renderDetailRow("Project Serial Code:", site.projectSerialCode)}
+      {renderDetailRow("Project Capacity:", site.ProjectCapacity)}
+      {renderDetailRow("CA Number:", site.cANumber)}
+      {renderDetailRow("I&C Vendor Name:", site.iCVendorName)}
+      {renderDetailRow("Contact No:", site.ContactNo)}
     </>
   );
 
   const renderProjectDetails = () => (
     <>
-      <Text style={styles.title}>{site.projectName}</Text>
-      <Text style={styles.detail}>Duration: {site.duration}</Text>
-      <Text style={styles.detail}>Status: {site.status}</Text>
+      {renderDetailRow("Project Name:", site.projectName)}
+      {renderDetailRow("Duration:", site.duration)}
+      {renderDetailRow("Status:", site.status)}
+      {renderDetailRow("Project Serial:", site.projectSerial)}
+      {renderDetailRow("Site Name:", site.siteName)}
+      {renderDetailRow("Sanction Load:", site.sanctionLoad)}
+      {renderDetailRow("Project Capacity:", site.projectCapacity)}
+      {renderDetailRow("CA Number:", site.caNumber)}
+      {renderDetailRow("Survey Status:", site.surveyStatus)}
+      {renderDetailRow("Contact No:", site.contactNo)}
+      {renderDetailRow("Solar Meter Serial:", site.solarMeterSerial)}
+      {renderDetailRow("Vendor Name:", site.vendorName)}
     </>
   );
+
   const renderVendorDetails = () => (
     <>
-      <Text style={styles.title}>Vendor Details</Text>
-      <Text style={styles.detail}>Vendor Name: {site.vendorName}</Text>
-      <Text style={styles.detail}>Mail ID: {site.mailId}</Text>
-      <Text style={styles.detail}>Contact No: {site.contactNo}</Text>
-      <Text style={styles.detail}>Location: {site.location}</Text>
-      <Text style={styles.detail}>GST Number: {site.gstNumber}</Text>
-      <Text style={styles.detail}>Status: {site.status}</Text>
+      {renderDetailRow("Vendor Name:", site.vendorName)}
+      {renderDetailRow("Mail ID:", site.mailId)}
+      {renderDetailRow("Contact No:", site.contactNo)}
+      {renderDetailRow("Location:", site.location)}
+      {renderDetailRow("GST Number:", site.gstNumber)}
+      {renderDetailRow("Status:", site.status)}
     </>
   );
 
@@ -53,38 +64,34 @@ const ViewDetailScreen = ({ route }) => {
         },
       ]}
     >
-      {/* <Card style={styles.card}>
-        {site.projectName ? renderProjectDetails() : renderSiteDetails()}
-      </Card> */}
-
-      <Card style={styles.card}>
-        {site.vendorName
-          ? renderVendorDetails()
-          : site.projectName
-          ? renderProjectDetails()
-          : renderSiteDetails()}
-      </Card>
+      {site.vendorName
+        ? renderVendorDetails()
+        : site.projectName
+        ? renderProjectDetails()
+        : renderSiteDetails()}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    padding: 16,
-    backgroundColor: "#ffffff",
-    borderRadius: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
   title: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: "bold",
+    color: "#333",
+    flex: 1,
   },
   detail: {
     fontSize: 16,
-    marginTop: 8,
+    color: "#555",
+    flex: 1,
+    textAlign: "right",
   },
 });
 
