@@ -10,7 +10,6 @@ import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation
-import { useRoute } from "@react-navigation/native"; // Import useRoute
 
 const TotalSitesScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -140,7 +139,10 @@ const TotalSitesScreen = () => {
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
         />
-        <TouchableOpacity style={styles.addButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate("sitesFormScreen")} // Navigate to SitesFormScreen
+        >
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
       </View>
