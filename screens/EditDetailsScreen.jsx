@@ -18,12 +18,15 @@ const EditDetailsScreen = ({ onSave }) => {
     } else {
       setFormData({
         name: "",
+        state: "",
         location: "",
         contactNumber: formType === "vendor" ? "" : undefined,
         dist: formType === "site" ? "" : undefined,
-        sanctionLoad: "", // New field
+        projectSerialCode: "", // New field
         projectCapacity: "", // New field
         contactNo: "", // New field
+        cANumber: "",
+        iCVendorName: "",
       });
     }
   }, [site, formType]);
@@ -69,6 +72,12 @@ const EditDetailsScreen = ({ onSave }) => {
         />
         <TextInput
           style={styles.input}
+          placeholder="State"
+          value={formData.state}
+          onChangeText={(text) => handleChange("state", text)}
+        />
+        <TextInput
+          style={styles.input}
           placeholder="Location"
           value={formData.location}
           onChangeText={(text) => handleChange("location", text)}
@@ -93,9 +102,9 @@ const EditDetailsScreen = ({ onSave }) => {
         {/* New fields */}
         <TextInput
           style={styles.input}
-          placeholder="Sanction Load"
-          value={formData.sanctionLoad}
-          onChangeText={(text) => handleChange("sanctionLoad", text)}
+          placeholder="Project Serial Code"
+          value={formData.projectSerialCode}
+          onChangeText={(text) => handleChange("projectSerialCode", text)}
         />
         <TextInput
           style={styles.input}
@@ -108,6 +117,20 @@ const EditDetailsScreen = ({ onSave }) => {
           placeholder="Contact No"
           value={formData.contactNo}
           onChangeText={(text) => handleChange("contactNo", text)}
+          keyboardType="phone-pad"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="CANumber"
+          value={formData.cANumber}
+          onChangeText={(text) => handleChange("CANumber", text)}
+          keyboardType="phone-pad"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="I&C Vendor Name"
+          value={formData.iCVendorName}
+          onChangeText={(text) => handleChange("iCVendorName", text)}
           keyboardType="phone-pad"
         />
 

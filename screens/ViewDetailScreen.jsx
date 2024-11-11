@@ -9,12 +9,17 @@ const ViewDetailScreen = ({ route }) => {
   const renderSiteDetails = () => (
     <>
       <Text style={styles.title}>{site.siteName}</Text>
+      <Text style={styles.detail}>State: {site.state}</Text>
       <Text style={styles.detail}>Dist: {site.dist}</Text>
       <Text style={styles.detail}>Location: {site.location}</Text>
-      <Text style={styles.detail}>Sanction Load: {site.Sanctionload}</Text>
+      <Text style={styles.detail}>
+        Project Serial Code: {site.projectSerialCode}
+      </Text>
       <Text style={styles.detail}>
         Project Capacity: {site.ProjectCapacity}
       </Text>
+      <Text style={styles.detail}>CANumber: {site.cANumber}</Text>
+      <Text style={styles.detail}>I&C VendorName: {site.iCVendorName}</Text>
       <Text style={styles.detail}>Contact No: {site.ContactNo}</Text>
     </>
   );

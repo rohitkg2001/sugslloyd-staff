@@ -5,7 +5,7 @@ export const SCREEN_WIDTH = Dimensions.get("screen").width;
 export const SCREEN_HEIGHT = Dimensions.get("screen").height;
 
 export const PRIMARY_COLOR = "#76885B";
-export const PRIMARY_COLOR_TRANSPARENT = "#C8E6C9";
+export const PRIMARY_COLOR_TRANSPARENT = "#F0FAF0";
 export const SECONDARY_COLOR = "#838280";
 export const LIGHT = "#ffffff";
 export const DARK = "#020409";

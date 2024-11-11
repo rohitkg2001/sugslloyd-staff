@@ -21,9 +21,9 @@ const SitesFormScreen = () => {
   const handleCancel = () => {
     setState("");
     setCity("");
+    setLocation("");
     setProjectSerial("");
     setSiteName("");
-    setLocation("");
     setProjectCapacity("");
     setCaNumber("");
     setContactNo("");
@@ -76,6 +76,12 @@ const SitesFormScreen = () => {
           ]}
         />
         <MyTextInput
+          title="Location"
+          value={location}
+          onChangeText={setLocation}
+          placeholder="Enter Location"
+        />
+        <MyTextInput
           title="Project Serial Code"
           value={projectSerial}
           onChangeText={setProjectSerial}
@@ -87,12 +93,7 @@ const SitesFormScreen = () => {
           onChangeText={setSiteName}
           placeholder="Enter Site Name"
         />
-        <MyTextInput
-          title="Location"
-          value={location}
-          onChangeText={setLocation}
-          placeholder="Enter Location"
-        />
+
         <MyTextInput
           title="Project Capacity"
           value={projectCapacity}
