@@ -69,39 +69,37 @@ const TotalSitesScreen = () => {
   };
 
   const renderListItem = ({ item }) => (
-    <Card
-      style={[
-        spacing.mv1,
-        { width: SCREEN_WIDTH - 18, backgroundColor: "#ffffff" },
-      ]}
-    >
-      <View style={{ flexDirection: "row", alignItems: "center", padding: 16 }}>
-        <View style={{ flex: 1 }}>
-          <H6 style={[typography.textBold]}>{item.siteName}</H6>
-          <P style={{ fontSize: 14, color: "#020409" }}>Dist: {item.dist}</P>
-          <P style={{ fontSize: 14, color: "#020409" }}>
-            Location: {item.location}
-          </P>
+    <TouchableOpacity onPress={() => handleViewDetails(item)}>
+      <Card
+        style={[
+          spacing.mv1,
+          { width: SCREEN_WIDTH - 18, backgroundColor: "#ffffff" },
+        ]}
+      >
+        <View
+          style={{ flexDirection: "row", alignItems: "center", padding: 16 }}
+        >
+          <View style={{ flex: 1 }}>
+            <H6 style={[typography.textBold]}>{item.siteName}</H6>
+            <P style={{ fontSize: 14, color: "#020409" }}>Dist: {item.dist}</P>
+            <P style={{ fontSize: 14, color: "#020409" }}>
+              Location: {item.location}
+            </P>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <TouchableOpacity
+              onPress={() => handleEdit(item)}
+              style={{ marginRight: 12 }}
+            >
+              <Ionicons name="create-outline" size={24} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleDelete(item)}>
+              <Ionicons name="trash-outline" size={24} color="red" />
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <TouchableOpacity
-            onPress={() => handleViewDetails(item)}
-            style={{ marginRight: 12 }}
-          >
-            <Ionicons name="eye-outline" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleEdit(item)}
-            style={{ marginRight: 12 }}
-          >
-            <Ionicons name="create-outline" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleDelete(item)}>
-            <Ionicons name="trash-outline" size={24} color="red" />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </Card>
+      </Card>
+    </TouchableOpacity>
   );
 
   return (
@@ -141,11 +139,7 @@ const TotalSitesScreen = () => {
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.list}
         />
-
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => console.log("Add Pressed")}
-        >
+        <TouchableOpacity style={styles.addButton} onPress={() => {}}>
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
         <VendorForm
