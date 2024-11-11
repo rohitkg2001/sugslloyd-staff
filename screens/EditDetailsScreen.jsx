@@ -18,9 +18,13 @@ const EditDetailsScreen = ({ onSave }) => {
     } else {
       setFormData({
         name: "",
-        state: formType === "site" ? "" : undefined,
         location: "",
         contactNumber: formType === "vendor" ? "" : undefined,
+        gstNumber: formType === "vendor" ? "" : undefined,
+        contactPerson: formType === "vendor" ? "" : undefined,
+        mailId: formType === "vendor" ? "" : undefined,
+        // Fields exclusive to "site"
+        state: formType === "site" ? "" : undefined,
         dist: formType === "site" ? "" : undefined,
         projectSerialCode: formType === "site" ? "" : undefined,
         projectCapacity: formType === "site" ? "" : undefined,
@@ -41,7 +45,7 @@ const EditDetailsScreen = ({ onSave }) => {
       !formData.location ||
       (formType === "vendor" && !formData.contactNumber)
     ) {
-      alert("Please fill all fields");
+      alert("Please fill all required fields");
       return;
     }
 
@@ -84,21 +88,37 @@ const EditDetailsScreen = ({ onSave }) => {
           value={formData.location}
           onChangeText={(text) => handleChange("location", text)}
         />
-        {formType === "vendor" ? (
-          <TextInput
-            style={styles.input}
-            placeholder="Contact Number"
-            value={formData.contactNumber}
-            onChangeText={(text) => handleChange("contactNumber", text)}
-            keyboardType="phone-pad"
-          />
-        ) : (
-          <TextInput
-            style={styles.input}
-            placeholder="Distance"
-            value={formData.dist}
-            onChangeText={(text) => handleChange("dist", text)}
-          />
+
+        {formType === "vendor" && (
+          <>
+            <TextInput
+              style={styles.input}
+              placeholder="Contact Number"
+              value={formData.contactNumber}
+              onChangeText={(text) => handleChange("contactNumber", text)}
+              keyboardType="phone-pad"
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="GST Number"
+              value={formData.gstNumber}
+              onChangeText={(text) => handleChange("gstNumber", text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Contact Person"
+              value={formData.contactPerson}
+              onChangeText={(text) => handleChange("contactPerson", text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Mail ID"
+              value={formData.mailId}
+              onChangeText={(text) => handleChange("mailId", text)}
+              keyboardType="email-address"
+            />
+          </>
         )}
 
         {/* Fields exclusive to the "site" formType */}

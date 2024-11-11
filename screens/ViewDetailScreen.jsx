@@ -31,6 +31,17 @@ const ViewDetailScreen = ({ route }) => {
       <Text style={styles.detail}>Status: {site.status}</Text>
     </>
   );
+  const renderVendorDetails = () => (
+    <>
+      <Text style={styles.title}>Vendor Details</Text>
+      <Text style={styles.detail}>Vendor Name: {site.vendorName}</Text>
+      <Text style={styles.detail}>Mail ID: {site.mailId}</Text>
+      <Text style={styles.detail}>Contact No: {site.contactNo}</Text>
+      <Text style={styles.detail}>Location: {site.location}</Text>
+      <Text style={styles.detail}>GST Number: {site.gstNumber}</Text>
+      <Text style={styles.detail}>Status: {site.status}</Text>
+    </>
+  );
 
   return (
     <View
@@ -42,8 +53,16 @@ const ViewDetailScreen = ({ route }) => {
         },
       ]}
     >
-      <Card style={styles.card}>
+      {/* <Card style={styles.card}>
         {site.projectName ? renderProjectDetails() : renderSiteDetails()}
+      </Card> */}
+
+      <Card style={styles.card}>
+        {site.vendorName
+          ? renderVendorDetails()
+          : site.projectName
+          ? renderProjectDetails()
+          : renderSiteDetails()}
       </Card>
     </View>
   );
