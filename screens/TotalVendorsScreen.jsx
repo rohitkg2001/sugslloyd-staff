@@ -61,7 +61,7 @@ const TotalVendorsScreen = () => {
 
   const handleEdit = (item) => {
     navigation.navigate("EditDetailsScreen", {
-      site: item,
+      vendor: item,
       formType: "vendor",
     });
   };
@@ -85,37 +85,44 @@ const TotalVendorsScreen = () => {
       ]
     );
   };
+  const handleViewDetails = (vendor) => {
+    navigation.navigate("ViewDetailScreen", { vendor: vendor });
+  };
 
   const renderListItem = ({ item }) => (
-    <Card
-      style={[
-        spacing.mv1,
-        { width: SCREEN_WIDTH - 18, backgroundColor: "#ffffff" },
-      ]}
-    >
-      <View style={{ flexDirection: "row", alignItems: "center", padding: 16 }}>
-        <View style={{ flex: 1 }}>
-          <H6 style={[typography.textBold]}>{item.name}</H6>
-          <P style={{ fontSize: 14, color: "#020409" }}>
-            Location: {item.location}
-          </P>
-          <P style={{ fontSize: 14, color: "#020409" }}>
-            Contact: {item.contactNumber}
-          </P>
+    <TouchableOpacity onPress={() => handleViewDetails(item)}>
+      <Card
+        style={[
+          spacing.mv1,
+          { width: SCREEN_WIDTH - 18, backgroundColor: "#ffffff" },
+        ]}
+      >
+        <View
+          style={{ flexDirection: "row", alignItems: "center", padding: 16 }}
+        >
+          <View style={{ flex: 1 }}>
+            <H6 style={[typography.textBold]}>{item.name}</H6>
+            <P style={{ fontSize: 14, color: "#020409" }}>
+              Location: {item.location}
+            </P>
+            <P style={{ fontSize: 14, color: "#020409" }}>
+              Contact: {item.contactNumber}
+            </P>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <TouchableOpacity
+              onPress={() => handleEdit(item)}
+              style={{ marginRight: 12 }}
+            >
+              <Ionicons name="create-outline" size={24} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleDelete(item)}>
+              <Ionicons name="trash-outline" size={24} color="red" />
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <TouchableOpacity
-            onPress={() => handleEdit(item)}
-            style={{ marginRight: 12 }}
-          >
-            <Ionicons name="create-outline" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleDelete(item)}>
-            <Ionicons name="trash-outline" size={24} color="red" />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </Card>
+      </Card>
+    </TouchableOpacity>
   );
 
   return (

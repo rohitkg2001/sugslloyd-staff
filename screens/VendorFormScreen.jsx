@@ -7,14 +7,12 @@ import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 
 const VendorFormScreen = () => {
-  const [vendorName, setVendorName] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [mailId, setMailId] = useState("");
 
   const handleCancel = () => {
-    setVendorName("");
     setGstNumber("");
     setContactPerson("");
     setContactNumber("");
@@ -23,7 +21,6 @@ const VendorFormScreen = () => {
 
   const handleCreate = () => {
     console.log("Creating Vendor with data:", {
-      vendorName,
       gstNumber,
       contactPerson,
       contactNumber,
@@ -40,13 +37,6 @@ const VendorFormScreen = () => {
         }}
       >
         <MyHeader title="Vendor Details" hasIcon icon="ellipsis-vertical" />
-
-        <MyTextInput
-          title="Vendor Name"
-          value={vendorName}
-          onChangeText={setVendorName}
-          placeholder="Enter Vendor Name"
-        />
 
         <MyTextInput
           title="GST Number"

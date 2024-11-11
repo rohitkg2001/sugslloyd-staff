@@ -18,15 +18,19 @@ const EditDetailsScreen = ({ onSave }) => {
     } else {
       setFormData({
         name: "",
-        state: "",
         location: "",
         contactNumber: formType === "vendor" ? "" : undefined,
+        gstNumber: formType === "vendor" ? "" : undefined,
+        contactPerson: formType === "vendor" ? "" : undefined,
+        mailId: formType === "vendor" ? "" : undefined,
+        // Fields exclusive to "site"
+        state: formType === "site" ? "" : undefined,
         dist: formType === "site" ? "" : undefined,
-        projectSerialCode: "", // New field
-        projectCapacity: "", // New field
-        contactNo: "", // New field
-        cANumber: "",
-        iCVendorName: "",
+        projectSerialCode: formType === "site" ? "" : undefined,
+        projectCapacity: formType === "site" ? "" : undefined,
+        contactNo: formType === "site" ? "" : undefined,
+        cANumber: formType === "site" ? "" : undefined,
+        iCVendorName: formType === "site" ? "" : undefined,
       });
     }
   }, [site, formType]);
@@ -41,7 +45,7 @@ const EditDetailsScreen = ({ onSave }) => {
       !formData.location ||
       (formType === "vendor" && !formData.contactNumber)
     ) {
-      alert("Please fill all fields");
+      alert("Please fill all required fields");
       return;
     }
 
@@ -70,69 +74,90 @@ const EditDetailsScreen = ({ onSave }) => {
           value={formData.name}
           onChangeText={(text) => handleChange("name", text)}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="State"
-          value={formData.state}
-          onChangeText={(text) => handleChange("state", text)}
-        />
+        {formType === "site" && (
+          <TextInput
+            style={styles.input}
+            placeholder="State"
+            value={formData.state}
+            onChangeText={(text) => handleChange("state", text)}
+          />
+        )}
         <TextInput
           style={styles.input}
           placeholder="Location"
           value={formData.location}
           onChangeText={(text) => handleChange("location", text)}
         />
-        {formType === "vendor" ? (
-          <TextInput
-            style={styles.input}
-            placeholder="Contact Number"
-            value={formData.contactNumber}
-            onChangeText={(text) => handleChange("contactNumber", text)}
-            keyboardType="phone-pad"
-          />
-        ) : (
-          <TextInput
-            style={styles.input}
-            placeholder="Distance"
-            value={formData.dist}
-            onChangeText={(text) => handleChange("dist", text)}
-          />
+
+        {formType === "vendor" && (
+          <>
+            <TextInput
+              style={styles.input}
+              placeholder="Contact Number"
+              value={formData.contactNumber}
+              onChangeText={(text) => handleChange("contactNumber", text)}
+              keyboardType="phone-pad"
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="GST Number"
+              value={formData.gstNumber}
+              onChangeText={(text) => handleChange("gstNumber", text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Contact Person"
+              value={formData.contactPerson}
+              onChangeText={(text) => handleChange("contactPerson", text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Mail ID"
+              value={formData.mailId}
+              onChangeText={(text) => handleChange("mailId", text)}
+              keyboardType="email-address"
+            />
+          </>
         )}
 
-    
-        <TextInput
-          style={styles.input}
-          placeholder="Project Serial Code"
-          value={formData.projectSerialCode}
-          onChangeText={(text) => handleChange("projectSerialCode", text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Project Capacity"
-          value={formData.projectCapacity}
-          onChangeText={(text) => handleChange("projectCapacity", text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Contact No"
-          value={formData.contactNo}
-          onChangeText={(text) => handleChange("contactNo", text)}
-          keyboardType="phone-pad"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="CANumber"
-          value={formData.cANumber}
-          onChangeText={(text) => handleChange("CANumber", text)}
-          keyboardType="phone-pad"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="I&C Vendor Name"
-          value={formData.iCVendorName}
-          onChangeText={(text) => handleChange("iCVendorName", text)}
-          keyboardType="phone-pad"
-        />
+        {/* Fields exclusive to the "site" formType */}
+        {formType === "site" && (
+          <>
+            <TextInput
+              style={styles.input}
+              placeholder="Project Serial Code"
+              value={formData.projectSerialCode}
+              onChangeText={(text) => handleChange("projectSerialCode", text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Project Capacity"
+              value={formData.projectCapacity}
+              onChangeText={(text) => handleChange("projectCapacity", text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Contact No"
+              value={formData.contactNo}
+              onChangeText={(text) => handleChange("contactNo", text)}
+              keyboardType="phone-pad"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="CANumber"
+              value={formData.cANumber}
+              onChangeText={(text) => handleChange("cANumber", text)}
+              keyboardType="phone-pad"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="I&C Vendor Name"
+              value={formData.iCVendorName}
+              onChangeText={(text) => handleChange("iCVendorName", text)}
+            />
+          </>
+        )}
 
         <View style={styles.buttonContainer}>
           <Button
