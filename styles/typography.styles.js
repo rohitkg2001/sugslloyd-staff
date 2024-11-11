@@ -21,7 +21,7 @@ export const typography = StyleSheet.create({
     },
     textLight: {
         color: LIGHT,
-    },
+    }, 
     textDark: {
         color: DARK,
     },

@@ -9,16 +9,15 @@ import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
-import VendorForm from "../components/VendorForm";
-import { useNavigation } from "@react-navigation/native"; 
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { useRoute } from "@react-navigation/native"; // Import useRoute
 
 const TotalSitesScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredSites, setFilteredSites] = useState(totalsitesData);
   const [selectedSite, setSelectedSite] = useState(null);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const navigation = useNavigation(); 
+  const navigation = useNavigation(); // Navigation hook
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
@@ -33,8 +32,10 @@ const TotalSitesScreen = () => {
   };
 
   const handleEdit = (site) => {
-    setSelectedSite(site);
-    setIsEditModalVisible(true);
+    navigation.navigate("EditDetailsScreen", {
+      site,
+      formType: "site",
+    });
   };
 
   const handleSave = (updatedSite) => {
@@ -88,7 +89,7 @@ const TotalSitesScreen = () => {
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <TouchableOpacity
-              onPress={() => handleEdit(item)}
+              onPress={() => handleEdit(item)} // Open Edit Details Screen
               style={{ marginRight: 12 }}
             >
               <Ionicons name="create-outline" size={24} color="black" />
@@ -136,19 +137,12 @@ const TotalSitesScreen = () => {
         <FlatList
           data={filteredSites}
           renderItem={renderListItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
         />
         <TouchableOpacity style={styles.addButton} onPress={() => {}}>
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
-        <VendorForm
-          visible={isEditModalVisible}
-          onClose={() => setIsEditModalVisible(false)}
-          onSave={handleSave}
-          initialData={selectedSite}
-          formType="site"
-        />
       </View>
     </ContainerComponent>
   );

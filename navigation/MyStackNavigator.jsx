@@ -24,12 +24,14 @@ import InactiveVendorsScreen from "../screens/InactiveVendorsScreen";
 import ActiveVendorsScreen from "../screens/ActiveVendorsScreen";
 import BlockListedVendorsScreen from "../screens/BlockListedVendorsScreen";
 import ViewDetailScreen from "../screens/ViewDetailScreen";
+import EditDetailsScreen from "../screens/EditDetailsScreen";
+import VendorFormScreen from "../screens/VendorFormScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="dashboardScreen"
+      initialRouteName="loginScreen"
       screenOptions={{
         headerShown: false,
       }}
@@ -77,6 +79,8 @@ export default function MyStackNavigator() {
         component={BlockListedVendorsScreen}
       />
       <Stack.Screen name="ViewDetailScreen" component={ViewDetailScreen} />
+      <Stack.Screen name="EditDetailsScreen" component={EditDetailsScreen} />
+      <Stack.Screen name="VendorFormScreen" component={VendorFormScreen} />
     </Stack.Navigator>
   );
 }

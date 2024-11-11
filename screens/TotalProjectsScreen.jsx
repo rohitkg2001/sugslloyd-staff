@@ -15,6 +15,7 @@ const TotalProjectsScreen = ({ navigation }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredProjects, setFilteredProjects] = useState(project);
 
+  // Filter projects based on search text
   const filterProjects = (text) => {
     setSearchText(text);
     const filtered = project.filter((item) =>
@@ -23,31 +24,15 @@ const TotalProjectsScreen = ({ navigation }) => {
     setFilteredProjects(filtered);
   };
 
-  const sortProjects = (sortOrder) => {
-    let sortedProjects = [...filteredProjects];
-
-    if (sortOrder === "alphabetical") {
-      sortedProjects.sort((a, b) => a.projectName.localeCompare(b.projectName));
-    } else if (sortOrder === "status") {
-      const statusOrder = ["Completed", "Ongoing"];
-      sortedProjects.sort((a, b) => {
-        const indexA = statusOrder.indexOf(a.status);
-        const indexB = statusOrder.indexOf(b.status);
-        return indexA - indexB;
-      });
-    } else if (sortOrder === "duration") {
-      sortedProjects.sort(
-        (a, b) => parseInt(a.duration, 10) - parseInt(b.duration, 10)
-      );
-    }
-
-    setFilteredProjects(sortedProjects);
+  // Navigate to project detail screen and pass project data
+  const navigateToProjectDetails = (projectData) => {
+    navigation.navigate("ViewDetailScreen", { site: projectData }); // Passing project data to ViewDetailScreen
   };
 
+  // Toggle the filter menu visibility
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
-
   const handleEdit = (item) => {
     console.log("Edit project:", item);
     // Add navigation or edit function logic here
@@ -97,6 +82,26 @@ const TotalProjectsScreen = ({ navigation }) => {
     },
   ];
 
+  // Sort projects based on different criteria
+  const sortProjects = (sortOrder) => {
+    let sortedProjects = [...filteredProjects];
+    if (sortOrder === "alphabetical") {
+      sortedProjects.sort((a, b) => a.projectName.localeCompare(b.projectName));
+    } else if (sortOrder === "status") {
+      const statusOrder = ["Completed", "Ongoing"];
+      sortedProjects.sort((a, b) => {
+        const indexA = statusOrder.indexOf(a.status);
+        const indexB = statusOrder.indexOf(b.status);
+        return indexA - indexB;
+      });
+    } else if (sortOrder === "duration") {
+      sortedProjects.sort(
+        (a, b) => parseInt(a.duration, 10) - parseInt(b.duration, 10)
+      );
+    }
+    setFilteredProjects(sortedProjects);
+  };
+
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
@@ -107,6 +112,7 @@ const TotalProjectsScreen = ({ navigation }) => {
           icon={"ellipsis-vertical"}
           onIconPress={toggleMenu}
         />
+
         <View
           style={{
             flexDirection: "row",
@@ -135,7 +141,10 @@ const TotalProjectsScreen = ({ navigation }) => {
           data={filteredProjects}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => navigateToProjectDetails(item)}
+            >
               <View style={{ flex: 1 }}>
                 <H5>{item.projectName}</H5>
                 <P>{`Duration: ${item.duration}`}</P>
@@ -152,16 +161,14 @@ const TotalProjectsScreen = ({ navigation }) => {
                   <Ionicons name="trash-outline" size={24} color="red" />
                 </TouchableOpacity>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
         />
-
         <Filter
           visible={isMenuVisible}
-          onClose={toggleMenu}
+          onClose={() => setIsMenuVisible(false)}
           options={menuOptions}
         />
-
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => navigation.navigate("formScreen")}
