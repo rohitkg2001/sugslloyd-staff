@@ -99,7 +99,7 @@ const EditDetailsScreen = ({ onSave }) => {
           />
         )}
 
-        {/* New fields */}
+    
         <TextInput
           style={styles.input}
           placeholder="Project Serial Code"
