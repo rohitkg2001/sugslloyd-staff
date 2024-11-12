@@ -8,7 +8,7 @@ import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
 import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import VendorForm from "../components/VendorForm"; // Import your VendorForm component for editing
+import VendorForm from "../components/VendorForm"; 
 
 const CompletedSitesScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -16,7 +16,7 @@ const CompletedSitesScreen = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [selectedSite, setSelectedSite] = useState(null);
 
-  // Filter sites based on search text
+
   const filterSites = (text) => {
     setSearchText(text);
     const filtered = totalsitesData.filter((item) =>
@@ -25,22 +25,22 @@ const CompletedSitesScreen = () => {
     setFilteredSites(filtered);
   };
 
-  // Handle edit functionality
+
   const handleEdit = (site) => {
     setSelectedSite(site);
-    setIsEditModalVisible(true); // Open edit modal
+    setIsEditModalVisible(true); 
   };
 
-  // Handle save functionality from the modal
+
   const handleSave = (updatedSite) => {
     const updatedSites = filteredSites.map((item) =>
       item.id === updatedSite.id ? updatedSite : item
     );
     setFilteredSites(updatedSites);
-    setIsEditModalVisible(false); // Close the modal after saving
+    setIsEditModalVisible(false); 
   };
 
-  // Handle delete functionality with a confirmation popup
+
   const handleDelete = (siteToDelete) => {
     Alert.alert(
       "Confirm Delete",
@@ -61,7 +61,7 @@ const CompletedSitesScreen = () => {
     );
   };
 
-  // Render each list item
+
   const renderListItem = ({ item }) => (
     <Card
       style={[
@@ -105,7 +105,7 @@ const CompletedSitesScreen = () => {
         icon="ellipsis-vertical"
       />
 
-      {/* Search and filter section */}
+ 
       <View
         style={{
           flexDirection: "row",
@@ -136,7 +136,7 @@ const CompletedSitesScreen = () => {
         </TouchableOpacity>
       </View>
 
-      {/* List of filtered sites */}
+
       <FlatList
         data={filteredSites}
         renderItem={renderListItem}
@@ -144,7 +144,7 @@ const CompletedSitesScreen = () => {
         contentContainerStyle={styles.list}
       />
 
-      {/* Add new site button */}
+  
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => console.log("Add Pressed")}
@@ -158,7 +158,7 @@ const CompletedSitesScreen = () => {
         onClose={() => setIsEditModalVisible(false)}
         onSave={handleSave}
         initialData={selectedSite}
-        formType="site" // Specify the form type
+        formType="site" 
       />
     </ContainerComponent>
   );

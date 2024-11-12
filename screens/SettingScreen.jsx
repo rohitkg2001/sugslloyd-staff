@@ -23,15 +23,32 @@ export default function SettingsScreen() {
     navigation.navigate("InternalSetting");
   };
 
-  const handlerequisitions = () => {
-    console.log("Navigating to RequisitionScreen");
-    navigation.navigate("requisitions");
+  const handleTotalProjectsScreen = () => {
+    console.log("Navigating to TotalProjectsScreen");
+    navigation.navigate("TotalProjectsScreen");
   };
 
-  const handleHolidayList = () => {
-    console.log("Navigating to HolidayListScreen");
-    navigation.navigate("HolidayListScreen");
+  const handleToInventoryScreen = () => {
+    console.log("Navigating to InventoryScreen");
+    navigation.navigate("InventoryScreen");
   };
+
+  const handleToTotalSitesScreen = () =>
+  {
+    console.log( "Navigating to TotalSitesScreen" );
+    navigation.navigate( "TotalSitesScreen" );
+  }
+  const handleToTotalVendorsScreen = () =>
+  {
+    console.log("Navigating to totalVendorsScreen");
+    navigation.navigate("totalVendorsScreen");
+  }
+  const handleToTaskListScreen = () =>
+  {
+    console.log( "Navigating to taskListScreen" );
+    navigation.navigate("taskListScreen");
+    
+  }
 
   return (
     <ContainerComponent justifyContent="space-between">
@@ -50,10 +67,18 @@ export default function SettingsScreen() {
             onPress={() => {
               if (item.label === "Settings") {
                 handleInternalSetting();
-              } else if (item.label === "Site Inventory") {
-                handlerequisitions();
+              } else if (item.label === "My Projects") {
+                handleTotalProjectsScreen();
               } else if (item.label === "Events") {
                 handleHolidayList();
+              } else if (item.label === "Inventory Management") {
+                handleToInventoryScreen();
+              } else if (item.label === "Site Management") {
+                handleToTotalSitesScreen();
+              } else if (item.label === "Vendor Management") {
+                handleToTotalVendorsScreen();
+              } else if (item.label === "Task Management") {
+                handleToTaskListScreen(); // Corrected here
               } else {
                 navigation.navigate(item.page);
               }

@@ -1,22 +1,24 @@
 import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Button, Platform } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const TaskListFormScreen = () => {
   const [projectName, setProjectName] = useState("");
   const [taskName, setTaskName] = useState("");
   const [description, setDescription] = useState("");
-  const [deadline, setDeadline] = useState("");
+  const [deadline, setDeadline] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleReset = () => {
     setProjectName("");
     setTaskName("");
     setDescription("");
-    setDeadline("");
+    setDeadline(new Date());
   };
 
   const handleSubmit = () => {
@@ -26,6 +28,16 @@ const TaskListFormScreen = () => {
       description,
       deadline,
     });
+  };
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || deadline;
+    setShowDatePicker(false);
+    setDeadline(currentDate);
+  };
+
+  const showPicker = () => {
+    setShowDatePicker(true);
   };
 
   return (
@@ -58,14 +70,23 @@ const TaskListFormScreen = () => {
           onChangeText={setDescription}
           placeholder="Enter Description"
           multiline
+          style={{ height: 120, textAlignVertical: "top", padding: 12 }}
         />
 
         <MyTextInput
-          title="Deadline"
-          date={deadline}
-          onDateChange={setDeadline}
-          placeholder="Deadline"
+          title="Selected Deadline"
+          value={deadline.toLocaleDateString()}
+          editable={false}
         />
+        <MyButton title="Select Deadline" onPress={showPicker} />
+        {showDatePicker && (
+          <DateTimePicker
+            value={deadline}
+            mode="date"
+            display={Platform.OS === "ios" ? "spinner" : "default"}
+            onChange={onChange}
+          />
+        )}
 
         <View
           style={{

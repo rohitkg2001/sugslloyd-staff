@@ -83,7 +83,6 @@ const EditDetailsScreen = ({ onSave }) => {
           title={headerTitle}
           isBack={true}
           hasIcon={true}
-          icon={"ellipsis-vertical"}
         />
 
         <MyTextInput

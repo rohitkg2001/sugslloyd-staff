@@ -31,7 +31,7 @@ const InventoryScreen = () => {
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
         <MyHeader
-          title="Orders"
+          title="Stock Management"
           hasIcon={true}
           icon={"ellipsis-vertical"}
           onIconPress={toggleMenu}
