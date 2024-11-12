@@ -33,8 +33,10 @@ const InventoryScreen = () => {
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
         <MyHeader
           title="Stock Management"
+          isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
+       
           onIconPress={toggleMenu}
         />
 
