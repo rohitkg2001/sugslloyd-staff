@@ -33,22 +33,18 @@ export default function SettingsScreen() {
     navigation.navigate("InventoryScreen");
   };
 
-  const handleToTotalSitesScreen = () =>
-  {
-    console.log( "Navigating to TotalSitesScreen" );
-    navigation.navigate( "TotalSitesScreen" );
-  }
-  const handleToTotalVendorsScreen = () =>
-  {
+  const handleToTotalSitesScreen = () => {
+    console.log("Navigating to TotalSitesScreen");
+    navigation.navigate("TotalSitesScreen");
+  };
+  const handleToTotalVendorsScreen = () => {
     console.log("Navigating to totalVendorsScreen");
     navigation.navigate("totalVendorsScreen");
-  }
-  const handleToTaskListScreen = () =>
-  {
-    console.log( "Navigating to taskListScreen" );
+  };
+  const handleToTaskListScreen = () => {
+    console.log("Navigating to taskListScreen");
     navigation.navigate("taskListScreen");
-    
-  }
+  };
 
   return (
     <ContainerComponent justifyContent="space-between">
@@ -67,7 +63,7 @@ export default function SettingsScreen() {
             onPress={() => {
               if (item.label === "Settings") {
                 handleInternalSetting();
-              } else if (item.label === "My Projects") {
+              } else if (item.label === "Project Management") {
                 handleTotalProjectsScreen();
               } else if (item.label === "Events") {
                 handleHolidayList();
@@ -78,7 +74,7 @@ export default function SettingsScreen() {
               } else if (item.label === "Vendor Management") {
                 handleToTotalVendorsScreen();
               } else if (item.label === "Task Management") {
-                handleToTaskListScreen(); // Corrected here
+                handleToTaskListScreen();
               } else {
                 navigation.navigate(item.page);
               }

@@ -1,6 +1,6 @@
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Span, H1 } from "../text";
+import { Span, H1, H6 } from "../text";
 import { styles, LIGHT, spacing } from "../../styles";
 
 export default function StatCard({
