@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { View, FlatList, TouchableOpacity } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { taskslistdata } from "../utils/faker";
+import { Card } from "react-native-paper";
+import { taskslistdata } from "../utils/faker"; 
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing } from "../styles";
-import { styles } from "../styles/components.styles";
 import MyHeader from "../components/header/MyHeader";
+import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
-import { useNavigation } from "@react-navigation/native"; 
+import { useNavigation } from "@react-navigation/native";
 
 const TaskListScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredTasks, setFilteredTasks] = useState(taskslistdata);
-
   const navigation = useNavigation();
+
+  const toggleMenu = () => {
+    console.log("Toggling menu visibility");
+    setIsMenuVisible(!isMenuVisible);
+  };
 
   const filterTasks = (text) => {
     setSearchText(text);
@@ -27,7 +31,7 @@ const TaskListScreen = () => {
   };
 
   const sortTasks = (sortOrder) => {
-    console.log(`Sorting by: ${sortOrder}`); // Debugging
+    console.log(`Sorting by: ${sortOrder}`);
     let sortedTasks = [...filteredTasks];
     if (sortOrder === "status") {
       sortedTasks.sort((a, b) => a.status.localeCompare(b.status));
@@ -35,11 +39,6 @@ const TaskListScreen = () => {
       sortedTasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
     }
     setFilteredTasks(sortedTasks);
-  };
-
-  const toggleMenu = () => {
-    console.log("Toggling menu visibility");
-    setIsMenuVisible(!isMenuVisible);
   };
 
   const menuOptions = [
@@ -60,6 +59,44 @@ const TaskListScreen = () => {
     },
   ];
 
+  const handleViewDetails = (task) => {
+    navigation.navigate("TaskDetailScreen", { task });
+  };
+
+  const renderListItem = ({ item }) => (
+    <TouchableOpacity onPress={() => handleViewDetails(item)}>
+      <Card
+        style={[
+          spacing.mv1,
+          { width: SCREEN_WIDTH - 18, backgroundColor: "#ffffff" },
+        ]}
+      >
+        <View
+          style={{ flexDirection: "row", alignItems: "center", padding: 16 }}
+        >
+          <View style={{ flex: 1 }}>
+            <H5 style={[typography.textBold]}>{item.projectName}</H5>
+            <P style={{ fontSize: 14, color: "#020409" }}>
+              Task Name: {item.taskName}
+            </P>
+            <P style={{ fontSize: 14, color: "#020409" }}>
+              Deadline: {item.deadline}
+            </P>
+            <P style={{ fontSize: 14, color: "#020409" }}>
+              Status: {item.status}
+            </P>
+            <P style={{ fontSize: 14, color: "#020409" }}>
+              Start Date: {item.startDate}
+            </P>
+            <P style={{ fontSize: 14, color: "#020409" }}>
+              End Date: {item.endDate}
+            </P>
+          </View>
+        </View>
+      </Card>
+    </TouchableOpacity>
+  );
+
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
@@ -79,12 +116,11 @@ const TaskListScreen = () => {
         >
           <View style={{ width: "80%" }}>
             <SearchBar
-              placeholder="Search"
+              placeholder="Search tasks..."
               value={searchText}
               onChangeText={filterTasks}
             />
           </View>
-
           <TouchableOpacity
             style={styles.iconButton}
             onPress={() => {
@@ -94,7 +130,6 @@ const TaskListScreen = () => {
           >
             <Ionicons name="filter" size={24} color="black" />
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.iconButton}
             onPress={() => {
@@ -108,36 +143,23 @@ const TaskListScreen = () => {
 
         <FlatList
           data={filteredTasks}
+          renderItem={renderListItem}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.card}>
-              <View style={{ flex: 1 }}>
-                <H5>{item.projectName}</H5>
-                <P>{`Task Name: ${item.taskName}`}</P>
-                <P>{`Deadline: ${item.deadline}`}</P>
-                <P>{`Status: ${item.status}`}</P>
-                <P>{`Start Date: ${item.startDate}`}</P>
-                <P>{`End Date: ${item.endDate}`}</P>
-              </View>
-            </TouchableOpacity>
-          )}
+          contentContainerStyle={styles.list}
         />
+
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate("taskListFormScreen")}
+        >
+          <Ionicons name="add" size={32} color="white" />
+        </TouchableOpacity>
 
         <Filter
           visible={isMenuVisible}
           onClose={toggleMenu}
           options={menuOptions}
         />
-
-        {/* Add Button to navigate to TaskListFormScreen */}
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => {
-            navigation.navigate("taskListFormScreen"); 
-          }}
-        >
-          <Ionicons name="add" size={32} color="white" />
-        </TouchableOpacity>
       </View>
     </ContainerComponent>
   );

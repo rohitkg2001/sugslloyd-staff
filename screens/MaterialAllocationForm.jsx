@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, ScrollView, Platform } from "react-native";
+import { View, ScrollView, Platform, Text } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
@@ -7,37 +7,35 @@ import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
-import { project } from "../utils/faker"; 
+import { project } from "../utils/faker";
 
-const TaskListFormScreen = () => {
+const MaterialAllocationForm = () => {
   const [projectName, setProjectName] = useState(null);
-  const [taskName, setTaskName] = useState("");
-  const [description, setDescription] = useState("");
+  const [materialName, setMaterialName] = useState("");
+  const [quantity, setQuantity] = useState(0);
   const [deadline, setDeadline] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const [open, setOpen] = useState(false);
-
-  
   const [projects, setProjects] = useState(
     project.map((proj) => ({
-      label: proj.projectName, 
-      value: proj.id, 
+      label: proj.projectName,
+      value: proj.id,
     }))
   );
 
   const handleReset = () => {
     setProjectName(null);
-    setTaskName("");
-    setDescription("");
+    setMaterialName("");
+    setQuantity(0);
     setDeadline(new Date());
   };
 
   const handleSubmit = () => {
-    console.log("Submitting Task with data:", {
+    console.log("Submitting Material Allocation with data:", {
       projectName,
-      taskName,
-      description,
+      materialName,
+      quantity,
       deadline,
     });
   };
@@ -60,9 +58,15 @@ const TaskListFormScreen = () => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title="Task Details" hasIcon icon="ellipsis-vertical" />
+        <MyHeader
+          title="Material Allocation"
+          isBack={true}
+          hasIcon={true}
+          icon={"ellipsis-vertical"}
+      
+        />
 
-       
+        {/* Project Dropdown */}
         <DropDownPicker
           open={open}
           value={projectName}
@@ -79,28 +83,29 @@ const TaskListFormScreen = () => {
           zIndex={3000}
         />
 
+        {/* Material Name Input */}
         <MyTextInput
-          title="Task Name"
-          value={taskName}
-          onChangeText={setTaskName}
-          placeholder="Enter Task Name"
+          title="Material Name"
+          value={materialName}
+          onChangeText={setMaterialName}
+          placeholder="Enter Material Name"
+        />
+
+        {/* Quantity Input */}
+        <MyTextInput
+          title="Quantity"
+          value={quantity.toString()}
+          onChangeText={(text) => setQuantity(parseInt(text) || 0)}
+          keyboardType="numeric"
+          placeholder="Enter Quantity"
         />
 
         <MyTextInput
-          title="Description"
-          value={description}
-          onChangeText={setDescription}
-          placeholder="Enter Description"
-          multiline
-          style={{ height: 120, textAlignVertical: "top", padding: 12 }}
-        />
-
-        <MyTextInput
-          title="Selected Deadline"
+          title="Allotment Date"
           value={deadline.toLocaleDateString()}
           editable={false}
         />
-        <MyButton title="Select Deadline" onPress={showPicker} />
+        <MyButton title="Select Allotment Date" onPress={showPicker} />
         {showDatePicker && (
           <DateTimePicker
             value={deadline}
@@ -125,4 +130,4 @@ const TaskListFormScreen = () => {
   );
 };
 
-export default TaskListFormScreen;
+export default MaterialAllocationForm;
