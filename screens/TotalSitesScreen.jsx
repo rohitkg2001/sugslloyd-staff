@@ -9,14 +9,14 @@ import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { useNavigation } from "@react-navigation/native"; 
 
 const TotalSitesScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredSites, setFilteredSites] = useState(totalsitesData);
   const [selectedSite, setSelectedSite] = useState(null);
-  const navigation = useNavigation(); // Navigation hook
+  const navigation = useNavigation(); 
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
@@ -88,7 +88,7 @@ const TotalSitesScreen = () => {
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <TouchableOpacity
-              onPress={() => handleEdit(item)} // Open Edit Details Screen
+              onPress={() => handleEdit(item)} 
               style={{ marginRight: 12 }}
             >
               <Ionicons name="create-outline" size={24} color="black" />
@@ -141,7 +141,7 @@ const TotalSitesScreen = () => {
         />
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() => navigation.navigate("sitesFormScreen")} // Navigate to SitesFormScreen
+          onPress={() => navigation.navigate("sitesFormScreen")} 
         >
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>

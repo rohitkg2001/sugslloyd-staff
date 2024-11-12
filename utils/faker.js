@@ -121,12 +121,35 @@ export const categories = [
 ];
 
 export const project = [
-  { id: 1, projectName: "Project 01A", duration: "2 days", status: "ongoing" },
+  {
+    id: 1,
+    projectName: "Project 01B",
+    duration: "6 days",
+    status: "completed",
+    projectSerial: "76",
+    siteName: "Site Delta",
+    sanctionLoad: "200KW",
+    projectCapacity: "400KW",
+    caNumber: "CA44556",
+    surveyStatus: "In Progress",
+    contactNo: "2233445566",
+    solarMeterSerial: "SM004D",
+    //vendorName: "Vendor D",
+  },
   {
     id: 2,
     projectName: "Project 02B",
     duration: "5 days",
     status: "completed",
+    projectSerial: "",
+    siteName: "",
+    sanctionLoad: "",
+    projectCapacity: "",
+    caNumber: "",
+    surveyStatus: "",
+    contactNo: "",
+    solarMeterSerial: "",
+    vendorName: "",
   },
   { id: 3, projectName: "Project 03C", duration: "3 days", status: "ongoing" },
   {
@@ -884,6 +907,9 @@ export const totalVendorsData = [
     name: "Raju Das",
     location: "Patna",
     contactNumber: "123-456-7890",
+    gstNumber: "",
+    contactPerson: "",
+    mailId: "",
   },
   {
     id: "2",

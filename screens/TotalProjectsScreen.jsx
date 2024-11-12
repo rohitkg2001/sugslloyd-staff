@@ -33,9 +33,12 @@ const TotalProjectsScreen = ({ navigation }) => {
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
+
   const handleEdit = (item) => {
-    console.log("Edit project:", item);
-    // Add navigation or edit function logic here
+    navigation.navigate("EditDetailsScreen", {
+      site: item,
+      formType: "project",
+    });
   };
 
   const handleDelete = (item) => {
