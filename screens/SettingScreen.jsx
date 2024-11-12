@@ -43,13 +43,19 @@ export default function SettingsScreen() {
     console.log("Navigating to totalVendorsScreen");
     navigation.navigate("totalVendorsScreen");
   }
+  const handleToTaskListScreen = () =>
+  {
+    console.log( "Navigating to taskListScreen" );
+    navigation.navigate("taskListScreen");
+    
+  }
 
   return (
     <ContainerComponent justifyContent="space-between">
       <ProfileCard
         imageUri={staff.image}
         name={`${staff.first_name} ${staff.last_name}`}
-        phoneNumber={staff.phone}
+        phoneNumber={staff.contactNo}
         onPress={() => navigation.navigate("profileScreen")}
       />
       <View style={{ flex: 1 }}>
@@ -59,11 +65,10 @@ export default function SettingsScreen() {
             label={item.label}
             icon={item.icon}
             onPress={() => {
-             
               if (item.label === "Settings") {
                 handleInternalSetting();
               } else if (item.label === "My Projects") {
-                handleTotalProjectsScreen(); 
+                handleTotalProjectsScreen();
               } else if (item.label === "Events") {
                 handleHolidayList();
               } else if (item.label === "Inventory Management") {
@@ -72,8 +77,10 @@ export default function SettingsScreen() {
                 handleToTotalSitesScreen();
               } else if (item.label === "Vendor Management") {
                 handleToTotalVendorsScreen();
+              } else if (item.label === "Task Management") {
+                handleToTaskListScreen(); // Corrected here
               } else {
-                navigation.navigate(item.page); 
+                navigation.navigate(item.page);
               }
             }}
           />

@@ -815,7 +815,7 @@ export const staff = {
   note: [],
   address: "123 gali, jhajjar, Haryana",
   alternative_address: "",
-  phone: "9909230912",
+  contactNo: "9909230912",
   alternative_phone: "",
   dob: "",
   gender: "male",
@@ -1052,5 +1052,26 @@ export const blocklistedVendorsData = [
     location: "Sultanpur",
     contactNumber: "(415) 555-4200",
     status: "blocklisted",
+  },
+];
+
+export const taskslistdata = [
+  {
+    id: 1,
+    projectName: "Project Alpha",
+    taskName: "Design Phase",
+    deadline: "2024-11-20",
+    status: "In Progress",
+    startDate: "2024-10-01",
+    endDate: "2024-12-15",
+  },
+  {
+    id: 2,
+    projectName: "Project Beta",
+    taskName: "Development Phase",
+    deadline: "2024-12-01",
+    status: "Completed",
+    startDate: "2024-09-01",
+    endDate: "2024-12-01",
   },
 ];
