@@ -38,7 +38,7 @@ export default function SettingsScreen() {
       <ProfileCard
         imageUri={staff.image}
         name={`${staff.first_name} ${staff.last_name}`}
-        phoneNumber={staff.phone}
+        phoneNumber={staff.contactNo}
         onPress={() => navigation.navigate("profileScreen")}
       />
       <View style={{ flex: 1 }}>
@@ -53,7 +53,7 @@ export default function SettingsScreen() {
               } else if (item.label === "Site Inventory") {
                 handlerequisitions();
               } else if (item.label === "Events") {
-                handleHolidayList(); 
+                handleHolidayList();
               } else {
                 navigation.navigate(item.page);
               }

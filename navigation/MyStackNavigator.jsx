@@ -27,12 +27,13 @@ import ViewDetailScreen from "../screens/ViewDetailScreen";
 import EditDetailsScreen from "../screens/EditDetailsScreen";
 import SitesFormScreen from "../screens/SitesFormScreen";
 import VendorFormScreen from "../screens/VendorFormScreen";
+import TaskListScreen from "../screens/TaskListScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="dashboardScreen"
+      initialRouteName="taskListScreen"
       screenOptions={{
         headerShown: false,
       }}
@@ -83,6 +84,7 @@ export default function MyStackNavigator() {
       <Stack.Screen name="EditDetailsScreen" component={EditDetailsScreen} />
       <Stack.Screen name="sitesFormScreen" component={SitesFormScreen} />
       <Stack.Screen name="VendorFormScreen" component={VendorFormScreen} />
+      <Stack.Screen name="taskListScreen" component={TaskListScreen} />
     </Stack.Navigator>
   );
 }
