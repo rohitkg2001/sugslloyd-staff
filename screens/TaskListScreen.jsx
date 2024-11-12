@@ -9,7 +9,7 @@ import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native"; 
 
 const TaskListScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -133,7 +133,7 @@ const TaskListScreen = () => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => {
-            navigation.navigate("taskListFormScreen");
+            navigation.navigate("taskListFormScreen"); 
           }}
         >
           <Ionicons name="add" size={32} color="white" />
