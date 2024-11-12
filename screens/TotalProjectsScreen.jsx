@@ -24,12 +24,10 @@ const TotalProjectsScreen = ({ navigation }) => {
     setFilteredProjects(filtered);
   };
 
-  // Navigate to project detail screen and pass project data
   const navigateToProjectDetails = (projectData) => {
-    navigation.navigate("ViewDetailScreen", { site: projectData }); // Passing project data to ViewDetailScreen
+    navigation.navigate("ViewDetailScreen", { site: projectData });
   };
 
-  // Toggle the filter menu visibility
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };

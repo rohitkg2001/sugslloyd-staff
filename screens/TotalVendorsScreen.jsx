@@ -86,7 +86,7 @@ const TotalVendorsScreen = () => {
     );
   };
   const handleViewDetails = (vendor) => {
-    navigation.navigate("ViewDetailScreen", { vendor: vendor });
+    navigation.navigate("ViewDetailScreen", { site: vendor });
   };
 
   const renderListItem = ({ item }) => (

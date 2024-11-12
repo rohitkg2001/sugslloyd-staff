@@ -45,7 +45,7 @@ const ViewDetailScreen = ({ route }) => {
 
   const renderVendorDetails = () => (
     <>
-      {renderDetailRow("Vendor Name:", site.vendorName)}
+      {renderDetailRow("VendorName:", site.vendorName)}
       {renderDetailRow("Mail ID:", site.mailId)}
       {renderDetailRow("Contact No:", site.contactNo)}
       {renderDetailRow("Location:", site.location)}

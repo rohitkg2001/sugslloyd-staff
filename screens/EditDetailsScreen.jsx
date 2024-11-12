@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, styles } from "react-native";
+import { ScrollView, View } from "react-native";
 import { H6 } from "../components/text";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import { useRoute, useNavigation } from "@react-navigation/native";
@@ -67,13 +67,23 @@ const EditDetailsScreen = ({ onSave }) => {
     navigation.goBack();
   };
 
+  const headerTitle =
+    formType === "project"
+      ? "Edit Project"
+      : formType === "vendor"
+      ? "Edit Vendor"
+      : "Edit Site";
+
   return (
     <ScrollView
       style={[spacing.mh2, { width: SCREEN_WIDTH - 16, paddingVertical: 6 }]}
     >
       <View>
-        <H6>{ site ? `Edit ${ formType }` : `Add ${ formType }` }</H6>
-        
+        <MyHeader
+          title={headerTitle}
+          isBack={true}
+          hasIcon={true}
+        />
 
         <MyTextInput
           title="Name"
@@ -249,7 +259,7 @@ const EditDetailsScreen = ({ onSave }) => {
           ]}
         >
           <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
-          <MyButton title=" Save" onPress={handleSave} />
+          <MyButton title="Save" onPress={handleSave} />
         </View>
       </View>
     </ScrollView>

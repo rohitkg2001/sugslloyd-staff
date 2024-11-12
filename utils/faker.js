@@ -494,8 +494,7 @@ export const menuItems = [
   { label: "Vendor Management", icon: "people-outline" },
   { label: "Project Management", icon: "reader-outline" },
   { label: "Reports", page: "", icon: "pie-chart-outline" },
-  { label: "My Projects", page: "", icon: "grid-outline" },
-  { label: "My Tasks", page: "", icon: "grid-outline" },
+  { label: "Task Management", page: "", icon: "grid-outline" },
   { label: "Settings", page: "", icon: "cog-outline" },
 ];
 export const internal = [
