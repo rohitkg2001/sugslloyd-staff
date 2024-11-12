@@ -74,7 +74,7 @@ export default function SettingsScreen() {
               } else if (item.label === "Vendor Management") {
                 handleToTotalVendorsScreen();
               } else if (item.label === "Task Management") {
-                handleToTaskListScreen();
+                handleToTaskListScreen(); 
               } else {
                 navigation.navigate(item.page);
               }
