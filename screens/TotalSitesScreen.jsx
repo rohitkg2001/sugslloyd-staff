@@ -9,16 +9,17 @@ import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
-import { useNavigation } from "@react-navigation/native"; 
+import { useNavigation } from "@react-navigation/native";
 
 const TotalSitesScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredSites, setFilteredSites] = useState(totalsitesData);
   const [selectedSite, setSelectedSite] = useState(null);
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
 
   const toggleMenu = () => {
+    console.log("Toggling menu visibility");
     setIsMenuVisible(!isMenuVisible);
   };
 
@@ -28,6 +29,17 @@ const TotalSitesScreen = () => {
       item.siteName.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredSites(filtered);
+  };
+
+  const sortSites = (sortOrder) => {
+    console.log(`Sorting by: ${sortOrder}`);
+    let sortedSites = [...filteredSites];
+    if (sortOrder === "lowToHigh") {
+      sortedSites.sort((a, b) => a.siteName.localeCompare(b.siteName));
+    } else if (sortOrder === "highToLow") {
+      sortedSites.sort((a, b) => b.siteName.localeCompare(a.siteName));
+    }
+    setFilteredSites(sortedSites);
   };
 
   const handleEdit = (site) => {
@@ -88,7 +100,7 @@ const TotalSitesScreen = () => {
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <TouchableOpacity
-              onPress={() => handleEdit(item)} 
+              onPress={() => handleEdit(item)}
               style={{ marginRight: 12 }}
             >
               <Ionicons name="create-outline" size={24} color="black" />
@@ -126,25 +138,56 @@ const TotalSitesScreen = () => {
               onChangeText={filterSites}
             />
           </View>
-          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => {
+              console.log("Filter Pressed");
+              toggleMenu();
+            }}
+          >
             <Ionicons name="filter" size={24} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => {
+              console.log("Sort Pressed");
+              toggleMenu();
+            }}
+          >
             <Ionicons name="swap-vertical" size={24} color="black" />
           </TouchableOpacity>
         </View>
+
         <FlatList
           data={filteredSites}
           renderItem={renderListItem}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
         />
+
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() => navigation.navigate("sitesFormScreen")} 
+          onPress={() => navigation.navigate("sitesFormScreen")}
         >
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
+
+        <Filter
+          visible={isMenuVisible}
+          onClose={toggleMenu}
+          options={[
+            {
+              label: "Low to High",
+              value: "lowToHigh",
+              action: () => sortSites("lowToHigh"),
+            },
+            {
+              label: "High to Low",
+              value: "highToLow",
+              action: () => sortSites("highToLow"),
+            },
+          ]}
+        />
       </View>
     </ContainerComponent>
   );

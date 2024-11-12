@@ -9,11 +9,14 @@ import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
+import { useNavigation } from "@react-navigation/native"; 
 
 const TaskListScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredTasks, setFilteredTasks] = useState(taskslistdata);
+
+  const navigation = useNavigation();
 
   const filterTasks = (text) => {
     setSearchText(text);
@@ -35,7 +38,7 @@ const TaskListScreen = () => {
   };
 
   const toggleMenu = () => {
-    console.log("Toggling menu visibility"); 
+    console.log("Toggling menu visibility");
     setIsMenuVisible(!isMenuVisible);
   };
 
@@ -126,9 +129,12 @@ const TaskListScreen = () => {
           options={menuOptions}
         />
 
+        {/* Add Button to navigate to TaskListFormScreen */}
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() => console.log("Add Pressed")}
+          onPress={() => {
+            navigation.navigate("taskListFormScreen"); 
+          }}
         >
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
