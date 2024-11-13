@@ -5,10 +5,10 @@ import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5, P } from "../components/text";
 import Filter from "../components/filters";
-import StatCard from "../components/card/Statcard";
+import MyButton from "../components/buttons/MyButton";
 
 const ViewDetailScreen = ({ route, navigation }) => {
-  const { site } = route.params;
+  const { site, formType } = route.params;
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const renderDetailRow = (label, value) => (
@@ -55,15 +55,14 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const renderVendorDetails = () => (
     <>
       {renderSectionTitle("Vendor Information")}
-      {renderDetailRow("Vendor Name", site.vendorName)}
+      {renderDetailRow("Vendor Name", site.name)}
       {renderDetailRow("Mail ID", site.mailId)}
-      {renderDetailRow("Contact No", site.contactNo)}
+      {renderDetailRow("Contact No", site.contactNumber)}
       {renderDetailRow("Location", site.location)}
       {renderDetailRow("GST Number", site.gstNumber)}
       {renderDetailRow("Status", site.status)}
     </>
   );
-
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
@@ -103,20 +102,12 @@ const ViewDetailScreen = ({ route, navigation }) => {
     { label: "Delete", onPress: handleDelete },
   ];
 
-  const navigateToCreateTask = () => {
-    navigation.navigate("CreateTaskScreen");
-  };
-
-  const navigateToViewTask = () => {
-    navigation.navigate("ViewTaskScreen");
-  };
-
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
         <MyHeader
           title={
-            site.vendorName
+            formType === "vendor"
               ? "Vendor Details"
               : site.projectName
               ? "Project Details"
@@ -124,37 +115,33 @@ const ViewDetailScreen = ({ route, navigation }) => {
           }
           isBack={true}
           hasIcon={true}
-          onIconPress={toggleMenu}
+          onIconPress={() => setIsMenuVisible(!isMenuVisible)}
         />
         <ScrollView contentContainerStyle>
           <View>
-            {site.vendorName
+            {formType === "vendor"
               ? renderVendorDetails()
               : site.projectName
               ? renderProjectDetails()
               : renderSiteDetails()}
           </View>
-          {/* <View
+          <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              marginTop: 20,
-              paddingHorizontal: 4,
+              marginVertical: 16,
             }}
           >
-            <StatCard
-              backgroundColor="#A0D3E8"
-              tasks="Create"
-              onPress={navigateToCreateTask}
-              style={{ flex: 1, marginRight: 8 }}
+            <MyButton
+              title="Create Task"
+              onPress={() => navigation.navigate("taskListFormScreen")}
+              color="#DC4C64"
             />
-            <StatCard
-              backgroundColor="#C8E6C9"
-              tasks="Tasks"
-              onPress={navigateToViewTask}
-              style={{ flex: 1, marginLeft: 8 }}
+            <MyButton
+              title="View Task"
+              onPress={() => navigation.navigate("taskListScreen")}
             />
-          </View> */}
+          </View>
         </ScrollView>
 
         <Filter
