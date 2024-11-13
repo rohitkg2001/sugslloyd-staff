@@ -1,28 +1,24 @@
 import React, { useState } from "react";
-import { View, ScrollView, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, ScrollView, StyleSheet, Alert } from "react-native";
 import { SCREEN_WIDTH, spacing } from "../styles";
-import { styles as componentStyles } from "../styles/components.styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5, P } from "../components/text";
-import Icon from "react-native-vector-icons/Ionicons";
 import Filter from "../components/filters";
-import CardFullWidth from "../components/card/CardFullWidth"; 
+import MyButton from "../components/buttons/MyButton";
 
 const ViewDetailScreen = ({ route, navigation }) => {
-  const { site } = route.params;
+  const { site, formType } = route.params;
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const renderDetailRow = (label, value) => (
     <View style={styles.row}>
-      <P style={styles.label}>{label}</P>
+      <P>{label}</P>
       <P style={styles.value}>{value}</P>
     </View>
   );
 
-  const renderSectionTitle = (title) => (
-    <H5 style={styles.sectionTitle}>{title}</H5>
-  );
+  const renderSectionTitle = (title) => <H5>{title}</H5>;
 
   const renderSiteDetails = () => (
     <>
@@ -59,15 +55,14 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const renderVendorDetails = () => (
     <>
       {renderSectionTitle("Vendor Information")}
-      {renderDetailRow("Vendor Name", site.vendorName)}
+      {renderDetailRow("Vendor Name", site.name)}
       {renderDetailRow("Mail ID", site.mailId)}
-      {renderDetailRow("Contact No", site.contactNo)}
+      {renderDetailRow("Contact No", site.contactNumber)}
       {renderDetailRow("Location", site.location)}
       {renderDetailRow("GST Number", site.gstNumber)}
       {renderDetailRow("Status", site.status)}
     </>
   );
-
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
@@ -75,14 +70,20 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const handleEdit = () => {
     navigation.navigate("EditDetailsScreen", {
       site: site,
-      formType: site.vendorName ? "vendor" : site.projectName ? "project" : "site",
+      formType: site.vendorName
+        ? "vendor"
+        : site.projectName
+        ? "project"
+        : "site",
     });
   };
 
   const handleDelete = () => {
     Alert.alert(
       "Confirm Delete",
-      `Are you sure you want to delete this ${site.vendorName ? "vendor" : site.projectName ? "project" : "site"}?`,
+      `Are you sure you want to delete this ${
+        site.vendorName ? "vendor" : site.projectName ? "project" : "site"
+      }?`,
       [
         { text: "Cancel", style: "cancel" },
         {
@@ -101,32 +102,48 @@ const ViewDetailScreen = ({ route, navigation }) => {
     { label: "Delete", onPress: handleDelete },
   ];
 
-  const navigateToCreateTask = () => {
-    navigation.navigate("CreateTaskScreen");
-  };
-
-  const navigateToViewTask = () => {
-    navigation.navigate("ViewTaskScreen");
-  };
-
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
         <MyHeader
-          title={site.vendorName ? "Vendor Details" : site.projectName ? "Project Details" : "Site Details"}
+          title={
+            formType === "vendor"
+              ? "Vendor Details"
+              : site.projectName
+              ? "Project Details"
+              : "Site Details"
+          }
           isBack={true}
           hasIcon={true}
-          onIconPress={toggleMenu}
+          onIconPress={() => setIsMenuVisible(!isMenuVisible)}
         />
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <View style={styles.content}>
-            {site.vendorName
+        <ScrollView contentContainerStyle>
+          <View>
+            {formType === "vendor"
               ? renderVendorDetails()
               : site.projectName
               ? renderProjectDetails()
               : renderSiteDetails()}
           </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginVertical: 16,
+            }}
+          >
+            <MyButton
+              title="Create Task"
+              onPress={() => navigation.navigate("taskListFormScreen")}
+              color="#DC4C64"
+            />
+            <MyButton
+              title="View Task"
+              onPress={() => navigation.navigate("taskListScreen")}
+            />
+          </View>
         </ScrollView>
+
         <Filter
           visible={isMenuVisible}
           onClose={() => setIsMenuVisible(false)}
@@ -138,52 +155,17 @@ const ViewDetailScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  scrollContent: {
-    flexGrow: 1,
-  },
-  content: {
-    padding: 16,
-    backgroundColor: "#f9f9f9",
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    marginVertical: 8,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: "#333",
-    marginVertical: 12,
-  },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 8,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#555",
-    flex: 1,
-  },
+
   value: {
     fontSize: 16,
     color: "#333",
     flex: 1,
     textAlign: "right",
-  },
-  cardSection: {
-    flexDirection: "row",
-    flexWrap: "wrap",  
-    justifyContent: "space-between",  
-    marginTop: 16,
-    paddingHorizontal: 8,  
-  },
-  cardContainer: {
-    width: "45%", 
-    marginBottom: 16,  
   },
 });
 

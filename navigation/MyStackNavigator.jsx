@@ -29,13 +29,12 @@ import SitesFormScreen from "../screens/SitesFormScreen";
 import VendorFormScreen from "../screens/VendorFormScreen";
 import TaskListScreen from "../screens/TaskListScreen";
 import TaskListFormScreen from "../screens/TaskListFormScreen";
-import MaterialAllocationForm from "../screens/MaterialAllocationForm";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="loginScreen"
+      initialRouteName="dashboardScreen"
       screenOptions={{
         headerShown: false,
       }}
@@ -88,10 +87,6 @@ export default function MyStackNavigator() {
       <Stack.Screen name="VendorFormScreen" component={VendorFormScreen} />
       <Stack.Screen name="taskListScreen" component={TaskListScreen} />
       <Stack.Screen name="taskListFormScreen" component={TaskListFormScreen} />
-      <Stack.Screen
-        name="materialAllocationForm"
-        component={MaterialAllocationForm}
-      />
     </Stack.Navigator>
   );
 }
