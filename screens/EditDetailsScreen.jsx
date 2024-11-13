@@ -162,7 +162,7 @@ const EditDetailsScreen = ({ onSave }) => {
               onChangeText={(text) => handleChange("solarMeterSerial", text)}
             />
             <MyTextInput
-              title="Vendor Name"
+              title="xName"
               placeholder="Vendor Name"
               value={formData.vendorName}
               onChangeText={(text) => handleChange("vendorName", text)}

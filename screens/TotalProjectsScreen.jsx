@@ -15,7 +15,7 @@ const TotalProjectsScreen = ({ navigation }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredProjects, setFilteredProjects] = useState(project);
 
-  // Filter projects based on search text
+  
   const filterProjects = (text) => {
     setSearchText(text);
     const filtered = project.filter((item) =>
