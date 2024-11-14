@@ -35,7 +35,7 @@ export const typography = StyleSheet.create({
         color: WARNING_COLOR
     },
     textSuccess: {
-        color: SUCCESS_COLOR
+        color: SUCCESS_COLOR 
     },
     textPrimaryTransparent: {
         color: PRIMARY_COLOR_TRANSPARENT,

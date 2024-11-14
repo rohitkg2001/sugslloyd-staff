@@ -1,52 +1,44 @@
-import React from "react";
-import { View, TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
+import { View, TouchableOpacity, Text, Image } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { staff } from "../utils/faker";
-import { LIGHT, PRIMARY_COLOR, styles, spacing, typography } from "../styles";
+import { documentData, staff } from "../utils/faker";
+import { LIGHT, PRIMARY_COLOR, styles, spacing, typography, SCREEN_WIDTH } from "../styles";
 import CardFullWidth from "../components/card/CardFullWidth";
 import Avatar from "../components/Avatar";
-import { H6 } from "../components/text";
-import { SCREEN_WIDTH } from "../styles";
+import { H6, H4 } from "../components/text";
+import MyFlatList from "../components/utility/MyFlatList";
 
-// Reusable item component with action icons
-const ProfileItem = ({ iconName, label }) => (
-  <View
-    style={[
-      spacing.mv4,
-      {
-        width: SCREEN_WIDTH - 32,
-      },
-    ]}
-  >
-    {/* Left side icon and label */}
-    <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <Icon
-        name={iconName}
-        size={30}
-        color={PRIMARY_COLOR}
-        style={{ marginRight: spacing.mh2 }}
-      />
-      <H6 style={[typography.font16, { color: "black", flex: 1 }]}>{label}</H6>
-    </View>
 
-    {/* Right side action icons */}
-    <View
-      style={{ flexDirection: "row", alignItems: "center", marginLeft: "auto" }}
-    >
-      <TouchableOpacity style={{ marginHorizontal: spacing.mh1 }}>
-        <Icon name="edit" size={24} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity style={{ marginHorizontal: spacing.mh1 }}>
-        <Icon name="visibility" size={24} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity style={{ marginHorizontal: spacing.mh1 }}>
-        <Icon name="delete" size={24} color="black" />
-      </TouchableOpacity>
+
+const ProfileItem = ({ iconName, label }) => {
+
+  return (
+    <View style={[styles.row, spacing.pv3, spacing.bbw05, { width: SCREEN_WIDTH - 20, justifyContent: 'flex-start' }]}>
+      <View style={[spacing.p1, spacing.br2, spacing.bw05, spacing.mh2]}>
+        <Image
+          source={{ uri: iconName }}
+          height={100}
+          width={180}
+        />
+      </View>
+      <View>
+        <H6 style={[typography.font16, { color: "black", flex: 1 }]}>{label}</H6>
+        <View style={[styles.row, { width: SCREEN_WIDTH - 248, justifyContent: 'space-between' }]}>
+          <TouchableOpacity>
+            <H4 style={typography.textInfo}>Edit </H4>
+          </TouchableOpacity>
+          <H4> | </H4>
+          <TouchableOpacity>
+            <H4 style={typography.textDanger}> Delete</H4>
+          </TouchableOpacity>
+        </View>
+
+      </View>
     </View>
-  </View>
-);
+  )
+};
 
 const ProfileScreen = () => {
   return (
@@ -54,56 +46,39 @@ const ProfileScreen = () => {
       <MyHeader title="My Profile" isBack={true} hasIcon={true} />
 
       {/* Main Profile Card */}
-      <CardFullWidth
-        backgroundColor={PRIMARY_COLOR}
-        style={{ padding: spacing.mh2 }}
-      >
-        <View
-          style={[
-            styles.row,
-            {
-              alignItems: "center",
-              paddingVertical: spacing.mv2,
-            },
-          ]}
-        >
+      <CardFullWidth backgroundColor={PRIMARY_COLOR} >
+        <View style={[styles.row, { alignItems: "center", marginTop: -10 }]}>
           <Avatar
             avatar={staff.image}
             name={`${staff.first_name} ${staff.last_name}`}
             online={false}
           />
 
-          <View style={{ flex: 1, marginLeft: spacing.mh1 }}>
+          <View style={spacing.mh1}>
             <H6 style={[typography.font12, { color: LIGHT }]}>
               {staff.first_name} {staff.last_name}
             </H6>
             <H6 style={[typography.font12, { color: LIGHT }]}>
-              Email: {staff.email}
+
+              {staff.email}
             </H6>
             <H6 style={[typography.font12, { color: LIGHT }]}>
-              Contact No: {staff.contactNo}
+              {staff.contactNo}
             </H6>
             <H6 style={[typography.font12, { color: LIGHT }]}>
-              Address: {staff.address}
+              {staff.address}
             </H6>
           </View>
         </View>
       </CardFullWidth>
 
-      <View style={{ padding: spacing.mh2, marginTop: spacing.mv5 }}>
-        <View style={{ marginBottom: spacing.mv3 }}>
-          <ProfileItem iconName="account-circle" label="Aadhar Card" />
-        </View>
-
-        <View style={{ marginBottom: spacing.mv3 }}>
-          <ProfileItem iconName="credit-card" label="Pan Card" />
-        </View>
-
-        <View style={{ marginBottom: spacing.mv3 }}>
-          <ProfileItem iconName="drive-eta" label="Driving License" />
-        </View>
-      </View>
-    </ContainerComponent>
+      <MyFlatList
+        data={documentData}
+        renderItem={({ item }, index) =>
+          <ProfileItem key={index} iconName={item.documentImage} label={item.documentName} />}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </ContainerComponent >
   );
 };
 

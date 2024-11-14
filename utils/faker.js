@@ -318,96 +318,16 @@ export const earnings = [
   },
 ];
 
-export const leaveTypes = [
-  {
-    id: 1,
-    type: "Single Day",
-    icon: "clock",
-  },
-  {
-    id: 2,
-    type: "Multiple Days",
-    icon: "clock",
-  },
-  {
-    id: 3,
-    type: "Hourly",
-    icon: "clock",
-  },
-];
-
-export const dummyData = [
-  { id: "1", title: "Item 1" },
-  { id: "2", title: "Item 2" },
-  { id: "3", title: "Item 3" },
-  { id: "4", title: "Item 4" },
-  { id: "5", title: "Item 5" },
-];
-
-export const cardData = [
-  {
-    id: 1,
-    title: "Dashboard design for admin",
-    priority: "High",
-    status: "On Track",
-    date: "14 Oct 2022",
-    links: 5,
-    comments: 5,
-    avatars: [
-      "https://randomuser.me/api/portraits/men/1.jpg",
-      "https://randomuser.me/api/portraits/women/2.jpg",
-    ],
-  },
-  {
-    id: 2,
-    title: "Mobile app redesign",
-    priority: "Medium",
-    status: "On Hold",
-    date: "18 Oct 2022",
-    links: 3,
-    comments: 2,
-    avatars: [
-      "https://randomuser.me/api/portraits/men/3.jpg",
-      "https://randomuser.me/api/portraits/women/4.jpg",
-    ],
-  },
-  {
-    id: 3,
-    title: "Website Revamp",
-    priority: "High",
-    status: "In Progress",
-    date: "20 Oct 2022",
-    links: 8,
-    comments: 12,
-    avatars: [
-      "https://randomuser.me/api/portraits/men/5.jpg",
-      "https://randomuser.me/api/portraits/women/6.jpg",
-    ],
-  },
-  {
-    id: 4,
-    title: "Marketing Campaign",
-    priority: "Low",
-    status: "Completed",
-    date: "22 Oct 2022",
-    links: 2,
-    comments: 0,
-    avatars: [
-      "https://randomuser.me/api/portraits/men/7.jpg",
-      "https://randomuser.me/api/portraits/women/8.jpg",
-    ],
-  },
-];
-
 export const menuItems = [
-  { label: "Inventory Management", icon: "cart-outline" },
-  { label: "Site Management", icon: "map-outline" },
-  { label: "Vendor Management", icon: "people-outline" },
-  { label: "Project Management", icon: "reader-outline" },
-  { label: "Reports", page: "", icon: "pie-chart-outline" },
-  { label: "Task Management", page: "", icon: "grid-outline" },
-  { label: "Settings", page: "", icon: "cog-outline" },
+  { label: "Inventory Management", icon: "cart-outline", page: "inventoryScreen" },
+  { label: "Site Management", icon: "map-outline", page: "TotalSitesScreen" },
+  { label: "Vendor Management", icon: "people-outline", page: "totalVendorsScreen" },
+  { label: "Project Management", icon: "reader-outline", page: "TotalProjectsScreen" },
+  { label: "Task Management", page: "", icon: "grid-outline", page: "taskListScreen" },
+  { label: "Reports", page: "", icon: "pie-chart-outline", },
+  { label: "Settings", page: "", icon: "cog-outline", page: "InternalSetting" },
 ];
+
 export const internal = [
   {
     label: "Notification",
@@ -450,11 +370,11 @@ export const notifications = [
 ];
 
 export const documentData = [
-  { id: "1", name: "Offer Letter", icon: "file-document-outline" },
-  { id: "2", name: "Appointment Letter", icon: "file-document-outline" },
-  { id: "3", name: "Bond Agreement", icon: "file-document-outline" },
-  { id: "4", name: "Appraisal Letter", icon: "file-document-outline" },
-  { id: "5", name: "Salary Slip", icon: "file-document-outline" },
+  { id: "1", staffId: 1, documentName: "Offer Letter", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
+  { id: "2", staffId: 1, documentName: "Appointment Letter", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
+  { id: "3", staffId: 1, documentName: "Bond Agreement", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
+  { id: "4", staffId: 1, documentName: "Appraisal Letter", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
+  // { id: "5", staffId: 1, documentName: "Salary Slip", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
 ];
 
 export const activities = [

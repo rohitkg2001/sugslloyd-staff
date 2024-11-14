@@ -69,6 +69,12 @@ export const spacing = StyleSheet.create({
         paddingLeft: 20,
     },
     // TODO:pr,pt,pb
+    pb3: {
+        paddingBottom: 12
+    },
+    pb4: {
+        paddingBottom: 16
+    },
 
     // Styles for horizontal margin
     mh1: {

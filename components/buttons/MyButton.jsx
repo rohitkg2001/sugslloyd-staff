@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { H5 } from "../text";
-import { typography } from "../../styles";
+import { typography, SCREEN_WIDTH } from "../../styles";
 
 const MyButton = ({ title, onPress, color = "#76885B" }) => {
   return (
@@ -14,6 +14,7 @@ const MyButton = ({ title, onPress, color = "#76885B" }) => {
           borderRadius: 8,
           alignItems: "center",
           marginVertical: 8,
+          width: (SCREEN_WIDTH / 2) - 40
         },
       ]}
       onPress={onPress}

@@ -18,7 +18,7 @@ import {
   styles,
   typography,
 } from "../styles";
-import { staff, tasks } from "../utils/faker"; 
+import { staff, tasks } from "../utils/faker";
 
 export default function DashboardScreen() {
   const navigation = useNavigation();
@@ -50,7 +50,7 @@ export default function DashboardScreen() {
     navigation.navigate("TotalSitesScreen");
   };
   const navigateToInventoryScreen = () => {
-    navigation.navigate("InventoryScreen");
+    navigation.navigate("inventoryScreen");
   };
   const navigateToCompletedSitesScreen = () => {
     navigation.navigate("completedSitesScreen");
@@ -150,21 +150,21 @@ export default function DashboardScreen() {
                 onPress={navigateToNoRecord}
               >
                 <P style={typography.textBold}>Open</P>
-                <P>0</P>
+                <P>20</P>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{ alignItems: "center" }}
                 onPress={navigateToNoRecord}
               >
                 <P style={typography.textBold}>Completed</P>
-                <P>0</P>
+                <P>7</P>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{ alignItems: "center" }}
                 onPress={navigateToNoRecord}
               >
                 <P style={typography.textBold}>Hold</P>
-                <P>0</P>
+                <P>1</P>
               </TouchableOpacity>
             </View>
           </CardFullWidth>
