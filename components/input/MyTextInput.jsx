@@ -9,6 +9,7 @@ const MyTextInput = ({
   onChangeText,
   placeholder,
   keyboardType,
+  style, 
   ...props
 }) => {
   return (
@@ -23,11 +24,10 @@ const MyTextInput = ({
           styles.textInputField,
           spacing.mv1,
           spacing.pl3,
-          { width: SCREEN_WIDTH - 20 },
+          { width: SCREEN_WIDTH - 20 }, 
+          style, 
         ]}
         cursorColor={PRIMARY_COLOR}
-        title
-        icon
         {...props}
       />
     </View>

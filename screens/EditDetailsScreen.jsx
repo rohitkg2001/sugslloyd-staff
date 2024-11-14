@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, styles } from "react-native";
+import { ScrollView, View } from "react-native";
 import { H6 } from "../components/text";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
+import MyHeader from "../components/header/MyHeader";
 
 const EditDetailsScreen = ({ onSave }) => {
   const route = useRoute();
@@ -66,13 +67,24 @@ const EditDetailsScreen = ({ onSave }) => {
     navigation.goBack();
   };
 
+  const headerTitle =
+    formType === "project"
+      ? "Edit Project"
+      : formType === "vendor"
+      ? "Edit Vendor"
+      : "Edit Site";
+
   return (
     <ScrollView
       style={[spacing.mh2, { width: SCREEN_WIDTH - 16, paddingVertical: 6 }]}
       showsVerticalScrollIndicator={false}
     >
       <View>
-        <H6>{site ? `Edit ${formType}` : `Add ${formType}`}</H6>
+        <MyHeader
+          title={headerTitle}
+          isBack={true}
+          hasIcon={true}
+        />
 
         <MyTextInput
           title="Name"
@@ -151,7 +163,7 @@ const EditDetailsScreen = ({ onSave }) => {
               onChangeText={(text) => handleChange("solarMeterSerial", text)}
             />
             <MyTextInput
-              title="Vendor Name"
+              title="xName"
               placeholder="Vendor Name"
               value={formData.vendorName}
               onChangeText={(text) => handleChange("vendorName", text)}
@@ -248,7 +260,7 @@ const EditDetailsScreen = ({ onSave }) => {
           ]}
         >
           <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
-          <MyButton title=" Save" onPress={handleSave} />
+          <MyButton title="Save" onPress={handleSave} />
         </View>
       </View>
     </ScrollView>

@@ -18,7 +18,7 @@ import {
   styles,
   typography,
 } from "../styles";
-import { staff, tasks } from "../utils/faker"; //TODO: This will come from reducer store
+import { staff, tasks } from "../utils/faker"; 
 
 export default function DashboardScreen() {
   const navigation = useNavigation();

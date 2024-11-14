@@ -134,7 +134,7 @@ export const project = [
     surveyStatus: "In Progress",
     contactNo: "2233445566",
     solarMeterSerial: "SM004D",
-    //vendorName: "Vendor D",
+    vendorName: "Raju Das",
   },
   {
     id: 2,
@@ -149,16 +149,29 @@ export const project = [
     surveyStatus: "",
     contactNo: "",
     solarMeterSerial: "",
-    vendorName: "",
+    vendorName: "Md. Sohail Ansari",
   },
-  { id: 3, projectName: "Project 03C", duration: "3 days", status: "ongoing" },
+  {
+    id: 3,
+    projectName: "Project 03C",
+    duration: "3 days",
+    status: "ongoing",
+    vendorName: "Ayush Ranjan",
+  },
   {
     id: 4,
     projectName: "Project 04D",
     duration: "7 days",
     status: "completed",
+    vendorName: "Md Munna",
   },
-  { id: 5, projectName: "Project 05E", duration: "4 days", status: "ongoing" },
+  {
+    id: 5,
+    projectName: "Project 05E",
+    duration: "4 days",
+    status: "ongoing",
+    vendorName: "Suresh Tripathy",
+  },
   { id: 6, projectName: "Project 06F", duration: "6 days", status: "ongoing" },
   { id: 7, projectName: "Project 07G", duration: "1 day", status: "completed" },
   { id: 8, projectName: "Project 08H", duration: "8 days", status: "ongoing" },
@@ -305,27 +318,6 @@ export const earnings = [
   },
 ];
 
-export const leaveReasons = [
-  {
-    id: 1,
-    label: "Select leave type",
-    value: "",
-    enabled: false,
-  },
-  {
-    id: 2,
-    label: "Sick Leave",
-    value: "sl",
-    enabled: true,
-  },
-  {
-    id: 3,
-    label: "Annual Leave",
-    value: "al",
-    enabled: true,
-  },
-];
-
 export const leaveTypes = [
   {
     id: 1,
@@ -342,12 +334,6 @@ export const leaveTypes = [
     type: "Hourly",
     icon: "clock",
   },
-];
-
-export const items = [
-  { label: "JavaScript", value: "javascript" },
-  { label: "Python", value: "python" },
-  { label: "Java", value: "java" },
 ];
 
 export const dummyData = [
@@ -413,89 +399,13 @@ export const cardData = [
   },
 ];
 
-export const data = [
-  { id: "1", title: "Attendance ", icon: "time-outline" },
-  { id: "2", title: "Salary ", icon: "document-text-outline" },
-  { id: "3", title: "Leave records", icon: "calendar-outline" },
-  { id: "4", title: "Settings", icon: "settings-outline" },
-  { id: "5", title: "Reports", icon: "bar-chart-outline" },
-  { id: "6", title: "Bag", icon: "bag-outline" },
-];
-
-export const contactsData = [
-  {
-    id: "1",
-    name: "Dhruv",
-    avatar: "https://randomuser.me/api/portraits/men/5.jpg",
-    status: "Online",
-    online: true,
-  },
-  {
-    id: "2",
-    name: "Shrishti ",
-    avatar: "https://randomuser.me/api/portraits/women/8.jpg",
-    status: "Online",
-    online: true,
-  },
-  {
-    id: "3",
-    name: "Anants",
-    avatar: "https://randomuser.me/api/portraits/men/7.jpg",
-    status: "Last seen 1 hours ago",
-    online: false,
-  },
-  {
-    id: "4",
-    name: "Naisha Singh",
-    avatar: "",
-    status: "Online",
-    online: true,
-  },
-  {
-    id: "5",
-    name: "Raki Devon",
-    avatar: "",
-    status: "Online",
-    online: true,
-  },
-  {
-    id: "6",
-    name: "Shanaya Akira",
-    avatar: "https://randomuser.me/api/portraits/women/2.jpg",
-    status: "Last seen 3 minutes ago",
-    online: false,
-  },
-  {
-    id: "8",
-    name: "Naisha Singh",
-    avatar: "",
-    status: "Online",
-    online: true,
-  },
-  {
-    id: "9",
-    name: "Raki Devon",
-    avatar: "",
-    status: "Online",
-    online: true,
-  },
-  {
-    id: "7",
-    name: "Shanaya Akira",
-    avatar: "https://randomuser.me/api/portraits/women/2.jpg",
-    status: "Last seen 3 minutes ago",
-    online: false,
-  },
-];
-
 export const menuItems = [
   { label: "Inventory Management", icon: "cart-outline" },
   { label: "Site Management", icon: "map-outline" },
   { label: "Vendor Management", icon: "people-outline" },
   { label: "Project Management", icon: "reader-outline" },
   { label: "Reports", page: "", icon: "pie-chart-outline" },
-  { label: "My Projects", page: "", icon: "grid-outline" },
-  { label: "My Tasks", page: "", icon: "grid-outline" },
+  { label: "Task Management", page: "", icon: "grid-outline" },
   { label: "Settings", page: "", icon: "cog-outline" },
 ];
 export const internal = [
@@ -538,24 +448,6 @@ export const notifications = [
     time: "25 sept,21:22 Pm",
   },
 ];
-
-export const personalData = {
-  fullName: "Bittu Kumar",
-  email: "bittu230@gmail.com",
-  phone: "+91 7945671265",
-  address: "Delhi India",
-};
-
-export const professionalData = {
-  employeeId: "7879987",
-  designation: " UI/UX Designer",
-  companyEmail: "bittu89@example.com",
-  employeeType: "Permanent",
-  department: "Design",
-  reportingManager: "Ashish Kumar",
-  companyExperience: "2 Year 5 Months",
-  officeTime: "10:00 am to 07:00 pm",
-};
 
 export const documentData = [
   { id: "1", name: "Offer Letter", icon: "file-document-outline" },
@@ -638,111 +530,6 @@ export const cardtasks = [
   },
 ];
 
-export const attendanceData = [
-  {
-    icon: "login",
-    title: "Check In",
-    time: "10:20 am",
-    status: "On Time",
-  },
-  {
-    icon: "logout",
-    title: "Check Out",
-    time: "07:00 pm",
-    status: "Go Home",
-  },
-  {
-    icon: "clock-outline",
-    title: "Break Time",
-    time: "00:30 min",
-    status: "Avg Time 30 min",
-  },
-  {
-    icon: "calendar-check-outline",
-    title: "Total Days",
-    time: "28",
-    status: "Working Days",
-  },
-];
-
-export const activityData = [
-  {
-    title: "Check In",
-    time: "10:00 am",
-    status: "On Time",
-    icon: "login",
-  },
-  {
-    title: "Break In",
-    time: "12:30 pm",
-    status: "On Time",
-    icon: "pause-circle-outline",
-  },
-  {
-    title: "Check Out",
-    time: "07:00 pm",
-    status: "On Time",
-    icon: "logout",
-  },
-];
-
-export const lineItems = [
-  {
-    id: "AS1001",
-    description: "HP Deskjet 1010 Color Inkjet Printer",
-    location: "MT-seattle Manufacturing",
-    subInventory: "Seattle Manufacturing",
-  },
-  {
-    id: "AS1002",
-    description: "Logitech B100 Optical Wired USB Mouse",
-    location: "MT-seattle Manufacturing",
-    subInventory: "Seattle Manufacturing",
-  },
-];
-
-export const requisitions = [
-  {
-    id: "PR - 10050019",
-    location: "PL01 - Texas Houston Plant",
-    date: "08/19/2024",
-    amount: "₹ 24.40 ",
-    checked: false,
-  },
-  {
-    id: "PR - 10050018",
-    location: "PL01 - Texas Houston Plant",
-    date: "08/23/2024",
-    amount: "₹ 254.40 ",
-    checked: false,
-  },
-  {
-    id: "PR - 10050017",
-    location: "PL01 - Texas Houston Plant",
-    date: "09/11/2024",
-    amount: "₹ 100.00 ",
-    checked: false,
-  },
-  {
-    id: "PR - 10050016",
-    location: "PL01 - Texas Houston Plant",
-    date: "10/19/2024",
-    amount: "₹ 100.00 ",
-    checked: false,
-  },
-];
-
-export const originalItems = [
-  { id: 1, name: "Robotics with Arduino" },
-  { id: 2, name: "Motor Control in Robotics" },
-  { id: 3, name: "Radio-Controlled Robots" },
-  { id: 4, name: "Robotics Programming Basics" },
-  { id: 5, name: "Autonomous Robot Design" },
-  { id: 6, name: "Obstacle Avoidance Robotics" },
-  { id: 7, name: "Sumo Robotics Challenge" },
-  { id: 8, name: "Robot Navigation with Sensors" },
-];
-
 export const itemsData = [
   { id: "P001", name: "Product A", price: 120.5, quantity: 2, total: 241.0 },
   { id: "P002", name: "Product B", price: 80.25, quantity: 3, total: 240.75 },
@@ -756,46 +543,6 @@ export const amountDetailsData = [
   { label: "Tax", value: 100 },
   { label: "Total", value: 1100 },
 ];
-
-export const projects = [
-  {
-    id: 1,
-    title: "Robatic cell",
-    status: "toDo",
-    progress: 0.5,
-    due: "25 Apr",
-    est: "20 h",
-  },
-  {
-    id: 2,
-    title: "Coffee Vending Machine",
-    status: "toDo",
-    progress: 0.7,
-    due: "28 Apr",
-    est: "15 h",
-  },
-  {
-    id: 3,
-    title: "Automatic soap Dispensor machine jig",
-    status: "toDo",
-    progress: 0.7,
-    due: "28 Apr",
-    est: "15 h",
-  },
-];
-
-export const handleTaskProgress = (
-  tasks,
-  projectId,
-  setTasks,
-  setActiveStatus
-) => {
-  const updatedTasks = tasks.map((task) =>
-    task.id === projectId ? { ...task, status: "inProgress" } : task
-  );
-  setTasks(updatedTasks);
-  setActiveStatus("inProgress");
-};
 
 export const staff = {
   id: 1,
@@ -816,7 +563,7 @@ export const staff = {
   note: [],
   address: "123 gali, jhajjar, Haryana",
   alternative_address: "",
-  phone: "9909230912",
+  contactNo: "9909230912",
   alternative_phone: "",
   dob: "",
   gender: "male",
@@ -1053,5 +800,26 @@ export const blocklistedVendorsData = [
     location: "Sultanpur",
     contactNumber: "(415) 555-4200",
     status: "blocklisted",
+  },
+];
+
+export const taskslistdata = [
+  {
+    id: 1,
+    projectName: "Project Alpha",
+    taskName: "Design Phase",
+    deadline: "2024-11-20",
+    status: "In Progress",
+    startDate: "2024-10-01",
+    endDate: "2024-12-15",
+  },
+  {
+    id: 2,
+    projectName: "Project Beta",
+    taskName: "Development Phase",
+    deadline: "2024-12-01",
+    status: "Completed",
+    startDate: "2024-09-01",
+    endDate: "2024-12-01",
   },
 ];

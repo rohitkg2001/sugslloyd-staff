@@ -61,7 +61,7 @@ const TotalVendorsScreen = () => {
 
   const handleEdit = (item) => {
     navigation.navigate("EditDetailsScreen", {
-      site: item,
+      vendor: item,
       formType: "vendor",
     });
   };
@@ -86,7 +86,10 @@ const TotalVendorsScreen = () => {
     );
   };
   const handleViewDetails = (vendor) => {
-    navigation.navigate("ViewDetailScreen", { vendor });
+    navigation.navigate("ViewDetailScreen", {
+      site: vendor,
+      formType: "vendor",
+    });
   };
 
   const renderListItem = ({ item }) => (

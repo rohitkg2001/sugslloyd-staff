@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
   },
 
   textInputField: {
-    backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+    backgroundColor: "#F0FAF0",
     borderRadius: 6,
     height: 54,
     fontSize: 18,
