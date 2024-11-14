@@ -299,9 +299,9 @@ export const earnings = [
 
 export const menuItems = [
   { label: "Inventory Management", icon: "cart-outline", page: "inventoryScreen" },
-  { label: "Site Management", icon: "map-outline", page: "TotalSitesScreen" },
+  { label: "Site Management", icon: "map-outline", page: "totalSitesScreen" },
   { label: "Vendor Management", icon: "people-outline", page: "totalVendorsScreen" },
-  { label: "Project Management", icon: "reader-outline", page: "TotalProjectsScreen" },
+  { label: "Project Management", icon: "reader-outline", page: "totalProjectsScreen" },
   { label: "Task Management", page: "", icon: "grid-outline", page: "taskListScreen" },
   { label: "Reports", page: "", icon: "pie-chart-outline", },
   { label: "Settings", page: "", icon: "cog-outline", page: "InternalSetting" },
