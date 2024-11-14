@@ -52,14 +52,6 @@ const PrivacyPolicy = () => {
           are continually updated to adapt to evolving security threats and
           industry standards.
         </P>
-
-        {/* <View style={styles.checkboxContainer}>
-            <CustomCheckbox
-              isChecked={isChecked}
-              onPress={handleCheckboxChange}
-              label="I accept the Privacy Policy"
-            />
-          </View> */}
       </ScrollView>
       <Button
         style={[styles.btn, styles.bgPrimary, { width: SCREEN_WIDTH - 20, justifyContent: 'center' }]}
