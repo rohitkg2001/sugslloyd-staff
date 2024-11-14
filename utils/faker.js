@@ -12,6 +12,7 @@ export const tasks = [
     description: "This is task 1",
     count: 28,
     status: "Total Projects ",
+    page: "totalProjectsScreen",
     backgroundColor: "#A0D3E8",
   },
   {
@@ -20,6 +21,7 @@ export const tasks = [
     description: "This is task 2",
     count: 31,
     status: "Total Earning",
+    page: "totalEarningScreen",
     backgroundColor: "#C8E6C9",
   },
   {
@@ -28,6 +30,7 @@ export const tasks = [
     description: "This is task 3",
     count: 46,
     status: "Total Sites",
+    page: "totalSitesScreen",
     backgroundColor: "#f9caa7",
   },
   {
@@ -36,6 +39,7 @@ export const tasks = [
     description: "This is task 4",
     count: 17,
     status: "Completed Sites",
+    page: "completedSitesScreen",
     backgroundColor: "#ffeead",
   },
   {
@@ -44,6 +48,7 @@ export const tasks = [
     description: "This is task 5",
     count: 22,
     status: "Sites in Progress",
+    page: "progressSitesScreen",
     backgroundColor: "#bdeaee",
   },
   {
@@ -52,6 +57,7 @@ export const tasks = [
     description: "This is task 5",
     count: 7,
     status: "Pending Sites",
+    page: "pendingSitesScreen",
     backgroundColor: "#ffbbee",
   },
   {
@@ -60,6 +66,7 @@ export const tasks = [
     description: "This is task 5",
     count: 67,
     status: "Total Vendors",
+    page: "totalVendorsScreen",
     backgroundColor: "#FFB7B2",
   },
   {
@@ -68,6 +75,7 @@ export const tasks = [
     description: "This is task 5",
     count: 53,
     status: "Active Vendors",
+    page: "activeVendorsScreen",
     backgroundColor: "#B6F4D3",
   },
   {
@@ -76,6 +84,7 @@ export const tasks = [
     description: "This is task 5",
     count: 10,
     status: "Inactive Vendors",
+    page: "inactiveVendorsScreen",
     backgroundColor: "#C4C3D0",
   },
   {
@@ -84,41 +93,11 @@ export const tasks = [
     description: "This is task 5",
     count: 4,
     status: "Blocklisted Vendor",
+    page: "blockListedVendorsScreen",
     backgroundColor: "#F5F5DC",
   },
 ];
-export const categories = [
-  {
-    id: "1",
-    label: "Installation",
-    icon: "layers-outline",
-    count: 5,
-  },
-  {
-    id: "2",
-    label: "Fixing Slip",
-    icon: "grid-outline",
-    count: 3,
-  },
-  {
-    id: "3",
-    label: "RMS Status",
-    icon: "cart-outline",
-    count: 2,
-  },
-  {
-    id: "4",
-    label: "Final Inspection",
-    icon: "document-text-outline",
-    count: 1,
-  },
-  {
-    id: "5",
-    label: "Report",
-    icon: "pie-chart-outline",
-    count: 4,
-  },
-];
+
 
 export const project = [
   {
@@ -377,11 +356,6 @@ export const documentData = [
   // { id: "5", staffId: 1, documentName: "Salary Slip", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
 ];
 
-export const activities = [
-  { id: "1", title: "Capital Icon", time: "9:15 AM - 11:00 AM" },
-  { id: "2", title: "Baroda Bank", time: "11:00 AM - 11:30 AM" },
-];
-
 export const profileImages = [
   "https://randomuser.me/api/portraits/men/1.jpg",
   "https://randomuser.me/api/portraits/women/1.jpg",
@@ -398,71 +372,6 @@ export const taskCards = [
   { id: 2, text: "Development Phase", progress: 0.4, bgColor: "#2b87b0" },
 ];
 
-export const cardtasks = [
-  {
-    id: 1,
-    title: "Design system",
-    time: "09:00 - 10:00",
-    progress: 0.6,
-    participants: 2,
-    avatars: [
-      "https://randomuser.me/api/portraits/men/32.jpg",
-      "https://randomuser.me/api/portraits/women/44.jpg",
-    ],
-  },
-  {
-    id: 2,
-    title: "Create prototype",
-    time: "10:00 - 11:00",
-    progress: 0.3,
-    participants: 4,
-    avatars: [
-      "https://randomuser.me/api/portraits/men/36.jpg",
-      "https://randomuser.me/api/portraits/women/40.jpg",
-      "https://randomuser.me/api/portraits/men/37.jpg",
-      "https://randomuser.me/api/portraits/women/50.jpg",
-    ],
-  },
-  {
-    id: 3,
-    title: "Dashboard design",
-    time: "11:00 - 12:00",
-    progress: 0.5,
-    participants: 4,
-    avatars: [
-      "https://randomuser.me/api/portraits/men/38.jpg",
-      "https://randomuser.me/api/portraits/women/51.jpg",
-      "https://randomuser.me/api/portraits/men/39.jpg",
-      "https://randomuser.me/api/portraits/women/53.jpg",
-    ],
-  },
-  {
-    id: 4,
-    title: "Offspace project",
-    time: "12:00 - 01:00",
-    progress: 0.7,
-    participants: 3,
-    avatars: [
-      "https://randomuser.me/api/portraits/men/40.jpg",
-      "https://randomuser.me/api/portraits/women/55.jpg",
-      "https://randomuser.me/api/portraits/men/41.jpg",
-    ],
-  },
-];
-
-export const itemsData = [
-  { id: "P001", name: "Product A", price: 120.5, quantity: 2, total: 241.0 },
-  { id: "P002", name: "Product B", price: 80.25, quantity: 3, total: 240.75 },
-  { id: "P003", name: "Product C", price: 50.0, quantity: 1, total: 50.0 },
-  { id: "P004", name: "Product D", price: 150.75, quantity: 5, total: 753.75 },
-  { id: "P005", name: "Product E", price: 99.99, quantity: 4, total: 399.96 },
-];
-
-export const amountDetailsData = [
-  { label: "Subtotal", value: 1000 },
-  { label: "Tax", value: 100 },
-  { label: "Total", value: 1100 },
-];
 
 export const staff = {
   id: 1,
@@ -497,7 +406,7 @@ export const staff = {
   created_date: "",
 };
 
-// taskData.js
+
 export const taskslist = [
   {
     id: 1,

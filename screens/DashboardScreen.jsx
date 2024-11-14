@@ -39,40 +39,7 @@ export default function DashboardScreen() {
   const navigateToNoRecord = () => {
     navigation.navigate("NoRecord");
   };
-
-  const navigateToTotalProjectsScreen = () => {
-    navigation.navigate("TotalProjectsScreen");
-  };
-  const navigateToTotalEarningScreen = () => {
-    navigation.navigate("TotalEarningScreen");
-  };
-  const navigateToTotalSitesScreen = () => {
-    navigation.navigate("TotalSitesScreen");
-  };
-  const navigateToInventoryScreen = () => {
-    navigation.navigate("inventoryScreen");
-  };
-  const navigateToCompletedSitesScreen = () => {
-    navigation.navigate("completedSitesScreen");
-  };
-  const navigateToProgressSitesScreen = () => {
-    navigation.navigate("progressSitesScreen");
-  };
-  const navigateToPendingSitesScreen = () => {
-    navigation.navigate("pendingSitesScreen");
-  };
-  const navigateToTotalVendorsScreen = () => {
-    navigation.navigate("totalVendorsScreen");
-  };
-  const navigateToinactiveVendorsScreen = () => {
-    navigation.navigate("inactiveVendorsScreen");
-  };
-  const navigateToactiveVendorsScreen = () => {
-    navigation.navigate("activeVendorsScreen");
-  };
-  const navigateToBlockListedVendorsScreen = () => {
-    navigation.navigate("blockListedVendorScreen");
-  };
+  
 
   const firstTwoTasks = tasks.slice(0, 2);
   const firstFourTasks = tasks.slice(2, 6);
@@ -101,24 +68,15 @@ export default function DashboardScreen() {
         <View>
           <MyFlatList
             data={firstTwoTasks}
-            renderItem={({ item }) => {
-              const handlePress = () => {
-                if (item.id === 1) {
-                  navigateToTotalProjectsScreen();
-                } else if (item.id === 2) {
-                  navigateToTotalEarningScreen();
-                }
-              };
-              return (
-                <StatCard
-                  key={item.id}
-                  backgroundColor={item.backgroundColor}
-                  tasks={item.count}
-                  status={item.status}
-                  onPress={handlePress}
-                />
-              );
-            }}
+            renderItem={({ item }) => (
+              <StatCard
+                key={item.id}
+                backgroundColor={item.backgroundColor}
+                tasks={item.count}
+                status={item.status}
+                onPress={() => navigation.navigate(item.page)} 
+              />
+            )}
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
           />
@@ -176,29 +134,13 @@ export default function DashboardScreen() {
             const isRightColumn = index % 2 !== 0;
             const marginTop = isRightColumn ? 20 : 0;
 
-            const handlePress = () => {
-              if (item.id === 1) {
-                navigateToTotalProjectsScreen();
-              } else if (item.status === "Total Sites") {
-                navigateToTotalSitesScreen();
-              } else if (item.status === "Pending Sites") {
-                navigateToPendingSitesScreen();
-              } else if (item.status === "Completed Sites") {
-                navigateToCompletedSitesScreen();
-              } else if (item.status === "Sites in Progress") {
-                navigateToProgressSitesScreen();
-              } else if (item.status === "Pending Sites") {
-                navigateToPendingSitesScreen;
-              }
-            };
-
             return (
               <StatCard
                 key={item.id}
                 backgroundColor={item.backgroundColor}
                 tasks={item.count}
                 status={item.status}
-                onPress={handlePress}
+                onPress={() => navigation.navigate(item.page)}
                 style={{
                   marginTop: marginTop,
                 }}
@@ -252,27 +194,13 @@ export default function DashboardScreen() {
             const isRightColumn = index % 2 !== 0;
             const marginTop = isRightColumn ? 20 : 0;
 
-            const handlePress = () => {
-              if (item.id === 1) {
-                navigateToTotalProjectsScreen();
-              } else if (item.status === "Total Vendors") {
-                navigateToTotalVendorsScreen();
-              } else if (item.status === "Inactive Vendors") {
-                navigateToinactiveVendorsScreen();
-              } else if (item.status === "Active Vendors") {
-                navigateToactiveVendorsScreen();
-              } else if (item.status === "Blocklisted Vendor") {
-                navigateToBlockListedVendorsScreen();
-              }
-            };
-
             return (
               <StatCard
                 key={item.id}
                 backgroundColor={item.backgroundColor}
                 tasks={item.count}
                 status={item.status}
-                onPress={handlePress}
+                onPress={() => navigation.navigate(item.page)}
               />
             );
           }}
