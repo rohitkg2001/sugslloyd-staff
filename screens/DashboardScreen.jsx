@@ -18,7 +18,7 @@ import {
   styles,
   typography,
 } from "../styles";
-import { staff, tasks } from "../utils/faker"; 
+import { staff, tasks } from "../utils/faker";
 
 export default function DashboardScreen() {
   const navigation = useNavigation();
@@ -50,7 +50,7 @@ export default function DashboardScreen() {
     navigation.navigate("TotalSitesScreen");
   };
   const navigateToInventoryScreen = () => {
-    navigation.navigate("InventoryScreen");
+    navigation.navigate("inventoryScreen");
   };
   const navigateToCompletedSitesScreen = () => {
     navigation.navigate("completedSitesScreen");

@@ -54,7 +54,7 @@ export default function MyStackNavigator() {
       <Stack.Screen name="TotalProjectsScreen" component={TotalProjectsScreen} />
       <Stack.Screen name="TotalEarningScreen" component={TotalEarningScreen} />
       <Stack.Screen name="TotalSitesScreen" component={TotalSitesScreen} />
-      <Stack.Screen name="InventoryScreen" component={InventoryScreen} />
+      <Stack.Screen name="inventoryScreen" component={InventoryScreen} />
       <Stack.Screen name="formScreen" component={FormScreen} />
       <Stack.Screen name="completedSitesScreen" component={CompletedSitesScreen} />
       <Stack.Screen name="progressSitesScreen" component={ProgressSitesScreen} />
