@@ -69,6 +69,7 @@ const EditDetailsScreen = ({ onSave }) => {
   return (
     <ScrollView
       style={[spacing.mh2, { width: SCREEN_WIDTH - 16, paddingVertical: 6 }]}
+      showsVerticalScrollIndicator={false}
     >
       <View>
         <H6>{site ? `Edit ${formType}` : `Add ${formType}`}</H6>

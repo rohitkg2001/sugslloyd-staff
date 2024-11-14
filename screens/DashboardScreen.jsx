@@ -150,21 +150,21 @@ export default function DashboardScreen() {
                 onPress={navigateToNoRecord}
               >
                 <P style={typography.textBold}>Open</P>
-                <P>0</P>
+                <P>20</P>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{ alignItems: "center" }}
                 onPress={navigateToNoRecord}
               >
                 <P style={typography.textBold}>Completed</P>
-                <P>0</P>
+                <P>7</P>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{ alignItems: "center" }}
                 onPress={navigateToNoRecord}
               >
                 <P style={typography.textBold}>Hold</P>
-                <P>0</P>
+                <P>1</P>
               </TouchableOpacity>
             </View>
           </CardFullWidth>
