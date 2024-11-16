@@ -9,7 +9,7 @@ import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
-import VendorForm from "../components/VendorForm";
+
 
 const ActiveVendorsScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -170,13 +170,6 @@ const ActiveVendorsScreen = () => {
           <Ionicons name="add" size={32} color="white" />
         </TouchableOpacity>
 
-        <VendorForm
-          visible={isFormVisible}
-          onClose={() => setIsFormVisible(false)}
-          onSave={handleFormSave}
-          formType="vendor"
-          initialData={currentVendor}
-        />
 
         <Filter
           visible={isMenuVisible}
