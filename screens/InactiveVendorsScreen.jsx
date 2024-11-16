@@ -129,7 +129,7 @@ const InactiveVendorsScreen = () => {
     <ContainerComponent>
       <View>
         <MyHeader
-          title="Total Vendors"
+          title="Inactive Vendors "
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}

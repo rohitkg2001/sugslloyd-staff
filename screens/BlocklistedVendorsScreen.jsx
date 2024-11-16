@@ -132,7 +132,7 @@ const BlockListedVendorsScreen = () => {
     <ContainerComponent>
       <View>
         <MyHeader
-          title="Total Vendors"
+          title="BlockListed Vendors"
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}

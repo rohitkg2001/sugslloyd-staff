@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, FlatList, TouchableOpacity, Alert } from "react-native";
 import { Card } from "react-native-paper";
-import { activeVendorsData } from "../utils/faker"; // Import active vendor data
+import { activeVendorsData } from "../utils/faker"; 
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
