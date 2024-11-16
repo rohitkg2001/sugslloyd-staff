@@ -31,7 +31,6 @@ export default function ClickableCard({ item,
               flexDirection: "row",
               alignItems: "center",
               padding: 16,
-            
             }}
           >
             <View style={{ flex: 1 }}>
@@ -53,6 +52,7 @@ export default function ClickableCard({ item,
               }
               {isVendor && (
                 <>
+                  <P style={{ fontSize: 14 }}>{item.name}</P>
                   <P style={{ fontSize: 14 }}>{item.location}</P>
                   <P style={{ fontSize: 14 }}>{item.contactNumber}</P>
                   {/* TODO: Add vendor specific changes */}
