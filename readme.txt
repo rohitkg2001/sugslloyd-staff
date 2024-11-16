@@ -34,7 +34,7 @@ Camera component was not used and moved to trash folder
 Camera component was not used and moved to trash folder
 
 ==========================Changes by rohit====================================
-remove internal style in ViewDetailScreen 
+remove internal style in ViewDetailScreen , clickableCard style change ,
 
 ==========================Changes by sumit====================================
 Camera component was not used and moved to trash folder
