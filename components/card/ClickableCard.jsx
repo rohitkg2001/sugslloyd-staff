@@ -49,8 +49,10 @@ export default function ClickableCard({
             }
             {isVendor && (
               <>
+                <P style={{ fontSize: 14 }}>{item.name}</P>
                 <P style={{ fontSize: 14 }}>{item.location}</P>
                 <P style={{ fontSize: 14 }}>{item.contactNumber}</P>
+
                 {/* TODO: Add vendor specific changes */}
               </>
             )}

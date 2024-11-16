@@ -95,7 +95,7 @@ const TotalVendorsScreen = () => {
 
   return (
     <ContainerComponent>
-      <View>
+      <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
         <MyHeader
           title="Total Vendors"
           isBack={true}

@@ -10,7 +10,6 @@ import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
 
-
 const BlockListedVendorsScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
