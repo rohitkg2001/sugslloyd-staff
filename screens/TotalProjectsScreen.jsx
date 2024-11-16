@@ -15,10 +15,9 @@ import { useNavigation } from "@react-navigation/native";
 const TotalProjectsScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
-  const [filteredProjects, setFilteredProjects] = useState(project); // Initially show all projects
+  const [filteredProjects, setFilteredProjects] = useState(project); 
   const navigation = useNavigation();
 
-  // Search functionality
   const filterProjects = (text) => {
     setSearchText(text);
     const filtered = project.filter((item) =>
@@ -27,18 +26,15 @@ const TotalProjectsScreen = () => {
     setFilteredProjects(filtered);
   };
 
-  // Sorting
   const sortProjects = (sortOrder) => {
-    let sortedProjects = [...filteredProjects];
+    const sortedProjects = [...filteredProjects];
     if (sortOrder === "alphabetical") {
       sortedProjects.sort((a, b) => a.projectName.localeCompare(b.projectName));
     } else if (sortOrder === "status") {
       const statusOrder = ["Completed", "Ongoing"];
-      sortedProjects.sort((a, b) => {
-        const indexA = statusOrder.indexOf(a.status);
-        const indexB = statusOrder.indexOf(b.status);
-        return indexA - indexB;
-      });
+      sortedProjects.sort(
+        (a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status)
+      );
     } else if (sortOrder === "duration") {
       sortedProjects.sort(
         (a, b) => parseInt(a.duration, 10) - parseInt(b.duration, 10)
@@ -47,14 +43,14 @@ const TotalProjectsScreen = () => {
     setFilteredProjects(sortedProjects);
   };
 
-  const handleViewDetails = (site) => {
-    navigation.navigate("ViewDetailScreen", { site });
+  const handleViewDetails = (projectData) => {
+    navigation.navigate("ViewDetailScreen", { site: projectData });
   };
 
   const handleDelete = (item) => {
     Alert.alert(
       "Confirm Delete",
-      `Are you sure you want to delete the project "${item.projectName}"?`,
+      `Are you sure you want to delete "${item.projectName}"?`,
       [
         { text: "Cancel", style: "cancel" },
         {
@@ -77,49 +73,29 @@ const TotalProjectsScreen = () => {
     });
   };
 
-  const navigateToProjectDetails = (projectData) => {
-    navigation.navigate("ViewDetailScreen", { site: projectData });
-  };
-
   const menuOptions = [
-    { label: "Search", onPress: () => console.log("Search clicked") },
     {
       label: "Sort Alphabetically",
-      onPress: () => {
-        sortProjects("alphabetical");
-        setIsMenuVisible(false);
-      },
+      onPress: () => sortProjects("alphabetical"),
     },
-    {
-      label: "Sort by Status (Completed, Ongoing)",
-      onPress: () => {
-        sortProjects("status");
-        setIsMenuVisible(false);
-      },
-    },
-    {
-      label: "Sort by Duration",
-      onPress: () => {
-        sortProjects("duration");
-        setIsMenuVisible(false);
-      },
-    },
+    { label: "Sort by Status", onPress: () => sortProjects("status") },
+    { label: "Sort by Duration", onPress: () => sortProjects("duration") },
   ];
 
   return (
     <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-      {/* Header Section */}
+     
       <MyHeader
         title="Total Projects"
         isBack={true}
         hasIcon={true}
-        icon={"ellipsis-vertical"}
+        icon="ellipsis-vertical"
         onIconPress={() => setIsMenuVisible(!isMenuVisible)}
       />
 
-      {/* Search Bar */}
+     
       <MyFlatList
-        data={filteredProjects} // Show filtered projects
+        data={filteredProjects}
         loading={false}
         renderItem={({ item }) => (
           <ClickableCard
@@ -127,24 +103,24 @@ const TotalProjectsScreen = () => {
             handleViewDetails={handleViewDetails}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
-            isProject={true} // Pass this to show project details
+            isProject={true}
           />
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.list}
         ListEmptyComponent={() => (
-          <NoRecord msg="Oops! There are no projects available. Start creating or contact admin." />
+          <NoRecord msg="Oops! No projects available. Start creating or contact admin." />
         )}
         ListHeaderComponent={() => (
           <SearchBar
             placeholder="Search by project name"
             value={searchText}
-            onChangeText={filterProjects} // Corrected the search handler
+            onChangeText={filterProjects}
           />
         )}
       />
 
-      {/* Add Project Button */}
+  
       <Button
         style={styles.addButton}
         onPress={() => navigation.navigate("formScreen")}
@@ -152,7 +128,7 @@ const TotalProjectsScreen = () => {
         <Ionicons name="add" size={32} color="white" />
       </Button>
 
-      {/* Filter Menu */}
+
       <Filter
         visible={isMenuVisible}
         onClose={() => setIsMenuVisible(false)}
