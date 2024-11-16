@@ -142,7 +142,7 @@ const BlockListedVendorsScreen = () => {
         />
       </View>
     </ContainerComponent>
-  );
+  )
 };
 
 export default BlockListedVendorsScreen;

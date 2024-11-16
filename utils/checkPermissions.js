@@ -19,7 +19,7 @@ export const checkPermissions = async () => {
     }
   };
 
-  // 1. Check and request location permission
+
   if (Platform.OS === "ios") {
     await checkAndRequestPermission(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
   } else if (Platform.OS === "android") {
