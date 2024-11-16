@@ -18,7 +18,6 @@ const PendingSitesScreen = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [selectedSite, setSelectedSite] = useState(null);
 
-
   const filterSites = (text) => {
     setSearchText(text);
     const filtered = totalsitesData.filter((item) =>
@@ -31,7 +30,6 @@ const PendingSitesScreen = () => {
     setSelectedSite(site);
     setIsEditModalVisible(true);
   };
-
 
   const handleSave = (updatedSite) => {
     const updatedSites = filteredSites.map((item) =>
@@ -72,14 +70,23 @@ const PendingSitesScreen = () => {
 
       <MyFlatList
         data={filteredSites}
-        renderItem={({ item }) => <ClickableCard item={item} isSite={true} />}
+        renderItem={({ item }) => (
+          <ClickableCard
+            item={item}
+            handleDelete={handleDelete}
+            isSite={true}
+          />
+        )}
         // TODO: add methods for edit,view,delete
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.list}
-        ListEmptyComponent={() => <NoRecord msg={"Yay! There are no pending sites"} />}
-        ListHeaderComponent={() => <SearchBar placeholder="Search by city, state or project code" />}
+        ListEmptyComponent={() => (
+          <NoRecord msg={"Yay! There are no pending sites"} />
+        )}
+        ListHeaderComponent={() => (
+          <SearchBar placeholder="Search by city, state or project code" />
+        )}
       />
-
 
       <Button
         style={styles.addButton}
@@ -87,8 +94,6 @@ const PendingSitesScreen = () => {
       >
         <Ionicons name="add" size={32} color="white" />
       </Button>
-
-    
     </ContainerComponent>
   );
 };
