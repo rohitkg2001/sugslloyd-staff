@@ -37,90 +37,82 @@ const FilterScreen = () => {
   };
 
   return (
-    <ContainerComponent>
-      <View style={[{ width: SCREEN_WIDTH - 10 }]}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            padding: 8,
-          }}
+    <ContainerComponent width={SCREEN_WIDTH - 10}>
+      <View style={styles.row}>
+        <Chip
+          style={{ backgroundColor: "#C3D1C0", marginHorizontal: 4 }}
+          onPress={() => openModal("Budget")}
         >
-          <Chip
-            style={{ backgroundColor: "#C3D1C0", marginHorizontal: 4 }}
-            //style={[styles.bgPrimaryTransParent, { marginHorizontal: 4 }]}
-            onPress={() => openModal("Budget")}
-          >
-            Budget
-          </Chip>
-          <Chip
-            style={{ backgroundColor: "#C3D1C0", marginHorizontal: 4 }}
-            onPress={() => openModal("Project")}
-          >
-            Project
-          </Chip>
-          <Chip
-            style={{ backgroundColor: "#C3D1C0", marginHorizontal: 4 }}
-            onPress={() => openModal("Location")}
-          >
-            Location
-          </Chip>
-          <Chip
-            style={{ backgroundColor: "#C3D1C0", marginHorizontal: 4 }}
-            onPress={() => openModal("State")}
-          >
-            State
-          </Chip>
-        </View>
+          Budget
+        </Chip>
+        <Chip
+          style={{ backgroundColor: "#C3D1C0", marginHorizontal: 4 }}
+          onPress={() => openModal("Project")}
+        >
+          Project
+        </Chip>
+        <Chip
+          style={{ backgroundColor: "#C3D1C0", marginHorizontal: 4 }}
+          onPress={() => openModal("Location")}
+        >
+          Location
+        </Chip>
+        <Chip
+          style={{ backgroundColor: "#C3D1C0", marginHorizontal: 4 }}
+          onPress={() => openModal("State")}
+        >
+          State
+        </Chip>
+      </View>
 
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={isModalVisible}
-          onRequestClose={closeModal}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={closeModal}
+      >
+        <View
+          backgroundColor={LIGHT}
+          style={{
+            flex: 1,
+            justifyContent: "flex-end",
+          }}
         >
           <View
             backgroundColor={LIGHT}
             style={{
-              flex: 1,
-              justifyContent: "flex-end",
+              padding: 20,
             }}
           >
-            <View
-              backgroundColor={LIGHT}
+            <H4
               style={{
-                padding: 20,
+                fontSize: 18,
+                fontWeight: "bold",
+                marginBottom: 16,
               }}
             >
-              <H4
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  marginBottom: 16,
-                }}
+              {modalContent.toUpperCase()}
+            </H4>
+            <ScrollView>{renderModalOptions()}</ScrollView>
+            <Button
+              style={[styles.bgPrimary, { justifyContent: "center" }]}
+              mode="outlined"
+              onPress={closeModal}
+            >
+              <H5
+                style={[
+                  styles.btnText,
+                  styles.textLarge,
+                  typography.textLight,
+                ]}
               >
-                {modalContent.toUpperCase()}
-              </H4>
-              <ScrollView>{renderModalOptions()}</ScrollView>
-              <Button
-                style={[styles.bgPrimary, { justifyContent: "center" }]}
-                mode="outlined"
-                onPress={closeModal}
-              >
-                <H5
-                  style={[
-                    styles.btnText,
-                    styles.textLarge,
-                    typography.textLight,
-                  ]}
-                >
-                  Close
-                </H5>
-              </Button>
-            </View>
+                Close
+              </H5>
+            </Button>
           </View>
-        </Modal>
-      </View>
+        </View>
+      </Modal>
+
     </ContainerComponent>
   );
 };
