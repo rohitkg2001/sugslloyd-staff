@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { FlatList, View, ActivityIndicator } from "react-native";
+import { FlatList, View, ActivityIndicator, Text } from "react-native";
 import { styles } from "../../styles/components.styles";
 import { PRIMARY_COLOR } from "../../styles/constant";
+import NoRecord from "../../screens/NoRecord";
 
 export default function MyFlatList({
   data,
@@ -9,22 +9,24 @@ export default function MyFlatList({
   keyExtractor,
   loading,
   holidays,
-  ListEmptyComponent,
   ...props
 }) {
+
+
   return (
-    <View style={styles.container}>
+    <View>
       {loading ? (
         <ActivityIndicator size="large" color={PRIMARY_COLOR} />
       ) : (
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          ListEmptyComponent={ListEmptyComponent}
-          showsVerticalScrollIndicator={false}
-          {...props}
-        />
+        <>
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={keyExtractor}
+            showsVerticalScrollIndicator={false}
+            {...props}
+          />
+        </>
       )}
     </View>
   );

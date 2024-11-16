@@ -10,6 +10,10 @@ import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
 import { useNavigation } from "@react-navigation/native";
+import MyFlatList from '../components/utility/MyFlatList'
+import NoRecord from "./NoRecord";
+import Button from "../components/buttons/Button";
+import ClickableCard from "../components/card/ClickableCard";
 
 const TotalSitesScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -80,39 +84,6 @@ const TotalSitesScreen = () => {
     navigation.navigate("ViewDetailScreen", { site });
   };
 
-  const renderListItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleViewDetails(item)}>
-      <Card
-        style={[
-          spacing.mv1,
-          { width: SCREEN_WIDTH - 18, backgroundColor: "#ffffff" },
-        ]}
-      >
-        <View
-          style={{ flexDirection: "row", alignItems: "center", padding: 16 }}
-        >
-          <View style={{ flex: 1 }}>
-            <H6 style={[typography.textBold]}>{item.siteName}</H6>
-            <P style={{ fontSize: 14, color: "#020409" }}>Dist: {item.dist}</P>
-            <P style={{ fontSize: 14, color: "#020409" }}>
-              Location: {item.location}
-            </P>
-          </View>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <TouchableOpacity
-              onPress={() => handleEdit(item)}
-              style={{ marginRight: 12 }}
-            >
-              <Ionicons name="create-outline" size={24} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleDelete(item)}>
-              <Ionicons name="trash-outline" size={24} color="red" />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Card>
-    </TouchableOpacity>
-  );
 
   return (
     <ContainerComponent>
@@ -124,53 +95,32 @@ const TotalSitesScreen = () => {
           icon={"ellipsis-vertical"}
           onIconPress={toggleMenu}
         />
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginVertical: 8,
-          }}
-        >
-          <View style={{ width: "80%" }}>
-            <SearchBar
-              placeholder="Search sites..."
-              value={searchText}
-              onChangeText={filterSites}
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => {
-              console.log("Filter Pressed");
-              toggleMenu();
-            }}
-          >
-            <Ionicons name="filter" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => {
-              console.log("Sort Pressed");
-              toggleMenu();
-            }}
-          >
-            <Ionicons name="swap-vertical" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-
-        <FlatList
-          data={filteredSites}
-          renderItem={renderListItem}
+        <MyFlatList
+          data={totalsitesData}
+          loading={false}
+          renderItem={({ item }) => <ClickableCard
+            item={item}
+            handleViewDetails={handleViewDetails}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+            isSite={true}
+          />}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
+          ListEmptyComponent={() => <NoRecord msg="Oops! There are no sites data available. Start creating or contact admin" />}
+          ListHeaderComponent={() => <SearchBar
+            placeholder="Search by city, state or project code"
+            value={searchText}
+            onChangeText={filterSites} />
+          }
         />
 
-        <TouchableOpacity
+        <Button
           style={styles.addButton}
           onPress={() => navigation.navigate("sitesFormScreen")}
         >
           <Ionicons name="add" size={32} color="white" />
-        </TouchableOpacity>
+        </Button>
 
         <Filter
           visible={isMenuVisible}

@@ -47,10 +47,10 @@ const SitesFormScreen = () => {
   return (
     <ContainerComponent>
       <ScrollView
-        contentContainerStyle={{
-          paddingHorizontal: spacing.mh1,
-          width: SCREEN_WIDTH - 18,
-        }}
+        contentContainerStyle={[
+          spacing.mh1,
+          { width: SCREEN_WIDTH - 18 }]
+        }
       >
         <MyHeader title="Sites Details" hasIcon icon="ellipsis-vertical" />
 

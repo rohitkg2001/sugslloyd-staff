@@ -25,6 +25,7 @@ export default function MyPickerInput({
             label={option.label}
             value={option.value}
             key={index}
+            style={styles.textInputField}
           />
         ))}
       </Picker>

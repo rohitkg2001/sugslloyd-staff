@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing } from "../styles";
+import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
@@ -31,12 +31,9 @@ const VendorFormScreen = () => {
   return (
     <ContainerComponent>
       <ScrollView
-        contentContainerStyle={{
-          paddingHorizontal: spacing.mh1,
-          width: SCREEN_WIDTH - 18,
-        }}
+        contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
-        <MyHeader title="Vendor Details" hasIcon icon="ellipsis-vertical" />
+        <MyHeader title="Create Vendor" hasIcon={true} isBack={true} />
 
         <MyTextInput
           title="GST Number"
@@ -68,17 +65,11 @@ const VendorFormScreen = () => {
           keyboardType="email-address"
         />
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: 16,
-          }}
-        >
-          <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
-          <MyButton title="Create" onPress={handleCreate} />
-        </View>
       </ScrollView>
+      <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>
+        <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
+        <MyButton title="Create" onPress={handleCreate} />
+      </View>
     </ContainerComponent>
   );
 };

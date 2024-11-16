@@ -577,10 +577,6 @@ export const styles = StyleSheet.create({
   itemsContainerStyle: {
     maxHeight: 100,
   },
-  textInput: {
-    // width: 310,
-    //color: "#020409",
-  },
 
   leaveCard: {
     position: "relative",
@@ -842,7 +838,7 @@ export const styles = StyleSheet.create({
   },
   addButton: {
     position: "absolute",
-    top: 660,
+    top: SCREEN_HEIGHT - 180,
     right: 20,
     backgroundColor: "#76885B",
     borderRadius: 50,

@@ -9,6 +9,10 @@ import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import VendorForm from "../components/VendorForm"; // Import your VendorForm component for editing
+import Button from "../components/buttons/Button";
+import MyFlatList from "../components/utility/MyFlatList";
+import NoRecord from "./NoRecord";
+import ClickableCard from "../components/card/ClickableCard";
 
 const ProgressSitesScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -61,40 +65,7 @@ const ProgressSitesScreen = () => {
     );
   };
 
-  // Render each list item
-  const renderListItem = ({ item }) => (
-    <Card
-      style={[
-        spacing.mv1,
-        { width: SCREEN_WIDTH - 18, backgroundColor: "#ffffff" },
-      ]}
-    >
-      <View style={{ flexDirection: "row", alignItems: "center", padding: 16 }}>
-        <View style={{ flex: 1, marginLeft: 16 }}>
-          <H6 style={[typography.textBold]}>{item.siteName}</H6>
-          <P style={{ fontSize: 14, color: "#020409" }}>Dist: {item.dist}</P>
-          <P style={{ fontSize: 14, color: "#020409" }}>
-            Location: {item.location}
-          </P>
-        </View>
 
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          {/* Edit button */}
-          <TouchableOpacity
-            onPress={() => handleEdit(item)}
-            style={{ marginRight: 12 }}
-          >
-            <Ionicons name="create-outline" size={24} color="black" />
-          </TouchableOpacity>
-
-          {/* Delete button */}
-          <TouchableOpacity onPress={() => handleDelete(item)}>
-            <Ionicons name="trash-outline" size={24} color="red" />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </Card>
-  );
 
   return (
     <ContainerComponent>
@@ -105,52 +76,24 @@ const ProgressSitesScreen = () => {
         icon="ellipsis-vertical"
       />
 
-      {/* Search and filter section */}
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginVertical: 8,
-        }}
-      >
-        <View style={{ width: "80%" }}>
-          <SearchBar
-            placeholder="Search Progress Sites..."
-            value={searchText}
-            onChangeText={filterSites}
-          />
-        </View>
-
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={() => console.log("Filter Pressed")}
-        >
-          <Ionicons name="filter" size={24} color="black" />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={() => console.log("Sort Pressed")}
-        >
-          <Ionicons name="swap-vertical" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
-
       {/* List of filtered sites */}
-      <FlatList
+      <MyFlatList
         data={filteredSites}
-        renderItem={renderListItem}
+        renderItem={({ item }) => <ClickableCard item={item} isSite={true} />}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.list}
+        ListEmptyComponent={() =>
+          <NoRecord msg={"Oops!!! There are currently no sites in progress. Start a site or contact admin"} />}
+        ListHeaderComponent={() => <SearchBar placeholder="Search by city, state or project code" />}
       />
 
       {/* Add new site button */}
-      <TouchableOpacity
+      <Button
         style={styles.addButton}
         onPress={() => console.log("Add Pressed")}
       >
         <Ionicons name="add" size={32} color="white" />
-      </TouchableOpacity>
+      </Button>
 
       {/* Edit modal */}
       <VendorForm

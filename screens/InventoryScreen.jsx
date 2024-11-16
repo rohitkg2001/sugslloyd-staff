@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { View, Image, FlatList, TouchableOpacity, Text } from "react-native";
+import { View, Image, TouchableOpacity, } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+
 import { inventoryData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
@@ -8,11 +11,15 @@ import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Button from '../components/buttons/Button'
+import MyFlatList from '../components/utility/MyFlatList'
+import NoRecord from "./NoRecord";
 
 const InventoryScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  const navigation = useNavigation()
 
   const filteredOrders = inventoryData.filter((item) =>
     item.name.toLowerCase().includes(searchText.toLowerCase())
@@ -36,17 +43,11 @@ const InventoryScreen = () => {
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
-       
+
           onIconPress={toggleMenu}
         />
 
-        <SearchBar
-          placeholder="Search orders..."
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-
-        <FlatList
+        <MyFlatList
           data={inventoryData}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
@@ -70,14 +71,22 @@ const InventoryScreen = () => {
               </View>
             </TouchableOpacity>
           )}
+          ListEmptyComponent={() => <NoRecord msg="Oops! No inventory" />}
+          ListHeaderComponent={() =>
+            <SearchBar
+              placeholder="Enter item name, brand or product code"
+              value={searchText}
+              onChangeText={setSearchText}
+            />
+          }
         />
 
-        <TouchableOpacity
+        <Button
           style={styles.addButton}
           onPress={() => navigation.navigate("sitesFormScreen")}
         >
           <Ionicons name="add" size={32} color="white" />
-        </TouchableOpacity>
+        </Button>
 
         <Filter
           visible={isMenuVisible}
