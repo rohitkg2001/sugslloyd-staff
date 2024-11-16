@@ -4,7 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
-import VendorForm from "../components/VendorForm";
+
 import MyFlatList from "../components/utility/MyFlatList";
 import ClickableCard from "../components/card/ClickableCard";
 import NoRecord from "./NoRecord";
@@ -88,14 +88,7 @@ const PendingSitesScreen = () => {
         <Ionicons name="add" size={32} color="white" />
       </Button>
 
-      {/* Edit modal */}
-      <VendorForm
-        visible={isEditModalVisible}
-        onClose={() => setIsEditModalVisible(false)}
-        onSave={handleSave}
-        initialData={selectedSite}
-        formType="site"
-      />
+    
     </ContainerComponent>
   );
 };
