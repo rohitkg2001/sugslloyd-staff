@@ -28,26 +28,24 @@ const ProgressSitesScreen = () => {
     setFilteredSites(filtered);
   };
 
-  // Handle edit functionality
   const handleEdit = (site) => {
     setSelectedSite(site);
-    setIsEditModalVisible(true); // Open edit modal
+    setIsEditModalVisible(true);
   };
 
-  // Handle save functionality from the modal
   const handleSave = (updatedSite) => {
     const updatedSites = filteredSites.map((item) =>
       item.id === updatedSite.id ? updatedSite : item
     );
     setFilteredSites(updatedSites);
-    setIsEditModalVisible(false); // Close the modal after saving
+    setIsEditModalVisible(false);
   };
 
   // Handle delete functionality
   const handleDelete = (siteToDelete) => {
     Alert.alert(
       "Confirm Delete",
-      "Are you sure you want to delete this site?",
+      `Are you sure you want to delete ${siteToDelete.siteName}?`,
       [
         { text: "Cancel", style: "cancel" },
         {
@@ -64,8 +62,6 @@ const ProgressSitesScreen = () => {
     );
   };
 
-
-
   return (
     <ContainerComponent>
       <MyHeader
@@ -78,22 +74,37 @@ const ProgressSitesScreen = () => {
       {/* List of filtered sites */}
       <MyFlatList
         data={filteredSites}
-        renderItem={({ item }) => <ClickableCard item={item} isSite={true} />}
+        renderItem={({ item }) => (
+          <ClickableCard
+            item={item}
+            handleDelete={handleDelete}
+            isSite={true}
+          />
+        )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.list}
-        ListEmptyComponent={() =>
-          <NoRecord msg={"Oops!!! There are currently no sites in progress. Start a site or contact admin"} />}
-        ListHeaderComponent={() => <SearchBar placeholder="Search by city, state or project code" />}
+        ListEmptyComponent={() => (
+          <NoRecord
+            msg={
+              "Oops!!! There are currently no sites in progress. Start a site or contact admin"
+            }
+          />
+        )}
+        ListHeaderComponent={() => (
+          <SearchBar
+            placeholder="Search by city, state or project code"
+            value={searchText}
+            onChangeText={filterSites}
+          />
+        )}
       />
 
-      {/* Add new site button */}
       <Button
         style={styles.addButton}
         onPress={() => console.log("Add Pressed")}
       >
         <Ionicons name="add" size={32} color="white" />
       </Button>
-
     </ContainerComponent>
   );
 };
