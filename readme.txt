@@ -30,7 +30,7 @@ Edit site open complete edit page
 ==========================Changes by sumit====================================
 Camera component was not used and moved to trash folder
 
-==========================Changes by sumit====================================
+==========================Changes by bittu====================================
 Camera component was not used and moved to trash folder
 
 ==========================Changes by sumit====================================
