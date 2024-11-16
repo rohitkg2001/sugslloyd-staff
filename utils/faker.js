@@ -106,7 +106,7 @@ export const project = [
     duration: "6 days",
     status: "completed",
     projectSerial: "76",
-    siteName: "Site Delta",
+    siteName: "Site Delta", // Added siteName
     sanctionLoad: "200KW",
     projectCapacity: "400KW",
     caNumber: "CA44556",
@@ -121,7 +121,7 @@ export const project = [
     duration: "5 days",
     status: "completed",
     projectSerial: "",
-    siteName: "",
+    siteName: "Site Alpha", // Added siteName
     sanctionLoad: "",
     projectCapacity: "",
     caNumber: "",
@@ -135,6 +135,7 @@ export const project = [
     projectName: "Project 03C",
     duration: "3 days",
     status: "ongoing",
+    siteName: "Site Beta", // Added siteName
     vendorName: "Ayush Ranjan",
   },
   {
@@ -142,6 +143,7 @@ export const project = [
     projectName: "Project 04D",
     duration: "7 days",
     status: "completed",
+    siteName: "Site Gamma", // Added siteName
     vendorName: "Md Munna",
   },
   {
@@ -149,19 +151,46 @@ export const project = [
     projectName: "Project 05E",
     duration: "4 days",
     status: "ongoing",
+    siteName: "Site Delta", // Added siteName
     vendorName: "Suresh Tripathy",
   },
-  { id: 6, projectName: "Project 06F", duration: "6 days", status: "ongoing" },
-  { id: 7, projectName: "Project 07G", duration: "1 day", status: "completed" },
-  { id: 8, projectName: "Project 08H", duration: "8 days", status: "ongoing" },
+  {
+    id: 6,
+    projectName: "Project 06F",
+    duration: "6 days",
+    status: "ongoing",
+    siteName: "Site Omega", // Added siteName
+  },
+  {
+    id: 7,
+    projectName: "Project 07G",
+    duration: "1 day",
+    status: "completed",
+    siteName: "Site Alpha", // Added siteName
+  },
+  {
+    id: 8,
+    projectName: "Project 08H",
+    duration: "8 days",
+    status: "ongoing",
+    siteName: "Site Beta", // Added siteName
+  },
   {
     id: 9,
     projectName: "Project 09I",
     duration: "10 days",
     status: "completed",
+    siteName: "Site Gamma", // Added siteName
   },
-  { id: 10, projectName: "Project 10J", duration: "3 days", status: "ongoing" },
+  {
+    id: 10,
+    projectName: "Project 10J",
+    duration: "3 days",
+    status: "ongoing",
+    siteName: "Site Omega", // Added siteName
+  },
 ];
+
 
 export const projecttask = [
   {
