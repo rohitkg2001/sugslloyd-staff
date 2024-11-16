@@ -14,57 +14,64 @@ export default function ClickableCard({ item,
     isProject = false
 }) {
     return (
-        <TouchableOpacity >
-            <Card
-                style={[
-                    spacing.mv1,
-                    { width: SCREEN_WIDTH - 18, backgroundColor: LIGHT },
-                ]}
-                onPress={() => handleViewDetails(item)}
-            >
-                <View
-                    style={{ flexDirection: "row", alignItems: "center", padding: 16 }}
-                >
-                    <View style={{ flex: 1 }}>
-                        <H6 style={[typography.textBold]}>{item.siteName}</H6>
-                        {
-                            isProject && (
-                                <>
-                                    <P style={{ fontSize: 14 }}>{item.duration}</P>
-                                    <P style={{ fontSize: 14 }}>{item.status}</P>
-                                    {/* TODO: Add project specific changes */}
-                                </>
-                            )
-                        }
-                        {
-                            isSite &&
-                            <P style={{ fontSize: 14 }}>{item.location}, {item.dist}</P>
-                            // {/* TODO: Add site specific changes */}
-                        }
-                        {
-                            isVendor &&
-                            <>
-                                <P style={{ fontSize: 14 }}>{item.location}</P>
-                                <P style={{ fontSize: 14 }}>{item.contactNumber}</P>
-                                {/* TODO: Add vendor specific changes */}
-                            </>
+      <TouchableOpacity>
+        <Card
+          style={[
+            spacing.mv1,
 
-                        }
-
-                    </View>
-                    <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Button
-                            onPress={() => handleEdit(item)}
-                            style={{ marginRight: 12 }}
-                        >
-                            <Ionicons name="pencil-outline" size={24} color="black" />
-                        </Button>
-                        <Button onPress={() => handleDelete(item)}>
-                            <Ionicons name="trash-outline" size={24} color="red" />
-                        </Button>
-                    </View>
-                </View>
-            </Card>
-        </TouchableOpacity>
-    )
+            {
+              width: SCREEN_WIDTH - 18,
+              backgroundColor: LIGHT,
+            },
+          ]}
+          onPress={() => handleViewDetails(item)}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              padding: 16,
+            
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <H6 style={[typography.textBold]}>{item.siteName}</H6>
+              {isProject && (
+                <>
+                  <P style={{ fontSize: 14 }}>{item.duration}</P>
+                  <P style={{ fontSize: 14 }}>{item.status}</P>
+                  {/* TODO: Add project specific changes */}
+                </>
+              )}
+              {
+                isSite && (
+                  <P style={{ fontSize: 14 }}>
+                    {item.location}, {item.dist}
+                  </P>
+                )
+                // {/* TODO: Add site specific changes */}
+              }
+              {isVendor && (
+                <>
+                  <P style={{ fontSize: 14 }}>{item.location}</P>
+                  <P style={{ fontSize: 14 }}>{item.contactNumber}</P>
+                  {/* TODO: Add vendor specific changes */}
+                </>
+              )}
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Button
+                onPress={() => handleEdit(item)}
+                style={{ marginRight: 12 }}
+              >
+                <Ionicons name="pencil-outline" size={24} color="black" />
+              </Button>
+              <Button onPress={() => handleDelete(item)}>
+                <Ionicons name="trash-outline" size={24} color="red" />
+              </Button>
+            </View>
+          </View>
+        </Card>
+      </TouchableOpacity>
+    );
 }
