@@ -9,13 +9,13 @@ import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
+import Button from "../components/buttons/Button";
 
 const TotalProjectsScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredProjects, setFilteredProjects] = useState(project);
 
-  
   const filterProjects = (text) => {
     setSearchText(text);
     const filtered = project.filter((item) =>
@@ -170,12 +170,12 @@ const TotalProjectsScreen = ({ navigation }) => {
           onClose={() => setIsMenuVisible(false)}
           options={menuOptions}
         />
-        <TouchableOpacity
+        <Button
           style={styles.addButton}
           onPress={() => navigation.navigate("formScreen")}
         >
           <Ionicons name="add" size={32} color="white" />
-        </TouchableOpacity>
+        </Button>
       </View>
     </ContainerComponent>
   );
