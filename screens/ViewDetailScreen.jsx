@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, ScrollView, StyleSheet, Alert } from "react-native";
-import { SCREEN_WIDTH, spacing } from "../styles";
+import { SCREEN_WIDTH, spacing, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
-import { H5, P } from "../components/text";
+import { H1, H5, H6, P } from "../components/text";
 import Filter from "../components/filters";
 import MyButton from "../components/buttons/MyButton";
 
@@ -12,9 +12,11 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const renderDetailRow = (label, value) => (
-    <View style={styles.row}>
-      <P>{label}</P>
-      <P style={styles.value}>{value}</P>
+    <View style={{ flexDirection: "row", paddingVertical: 8 }}>
+      <H5 style={[typography.textBold]}>{label}</H5>
+      <H5 style={[typography.font16, { textAlign: "right", flex: 1 }]}>
+        {value}
+      </H5>
     </View>
   );
 
@@ -153,20 +155,5 @@ const ViewDetailScreen = ({ route, navigation }) => {
     </ContainerComponent>
   );
 };
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 8,
-  },
-
-  value: {
-    fontSize: 16,
-    color: "#333",
-    flex: 1,
-    textAlign: "right",
-  },
-});
 
 export default ViewDetailScreen;

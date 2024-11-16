@@ -47,7 +47,10 @@ export default function MyStackNavigator() {
       <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
       <Stack.Screen name="InternalSetting" component={InternalSetting} />
       <Stack.Screen name="NoRecord" component={NoRecord} />
-      <Stack.Screen name="totalProjectsScreen" component={TotalProjectsScreen} />
+      <Stack.Screen
+        name="totalProjectsScreen"
+        component={TotalProjectsScreen}
+      />
       <Stack.Screen name="totalEarningScreen" component={TotalEarningScreen} />
       <Stack.Screen name="totalSitesScreen" component={TotalSitesScreen} />
       <Stack.Screen name="inventoryScreen" component={InventoryScreen} />
@@ -62,16 +65,24 @@ export default function MyStackNavigator() {
       />
       <Stack.Screen name="pendingSitesScreen" component={PendingSitesScreen} />
       <Stack.Screen name="totalVendorsScreen" component={TotalVendorsScreen} />
-      <Stack.Screen name="inactiveVendorsScreen" component={InactiveVendorsScreen} />
-      <Stack.Screen name="activeVendorsScreen" component={ ActiveVendorsScreen } />
-      <Stack.Screen name="blockListedVendorsScreen" component={ BlockListedVendorsScreen } />
+      <Stack.Screen
+        name="inactiveVendorsScreen"
+        component={InactiveVendorsScreen}
+      />
+      <Stack.Screen
+        name="activeVendorsScreen"
+        component={ActiveVendorsScreen}
+      />
+      <Stack.Screen
+        name="blockListedVendorsScreen"
+        component={BlockListedVendorsScreen}
+      />
       <Stack.Screen name="ViewDetailScreen" component={ViewDetailScreen} />
       <Stack.Screen name="EditDetailsScreen" component={EditDetailsScreen} />
       <Stack.Screen name="sitesFormScreen" component={SitesFormScreen} />
       <Stack.Screen name="VendorFormScreen" component={VendorFormScreen} />
       <Stack.Screen name="taskListScreen" component={TaskListScreen} />
-      <Stack.Screen name="taskListFormScreen" component={ TaskListFormScreen } />
-      
+      <Stack.Screen name="taskListFormScreen" component={TaskListFormScreen} />
     </Stack.Navigator>
   );
 }
