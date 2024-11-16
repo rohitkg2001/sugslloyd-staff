@@ -8,6 +8,7 @@ import { styles } from "../styles/components.styles";
 import { H2, H5, P } from "../components/text";
 import { useFonts } from "expo-font";
 //import MyFlatList from "../components/utility/MyFlatList";
+import { PRIMARY_COLOR } from "../styles/constant";
 
 export default function NotificationScreen() {
   const renderItem = ({ item }) => (
@@ -17,9 +18,9 @@ export default function NotificationScreen() {
         description={<P style={styles.description}>{item.description}</P>}
         left={() => (
           <Avatar.Icon
+            backgroundColor={PRIMARY_COLOR}
             size={40}
             icon={item.icon}
-            style={{ backgroundColor: "#2b87b0" }}
           />
         )}
         right={() => <H2 style={styles.time}>{item.time}</H2>}
