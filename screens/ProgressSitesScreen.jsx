@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity, Alert } from "react-native";
-import { Card } from "react-native-paper";
+import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
-import { H6, P } from "../components/text";
+import { styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
@@ -18,6 +17,7 @@ const ProgressSitesScreen = () => {
   const [filteredSites, setFilteredSites] = useState(totalsitesData);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [selectedSite, setSelectedSite] = useState(null);
+  const navigation = useNavigation();
 
   // Filter sites based on search text
   const filterSites = (text) => {
@@ -29,8 +29,13 @@ const ProgressSitesScreen = () => {
   };
 
   const handleEdit = (site) => {
-    setSelectedSite(site);
-    setIsEditModalVisible(true);
+    navigation.navigate("EditDetailsScreen", {
+      site,
+      formType: "site",
+    });
+  };
+  const handleViewDetails = (site) => {
+    navigation.navigate("ViewDetailScreen", { site });
   };
 
   const handleSave = (updatedSite) => {
@@ -77,7 +82,9 @@ const ProgressSitesScreen = () => {
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
+            handleViewDetails={handleViewDetails}
             handleDelete={handleDelete}
+            handleEdit={handleEdit}
             isSite={true}
           />
         )}
@@ -101,7 +108,7 @@ const ProgressSitesScreen = () => {
 
       <Button
         style={styles.addButton}
-        onPress={() => console.log("Add Pressed")}
+        onPress={() => navigation.navigate("sitesFormScreen")}
       >
         <Ionicons name="add" size={32} color="white" />
       </Button>

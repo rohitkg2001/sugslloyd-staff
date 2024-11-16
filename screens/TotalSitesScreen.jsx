@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity, Alert } from "react-native";
-import { Card } from "react-native-paper";
+import { View, Alert } from "react-native";
 import { totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
-import { H6, P } from "../components/text";
+import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
 import { useNavigation } from "@react-navigation/native";
-import MyFlatList from '../components/utility/MyFlatList'
+import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
@@ -84,7 +82,6 @@ const TotalSitesScreen = () => {
     navigation.navigate("ViewDetailScreen", { site });
   };
 
-
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
@@ -98,21 +95,27 @@ const TotalSitesScreen = () => {
         <MyFlatList
           data={totalsitesData}
           loading={false}
-          renderItem={({ item }) => <ClickableCard
-            item={item}
-            handleViewDetails={handleViewDetails}
-            handleDelete={handleDelete}
-            handleEdit={handleEdit}
-            isSite={true}
-          />}
+          renderItem={({ item }) => (
+            <ClickableCard
+              item={item}
+              handleViewDetails={handleViewDetails}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+              isSite={true}
+            />
+          )}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
-          ListEmptyComponent={() => <NoRecord msg="Oops! There are no sites data available. Start creating or contact admin" />}
-          ListHeaderComponent={() => <SearchBar
-            placeholder="Search by city, state or project code"
-            value={searchText}
-            onChangeText={filterSites} />
-          }
+          ListEmptyComponent={() => (
+            <NoRecord msg="Oops! There are no sites data available. Start creating or contact admin" />
+          )}
+          ListHeaderComponent={() => (
+            <SearchBar
+              placeholder="Search by city, state or project code"
+              value={searchText}
+              onChangeText={filterSites}
+            />
+          )}
         />
 
         <Button
