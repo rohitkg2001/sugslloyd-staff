@@ -8,7 +8,6 @@ import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
 import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import VendorForm from "../components/VendorForm";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
@@ -100,15 +99,6 @@ const CompletedSitesScreen = () => {
       >
         <Ionicons name="add" size={32} color="white" />
       </Button>
-
-      {/* Edit modal */}
-      <VendorForm
-        visible={isEditModalVisible}
-        onClose={() => setIsEditModalVisible(false)}
-        onSave={handleSave}
-        initialData={selectedSite}
-        formType="site"
-      />
     </ContainerComponent>
   );
 };
