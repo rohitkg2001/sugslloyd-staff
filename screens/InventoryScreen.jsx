@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Image, TouchableOpacity, } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -11,15 +11,15 @@ import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
-import Button from '../components/buttons/Button'
-import MyFlatList from '../components/utility/MyFlatList'
+import Button from "../components/buttons/Button";
+import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 
 const InventoryScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const filteredOrders = inventoryData.filter((item) =>
     item.name.toLowerCase().includes(searchText.toLowerCase())
@@ -43,7 +43,6 @@ const InventoryScreen = () => {
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
-
           onIconPress={toggleMenu}
         />
 
@@ -72,18 +71,18 @@ const InventoryScreen = () => {
             </TouchableOpacity>
           )}
           ListEmptyComponent={() => <NoRecord msg="Oops! No inventory" />}
-          ListHeaderComponent={() =>
+          ListHeaderComponent={() => (
             <SearchBar
               placeholder="Enter item name, brand or product code"
               value={searchText}
               onChangeText={setSearchText}
             />
-          }
+          )}
         />
 
         <Button
           style={styles.addButton}
-          onPress={() => navigation.navigate("sitesFormScreen")}
+          onPress={() => navigation.navigate("inventoryFormScreen")}
         >
           <Ionicons name="add" size={32} color="white" />
         </Button>

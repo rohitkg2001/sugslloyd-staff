@@ -54,11 +54,11 @@ const TotalProjectsScreen = () => {
       [
         { text: "Cancel", style: "cancel" },
         {
-          text: "Delete",
+          text: "Delete" ,
           style: "destructive",
           onPress: () => {
             setFilteredProjects((prevProjects) =>
-              prevProjects.filter((project) => project.id !== item.id)
+              prevProjects.filter( ( project ) => project.id !== item.id )
             );
           },
         },

@@ -1,4 +1,4 @@
-import { View, FlatList } from "react-native";
+import { View } from "react-native";
 import { Avatar, List, Divider } from "react-native-paper";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
@@ -7,9 +7,8 @@ import { TouchableOpacity } from "react-native";
 import { styles } from "../styles/components.styles";
 import { H2, H5, P } from "../components/text";
 import { useFonts } from "expo-font";
-//import MyFlatList from "../components/utility/MyFlatList";
+import MyFlatList from "../components/utility/MyFlatList";
 import { PRIMARY_COLOR } from "../styles/constant";
-
 export default function NotificationScreen() {
   const renderItem = ({ item }) => (
     <TouchableOpacity>
@@ -21,6 +20,7 @@ export default function NotificationScreen() {
             backgroundColor={PRIMARY_COLOR}
             size={40}
             icon={item.icon}
+            style={{ backgroundColor: "#2b87b0" }}
           />
         )}
         right={() => <H2 style={styles.time}>{item.time}</H2>}
@@ -38,7 +38,7 @@ export default function NotificationScreen() {
         icon={"search-outline"}
       />
       <View>
-        <FlatList
+        <MyFlatList
           data={notifications}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}

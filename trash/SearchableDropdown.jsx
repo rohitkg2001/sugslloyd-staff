@@ -5,7 +5,7 @@ import ContainerComponent from "./ContainerComponent";
 import { originalItems } from "../utils/faker";
 import { styles } from "../styles/components.styles";
 
-class SearchableDropdown extends Component {
+class  SearchableDropdown extends Component {
   constructor(props) {
     super(props);
     this.state = {

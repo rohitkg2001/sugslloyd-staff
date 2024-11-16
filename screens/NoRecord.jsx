@@ -17,8 +17,7 @@ const NoRecord = ({ msg }) => {
         },
       ]}
     >
-
-      <P style={{ textAlign: 'center' }}>{msg}</P>
+      <P style={{ textAlign: "center" }}>{msg}</P>
     </View>
   );
 };
