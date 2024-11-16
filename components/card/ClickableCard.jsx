@@ -34,8 +34,10 @@ export default function ClickableCard({
             <H6 style={[typography.textBold]}>{item.siteName}</H6>
             {isProject && (
               <>
+                <P style={{ fontSize: 14 }}>{item.projectName}</P>
                 <P style={{ fontSize: 14 }}>{item.duration}</P>
                 <P style={{ fontSize: 14 }}>{item.status}</P>
+
                 {/* TODO: Add project specific changes */}
               </>
             )}
@@ -49,8 +51,10 @@ export default function ClickableCard({
             }
             {isVendor && (
               <>
+                <P style={{ fontSize: 14 }}>{item.name}</P>
                 <P style={{ fontSize: 14 }}>{item.location}</P>
                 <P style={{ fontSize: 14 }}>{item.contactNumber}</P>
+
                 {/* TODO: Add vendor specific changes */}
               </>
             )}

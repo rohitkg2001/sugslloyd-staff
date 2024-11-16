@@ -30,10 +30,6 @@ Edit site open complete edit page
 ==========================Changes by sumit====================================
 Camera component was not used and moved to trash folder
 
-<<<<<<< HEAD
-==========================Changes by bittu====================================
-Camera component was not used and moved to trash folder
-=======
 ==========================Changes by Ujjaval ====================================
 ItemCard component was not used and moved to trash folder
 ProjctCard component was not used and moved to trash folder
@@ -52,7 +48,6 @@ ProjectCard component was not used and moved to trash folder
 SearchableDropdown component was not used and moved to trash folder
 SuccessModal component was not used and moved to trash folder
 TabNavigation component was not used and moved to trash folder
->>>>>>> ce6cffe8af52a78a6ce75e1665f15f050103df2c
 
 ==========================Changes by rohit====================================
 remove internal style in ViewDetailScreen , clickableCard style change ,
