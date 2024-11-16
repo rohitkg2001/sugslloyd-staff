@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity, Alert } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { project } from "../utils/faker";
-import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing } from "../styles";
-import { styles } from "../styles/components.styles";
+import { View, Alert } from "react-native";
+import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
-import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import Filter from "../components/filters";
+import MyFlatList from "../components/utility/MyFlatList";
+import NoRecord from "./NoRecord";
+import Button from "../components/buttons/Button";
+import ClickableCard from "../components/card/ClickableCard";
+import { project } from "../utils/faker";
+import { useNavigation } from "@react-navigation/native";
 
-const TotalProjectsScreen = ({ navigation }) => {
+const TotalProjectsScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
-  const [filteredProjects, setFilteredProjects] = useState(project);
+  const [filteredProjects, setFilteredProjects] = useState(project); // Initially show all projects
+  const navigation = useNavigation();
 
-  
+  // Search functionality
   const filterProjects = (text) => {
     setSearchText(text);
     const filtered = project.filter((item) =>
@@ -24,19 +27,28 @@ const TotalProjectsScreen = ({ navigation }) => {
     setFilteredProjects(filtered);
   };
 
-  const navigateToProjectDetails = (projectData) => {
-    navigation.navigate("ViewDetailScreen", { site: projectData });
+  // Sorting
+  const sortProjects = (sortOrder) => {
+    let sortedProjects = [...filteredProjects];
+    if (sortOrder === "alphabetical") {
+      sortedProjects.sort((a, b) => a.projectName.localeCompare(b.projectName));
+    } else if (sortOrder === "status") {
+      const statusOrder = ["Completed", "Ongoing"];
+      sortedProjects.sort((a, b) => {
+        const indexA = statusOrder.indexOf(a.status);
+        const indexB = statusOrder.indexOf(b.status);
+        return indexA - indexB;
+      });
+    } else if (sortOrder === "duration") {
+      sortedProjects.sort(
+        (a, b) => parseInt(a.duration, 10) - parseInt(b.duration, 10)
+      );
+    }
+    setFilteredProjects(sortedProjects);
   };
 
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
-  };
-
-  const handleEdit = (item) => {
-    navigation.navigate("EditDetailsScreen", {
-      site: item,
-      formType: "project",
-    });
+  const handleViewDetails = (site) => {
+    navigation.navigate("ViewDetailScreen", { site });
   };
 
   const handleDelete = (item) => {
@@ -58,126 +70,95 @@ const TotalProjectsScreen = ({ navigation }) => {
     );
   };
 
+  const handleEdit = (item) => {
+    navigation.navigate("EditDetailsScreen", {
+      site: item,
+      formType: "project",
+    });
+  };
+
+  const navigateToProjectDetails = (projectData) => {
+    navigation.navigate("ViewDetailScreen", { site: projectData });
+  };
+
   const menuOptions = [
     { label: "Search", onPress: () => console.log("Search clicked") },
     {
       label: "Sort Alphabetically",
       onPress: () => {
         sortProjects("alphabetical");
-        toggleMenu();
+        setIsMenuVisible(false);
       },
     },
     {
       label: "Sort by Status (Completed, Ongoing)",
       onPress: () => {
         sortProjects("status");
-        toggleMenu();
+        setIsMenuVisible(false);
       },
     },
     {
       label: "Sort by Duration",
       onPress: () => {
         sortProjects("duration");
-        toggleMenu();
+        setIsMenuVisible(false);
       },
     },
   ];
 
-  // Sort projects based on different criteria
-  const sortProjects = (sortOrder) => {
-    let sortedProjects = [...filteredProjects];
-    if (sortOrder === "alphabetical") {
-      sortedProjects.sort((a, b) => a.projectName.localeCompare(b.projectName));
-    } else if (sortOrder === "status") {
-      const statusOrder = ["Completed", "Ongoing"];
-      sortedProjects.sort((a, b) => {
-        const indexA = statusOrder.indexOf(a.status);
-        const indexB = statusOrder.indexOf(b.status);
-        return indexA - indexB;
-      });
-    } else if (sortOrder === "duration") {
-      sortedProjects.sort(
-        (a, b) => parseInt(a.duration, 10) - parseInt(b.duration, 10)
-      );
-    }
-    setFilteredProjects(sortedProjects);
-  };
-
   return (
-    <ContainerComponent>
-      <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-        <MyHeader
-          title="Total Projects"
-          isBack={true}
-          hasIcon={true}
-          icon={"ellipsis-vertical"}
-          onIconPress={toggleMenu}
-        />
+    <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
+      {/* Header Section */}
+      <MyHeader
+        title="Total Projects"
+        isBack={true}
+        hasIcon={true}
+        icon={"ellipsis-vertical"}
+        onIconPress={() => setIsMenuVisible(!isMenuVisible)}
+      />
 
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginVertical: 8,
-          }}
-        >
-          <View style={{ width: "80%" }}>
-            <SearchBar
-              placeholder="Search projects..."
-              value={searchText}
-              onChangeText={filterProjects}
-            />
-          </View>
+      {/* Search Bar */}
+      <MyFlatList
+        data={filteredProjects} // Show filtered projects
+        loading={false}
+        renderItem={({ item }) => (
+          <ClickableCard
+            item={item}
+            handleViewDetails={handleViewDetails}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+            isProject={true} // Pass this to show project details
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={styles.list}
+        ListEmptyComponent={() => (
+          <NoRecord msg="Oops! There are no projects available. Start creating or contact admin." />
+        )}
+        ListHeaderComponent={() => (
+          <SearchBar
+            placeholder="Search by project name"
+            value={searchText}
+            onChangeText={filterProjects} // Corrected the search handler
+          />
+        )}
+      />
 
-          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
-            <Ionicons name="filter" size={24} color="black" />
-          </TouchableOpacity>
+      {/* Add Project Button */}
+      <Button
+        style={styles.addButton}
+        onPress={() => navigation.navigate("formScreen")}
+      >
+        <Ionicons name="add" size={32} color="white" />
+      </Button>
 
-          <TouchableOpacity style={styles.iconButton} onPress={toggleMenu}>
-            <Ionicons name="swap-vertical" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-
-        <FlatList
-          data={filteredProjects}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => navigateToProjectDetails(item)}
-            >
-              <View style={{ flex: 1 }}>
-                <H5>{item.projectName}</H5>
-                <P>{`Duration: ${item.duration}`}</P>
-                <P>{`Status: ${item.status}`}</P>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <TouchableOpacity onPress={() => handleEdit(item)}>
-                  <Ionicons name="create-outline" size={24} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => handleDelete(item)}
-                  style={{ marginLeft: 16 }}
-                >
-                  <Ionicons name="trash-outline" size={24} color="red" />
-                </TouchableOpacity>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-        <Filter
-          visible={isMenuVisible}
-          onClose={() => setIsMenuVisible(false)}
-          options={menuOptions}
-        />
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => navigation.navigate("formScreen")}
-        >
-          <Ionicons name="add" size={32} color="white" />
-        </TouchableOpacity>
-      </View>
-    </ContainerComponent>
+      {/* Filter Menu */}
+      <Filter
+        visible={isMenuVisible}
+        onClose={() => setIsMenuVisible(false)}
+        options={menuOptions}
+      />
+    </View>
   );
 };
 

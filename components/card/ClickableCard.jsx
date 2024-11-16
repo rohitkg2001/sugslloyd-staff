@@ -34,8 +34,10 @@ export default function ClickableCard({
             <H6 style={[typography.textBold]}>{item.siteName}</H6>
             {isProject && (
               <>
+                <P style={{ fontSize: 14 }}>{item.projectName}</P>
                 <P style={{ fontSize: 14 }}>{item.duration}</P>
                 <P style={{ fontSize: 14 }}>{item.status}</P>
+
                 {/* TODO: Add project specific changes */}
               </>
             )}
