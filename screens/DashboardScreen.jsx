@@ -39,7 +39,6 @@ export default function DashboardScreen() {
   const navigateToNoRecord = () => {
     navigation.navigate("NoRecord");
   };
-  
 
   const firstTwoTasks = tasks.slice(0, 2);
   const firstFourTasks = tasks.slice(2, 6);
@@ -74,7 +73,7 @@ export default function DashboardScreen() {
                 backgroundColor={item.backgroundColor}
                 tasks={item.count}
                 status={item.status}
-                onPress={() => navigation.navigate(item.page)} 
+                onPress={() => navigation.navigate(item.page)}
               />
             )}
             keyExtractor={(item) => item.id.toString()}
