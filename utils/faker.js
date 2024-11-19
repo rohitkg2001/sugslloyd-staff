@@ -401,7 +401,6 @@ export const taskCards = [
   { id: 2, text: "Development Phase", progress: 0.4, bgColor: "#2b87b0" },
 ];
 
-
 export const staff = {
   id: 1,
   first_name: "Rakesh",
@@ -434,7 +433,6 @@ export const staff = {
   uploaded_by: "rakesh sharma",
   created_date: "",
 };
-
 
 export const taskslist = [
   {
