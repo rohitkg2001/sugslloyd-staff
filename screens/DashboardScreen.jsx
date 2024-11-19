@@ -8,6 +8,7 @@ import MyFlatList from "../components/utility/MyFlatList";
 import { H2, H3, H4, H5, P } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
+import { useSelector } from "react-redux";
 
 import {
   layouts,
@@ -23,6 +24,7 @@ import { staff, tasks } from "../utils/faker";
 export default function DashboardScreen() {
   const navigation = useNavigation();
   const today = useState(moment().format("DD MMM YYYY"));
+  const { first_name } = useSelector((state) => state);
 
   const navigateToTaskList = () => {
     navigation.navigate("taskList");
@@ -54,7 +56,7 @@ export default function DashboardScreen() {
         ]}
       >
         <View>
-          <H3 style={typography.textBold}>Good Morning, {staff.first_name}</H3>
+          <H3 style={typography.textBold}>Good Morning, {first_name}</H3>
           <P style={spacing.ml1}>{today}</P>
         </View>
         <Image
