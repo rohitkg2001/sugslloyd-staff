@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Alert } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -17,6 +18,7 @@ const PendingSitesScreen = () => {
   const [filteredSites, setFilteredSites] = useState(totalsitesData);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [selectedSite, setSelectedSite] = useState(null);
+  const navigation = useNavigation();
 
   const filterSites = (text) => {
     setSearchText(text);
@@ -27,8 +29,13 @@ const PendingSitesScreen = () => {
   };
 
   const handleEdit = (site) => {
-    setSelectedSite(site);
-    setIsEditModalVisible(true);
+    navigation.navigate("EditDetailsScreen", {
+      site,
+      formType: "site",
+    });
+  };
+  const handleViewDetails = (site) => {
+    navigation.navigate("ViewDetailScreen", { site });
   };
 
   const handleSave = (updatedSite) => {
@@ -74,6 +81,8 @@ const PendingSitesScreen = () => {
           <ClickableCard
             item={item}
             handleDelete={handleDelete}
+            handleViewDetails={handleViewDetails}
+            handleEdit={handleEdit}
             isSite={true}
           />
         )}
@@ -90,7 +99,7 @@ const PendingSitesScreen = () => {
 
       <Button
         style={styles.addButton}
-        onPress={() => console.log("Add Pressed")}
+        onPress={() => navigation.navigate("sitesFormScreen")}
       >
         <Ionicons name="add" size={32} color="white" />
       </Button>

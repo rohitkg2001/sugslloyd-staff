@@ -24,10 +24,6 @@ export default function DashboardScreen() {
   const navigation = useNavigation();
   const today = useState(moment().format("DD MMM YYYY"));
 
-  const navigateToTaskList = () => {
-    navigation.navigate("taskList");
-  };
-
   const navigateToTaskCardScreen = () => {
     navigation.navigate("TaskCardScreen");
   };

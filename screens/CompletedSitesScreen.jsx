@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity, Alert } from "react-native";
-import { Card } from "react-native-paper";
+import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
-import { H6, P } from "../components/text";
+import { styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
@@ -17,7 +16,7 @@ const CompletedSitesScreen = () => {
   const [filteredSites, setFilteredSites] = useState(totalsitesData);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [selectedSite, setSelectedSite] = useState(null);
-
+  const navigation = useNavigation();
 
   const filterSites = (text) => {
     setSearchText(text);
@@ -27,12 +26,12 @@ const CompletedSitesScreen = () => {
     setFilteredSites(filtered);
   };
 
-
   const handleEdit = (site) => {
-    setSelectedSite(site);
-    setIsEditModalVisible(true);
+    navigation.navigate("EditDetailsScreen", {
+      site,
+      formType: "site",
+    });
   };
-
 
   const handleSave = (updatedSite) => {
     const updatedSites = filteredSites.map((item) =>
@@ -41,7 +40,6 @@ const CompletedSitesScreen = () => {
     setFilteredSites(updatedSites);
     setIsEditModalVisible(false);
   };
-
 
   const handleDelete = (siteToDelete) => {
     Alert.alert(
@@ -62,7 +60,9 @@ const CompletedSitesScreen = () => {
       ]
     );
   };
-
+  const handleViewDetails = (site) => {
+    navigation.navigate("ViewDetailScreen", { site });
+  };
 
   return (
     <ContainerComponent>
@@ -75,26 +75,33 @@ const CompletedSitesScreen = () => {
 
       <MyFlatList
         data={filteredSites}
-        renderItem={({ item }) =>
+        renderItem={({ item }) => (
           <ClickableCard
             item={item}
-            handleViewDetails={handleEdit}
-            handleEdit={handleSave}
+            handleViewDetails={handleViewDetails}
+            handleEdit={handleEdit}
             handleDelete={handleDelete}
             isSite={true}
-          />}
-        // TODO: 
+          />
+        )}
+        // TODO:
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.list}
-        ListEmptyComponent={() =>
-          <NoRecord msg={"Oops!!! There are currently no sites completed. Start completing or contact admin"} />}
-        ListHeaderComponent={() => <SearchBar placeholder="Search by city, state or project code" />}
+        ListEmptyComponent={() => (
+          <NoRecord
+            msg={
+              "Oops!!! There are currently no sites completed. Start completing or contact admin"
+            }
+          />
+        )}
+        ListHeaderComponent={() => (
+          <SearchBar placeholder="Search by city, state or project code" />
+        )}
       />
-
 
       <Button
         style={styles.addButton}
-        onPress={() => console.log("Add Pressed")}
+        onPress={() => navigation.navigate("sitesFormScreen")}
       >
         <Ionicons name="add" size={32} color="white" />
       </Button>
