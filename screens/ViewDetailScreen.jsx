@@ -140,7 +140,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
             />
             <MyButton
               title="View Task"
-              onPress={() => navigation.navigate("taskListScreen")}
+              onPress={() => navigation.navigate("taskScreen")}
             />
           </View>
         </ScrollView>

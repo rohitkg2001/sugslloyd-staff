@@ -18,7 +18,7 @@ import {
   styles,
   typography,
 } from "../styles";
-import { staff, tasks } from "../utils/faker";
+import { siteCardsForDashboard, staff, tasks } from "../utils/faker";
 
 export default function DashboardScreen({ navigation }) {
   const today = useState(moment().format("DD MMM YYYY"));
@@ -37,8 +37,7 @@ export default function DashboardScreen({ navigation }) {
   };
 
   const firstTwoTasks = tasks.slice(0, 2);
-  const firstFourTasks = tasks.slice(2, 6);
-  const secondFourTasks = tasks.slice(6, 10);
+  const secondFourTasks = tasks.slice(2, 6);
 
   return (
     <ContainerComponent>
@@ -124,7 +123,7 @@ export default function DashboardScreen({ navigation }) {
         </View>
 
         <MyFlatList
-          data={firstFourTasks}
+          data={siteCardsForDashboard}
           renderItem={({ item, index }) => {
             const isRightColumn = index % 2 !== 0;
             const marginTop = isRightColumn ? 20 : 0;
@@ -134,8 +133,11 @@ export default function DashboardScreen({ navigation }) {
                 key={item.id}
                 backgroundColor={item.backgroundColor}
                 tasks={item.count}
-                status={item.status}
-                onPress={() => navigation.navigate(item.page)}
+                status={item.title}
+                onPress={() => navigation.navigate(item.page, {
+                  pageTitle: item.title,
+                  data: item.data
+                })}
                 style={{
                   marginTop: marginTop,
                 }}
@@ -187,8 +189,6 @@ export default function DashboardScreen({ navigation }) {
           data={secondFourTasks}
           renderItem={({ item, index }) => {
             const isRightColumn = index % 2 !== 0;
-            const marginTop = isRightColumn ? 20 : 0;
-
             return (
               <StatCard
                 key={item.id}
