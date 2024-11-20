@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
@@ -12,12 +11,11 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import ClickableCard from "../components/card/ClickableCard";
 
-const ProgressSitesScreen = () => {
+const ProgressSitesScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [filteredSites, setFilteredSites] = useState(totalsitesData);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [selectedSite, setSelectedSite] = useState(null);
-  const navigation = useNavigation();
 
   // Filter sites based on search text
   const filterSites = (text) => {

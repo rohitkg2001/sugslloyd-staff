@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { View, Image, ScrollView, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import MyFlatList from "../components/utility/MyFlatList";
-import { H2, H3, H4, H5, P } from "../components/text";
+import { H3, H5, P } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
 import { useSelector } from "react-redux";
@@ -21,8 +20,7 @@ import {
 } from "../styles";
 import { staff, tasks } from "../utils/faker";
 
-export default function DashboardScreen() {
-  const navigation = useNavigation();
+export default function DashboardScreen({ navigation }) {
   const today = useState(moment().format("DD MMM YYYY"));
   const { first_name } = useSelector((state) => state);
 

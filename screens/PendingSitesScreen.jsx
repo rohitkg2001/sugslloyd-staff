@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
-
 import MyFlatList from "../components/utility/MyFlatList";
 import ClickableCard from "../components/card/ClickableCard";
 import NoRecord from "./NoRecord";
@@ -13,20 +11,9 @@ import Button from "../components/buttons/Button";
 import { styles } from "../styles";
 import { totalsitesData } from "../utils/faker";
 
-const PendingSitesScreen = () => {
-  const [searchText, setSearchText] = useState("");
-  const [filteredSites, setFilteredSites] = useState(totalsitesData);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [selectedSite, setSelectedSite] = useState(null);
-  const navigation = useNavigation();
+const PendingSitesScreen = ({ navigation }) => {
 
-  const filterSites = (text) => {
-    setSearchText(text);
-    const filtered = totalsitesData.filter((item) =>
-      item.siteName.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredSites(filtered);
-  };
+  const [filteredSites, setFilteredSites] = useState(totalsitesData);
 
   const handleEdit = (site) => {
     navigation.navigate("EditDetailsScreen", {
@@ -38,13 +25,6 @@ const PendingSitesScreen = () => {
     navigation.navigate("ViewDetailScreen", { site });
   };
 
-  const handleSave = (updatedSite) => {
-    const updatedSites = filteredSites.map((item) =>
-      item.id === updatedSite.id ? updatedSite : item
-    );
-    setFilteredSites(updatedSites);
-    setIsEditModalVisible(false);
-  };
 
   const handleDelete = (siteToDelete) => {
     Alert.alert(

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { useState } from "react";
+import { ScrollView } from "react-native";
 import MyHeader from "../components/header/MyHeader";
-import CustomCheckbox from "../components/input/CustomCheckbox";
 import Button from "../components/buttons/Button";
-import { H6, H2, P } from "../components/text";
+import { H2, P } from "../components/text";
 import { styles } from "../styles/components.styles";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, typography } from "../styles";

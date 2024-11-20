@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { View, Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
@@ -12,11 +11,10 @@ import ClickableCard from "../components/card/ClickableCard";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import { activeVendorsData } from "../utils/faker";
 
-const ActiveVendorsScreen = () => {
+const ActiveVendorsScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredVendors, setFilteredVendors] = useState(activeVendorsData);
-  const navigation = useNavigation();
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
