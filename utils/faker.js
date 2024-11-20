@@ -679,3 +679,5 @@ export const taskslistdata = [
     endDate: "2024-12-01",
   },
 ];
+
+export const PRIVACY_POLICY = "lorem ipsum sit dolor amet"
