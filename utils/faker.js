@@ -98,7 +98,6 @@ export const tasks = [
   },
 ];
 
-
 export const project = [
   {
     id: 1,
@@ -190,7 +189,6 @@ export const project = [
     siteName: "Site Omega", // Added siteName
   },
 ];
-
 
 export const projecttask = [
   {
@@ -327,12 +325,29 @@ export const earnings = [
 ];
 
 export const menuItems = [
-  { label: "Inventory Management", icon: "cart-outline", page: "inventoryScreen" },
+  {
+    label: "Inventory Management",
+    icon: "cart-outline",
+    page: "inventoryScreen",
+  },
   { label: "Site Management", icon: "map-outline", page: "totalSitesScreen" },
-  { label: "Vendor Management", icon: "people-outline", page: "totalVendorsScreen" },
-  { label: "Project Management", icon: "reader-outline", page: "totalProjectsScreen" },
-  { label: "Task Management", page: "", icon: "grid-outline", page: "taskListScreen" },
-  { label: "Reports", page: "", icon: "pie-chart-outline", },
+  {
+    label: "Vendor Management",
+    icon: "people-outline",
+    page: "totalVendorsScreen",
+  },
+  {
+    label: "Project Management",
+    icon: "reader-outline",
+    page: "totalProjectsScreen",
+  },
+  {
+    label: "Task Management",
+    page: "",
+    icon: "grid-outline",
+    page: "taskListScreen",
+  },
+  { label: "Reports", page: "", icon: "pie-chart-outline" },
   { label: "Settings", page: "", icon: "cog-outline", page: "InternalSetting" },
 ];
 
@@ -378,10 +393,34 @@ export const notifications = [
 ];
 
 export const documentData = [
-  { id: "1", staffId: 1, documentName: "Offer Letter", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
-  { id: "2", staffId: 1, documentName: "Appointment Letter", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
-  { id: "3", staffId: 1, documentName: "Bond Agreement", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
-  { id: "4", staffId: 1, documentName: "Appraisal Letter", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
+  {
+    id: "1",
+    staffId: 1,
+    documentName: "Offer Letter",
+    documentImage:
+      "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png",
+  },
+  {
+    id: "2",
+    staffId: 1,
+    documentName: "Appointment Letter",
+    documentImage:
+      "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png",
+  },
+  {
+    id: "3",
+    staffId: 1,
+    documentName: "Bond Agreement",
+    documentImage:
+      "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png",
+  },
+  {
+    id: "4",
+    staffId: 1,
+    documentName: "Appraisal Letter",
+    documentImage:
+      "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png",
+  },
   // { id: "5", staffId: 1, documentName: "Salary Slip", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
 ];
 
@@ -400,7 +439,6 @@ export const taskCards = [
   { id: 1, text: "Design Concept", progress: 0.7, bgColor: "#54B4D3" },
   { id: 2, text: "Development Phase", progress: 0.4, bgColor: "#2b87b0" },
 ];
-
 
 export const staff = {
   id: 1,
@@ -434,7 +472,6 @@ export const staff = {
   uploaded_by: "rakesh sharma",
   created_date: "",
 };
-
 
 export const taskslist = [
   {
