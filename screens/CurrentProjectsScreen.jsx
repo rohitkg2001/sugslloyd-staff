@@ -31,13 +31,7 @@ const CurrentProjectsScreen = ({ navigation }) => {
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-        <MyHeader
-          title="Current Projects"
-          isBack={true}
-          hasIcon={true}
-          icon={"ellipsis-vertical"}
-          onIconPress={toggleMenu}
-        />
+        <MyHeader title="Current Projects" isBack={true} hasIcon={true} />
 
         <SearchBar
           placeholder="Search current projects..."

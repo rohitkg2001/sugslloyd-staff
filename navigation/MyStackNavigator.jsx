@@ -12,10 +12,7 @@ import TotalProjectsScreen from "../screens/TotalProjectsScreen";
 import TotalEarningScreen from "../screens/TotalEarningScreen";
 import TotalSitesScreen from "../screens/TotalSitesScreen";
 import InventoryScreen from "../screens/InventoryScreen";
-import CompletedSitesScreen from "../screens/CompletedSitesScreen";
 import FormScreen from "../screens/FormScreen";
-import ProgressSitesScreen from "../screens/ProgressSitesScreen";
-import PendingSitesScreen from "../screens/PendingSitesScreen";
 import TotalVendorsScreen from "../screens/TotalVendorsScreen";
 import InactiveVendorsScreen from "../screens/InactiveVendorsScreen";
 import ActiveVendorsScreen from "../screens/ActiveVendorsScreen";
@@ -54,15 +51,6 @@ export default function MyStackNavigator() {
       <Stack.Screen name="totalSitesScreen" component={TotalSitesScreen} />
       <Stack.Screen name="inventoryScreen" component={InventoryScreen} />
       <Stack.Screen name="formScreen" component={FormScreen} />
-      <Stack.Screen
-        name="completedSitesScreen"
-        component={CompletedSitesScreen}
-      />
-      <Stack.Screen
-        name="progressSitesScreen"
-        component={ProgressSitesScreen}
-      />
-      <Stack.Screen name="pendingSitesScreen" component={PendingSitesScreen} />
       <Stack.Screen name="totalVendorsScreen" component={TotalVendorsScreen} />
       <Stack.Screen
         name="inactiveVendorsScreen"
@@ -80,7 +68,7 @@ export default function MyStackNavigator() {
       <Stack.Screen name="EditDetailsScreen" component={EditDetailsScreen} />
       <Stack.Screen name="sitesFormScreen" component={SitesFormScreen} />
       <Stack.Screen name="VendorFormScreen" component={VendorFormScreen} />
-      <Stack.Screen name="taskListScreen" component={TaskListScreen} />
+      <Stack.Screen name="taskScreen" component={TaskListScreen} />
       <Stack.Screen name="taskListFormScreen" component={TaskListFormScreen} />
       <Stack.Screen
         name="inventoryFormScreen"
