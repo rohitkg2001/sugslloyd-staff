@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Staff Management - Dashandots",
+    "name": "Staff App | Sugslloyds",
     "slug": "smdnd",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -30,13 +30,9 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION"
       ],
-      "package": "com.anonymous.smdnd"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "package": "com.dashandots.sugslloydsstaffapp"
     },
     "plugins": [
-      "expo-font",
       [
         "expo-camera",
         {

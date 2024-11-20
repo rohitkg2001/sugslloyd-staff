@@ -1,7 +1,5 @@
 import { FlatList, View, ActivityIndicator, Text } from "react-native";
-import { styles } from "../../styles/components.styles";
 import { PRIMARY_COLOR } from "../../styles/constant";
-import NoRecord from "../../screens/NoRecord";
 
 export default function MyFlatList({
   data,

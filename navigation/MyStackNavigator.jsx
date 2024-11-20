@@ -8,7 +8,6 @@ import TaskList from "../components/card/CardTask";
 import ProfileScreen from "../screens/ProfileScreen";
 import SettingsScreen from "../screens/SettingScreen";
 import InternalSetting from "../screens/InternalSetting";
-import NoRecord from "../screens/NoRecord";
 import TotalProjectsScreen from "../screens/TotalProjectsScreen";
 import TotalEarningScreen from "../screens/TotalEarningScreen";
 import TotalSitesScreen from "../screens/TotalSitesScreen";
@@ -47,7 +46,6 @@ export default function MyStackNavigator() {
       <Stack.Screen name="profileScreen" component={ProfileScreen} />
       <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
       <Stack.Screen name="InternalSetting" component={InternalSetting} />
-      <Stack.Screen name="NoRecord" component={NoRecord} />
       <Stack.Screen
         name="totalProjectsScreen"
         component={TotalProjectsScreen}
