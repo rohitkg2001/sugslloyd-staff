@@ -1,16 +1,16 @@
-
 import { Alert } from "react-native";
 
-export const fakeDelete = ({ title, message, negativeTextClick = null, positiveTextClick = null }) => {
-  Alert.alert(
-    title,
-    message,
-    [
-      { text: "Cancel", style: "cancel", onPress: negativeTextClick },
-      { text: "Delete", onPress: positiveTextClick },
-    ]
-  );
-}
+export const fakeDelete = ({
+  title,
+  message,
+  negativeTextClick = null,
+  positiveTextClick = null,
+}) => {
+  Alert.alert(title, message, [
+    { text: "Cancel", style: "cancel", onPress: negativeTextClick },
+    { text: "Delete", onPress: positiveTextClick },
+  ]);
+};
 
 export const tasks = [
   {
@@ -303,10 +303,23 @@ export const menuItems = [
     page: "inventoryScreen",
   },
   { label: "Site Management", icon: "map-outline", page: "totalSitesScreen" },
-  { label: "Vendor Management", icon: "people-outline", page: "totalVendorsScreen" },
-  { label: "Project Management", icon: "reader-outline", page: "totalProjectsScreen" },
-  { label: "Task Management", page: "", icon: "grid-outline", page: "taskScreen" },
-  { label: "Reports", page: "", icon: "pie-chart-outline", },
+  {
+    label: "Vendor Management",
+    icon: "people-outline",
+    page: "totalVendorsScreen",
+  },
+  {
+    label: "Project Management",
+    icon: "reader-outline",
+    page: "totalProjectsScreen",
+  },
+  {
+    label: "Task Management",
+    page: "",
+    icon: "grid-outline",
+    page: "taskScreen",
+  },
+  { label: "Reports", page: "", icon: "pie-chart-outline" },
   { label: "Settings", page: "", icon: "cog-outline", page: "InternalSetting" },
 ];
 
@@ -680,40 +693,74 @@ export const taskslistdata = [
   },
 ];
 
-export const PRIVACY_POLICY = "lorem ipsum sit dolor amet"
+export const PRIVACY_POLICY = "lorem ipsum sit dolor amet";
 
 export const siteCardsForDashboard = [
   {
     id: 1,
-    title: 'Total Sites',
+    title: "Total Sites",
     count: 46,
-    page: 'totalSitesScreen',
+    page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#f9caa7",
   },
   {
     id: 2,
-    title: 'Completed Sites',
+    title: "Completed Sites",
     count: 17,
-    page: 'totalSitesScreen',
+    page: "totalSitesScreen",
     data: totalsitesData,
-    backgroundColor: "#ffeead"
+    backgroundColor: "#ffeead",
   },
   {
     id: 3,
-    title: 'Sites in Progress',
+    title: "Sites in Progress",
     count: 22,
-    page: 'totalSitesScreen',
+    page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#bdeaee",
   },
   {
     id: 4,
-    title: 'Pending Sites',
+    title: "Pending Sites",
     count: 7,
-    page: 'totalSitesScreen',
+    page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#ffbbee",
+  },
+];
 
-  }
-]
+export const vendorCardForDashboard = [
+  {
+    id: "1",
+    title: "Total Vendors",
+    count: 67,
+    page: "",
+    data: totalsitesData,
+    backgroundColor: "#f9caa7",
+  },
+  {
+    id: "2",
+    title: "Active Vendors",
+    count: 53,
+    page: "",
+    data: totalsitesData,
+    backgroundColor: "#f9caa7",
+  },
+  {
+    id: "3",
+    title: "Inactive Vendors",
+    count: 10,
+    page: "",
+    data: totalsitesData,
+    backgroundColor: "#f9caa7",
+  },
+  {
+    id: "4",
+    title: "Blocklisted Vendors",
+    count: 4,
+    page: "",
+    data: totalsitesData,
+    backgroundColor: "#f9caa7",
+  },
+];

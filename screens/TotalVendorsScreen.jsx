@@ -1,23 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { View, Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { H6, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
 import MyFlatList from "../components/utility/MyFlatList";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
+import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import { totalVendorsData } from "../utils/faker";
 
-const TotalVendorsScreen = () => {
+const TotalVendorsScreen = ({navigation}) => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [filteredVendors, setFilteredVendors] = useState(totalVendorsData);
-  const navigation = useNavigation();
+
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
