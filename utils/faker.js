@@ -1,9 +1,16 @@
-import {
-  DANGER_COLOR,
-  INFO_COLOR,
-  SUCCESS_COLOR,
-  WARNING_COLOR,
-} from "../styles/constant";
+
+import { Alert } from "react-native";
+
+export const fakeDelete = ({ title, message, negativeTextClick = null, positiveTextClick = null }) => {
+  Alert.alert(
+    title,
+    message,
+    [
+      { text: "Cancel", style: "cancel", onPress: negativeTextClick },
+      { text: "Delete", onPress: positiveTextClick },
+    ]
+  );
+}
 
 export const tasks = [
   {
@@ -24,42 +31,7 @@ export const tasks = [
     page: "totalEarningScreen",
     backgroundColor: "#C8E6C9",
   },
-  {
-    id: 3,
-    title: "Task 3",
-    description: "This is task 3",
-    count: 46,
-    status: "Total Sites",
-    page: "totalSitesScreen",
-    backgroundColor: "#f9caa7",
-  },
-  {
-    id: 4,
-    title: "Task 4",
-    description: "This is task 4",
-    count: 17,
-    status: "Completed Sites",
-    page: "completedSitesScreen",
-    backgroundColor: "#ffeead",
-  },
-  {
-    id: 5,
-    title: "Task 5",
-    description: "This is task 5",
-    count: 22,
-    status: "Sites in Progress",
-    page: "progressSitesScreen",
-    backgroundColor: "#bdeaee",
-  },
-  {
-    id: 6,
-    title: "Task 6",
-    description: "This is task 5",
-    count: 7,
-    status: "Pending Sites",
-    page: "pendingSitesScreen",
-    backgroundColor: "#ffbbee",
-  },
+
   {
     id: 7,
     title: "Task 6",
@@ -331,7 +303,7 @@ export const menuItems = [
   { label: "Site Management", icon: "map-outline", page: "totalSitesScreen" },
   { label: "Vendor Management", icon: "people-outline", page: "totalVendorsScreen" },
   { label: "Project Management", icon: "reader-outline", page: "totalProjectsScreen" },
-  { label: "Task Management", page: "", icon: "grid-outline", page: "taskListScreen" },
+  { label: "Task Management", page: "", icon: "grid-outline", page: "taskScreen" },
   { label: "Reports", page: "", icon: "pie-chart-outline", },
   { label: "Settings", page: "", icon: "cog-outline", page: "InternalSetting" },
 ];
@@ -539,6 +511,7 @@ export const totalVendorsData = [
     contactNumber: "789-123-4560",
   },
 ];
+
 export const inactiveVendorsData = [
   {
     id: 1,
@@ -555,6 +528,7 @@ export const inactiveVendorsData = [
     status: "Inactive",
   },
 ];
+
 export const activeVendorsData = [
   {
     id: 1,
@@ -681,3 +655,39 @@ export const taskslistdata = [
 ];
 
 export const PRIVACY_POLICY = "lorem ipsum sit dolor amet"
+
+export const siteCardsForDashboard = [
+  {
+    id: 1,
+    title: 'Total Sites',
+    count: 46,
+    page: 'totalSitesScreen',
+    data: totalsitesData,
+    backgroundColor: "#f9caa7",
+  },
+  {
+    id: 2,
+    title: 'Completed Sites',
+    count: 17,
+    page: 'totalSitesScreen',
+    data: totalsitesData,
+    backgroundColor: "#ffeead"
+  },
+  {
+    id: 3,
+    title: 'Sites in Progress',
+    count: 22,
+    page: 'totalSitesScreen',
+    data: totalsitesData,
+    backgroundColor: "#bdeaee",
+  },
+  {
+    id: 4,
+    title: 'Pending Sites',
+    count: 7,
+    page: 'totalSitesScreen',
+    data: totalsitesData,
+    backgroundColor: "#ffbbee",
+
+  }
+]

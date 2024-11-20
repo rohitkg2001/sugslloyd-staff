@@ -1,4 +1,4 @@
-import "react-native-gesture-handler"; //Don't ever remove this line
+
 import { PaperProvider } from "react-native-paper";
 import MyNavigationContainer from "./navigation/MyNavigationContainer";
 import { Provider } from "react-redux";

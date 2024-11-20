@@ -9,14 +9,13 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { project } from "../utils/faker";
+import { fakeDelete, project } from "../utils/faker";
 import { useNavigation } from "@react-navigation/native";
 
-const TotalProjectsScreen = () => {
+export default function TotalProjectsScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
-  const [filteredProjects, setFilteredProjects] = useState(project); 
-  const navigation = useNavigation();
+  const [filteredProjects, setFilteredProjects] = useState(project);
 
   const filterProjects = (text) => {
     setSearchText(text);
@@ -47,25 +46,6 @@ const TotalProjectsScreen = () => {
     navigation.navigate("ViewDetailScreen", { site: projectData });
   };
 
-  const handleDelete = (item) => {
-    Alert.alert(
-      "Confirm Delete",
-      `Are you sure you want to delete "${item.projectName}"?`,
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Delete" ,
-          style: "destructive",
-          onPress: () => {
-            setFilteredProjects((prevProjects) =>
-              prevProjects.filter( ( project ) => project.id !== item.id )
-            );
-          },
-        },
-      ]
-    );
-  };
-
   const handleEdit = (item) => {
     navigation.navigate("EditDetailsScreen", {
       site: item,
@@ -84,16 +64,7 @@ const TotalProjectsScreen = () => {
 
   return (
     <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-     
-      <MyHeader
-        title="Total Projects"
-        isBack={true}
-        hasIcon={true}
-        icon="ellipsis-vertical"
-        onIconPress={() => setIsMenuVisible(!isMenuVisible)}
-      />
-
-     
+      <MyHeader title="Total Projects" isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredProjects}
         loading={false}
@@ -101,7 +72,7 @@ const TotalProjectsScreen = () => {
           <ClickableCard
             item={item}
             handleViewDetails={handleViewDetails}
-            handleDelete={handleDelete}
+            handleDelete={() => fakeDelete({ title: "Error!!!", message: "You cannot delete this project. Please contact admin!" })}
             handleEdit={handleEdit}
             isProject={true}
           />
@@ -120,22 +91,13 @@ const TotalProjectsScreen = () => {
         )}
       />
 
-  
+
       <Button
         style={styles.addButton}
         onPress={() => navigation.navigate("formScreen")}
       >
         <Ionicons name="add" size={32} color="white" />
       </Button>
-
-
-      <Filter
-        visible={isMenuVisible}
-        onClose={() => setIsMenuVisible(false)}
-        options={menuOptions}
-      />
     </View>
   );
 };
-
-export default TotalProjectsScreen;
