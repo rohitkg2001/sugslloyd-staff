@@ -11,14 +11,14 @@ const VendorFormScreen = () => {
   const [gstNumber, setGstNumber] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-  const [aadharNumber, setAadharNumber] = useState("");
+  const [setAadharNumber] = useState("");
   const [address, setAddress] = useState("");
   const [accountName, setAccountName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [ifsc, setIfsc] = useState("");
   const [bankName, setBankName] = useState("");
   const [branch, SetBranch] = useState("");
-  const [pan, setPan] = useState("");
+  const [setPan] = useState("");
   const [mailId, setMailId] = useState("");
 
   const handleCancel = () => {

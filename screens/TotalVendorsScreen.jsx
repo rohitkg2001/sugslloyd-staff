@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { H6, P } from "../components/text";
+
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
 import MyFlatList from "../components/utility/MyFlatList";
