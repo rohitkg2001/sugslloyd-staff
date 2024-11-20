@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { styles } from "../../styles/components.styles";
-import { H3, H4, H5, H6, P } from "../text";
+import { H4, P } from "../text";
 
 const ToDo = ({
   projects,

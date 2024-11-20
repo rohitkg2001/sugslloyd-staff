@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Checkbox as PaperCheckbox } from "react-native-paper";
-import { styles } from "../../styles/components.styles";
+
 import { H5 } from "../text";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "../../styles/constant";
 

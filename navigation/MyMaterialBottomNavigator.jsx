@@ -21,7 +21,6 @@ export default function MyMaterialBottomNavigator() {
         borderTopWidth: 0.5,
         borderTopColor: "#6c6c6c",
         paddingTop: 0,
-        // paddingBottom: 48
       }}
     >
       <BottomTab.Screen
@@ -51,11 +50,7 @@ export default function MyMaterialBottomNavigator() {
         options={{
           tabBarLabel: "More",
           tabBarIcon: ({ color }) => (
-            <Icon
-              name="ellipsis-vertical-circle"
-              size={26}
-              color={color}
-            />
+            <Icon name="ellipsis-vertical-circle" size={26} color={color} />
           ),
         }}
       />
