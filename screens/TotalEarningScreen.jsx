@@ -119,19 +119,13 @@ const TotalEarningScreen = () => {
           )}
         />
 
-        {/* Filter Modal */}
         <Filter
           visible={isMenuVisible}
           onClose={toggleMenu}
-          options={menuOptions} // Pass the menu options for sort functionality
+          options={menuOptions} 
         />
 
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => console.log("Add Pressed")}
-        >
-          <Ionicons name="add" size={32} color="white" />
-        </TouchableOpacity>
+     
       </View>
     </ContainerComponent>
   );
