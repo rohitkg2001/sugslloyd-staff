@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { View, ScrollView, StyleSheet, Alert } from "react-native";
+import { useState } from "react";
+import { View, ScrollView, Alert } from "react-native";
 import { SCREEN_WIDTH, spacing, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
-import { H1, H5, H6, P } from "../components/text";
+import { H5 } from "../components/text";
 import Filter from "../components/filters";
 import MyButton from "../components/buttons/MyButton";
 
@@ -75,16 +75,15 @@ const ViewDetailScreen = ({ route, navigation }) => {
       formType: site.vendorName
         ? "vendor"
         : site.projectName
-        ? "project"
-        : "site",
+          ? "project"
+          : "site",
     });
   };
 
   const handleDelete = () => {
     Alert.alert(
       "Confirm Delete",
-      `Are you sure you want to delete this ${
-        site.vendorName ? "vendor" : site.projectName ? "project" : "site"
+      `Are you sure you want to delete this ${site.vendorName ? "vendor" : site.projectName ? "project" : "site"
       }?`,
       [
         { text: "Cancel", style: "cancel" },
@@ -112,8 +111,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             formType === "vendor"
               ? "Vendor Details"
               : site.projectName
-              ? "Project Details"
-              : "Site Details"
+                ? "Project Details"
+                : "Site Details"
           }
           isBack={true}
           hasIcon={true}
@@ -124,8 +123,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             {formType === "vendor"
               ? renderVendorDetails()
               : site.projectName
-              ? renderProjectDetails()
-              : renderSiteDetails()}
+                ? renderProjectDetails()
+                : renderSiteDetails()}
           </View>
           <View
             style={{

@@ -1,14 +1,11 @@
-import React, { useState } from "react";
 import MenuItem from "../components/MenuItem";
 import { internal } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { View } from "react-native";
 
-import { useNavigation } from "@react-navigation/native";
 
-export default function SettingsScreen() {
-  const navigation = useNavigation();
+export default function SettingsScreen({ navigation }) {
 
   return (
     <ContainerComponent justifyContent="space-between">

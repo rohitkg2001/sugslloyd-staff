@@ -1,7 +1,6 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { View, FlatList, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { projecttask } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
@@ -11,10 +10,9 @@ import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
 
-const CurrentProjectsScreen = () => {
+const CurrentProjectsScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
-  const navigation = useNavigation(); 
 
   const filteredProjects = projecttask.filter((item) =>
     item.projectName.toLowerCase().includes(searchText.toLowerCase())

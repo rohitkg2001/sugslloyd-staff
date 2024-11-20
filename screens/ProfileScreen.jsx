@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
 import { View, TouchableOpacity, Text, Image } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { documentData, staff } from "../utils/faker";

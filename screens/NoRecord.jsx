@@ -1,9 +1,7 @@
 import React from "react";
-import { View } from "react-native";
-import ContainerComponent from "../components/ContainerComponent";
-import { H4, P } from "../components/text";
-import { SCREEN_WIDTH, spacing, typography } from "../styles";
-import MyHeader from "../components/header/MyHeader";
+import { View, Image } from "react-native";
+import { P } from "../components/text";
+import { SCREEN_WIDTH, spacing } from "../styles";
 
 const NoRecord = ({ msg }) => {
   return (
@@ -17,6 +15,10 @@ const NoRecord = ({ msg }) => {
         },
       ]}
     >
+      <Image
+        source={require('../assets/Error.png')}
+        style={{ height: SCREEN_WIDTH / 2, width: SCREEN_WIDTH / 2 }}
+        resizeMode="contain" />
       <P style={{ textAlign: "center" }}>{msg}</P>
     </View>
   );

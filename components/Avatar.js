@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { View, Image, Text } from "react-native";
 import { styles, spacing, layouts } from "../styles";
 import H1 from "./text/H2";

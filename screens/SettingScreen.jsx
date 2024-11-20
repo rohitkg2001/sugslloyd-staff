@@ -1,4 +1,3 @@
-import React from "react";
 import ProfileCard from "../components/ProfileCard";
 import MenuItem from "../components/MenuItem";
 import { menuItems } from "../utils/faker";
@@ -7,11 +6,9 @@ import { View, TouchableOpacity } from "react-native";
 import { H5 } from "../components/text";
 import { DANGER_COLOR } from "../styles/constant";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
 import { staff } from "../utils/faker";
 
-export default function SettingsScreen() {
-  const navigation = useNavigation();
+export default function SettingsScreen({ navigation }) {
 
   const handleLogoutPress = () => {
     console.log("Logout pressed");

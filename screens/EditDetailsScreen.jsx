@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ScrollView, View } from "react-native";
-import { H6 } from "../components/text";
 import { SCREEN_WIDTH, spacing } from "../styles";
-import { useRoute, useNavigation } from "@react-navigation/native";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 import MyHeader from "../components/header/MyHeader";
 
-const EditDetailsScreen = ({ onSave }) => {
-  const route = useRoute();
-  const navigation = useNavigation();
+const EditDetailsScreen = ({ route, navigation, onSave }) => {
+
   const { site, formType } = route.params || {};
 
   const [ formData, setFormData ] = useState( {} );
@@ -71,8 +68,8 @@ const EditDetailsScreen = ({ onSave }) => {
     formType === "project"
       ? "Edit Project"
       : formType === "vendor"
-      ? "Edit Vendor"
-      : "Edit Site";
+        ? "Edit Vendor"
+        : "Edit Site";
 
   return (
     <ScrollView

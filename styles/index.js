@@ -4,8 +4,6 @@ import {
     PRIMARY_COLOR,
     PRIMARY_COLOR_TRANSPARENT,
     LIGHT,
-    DARK,
-    DANGER_COLOR
 } from './constant'
 
 import { spacing } from './spacing.styles'
@@ -19,6 +17,8 @@ export {
     PRIMARY_COLOR,
     PRIMARY_COLOR_TRANSPARENT,
     LIGHT,
+    DARK,
+    DANGER_COLOR,
     spacing,
     typography,
     styles,

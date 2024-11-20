@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, TouchableOpacity, View, StyleSheet } from "react-native";
+import { Modal, TouchableOpacity, View } from "react-native";
 import { P } from "./text";
 import { spacing, typography } from "../styles";
 import { styles } from "../styles/components.styles";

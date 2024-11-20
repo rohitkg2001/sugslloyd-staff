@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { View, Image, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
-
 import { inventoryData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
@@ -15,15 +13,10 @@ import Button from "../components/buttons/Button";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 
-const InventoryScreen = () => {
+const InventoryScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
-  const navigation = useNavigation();
-
-  const filteredOrders = inventoryData.filter((item) =>
-    item.name.toLowerCase().includes(searchText.toLowerCase())
-  );
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);

@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import {
-  View,
-  ScrollView,
-  Platform,
-  TouchableOpacity,
-  Text,
-} from "react-native";
+import { useState } from "react";
+import { View, ScrollView, Platform } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
@@ -103,7 +97,7 @@ const TaskListFormScreen = () => {
             title="Select Deadline"
             value={deadline.toLocaleDateString()}
             editable={true}
-            onPress={showPicker} 
+            onPress={showPicker}
           />
 
           {showDatePicker && (

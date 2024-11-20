@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { View, Modal, ScrollView } from "react-native";
 import { RadioButton, Button, Chip } from "react-native-paper";
 import ContainerComponent from "../components/ContainerComponent";
