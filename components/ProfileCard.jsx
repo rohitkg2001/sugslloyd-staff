@@ -4,8 +4,6 @@ import { P, Span } from "./text";
 import Avatar from "./Avatar";
 import { styles, layouts, spacing, typography, SCREEN_WIDTH } from "../styles";
 
-
-
 export default function ProfileCard({ imageUri, name, phoneNumber, onPress }) {
   return (
     <TouchableOpacity
