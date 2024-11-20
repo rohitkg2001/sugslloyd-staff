@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from "react-native";
-import { H2, H3, H4, H6 } from "../text";
+import { H4 } from "../text";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Badge } from "react-native-paper";
 import { styles } from "../../styles/components.styles";
@@ -17,7 +17,6 @@ export default function MyHeader({
   const navigation = useNavigation();
   return (
     <View style={styles.headerStyle}>
-
       {isBack && (
         <TouchableOpacity
           onPress={() => navigation.goBack()}
