@@ -737,7 +737,7 @@ export const vendorCardForDashboard = [
     count: 67,
     page: "totalVendorsScreen",
     data: totalVendorsData,
-    backgroundColor: "#F5F5DC",
+    backgroundColor: "#FFB7B2",
   },
   {
     id: "2",
@@ -745,7 +745,7 @@ export const vendorCardForDashboard = [
     count: 53,
     page: "totalVendorsScreen",
     data: totalVendorsData,
-    backgroundColor: "#C4C3D0",
+    backgroundColor: "#B6F4D3",
   },
   {
     id: "3",
@@ -753,7 +753,7 @@ export const vendorCardForDashboard = [
     count: 10,
     page: "totalVendorsScreen",
     data: totalVendorsData,
-    backgroundColor: "#C8E6C9",
+    backgroundColor: "#C4C3D0",
   },
   {
     id: "4",
@@ -761,6 +761,6 @@ export const vendorCardForDashboard = [
     count: 44,
     page: "totalVendorsScreen",
     data: totalVendorsData,
-    backgroundColor: "#f9caa7",
+    backgroundColor: "#F5F5DC",
   },
 ];

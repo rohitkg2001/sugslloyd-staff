@@ -10,8 +10,14 @@ import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 
 export default function TotalSitesScreen({ navigation, route }) {
-  const { pageTitle, data } = route.params || { pageTitle: 'Site Management', data: totalsitesData }
+  const { pageTitle, data } = route.params || {
+    pageTitle: "Site Management",
+    data: totalsitesData,
+  };
 
+  const handleViewDetails = (projectData) => {
+    navigation.navigate("ViewDetailScreen", { site: projectData });
+  };
   return (
     <ContainerComponent>
       <MyHeader title={pageTitle} isBack={true} hasIcon={true} />
@@ -19,14 +25,21 @@ export default function TotalSitesScreen({ navigation, route }) {
         data={data}
         loading={false}
         renderItem={({ item }) => (
-          <ClickableCard item={item}
-            handleViewDetails={() => navigation.navigate("ViewDetailScreen", { site })}
-            handleDelete={() => fakeDelete({ title: "Error!!!", message: "You cannot delete this site. Please contact Admin!" })}
-            handleEdit={(item) => navigation.navigate("EditDetailsScreen",
-              {
+          <ClickableCard
+            item={item}
+            handleViewDetails={handleViewDetails}
+            handleDelete={() =>
+              fakeDelete({
+                title: "Error!!!",
+                message: "You cannot delete this site. Please contact Admin!",
+              })
+            }
+            handleEdit={(item) =>
+              navigation.navigate("EditDetailsScreen", {
                 item,
                 formType: "site",
-              })}
+              })
+            }
             isSite={true}
           />
         )}
@@ -48,4 +61,4 @@ export default function TotalSitesScreen({ navigation, route }) {
       </Button>
     </ContainerComponent>
   );
-};
+}

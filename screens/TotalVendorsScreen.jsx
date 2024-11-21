@@ -15,6 +15,10 @@ export default function TotalVendorsScreen({ navigation, route }) {
     data: totalVendorsData,
   };
 
+  const handleViewDetails = (projectData) => {
+    navigation.navigate("ViewDetailScreen", { vendor: projectData });
+  };
+
   return (
     <ContainerComponent>
       <MyHeader title={pageTitle} isBack={true} hasIcon={true} />
@@ -24,9 +28,10 @@ export default function TotalVendorsScreen({ navigation, route }) {
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
-            handleViewDetails={() =>
-              navigation.navigate("ViewDetailScreen", { vendor: item })
-            }
+            // handleViewDetails={() =>
+            //   navigation.navigate("ViewDetailScreen", { vendor: item })
+            // }
+            handleViewDetails={handleViewDetails}
             handleDelete={() =>
               fakeDelete({
                 title: "Error!!!",
@@ -39,7 +44,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
                 formType: "vendor",
               })
             }
-            isVendor={true} 
+            isVendor={true}
           />
         )}
         keyExtractor={(item) => item.id.toString()}
