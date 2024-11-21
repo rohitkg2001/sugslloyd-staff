@@ -18,7 +18,12 @@ import {
   styles,
   typography,
 } from "../styles";
-import { siteCardsForDashboard, staff, tasks } from "../utils/faker";
+import {
+  siteCardsForDashboard,
+  vendorCardForDashboard,
+  staff,
+  tasks,
+} from "../utils/faker";
 
 export default function DashboardScreen({ navigation }) {
   const today = useState(moment().format("DD MMM YYYY"));
@@ -134,10 +139,12 @@ export default function DashboardScreen({ navigation }) {
                 backgroundColor={item.backgroundColor}
                 tasks={item.count}
                 status={item.title}
-                onPress={() => navigation.navigate(item.page, {
-                  pageTitle: item.title,
-                  data: item.data
-                })}
+                onPress={() =>
+                  navigation.navigate(item.page, {
+                    pageTitle: item.title,
+                    data: item.data,
+                  })
+                }
                 style={{
                   marginTop: marginTop,
                 }}
@@ -186,7 +193,7 @@ export default function DashboardScreen({ navigation }) {
         </View>
 
         <MyFlatList
-          data={secondFourTasks}
+          data={vendorCardForDashboard}
           renderItem={({ item, index }) => {
             const isRightColumn = index % 2 !== 0;
             return (
@@ -194,8 +201,13 @@ export default function DashboardScreen({ navigation }) {
                 key={item.id}
                 backgroundColor={item.backgroundColor}
                 tasks={item.count}
-                status={item.status}
-                onPress={() => navigation.navigate(item.page)}
+                status={item.title}
+                onPress={() =>
+                  navigation.navigate(item.page, {
+                    pageTitle: item.title,
+                    data: item.data,
+                  })
+                }
               />
             );
           }}

@@ -9,26 +9,10 @@ import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 
-export default function TotalVendorsScreen({ navigation , route }) {
-  const { pageTitle = "Vendor Management", data = totalVendorsData } =
-    route.params || {};
-
-  const handleViewDetails = (vendor) => {
-    navigation.navigate("ViewDetailScreen", { vendor });
-  };
-
-  const handleDelete = (vendorToDelete) => {
-    fakeDelete({
-      title: "Error!!!",
-      message: `You cannot delete ${vendorToDelete.name}. Please contact Admin!`,
-    });
-  };
-
-  const handleEdit = (vendor) => {
-    navigation.navigate("EditDetailsScreen", {
-      vendor,
-      formType: "vendor",
-    });
+export default function TotalVendorsScreen({ navigation, route }) {
+  const { pageTitle, data } = route.params || {
+    pageTitle: "Vendor Management",
+    data: totalVendorsData,
   };
 
   return (
@@ -40,10 +24,22 @@ export default function TotalVendorsScreen({ navigation , route }) {
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
-            handleViewDetails={() => handleViewDetails(item)}
-            handleDelete={() => handleDelete(item)}
-            handleEdit={() => handleEdit(item)}
-            isVendor={true}
+            handleViewDetails={() =>
+              navigation.navigate("ViewDetailScreen", { vendor })
+            }
+            handleDelete={() =>
+              fakeDelete({
+                title: "Error!!!",
+                message: "You cannot delete this vendor. Please contact Admin!",
+              })
+            }
+            handleEdit={(item) =>
+              navigation.navigate("EditDetailsScreen", {
+                item,
+                formType: "vendor",
+              })
+            }
+            isSite={true}
           />
         )}
         keyExtractor={(item) => item.id.toString()}
