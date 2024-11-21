@@ -51,7 +51,7 @@ export default function ClickableCard({
             }
             {isVendor && (
               <>
-                <P style={{ fontSize: 14 }}>{item.name}</P>
+                <H6 style={[typography.textBold]}>{item.name}</H6>
                 <P style={{ fontSize: 14 }}>{item.location}</P>
                 <P style={{ fontSize: 14 }}>{item.contactNumber}</P>
 
