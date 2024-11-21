@@ -15,8 +15,9 @@ export default function TotalVendorsScreen({ navigation, route }) {
     data: totalVendorsData,
   };
 
-  const handleViewDetails = (projectData) => {
-    navigation.navigate("ViewDetailScreen", { vendor: projectData });
+  const handleViewDetails = (item) => {
+    const dataType = item.projectName ? "project" : "vendor"; 
+    navigation.navigate("ViewDetailScreen", { site: item, formType: dataType });
   };
 
   return (
@@ -28,9 +29,6 @@ export default function TotalVendorsScreen({ navigation, route }) {
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
-            // handleViewDetails={() =>
-            //   navigation.navigate("ViewDetailScreen", { vendor: item })
-            // }
             handleViewDetails={handleViewDetails}
             handleDelete={() =>
               fakeDelete({
