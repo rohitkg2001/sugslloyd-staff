@@ -10,7 +10,7 @@ import SearchBar from "../components/input/SearchBar";
 import MyFlatList from "../components/utility/MyFlatList";
 
 export default function CurrentProjectsScreen({ navigation }) {
-  const [searchText, setSearchText] = useState("");
+  const [searchText] = useState("");
 
   const filteredProjects = projecttask.filter((item) =>
     item.projectName.toLowerCase().includes(searchText.toLowerCase())
