@@ -56,7 +56,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
 
   const renderVendorDetails = () => (
     <>
-      {renderSectionTitle("Vendor Information")}
       {renderDetailRow("Vendor Name", site.name)}
       {renderDetailRow("Mail ID", site.mailId)}
       {renderDetailRow("Contact No", site.contactNumber)}
@@ -65,9 +64,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("Status", site.status)}
     </>
   );
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
-  };
+ 
 
   const handleEdit = () => {
     navigation.navigate("EditDetailsScreen", {
@@ -97,11 +94,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
       ]
     );
   };
-
-  const menuOptions = [
-    { label: "Edit", onPress: handleEdit },
-    { label: "Delete", onPress: handleDelete },
-  ];
 
   return (
     <ContainerComponent>
@@ -145,11 +137,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
           </View>
         </ScrollView>
 
-        <Filter
-          visible={isMenuVisible}
-          onClose={() => setIsMenuVisible(false)}
-          options={menuOptions}
-        />
       </View>
     </ContainerComponent>
   );
