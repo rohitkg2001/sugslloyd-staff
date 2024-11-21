@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { View, FlatList, TouchableOpacity } from "react-native";
 import { projecttask } from "../utils/faker";
@@ -9,6 +8,7 @@ import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/filters";
+import MyFlatList from "../components/utility/MyFlatList";
 
 const CurrentProjectsScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
