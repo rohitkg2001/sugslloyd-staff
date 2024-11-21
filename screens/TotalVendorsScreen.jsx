@@ -3,7 +3,7 @@ import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { spacing, styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
@@ -25,7 +25,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
           <ClickableCard
             item={item}
             handleViewDetails={() =>
-              navigation.navigate("ViewDetailScreen", { vendor })
+              navigation.navigate("ViewDetailScreen", { vendor: item })
             }
             handleDelete={() =>
               fakeDelete({
@@ -39,7 +39,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
                 formType: "vendor",
               })
             }
-            isSite={true}
+            isVendor={true} 
           />
         )}
         keyExtractor={(item) => item.id.toString()}
