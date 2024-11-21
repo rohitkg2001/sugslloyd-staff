@@ -10,7 +10,7 @@ import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 
-const TaskListScreen = ({ navigation }) => {
+export default function TaskListScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
   const [filteredTasks, setFilteredTasks] = useState(taskslistdata);
 
@@ -51,31 +51,20 @@ const TaskListScreen = ({ navigation }) => {
 
   return (
     <ContainerComponent>
-      <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-        <MyHeader
-          title="Task List"
-          isBack={true}
-          hasIcon={true}
-          icon={"ellipsis-vertical"}
-        />
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginVertical: 8,
-          }}
-        >
-          <SearchBar
-            placeholder="Search tasks..."
-            value={searchText}
-            onChangeText={filterTasks}
-          />
-        </View>
+      <View>
+        <MyHeader title="Task List" isBack={true} hasIcon={true} />
         <MyFlatList
           data={filteredTasks}
           renderItem={renderListItem}
           keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={styles.list}
+          contentContainerStyle={[spacing.mh2, spacing.mt1]}
+          ListHeaderComponent={() => (
+            <SearchBar
+              placeholder="Search tasks..."
+              value={searchText}
+              onChangeText={filterTasks}
+            />
+          )}
         />
         <TouchableOpacity
           style={styles.addButton}
@@ -86,6 +75,4 @@ const TaskListScreen = ({ navigation }) => {
       </View>
     </ContainerComponent>
   );
-};
-
-export default TaskListScreen;
+}
