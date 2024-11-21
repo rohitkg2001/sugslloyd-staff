@@ -84,7 +84,7 @@ export default function LoginScreen({ navigation }) {
             >
               <Icon
                 name={isPasswordVisible ? "eye-off" : "eye"}
-                size={30}
+                size={32}
                 color="gray"
               />
             </TouchableOpacity>

@@ -18,7 +18,7 @@ export default function NotificationScreen() {
         left={() => (
           <Avatar.Icon
             backgroundColor={PRIMARY_COLOR}
-            size={40}
+            size={32}
             icon={item.icon}
             style={{ backgroundColor: "#2b87b0" }}
           />

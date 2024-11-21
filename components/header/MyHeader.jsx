@@ -33,7 +33,7 @@ export default function MyHeader({
         >
           <Icon
             name={icon}
-            size={30}
+            size={32}
             style={{ position: "absolute", top: 10, left: 14 }}
           />
           {hasBadge && (

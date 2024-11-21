@@ -85,7 +85,7 @@ export default function DashboardScreen({ navigation }) {
         >
           <CardFullWidth backgroundColor={LIGHT}>
             <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
-              <Icon name="calendar-clear" size={34} color={PRIMARY_COLOR} />
+              <Icon name="calendar-clear" size={32} color={PRIMARY_COLOR} />
               <H5 style={[typography.textBold, { marginRight: 130 }]}>
                 Project Overview
               </H5>
@@ -134,10 +134,12 @@ export default function DashboardScreen({ navigation }) {
                 backgroundColor={item.backgroundColor}
                 tasks={item.count}
                 status={item.title}
-                onPress={() => navigation.navigate(item.page, {
-                  pageTitle: item.title,
-                  data: item.data
-                })}
+                onPress={() =>
+                  navigation.navigate(item.page, {
+                    pageTitle: item.title,
+                    data: item.data,
+                  })
+                }
                 style={{
                   marginTop: marginTop,
                 }}
@@ -157,7 +159,7 @@ export default function DashboardScreen({ navigation }) {
         >
           <CardFullWidth backgroundColor={LIGHT}>
             <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
-              <Icon name="filter" size={34} color={PRIMARY_COLOR} />
+              <Icon name="filter" size={32} color={PRIMARY_COLOR} />
               <H5 style={[typography.textBold, { marginRight: 130 }]}>
                 All Task Overview
               </H5>
