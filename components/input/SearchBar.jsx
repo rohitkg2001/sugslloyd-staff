@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { styles } from "../../styles/components.styles"; // Ensure this contains your base styles
+import { styles } from "../../styles/components.styles";
 import { SCREEN_WIDTH } from "../../styles/constant";
 
 export default function SearchBar({ placeholder, value, onChangeText }) {
@@ -21,7 +21,7 @@ export default function SearchBar({ placeholder, value, onChangeText }) {
           height: 48,
           width: SCREEN_WIDTH - 12,
           borderRadius: 12,
-          paddingHorizontal: 10,
+          paddingHorizontal: 8,
         },
       ]}
     >
@@ -31,12 +31,7 @@ export default function SearchBar({ placeholder, value, onChangeText }) {
         value={value}
         onChangeText={onChangeText}
         style={[
-          {
-            flex: 1, // Make it take available space
-            height: 48,
-            paddingLeft: 30, // Space from the icon
-            fontSize: 18,
-          },
+          { marginHorizontal: 4, height: 48, paddingLeft: 12, fontSize: 18 },
         ]}
       />
     </View>
