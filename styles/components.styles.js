@@ -19,11 +19,7 @@ export const styles = StyleSheet.create({
     backgroundColor: LIGHT,
     alignItems: "center",
   },
-  cameraContainer: {
-    borderWidth: 6,
-    borderColor: PRIMARY_COLOR,
-    overflow: "hidden",
-  },
+
   imageContainerImg: {
     width: 0.6 * SCREEN_WIDTH,
     height: 0.6 * SCREEN_WIDTH,
@@ -41,13 +37,7 @@ export const styles = StyleSheet.create({
     borderColor: PRIMARY_COLOR,
     borderWidth: 1,
   },
-  primaryButton: {
-    marginVertical: 8,
-    backgroundColor: PRIMARY_COLOR,
-    paddingVertical: 8,
-    borderRadius: 6,
-    alignItems: "center",
-  },
+
   btnText: {
     textTransform: "uppercase",
     fontWeight: "bold",
@@ -64,13 +54,6 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     height: 54,
     paddingHorizontal: 8,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  titleText: {
-    fontWeight: "800",
-    color: DARK,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -98,13 +81,7 @@ export const styles = StyleSheet.create({
     borderColor: SECONDARY_COLOR,
     borderRadius: 6,
   },
-  chipButton: {
-    borderWidth: 1,
-    borderRadius: 6,
-    padding: 4,
-    margin: 4,
-    width: SCREEN_WIDTH / 4,
-  },
+
   btn: {
     marginVertical: 8,
     padding: 8,
@@ -116,9 +93,7 @@ export const styles = StyleSheet.create({
   bgDark: {
     backgroundColor: DARK,
   },
-  bgLight: {
-    backgroundColor: LIGHT,
-  },
+
   bgInfo: {
     backgroundColor: INFO_COLOR,
   },
