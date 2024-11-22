@@ -19,9 +19,9 @@ export default function SearchBar({ placeholder, value, onChangeText }) {
           alignItems: "center",
           justifyContent: "flex-start",
           height: 48,
-          width: SCREEN_WIDTH - 16,
-          borderRadius: 12, // Add border radius here for a curved effect
-          paddingHorizontal: 10, // Optional: add horizontal padding
+          width: SCREEN_WIDTH - 12,
+          borderRadius: 12,
+          paddingHorizontal: 10,
         },
       ]}
     >
