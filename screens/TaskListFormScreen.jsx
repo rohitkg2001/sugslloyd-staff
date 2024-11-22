@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, ScrollView, Platform } from "react-native";
+import { useDispatch, useSelector } from 'react-redux';
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
@@ -7,13 +8,17 @@ import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
+import { updateTask } from '../redux/actions/taskActions';
 import { project } from "../utils/faker";
 
-const TaskListFormScreen = () => {
-  const [projectName, setProjectName] = useState(null);
-  const [taskName, setTaskName] = useState("");
-  const [description, setDescription] = useState("");
-  const [deadline, setDeadline] = useState(new Date());
+const TaskListFormScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const currentTask = useSelector(state => state.tasks?.currentTask);
+
+  const [projectName, setProjectName] = useState(currentTask?.projectName || null);
+  const [taskName, setTaskName] = useState(currentTask?.taskName || "");
+  const [description, setDescription] = useState(currentTask?.description || "");
+  const [deadline, setDeadline] = useState(currentTask?.deadline ? new Date(currentTask.deadline) : new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -24,20 +29,34 @@ const TaskListFormScreen = () => {
     }))
   );
 
+  useEffect(() => {
+    if (currentTask) {
+      setProjectName(currentTask.projectName);
+      setTaskName(currentTask.taskName);
+      setDescription(currentTask.description);
+      setDeadline(new Date(currentTask.deadline));
+    }
+  }, [currentTask]);
+
   const handleReset = () => {
-    setProjectName(null);
-    setTaskName("");
-    setDescription("");
-    setDeadline(new Date());
+    setProjectName(currentTask?.projectName || null);
+    setTaskName(currentTask?.taskName || "");
+    setDescription(currentTask?.description || "");
+    setDeadline(currentTask?.deadline ? new Date(currentTask.deadline) : new Date());
   };
 
   const handleSubmit = () => {
-    console.log("Submitting Task with data:", {
-      projectName,
-      taskName,
-      description,
-      deadline,
-    });
+    if (currentTask) {
+      const updatedTask = {
+        ...currentTask,
+        projectName,
+        taskName,
+        description,
+        deadline: deadline.toISOString(),
+      };
+      dispatch(updateTask(updatedTask));
+      navigation.goBack();
+    }
   };
 
   const onChange = (event, selectedDate) => {
@@ -58,7 +77,7 @@ const TaskListFormScreen = () => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title="Create Task" hasIcon icon="ellipsis-vertical" />
+        <MyHeader title="Update Task" hasIcon icon="ellipsis-vertical" />
 
         <DropDownPicker
           open={open}
@@ -96,8 +115,8 @@ const TaskListFormScreen = () => {
           <MyTextInput
             title="Select Deadline"
             value={deadline.toLocaleDateString()}
-            editable={true}
-            onPress={showPicker}
+            editable={false}
+            onPressIn={showPicker}
           />
 
           {showDatePicker && (
@@ -118,7 +137,7 @@ const TaskListFormScreen = () => {
           }}
         >
           <MyButton title="Reset" onPress={handleReset} color="#DC4C64" />
-          <MyButton title="Submit" onPress={handleSubmit} />
+          <MyButton title="Update" onPress={handleSubmit} />
         </View>
       </ScrollView>
     </ContainerComponent>
@@ -126,3 +145,4 @@ const TaskListFormScreen = () => {
 };
 
 export default TaskListFormScreen;
+
