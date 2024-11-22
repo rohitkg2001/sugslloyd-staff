@@ -204,8 +204,7 @@ export const styles = StyleSheet.create({
     color: DARK,
     fontSize: 14,
   },
- 
- 
+
   time: {
     fontSize: 12,
     color: "#020409",
@@ -284,7 +283,7 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 10,
   },
- 
+
   footerText: {
     fontSize: 14,
     color: "#020409",
@@ -296,7 +295,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
- 
+
   quantityContainer: {
     position: "absolute",
     bottom: 0,
@@ -309,7 +308,7 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
   },
-  
+
   popupMenu: {
     position: "absolute",
     top: 50,
@@ -326,13 +325,13 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 20,
   },
- 
+
   image: {
     width: 50,
     height: 50,
     borderRadius: 10,
   },
- 
+
   addButton: {
     position: "absolute",
     top: SCREEN_HEIGHT - 180,
