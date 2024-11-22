@@ -126,29 +126,23 @@ export default function DashboardScreen({ navigation }) {
               <H5 style={spacing.ml1}>{today}</H5>
             </View>
           </View>
-          <MyFlatList
-            data={firstTwoTasks}
-            renderItem={({ item }) => (
-              <StatCard
-                key={item.id}
-                backgroundColor={item.backgroundColor}
-                tasks={item.count}
-                status={item.status}
-                onPress={() => navigation.navigate(item.page)}
-              />
-            )}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={2}
-          />
         </View>
+        <MyFlatList
+          data={firstTwoTasks}
+          renderItem={({ item }) => (
+            <StatCard
+              key={item.id}
+              backgroundColor={item.backgroundColor}
+              tasks={item.count}
+              status={item.status}
+              onPress={() => navigation.navigate(item.page)}
+            />
+          )}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+        />
 
-        <View
-          style={[
-            spacing.mt2,
-            { width: SCREEN_WIDTH - 18, alignSelf: "center" },
-            spacing.pv3,
-          ]}
-        >
+        <View>
           <CardFullWidth backgroundColor={LIGHT}>
             <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
               <Icon name="calendar-clear" size={32} color={PRIMARY_COLOR} />
@@ -216,13 +210,7 @@ export default function DashboardScreen({ navigation }) {
           numColumns={2}
         />
 
-        <View
-          style={[
-            spacing.mt2,
-            { width: SCREEN_WIDTH - 18, alignSelf: "center" },
-            spacing.pv3,
-          ]}
-        >
+        <View>
           <CardFullWidth backgroundColor={LIGHT}>
             <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
               <Icon name="filter" size={32} color={PRIMARY_COLOR} />
