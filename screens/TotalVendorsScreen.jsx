@@ -16,7 +16,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
   };
 
   const handleViewDetails = (item) => {
-    const dataType = item.projectName ? "project" : "vendor"; 
+    const dataType = item.projectName ? "project" : "vendor";
     navigation.navigate("ViewDetailScreen", { site: item, formType: dataType });
   };
 

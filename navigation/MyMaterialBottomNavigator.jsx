@@ -21,7 +21,6 @@ export default function MyMaterialBottomNavigator() {
         borderTopWidth: 0.5,
         borderTopColor: "#6c6c6c",
         paddingTop: 0,
-        // paddingBottom: 48
       }}
     >
       <BottomTab.Screen
@@ -30,7 +29,7 @@ export default function MyMaterialBottomNavigator() {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <Icon name="desktop-outline" size={26} color={color} />
+            <Icon name="desktop-outline" size={24} color={color} />
           ),
         }}
       />
@@ -40,7 +39,7 @@ export default function MyMaterialBottomNavigator() {
         options={{
           tabBarLabel: "Projects",
           tabBarIcon: ({ color }) => (
-            <Icon name="grid-outline" size={26} color={color} />
+            <Icon name="grid-outline" size={24} color={color} />
           ),
         }}
       />
@@ -51,14 +50,11 @@ export default function MyMaterialBottomNavigator() {
         options={{
           tabBarLabel: "More",
           tabBarIcon: ({ color }) => (
-            <Icon
-              name="ellipsis-vertical-circle"
-              size={26}
-              color={color}
-            />
+            <Icon name="ellipsis-vertical-circle" size={24} color={color} />
           ),
         }}
       />
     </BottomTab.Navigator>
   );
 }
+s;

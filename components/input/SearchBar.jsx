@@ -25,7 +25,7 @@ export default function SearchBar({ placeholder, value, onChangeText }) {
         },
       ]}
     >
-      <Ionicons name="search-outline" size={20} color="#333" />
+      <Ionicons name="search-outline" size={24} color="#333" />
       <TextInput
         placeholder={placeholder}
         value={value}
@@ -40,6 +40,5 @@ export default function SearchBar({ placeholder, value, onChangeText }) {
         ]}
       />
     </View>
-   
   );
 }
