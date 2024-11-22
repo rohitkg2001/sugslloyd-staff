@@ -57,4 +57,3 @@ export default function MyMaterialBottomNavigator() {
     </BottomTab.Navigator>
   );
 }
-s;
