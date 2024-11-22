@@ -34,7 +34,7 @@ const CardTask = ({ task }) => {
         <View style={[styles.row, styles.mv3, { alignItems: "center" }]}>
           <View style={styles.taskFooterItem}>
             <Icon name="calendar-outline" size={24} color="#6b7280" />
-            <P style={styles.footerText}>{task.date}</P>
+            <P style={styles.Text}>{task.date}</P>
           </View>
 
           <View style={styles.taskFooterItem}>

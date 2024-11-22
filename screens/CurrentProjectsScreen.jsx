@@ -20,7 +20,6 @@ export default function CurrentProjectsScreen({ navigation }) {
     <ContainerComponent>
       <View>
         <MyHeader title="Current Projects" isBack={true} hasIcon={true} />
-
         <MyFlatList
           data={filteredProjects}
           keyExtractor={(item) => item.id.toString()}
