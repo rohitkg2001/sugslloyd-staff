@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { View } from "react-native";
-import { spacing, styles } from "../styles";
+import { View, ScrollView } from "react-native";
+import { spacing, styles, LIGHT, SCREEN_WIDTH } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -9,6 +9,7 @@ import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 import { fakeDelete, project } from "../utils/faker";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default function TotalProjectsScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
@@ -60,11 +61,17 @@ export default function TotalProjectsScreen({ navigation }) {
           <NoRecord msg="Oops! No projects available. Start creating or contact admin." />
         )}
         ListHeaderComponent={() => (
-          <SearchBar
-            placeholder="Search by project name"
-            value={searchText}
-            onChangeText={filterProjects}
-          />
+          <View>
+            <SearchBar
+              placeholder="Search"
+              style={{ width: SCREEN_WIDTH - 70 }}
+            />
+            <Button
+              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+            >
+              <Icon name="options-outline" size={28} color={LIGHT} />
+            </Button>
+          </View>
         )}
       />
 

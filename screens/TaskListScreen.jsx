@@ -1,7 +1,7 @@
-import { useState } from "react";
+import  { useEffect } from "react";
 import { View, TouchableOpacity } from "react-native";
+import { useDispatch, useSelector } from 'react-redux';
 import { Card } from "react-native-paper";
-import { taskslistdata } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
@@ -9,22 +9,23 @@ import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
+import { viewTask, initializeTasks } from '../redux/actions/taskActions';
 
 export default function TaskListScreen({ navigation }) {
-  const [searchText, setSearchText] = useState("");
-  const [filteredTasks, setFilteredTasks] = useState(taskslistdata);
+  const dispatch = useDispatch();
+  const tasks = useSelector(state => state.tasks?.tasks || []);
 
-  const filterTasks = (text) => {
-    setSearchText(text);
-    setFilteredTasks(
-      taskslistdata.filter((task) =>
-        task.projectName.toLowerCase().includes(text.toLowerCase())
-      )
-    );
+  useEffect(() => {
+    dispatch(initializeTasks());
+  }, [dispatch]);
+
+  const handleViewTask = (task) => {
+    dispatch(viewTask(task.id));
+    navigation.navigate("taskListFormScreen");
   };
 
   const renderListItem = ({ item }) => (
-    <TouchableOpacity onPress={() => console.log(item)}>
+    <TouchableOpacity onPress={() => handleViewTask(item)}>
       <Card
         style={[
           spacing.mv1,
@@ -54,15 +55,15 @@ export default function TaskListScreen({ navigation }) {
       <View>
         <MyHeader title="Task List" isBack={true} hasIcon={true} />
         <MyFlatList
-          data={filteredTasks}
+          data={tasks}
           renderItem={renderListItem}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={[spacing.mh2, spacing.mt1]}
           ListHeaderComponent={() => (
             <SearchBar
               placeholder="Search tasks..."
-              value={searchText}
-              onChangeText={filterTasks}
+              value=""
+              onChangeText={() => {}}
             />
           )}
         />
@@ -76,3 +77,4 @@ export default function TaskListScreen({ navigation }) {
     </ContainerComponent>
   );
 }
+

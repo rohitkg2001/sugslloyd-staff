@@ -1,64 +1,80 @@
-import { fakeDelete, totalsitesData } from "../utils/faker";
+import { useReducer } from "react";
+import { View, TouchableOpacity } from "react-native";
+import { Card } from "react-native-paper";
+import { taskslistdata } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { spacing, styles } from "../styles";
+import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
+import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
-import NoRecord from "./NoRecord";
-import Button from "../components/buttons/Button";
-import ClickableCard from "../components/card/ClickableCard";
 
-export default function TotalSitesScreen({ navigation, route }) {
-  const { pageTitle, data } = route.params || {
-    pageTitle: "Site Management",
-    data: totalsitesData,
+import { taskListReducer, initialState } from "../redux/reducers/siteReducer";
+import { searchSite, viewSite } from "../redux/actions/siteActions";
+
+export default function TaskListScreen({ navigation }) {
+  const [state, dispatch] = useReducer(taskListReducer, initialState);
+
+const filterTasks = (text) => {
+    dispatch(searchSite(text)); 
   };
 
-  const handleViewDetails = (projectData) => {
-    navigation.navigate("ViewDetailScreen", { site: projectData });
+const handleViewTask = (task) => {
+    dispatch(viewSite(task)); 
+    console.log(task); 
   };
+
+  const renderListItem = ({ item }) => (
+    <TouchableOpacity onPress={() => handleViewTask(item)}>
+      <Card
+        style={[
+          spacing.mv1,
+          { width: SCREEN_WIDTH - 18, backgroundColor: "#ffffff" },
+        ]}
+      >
+        <View style={{ flexDirection: "row", padding: 16 }}>
+          <View style={{ flex: 1 }}>
+            <H5 style={[typography.textBold]}>{item.projectName}</H5>
+            {["taskName", "deadline", "status", "startDate", "endDate"].map(
+              (field) => (
+                <P key={field} style={{ fontSize: 14, color: "#020409" }}>
+                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${
+                    item[field]
+                  }`}
+                </P>
+              )
+            )}
+          </View>
+        </View>
+      </Card>
+    </TouchableOpacity>
+  );
+
   return (
     <ContainerComponent>
-      <MyHeader title={pageTitle} isBack={true} hasIcon={true} />
-      <MyFlatList
-        data={data}
-        loading={false}
-        renderItem={({ item }) => (
-          <ClickableCard
-            item={item}
-            handleViewDetails={handleViewDetails}
-            handleDelete={() =>
-              fakeDelete({
-                title: "Error!!!",
-                message: "You cannot delete this site. Please contact Admin!",
-              })
-            }
-            handleEdit={(item) =>
-              navigation.navigate("EditDetailsScreen", {
-                item,
-                formType: "site",
-              })
-            }
-            isSite={true}
-          />
-        )}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={[spacing.mh2, spacing.mt1]}
-        ListEmptyComponent={() => (
-          <NoRecord msg="Oops! There are no sites data available. Start creating or contact admin" />
-        )}
-        ListHeaderComponent={() => (
-          <SearchBar placeholder="Search by city, state or project code" />
-        )}
-      />
-
-      <Button
-        style={styles.addButton}
-        onPress={() => navigation.navigate("sitesFormScreen")}
-      >
-        <Ionicons name="add" size={32} color="white" />
-      </Button>
+      <View>
+        <MyHeader title="Task List" isBack={true} hasIcon={true} />
+        <MyFlatList
+          data={state.filteredTasks} 
+          renderItem={renderListItem}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={[spacing.mh2, spacing.mt1]}
+          ListHeaderComponent={() => (
+            <SearchBar
+              placeholder="Search tasks..."
+              value={state.searchText} 
+              onChangeText={filterTasks} 
+            />
+          )}
+        />
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate("taskListFormScreen")}
+        >
+          <Ionicons name="add" size={32} color="white" />
+        </TouchableOpacity>
+      </View>
     </ContainerComponent>
   );
 }

@@ -1,8 +1,23 @@
-// // import { configureStore, createSlice } from '@reduxjs/toolkit'
-import { initialState } from "./redux/constant";
-import { staffReducer } from "./redux/reducers/staffReducer";
-import { createStore, applyMiddleware } from "redux";
-import Thunk from "redux-thunk";
 
-const store = createStore(staffReducer, initialState, applyMiddleware(Thunk));
+
+
+
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+import { taskReducer } from './redux/reducers/taskReducer';
+
+import {  taskListReducer as siteReducer } from './redux/reducers/siteReducer';
+import { staffReducer } from './redux/reducers/staffReducer';
+import { projectReducer } from './redux/reducers/projectrReducer';
+import { project } from "./utils/faker";
+const rootReducer = combineReducers({
+    tasks: taskReducer, 
+    staff: staffReducer, 
+    site: siteReducer,   
+    project: projectReducer 
+  });
+  
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
 export default store;
