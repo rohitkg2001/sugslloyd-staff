@@ -6,7 +6,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { taskReducer } from './redux/reducers/taskReducer';
 
-import {  taskListReducer as siteReducer } from './redux/reducers/siteReducer';
+import {  siteReducer } from './redux/reducers/siteReducer';
 import { staffReducer } from './redux/reducers/staffReducer';
 import { projectReducer } from './redux/reducers/projectrReducer';
 import { project } from "./utils/faker";
