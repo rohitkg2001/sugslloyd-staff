@@ -1,50 +1,53 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
+import { useDispatch } from 'react-redux';
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
+import { updateVendor } from '../redux/actions/vendorAction';
 
-const VendorFormScreen = () => {
-  const [name, setName] = useState("");
-  const [gstNumber, setGstNumber] = useState("");
-  const [contactPerson, setContactPerson] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [setAadharNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [accountName, setAccountName] = useState("");
-  const [accountNumber, setAccountNumber] = useState("");
-  const [ifsc, setIfsc] = useState("");
-  const [bankName, setBankName] = useState("");
-  const [branch, SetBranch] = useState("");
-  const [setPan] = useState("");
-  const [mailId, setMailId] = useState("");
+const VendorFormScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const editVendor = route.params?.vendor;
+  const [name, setName] = useState(editVendor?.name || "");
+  const [gstNumber, setGstNumber] = useState(editVendor?.gstNumber || "");
+  const [contactPerson, setContactPerson] = useState(editVendor?.contactPerson || "");
+  const [contactNumber, setContactNumber] = useState(editVendor?.contactNumber || "");
+  const [aadharNumber, setAadharNumber] = useState(editVendor?.aadharNumber || "");
+  const [address, setAddress] = useState(editVendor?.address || "");
+  const [accountName, setAccountName] = useState(editVendor?.accountName || "");
+  const [accountNumber, setAccountNumber] = useState(editVendor?.accountNumber || "");
+  const [ifsc, setIfsc] = useState(editVendor?.ifsc || "");
+  const [bankName, setBankName] = useState(editVendor?.bankName || "");
+  const [branch, setBranch] = useState(editVendor?.branch || "");
+  const [pan, setPan] = useState(editVendor?.pan || "");
+  const [mailId, setMailId] = useState(editVendor?.mailId || "");
 
   const handleCancel = () => {
-    setName("");
-    setGstNumber("");
-    setContactPerson("");
-    setContactNumber("");
-    setMailId("");
-    setName("");
-    setAadharNumber("");
-    setAddress("");
-    setAccountName("");
-    setAccountNumber("");
-    setIfsc("");
-    setBankName("");
-    SetBranch("");
-    setPan("");
+    navigation.goBack();
   };
 
   const handleCreate = () => {
-    console.log("Creating Vendor with data:", {
+    const vendorData = {
+      id: editVendor?.id || Date.now().toString(),
+      name,
       gstNumber,
       contactPerson,
       contactNumber,
-      mailId,
-    });
+      aadharNumber,
+      address,
+      accountName,
+      accountNumber,
+      ifsc,
+      bankName,
+      branch,
+      pan,
+      mailId
+    };
+    dispatch(updateVendor(vendorData));
+    navigation.goBack();
   };
 
   return (
@@ -52,7 +55,7 @@ const VendorFormScreen = () => {
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
-        <MyHeader title="Create Vendor" hasIcon={true} isBack={true} />
+        <MyHeader title={editVendor ? "Edit Vendor" : "Create Vendor"} hasIcon={true} isBack={true} />
 
         <MyTextInput
           title="Name"
@@ -78,7 +81,7 @@ const VendorFormScreen = () => {
 
         <MyTextInput
           title="Aadhar Number"
-          value={contactPerson}
+          value={aadharNumber}
           onChangeText={setAadharNumber}
           placeholder="Enter Aadhar Number"
         />
@@ -102,7 +105,7 @@ const VendorFormScreen = () => {
           title="Account Name"
           value={accountName}
           onChangeText={setAccountName}
-          placeholder="Enter Contact Person"
+          placeholder="Enter Account Name"
         />
 
         <MyTextInput
@@ -129,9 +132,10 @@ const VendorFormScreen = () => {
         <MyTextInput
           title="Branch"
           value={branch}
-          onChangeText={SetBranch}
+          onChangeText={setBranch}
           placeholder="Enter Branch"
         />
+
         <MyTextInput
           title="GST Number"
           value={gstNumber}
@@ -141,14 +145,14 @@ const VendorFormScreen = () => {
 
         <MyTextInput
           title="PAN Number"
-          value={bankName}
+          value={pan}
           onChangeText={setPan}
           placeholder="Enter PAN Number"
         />
       </ScrollView>
       <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>
         <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
-        <MyButton title="Create" onPress={handleCreate} />
+        <MyButton title={editVendor ? "Save Changes" : "Create"} onPress={handleCreate} />
       </View>
     </ContainerComponent>
   );

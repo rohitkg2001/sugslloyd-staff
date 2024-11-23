@@ -1,5 +1,5 @@
 import { VIEW_SITE, SEARCH_SITE } from '../actions/siteActions';
-import { totalsitesData } from "..//../utils/faker";
+import { totalsitesData } from "../../utils/faker";
 
 const initialState = {
   sites: totalsitesData,
