@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { viewSite, searchSite } from '../redux/actions/siteActions';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { fakeDelete, totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
@@ -11,48 +10,64 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
+import { viewSite, searchSite } from '../redux/actions/siteActions';
 
 export default function TotalSitesScreen({ navigation, route }) {
-  const { pageTitle } = route.params || { pageTitle: "Site Management" };
-
   const dispatch = useDispatch();
+  const siteState = useSelector(state => state.sites);
+  const searchText = siteState ? siteState.searchText : '';
+  const [filteredData, setFilteredData] = useState([]);
 
-  const { filteredData, searchQuery } = useSelector((state) => state.totalSites);
-
-  useEffect(() => {
-    dispatch({ type: 'SET_SITES_DATA', payload: totalsitesData });
-  }, [dispatch]);
-
-  const handleViewDetails = (projectData) => {
-    dispatch(viewSite(projectData));
-    navigation.navigate("ViewDetailScreen", { site: projectData });
+  const { pageTitle, data } = route.params || {
+    pageTitle: "Site Management",
+    data: totalsitesData,
   };
 
-  const handleSearch = (query) => {
-    dispatch(searchSite(query)); 
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
+  const handleSearch = (text) => {
+    dispatch(searchSite(text));
+    const filtered = data.filter(site => 
+      site.city.toLowerCase().includes(text.toLowerCase()) ||
+      site.state.toLowerCase().includes(text.toLowerCase()) ||
+      site.projectCode.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
+  const handleViewDetails = (siteData) => {
+    dispatch(viewSite(siteData));
+    navigation.navigate("ViewDetailScreen", { site: siteData });
+  };
+
+  const handleDelete = () => {
+    fakeDelete({
+      title: "Error!!!",
+      message: "You cannot delete this site. Please contact Admin!",
+    });
+  };
+
+  const handleEdit = (item) => {
+    navigation.navigate("EditDetailsScreen", {
+      item,
+      formType: "site",
+    });
   };
 
   return (
     <ContainerComponent>
       <MyHeader title={pageTitle} isBack={true} hasIcon={true} />
       <MyFlatList
-        data={filteredData.length > 0 ? filteredData : totalsitesData} 
+        data={filteredData}
+        loading={false}
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
             handleViewDetails={handleViewDetails}
-            handleDelete={() =>
-              fakeDelete({
-                title: "Error!!!",
-                message: "You cannot delete this site. Please contact Admin!",
-              })
-            }
-            handleEdit={(item) =>
-              navigation.navigate("EditDetailsScreen", {
-                item,
-                formType: "site",
-              })
-            }
+            handleDelete={handleDelete}
+            handleEdit={() => handleEdit(item)}
             isSite={true}
           />
         )}
@@ -62,10 +77,10 @@ export default function TotalSitesScreen({ navigation, route }) {
           <NoRecord msg="Oops! There are no sites data available. Start creating or contact admin" />
         )}
         ListHeaderComponent={() => (
-          <SearchBar
+          <SearchBar 
             placeholder="Search by city, state or project code"
-            value={searchQuery}
-            onChangeText={handleSearch} 
+            value={searchText}
+            onChangeText={handleSearch}
           />
         )}
       />

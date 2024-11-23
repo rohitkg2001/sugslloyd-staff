@@ -1,18 +1,30 @@
-
-import { VIEW_SITE, SEARCH_SITE } from './actionTypes';
+import { VIEW_SITE, SEARCH_SITE } from '../actions/siteActions';
+import { totalsitesData } from "..//../utils/faker";
 
 const initialState = {
-  sitesData: [], 
-  searchQuery: '', 
-  filteredData: [],
+  sites: totalsitesData,
+  filteredSites: totalsitesData,
+  currentSite: null,
+  searchText: ''
 };
 
-const totalSitesReducer = (state = initialState, action) => {
+export const siteReducer = (state = initialState, action) => {
   switch (action.type) {
     case VIEW_SITE:
       return {
         ...state,
-        
+        currentSite: action.payload
+      };
+    case SEARCH_SITE:
+      const searchText = action.payload.toLowerCase();
+      return {
+        ...state,
+        searchText: action.payload,
+        filteredSites: state.sites.filter(site => 
+          site.city.toLowerCase().includes(searchText) ||
+          site.state.toLowerCase().includes(searchText) ||
+          site.projectCode.toLowerCase().includes(searchText)
+        )
       };
 
     case SEARCH_SITE:
@@ -32,6 +44,3 @@ const totalSitesReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default totalSitesReducer;
-
