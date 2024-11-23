@@ -1,33 +1,37 @@
-import { VIEW_SITE, SEARCH_SITE } from "../actions/siteActions";
-import { taskslistdata } from "../../utils/faker";
 
-// Define initial state
+import { VIEW_SITE, SEARCH_SITE } from './actionTypes';
+
 const initialState = {
-  sites: [],
-  searchText: "",
-  filteredTasks: taskslistdata,
-  selectedTask: null,
+  sitesData: [], 
+  searchQuery: '', 
+  filteredData: [],
 };
 
-// Ensure initialState is used when state is undefined
-const taskListReducer = (state = initialState, action) => {
+const totalSitesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SEARCH_SITE:
-      return {
-        ...state,
-        searchText: action.payload,
-        filteredTasks: taskslistdata.filter((task) =>
-          task.projectName.toLowerCase().includes(action.payload.toLowerCase())
-        ),
-      };
     case VIEW_SITE:
       return {
         ...state,
-        selectedTask: action.payload,
+        
       };
+
+    case SEARCH_SITE:
+      const query = action.payload.toLowerCase();
+      const filteredData = state.sitesData.filter((site) =>
+        site.city.toLowerCase().includes(query) ||
+        site.state.toLowerCase().includes(query) ||
+        site.projectCode.toLowerCase().includes(query)
+      );
+      return {
+        ...state,
+        searchQuery: query,
+        filteredData,
+      };
+
     default:
       return state;
   }
 };
 
-export { taskListReducer, initialState };
+export default totalSitesReducer;
+

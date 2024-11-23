@@ -1,14 +1,16 @@
-export const VIEW_SITE = "VIEW_SITE";
-export const SEARCH_SITE = "SEARCH_SITE";
 
-// import { VIEW_SITE, SEARCH_SITE } from './taskActions';
+export const VIEW_SITE = 'VIEW_SITE';
+export const SEARCH_SITE = 'SEARCH_SITE';
 
-export const viewSite = (task) => ({
+// import { VIEW_SITE, SEARCH_SITE } from './actionTypes';
+
+export const viewSite = (siteData) => ({
   type: VIEW_SITE,
-  payload: task,
+  payload: siteData,
 });
 
-export const searchSite = (searchText) => ({
+
+export const searchSite = (query) => ({
   type: SEARCH_SITE,
-  payload: searchText,
+  payload: query,
 });
