@@ -1,7 +1,7 @@
-import { useState } from "react";
+import React, { useEffect } from "react";
 import { View, Image, TouchableOpacity } from "react-native";
+import { useSelector, useDispatch } from 'react-redux';
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { inventoryData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import { styles } from "../styles/components.styles";
@@ -12,14 +12,28 @@ import Filter from "../components/filters";
 import Button from "../components/buttons/Button";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
+import { viewInventory, searchInventory, countInventory } from '../redux/actions/inventoryAction';
 
 const InventoryScreen = ({ navigation }) => {
-  const [searchText, setSearchText] = useState("");
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const dispatch = useDispatch();
+  const { filteredInventory, searchText, count } = useSelector(state => state.inventory);
+  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
 
+  useEffect(() => {
+    dispatch(countInventory());
+  }, [dispatch]);
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
+  };
+
+  const handleSearch = (text) => {
+    dispatch(searchInventory(text));
+  };
+
+  const handleViewItem = (item) => {
+    dispatch(viewInventory(item));
+    navigation.navigate("InventoryDetailScreen", { item });
   };
 
   const menuOptions = [
@@ -32,7 +46,7 @@ const InventoryScreen = ({ navigation }) => {
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
         <MyHeader
-          title="Stock Management"
+          title={`Stock Management (${count})`}
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
@@ -40,10 +54,10 @@ const InventoryScreen = ({ navigation }) => {
         />
 
         <MyFlatList
-          data={inventoryData}
+          data={filteredInventory}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.card}>
+            <TouchableOpacity style={styles.card} onPress={() => handleViewItem(item)}>
               <Image
                 source={{ uri: item.url }}
                 style={{
@@ -67,7 +81,7 @@ const InventoryScreen = ({ navigation }) => {
             <SearchBar
               placeholder="Enter item name, brand or product code"
               value={searchText}
-              onChangeText={setSearchText}
+              onChangeText={handleSearch}
             />
           )}
         />

@@ -1,8 +1,6 @@
-// Action Types
-export const VIEW_SITE = "VIEW_SITE";
-export const SEARCH_SITE = "SEARCH_SITE";
 
-// Action Creators
+import { VIEW_SITE, SEARCH_SITE } from "../constant";
+
 export const viewSite = (site) => ({
   type: VIEW_SITE,
   payload: site
