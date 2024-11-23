@@ -1,7 +1,3 @@
-
-
-
-
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { taskReducer } from './redux/reducers/taskReducer';
@@ -13,7 +9,7 @@ import { project } from "./utils/faker";
 const rootReducer = combineReducers({
     tasks: taskReducer, 
     staff: staffReducer, 
-    // totalSites: totalSitesReducer,  
+    site: siteReducer,   
     project: projectReducer 
   });
   
