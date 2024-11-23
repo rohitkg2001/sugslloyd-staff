@@ -13,7 +13,7 @@ import { project } from "./utils/faker";
 const rootReducer = combineReducers({
     tasks: taskReducer, 
     staff: staffReducer, 
-    totalSites: totalSitesReducer,  
+    // totalSites: totalSitesReducer,  
     project: projectReducer 
   });
   
