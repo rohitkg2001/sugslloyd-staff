@@ -165,47 +165,32 @@ export const project = [
 
 export const inventoryData = [
   {
-    id: "1",
-    name: "Solar LED Street Light",
+    id: 1,
+    projectId: 1,
+    siteId: 1,
+    product_name: "Solar LED Street Light",
     description: "Eco-friendly solar-powered street light with motion sensor.",
-    quantity: 1,
+    unit: "pcs",
+    initial_quantity: "1000",
+    qty_stock: "1000",
+    material_dispatch_date: "20 Nov 2024",
+    delivery_date: "20 Nov 2024",
+    allocation_officer: "Bittu Gupta",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfaVettxgHxUSbCpPamGNdUB8g_9t_qYFhgQ&s",
   },
   {
-    id: "2",
-    name: "Smart Street Light System",
+    id: 2,
+    projectId: 1,
+    siteId: 1,
+    product_name: "Smart Street Light System",
     description: "Automated street light system with IoT connectivity.",
-    quantity: 2,
+    unit: "pcs",
+    initial_quantity: "1000",
+    qty_stock: "200",
+    material_dispatch_date: "20 Nov 2024",
+    delivery_date: "24 Nov 2024",
+    allocation_officer: "Bittu Mishra",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
-  },
-  {
-    id: "3",
-    name: "LED Floodlight for Streets",
-    description: "High brightness LED floodlight for outdoor use.",
-    quantity: 3,
-    url: "https://m.media-amazon.com/images/I/81hIbQn03RL._AC_UF1000,1000_QL80_.jpg",
-  },
-  {
-    id: "4",
-    name: "Solar Street Light with Camera",
-    description: "Integrated street light with a security camera.",
-    quantity: 1,
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfaVettxgHxUSbCpPamGNdUB8g_9t_qYFhgQ&s",
-  },
-  {
-    id: "5",
-    name: "Street Light Pole",
-    description: "Durable street light pole for various applications.",
-    quantity: 5,
-    url: "https://th.bing.com/th?id=OPAC.9GyQh8O0Qccugw474C474&w=592&h=550&o=5&dpr=1.1&pid=21.1",
-  },
-  {
-    id: "6",
-    name: "Motion Sensor Street Light",
-    description:
-      "Street light with a built-in motion sensor for energy savings.",
-    quantity: 2,
-    url: "  https://th.bing.com/th?id=OPAC.CS1gpu%2fn0Pggmw474C474&w=592&h=550&o=5&dpr=1.1&pid=21.1 ",
   },
 ];
 
@@ -406,7 +391,7 @@ export const staff = {
 
 export const totalsitesData = [
   {
-    id: "1",
+    id: 1,
     siteName: "P S SHIKSHA NAGAR BANMANKHI",
     State: "",
     City: "",
@@ -419,25 +404,25 @@ export const totalsitesData = [
     ICVendorName: "",
   },
   {
-    id: "2",
+    id: 2,
     siteName: "P S MIRCHAIBARI UTTAR",
     dist: "Purnia",
     location: "BANMANKHI",
   },
   {
-    id: "3",
+    id: 3,
     siteName: "P S MIRCHAIBARI UTTAR",
     dist: "Purnia",
     location: "BANMANKHI",
   },
   {
-    id: "4",
+    id: 4,
     siteName: "P S MIRCHAIBARI UTTAR",
     dist: "Purnia",
     location: "BANMANKHI",
   },
   {
-    id: "5",
+    id: 5,
     siteName: "P S MIRCHAIBARI UTTAR",
     dist: "Purnia",
     location: "BANMANKHI",

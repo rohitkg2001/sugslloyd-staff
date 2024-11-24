@@ -7,11 +7,13 @@ import { styles } from "../styles/components.styles";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import MyFlatList from "../components/utility/MyFlatList";
+import { useTranslation } from "react-i18next";
 import Button from "../components/buttons/Button";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const [searchText] = useState("");
+  const { t } = useTranslation();
 
   const filteredProjects = project.filter((item) =>
     item.projectName.toLowerCase().includes(searchText.toLowerCase())
@@ -35,18 +37,9 @@ export default function CurrentProjectsScreen({ navigation }) {
             </TouchableOpacity>
           )}
           contentContainerStyle={[spacing.mh2, spacing.mt1]}
-          ListEmptyComponent={() => (
-            <NoRecord msg="Oops! There are no current projects available. Start creating or contact admin" />
-          )}
+          ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
           ListHeaderComponent={() => (
-            <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
-              <SearchBar style={{ width: SCREEN_WIDTH - 70 }} />
-              <Button
-                style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
-              >
-                <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
-              </Button>
-            </View>
+            <SearchBar placeholder={t("placeholder")} />
           )}
         />
       </View>
