@@ -1,13 +1,13 @@
 
 import { Alert } from "react-native";
 
-export const fakeDelete = ({ title, message, negativeTextClick = null, positiveTextClick = null }) => {
+export const fakeDelete = ({ title, message, negativeTextClick = null,postiveText, positiveTextClick = null }) => {
   Alert.alert(
     title,
     message,
     [
       { text: "Cancel", style: "cancel", onPress: negativeTextClick },
-      { text: "Delete", onPress: positiveTextClick },
+      { text: positiveText, onPress: positiveTextClick },
     ]
   );
 }
