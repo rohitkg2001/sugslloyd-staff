@@ -8,6 +8,7 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
+import { ICON_LARGE } from "../styles/constant";
 
 export default function TotalVendorsScreen({ navigation, route }) {
   const { pageTitle, data } = route.params || {
@@ -58,7 +59,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
         style={styles.addButton}
         onPress={() => navigation.navigate("VendorFormScreen")}
       >
-        <Ionicons name="add" size={32} color="white" />
+        <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
     </ContainerComponent>
   );

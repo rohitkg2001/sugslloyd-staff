@@ -6,6 +6,7 @@ import { styles } from "../../styles/components.styles";
 import MyFlatList from "../utility/MyFlatList";
 import { H4, Span, P } from "../text";
 import { TouchableOpacity } from "react-native";
+import { ICON_SMALL } from "../../styles/constant";
 
 const CardTask = ({ task }) => {
   return (
@@ -13,7 +14,11 @@ const CardTask = ({ task }) => {
       <Card style={styles.card}>
         <View style={[styles.row, { alignItems: "center" }]}>
           <H4>{task.title}</H4>
-          <IconButton icon="dots-horizontal" size={24} onPress={() => {}} />
+          <IconButton
+            icon="dots-horizontal"
+            size={ICON_SMALL}
+            onPress={() => {}}
+          />
         </View>
 
         <View style={[styles.row, styles.mv3]}>
@@ -33,17 +38,17 @@ const CardTask = ({ task }) => {
 
         <View style={[styles.row, styles.mv3, { alignItems: "center" }]}>
           <View style={styles.taskFooterItem}>
-            <Icon name="calendar-outline" size={24} color="#6b7280" />
+            <Icon name="calendar-outline" size={ICON_SMALL} color="#6b7280" />
             <P style={styles.Text}>{task.date}</P>
           </View>
 
           <View style={styles.taskFooterItem}>
-            <Icon name="link-outline" size={24} color="#6b7280" />
+            <Icon name="link-outline" size={ICON_SMALL} color="#6b7280" />
             <P style={styles.footerText}>{task.links}</P>
           </View>
 
           <View style={styles.taskFooterItem}>
-            <Icon name="chatbubble-outline" size={24} color="#6b7280" />
+            <Icon name="chatbubble-outline" size={ICON_SMALL} color="#6b7280" />
             <P style={styles.footerText}>{task.comments}</P>
           </View>
 

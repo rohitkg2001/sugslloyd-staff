@@ -9,6 +9,7 @@ import { H4, H5, P, Span } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
 import { useSelector } from "react-redux";
+import { ICON_SMALL, ICON_MEDIUM, ICON_LARGE } from "../styles/constant";
 
 import {
   layouts,
@@ -77,7 +78,7 @@ export default function DashboardScreen({ navigation }) {
             { position: "relative" },
           ]}
         >
-          <Icon name="notifications-outline" size={28} color={DARK} />
+          <Icon name="notifications-outline" size={ICON_MEDIUM} color={DARK} />
           <View
             style={[
               styles.bgDanger,
@@ -117,13 +118,13 @@ export default function DashboardScreen({ navigation }) {
           <Button
             style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
           >
-            <Icon name="options-outline" size={28} color={LIGHT} />
+            <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
           </View>
           <View style={[spacing.mv2, styles.row, { alignItems: "center" }]}>
             <H4>Today</H4>
             <View style={{ flexDirection: "row" }}>
-              <Icon name="calendar-outline" size={24} color={DARK} />
+              <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
               <H5 style={spacing.ml1}>{today}</H5>
             </View>
           </View>
@@ -147,7 +148,11 @@ export default function DashboardScreen({ navigation }) {
         <View>
           <CardFullWidth backgroundColor={LIGHT}>
             <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
-              <Icon name="calendar-clear" size={32} color={PRIMARY_COLOR} />
+              <Icon
+                name="calendar-clear"
+                size={ICON_LARGE}
+                color={PRIMARY_COLOR}
+              />
               <H5 style={[typography.textBold, { marginRight: 130 }]}>
                 Project Overview
               </H5>
@@ -215,7 +220,7 @@ export default function DashboardScreen({ navigation }) {
         <View>
           <CardFullWidth backgroundColor={LIGHT}>
             <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
-              <Icon name="filter" size={32} color={PRIMARY_COLOR} />
+              <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
               <H5 style={[typography.textBold, { marginRight: 130 }]}>
                 All Task Overview
               </H5>

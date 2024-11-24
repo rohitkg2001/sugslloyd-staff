@@ -4,6 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { Badge } from "react-native-paper";
 import { styles } from "../../styles/components.styles";
 import { useNavigation } from "@react-navigation/native";
+import { ICON_SMALL, ICON_LARGE } from "../../styles/constant";
 
 export default function MyHeader({
   isBack,
@@ -22,7 +23,7 @@ export default function MyHeader({
           onPress={() => navigation.goBack()}
           style={{ marginRight: 10 }}
         >
-          <Icon name="arrow-back" size={24} color="#000" />
+          <Icon name="arrow-back" size={ICON_SMALL} color="#000" />
         </TouchableOpacity>
       )}
       <H4 style={styles.titleText}>{title}</H4>
@@ -33,7 +34,7 @@ export default function MyHeader({
         >
           <Icon
             name={icon}
-            size={32}
+            size={ICON_LARGE}
             style={{ position: "absolute", top: 10, left: 14 }}
           />
           {hasBadge && (

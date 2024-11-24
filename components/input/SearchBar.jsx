@@ -3,7 +3,7 @@ import { View, TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { styles } from "../../styles/components.styles";
 import { SCREEN_WIDTH } from "../../styles/constant";
-
+import { ICON_SMALL } from "../../styles/constant";
 export default function SearchBar({ placeholder, value, onChangeText }) {
   return (
     <View
@@ -25,7 +25,7 @@ export default function SearchBar({ placeholder, value, onChangeText }) {
         },
       ]}
     >
-      <Ionicons name="search-outline" size={24} color="#333" />
+      <Ionicons name="search-outline" size={ICON_SMALL} color="#333" />
       <TextInput
         placeholder={placeholder}
         value={value}

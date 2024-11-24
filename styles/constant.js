@@ -1,6 +1,5 @@
 import { Dimensions } from "react-native";
 
-
 export const SCREEN_WIDTH = Dimensions.get("screen").width;
 export const SCREEN_HEIGHT = Dimensions.get("screen").height;
 
@@ -13,3 +12,7 @@ export const INFO_COLOR = "#4B5A3D";
 export const SUCCESS_COLOR = "#14A44D";
 export const WARNING_COLOR = "#E4A11B";
 export const DANGER_COLOR = "#DC4C64";
+
+export const ICON_SMALL = 24;
+export const ICON_MEDIUM = 28;
+export const ICON_LARGE = 32;
