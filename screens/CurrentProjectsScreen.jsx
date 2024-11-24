@@ -7,9 +7,11 @@ import { styles } from "../styles/components.styles";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import MyFlatList from "../components/utility/MyFlatList";
+import { useTranslation } from "react-i18next";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const [searchText] = useState("");
+  const { t } = useTranslation();
 
   const filteredProjects = project.filter((item) =>
     item.projectName.toLowerCase().includes(searchText.toLowerCase())
@@ -33,11 +35,9 @@ export default function CurrentProjectsScreen({ navigation }) {
             </TouchableOpacity>
           )}
           contentContainerStyle={[spacing.mh2, spacing.mt1]}
-          ListEmptyComponent={() => (
-            <NoRecord msg="Oops! There are no current projects available. Start creating or contact admin" />
-          )}
+          ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
           ListHeaderComponent={() => (
-            <SearchBar placeholder="Search current projects..." />
+            <SearchBar placeholder={t("placeholder")} />
           )}
         />
       </View>

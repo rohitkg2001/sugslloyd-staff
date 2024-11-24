@@ -159,7 +159,33 @@ export const project = [
     projectName: "Project 10J",
     duration: "3 days",
     status: "ongoing",
-    siteName: "Site Omega", 
+    siteName: "Site Omega", // Added siteName
+  },
+];
+
+export const projecttask = [
+  {
+    id: 1,
+    projectName: "Project 01A",
+    siteName: " SBI Bank , Rampur School , Lakhisarai",
+  },
+  {
+    id: 2,
+    projectName: "Project 02B",
+    siteName: "Block Office, Shershah Road ,Madhepura",
+  },
+  {
+    id: 3,
+    projectName: "Project 03C",
+    siteName: "Purnea Mahila College , Sipahi Tola , Purnea",
+  },
+];
+
+export const tasksData = [
+  {
+    id: "1",
+    taskName: "Solar Panel Installlation at railway station.",
+    installation: "Install the panel on top of the platform of 5kw of power.",
   },
 ];
 

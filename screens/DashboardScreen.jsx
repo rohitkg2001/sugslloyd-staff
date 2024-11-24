@@ -10,6 +10,7 @@ import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
 import { useSelector } from "react-redux";
 import { ICON_SMALL, ICON_MEDIUM, ICON_LARGE } from "../styles/constant";
+import { useTranslation } from "react-i18next";
 
 import {
   layouts,
@@ -34,6 +35,7 @@ export default function DashboardScreen({ navigation }) {
   const [dueTasks, setDueTasks] = useState(4);
   const [greeting, setGreeting] = useState("Good morning");
   const { first_name } = useSelector((state) => state);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setGreeting(greet());
@@ -110,9 +112,9 @@ export default function DashboardScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[spacing.mh1]}
       >
-        <View >
+        <View>
           <SearchBar
-            placeholder="Search"
+            placeholder={t("placeholder")}
             style={{ width: SCREEN_WIDTH - 70 }}
           />
           <Button
@@ -120,15 +122,14 @@ export default function DashboardScreen({ navigation }) {
           >
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
+        </View>
+        <View style={[spacing.mv2, styles.row, { alignItems: "center" }]}>
+          <H4>Today</H4>
+          <View style={{ flexDirection: "row" }}>
+            <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
+            <H5 style={spacing.ml1}>{today}</H5>
           </View>
-          <View style={[spacing.mv2, styles.row, { alignItems: "center" }]}>
-            <H4>Today</H4>
-            <View style={{ flexDirection: "row" }}>
-              <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
-              <H5 style={spacing.ml1}>{today}</H5>
-            </View>
-          </View>
- 
+        </View>
 
         <MyFlatList
           data={firstTwoTasks}
@@ -154,7 +155,7 @@ export default function DashboardScreen({ navigation }) {
                 color={PRIMARY_COLOR}
               />
               <H5 style={[typography.textBold, { marginRight: 130 }]}>
-                Project Overview
+                {t("project_overview")}
               </H5>
             </View>
             <View style={[spacing.bbw05, spacing.mv1]} />
