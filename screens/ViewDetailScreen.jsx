@@ -4,7 +4,6 @@ import { SCREEN_WIDTH, spacing, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
-import Filter from "../components/filters";
 import MyButton from "../components/buttons/MyButton";
 
 const ViewDetailScreen = ({ route, navigation }) => {
@@ -56,7 +55,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
 
   const renderVendorDetails = () => (
     <>
-      {renderSectionTitle("Vendor Information")}
       {renderDetailRow("Vendor Name", site.name)}
       {renderDetailRow("Mail ID", site.mailId)}
       {renderDetailRow("Contact No", site.contactNumber)}
@@ -65,44 +63,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("Status", site.status)}
     </>
   );
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
-  };
-
-  const handleEdit = () => {
-    navigation.navigate("EditDetailsScreen", {
-      site: site,
-      formType: site.vendorName
-        ? "vendor"
-        : site.projectName
-          ? "project"
-          : "site",
-    });
-  };
-
-  const handleDelete = () => {
-    Alert.alert(
-      "Confirm Delete",
-      `Are you sure you want to delete this ${site.vendorName ? "vendor" : site.projectName ? "project" : "site"
-      }?`,
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: () => {
-            navigation.goBack();
-          },
-        },
-      ]
-    );
-  };
-
-  const menuOptions = [
-    { label: "Edit", onPress: handleEdit },
-    { label: "Delete", onPress: handleDelete },
-  ];
-
+ 
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
@@ -145,11 +106,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
           </View>
         </ScrollView>
 
-        <Filter
-          visible={isMenuVisible}
-          onClose={() => setIsMenuVisible(false)}
-          options={menuOptions}
-        />
       </View>
     </ContainerComponent>
   );

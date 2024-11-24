@@ -1,16 +1,17 @@
-
 import { Alert } from "react-native";
 
-export const fakeDelete = ({ title, message, negativeTextClick = null,postiveText, positiveTextClick = null }) => {
-  Alert.alert(
-    title,
-    message,
-    [
-      { text: "Cancel", style: "cancel", onPress: negativeTextClick },
-      { text: positiveText, onPress: positiveTextClick },
-    ]
-  );
-}
+export const fakeDelete = ({
+  title,
+  message,
+  negativeTextClick = null,
+  positiveText,
+  positiveTextClick = null,
+}) => {
+  Alert.alert(title, message, [
+    { text: "Cancel", style: "cancel", onPress: negativeTextClick },
+    { text: positiveText, onPress: positiveTextClick },
+  ]);
+};
 
 export const tasks = [
   {
@@ -69,7 +70,6 @@ export const tasks = [
     backgroundColor: "#F5F5DC",
   },
 ];
-
 
 export const project = [
   {
@@ -163,7 +163,6 @@ export const project = [
   },
 ];
 
-
 export const projecttask = [
   {
     id: 1,
@@ -181,6 +180,7 @@ export const projecttask = [
     siteName: "Purnea Mahila College , Sipahi Tola , Purnea",
   },
 ];
+
 export const tasksData = [
   {
     id: "1",
@@ -299,12 +299,29 @@ export const earnings = [
 ];
 
 export const menuItems = [
-  { label: "Inventory Management", icon: "cart-outline", page: "inventoryScreen" },
+  {
+    label: "Inventory Management",
+    icon: "cart-outline",
+    page: "inventoryScreen",
+  },
   { label: "Site Management", icon: "map-outline", page: "totalSitesScreen" },
-  { label: "Vendor Management", icon: "people-outline", page: "totalVendorsScreen" },
-  { label: "Project Management", icon: "reader-outline", page: "totalProjectsScreen" },
-  { label: "Task Management", page: "", icon: "grid-outline", page: "taskScreen" },
-  { label: "Reports", page: "", icon: "pie-chart-outline", },
+  {
+    label: "Vendor Management",
+    icon: "people-outline",
+    page: "totalVendorsScreen",
+  },
+  {
+    label: "Project Management",
+    icon: "reader-outline",
+    page: "totalProjectsScreen",
+  },
+  {
+    label: "Task Management",
+    page: "",
+    icon: "grid-outline",
+    page: "taskScreen",
+  },
+  { label: "Reports", page: "", icon: "pie-chart-outline" },
   { label: "Settings", page: "", icon: "cog-outline", page: "InternalSetting" },
 ];
 
@@ -350,10 +367,34 @@ export const notifications = [
 ];
 
 export const documentData = [
-  { id: "1", staffId: 1, documentName: "Offer Letter", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
-  { id: "2", staffId: 1, documentName: "Appointment Letter", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
-  { id: "3", staffId: 1, documentName: "Bond Agreement", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
-  { id: "4", staffId: 1, documentName: "Appraisal Letter", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
+  {
+    id: "1",
+    staffId: 1,
+    documentName: "Offer Letter",
+    documentImage:
+      "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png",
+  },
+  {
+    id: "2",
+    staffId: 1,
+    documentName: "Appointment Letter",
+    documentImage:
+      "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png",
+  },
+  {
+    id: "3",
+    staffId: 1,
+    documentName: "Bond Agreement",
+    documentImage:
+      "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png",
+  },
+  {
+    id: "4",
+    staffId: 1,
+    documentName: "Appraisal Letter",
+    documentImage:
+      "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png",
+  },
   // { id: "5", staffId: 1, documentName: "Salary Slip", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
 ];
 
@@ -654,40 +695,98 @@ export const taskslistdata = [
   },
 ];
 
-export const PRIVACY_POLICY = "lorem ipsum sit dolor amet"
+export const PRIVACY_POLICY = "lorem ipsum sit dolor amet";
 
 export const siteCardsForDashboard = [
   {
     id: 1,
-    title: 'Total Sites',
+    title: "Total Sites",
     count: 46,
-    page: 'totalSitesScreen',
+    page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#f9caa7",
   },
   {
     id: 2,
-    title: 'Completed Sites',
+    title: "Completed Sites",
     count: 17,
-    page: 'totalSitesScreen',
+    page: "totalSitesScreen",
     data: totalsitesData,
-    backgroundColor: "#ffeead"
+    backgroundColor: "#ffeead",
   },
   {
     id: 3,
-    title: 'Sites in Progress',
+    title: "Sites in Progress",
     count: 22,
-    page: 'totalSitesScreen',
+    page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#bdeaee",
   },
   {
     id: 4,
-    title: 'Pending Sites',
+    title: "Pending Sites",
     count: 7,
-    page: 'totalSitesScreen',
+    page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#ffbbee",
+  },
+];
 
-  }
-]
+export const vendorCardForDashboard = [
+  {
+    id: "1",
+    title: "Total Vendors",
+    count: 67,
+    page: "totalVendorsScreen",
+    data: totalVendorsData,
+    backgroundColor: "#FFB7B2",
+  },
+  {
+    id: "2",
+    title: "Active Vendors",
+    count: 53,
+    page: "totalVendorsScreen",
+    data: totalVendorsData,
+    backgroundColor: "#B6F4D3",
+  },
+  {
+    id: "3",
+    title: "Inactive Vendors",
+    count: 10,
+    page: "totalVendorsScreen",
+    data: totalVendorsData,
+    backgroundColor: "#C4C3D0",
+  },
+  {
+    id: "4",
+    title: "Blocklisted Vendors",
+    count: 44,
+    page: "totalVendorsScreen",
+    data: totalVendorsData,
+    backgroundColor: "#F5F5DC",
+  },
+];
+
+export const PageData = [
+  {
+    description:
+      "Streamline Your Projects with Sugs Lloyd – Efficiency at Its Best!",
+  },
+
+  {
+    id: 1,
+    text: "Manage & Track Projects Anytime, Anywhere!",
+  },
+  {
+    id: 2,
+    text: "Stay Updated – Receive Tasks & Progress Instantly!",
+  },
+  {
+    id: 3,
+    text: "Share Work Details with Real-Time Location & Visuals!",
+  },
+  {
+    id: 4,
+    text: "Keep a Sharp Eye on Your Stock Levels with Ease!",
+  },
+];

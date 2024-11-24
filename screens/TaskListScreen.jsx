@@ -1,96 +1,50 @@
-import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { useEffect } from "react";
+import { View, TouchableOpacity } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { Card } from "react-native-paper";
-import { taskslistdata } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
+import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import Filter from "../components/filters";
-import { useNavigation } from "@react-navigation/native";
+import MyFlatList from "../components/utility/MyFlatList";
+import { viewTask, initializeTasks } from "../redux/actions/taskActions";
+import { ICON_LARGE } from "../styles/constant";
 
-const TaskListScreen = () => {
-  const [searchText, setSearchText] = useState("");
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
-  const [filteredTasks, setFilteredTasks] = useState(taskslistdata);
-  const navigation = useNavigation();
+export default function TaskListScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks?.tasks || []);
 
-  const toggleMenu = () => {
-    console.log("Toggling menu visibility");
-    setIsMenuVisible(!isMenuVisible);
-  };
+  useEffect(() => {
+    dispatch(initializeTasks());
+  }, [dispatch]);
 
-  const filterTasks = (text) => {
-    setSearchText(text);
-    const filtered = taskslistdata.filter((task) =>
-      task.projectName.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredTasks(filtered);
-  };
-
-  const sortTasks = (sortOrder) => {
-    console.log(`Sorting by: ${sortOrder}`);
-    let sortedTasks = [...filteredTasks];
-    if (sortOrder === "status") {
-      sortedTasks.sort((a, b) => a.status.localeCompare(b.status));
-    } else if (sortOrder === "deadline") {
-      sortedTasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
-    }
-    setFilteredTasks(sortedTasks);
-  };
-
-  const menuOptions = [
-    { label: "Search", onPress: () => console.log("Search clicked") },
-    {
-      label: "Sort by Status",
-      onPress: () => {
-        sortTasks("status");
-        toggleMenu();
-      },
-    },
-    {
-      label: "Sort by Deadline",
-      onPress: () => {
-        sortTasks("deadline");
-        toggleMenu();
-      },
-    },
-  ];
-
-  const handleViewDetails = (task) => {
-    console.log(task)
+  const handleViewTask = (task) => {
+    dispatch(viewTask(task.id));
+    navigation.navigate("taskListFormScreen");
   };
 
   const renderListItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleViewDetails(item)}>
+    <TouchableOpacity onPress={() => handleViewTask(item)}>
       <Card
         style={[
           spacing.mv1,
           { width: SCREEN_WIDTH - 18, backgroundColor: "#ffffff" },
         ]}
       >
-        <View
-          style={{ flexDirection: "row", alignItems: "center", padding: 16 }}
-        >
+        <View style={{ flexDirection: "row", padding: 16 }}>
           <View style={{ flex: 1 }}>
             <H5 style={[typography.textBold]}>{item.projectName}</H5>
-            <P style={{ fontSize: 14, color: "#020409" }}>
-              Task Name: {item.taskName}
-            </P>
-            <P style={{ fontSize: 14, color: "#020409" }}>
-              Deadline: {item.deadline}
-            </P>
-            <P style={{ fontSize: 14, color: "#020409" }}>
-              Status: {item.status}
-            </P>
-            <P style={{ fontSize: 14, color: "#020409" }}>
-              Start Date: {item.startDate}
-            </P>
-            <P style={{ fontSize: 14, color: "#020409" }}>
-              End Date: {item.endDate}
-            </P>
+            {["taskName", "deadline", "status", "startDate", "endDate"].map(
+              (field) => (
+                <P key={field} style={{ fontSize: 14, color: "#020409" }}>
+                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${
+                    item[field]
+                  }`}
+                </P>
+              )
+            )}
           </View>
         </View>
       </Card>
@@ -99,70 +53,28 @@ const TaskListScreen = () => {
 
   return (
     <ContainerComponent>
-      <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-        <MyHeader
-          title="Task List"
-          isBack={true}
-          hasIcon={true}
-          icon={"ellipsis-vertical"}
-          onIconPress={toggleMenu}
-        />
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginVertical: 8,
-          }}
-        >
-          <View style={{ width: "80%" }}>
-            <SearchBar
-              placeholder="Search tasks..."
-              value={searchText}
-              onChangeText={filterTasks}
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => {
-              console.log("Filter Pressed");
-              toggleMenu();
-            }}
-          >
-            <Ionicons name="filter" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => {
-              console.log("Sort Pressed");
-              toggleMenu();
-            }}
-          >
-            <Ionicons name="swap-vertical" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-
-        <FlatList
-          data={filteredTasks}
+      <View>
+        <MyHeader title="Task List" isBack={true} hasIcon={true} />
+        <MyFlatList
+          data={tasks}
           renderItem={renderListItem}
           keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={styles.list}
+          contentContainerStyle={[spacing.mh2, spacing.mt1]}
+          ListHeaderComponent={() => (
+            <SearchBar
+              placeholder="Search tasks..."
+              value=""
+              onChangeText={() => {}}
+            />
+          )}
         />
-
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => navigation.navigate("taskListFormScreen")}
         >
-          <Ionicons name="add" size={32} color="white" />
+          <Ionicons name="add" size={ICON_LARGE} color="white" />
         </TouchableOpacity>
-
-        <Filter
-          visible={isMenuVisible}
-          onClose={toggleMenu}
-          options={menuOptions}
-        />
       </View>
     </ContainerComponent>
   );
-};
-
-export default TaskListScreen;
+}

@@ -9,7 +9,7 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
 
   const { site, formType } = route.params || {};
 
-  const [formData, setFormData] = useState({});
+  const [ formData, setFormData ] = useState( {} );
 
   useEffect(() => {
     if (site) {

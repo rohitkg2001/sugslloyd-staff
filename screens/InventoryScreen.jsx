@@ -12,11 +12,11 @@ import Filter from "../components/filters";
 import Button from "../components/buttons/Button";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
+import { ICON_LARGE } from "../styles/constant";
 
 const InventoryScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
-
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
@@ -76,7 +76,7 @@ const InventoryScreen = ({ navigation }) => {
           style={styles.addButton}
           onPress={() => navigation.navigate("inventoryFormScreen")}
         >
-          <Ionicons name="add" size={32} color="white" />
+          <Ionicons name="add" size={ICON_LARGE} color="white" />
         </Button>
 
         <Filter

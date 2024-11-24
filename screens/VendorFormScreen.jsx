@@ -5,20 +5,22 @@ import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
+import { useTranslation } from "react-i18next";
+
 
 const VendorFormScreen = () => {
   const [name, setName] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-  const [aadharNumber, setAadharNumber] = useState("");
+  const [setAadharNumber] = useState("");
   const [address, setAddress] = useState("");
   const [accountName, setAccountName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [ifsc, setIfsc] = useState("");
   const [bankName, setBankName] = useState("");
   const [branch, SetBranch] = useState("");
-  const [pan, setPan] = useState("");
+  const [setPan] = useState("");
   const [mailId, setMailId] = useState("");
 
   const handleCancel = () => {
@@ -46,6 +48,7 @@ const VendorFormScreen = () => {
       mailId,
     });
   };
+    const { t } = useTranslation();
 
   return (
     <ContainerComponent>
@@ -55,7 +58,7 @@ const VendorFormScreen = () => {
         <MyHeader title="Create Vendor" hasIcon={true} isBack={true} />
 
         <MyTextInput
-          title="Name"
+          title={t("vedor_form_Name")}
           value={name}
           onChangeText={setName}
           placeholder="Enter Name"

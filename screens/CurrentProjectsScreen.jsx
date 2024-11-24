@@ -1,45 +1,26 @@
-
 import { useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { projecttask } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing } from "../styles";
+import { spacing } from "../styles";
 import { styles } from "../styles/components.styles";
 import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
-import Filter from "../components/filters";
+import MyFlatList from "../components/utility/MyFlatList";
 
-const CurrentProjectsScreen = ({ navigation }) => {
-  const [searchText, setSearchText] = useState("");
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+export default function CurrentProjectsScreen({ navigation }) {
+  const [searchText] = useState("");
 
   const filteredProjects = projecttask.filter((item) =>
     item.projectName.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
-  };
-
-  const menuOptions = [
-    { label: "Search", onPress: () => console.log("Search clicked") },
-    { label: "Sort", onPress: () => console.log("Sort clicked") },
-    { label: "Filter", onPress: () => console.log("Filter clicked") },
-  ];
-
   return (
     <ContainerComponent>
-      <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
+      <View>
         <MyHeader title="Current Projects" isBack={true} hasIcon={true} />
-
-        <SearchBar
-          placeholder="Search current projects..."
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-
-        <FlatList
+        <MyFlatList
           data={filteredProjects}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
@@ -53,16 +34,15 @@ const CurrentProjectsScreen = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           )}
-        />
-
-        <Filter
-          visible={isMenuVisible}
-          onClose={toggleMenu}
-          options={menuOptions}
+          contentContainerStyle={[spacing.mh2, spacing.mt1]}
+          ListEmptyComponent={() => (
+            <NoRecord msg="Oops! There are no current projects available. Start creating or contact admin" />
+          )}
+          ListHeaderComponent={() => (
+            <SearchBar placeholder="Search current projects..." />
+          )}
         />
       </View>
     </ContainerComponent>
   );
-};
-
-export default CurrentProjectsScreen;
+}

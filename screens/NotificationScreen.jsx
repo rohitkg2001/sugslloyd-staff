@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native";
 import { styles } from "../styles/components.styles";
 import { H2, H5, P } from "../components/text";
 import MyFlatList from "../components/utility/MyFlatList";
-import { PRIMARY_COLOR } from "../styles/constant";
+import { PRIMARY_COLOR, ICON_LARGE } from "../styles/constant";
 
 export default function NotificationScreen() {
   const renderItem = ({ item }) => (
@@ -18,7 +18,7 @@ export default function NotificationScreen() {
         left={() => (
           <Avatar.Icon
             backgroundColor={PRIMARY_COLOR}
-            size={40}
+            size={ICON_LARGE}
             icon={item.icon}
             style={{ backgroundColor: "#2b87b0" }}
           />

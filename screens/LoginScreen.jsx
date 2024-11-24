@@ -16,6 +16,8 @@ import { layouts, spacing, typography } from "../styles";
 import { useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import { login } from "../redux/actions/staffActions";
+import { fakeDelete } from "../utils/faker";
+import { ICON_LARGE } from "../styles/constant";
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -84,7 +86,7 @@ export default function LoginScreen({ navigation }) {
             >
               <Icon
                 name={isPasswordVisible ? "eye-off" : "eye"}
-                size={30}
+                size={ICON_LARGE}
                 color="gray"
               />
             </TouchableOpacity>
@@ -94,7 +96,18 @@ export default function LoginScreen({ navigation }) {
             <Text style={{ color: "red", marginBottom: 10 }}>{error}</Text>
           ) : null}
 
-          <Span style={styles.rightLink}>Forgot Password?</Span>
+          <TouchableOpacity
+            onPress={() =>
+              fakeDelete({
+                title: "Forgot Password",
+                message:
+                  "No worries. Contact admin to change your existing password",
+                positiveText: "OK",
+              })
+            }
+          >
+            <Span style={styles.rightLink}>Forgot Password?</Span>
+          </TouchableOpacity>
         </KeyboardAvoidingView>
         <Button
           style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
