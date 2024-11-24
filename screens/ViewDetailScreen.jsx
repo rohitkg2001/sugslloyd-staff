@@ -4,7 +4,6 @@ import { SCREEN_WIDTH, spacing, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
-import Filter from "../components/filters";
 import MyButton from "../components/buttons/MyButton";
 
 const ViewDetailScreen = ({ route, navigation }) => {
@@ -65,36 +64,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
     </>
   );
  
-
-  const handleEdit = () => {
-    navigation.navigate("EditDetailsScreen", {
-      site: site,
-      formType: site.vendorName
-        ? "vendor"
-        : site.projectName
-          ? "project"
-          : "site",
-    });
-  };
-
-  const handleDelete = () => {
-    Alert.alert(
-      "Confirm Delete",
-      `Are you sure you want to delete this ${site.vendorName ? "vendor" : site.projectName ? "project" : "site"
-      }?`,
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: () => {
-            navigation.goBack();
-          },
-        },
-      ]
-    );
-  };
-
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
