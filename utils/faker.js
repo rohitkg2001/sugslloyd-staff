@@ -4,11 +4,12 @@ export const fakeDelete = ({
   title,
   message,
   negativeTextClick = null,
+  positiveText,
   positiveTextClick = null,
 }) => {
   Alert.alert(title, message, [
     { text: "Cancel", style: "cancel", onPress: negativeTextClick },
-    { text: "Delete", onPress: positiveTextClick },
+    { text: positiveText, onPress: positiveTextClick },
   ]);
 };
 
