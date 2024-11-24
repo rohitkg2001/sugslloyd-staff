@@ -23,7 +23,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
 
   const renderSiteDetails = () => (
     <>
-      {renderSectionTitle("Site Information")}
       {renderDetailRow("Site Name", site.siteName)}
       {renderDetailRow("State", site.state)}
       {renderDetailRow("District", site.dist)}
@@ -78,7 +77,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
         hasIcon={true}
         onIconPress={() => setIsMenuVisible(!isMenuVisible)}
       />
-      <ScrollView contentContainerStyle>
+      <ScrollView >
         <View>
           {formType === "vendor"
             ? renderVendorDetails()

@@ -11,7 +11,7 @@ import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 import { viewSite, searchSite } from "../redux/actions/siteActions";
-import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH, spacing, styles } from "../styles/constant";
+import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH, spacing, styles } from "../styles";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
