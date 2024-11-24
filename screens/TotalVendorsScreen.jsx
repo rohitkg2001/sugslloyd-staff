@@ -8,8 +8,8 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH } from "../styles/constant";
-import { View } from "react-native";
+import { ICON_LARGE } from "../styles/constant";
+import { useTranslation } from "react-i18next";
 
 export default function TotalVendorsScreen({ navigation, route }) {
   const { pageTitle, data } = route.params || {
@@ -22,6 +22,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
     navigation.navigate("ViewDetailScreen", { site: item, formType: dataType });
   };
 
+  const { t } = useTranslation();
   return (
     <ContainerComponent>
       <MyHeader title={pageTitle} isBack={true} hasIcon={true} />
@@ -34,8 +35,8 @@ export default function TotalVendorsScreen({ navigation, route }) {
             handleViewDetails={handleViewDetails}
             handleDelete={() =>
               fakeDelete({
-                title: "Error!!!",
-                message: "You cannot delete this vendor. Please contact Admin!",
+                title: t("error"),
+                message: t("error_msg"),
               })
             }
             handleEdit={(item) =>
@@ -49,9 +50,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
-        ListEmptyComponent={() => (
-          <NoRecord msg="Oops! No Vendors available. Create the new one." />
-        )}
+        ListEmptyComponent={() => <NoRecord msg={t("norecord_msg")} />}
         ListHeaderComponent={() => (
           <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
             <SearchBar
