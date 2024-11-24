@@ -1,6 +1,6 @@
-import  { useEffect } from "react";
+import { useEffect } from "react";
 import { View, TouchableOpacity } from "react-native";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { Card } from "react-native-paper";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
@@ -9,11 +9,12 @@ import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
-import { viewTask, initializeTasks } from '../redux/actions/taskActions';
+import { viewTask, initializeTasks } from "../redux/actions/taskActions";
+import { ICON_LARGE } from "../styles/constant";
 
 export default function TaskListScreen({ navigation }) {
   const dispatch = useDispatch();
-  const tasks = useSelector(state => state.tasks?.tasks || []);
+  const tasks = useSelector((state) => state.tasks?.tasks || []);
 
   useEffect(() => {
     dispatch(initializeTasks());
@@ -71,10 +72,9 @@ export default function TaskListScreen({ navigation }) {
           style={styles.addButton}
           onPress={() => navigation.navigate("taskListFormScreen")}
         >
-          <Ionicons name="add" size={32} color="white" />
+          <Ionicons name="add" size={ICON_LARGE} color="white" />
         </TouchableOpacity>
       </View>
     </ContainerComponent>
   );
 }
-
