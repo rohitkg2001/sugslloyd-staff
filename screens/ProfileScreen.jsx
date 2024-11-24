@@ -14,8 +14,11 @@ import CardFullWidth from "../components/card/CardFullWidth";
 import Avatar from "../components/Avatar";
 import { H6, H4 } from "../components/text";
 import MyFlatList from "../components/utility/MyFlatList";
+import { useTranslation } from "react-i18next";
 
-const ProfileItem = ({ iconName, label }) => {
+const ProfileItem = ( { iconName, label } ) =>
+{
+  
   return (
     <View
       style={[
@@ -51,10 +54,12 @@ const ProfileItem = ({ iconName, label }) => {
   );
 };
 
-const ProfileScreen = () => {
+const ProfileScreen = () =>
+{
+   const { t } = useTranslation();
   return (
     <ContainerComponent>
-      <MyHeader title="My Profile" isBack={true} hasIcon={true} />
+      <MyHeader title={t("profile_title")} isBack={true} hasIcon={true} />
 
       {/* Main Profile Card */}
       <CardFullWidth backgroundColor={PRIMARY_COLOR}>

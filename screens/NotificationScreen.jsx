@@ -29,14 +29,13 @@ export default function NotificationScreen() {
       <Divider />
     </TouchableOpacity>
   );
- const { t } = useTranslation();
+  const { t } = useTranslation();
   return (
     <ContainerComponent>
       <MyHeader
         title={t("notification_title")}
         isBack={true}
         hasIcon={true}
-        icon={"search-outline"}
       />
       <View>
         <MyFlatList

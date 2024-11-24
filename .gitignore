@@ -10,6 +10,8 @@ android/
 .expo/
 dist/
 web-build/
+#Dont push anything over git
+android/
 
 # Native
 *.orig.*

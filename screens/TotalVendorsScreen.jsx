@@ -1,14 +1,15 @@
-import { fakeDelete, totalVendorsData } from "../utils/faker";
+import { View } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { spacing, styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { ICON_LARGE } from "../styles/constant";
+import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH, spacing, styles } from "../styles";
+import { fakeDelete, totalVendorsData } from "../utils/faker";
+import { useTranslation } from "react-i18next";
 
 export default function TotalVendorsScreen({ navigation, route }) {
   const { pageTitle, data } = route.params || {
@@ -21,6 +22,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
     navigation.navigate("ViewDetailScreen", { site: item, formType: dataType });
   };
 
+  const { t } = useTranslation();
   return (
     <ContainerComponent>
       <MyHeader title={pageTitle} isBack={true} hasIcon={true} />
@@ -33,8 +35,8 @@ export default function TotalVendorsScreen({ navigation, route }) {
             handleViewDetails={handleViewDetails}
             handleDelete={() =>
               fakeDelete({
-                title: "Error!!!",
-                message: "You cannot delete this vendor. Please contact Admin!",
+                title: t("error"),
+                message: t("error_msg"),
               })
             }
             handleEdit={(item) =>
@@ -48,11 +50,19 @@ export default function TotalVendorsScreen({ navigation, route }) {
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
-        ListEmptyComponent={() => (
-          <NoRecord msg="Oops! No Vendors available. Create the new one." />
-        )}
+        ListEmptyComponent={() => <NoRecord msg={t("norecord_msg")} />}
         ListHeaderComponent={() => (
-          <SearchBar placeholder="Search by name, state or project code" />
+          <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
+            <SearchBar
+              placeholder="Search"
+              style={{ width: SCREEN_WIDTH - 70 }}
+            />
+            <Button
+              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+            >
+              <Ionicons name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+            </Button>
+          </View>
         )}
       />
       <Button

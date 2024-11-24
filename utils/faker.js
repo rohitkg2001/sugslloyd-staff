@@ -259,7 +259,7 @@ export const earnings = [
 
 export const menuItems = [
   {
-    label: "Inventory Management",
+    label: "inventory_title",
     icon: "cart-outline",
     page: "inventoryScreen",
   },
@@ -492,6 +492,7 @@ export const siteCardsForDashboard = [
   {
     id: 1,
     title: "Total Sites",
+    name: "total_sites",
     count: 46,
     page: "totalSitesScreen",
     data: totalsitesData,
