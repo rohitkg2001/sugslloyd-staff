@@ -1,5 +1,6 @@
 import { fakeDelete, totalVendorsData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
+import { View } from "react-native";
 import MyHeader from "../components/header/MyHeader";
 import { spacing, styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";

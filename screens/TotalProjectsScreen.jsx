@@ -50,9 +50,8 @@ export default function TotalProjectsScreen({ navigation }) {
             handleViewDetails={handleViewDetails}
             handleDelete={() =>
               fakeDelete({
-                title: "Error!!!",
-                message:
-                  "You cannot delete this project. Please contact admin!",
+                title: t("error"),
+                message: t("error_msg"),
               })
             }
             handleEdit={handleEdit}
@@ -62,7 +61,7 @@ export default function TotalProjectsScreen({ navigation }) {
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
         ListEmptyComponent={() => (
-          <NoRecord msg="Oops! No projects available. Start creating or contact admin." />
+          <NoRecord msg={t("no_record_project" )}/>
         )}
         ListHeaderComponent={() => (
           <View>
