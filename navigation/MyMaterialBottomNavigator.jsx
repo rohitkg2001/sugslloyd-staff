@@ -4,7 +4,12 @@ import DashboardScreen from "../screens/DashboardScreen";
 import SettingsScreen from "../screens/SettingScreen";
 import CurrentProjectsScreen from "../screens/CurrentProjectsScreen";
 
-import { INFO_COLOR, LIGHT, PRIMARY_COLOR } from "../styles/constant";
+import {
+  INFO_COLOR,
+  LIGHT,
+  PRIMARY_COLOR,
+  ICON_SMALL,
+} from "../styles/constant";
 
 const BottomTab = createMaterialBottomTabNavigator();
 
@@ -29,7 +34,7 @@ export default function MyMaterialBottomNavigator() {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <Icon name="desktop-outline" size={24} color={color} />
+            <Icon name="desktop-outline" size={ICON_SMALL} color={color} />
           ),
         }}
       />
@@ -39,7 +44,7 @@ export default function MyMaterialBottomNavigator() {
         options={{
           tabBarLabel: "Projects",
           tabBarIcon: ({ color }) => (
-            <Icon name="grid-outline" size={24} color={color} />
+            <Icon name="grid-outline" size={ICON_SMALL} color={color} />
           ),
         }}
       />
@@ -50,7 +55,11 @@ export default function MyMaterialBottomNavigator() {
         options={{
           tabBarLabel: "More",
           tabBarIcon: ({ color }) => (
-            <Icon name="ellipsis-vertical-circle" size={24} color={color} />
+            <Icon
+              name="ellipsis-vertical-circle"
+              size={ICON_SMALL}
+              color={color}
+            />
           ),
         }}
       />

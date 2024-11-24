@@ -10,6 +10,7 @@ import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 import { fakeDelete, project } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
+import { ICON_MEDIUM, ICON_LARGE } from "../styles/constant";
 
 export default function TotalProjectsScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
@@ -69,7 +70,7 @@ export default function TotalProjectsScreen({ navigation }) {
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
             >
-              <Icon name="options-outline" size={28} color={LIGHT} />
+              <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
             </Button>
           </View>
         )}
@@ -79,7 +80,7 @@ export default function TotalProjectsScreen({ navigation }) {
         style={styles.addButton}
         onPress={() => navigation.navigate("formScreen")}
       >
-        <Ionicons name="add" size={32} color="white" />
+        <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
     </View>
   );

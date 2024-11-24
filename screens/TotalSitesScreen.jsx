@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { fakeDelete, totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
@@ -10,12 +10,13 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { viewSite, searchSite } from '../redux/actions/siteActions';
+import { viewSite, searchSite } from "../redux/actions/siteActions";
+import { ICON_LARGE } from "../styles/constant";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
-  const siteState = useSelector(state => state.sites);
-  const searchText = siteState ? siteState.searchText : '';
+  const siteState = useSelector((state) => state.sites);
+  const searchText = siteState ? siteState.searchText : "";
   const [filteredData, setFilteredData] = useState([]);
 
   const { pageTitle, data } = route.params || {
@@ -29,10 +30,11 @@ export default function TotalSitesScreen({ navigation, route }) {
 
   const handleSearch = (text) => {
     dispatch(searchSite(text));
-    const filtered = data.filter(site => 
-      site.city.toLowerCase().includes(text.toLowerCase()) ||
-      site.state.toLowerCase().includes(text.toLowerCase()) ||
-      site.projectCode.toLowerCase().includes(text.toLowerCase())
+    const filtered = data.filter(
+      (site) =>
+        site.city.toLowerCase().includes(text.toLowerCase()) ||
+        site.state.toLowerCase().includes(text.toLowerCase()) ||
+        site.projectCode.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -77,7 +79,7 @@ export default function TotalSitesScreen({ navigation, route }) {
           <NoRecord msg="Oops! There are no sites data available. Start creating or contact admin" />
         )}
         ListHeaderComponent={() => (
-          <SearchBar 
+          <SearchBar
             placeholder="Search by city, state or project code"
             value={searchText}
             onChangeText={handleSearch}
@@ -89,7 +91,7 @@ export default function TotalSitesScreen({ navigation, route }) {
         style={styles.addButton}
         onPress={() => navigation.navigate("sitesFormScreen")}
       >
-        <Ionicons name="add" size={32} color="white" />
+        <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
     </ContainerComponent>
   );
