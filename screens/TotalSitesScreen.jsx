@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { View } from "react-native";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fakeDelete, totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { spacing, styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
@@ -11,8 +11,7 @@ import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 import { viewSite, searchSite } from "../redux/actions/siteActions";
-import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH } from "../styles/constant";
-import { View } from "react-native";
+import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH, spacing, styles } from "../styles/constant";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();

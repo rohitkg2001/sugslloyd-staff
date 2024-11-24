@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { View, ScrollView } from "react-native";
-import { spacing, styles, LIGHT, SCREEN_WIDTH } from "../styles";
+import { View } from "react-native";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -10,7 +9,8 @@ import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 import { fakeDelete, project } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
-import { ICON_MEDIUM, ICON_LARGE } from "../styles/constant";
+import ContainerComponent from "../components/ContainerComponent";
+import { spacing, styles, LIGHT, SCREEN_WIDTH, ICON_MEDIUM, ICON_LARGE } from "../styles";
 
 export default function TotalProjectsScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
@@ -36,7 +36,7 @@ export default function TotalProjectsScreen({ navigation }) {
   };
 
   return (
-    <View>
+    <ContainerComponent>
       <MyHeader title="Total Projects" isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredProjects}
@@ -82,6 +82,6 @@ export default function TotalProjectsScreen({ navigation }) {
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
-    </View>
+    </ContainerComponent>
   );
 }
