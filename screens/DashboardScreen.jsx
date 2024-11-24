@@ -109,7 +109,7 @@ export default function DashboardScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[spacing.mh1]}
       >
-        <View>
+        <View >
           <SearchBar
             placeholder="Search"
             style={{ width: SCREEN_WIDTH - 70 }}
@@ -119,6 +119,7 @@ export default function DashboardScreen({ navigation }) {
           >
             <Icon name="options-outline" size={28} color={LIGHT} />
           </Button>
+          </View>
           <View style={[spacing.mv2, styles.row, { alignItems: "center" }]}>
             <H4>Today</H4>
             <View style={{ flexDirection: "row" }}>
@@ -126,7 +127,11 @@ export default function DashboardScreen({ navigation }) {
               <H5 style={spacing.ml1}>{today}</H5>
             </View>
           </View>
-        </View>
+ 
+
+
+
+        
         <MyFlatList
           data={firstTwoTasks}
           renderItem={({ item }) => (

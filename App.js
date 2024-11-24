@@ -5,7 +5,7 @@ import MyNavigationContainer from "./navigation/MyNavigationContainer";
 import { Provider } from "react-redux";
 import store from "./store";
 import i18n from "./i18n";
-import { View, Text, Button, ActivityIndicator } from "react-native";
+import { View, Text, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
