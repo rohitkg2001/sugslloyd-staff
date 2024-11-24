@@ -26,7 +26,7 @@ const PrivacyPolicy = () => {
     }
   };
 
-   const { t } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <ContainerComponent>
@@ -41,16 +41,6 @@ const PrivacyPolicy = () => {
           {PRIVACY_POLICY}
         </P>
       </ScrollView>
-      <Button
-        style={[
-          styles.btn,
-          styles.bgPrimary,
-          { width: SCREEN_WIDTH - 20, justifyContent: "center" },
-        ]}
-        onPress={onSubmit}
-      >
-        <H2 style={[styles.btnText, typography.textLight]}>Submit</H2>
-      </Button>
     </ContainerComponent>
   );
 };
