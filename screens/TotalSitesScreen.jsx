@@ -12,6 +12,7 @@ import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 import { viewSite, searchSite } from "../redux/actions/siteActions";
 import { ICON_LARGE } from "../styles/constant";
+import { useTranslation } from "react-i18next";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
@@ -43,11 +44,11 @@ export default function TotalSitesScreen({ navigation, route }) {
     dispatch(viewSite(siteData));
     navigation.navigate("ViewDetailScreen", { site: siteData });
   };
-
+  const { t } = useTranslation();
   const handleDelete = () => {
     fakeDelete({
-      title: "Error!!!",
-      message: "You cannot delete this site. Please contact Admin!",
+      title: t("error"),
+      message: t("total_site_screen_msg"),
     });
   };
 
@@ -76,7 +77,7 @@ export default function TotalSitesScreen({ navigation, route }) {
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
         ListEmptyComponent={() => (
-          <NoRecord msg="Oops! There are no sites data available. Start creating or contact admin" />
+          <NoRecord msg={t("tota_Site_norecord_msg")} />
         )}
         ListHeaderComponent={() => (
           <SearchBar
