@@ -1,92 +1,79 @@
 import { useState } from "react";
-import { View, Image, TouchableOpacity } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { inventoryData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing } from "../styles";
-import { styles } from "../styles/components.styles";
 import MyHeader from "../components/header/MyHeader";
-import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
-import Filter from "../components/filters";
-import Button from "../components/buttons/Button";
 import MyFlatList from "../components/utility/MyFlatList";
+import { inventoryData, project, totalsitesData } from "../utils/faker";
+import InventoryCard from "../components/card/InventoryCard";
 import NoRecord from "./NoRecord";
-import { ICON_LARGE } from "../styles/constant";
+import { useTranslation } from "react-i18next";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/Ionicons";
+import Button from "../components/buttons/Button";
+import { ICON_MEDIUM, LIGHT, styles, spacing, SCREEN_WIDTH } from "../styles";
+import { View } from "react-native";
 
-const InventoryScreen = ({ navigation }) => {
+import InventoryDetailsModal from "../components/InventoryDetailsModal";
+
+export default function InventoryScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [isVisible, setVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const { t } = useTranslation();
 
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
+  const viewItem = (id) => {
+    setVisible(true);
+    const thisItem = inventoryData.find((item) => item.id === id);
+    const thisProject = project.find((item) => item.id === thisItem.projectId);
+    const thisSite = totalsitesData.find((item) => item.id === thisItem.siteId);
+    const itemDetails = { ...thisItem, ...thisProject, ...thisSite };
+    console.log(itemDetails);
+    setSelectedItem(itemDetails);
   };
-
-  const menuOptions = [
-    { label: "Search", onPress: () => console.log("Search clicked") },
-    { label: "Sort", onPress: () => console.log("Sort clicked") },
-    { label: "Filter", onPress: () => console.log("Filter clicked") },
-  ];
 
   return (
     <ContainerComponent>
-      <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-        <MyHeader
-          title="Stock Management"
-          isBack={true}
-          hasIcon={true}
-          icon={"ellipsis-vertical"}
-          onIconPress={toggleMenu}
-        />
-
-        <MyFlatList
-          data={inventoryData}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.card}>
-              <Image
-                source={{ uri: item.url }}
-                style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 8,
-                  marginRight: 16,
-                }}
-              />
-              <View style={{ flex: 1 }}>
-                <H5>{item.name}</H5>
-                <P>{item.description}</P>
-                <View style={styles.quantityContainer}>
-                  <P style={styles.productQuantity}>Qty: {item.quantity}</P>
-                </View>
-              </View>
-            </TouchableOpacity>
-          )}
-          ListEmptyComponent={() => <NoRecord msg="Oops! No inventory" />}
-          ListHeaderComponent={() => (
+      <MyHeader title={t("inventory_title")} hasIcon={true} isBack={true} />
+      <MyFlatList
+        data={inventoryData}
+        keyExtractor={(item) => item.id.toString()}
+        ListHeaderComponent={() => (
+          <View
+            style={[
+              styles.row,
+              spacing.mh2,
+              spacing.mb5,
+              { alignItems: "center" },
+            ]}
+          >
             <SearchBar
-              placeholder="Enter item name, brand or product code"
               value={searchText}
               onChangeText={setSearchText}
+              style={{ width: SCREEN_WIDTH - 70 }}
             />
-          )}
-        />
-
-        <Button
-          style={styles.addButton}
-          onPress={() => navigation.navigate("inventoryFormScreen")}
-        >
-          <Ionicons name="add" size={ICON_LARGE} color="white" />
-        </Button>
-
-        <Filter
-          visible={isMenuVisible}
-          onClose={toggleMenu}
-          options={menuOptions}
-        />
-      </View>
+            <Button
+              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+            >
+              <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+            </Button>
+          </View>
+        )}
+        ListEmptyComponent={() => <NoRecord msg={t("no_inventory")} />}
+        renderItem={({ item }) => (
+          <InventoryCard item={item} onPress={() => viewItem(item.id)} />
+        )}
+      />
+      <InventoryDetailsModal
+        visible={isVisible}
+        onClose={() => setVisible(false)}
+        selectedItem={selectedItem}
+      />
+      <Button
+        style={styles.addButton}
+        onPress={() => navigation.navigate("inventoryFormScreen")}
+      >
+        <Ionicons name="add" size={28} color="white" />
+      </Button>
     </ContainerComponent>
   );
-};
-
-export default InventoryScreen;
+}

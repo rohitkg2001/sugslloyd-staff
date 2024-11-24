@@ -8,6 +8,7 @@ import { styles } from "../styles/components.styles";
 import { H2, H5, P } from "../components/text";
 import MyFlatList from "../components/utility/MyFlatList";
 import { PRIMARY_COLOR, ICON_LARGE } from "../styles/constant";
+import { useTranslation } from "react-i18next";
 
 export default function NotificationScreen() {
   const renderItem = ({ item }) => (
@@ -28,11 +29,11 @@ export default function NotificationScreen() {
       <Divider />
     </TouchableOpacity>
   );
-
+ const { t } = useTranslation();
   return (
     <ContainerComponent>
       <MyHeader
-        title="Notification"
+        title={t("notification_title")}
         isBack={true}
         hasIcon={true}
         icon={"search-outline"}

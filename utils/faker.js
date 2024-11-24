@@ -78,7 +78,7 @@ export const project = [
     duration: "6 days",
     status: "completed",
     projectSerial: "76",
-    siteName: "Site Delta", 
+    siteName: "Site Delta",
     sanctionLoad: "200KW",
     projectCapacity: "400KW",
     caNumber: "CA44556",
@@ -93,7 +93,7 @@ export const project = [
     duration: "5 days",
     status: "completed",
     projectSerial: "",
-    siteName: "Site Alpha", 
+    siteName: "Site Alpha",
     sanctionLoad: "",
     projectCapacity: "",
     caNumber: "",
@@ -107,7 +107,7 @@ export const project = [
     projectName: "Project 03C",
     duration: "3 days",
     status: "ongoing",
-    siteName: "Site Beta", 
+    siteName: "Site Beta",
     vendorName: "Ayush Ranjan",
   },
   {
@@ -115,7 +115,7 @@ export const project = [
     projectName: "Project 04D",
     duration: "7 days",
     status: "completed",
-    siteName: "Site Gamma", 
+    siteName: "Site Gamma",
     vendorName: "Md Munna",
   },
   {
@@ -123,7 +123,7 @@ export const project = [
     projectName: "Project 05E",
     duration: "4 days",
     status: "ongoing",
-    siteName: "Site Delta", 
+    siteName: "Site Delta",
     vendorName: "Suresh Tripathy",
   },
   {
@@ -131,21 +131,21 @@ export const project = [
     projectName: "Project 06F",
     duration: "6 days",
     status: "ongoing",
-    siteName: "Site Omega", 
+    siteName: "Site Omega",
   },
   {
     id: 7,
     projectName: "Project 07G",
     duration: "1 day",
     status: "completed",
-    siteName: "Site Alpha", 
+    siteName: "Site Alpha",
   },
   {
     id: 8,
     projectName: "Project 08H",
     duration: "8 days",
     status: "ongoing",
-    siteName: "Site Beta", 
+    siteName: "Site Beta",
   },
   {
     id: 9,
@@ -159,79 +159,38 @@ export const project = [
     projectName: "Project 10J",
     duration: "3 days",
     status: "ongoing",
-    siteName: "Site Omega", // Added siteName
-  },
-];
-
-export const projecttask = [
-  {
-    id: 1,
-    projectName: "Project 01A",
-    siteName: " SBI Bank , Rampur School , Lakhisarai",
-  },
-  {
-    id: 2,
-    projectName: "Project 02B",
-    siteName: "Block Office, Shershah Road ,Madhepura",
-  },
-  {
-    id: 3,
-    projectName: "Project 03C",
-    siteName: "Purnea Mahila College , Sipahi Tola , Purnea",
-  },
-];
-
-export const tasksData = [
-  {
-    id: "1",
-    taskName: "Solar Panel Installlation at railway station.",
-    installation: "Install the panel on top of the platform of 5kw of power.",
+    siteName: "Site Omega",
   },
 ];
 
 export const inventoryData = [
   {
-    id: "1",
-    name: "Solar LED Street Light",
+    id: 1,
+    projectId: 1,
+    siteId: 1,
+    product_name: "Solar LED Street Light",
     description: "Eco-friendly solar-powered street light with motion sensor.",
-    quantity: 1,
+    unit: "pcs",
+    initial_quantity: "1000",
+    qty_stock: "1000",
+    material_dispatch_date: "20 Nov 2024",
+    delivery_date: "20 Nov 2024",
+    allocation_officer: "Bittu Gupta",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfaVettxgHxUSbCpPamGNdUB8g_9t_qYFhgQ&s",
   },
   {
-    id: "2",
-    name: "Smart Street Light System",
+    id: 2,
+    projectId: 1,
+    siteId: 1,
+    product_name: "Smart Street Light System",
     description: "Automated street light system with IoT connectivity.",
-    quantity: 2,
+    unit: "pcs",
+    initial_quantity: "1000",
+    qty_stock: "200",
+    material_dispatch_date: "20 Nov 2024",
+    delivery_date: "24 Nov 2024",
+    allocation_officer: "Bittu Mishra",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
-  },
-  {
-    id: "3",
-    name: "LED Floodlight for Streets",
-    description: "High brightness LED floodlight for outdoor use.",
-    quantity: 3,
-    url: "https://m.media-amazon.com/images/I/81hIbQn03RL._AC_UF1000,1000_QL80_.jpg",
-  },
-  {
-    id: "4",
-    name: "Solar Street Light with Camera",
-    description: "Integrated street light with a security camera.",
-    quantity: 1,
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfaVettxgHxUSbCpPamGNdUB8g_9t_qYFhgQ&s",
-  },
-  {
-    id: "5",
-    name: "Street Light Pole",
-    description: "Durable street light pole for various applications.",
-    quantity: 5,
-    url: "https://th.bing.com/th?id=OPAC.9GyQh8O0Qccugw474C474&w=592&h=550&o=5&dpr=1.1&pid=21.1",
-  },
-  {
-    id: "6",
-    name: "Motion Sensor Street Light",
-    description:
-      "Street light with a built-in motion sensor for energy savings.",
-    quantity: 2,
-    url: "  https://th.bing.com/th?id=OPAC.CS1gpu%2fn0Pggmw474C474&w=592&h=550&o=5&dpr=1.1&pid=21.1 ",
   },
 ];
 
@@ -432,7 +391,7 @@ export const staff = {
 
 export const totalsitesData = [
   {
-    id: "1",
+    id: 1,
     siteName: "P S SHIKSHA NAGAR BANMANKHI",
     State: "",
     City: "",
@@ -445,25 +404,25 @@ export const totalsitesData = [
     ICVendorName: "",
   },
   {
-    id: "2",
+    id: 2,
     siteName: "P S MIRCHAIBARI UTTAR",
     dist: "Purnia",
     location: "BANMANKHI",
   },
   {
-    id: "3",
+    id: 3,
     siteName: "P S MIRCHAIBARI UTTAR",
     dist: "Purnia",
     location: "BANMANKHI",
   },
   {
-    id: "4",
+    id: 4,
     siteName: "P S MIRCHAIBARI UTTAR",
     dist: "Purnia",
     location: "BANMANKHI",
   },
   {
-    id: "5",
+    id: 5,
     siteName: "P S MIRCHAIBARI UTTAR",
     dist: "Purnia",
     location: "BANMANKHI",

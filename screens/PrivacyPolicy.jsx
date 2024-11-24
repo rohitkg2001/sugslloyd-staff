@@ -7,6 +7,7 @@ import { styles } from "../styles/components.styles";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, typography } from "../styles";
 import { PRIVACY_POLICY } from "../utils/faker";
+import { useTranslation } from "react-i18next";
 
 const PrivacyPolicy = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -25,10 +26,12 @@ const PrivacyPolicy = () => {
     }
   };
 
+  const { t } = useTranslation();
+
   return (
     <ContainerComponent>
       <MyHeader
-        title="Privacy Policy"
+        title={t("privacy_policy_title")}
         isBack={true}
         hasIcon={true}
         icon={""}
@@ -38,12 +41,6 @@ const PrivacyPolicy = () => {
           {PRIVACY_POLICY}
         </P>
       </ScrollView>
-      <Button
-        style={[styles.btn, styles.bgPrimary, { width: SCREEN_WIDTH - 20, justifyContent: 'center' }]}
-        onPress={onSubmit}
-      >
-        <H2 style={[styles.btnText, typography.textLight]}>Submit</H2>
-      </Button>
     </ContainerComponent>
   );
 };

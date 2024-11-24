@@ -63,7 +63,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("Status", site.status)}
     </>
   );
- 
+
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
@@ -72,8 +72,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             formType === "vendor"
               ? "Vendor Details"
               : site.projectName
-                ? "Project Details"
-                : "Site Details"
+              ? "Project Details"
+              : "Site Details"
           }
           isBack={true}
           hasIcon={true}
@@ -84,8 +84,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             {formType === "vendor"
               ? renderVendorDetails()
               : site.projectName
-                ? renderProjectDetails()
-                : renderSiteDetails()}
+              ? renderProjectDetails()
+              : renderSiteDetails()}
           </View>
           <View
             style={{
@@ -105,7 +105,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
             />
           </View>
         </ScrollView>
-
       </View>
     </ContainerComponent>
   );
