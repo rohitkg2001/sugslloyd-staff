@@ -63,50 +63,47 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("Status", site.status)}
     </>
   );
- 
+
   return (
     <ContainerComponent>
-      <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-        <MyHeader
-          title={
-            formType === "vendor"
-              ? "Vendor Details"
-              : site.projectName
-                ? "Project Details"
-                : "Site Details"
-          }
-          isBack={true}
-          hasIcon={true}
-          onIconPress={() => setIsMenuVisible(!isMenuVisible)}
-        />
-        <ScrollView contentContainerStyle>
-          <View>
-            {formType === "vendor"
-              ? renderVendorDetails()
-              : site.projectName
-                ? renderProjectDetails()
-                : renderSiteDetails()}
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginVertical: 16,
-            }}
-          >
-            <MyButton
-              title="Create Task"
-              onPress={() => navigation.navigate("taskListFormScreen")}
-              color="#DC4C64"
-            />
-            <MyButton
-              title="View Task"
-              onPress={() => navigation.navigate("taskScreen")}
-            />
-          </View>
-        </ScrollView>
-
-      </View>
+      <MyHeader
+        title={
+          formType === "vendor"
+            ? "Vendor Details"
+            : site.projectName
+              ? "Project Details"
+              : "Site Details"
+        }
+        isBack={true}
+        hasIcon={true}
+        onIconPress={() => setIsMenuVisible(!isMenuVisible)}
+      />
+      <ScrollView contentContainerStyle>
+        <View>
+          {formType === "vendor"
+            ? renderVendorDetails()
+            : site.projectName
+              ? renderProjectDetails()
+              : renderSiteDetails()}
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginVertical: 16,
+          }}
+        >
+          <MyButton
+            title="Create Task"
+            onPress={() => navigation.navigate("taskListFormScreen")}
+            color="#DC4C64"
+          />
+          <MyButton
+            title="View Task"
+            onPress={() => navigation.navigate("taskScreen")}
+          />
+        </View>
+      </ScrollView>
     </ContainerComponent>
   );
 };

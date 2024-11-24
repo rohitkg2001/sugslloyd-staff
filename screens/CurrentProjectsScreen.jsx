@@ -2,11 +2,13 @@ import { useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { project } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
-import { spacing } from "../styles";
+import { ICON_MEDIUM, LIGHT, SCREEN_WIDTH, spacing } from "../styles";
 import { styles } from "../styles/components.styles";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import MyFlatList from "../components/utility/MyFlatList";
+import Button from "../components/buttons/Button";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const [searchText] = useState("");
@@ -37,7 +39,17 @@ export default function CurrentProjectsScreen({ navigation }) {
             <NoRecord msg="Oops! There are no current projects available. Start creating or contact admin" />
           )}
           ListHeaderComponent={() => (
-            <SearchBar placeholder="Search current projects..." />
+            <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
+              <SearchBar
+                placeholder="Search"
+                style={{ width: SCREEN_WIDTH - 70 }}
+              />
+              <Button
+                style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+              >
+                <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+              </Button>
+            </View>
           )}
         />
       </View>
