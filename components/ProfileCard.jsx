@@ -2,14 +2,8 @@ import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { P, Span } from "./text";
 import Avatar from "./Avatar";
-import {
-  styles,
-  layouts,
-  spacing,
-  typography,
-  SCREEN_WIDTH,
-  ICON_SMALL,
-} from "../styles";
+import { ICON_SMALL } from "../styles/constant";
+import { styles, layouts, spacing, typography, SCREEN_WIDTH } from "../styles";
 
 export default function ProfileCard({ imageUri, name, phoneNumber, onPress }) {
   return (
