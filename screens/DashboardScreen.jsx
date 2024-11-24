@@ -129,9 +129,6 @@ export default function DashboardScreen({ navigation }) {
           </View>
  
 
-
-
-        
         <MyFlatList
           data={firstTwoTasks}
           renderItem={({ item }) => (
