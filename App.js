@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler'
 import { PaperProvider } from "react-native-paper";
+import { useEffect, useState } from 'react';
 import MyNavigationContainer from "./navigation/MyNavigationContainer";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -17,6 +18,15 @@ export default function App() {
     setLanguage(lang);
     setIsLanguageSelected(true);
   };
+  useEffect(() => {
+    const fetchLanguage = async () => {
+      const storedLanguage = await AsyncStorage.getItem('appLanguage')
+      console.log(storedLanguage)
+    }
+
+    fetchLanguage()
+  }, [])
+
 
   if (!isLanguageSelected) {
     return <LanguageSelector onSelectLanguage={selectLanguage} />;

@@ -48,7 +48,7 @@ const VendorFormScreen = () => {
       mailId,
     });
   };
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <ContainerComponent>
@@ -58,7 +58,7 @@ const VendorFormScreen = () => {
         <MyHeader title="Create Vendor" hasIcon={true} isBack={true} />
 
         <MyTextInput
-          title={t("vedor_form_Name")}
+          title={t("vendor_form_name")}
           value={name}
           onChangeText={setName}
           placeholder="Enter Name"

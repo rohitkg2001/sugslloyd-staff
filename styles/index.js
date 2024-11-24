@@ -5,7 +5,10 @@ import {
     PRIMARY_COLOR_TRANSPARENT,
     LIGHT,
     DARK,
-    DANGER_COLOR
+    DANGER_COLOR,
+    ICON_SMALL,
+    ICON_MEDIUM,
+    ICON_LARGE
 } from './constant'
 
 import { spacing } from './spacing.styles'
@@ -24,5 +27,8 @@ export {
     spacing,
     typography,
     styles,
-    layouts
+    layouts,
+    ICON_SMALL,
+    ICON_MEDIUM,
+    ICON_LARGE
 }
