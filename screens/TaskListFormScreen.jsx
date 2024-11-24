@@ -10,6 +10,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import { updateTask } from '../redux/actions/taskActions';
 import { project } from "../utils/faker";
+import { useTranslation } from "react-i18next";
 
 const TaskListFormScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -69,6 +70,8 @@ const TaskListFormScreen = ({ navigation }) => {
     setShowDatePicker(true);
   };
 
+  const { t } = useTranslation();
+  
   return (
     <ContainerComponent>
       <ScrollView
@@ -77,7 +80,7 @@ const TaskListFormScreen = ({ navigation }) => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title="Update Task" hasIcon icon="ellipsis-vertical" />
+        <MyHeader title={t("update_task")} hasIcon icon="ellipsis-vertical" />
 
         <DropDownPicker
           open={open}
@@ -96,14 +99,14 @@ const TaskListFormScreen = ({ navigation }) => {
         />
 
         <MyTextInput
-          title="Task Name"
+          title={t("task_name")}
           value={taskName}
           onChangeText={setTaskName}
           placeholder="Enter Task Name"
         />
 
         <MyTextInput
-          title="Description"
+          title={t("description")}
           value={description}
           onChangeText={setDescription}
           placeholder="Enter Description"
@@ -113,19 +116,20 @@ const TaskListFormScreen = ({ navigation }) => {
 
         <View>
           <MyTextInput
-            title="Select Deadline"
+            title={t("start_date")}
+            value={deadline.toLocaleDateString()}
+            editable={false}
+            onPressIn={showPicker}
+          />
+          <MyTextInput
+            title={t("end_date")}
             value={deadline.toLocaleDateString()}
             editable={false}
             onPressIn={showPicker}
           />
 
           {showDatePicker && (
-            <DateTimePicker
-              value={deadline}
-              mode="date"
-              display={Platform.OS === "ios" ? "spinner" : "default"}
-              onChange={onChange}
-            />
+            <DateTimePicker value={deadline} mode="date" onChange={true} />
           )}
         </View>
 
@@ -136,8 +140,12 @@ const TaskListFormScreen = ({ navigation }) => {
             marginVertical: 16,
           }}
         >
-          <MyButton title="Reset" onPress={handleReset} color="#DC4C64" />
-          <MyButton title="Update" onPress={handleSubmit} />
+          <MyButton
+            title={t("reset_button")}
+            onPress={handleReset}
+            color="#DC4C64"
+          />
+          <MyButton title={t("update_button")} onPress={handleSubmit} />
         </View>
       </ScrollView>
     </ContainerComponent>

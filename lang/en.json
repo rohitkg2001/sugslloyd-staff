@@ -45,6 +45,24 @@
         "my_tasks": "My Tasks",
         "reports": "Reports",
         "settings": "Settings",
-        "vendor_form_name": "Vendor Name"
-    }
+        "vendor_form_name": "Vendor Name",
+        "logout_button" : "Logout",
+        "site_State" : "State",
+        "site_city" : "City",
+        "site_location" : "Location",
+        "site_Projectcode" : "Project Serial Code",
+        "site_name" : "Site Name",
+        "site_projectcapacity" : "Project Capacity",
+        "site_canumber" : "CA Number",
+        "site_ContactNo" :  "Contact No." ,
+        "site_I&CVendorName" : "I & C Vendor Name",
+        "cancel" : "Cancel" ,
+        "create" : "Create",
+        "update_task" : "Update Task",
+        "task_name" : "Task Name",
+        "start_date" : "Start Date",
+        "end_date" : "End Date" ,
+        "reset_button" : "Reset" ,
+        "update_button" : "Update" 
+       }
 }

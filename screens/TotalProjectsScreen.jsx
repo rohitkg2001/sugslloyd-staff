@@ -11,6 +11,7 @@ import ClickableCard from "../components/card/ClickableCard";
 import { fakeDelete, project } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
 import { ICON_MEDIUM, ICON_LARGE } from "../styles/constant";
+import { useTranslation } from "react-i18next";
 
 export default function TotalProjectsScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
@@ -35,9 +36,11 @@ export default function TotalProjectsScreen({ navigation }) {
     });
   };
 
+   const { t } = useTranslation();
+
   return (
     <View>
-      <MyHeader title="Total Projects" isBack={true} hasIcon={true} />
+      <MyHeader title={t("total_projects")} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredProjects}
         loading={false}
