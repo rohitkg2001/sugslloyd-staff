@@ -9,8 +9,6 @@ import { H4, H5, P, Span } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
 import { useSelector } from "react-redux";
-import { ICON_SMALL, ICON_MEDIUM, ICON_LARGE } from "../styles/constant";
-
 import {
   layouts,
   LIGHT,
@@ -20,6 +18,9 @@ import {
   spacing,
   styles,
   typography,
+  ICON_SMALL,
+  ICON_MEDIUM,
+  ICON_LARGE
 } from "../styles";
 import {
   siteCardsForDashboard,
@@ -52,14 +53,13 @@ export default function DashboardScreen({ navigation }) {
   };
 
   const firstTwoTasks = tasks.slice(0, 2);
-  const secondFourTasks = tasks.slice(2, 6);
 
   return (
     <ContainerComponent>
       <View
         style={[
           styles.row,
-          spacing.mh2,
+          spacing.m2,
           { alignItems: "center", width: SCREEN_WIDTH - 16 },
         ]}
       >
@@ -67,7 +67,7 @@ export default function DashboardScreen({ navigation }) {
           <H4 style={typography.textBold}>
             {greeting}, {first_name}
           </H4>
-          <P style={spacing.ml1}>You have {dueTasks} due Today</P>
+          <P style={spacing.ml1}>You have {dueTasks} due tasks Today</P>
         </View>
         <TouchableOpacity
           style={[
@@ -108,9 +108,9 @@ export default function DashboardScreen({ navigation }) {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[spacing.mh1]}
+        contentContainerStyle={spacing.mh1}
       >
-        <View >
+        <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
           <SearchBar
             placeholder="Search"
             style={{ width: SCREEN_WIDTH - 70 }}
@@ -120,15 +120,15 @@ export default function DashboardScreen({ navigation }) {
           >
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
+        </View>
+
+        <View style={[spacing.mv2, spacing.mr3, styles.row, { alignItems: "center" }]}>
+          <H4>Today</H4>
+          <View style={{ flexDirection: "row" }}>
+            <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
+            <H5 style={spacing.ml1}>{today}</H5>
           </View>
-          <View style={[spacing.mv2, styles.row, { alignItems: "center" }]}>
-            <H4>Today</H4>
-            <View style={{ flexDirection: "row" }}>
-              <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
-              <H5 style={spacing.ml1}>{today}</H5>
-            </View>
-          </View>
- 
+        </View>
 
         <MyFlatList
           data={firstTwoTasks}
@@ -143,51 +143,52 @@ export default function DashboardScreen({ navigation }) {
           )}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
+          contentContainerStyle={spacing.mv4}
         />
 
-        <View>
-          <CardFullWidth backgroundColor={LIGHT}>
-            <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
-              <Icon
-                name="calendar-clear"
-                size={ICON_LARGE}
-                color={PRIMARY_COLOR}
-              />
-              <H5 style={[typography.textBold, { marginRight: 130 }]}>
-                Project Overview
-              </H5>
-            </View>
-            <View style={[spacing.bbw05, spacing.mv1]} />
-            <View
-              style={[
-                styles.row,
-                { justifyContent: "space-between", paddingVertical: 10 },
-              ]}
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
+            <Icon
+              name="calendar-clear"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>
+              Project Overview
+            </H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv1]} />
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <TouchableOpacity
+              style={{ alignItems: "center" }}
+              onPress={navigateToNoRecord}
             >
-              <TouchableOpacity
-                style={{ alignItems: "center" }}
-                onPress={navigateToNoRecord}
-              >
-                <P style={typography.textBold}>Open</P>
-                <P>20</P>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{ alignItems: "center" }}
-                onPress={navigateToNoRecord}
-              >
-                <P style={typography.textBold}>Completed</P>
-                <P>7</P>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{ alignItems: "center" }}
-                onPress={navigateToNoRecord}
-              >
-                <P style={typography.textBold}>Hold</P>
-                <P>1</P>
-              </TouchableOpacity>
-            </View>
-          </CardFullWidth>
-        </View>
+              <P style={typography.textBold}>Open</P>
+              <P>20</P>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ alignItems: "center" }}
+              onPress={navigateToNoRecord}
+            >
+              <P style={typography.textBold}>Completed</P>
+              <P>7</P>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ alignItems: "center" }}
+              onPress={navigateToNoRecord}
+            >
+              <P style={typography.textBold}>Hold</P>
+              <P>1</P>
+            </TouchableOpacity>
+          </View>
+        </CardFullWidth>
+
 
         <MyFlatList
           data={siteCardsForDashboard}
@@ -217,36 +218,36 @@ export default function DashboardScreen({ navigation }) {
           numColumns={2}
         />
 
-        <View>
-          <CardFullWidth backgroundColor={LIGHT}>
-            <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
-              <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
-              <H5 style={[typography.textBold, { marginRight: 130 }]}>
-                All Task Overview
-              </H5>
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
+            <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>
+              All Task Overview
+            </H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv1]} />
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <View style={{ alignItems: "center" }}>
+              <TouchableOpacity onPress={navigateToToDoTaskCardScreen}>
+                <P style={typography.textBold}>To Do</P>
+                <P style={spacing.ml2}>2</P>
+              </TouchableOpacity>
             </View>
-            <View style={[spacing.bbw05, spacing.mv1]} />
-            <View
-              style={[
-                styles.row,
-                { justifyContent: "space-between", paddingVertical: 10 },
-              ]}
-            >
-              <View style={{ alignItems: "center" }}>
-                <TouchableOpacity onPress={navigateToToDoTaskCardScreen}>
-                  <P style={typography.textBold}>To Do</P>
-                  <P style={spacing.ml2}>2</P>
-                </TouchableOpacity>
-              </View>
-              <View style={{ alignItems: "center", marginRight: 140 }}>
-                <TouchableOpacity onPress={navigateToTaskCardScreen}>
-                  <P style={typography.textBold}>Done</P>
-                  <P style={spacing.ml2}>3</P>
-                </TouchableOpacity>
-              </View>
+            <View style={{ alignItems: "center", marginRight: 140 }}>
+              <TouchableOpacity onPress={navigateToTaskCardScreen}>
+                <P style={typography.textBold}>Done</P>
+                <P style={spacing.ml2}>3</P>
+              </TouchableOpacity>
             </View>
-          </CardFullWidth>
-        </View>
+          </View>
+        </CardFullWidth>
+
 
         <MyFlatList
           data={vendorCardForDashboard}

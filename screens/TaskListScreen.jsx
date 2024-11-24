@@ -10,7 +10,8 @@ import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import { viewTask, initializeTasks } from "../redux/actions/taskActions";
-import { ICON_LARGE } from "../styles/constant";
+import { ICON_LARGE, ICON_MEDIUM, LIGHT } from "../styles/constant";
+import Button from "../components/buttons/Button";
 
 export default function TaskListScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -39,9 +40,8 @@ export default function TaskListScreen({ navigation }) {
             {["taskName", "deadline", "status", "startDate", "endDate"].map(
               (field) => (
                 <P key={field} style={{ fontSize: 14, color: "#020409" }}>
-                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${
-                    item[field]
-                  }`}
+                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${item[field]
+                    }`}
                 </P>
               )
             )}
@@ -61,11 +61,17 @@ export default function TaskListScreen({ navigation }) {
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={[spacing.mh2, spacing.mt1]}
           ListHeaderComponent={() => (
-            <SearchBar
-              placeholder="Search tasks..."
-              value=""
-              onChangeText={() => {}}
-            />
+            <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
+              <SearchBar
+                placeholder="Search"
+                style={{ width: SCREEN_WIDTH - 70 }}
+              />
+              <Button
+                style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+              >
+                <Ionicons name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+              </Button>
+            </View>
           )}
         />
         <TouchableOpacity

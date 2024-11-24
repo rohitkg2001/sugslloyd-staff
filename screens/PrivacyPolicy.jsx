@@ -26,7 +26,7 @@ const PrivacyPolicy = () => {
     }
   };
 
-   const { t } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <ContainerComponent>
@@ -34,7 +34,6 @@ const PrivacyPolicy = () => {
         title={t("privacy_policy_title")}
         isBack={true}
         hasIcon={true}
-        icon={""}
       />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <P style={{ marginHorizontal: 2, textAlign: "justify" }}>

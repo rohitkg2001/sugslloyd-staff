@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, TouchableOpacity } from "react-native";
-import { earnings } from "../utils/faker";
+import { earnings, fakeDelete } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import { spacing } from "../styles";
 import { styles } from "../styles/components.styles";

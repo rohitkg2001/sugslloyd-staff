@@ -8,7 +8,8 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { ICON_LARGE } from "../styles/constant";
+import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH } from "../styles/constant";
+import { View } from "react-native";
 
 export default function TotalVendorsScreen({ navigation, route }) {
   const { pageTitle, data } = route.params || {
@@ -52,7 +53,17 @@ export default function TotalVendorsScreen({ navigation, route }) {
           <NoRecord msg="Oops! No Vendors available. Create the new one." />
         )}
         ListHeaderComponent={() => (
-          <SearchBar placeholder="Search by name, state or project code" />
+          <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
+            <SearchBar
+              placeholder="Search"
+              style={{ width: SCREEN_WIDTH - 70 }}
+            />
+            <Button
+              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+            >
+              <Ionicons name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+            </Button>
+          </View>
         )}
       />
       <Button

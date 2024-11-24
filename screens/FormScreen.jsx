@@ -67,7 +67,7 @@ const FormScreen = () => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title="Project Details" hasIcon icon="ellipsis-vertical" />
+        <MyHeader title="Project Details" hasIcon />
 
         <MyPickerInput
           title="State"

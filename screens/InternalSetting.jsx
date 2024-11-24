@@ -13,7 +13,6 @@ export default function SettingsScreen({ navigation }) {
         title="Settings"
         isBack={true}
         hasIcon={true}
-        icon={"cog-outline"}
       />
       <View style={{ flex: 1 }}>
         {internal.map((item, index) => (

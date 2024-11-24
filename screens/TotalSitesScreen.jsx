@@ -11,7 +11,8 @@ import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 import { viewSite, searchSite } from "../redux/actions/siteActions";
-import { ICON_LARGE } from "../styles/constant";
+import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH } from "../styles/constant";
+import { View } from "react-native";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
@@ -74,16 +75,22 @@ export default function TotalSitesScreen({ navigation, route }) {
           />
         )}
         keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={[spacing.mh2, spacing.mt1]}
+        contentContainerStyle={[spacing.mh1, spacing.mt1]}
         ListEmptyComponent={() => (
           <NoRecord msg="Oops! There are no sites data available. Start creating or contact admin" />
         )}
         ListHeaderComponent={() => (
-          <SearchBar
-            placeholder="Search by city, state or project code"
-            value={searchText}
-            onChangeText={handleSearch}
-          />
+          <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
+            <SearchBar
+              placeholder="Search"
+              style={{ width: SCREEN_WIDTH - 70 }}
+            />
+            <Button
+              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+            >
+              <Ionicons name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+            </Button>
+          </View>
         )}
       />
 
