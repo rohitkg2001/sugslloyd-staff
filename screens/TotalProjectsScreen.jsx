@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { View, ScrollView } from "react-native";
-import { spacing, styles, LIGHT, SCREEN_WIDTH } from "../styles";
+import { View } from "react-native";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -10,7 +9,8 @@ import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 import { fakeDelete, project } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
-import { ICON_MEDIUM, ICON_LARGE } from "../styles/constant";
+import ContainerComponent from "../components/ContainerComponent";
+import { spacing, styles, LIGHT, SCREEN_WIDTH, ICON_MEDIUM, ICON_LARGE } from "../styles";
 import { useTranslation } from "react-i18next";
 
 export default function TotalProjectsScreen({ navigation }) {
@@ -36,10 +36,10 @@ export default function TotalProjectsScreen({ navigation }) {
     });
   };
 
-   const { t } = useTranslation();
+  const { t } = useTranslation();
 
   return (
-    <View>
+    <ContainerComponent>
       <MyHeader title={t("total_projects")} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredProjects}
@@ -61,10 +61,10 @@ export default function TotalProjectsScreen({ navigation }) {
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
         ListEmptyComponent={() => (
-          <NoRecord msg={t("no_record_project" )}/>
+          <NoRecord msg={t("no_project")} />
         )}
         ListHeaderComponent={() => (
-          <View>
+          <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
             <SearchBar
               placeholder="Search"
               style={{ width: SCREEN_WIDTH - 70 }}
@@ -84,6 +84,6 @@ export default function TotalProjectsScreen({ navigation }) {
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
-    </View>
+    </ContainerComponent>
   );
 }

@@ -148,7 +148,7 @@ export default function DashboardScreen({ navigation }) {
 
 
         <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
+          <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
               name="calendar-clear"
               size={ICON_LARGE}
@@ -193,8 +193,8 @@ export default function DashboardScreen({ navigation }) {
         <MyFlatList
           data={siteCardsForDashboard}
           renderItem={({ item, index }) => {
-            const isRightColumn = index % 2 !== 0;
-            const marginTop = isRightColumn ? 20 : 0;
+            // const isRightColumn = index % 2 !== 0;
+            // const marginTop = isRightColumn ? 20 : 0;
 
             return (
               <StatCard
@@ -204,13 +204,10 @@ export default function DashboardScreen({ navigation }) {
                 status={item.title}
                 onPress={() =>
                   navigation.navigate(item.page, {
-                    pageTitle: item.title,
+                    pageTitle: item.name,
                     data: item.data,
                   })
                 }
-                style={{
-                  marginTop: marginTop,
-                }}
               />
             );
           }}

@@ -46,13 +46,13 @@ const SitesFormScreen = () => {
   };
 
   const { t } = useTranslation();
-  
+
   return (
     <ContainerComponent>
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 18 }]}
       >
-        <MyHeader title="Sites Details" hasIcon icon="ellipsis-vertical" />
+        <MyHeader title={t('create_site')} hasIcon />
 
         <MyPickerInput
           title={t("site_State")}
@@ -126,7 +126,7 @@ const SitesFormScreen = () => {
             onPress={handleCancel}
             color="#DC4C64"
           />
-          <MyButton title={t("create" )}onPress={handleCreate} />
+          <MyButton title={t("create")} onPress={handleCreate} />
         </View>
       </ScrollView>
     </ContainerComponent>

@@ -56,10 +56,7 @@ const InventoryScreen = ({ navigation }) => {
         ListEmptyComponent={() => <NoRecord msg="Oops! No inventory" />}
         ListHeaderComponent={() => (
           <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
-            <SearchBar
-              placeholder="Search"
-              style={{ width: SCREEN_WIDTH - 70 }}
-            />
+            <SearchBar style={{ width: SCREEN_WIDTH - 70 }} />
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
             >

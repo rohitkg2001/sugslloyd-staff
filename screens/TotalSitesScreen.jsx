@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { View } from "react-native";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fakeDelete, totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { spacing, styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
@@ -11,7 +11,7 @@ import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 import { viewSite, searchSite } from "../redux/actions/siteActions";
-import { ICON_LARGE } from "../styles/constant";
+import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH, spacing, styles } from "../styles";
 import { useTranslation } from "react-i18next";
 
 export default function TotalSitesScreen({ navigation, route }) {
@@ -27,6 +27,7 @@ export default function TotalSitesScreen({ navigation, route }) {
 
   useEffect(() => {
     setFilteredData(data);
+    console.log(pageTitle)
   }, [data]);
 
   const handleSearch = (text) => {
@@ -61,7 +62,7 @@ export default function TotalSitesScreen({ navigation, route }) {
 
   return (
     <ContainerComponent>
-      <MyHeader title={pageTitle} isBack={true} hasIcon={true} />
+      <MyHeader title={t(pageTitle)} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredData}
         loading={false}
@@ -77,7 +78,7 @@ export default function TotalSitesScreen({ navigation, route }) {
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh1, spacing.mt1]}
         ListEmptyComponent={() => (
-          <NoRecord msg={t("tota_Site_norecord_msg")} />
+          <NoRecord msg={t("no_site_msg")} />
         )}
         ListHeaderComponent={() => (
           <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>

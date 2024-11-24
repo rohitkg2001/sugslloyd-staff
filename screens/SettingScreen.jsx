@@ -16,7 +16,7 @@ export default function SettingsScreen({ navigation }) {
     // Insert logout logic
   };
   const { t } = useTranslation();
-  
+
   return (
     <ContainerComponent justifyContent="space-between">
       <ProfileCard
@@ -29,7 +29,7 @@ export default function SettingsScreen({ navigation }) {
         {menuItems.map((item, index) => (
           <MenuItem
             key={index}
-            label={item.label}
+            label={t(item.label)}
             icon={item.icon}
             onPress={() => navigation.navigate(item.page)}
           />

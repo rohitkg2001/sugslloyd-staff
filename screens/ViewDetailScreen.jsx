@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { View, ScrollView, Alert } from "react-native";
-import { SCREEN_WIDTH, spacing, typography } from "../styles";
+import { View, ScrollView } from "react-native";
+import { typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
@@ -18,12 +18,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
       </H5>
     </View>
   );
-
-  const renderSectionTitle = (title) => <H5>{title}</H5>;
-
   const renderSiteDetails = () => (
     <>
-      {renderSectionTitle("Site Information")}
       {renderDetailRow("Site Name", site.siteName)}
       {renderDetailRow("State", site.state)}
       {renderDetailRow("District", site.dist)}
@@ -78,7 +74,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
         hasIcon={true}
         onIconPress={() => setIsMenuVisible(!isMenuVisible)}
       />
-      <ScrollView contentContainerStyle>
+      <ScrollView >
         <View>
           {formType === "vendor"
             ? renderVendorDetails()

@@ -1,15 +1,14 @@
-import { fakeDelete, totalVendorsData } from "../utils/faker";
-import ContainerComponent from "../components/ContainerComponent";
 import { View } from "react-native";
+import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { spacing, styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { ICON_LARGE } from "../styles/constant";
+import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH, spacing, styles } from "../styles";
+import { fakeDelete, totalVendorsData } from "../utils/faker";
 import { useTranslation } from "react-i18next";
 
 export default function TotalVendorsScreen({ navigation, route }) {

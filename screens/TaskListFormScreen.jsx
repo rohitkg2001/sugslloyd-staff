@@ -71,7 +71,7 @@ const TaskListFormScreen = ({ navigation }) => {
   };
 
   const { t } = useTranslation();
-  
+
   return (
     <ContainerComponent>
       <ScrollView
@@ -80,7 +80,7 @@ const TaskListFormScreen = ({ navigation }) => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title={t("update_task")} hasIcon icon="ellipsis-vertical" />
+        <MyHeader title={t("update_task")} hasIcon />
 
         <DropDownPicker
           open={open}
