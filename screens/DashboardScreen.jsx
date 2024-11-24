@@ -9,6 +9,7 @@ import { H4, H5, P, Span } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
 import { useSelector } from "react-redux";
+import { ICON_SMALL, ICON_MEDIUM, ICON_LARGE } from "../styles/constant";
 
 import {
   layouts,
@@ -19,9 +20,6 @@ import {
   spacing,
   styles,
   typography,
-  ICON_SMALL,
-  ICON_MEDIUM,
-  ICON_LARGE,
 } from "../styles";
 import {
   siteCardsForDashboard,
@@ -80,7 +78,7 @@ export default function DashboardScreen({ navigation }) {
             { position: "relative" },
           ]}
         >
-          <Icon name="notifications-outline" size={ICON_SMALL} color={DARK} />
+          <Icon name="notifications-outline" size={ICON_MEDIUM} color={DARK} />
           <View
             style={[
               styles.bgDanger,
