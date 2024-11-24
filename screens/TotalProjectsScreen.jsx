@@ -62,7 +62,7 @@ export default function TotalProjectsScreen({ navigation }) {
           <NoRecord msg="Oops! No projects available. Start creating or contact admin." />
         )}
         ListHeaderComponent={() => (
-          <View>
+          <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
             <SearchBar
               placeholder="Search"
               style={{ width: SCREEN_WIDTH - 70 }}
