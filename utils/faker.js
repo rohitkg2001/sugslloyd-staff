@@ -78,7 +78,7 @@ export const project = [
     duration: "6 days",
     status: "completed",
     projectSerial: "76",
-    siteName: "Site Delta", 
+    siteName: "Site Delta",
     sanctionLoad: "200KW",
     projectCapacity: "400KW",
     caNumber: "CA44556",
@@ -93,7 +93,7 @@ export const project = [
     duration: "5 days",
     status: "completed",
     projectSerial: "",
-    siteName: "Site Alpha", 
+    siteName: "Site Alpha",
     sanctionLoad: "",
     projectCapacity: "",
     caNumber: "",
@@ -107,7 +107,7 @@ export const project = [
     projectName: "Project 03C",
     duration: "3 days",
     status: "ongoing",
-    siteName: "Site Beta", 
+    siteName: "Site Beta",
     vendorName: "Ayush Ranjan",
   },
   {
@@ -115,7 +115,7 @@ export const project = [
     projectName: "Project 04D",
     duration: "7 days",
     status: "completed",
-    siteName: "Site Gamma", 
+    siteName: "Site Gamma",
     vendorName: "Md Munna",
   },
   {
@@ -123,7 +123,7 @@ export const project = [
     projectName: "Project 05E",
     duration: "4 days",
     status: "ongoing",
-    siteName: "Site Delta", 
+    siteName: "Site Delta",
     vendorName: "Suresh Tripathy",
   },
   {
@@ -131,21 +131,21 @@ export const project = [
     projectName: "Project 06F",
     duration: "6 days",
     status: "ongoing",
-    siteName: "Site Omega", 
+    siteName: "Site Omega",
   },
   {
     id: 7,
     projectName: "Project 07G",
     duration: "1 day",
     status: "completed",
-    siteName: "Site Alpha", 
+    siteName: "Site Alpha",
   },
   {
     id: 8,
     projectName: "Project 08H",
     duration: "8 days",
     status: "ongoing",
-    siteName: "Site Beta", 
+    siteName: "Site Beta",
   },
   {
     id: 9,
@@ -159,7 +159,7 @@ export const project = [
     projectName: "Project 10J",
     duration: "3 days",
     status: "ongoing",
-    siteName: "Site Omega", 
+    siteName: "Site Omega",
   },
 ];
 
@@ -274,7 +274,7 @@ export const earnings = [
 
 export const menuItems = [
   {
-    label: "Inventory Management",
+    label: "inventory_title",
     icon: "cart-outline",
     page: "inventoryScreen",
   },
@@ -507,6 +507,7 @@ export const siteCardsForDashboard = [
   {
     id: 1,
     title: "Total Sites",
+    name: "total_sites",
     count: 46,
     page: "totalSitesScreen",
     data: totalsitesData,

@@ -18,9 +18,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
       </H5>
     </View>
   );
-
-  const renderSectionTitle = (title) => <H5>{title}</H5>;
-
   const renderSiteDetails = () => (
     <>
       {renderDetailRow("Site Name", site.siteName)}

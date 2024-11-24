@@ -40,6 +40,7 @@ const PrivacyPolicy = () => {
           {PRIVACY_POLICY}
         </P>
       </ScrollView>
+  
     </ContainerComponent>
   );
 };
