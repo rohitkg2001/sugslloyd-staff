@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { View, TouchableOpacity } from "react-native";
-import { projecttask } from "../utils/faker";
+import { project } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import { spacing } from "../styles";
 import { styles } from "../styles/components.styles";
-import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import MyFlatList from "../components/utility/MyFlatList";
@@ -12,14 +11,13 @@ import MyFlatList from "../components/utility/MyFlatList";
 export default function CurrentProjectsScreen({ navigation }) {
   const [searchText] = useState("");
 
-  const filteredProjects = projecttask.filter((item) =>
+  const filteredProjects = project.filter((item) =>
     item.projectName.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
     <ContainerComponent>
       <View>
-        <MyHeader title="Current Projects" isBack={true} hasIcon={true} />
         <MyFlatList
           data={filteredProjects}
           keyExtractor={(item) => item.id.toString()}

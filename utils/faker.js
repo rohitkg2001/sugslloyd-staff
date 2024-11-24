@@ -78,7 +78,7 @@ export const project = [
     duration: "6 days",
     status: "completed",
     projectSerial: "76",
-    siteName: "Site Delta", // Added siteName
+    siteName: "Site Delta", 
     sanctionLoad: "200KW",
     projectCapacity: "400KW",
     caNumber: "CA44556",
@@ -93,7 +93,7 @@ export const project = [
     duration: "5 days",
     status: "completed",
     projectSerial: "",
-    siteName: "Site Alpha", // Added siteName
+    siteName: "Site Alpha", 
     sanctionLoad: "",
     projectCapacity: "",
     caNumber: "",
@@ -107,7 +107,7 @@ export const project = [
     projectName: "Project 03C",
     duration: "3 days",
     status: "ongoing",
-    siteName: "Site Beta", // Added siteName
+    siteName: "Site Beta", 
     vendorName: "Ayush Ranjan",
   },
   {
@@ -115,7 +115,7 @@ export const project = [
     projectName: "Project 04D",
     duration: "7 days",
     status: "completed",
-    siteName: "Site Gamma", // Added siteName
+    siteName: "Site Gamma", 
     vendorName: "Md Munna",
   },
   {
@@ -123,7 +123,7 @@ export const project = [
     projectName: "Project 05E",
     duration: "4 days",
     status: "ongoing",
-    siteName: "Site Delta", // Added siteName
+    siteName: "Site Delta", 
     vendorName: "Suresh Tripathy",
   },
   {
@@ -131,60 +131,35 @@ export const project = [
     projectName: "Project 06F",
     duration: "6 days",
     status: "ongoing",
-    siteName: "Site Omega", // Added siteName
+    siteName: "Site Omega", 
   },
   {
     id: 7,
     projectName: "Project 07G",
     duration: "1 day",
     status: "completed",
-    siteName: "Site Alpha", // Added siteName
+    siteName: "Site Alpha", 
   },
   {
     id: 8,
     projectName: "Project 08H",
     duration: "8 days",
     status: "ongoing",
-    siteName: "Site Beta", // Added siteName
+    siteName: "Site Beta", 
   },
   {
     id: 9,
     projectName: "Project 09I",
     duration: "10 days",
     status: "completed",
-    siteName: "Site Gamma", // Added siteName
+    siteName: "Site Gamma",
   },
   {
     id: 10,
     projectName: "Project 10J",
     duration: "3 days",
     status: "ongoing",
-    siteName: "Site Omega", // Added siteName
-  },
-];
-
-export const projecttask = [
-  {
-    id: 1,
-    projectName: "Project 01A",
-    siteName: " SBI Bank , Rampur School , Lakhisarai",
-  },
-  {
-    id: 2,
-    projectName: "Project 02B",
-    siteName: "Block Office, Shershah Road ,Madhepura",
-  },
-  {
-    id: 3,
-    projectName: "Project 03C",
-    siteName: "Purnea Mahila College , Sipahi Tola , Purnea",
-  },
-];
-export const tasksData = [
-  {
-    id: "1",
-    taskName: "Solar Panel Installlation at railway station.",
-    installation: "Install the panel on top of the platform of 5kw of power.",
+    siteName: "Site Omega", 
   },
 ];
 
@@ -394,23 +369,6 @@ export const documentData = [
     documentImage:
       "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png",
   },
-  // { id: "5", staffId: 1, documentName: "Salary Slip", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
-];
-
-export const profileImages = [
-  "https://randomuser.me/api/portraits/men/1.jpg",
-  "https://randomuser.me/api/portraits/women/1.jpg",
-];
-
-export const miniCards = [
-  { id: 1, icon: "time-outline", text: "Est: 20h" },
-  { id: 2, icon: "calendar-outline", text: "Due: 25 Apr" },
-  { id: 3, icon: "checkmark-circle-outline", text: "Tasks: 1/3" },
-];
-
-export const taskCards = [
-  { id: 1, text: "Design Concept", progress: 0.7, bgColor: "#54B4D3" },
-  { id: 2, text: "Development Phase", progress: 0.4, bgColor: "#2b87b0" },
 ];
 
 export const staff = {
@@ -445,36 +403,6 @@ export const staff = {
   uploaded_by: "rakesh sharma",
   created_date: "",
 };
-
-export const taskslist = [
-  {
-    id: 1,
-    title: "Design in Solidworks",
-    status: "done",
-    deadline: "2024-10-13",
-    start: "2024-10-08",
-    project: "Robotic Cell",
-    assignedTo: "Rakesh Sharma",
-  },
-  {
-    id: 2,
-    title: "Purchase Parts",
-    status: "critical",
-    deadline: "2024-08-28",
-    start: "2024-08-28",
-    project: "Coffee Vending Machine",
-    assignedTo: "Rakesh Sharma",
-  },
-  {
-    id: 3,
-    title: "Purchase Parts",
-    status: "blocker",
-    deadline: "2024-08-28",
-    start: "2024-08-28",
-    project: "Automatic Soap Dispenser Machine Jig",
-    assignedTo: "Rakesh Sharma",
-  },
-];
 
 export const totalsitesData = [
   {
@@ -549,127 +477,6 @@ export const totalVendorsData = [
     name: "Suresh Tripathy",
     location: "Betiah",
     contactNumber: "789-123-4560",
-  },
-];
-
-export const inactiveVendorsData = [
-  {
-    id: 1,
-    name: "Ramesh Chaurasiya",
-    location: "Saharanpur",
-    contactNumber: "+91 234 567 890",
-    status: "Inactive",
-  },
-  {
-    id: 2,
-    name: "Danish akhtar",
-    location: "Muradabad",
-    contactNumber: "+91 345 678 901",
-    status: "Inactive",
-  },
-];
-
-export const activeVendorsData = [
-  {
-    id: 1,
-    name: "Ahmad",
-    location: "Lucknow",
-    contactNumber: "(123) 456-7890",
-    status: "active",
-  },
-  {
-    id: 2,
-    name: "Vinay Tiwary",
-    location: "Patna",
-    contactNumber: "(987) 654-3210",
-    status: "active",
-  },
-  {
-    id: 3,
-    name: "Ravi Singh",
-    location: "Varanasi",
-    contactNumber: "(312) 555-1234",
-    status: "active",
-  },
-  {
-    id: 4,
-    name: "Priya Chaturvedi",
-    location: "Gaya",
-    contactNumber: "(424) 555-5678",
-    status: "active",
-  },
-  {
-    id: 5,
-    name: "Suresh Kumar",
-    location: "Agra",
-    contactNumber: "(512) 555-9012",
-    status: "active",
-  },
-  {
-    id: 6,
-    name: "Neha Devi",
-    location: "Patna",
-    contactNumber: "(206) 555-3456",
-    status: "active",
-  },
-  {
-    id: 7,
-    name: "Vikram Yadav",
-    location: "Kanpur",
-    contactNumber: "(305) 555-7890",
-    status: "active",
-  },
-];
-
-export const blocklistedVendorsData = [
-  {
-    id: 1,
-    name: "Amit Kumar",
-    location: "Muzaffarpur",
-    contactNumber: "(305) 555-1234",
-    status: "blocklisted",
-  },
-  {
-    id: 2,
-    name: "Rajeev Singh",
-    location: "Aligarh",
-    contactNumber: "(323) 555-6789",
-    status: "blocklisted",
-  },
-  {
-    id: 3,
-    name: "Pooja Sharma",
-    location: "Jhansi",
-    contactNumber: "(212) 555-9876",
-    status: "blocklisted",
-  },
-  {
-    id: 4,
-    name: "Rakesh Yadav",
-    location: "Bhagalpur",
-    contactNumber: "(312) 555-2468",
-    status: "blocklisted",
-  },
-  {
-    id: 5,
-    name: "Kiran Patel",
-    location: "Bareilly",
-    contactNumber: "(713) 555-1357",
-    status: "blocklisted",
-  },
-  {
-    id: 6,
-    name: "Manoj Jha",
-    location: "Darbhanga",
-    contactNumber: "(206) 555-8642",
-    status: "blocklisted",
-  },
-  {
-    id: 7,
-    name: "Neelam Rani",
-    location: "Sultanpur",
-    contactNumber: "(415) 555-4200",
-    status: "blocklisted",
   },
 ];
 
