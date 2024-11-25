@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, ScrollView } from "react-native";
-import { typography } from "../styles";
+import { SCREEN_WIDTH, spacing, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
@@ -18,8 +18,12 @@ const ViewDetailScreen = ({ route, navigation }) => {
       </H5>
     </View>
   );
+
+  const renderSectionTitle = (title) => <H5>{title}</H5>;
+
   const renderSiteDetails = () => (
     <>
+      {renderSectionTitle("Site Information")}
       {renderDetailRow("Site Name", site.siteName)}
       {renderDetailRow("State", site.state)}
       {renderDetailRow("District", site.dist)}
@@ -62,26 +66,28 @@ const ViewDetailScreen = ({ route, navigation }) => {
 
   return (
     <ContainerComponent>
-      <MyHeader
-        title={
-          formType === "vendor"
-            ? "Vendor Details"
-            : site.projectName
+      <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
+        <MyHeader
+          title={
+            formType === "vendor"
+              ? "Vendor Details"
+              : site.projectName
               ? "Project Details"
               : "Site Details"
-        }
-        isBack={true}
-        hasIcon={true}
-        onIconPress={() => setIsMenuVisible(!isMenuVisible)}
-      />
-      <ScrollView >
-        <View>
-          {formType === "vendor"
-            ? renderVendorDetails()
-            : site.projectName
+          }
+          isBack={true}
+          hasIcon={true}
+          onIconPress={() => setIsMenuVisible(!isMenuVisible)}
+        />
+        <ScrollView contentContainerStyle>
+          <View>
+            {formType === "vendor"
+              ? renderVendorDetails()
+              : site.projectName
               ? renderProjectDetails()
               : renderSiteDetails()}
-        </View>
+          </View>
+        </ScrollView>
         <View
           style={{
             flexDirection: "row",
@@ -99,7 +105,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
             onPress={() => navigation.navigate("taskScreen")}
           />
         </View>
-      </ScrollView>
+      </View>
     </ContainerComponent>
   );
 };
