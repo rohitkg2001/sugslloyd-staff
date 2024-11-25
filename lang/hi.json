@@ -93,6 +93,10 @@
     "quantity": "मात्रा",
     "ent_quantity": "मात्रा दर्ज करें",
     "release_date": "रिलीज़ की तारीख",
-    "ent_release_date": "रिलीज़ की तारीख दर्ज करें (YYYY-MM-DD)"
+    "ent_release_date": "रिलीज़ की तारीख दर्ज करें (YYYY-MM-DD)",
+    "name": "नाम",
+    "create_task": "कार्य बनाएँ",
+    "view_task": "कार्य देखें",
+    "site_management": "साइट प्रबंधन"
   }
 }

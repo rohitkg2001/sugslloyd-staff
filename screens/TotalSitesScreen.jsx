@@ -29,7 +29,7 @@ export default function TotalSitesScreen({ navigation, route }) {
   const { t } = useTranslation();
 
   const { pageTitle, data } = route.params || {
-    pageTitle: "Site Management",
+    pageTitle: t("site_management"),
     data: totalsitesData,
   };
 

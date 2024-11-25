@@ -93,6 +93,9 @@
                 "ent_quantity": "Enter Quantity",
                 "release_date": "Release Date",
                 "ent_release_date": "Enter Release Date (YYYY-MM-DD)",
-                "name" : "Name"
+                "name" : "Name" ,
+                "create_task" : "Create Task" ,
+                "view_task" : "View Task" ,
+                "site_management" : "Site Management"
         }
 }

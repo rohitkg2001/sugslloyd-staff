@@ -5,10 +5,11 @@ import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
 import MyButton from "../components/buttons/MyButton";
-
+import { useTranslation } from "react-i18next";
 const ViewDetailScreen = ({ route, navigation }) => {
   const { site, formType } = route.params;
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [ isMenuVisible, setIsMenuVisible ] = useState( false );
+    const { t } = useTranslation();
 
   const renderDetailRow = (label, value) => (
     <View style={{ flexDirection: "row", paddingVertical: 8 }}>
@@ -63,8 +64,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             formType === "vendor"
               ? "Vendor Details"
               : site.projectName
-                ? "Project Details"
-                : "Site Details"
+              ? "Project Details"
+              : "Site Details"
           }
           isBack={true}
           hasIcon={true}
@@ -75,8 +76,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             {formType === "vendor"
               ? renderVendorDetails()
               : site.projectName
-                ? renderProjectDetails()
-                : renderSiteDetails()}
+              ? renderProjectDetails()
+              : renderSiteDetails()}
           </View>
         </ScrollView>
         <View
@@ -87,12 +88,12 @@ const ViewDetailScreen = ({ route, navigation }) => {
           }}
         >
           <MyButton
-            title="Create Task"
+            title={t("create_task")}
             onPress={() => navigation.navigate("taskListFormScreen")}
             color="#DC4C64"
           />
           <MyButton
-            title="View Task"
+            title={t("view_task")}
             onPress={() => navigation.navigate("taskScreen")}
           />
         </View>
