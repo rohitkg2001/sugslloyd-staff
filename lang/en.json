@@ -82,6 +82,7 @@
         "no_site_msg": "Oops! There are no sites data available. Start creating or contact admin",
         "total_site_screen_msg": "You cannot delete this site. Please contact Admin!",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "create_site": "Create Site"
 =======
         "create_site": "Create Site",
@@ -97,5 +98,9 @@
         "release_date":"Release Date",
         "ent_release_date":"Enter Release Date (YYYY-MM-DD)"
 >>>>>>> 3bdc52102b39f666d6730fa05aef993e3abf44dd
+=======
+        "create_site": "Create Site",
+        "today" : "Today"
+>>>>>>> 19a3c4f32751218f46bce03f1c1de04eff83d230
     }
 }

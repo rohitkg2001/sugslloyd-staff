@@ -6,10 +6,9 @@ import MyButton from "../components/buttons/MyButton";
 import MyHeader from "../components/header/MyHeader";
 
 const EditDetailsScreen = ({ route, navigation, onSave }) => {
-
   const { site, formType } = route.params || {};
 
-  const [ formData, setFormData ] = useState( {} );
+  const [formData, setFormData] = useState({});
 
   useEffect(() => {
     if (site) {
@@ -68,8 +67,8 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
     formType === "project"
       ? "Edit Project"
       : formType === "vendor"
-        ? "Edit Vendor"
-        : "Edit Site";
+      ? "Edit Vendor"
+      : "Edit Site";
 
   return (
     <ScrollView
@@ -77,11 +76,7 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
       showsVerticalScrollIndicator={false}
     >
       <View>
-        <MyHeader
-          title={headerTitle}
-          isBack={true}
-          hasIcon={true}
-        />
+        <MyHeader title={headerTitle} isBack={true} hasIcon={true} />
 
         <MyTextInput
           title="Name"
