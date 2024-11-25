@@ -295,7 +295,6 @@ export const internal = [
     icon: "notifications-outline",
   },
   { label: "Privacy", page: "privacyPolicy", icon: "shield-checkmark-outline" },
-  { label: "Data Usage", page: "", icon: "folder-outline" },
 ];
 
 export const notifications = [
