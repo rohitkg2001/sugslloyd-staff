@@ -39,17 +39,10 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const renderProjectDetails = () => (
     <>
       {renderDetailRow("Project Name", site.projectName)}
-      {renderDetailRow("Duration", site.duration)}
-      {renderDetailRow("Status", site.status)}
-      {renderDetailRow("Project Serial", site.projectSerial)}
-      {renderDetailRow("Site Name", site.siteName)}
-      {renderDetailRow("Sanction Load", site.sanctionLoad)}
-      {renderDetailRow("Project Capacity", site.projectCapacity)}
-      {renderDetailRow("CA Number", site.caNumber)}
-      {renderDetailRow("Survey Status", site.surveyStatus)}
-      {renderDetailRow("Contact No", site.contactNo)}
-      {renderDetailRow("Solar Meter Serial", site.solarMeterSerial)}
-      {renderDetailRow("Vendor Name", site.vendorName)}
+      {renderDetailRow("Work Order Number", site.workOrderNumber)}
+      {renderDetailRow("Rate", site.rate)}
+      {renderDetailRow("Location", site.location)}
+      {renderDetailRow("Date", site.date)}
     </>
   );
 

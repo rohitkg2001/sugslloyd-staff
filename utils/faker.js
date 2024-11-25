@@ -75,6 +75,10 @@ export const project = [
   {
     id: 1,
     projectName: "Project 01B",
+    workOrderNumber: "12345",
+    rate: "100",
+    location: "India",
+    date: "",
     duration: "6 days",
     status: "completed",
     projectSerial: "76",
@@ -497,7 +501,7 @@ export const siteCardsForDashboard = [
     page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#f9caa7",
-    status : 1 ,
+    status: 1,
   },
   {
     id: 2,
@@ -564,7 +568,6 @@ export const vendorCardForDashboard = [
 //statuscode = 1 -> Site,
 //statuscode = 2 -> Completed ,
 //statuscode = 3 -> Pending
-
 
 export const PageData = [
   {
