@@ -8,6 +8,7 @@ import Button from "../buttons/Button";
 export default function ClickableCard({
   item,
   handleViewDetails,
+  hideIcons,
   handleDelete,
   handleEdit,
   isSite = false,
@@ -59,17 +60,19 @@ export default function ClickableCard({
               </>
             )}
           </View>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Button
-              onPress={() => handleEdit(item)}
-              style={{ marginRight: 12 }}
-            >
-              <Ionicons name="pencil-outline" size={24} color="black" />
-            </Button>
-            <Button onPress={() => handleDelete(item)}>
-              <Ionicons name="trash-outline" size={24} color="red" />
-            </Button>
-          </View>
+          {!hideIcons && (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Button
+                onPress={() => handleEdit(item)}
+                style={{ marginRight: 12 }}
+              >
+                <Ionicons name="pencil-outline" size={24} color="black" />
+              </Button>
+              <Button onPress={() => handleDelete(item)}>
+                <Ionicons name="trash-outline" size={24} color="red" />
+              </Button>
+            </View>
+          )}
         </View>
       </Card>
     </TouchableOpacity>

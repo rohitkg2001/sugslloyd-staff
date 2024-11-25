@@ -20,7 +20,7 @@ import {
   typography,
   ICON_SMALL,
   ICON_MEDIUM,
-  ICON_LARGE
+  ICON_LARGE,
 } from "../styles";
 import {
   siteCardsForDashboard,
@@ -29,12 +29,14 @@ import {
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
+import { useTranslation } from "react-i18next";
 
 export default function DashboardScreen({ navigation }) {
   const today = useState(moment().format("DD MMM YYYY"));
   const [dueTasks, setDueTasks] = useState(4);
   const [greeting, setGreeting] = useState("Good morning");
   const { first_name } = useSelector((state) => state);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setGreeting(greet());
@@ -48,8 +50,12 @@ export default function DashboardScreen({ navigation }) {
     navigation.navigate("ToDoTaskCardScreen");
   };
 
-  const navigateToNoRecord = () => {
-    navigation.navigate("NoRecord");
+  const navigateToTotalProjectsScreen = () => {
+    navigation.navigate("totalProjectsScreen");
+  };
+
+  const navigateToTotalSitesScreen = () => {
+    navigation.navigate("totalSitesScreen");
   };
 
   const firstTwoTasks = tasks.slice(0, 2);
@@ -110,9 +116,16 @@ export default function DashboardScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={spacing.mh1}
       >
-        <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
+        <View
+          style={[
+            spacing.mv4,
+            styles.row,
+            spacing.mh1,
+            { alignItems: "center" },
+          ]}
+        >
           <SearchBar
-            placeholder="Search"
+            placeholder={t("placeholder")}
             style={{ width: SCREEN_WIDTH - 70 }}
           />
           <Button
@@ -122,8 +135,15 @@ export default function DashboardScreen({ navigation }) {
           </Button>
         </View>
 
-        <View style={[spacing.mv2, spacing.mr3, styles.row, { alignItems: "center" }]}>
-          <H4>Today</H4>
+        <View
+          style={[
+            spacing.mv2,
+            spacing.mr3,
+            styles.row,
+            { alignItems: "center" },
+          ]}
+        >
+          <H4>{t("today")}</H4>
           <View style={{ flexDirection: "row" }}>
             <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
             <H5 style={spacing.ml1}>{today}</H5>
@@ -146,7 +166,7 @@ export default function DashboardScreen({ navigation }) {
           contentContainerStyle={spacing.mv4}
         />
 
-
+        {/* //Project OverView  */}
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -167,35 +187,38 @@ export default function DashboardScreen({ navigation }) {
           >
             <TouchableOpacity
               style={{ alignItems: "center" }}
-              onPress={navigateToNoRecord}
+              onPress={navigateToTotalProjectsScreen}
             >
-              <P style={typography.textBold}>Open</P>
+              <P style={typography.textBold}>Project</P>
               <P>20</P>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ alignItems: "center" }}
-              onPress={navigateToNoRecord}
+              onPress={navigateToTotalSitesScreen}
             >
-              <P style={typography.textBold}>Completed</P>
+              <P style={typography.textBold}>Site</P>
               <P>7</P>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ alignItems: "center" }}
-              onPress={navigateToNoRecord}
+              // onPress={navigateToNoRecord}
             >
-              <P style={typography.textBold}>Hold</P>
+              <P style={typography.textBold}>Completed</P>
+              <P>1</P>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ alignItems: "center" }}
+              // onPress={navigateToNoRecord}
+            >
+              <P style={typography.textBold}>Pending</P>
               <P>1</P>
             </TouchableOpacity>
           </View>
         </CardFullWidth>
 
-
         <MyFlatList
           data={siteCardsForDashboard}
           renderItem={({ item, index }) => {
-            // const isRightColumn = index % 2 !== 0;
-            // const marginTop = isRightColumn ? 20 : 0;
-
             return (
               <StatCard
                 key={item.id}
@@ -214,7 +237,6 @@ export default function DashboardScreen({ navigation }) {
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
         />
-
 
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
@@ -244,7 +266,6 @@ export default function DashboardScreen({ navigation }) {
             </View>
           </View>
         </CardFullWidth>
-
 
         <MyFlatList
           data={vendorCardForDashboard}
