@@ -19,7 +19,6 @@ import { useEffect, useState } from "react";
 
 export default function SettingsScreen({ navigation }) {
   const [language, setLanguage] = useState(null);
-
   const { t } = useTranslation();
   useEffect(() => {
     const fetchLanguage = async () => {

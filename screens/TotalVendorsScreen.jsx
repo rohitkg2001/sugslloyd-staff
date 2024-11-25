@@ -9,19 +9,26 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
+import { ICON_LARGE, spacing, styles } from "../styles";
+import { useTranslation } from "react-i18next";
 import {
   viewVendor,
   searchVendor,
   countVendor,
 } from "../redux/actions/vendorAction";
 
-export default function TotalVendorsScreen({ navigation }) {
+export default function TotalVendorsScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const vendorState = useSelector((state) => state.vendors);
   const filteredVendors = vendorState?.filteredVendors || totalVendorsData;
   const searchText = vendorState?.searchText || "";
   const count = vendorState?.count || totalVendorsData.length;
+
+  const { pageTitle, data } = route.params || {
+    pageTitle: "Vendor Management",
+    data: totalVendorsData,
+  };
 
   useEffect(() => {
     dispatch(countVendor());
@@ -40,14 +47,9 @@ export default function TotalVendorsScreen({ navigation }) {
     navigation.navigate("VendorFormScreen", { vendor: item });
   };
 
-
   return (
     <ContainerComponent>
-      <MyHeader
-        title={`Vendor Management (${count})`}
-        isBack={true}
-        hasIcon={true}
-      />
+      <MyHeader title={t(pageTitle)} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredVendors}
         loading={false}
