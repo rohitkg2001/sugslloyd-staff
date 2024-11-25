@@ -55,7 +55,7 @@ const VendorFormScreen = () => {
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
-        <MyHeader title="Create Vendor" hasIcon={true} isBack={true} />
+        <MyHeader title={t("total_vendors")} hasIcon={true} isBack={true} />
 
         <MyTextInput
           title={t("name")}

@@ -40,7 +40,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("Project Name", site.projectName)}
       {renderDetailRow("Work Order Number", site.workOrderNumber)}
       {renderDetailRow("Rate", site.rate)}
-      {renderDetailRow("Location", site.location)}
       {renderDetailRow("Date", site.date)}
     </>
   );

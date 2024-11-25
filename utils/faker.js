@@ -531,7 +531,7 @@ export const siteCardsForDashboard = [
 export const vendorCardForDashboard = [
   {
     id: "1",
-    title: "Total Vendors",
+    title: "total_vendors",
     count: 67,
     page: "totalVendorsScreen",
     data: totalVendorsData,
@@ -539,7 +539,7 @@ export const vendorCardForDashboard = [
   },
   {
     id: "2",
-    title: "Active Vendors",
+    title: "active_vendors",
     count: 53,
     page: "totalVendorsScreen",
     data: totalVendorsData,
@@ -547,19 +547,11 @@ export const vendorCardForDashboard = [
   },
   {
     id: "3",
-    title: "Inactive Vendors",
+    title: "inactive_vendors",
     count: 10,
     page: "totalVendorsScreen",
     data: totalVendorsData,
     backgroundColor: "#C4C3D0",
-  },
-  {
-    id: "4",
-    title: "Blocklisted Vendors",
-    count: 44,
-    page: "totalVendorsScreen",
-    data: totalVendorsData,
-    backgroundColor: "#F5F5DC",
   },
 ];
 

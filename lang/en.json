@@ -95,7 +95,11 @@
                 "ent_release_date": "Enter Release Date (YYYY-MM-DD)",
                 "name" : "Name" ,
                 "create_task" : "Create Task" ,
-                "view_task" : "View Task" ,
-                "site_management" : "Site Management"
+                "view_task" : "View Tasks" ,
+                "site_management" : "Site Management",
+                "create_vendor" : "Create Vendor" ,
+                "total_vendors" : "Total Vendors" ,
+                "active_vendors" : "Active Vendors" ,
+                "inactive_vendors" : "Inactive Vendors"
         }
 }

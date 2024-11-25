@@ -97,6 +97,7 @@
     "name": "नाम",
     "create_task": "कार्य बनाएँ",
     "view_task": "कार्य देखें",
-    "site_management": "साइट प्रबंधन"
+    "site_management": "साइट प्रबंधन" ,
+    "create_vendor" : "विक्रेता बनाएँ" 
   }
 }
