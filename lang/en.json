@@ -92,6 +92,7 @@
                 "quantity": "Quantity",
                 "ent_quantity": "Enter Quantity",
                 "release_date": "Release Date",
-                "ent_release_date": "Enter Release Date (YYYY-MM-DD)"
+                "ent_release_date": "Enter Release Date (YYYY-MM-DD)",
+                "name" : "Name"
         }
 }

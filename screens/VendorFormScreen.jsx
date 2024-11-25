@@ -5,6 +5,8 @@ import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
+import { useTranslation } from "react-i18next";
+
 
 const VendorFormScreen = () => {
   const [name, setName] = useState("");
@@ -19,7 +21,8 @@ const VendorFormScreen = () => {
   const [bankName, setBankName] = useState("");
   const [branch, SetBranch] = useState("");
   const [pan, setPan] = useState("");
-  const [mailId, setMailId] = useState("");
+  const [ mailId, setMailId ] = useState( "" );
+   const { t } = useTranslation();
 
   const handleCancel = () => {
     setName("");
@@ -55,21 +58,21 @@ const VendorFormScreen = () => {
         <MyHeader title="Create Vendor" hasIcon={true} isBack={true} />
 
         <MyTextInput
-          title="Name"
+          title={t("name")}
           value={name}
           onChangeText={setName}
           placeholder="Enter Name"
         />
 
         <MyTextInput
-          title="Contact Person"
+          title={t("contact_person_name")}
           value={contactPerson}
           onChangeText={setContactPerson}
           placeholder="Enter Contact Person"
         />
 
         <MyTextInput
-          title="Contact Number"
+          title={t("site_ContactNo")}
           value={contactNumber}
           onChangeText={setContactNumber}
           placeholder="Enter Contact Number"
@@ -77,7 +80,7 @@ const VendorFormScreen = () => {
         />
 
         <MyTextInput
-          title="Aadhar Number"
+          title={t("vendor_aadhar_number")}
           value={contactPerson}
           onChangeText={setAadharNumber}
           placeholder="Enter Aadhar Number"
@@ -85,70 +88,70 @@ const VendorFormScreen = () => {
 
         <MyTextInput
           title="Mail ID"
-          value={mailId}
+          value={t("vendor_mail_id")}
           onChangeText={setMailId}
           placeholder="Enter Mail ID"
           keyboardType="email-address"
         />
 
         <MyTextInput
-          title="Address"
+          title={t("vendor_address")}
           value={address}
           onChangeText={setAddress}
           placeholder="Enter Address"
         />
 
         <MyTextInput
-          title="Account Name"
+          title={t("vendor_account_name")}
           value={accountName}
           onChangeText={setAccountName}
           placeholder="Enter Contact Person"
         />
 
         <MyTextInput
-          title="Account Number"
+          title={t("vendor_account_number")}
           value={accountNumber}
           onChangeText={setAccountNumber}
           placeholder="Enter Account Number"
         />
 
         <MyTextInput
-          title="IFSC"
+          title={t("ifsc")}
           value={ifsc}
           onChangeText={setIfsc}
           placeholder="Enter IFSC"
         />
 
         <MyTextInput
-          title="Bank Name"
+          title={t("bank_name")}
           value={bankName}
           onChangeText={setBankName}
           placeholder="Enter Bank Name"
         />
 
         <MyTextInput
-          title="Branch"
+          title={t("branch")}
           value={branch}
           onChangeText={SetBranch}
           placeholder="Enter Branch"
         />
         <MyTextInput
-          title="GST Number"
+          title={t("gst_number")}
           value={gstNumber}
           onChangeText={setGstNumber}
           placeholder="Enter GST Number"
         />
 
         <MyTextInput
-          title="PAN Number"
+          title={t("pan_number")}
           value={bankName}
           onChangeText={setPan}
           placeholder="Enter PAN Number"
         />
       </ScrollView>
       <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>
-        <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
-        <MyButton title="Create" onPress={handleCreate} />
+        <MyButton title={t("cancel")} onPress={handleCancel} color="#DC4C64" />
+        <MyButton title={t("create")} onPress={handleCreate} />
       </View>
     </ContainerComponent>
   );
