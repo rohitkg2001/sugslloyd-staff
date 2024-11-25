@@ -139,7 +139,7 @@ export default function DashboardScreen({ navigation }) {
             { alignItems: "center" },
           ]}
         >
-          <H4>Today</H4>
+          <H4>{t("today")}</H4>
           <View style={{ flexDirection: "row" }}>
             <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
             <H5 style={spacing.ml1}>{today}</H5>
@@ -207,8 +207,6 @@ export default function DashboardScreen({ navigation }) {
         <MyFlatList
           data={siteCardsForDashboard}
           renderItem={({ item, index }) => {
-            // const isRightColumn = index % 2 !== 0;
-            // const marginTop = isRightColumn ? 20 : 0;
 
             return (
               <StatCard
