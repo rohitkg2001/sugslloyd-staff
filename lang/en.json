@@ -93,8 +93,18 @@
       "ent_quantity": "Enter Quantity",
       "release_date": "Release Date",
       "ent_release_date": "Enter Release Date (YYYY-MM-DD)",
-      "add_product" : "Add Product" 
- 
-       
+      "add_product" : "Add Product", 
+        "create_site": "Create Site",
+        "today" : "Today",
+        "stock_mng":"Stock Management",
+        "no_inv":"Oops! No inventory",
+        "prod_name":"Product Name",
+        "ent_prod_name":"Enter Produce Name",
+        "brand":"Brand",
+        "ent_brand":"Enter Brand",
+        "quantity":"Quantity",
+        "ent_quantity":"Enter Quantity",
+        "release_date":"Release Date",
+        "ent_release_date":"Enter Release Date (YYYY-MM-DD)"
     }
 }
