@@ -1,39 +1,25 @@
-import React, { useEffect } from "react";
+import { useState } from "react";
 import { View, Image, TouchableOpacity } from "react-native";
-import { useSelector, useDispatch } from 'react-redux';
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { inventoryData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing } from "../styles";
-import { styles } from "../styles/components.styles";
 import MyHeader from "../components/header/MyHeader";
-import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
-import Filter from "../components/filters";
-import Button from "../components/buttons/Button";
 import MyFlatList from "../components/utility/MyFlatList";
+import { inventoryData, project, totalsitesData } from "../utils/faker";
+import InventoryCard from "../components/card/InventoryCard";
 import NoRecord from "./NoRecord";
-import { viewInventory, searchInventory, countInventory } from '../redux/actions/inventoryAction';
+import { useTranslation } from "react-i18next";
+
+const { t } = useTranslation();
 
 const InventoryScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const { filteredInventory, searchText, count } = useSelector(state => state.inventory);
-  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
 
-  useEffect(() => {
-    dispatch(countInventory());
-  }, [dispatch]);
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
-  };
-
-  const handleSearch = (text) => {
-    dispatch(searchInventory(text));
-  };
-
-  const handleViewItem = (item) => {
-    dispatch(viewInventory(item));
-    navigation.navigate("InventoryDetailScreen", { item });
   };
 
   const menuOptions = [
@@ -46,7 +32,7 @@ const InventoryScreen = ({ navigation }) => {
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
         <MyHeader
-          title={`Stock Management (${count})`}
+          title={t("stock_mng")}
           isBack={true}
           hasIcon={true}
           icon={"ellipsis-vertical"}
@@ -54,10 +40,10 @@ const InventoryScreen = ({ navigation }) => {
         />
 
         <MyFlatList
-          data={filteredInventory}
+          data={inventoryData}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.card} onPress={() => handleViewItem(item)}>
+            <TouchableOpacity style={styles.card}>
               <Image
                 source={{ uri: item.url }}
                 style={{
@@ -76,12 +62,11 @@ const InventoryScreen = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           )}
-          ListEmptyComponent={() => <NoRecord msg="Oops! No inventory" />}
+          ListEmptyComponent={() => <NoRecord msg={t("no_inv")} />}
           ListHeaderComponent={() => (
             <SearchBar
-              placeholder="Enter item name, brand or product code"
               value={searchText}
-              onChangeText={handleSearch}
+              onChangeText={setSearchText}
             />
           )}
         />
