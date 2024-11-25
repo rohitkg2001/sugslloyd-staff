@@ -98,12 +98,7 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               value={formData.date}
               onChangeText={(text) => handleChange("date", text)}
             />
-            <MyTextInput
-              title="Location"
-              placeholder="Location"
-              value={formData.location}
-              onChangeText={(text) => handleChange("location", text)}
-            />
+           
           </>
         )}
 

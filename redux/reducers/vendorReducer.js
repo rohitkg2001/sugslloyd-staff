@@ -1,12 +1,12 @@
 import { VIEW_VENDOR, UPDATE_VENDOR, SEARCH_VENDOR, COUNT_VENDOR } from '../constant';
-import { totalVendorsData } from "../../utils/faker";
+import { vendors } from "../../utils/faker";
 
 const initialState = {
-  vendors: totalVendorsData,
-  filteredVendors: totalVendorsData,
+  vendors: vendors,
+  filteredVendors: vendors,
   currentVendor: null,
   searchText: '',
-  count: totalVendorsData.length
+  count: vendors.length
 };
 
 export const vendorReducer = (state = initialState, action) => {
@@ -17,7 +17,7 @@ export const vendorReducer = (state = initialState, action) => {
         currentVendor: action.payload
       };
     case UPDATE_VENDOR:
-      const updatedVendors = state.vendors.map(vendor => 
+      const updatedVendors = state.vendors.map(vendor =>
         vendor.id === action.payload.id ? action.payload : vendor
       );
       return {

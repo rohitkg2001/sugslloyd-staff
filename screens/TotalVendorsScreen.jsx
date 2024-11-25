@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete, totalVendorsData } from "../utils/faker";
+import { fakeDelete, vendors } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -30,12 +30,12 @@ export default function TotalVendorsScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const vendorState = useSelector((state) => state.vendors);
-  const filteredVendors = vendorState?.filteredVendors || totalVendorsData;
+  const filteredVendors = vendorState?.filteredVendors || vendors;
   const searchText = vendorState?.searchText || "";
-  const count = vendorState?.count || totalVendorsData.length;
+  const count = vendorState?.count || vendors.length;
 
   const { pageTitle, data } = route.params || {
-    pageTitle: "Vendor Management",
+    pageTitle: "vendor_management_title",
     data: totalVendorsData,
   };
 
