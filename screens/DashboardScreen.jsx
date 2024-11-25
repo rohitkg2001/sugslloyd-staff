@@ -184,21 +184,28 @@ export default function DashboardScreen({ navigation }) {
               style={{ alignItems: "center" }}
               onPress={navigateToNoRecord}
             >
-              <P style={typography.textBold}>Open</P>
+              <P style={typography.textBold}>Project</P>
               <P>20</P>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ alignItems: "center" }}
               onPress={navigateToNoRecord}
             >
-              <P style={typography.textBold}>Completed</P>
+              <P style={typography.textBold}>Site</P>
               <P>7</P>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ alignItems: "center" }}
               onPress={navigateToNoRecord}
             >
-              <P style={typography.textBold}>Hold</P>
+              <P style={typography.textBold}>Completed</P>
+              <P>1</P>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ alignItems: "center" }}
+              onPress={navigateToNoRecord}
+            >
+              <P style={typography.textBold}>Pending</P>
               <P>1</P>
             </TouchableOpacity>
           </View>
@@ -207,7 +214,6 @@ export default function DashboardScreen({ navigation }) {
         <MyFlatList
           data={siteCardsForDashboard}
           renderItem={({ item, index }) => {
-
             return (
               <StatCard
                 key={item.id}
