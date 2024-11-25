@@ -9,11 +9,7 @@ export default function SettingsScreen({ navigation }) {
 
   return (
     <ContainerComponent justifyContent="space-between">
-      <MyHeader
-        title="Settings"
-        isBack={true}
-        hasIcon={true}
-      />
+      <MyHeader title="Settings" isBack={true} hasIcon={true} />
       <View style={{ flex: 1 }}>
         {internal.map((item, index) => (
           <MenuItem
