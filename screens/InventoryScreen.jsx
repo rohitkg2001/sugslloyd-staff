@@ -12,7 +12,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
 import { ICON_MEDIUM, LIGHT, styles, spacing, SCREEN_WIDTH } from "../styles";
 import { View } from "react-native";
-
 import InventoryDetailsModal from "../components/InventoryDetailsModal";
 
 export default function InventoryScreen({ navigation }) {

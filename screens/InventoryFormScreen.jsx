@@ -5,6 +5,8 @@ import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
+import { useTranslation } from "react-i18next";
+
 
 const InventoryFormScreen = () => {
   const [productName, setProductName] = useState("");
@@ -27,41 +29,42 @@ const InventoryFormScreen = () => {
       releaseDate,
     });
   };
+const { t } = useTranslation();
 
   return (
     <ContainerComponent>
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
-        <MyHeader title="Add Product" hasIcon={true} isBack={true} />
+        <MyHeader title={t("add_product")} hasIcon={true} isBack={true} />
 
         <MyTextInput
-          title="Product Name"
+          title={t("prod_name")}
           value={productName}
           onChangeText={setProductName}
-          placeholder="Enter Product Name"
+          placeholder={t("ent_prod_name")}
         />
 
         <MyTextInput
-          title="Brand"
+          title={t("brand")}
           value={brand}
           onChangeText={setBrand}
-          placeholder="Enter Brand"
+          placeholder={t("ent_brand")}
         />
 
         <MyTextInput
-          title="Quantity"
+          title={t("quantity")}
           value={quantity}
           onChangeText={setQuantity}
-          placeholder="Enter Quantity"
+          placeholder={t("ent_quantity")}
           keyboardType="numeric"
         />
 
         <MyTextInput
-          title="Release Date"
+          title={t("release_date")}
           value={releaseDate}
           onChangeText={setReleaseDate}
-          placeholder="Enter Release Date (YYYY-MM-DD)"
+          placeholder={t("ent_release_date")}
         />
       </ScrollView>
 
