@@ -26,7 +26,6 @@ import {
   siteCardsForDashboard,
   vendorCardForDashboard,
   tasks,
-  project,
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -59,19 +58,6 @@ export default function DashboardScreen({ navigation }) {
   {
     navigation.navigate("totalSitesScreen");
   }
-const completedProjects = project.filter((item) => item.status === "completed");
-const completedProjectsCount = completedProjects.length;
-
-  
-  const navigateToCompletedProjectsScreen = () => {
-    // Add your navigation logic here, for example:
-    if (completedProjectsCount > 0) {
-      navigation.navigate("CompletedProjectsScreen", {
-        DATA: completedProjects,
-        title: "Completed Projects",
-      });
-    }
-  };
 
   const firstTwoTasks = tasks.slice(0, 2);
 
@@ -181,7 +167,7 @@ const completedProjectsCount = completedProjects.length;
           contentContainerStyle={spacing.mv4}
         />
 
-        {/* //Project OverView  */}
+        {/* //Project OverView  */ }
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -216,7 +202,7 @@ const completedProjectsCount = completedProjects.length;
             </TouchableOpacity>
             <TouchableOpacity
               style={{ alignItems: "center" }}
-              onPress={navigateToCompletedProjectsScreen}
+              // onPress={navigateToNoRecord}
             >
               <P style={typography.textBold}>Completed</P>
               <P>1</P>
@@ -231,6 +217,7 @@ const completedProjectsCount = completedProjects.length;
           </View>
         </CardFullWidth>
 
+        
         <MyFlatList
           data={siteCardsForDashboard}
           renderItem={({ item, index }) => {
