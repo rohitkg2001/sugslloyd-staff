@@ -54,10 +54,9 @@ export default function DashboardScreen({ navigation }) {
     navigation.navigate("totalProjectsScreen");
   };
 
-  const navigateToTotalSitesScreen = () =>
-  {
+  const navigateToTotalSitesScreen = () => {
     navigation.navigate("totalSitesScreen");
-  }
+  };
 
   const firstTwoTasks = tasks.slice(0, 2);
 
@@ -167,7 +166,7 @@ export default function DashboardScreen({ navigation }) {
           contentContainerStyle={spacing.mv4}
         />
 
-        {/* //Project OverView  */ }
+        {/* //Project OverView  */}
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -217,7 +216,6 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
 
-        
         <MyFlatList
           data={siteCardsForDashboard}
           renderItem={({ item, index }) => {
