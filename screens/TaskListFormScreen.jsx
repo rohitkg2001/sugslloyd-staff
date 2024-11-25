@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 
 const TaskListFormScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const currentTask = useSelector(state => state.tasks?.currentTask);
 
   const [projectName, setProjectName] = useState(currentTask?.projectName || null);
@@ -70,7 +71,6 @@ const TaskListFormScreen = ({ navigation }) => {
     setShowDatePicker(true);
   };
 
-  const { t } = useTranslation();
 
   return (
     <ContainerComponent>

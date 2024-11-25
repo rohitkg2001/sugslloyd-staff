@@ -19,11 +19,9 @@ const ViewDetailScreen = ({ route, navigation }) => {
     </View>
   );
 
-  const renderSectionTitle = (title) => <H5>{title}</H5>;
 
   const renderSiteDetails = () => (
     <>
-      {renderSectionTitle("Site Information")}
       {renderDetailRow("Site Name", site.siteName)}
       {renderDetailRow("State", site.state)}
       {renderDetailRow("District", site.dist)}
@@ -65,8 +63,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             formType === "vendor"
               ? "Vendor Details"
               : site.projectName
-              ? "Project Details"
-              : "Site Details"
+                ? "Project Details"
+                : "Site Details"
           }
           isBack={true}
           hasIcon={true}
@@ -77,8 +75,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             {formType === "vendor"
               ? renderVendorDetails()
               : site.projectName
-              ? renderProjectDetails()
-              : renderSiteDetails()}
+                ? renderProjectDetails()
+                : renderSiteDetails()}
           </View>
         </ScrollView>
         <View

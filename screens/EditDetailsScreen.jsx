@@ -7,7 +7,6 @@ import MyHeader from "../components/header/MyHeader";
 
 const EditDetailsScreen = ({ route, navigation, onSave }) => {
   const { site, formType } = route.params || {};
-
   const [formData, setFormData] = useState({});
 
   useEffect(() => {

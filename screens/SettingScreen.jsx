@@ -9,13 +9,16 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { staff } from "../utils/faker";
 import { useTranslation } from "react-i18next";
 
+
 export default function SettingsScreen({ navigation }) {
+  const { t } = useTranslation();
+
   const handleLogoutPress = () => {
     console.log("Logout pressed");
     navigation.navigate("loginScreen");
     // Insert logout logic
   };
-  const { t } = useTranslation();
+
 
   return (
     <ContainerComponent justifyContent="space-between">

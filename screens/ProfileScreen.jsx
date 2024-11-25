@@ -16,9 +16,8 @@ import { H6, H4 } from "../components/text";
 import MyFlatList from "../components/utility/MyFlatList";
 import { useTranslation } from "react-i18next";
 
-const ProfileItem = ( { iconName, label } ) =>
-{
-  
+const ProfileItem = ({ iconName, label }) => {
+
   return (
     <View
       style={[
@@ -54,9 +53,8 @@ const ProfileItem = ( { iconName, label } ) =>
   );
 };
 
-const ProfileScreen = () =>
-{
-   const { t } = useTranslation();
+export default function ProfileScreen() {
+  const { t } = useTranslation();
   return (
     <ContainerComponent>
       <MyHeader title={t("profile_title")} isBack={true} hasIcon={true} />
@@ -99,5 +97,3 @@ const ProfileScreen = () =>
     </ContainerComponent>
   );
 };
-
-export default ProfileScreen;

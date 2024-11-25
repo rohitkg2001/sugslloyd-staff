@@ -17,6 +17,7 @@ import {
 
 export default function TotalVendorsScreen({ navigation }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const vendorState = useSelector((state) => state.vendors);
   const filteredVendors = vendorState?.filteredVendors || totalVendorsData;
   const searchText = vendorState?.searchText || "";
@@ -39,7 +40,7 @@ export default function TotalVendorsScreen({ navigation }) {
     navigation.navigate("VendorFormScreen", { vendor: item });
   };
 
-  const { t } = useTranslation();
+
   return (
     <ContainerComponent>
       <MyHeader

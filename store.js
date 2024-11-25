@@ -6,7 +6,7 @@ import { staffReducer } from "./redux/reducers/staffReducer";
 import { projectReducer } from "./redux/reducers/projectrReducer";
 import { inventoryReducer } from "./redux/reducers/inventoryReducer";
 import { vendorReducer } from "./redux/reducers/vendorReducer";
-import { project } from "./utils/faker";
+import { initialState } from "./redux/constant";
 
 const rootReducer = combineReducers({
   tasks: taskReducer,
@@ -17,6 +17,6 @@ const rootReducer = combineReducers({
   inventory: inventoryReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
 
 export default store;
