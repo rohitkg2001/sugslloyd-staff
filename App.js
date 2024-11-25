@@ -7,6 +7,7 @@ import store from "./store";
 import i18n from "./i18n";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LanguageSelector from "./components/LanguageSelector";
+import {ActivityIndicator}from 'react-native'
 
 export default function App() {
   const [language, setLanguage] = useState(null);
@@ -21,7 +22,8 @@ export default function App() {
   useEffect(() => {
     const fetchLanguage = async () => {
       const storedLanguage = await AsyncStorage.getItem('appLanguage')
-      console.log(storedLanguage)
+      setLanguage(storedLanguage)
+      setIsLanguageSelected(true)
     }
 
     fetchLanguage()
@@ -31,6 +33,10 @@ export default function App() {
   if (!isLanguageSelected) {
     return <LanguageSelector onSelectLanguage={selectLanguage} />;
   }
+  if(!language){
+    return <ActivityIndicator size="large"/>
+  }
+  
 
   return (
     <Provider store={store}>
