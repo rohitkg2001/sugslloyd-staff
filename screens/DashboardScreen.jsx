@@ -50,9 +50,14 @@ export default function DashboardScreen({ navigation }) {
     navigation.navigate("ToDoTaskCardScreen");
   };
 
-  const navigateToNoRecord = () => {
-    navigation.navigate("NoRecord");
+  const navigateToTotalProjectsScreen = () => {
+    navigation.navigate("totalProjectsScreen");
   };
+
+  const navigateToTotalSitesScreen = () =>
+  {
+    navigation.navigate("totalSitesScreen");
+  }
 
   const firstTwoTasks = tasks.slice(0, 2);
 
@@ -162,6 +167,7 @@ export default function DashboardScreen({ navigation }) {
           contentContainerStyle={spacing.mv4}
         />
 
+        {/* //Project OverView  */ }
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -182,28 +188,28 @@ export default function DashboardScreen({ navigation }) {
           >
             <TouchableOpacity
               style={{ alignItems: "center" }}
-              onPress={navigateToNoRecord}
+              onPress={navigateToTotalProjectsScreen}
             >
               <P style={typography.textBold}>Project</P>
               <P>20</P>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ alignItems: "center" }}
-              onPress={navigateToNoRecord}
+              onPress={navigateToTotalSitesScreen}
             >
               <P style={typography.textBold}>Site</P>
               <P>7</P>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ alignItems: "center" }}
-              onPress={navigateToNoRecord}
+              // onPress={navigateToNoRecord}
             >
               <P style={typography.textBold}>Completed</P>
               <P>1</P>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ alignItems: "center" }}
-              onPress={navigateToNoRecord}
+              // onPress={navigateToNoRecord}
             >
               <P style={typography.textBold}>Pending</P>
               <P>1</P>
@@ -211,6 +217,7 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
 
+        
         <MyFlatList
           data={siteCardsForDashboard}
           renderItem={({ item, index }) => {
