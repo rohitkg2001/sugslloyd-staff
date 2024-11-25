@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { View } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import { project } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
-import { spacing } from "../styles";
+import { spacing, styles, LIGHT, SCREEN_WIDTH, ICON_MEDIUM } from "../styles";
 import SearchBar from "../components/input/SearchBar";
+import Button from "../components/buttons/Button";
 import MyFlatList from "../components/utility/MyFlatList";
 import { useTranslation } from "react-i18next";
 import ClickableCard from "../components/card/ClickableCard";
@@ -36,7 +38,29 @@ export default function CurrentProjectsScreen({ navigation }) {
           contentContainerStyle={[spacing.mh2, spacing.mt1]}
           ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
           ListHeaderComponent={() => (
-            <SearchBar placeholder={t("placeholder")} />
+            <View
+              style={[
+                spacing.mv4,
+                styles.row,
+                spacing.mh1,
+                { alignItems: "center" },
+              ]}
+            >
+              <SearchBar
+                placeholder="Search"
+                style={{ width: SCREEN_WIDTH - 70 }}
+              />
+              <Button
+                style={[
+                  styles.btn,
+                  styles.bgPrimary,
+                  spacing.mh1,
+                  { width: 50 },
+                ]}
+              >
+                <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+              </Button>
+            </View>
           )}
         />
       </View>

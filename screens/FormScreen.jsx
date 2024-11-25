@@ -20,7 +20,7 @@ const FormScreen = () => {
     setProjectName("");
     setWorkOrderNumber("");
     setRate("");
-    setLocation("");
+    // setLocation("");
     setDate(new Date());
   };
 
@@ -49,7 +49,7 @@ const FormScreen = () => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title="Project Details" hasIcon />
+        <MyHeader title="Create Project " hasIcon />
 
         <MyTextInput
           title="Project Name"

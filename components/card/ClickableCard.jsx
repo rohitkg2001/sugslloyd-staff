@@ -32,12 +32,15 @@ export default function ClickableCard({
           style={{ flexDirection: "row", alignItems: "center", padding: 16 }}
         >
           <View style={{ flex: 1 }}>
-            <H6 style={[typography.textBold]}>{item.siteName}</H6>
+            <H6 style={[typography.textBold]}>
+              Project Name: {item.projectName}
+            </H6>
             {isProject && (
               <>
-                <P style={{ fontSize: 14 }}>{item.projectName}</P>
-                <P style={{ fontSize: 14 }}>{item.duration}</P>
-                <P style={{ fontSize: 14 }}>{item.status}</P>
+                <P style={{ fontSize: 14 }}>
+                  Work Order Number: {item.workOrderNumber}
+                </P>
+                <P style={{ fontSize: 14 }}>Rate: {item.rate}</P>
 
                 {/* TODO: Add project specific changes */}
               </>

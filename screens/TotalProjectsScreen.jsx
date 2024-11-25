@@ -10,7 +10,14 @@ import ClickableCard from "../components/card/ClickableCard";
 import { fakeDelete, project } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
-import { spacing, styles, LIGHT, SCREEN_WIDTH, ICON_MEDIUM, ICON_LARGE } from "../styles";
+import {
+  spacing,
+  styles,
+  LIGHT,
+  SCREEN_WIDTH,
+  ICON_MEDIUM,
+  ICON_LARGE,
+} from "../styles";
 import { useTranslation } from "react-i18next";
 
 export default function TotalProjectsScreen({ navigation }) {
@@ -37,7 +44,6 @@ export default function TotalProjectsScreen({ navigation }) {
     });
   };
 
-
   return (
     <ContainerComponent>
       <MyHeader title={t("total_projects")} isBack={true} hasIcon={true} />
@@ -60,11 +66,16 @@ export default function TotalProjectsScreen({ navigation }) {
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
-        ListEmptyComponent={() => (
-          <NoRecord msg={t("no_project")} />
-        )}
+        ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
         ListHeaderComponent={() => (
-          <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
+          <View
+            style={[
+              spacing.mv4,
+              styles.row,
+              spacing.mh1,
+              { alignItems: "center" },
+            ]}
+          >
             <SearchBar
               placeholder="Search"
               style={{ width: SCREEN_WIDTH - 70 }}
