@@ -276,7 +276,7 @@ export default function DashboardScreen({ navigation }) {
                 key={item.id}
                 backgroundColor={item.backgroundColor}
                 tasks={item.count}
-                status={item.title}
+                status={t(item.title)}
                 onPress={() =>
                   navigation.navigate(item.page, {
                     pageTitle: item.title,

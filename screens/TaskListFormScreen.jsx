@@ -80,7 +80,7 @@ const TaskListFormScreen = ({ navigation }) => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title={t("update_task")} hasIcon />
+        <MyHeader title={t("create_task")} hasIcon />
 
         <DropDownPicker
           open={open}
@@ -88,7 +88,7 @@ const TaskListFormScreen = ({ navigation }) => {
           items={projects}
           setOpen={setOpen}
           setValue={setProjectName}
-          placeholder="Select a Project"
+          placeholder="Select a Site"
           searchable={true}
           searchPlaceholder="Search Project"
           style={{ marginBottom: 16, backgroundColor: "#E1F3E1" }}

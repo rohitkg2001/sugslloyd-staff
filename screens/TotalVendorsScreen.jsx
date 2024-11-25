@@ -26,8 +26,8 @@ export default function TotalVendorsScreen({ navigation, route }) {
   const count = vendorState?.count || vendors.length;
 
   const { pageTitle, data } = route.params || {
-    pageTitle: "Vendor Management",
-    data: vendors,
+    pageTitle: "vendor_management_title",
+    data: totalVendorsData,
   };
 
   useEffect(() => {
