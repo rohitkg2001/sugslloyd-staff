@@ -7,15 +7,10 @@ import { inventoryData, project, totalsitesData } from "../utils/faker";
 import InventoryCard from "../components/card/InventoryCard";
 import NoRecord from "./NoRecord";
 import { useTranslation } from "react-i18next";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import Icon from "react-native-vector-icons/Ionicons";
-import Button from "../components/buttons/Button";
-import { ICON_MEDIUM, LIGHT, styles, spacing, SCREEN_WIDTH } from "../styles";
-import { View } from "react-native";
 
-import InventoryDetailsModal from "../components/InventoryDetailsModal";
+const { t } = useTranslation();
 
-export default function InventoryScreen({ navigation }) {
+const InventoryScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [isVisible, setVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -33,19 +28,40 @@ export default function InventoryScreen({ navigation }) {
 
   return (
     <ContainerComponent>
-      <MyHeader title={t("inventory_title")} hasIcon={true} isBack={true} />
-      <MyFlatList
-        data={inventoryData}
-        keyExtractor={(item) => item.id.toString()}
-        ListHeaderComponent={() => (
-          <View
-            style={[
-              styles.row,
-              spacing.mh2,
-              spacing.mb5,
-              { alignItems: "center" },
-            ]}
-          >
+      <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
+        <MyHeader
+          title={t("stock_mng")}
+          isBack={true}
+          hasIcon={true}
+          icon={"ellipsis-vertical"}
+          onIconPress={toggleMenu}
+        />
+
+        <MyFlatList
+          data={inventoryData}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.card}>
+              <Image
+                source={{ uri: item.url }}
+                style={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: 8,
+                  marginRight: 16,
+                }}
+              />
+              <View style={{ flex: 1 }}>
+                <H5>{item.name}</H5>
+                <P>{item.description}</P>
+                <View style={styles.quantityContainer}>
+                  <P style={styles.productQuantity}>Qty: {item.quantity}</P>
+                </View>
+              </View>
+            </TouchableOpacity>
+          )}
+          ListEmptyComponent={() => <NoRecord msg={t("no_inv")} />}
+          ListHeaderComponent={() => (
             <SearchBar
               value={searchText}
               onChangeText={setSearchText}
