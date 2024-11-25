@@ -32,11 +32,11 @@ export default function ClickableCard({
           style={{ flexDirection: "row", alignItems: "center", padding: 16 }}
         >
           <View style={{ flex: 1 }}>
-            <H6 style={[typography.textBold]}>
-              Project Name: {item.projectName}
-            </H6>
             {isProject && (
               <>
+                <H6 style={[typography.textBold]}>
+                  Project Name: {item.projectName}
+                </H6>
                 <P style={{ fontSize: 14 }}>
                   Work Order Number: {item.workOrderNumber}
                 </P>
@@ -56,8 +56,8 @@ export default function ClickableCard({
             {isVendor && (
               <>
                 <H6 style={[typography.textBold]}>{item.name}</H6>
-                <P style={{ fontSize: 14 }}>{item.location}</P>
-                <P style={{ fontSize: 14 }}>{item.contactNumber}</P>
+                <P style={{ fontSize: 14 }}>{item.address}</P>
+                <P style={{ fontSize: 14 }}>{item.contact_number}</P>
 
                 {/* TODO: Add vendor specific changes */}
               </>
