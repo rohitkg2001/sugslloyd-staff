@@ -267,25 +267,38 @@ export const menuItems = [
     icon: "cart-outline",
     page: "inventoryScreen",
   },
-  { label: "Site Management", icon: "map-outline", page: "totalSitesScreen" },
   {
-    label: "Vendor Management",
+    label: "site_management_title",
+    icon: "map-outline",
+    page: "totalSitesScreen",
+  },
+  {
+    label: "vendor_management_title",
     icon: "people-outline",
     page: "totalVendorsScreen",
   },
   {
-    label: "Project Management",
+    label: "project_management_title",
     icon: "reader-outline",
     page: "totalProjectsScreen",
   },
   {
-    label: "Task Management",
+    label: "task_management_title",
     page: "",
     icon: "grid-outline",
     page: "taskScreen",
   },
-  { label: "Reports", page: "", icon: "pie-chart-outline" },
-  { label: "Settings", page: "", icon: "cog-outline", page: "InternalSetting" },
+  {
+    label: "report_title",
+    page: "",
+    icon: "pie-chart-outline",
+  },
+  {
+    label: "setting",
+    page: "",
+    icon: "cog-outline",
+    page: "InternalSetting",
+  },
 ];
 
 export const internal = [
