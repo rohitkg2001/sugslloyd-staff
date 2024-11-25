@@ -11,7 +11,14 @@ import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
 import { viewSite, searchSite } from "../redux/actions/siteActions";
-import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH, spacing, styles } from "../styles";
+import {
+  ICON_LARGE,
+  ICON_MEDIUM,
+  LIGHT,
+  SCREEN_WIDTH,
+  spacing,
+  styles,
+} from "../styles";
 import { useTranslation } from "react-i18next";
 
 export default function TotalSitesScreen({ navigation, route }) {
@@ -27,7 +34,7 @@ export default function TotalSitesScreen({ navigation, route }) {
 
   useEffect(() => {
     setFilteredData(data);
-    console.log(pageTitle)
+    console.log(pageTitle);
   }, [data]);
 
   const handleSearch = (text) => {
@@ -77,11 +84,16 @@ export default function TotalSitesScreen({ navigation, route }) {
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh1, spacing.mt1]}
-        ListEmptyComponent={() => (
-          <NoRecord msg={t("no_site_msg")} />
-        )}
+        ListEmptyComponent={() => <NoRecord msg={t("no_site_msg")} />}
         ListHeaderComponent={() => (
-          <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
+          <View
+            style={[
+              spacing.mv4,
+              styles.row,
+              spacing.mh1,
+              { alignItems: "center" },
+            ]}
+          >
             <SearchBar
               placeholder="Search"
               style={{ width: SCREEN_WIDTH - 70 }}
@@ -89,7 +101,11 @@ export default function TotalSitesScreen({ navigation, route }) {
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
             >
-              <Ionicons name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+              <Ionicons
+                name="options-outline"
+                size={ICON_MEDIUM}
+                color={LIGHT}
+              />
             </Button>
           </View>
         )}
