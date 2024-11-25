@@ -497,6 +497,7 @@ export const siteCardsForDashboard = [
     page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#f9caa7",
+    status : 1 ,
   },
   {
     id: 2,
@@ -558,6 +559,12 @@ export const vendorCardForDashboard = [
     backgroundColor: "#F5F5DC",
   },
 ];
+
+// statuscode=0->Project,
+//statuscode = 1 -> Site,
+//statuscode = 2 -> Completed ,
+//statuscode = 3 -> Pending
+
 
 export const PageData = [
   {

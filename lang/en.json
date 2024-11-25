@@ -81,6 +81,7 @@
         "no_record_msg": "Oops! No Vendors available. Create the new one.",
         "no_site_msg": "Oops! There are no sites data available. Start creating or contact admin",
         "total_site_screen_msg": "You cannot delete this site. Please contact Admin!",
-        "create_site": "Create Site"
+        "create_site": "Create Site",
+        "today" : "Today"
     }
 }

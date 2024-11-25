@@ -39,8 +39,9 @@ export default function TaskListScreen({ navigation }) {
             {["taskName", "deadline", "status", "startDate", "endDate"].map(
               (field) => (
                 <P key={field} style={{ fontSize: 14, color: "#020409" }}>
-                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${item[field]
-                    }`}
+                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${
+                    item[field]
+                  }`}
                 </P>
               )
             )}
