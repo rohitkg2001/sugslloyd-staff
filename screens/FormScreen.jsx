@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, TouchableOpacity } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
@@ -8,14 +9,19 @@ import MyButton from "../components/buttons/MyButton";
 
 const FormScreen = () => {
   const [projectName, setProjectName] = useState("");
-  const [workOrderNumber, setworkOrderNumber] = useState("");
+  const [workOrderNumber, setWorkOrderNumber] = useState("");
   const [rate, setRate] = useState("");
   const [location, setLocation] = useState("");
 
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
   const handleCancel = () => {
-    setprojectName("");
-    setworkOrderNumber("");
+    setProjectName("");
+    setWorkOrderNumber("");
     setRate("");
+    setLocation("");
+    setDate(new Date());
   };
 
   const handleCreate = () => {
@@ -23,7 +29,16 @@ const FormScreen = () => {
       projectName,
       workOrderNumber,
       rate,
+      location,
+      date,
     });
+  };
+
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
   };
 
   return (
@@ -45,15 +60,26 @@ const FormScreen = () => {
         <MyTextInput
           title="Work Order Number"
           value={workOrderNumber}
-          onChangeText={setworkOrderNumber}
+          onChangeText={setWorkOrderNumber}
           placeholder="Enter Work Order Number"
         />
-        <MyTextInput
-          title="Date"
-          value={location}
-          onChangeText={setLocation}
-          placeholder="Enter Location"
-        />
+
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <MyTextInput
+            title="Date"
+            value={date.toLocaleDateString()}
+            placeholder="Select Date"
+            editable={false}
+          />
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
         <MyTextInput
           title="Rate"
           value={rate}
