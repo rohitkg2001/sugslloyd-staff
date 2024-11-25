@@ -5,21 +5,20 @@ import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
-import { useTranslation } from "react-i18next";
 
 const VendorFormScreen = () => {
   const [name, setName] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-  const [setAadharNumber] = useState("");
+  const [aadharNumber, setAadharNumber] = useState("");
   const [address, setAddress] = useState("");
   const [accountName, setAccountName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [ifsc, setIfsc] = useState("");
   const [bankName, setBankName] = useState("");
   const [branch, SetBranch] = useState("");
-  const [setPan] = useState("");
+  const [pan, setPan] = useState("");
   const [mailId, setMailId] = useState("");
 
   const handleCancel = () => {
@@ -47,7 +46,6 @@ const VendorFormScreen = () => {
       mailId,
     });
   };
-  const { t } = useTranslation();
 
   return (
     <ContainerComponent>
@@ -57,21 +55,21 @@ const VendorFormScreen = () => {
         <MyHeader title="Create Vendor" hasIcon={true} isBack={true} />
 
         <MyTextInput
-          title={t("vendor_form_name")}
+          title="Name"
           value={name}
           onChangeText={setName}
           placeholder="Enter Name"
         />
 
         <MyTextInput
-          title={t("contact_person_name")}
+          title="Contact Person"
           value={contactPerson}
           onChangeText={setContactPerson}
           placeholder="Enter Contact Person"
         />
 
         <MyTextInput
-          title={t("vendor_contact_number")}
+          title="Contact Number"
           value={contactNumber}
           onChangeText={setContactNumber}
           placeholder="Enter Contact Number"
@@ -79,14 +77,14 @@ const VendorFormScreen = () => {
         />
 
         <MyTextInput
-          title={t("vendor_aadhar_number")}
+          title="Aadhar Number"
           value={contactPerson}
           onChangeText={setAadharNumber}
           placeholder="Enter Aadhar Number"
         />
 
         <MyTextInput
-          title={t("vendor_mail_id")}
+          title="Mail ID"
           value={mailId}
           onChangeText={setMailId}
           placeholder="Enter Mail ID"
@@ -94,55 +92,55 @@ const VendorFormScreen = () => {
         />
 
         <MyTextInput
-          title={t("vendor_address")}
+          title="Address"
           value={address}
           onChangeText={setAddress}
           placeholder="Enter Address"
         />
 
         <MyTextInput
-          title={t("vendor_account_name")}
+          title="Account Name"
           value={accountName}
           onChangeText={setAccountName}
-          placeholder="Enter Account Name"
+          placeholder="Enter Contact Person"
         />
 
         <MyTextInput
-          title={t("vendor_account_number")}
+          title="Account Number"
           value={accountNumber}
           onChangeText={setAccountNumber}
           placeholder="Enter Account Number"
         />
 
         <MyTextInput
-          title={t("ifsc")}
+          title="IFSC"
           value={ifsc}
           onChangeText={setIfsc}
           placeholder="Enter IFSC"
         />
 
         <MyTextInput
-          title={t("bank_name")}
+          title="Bank Name"
           value={bankName}
           onChangeText={setBankName}
           placeholder="Enter Bank Name"
         />
 
         <MyTextInput
-          title={t("branch")}
+          title="Branch"
           value={branch}
           onChangeText={SetBranch}
           placeholder="Enter Branch"
         />
         <MyTextInput
-          title={t("gst_number")}
+          title="GST Number"
           value={gstNumber}
           onChangeText={setGstNumber}
           placeholder="Enter GST Number"
         />
 
         <MyTextInput
-          title={t("pan_number")}
+          title="PAN Number"
           value={bankName}
           onChangeText={setPan}
           placeholder="Enter PAN Number"

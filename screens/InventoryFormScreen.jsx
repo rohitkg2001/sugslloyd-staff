@@ -1,31 +1,39 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
+import { useDispatch } from 'react-redux';
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
+import { updateInventory } from '../redux/actions/inventoryAction';
+import { useTranslation } from "react-i18next";
 
-const InventoryFormScreen = () => {
-  const [productName, setProductName] = useState("");
-  const [brand, setBrand] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [releaseDate, setReleaseDate] = useState("");
+
+const InventoryFormScreen = ({ navigation, route }) => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const editItem = route.params?.item;
+  const [productName, setProductName] = useState(editItem?.name || "");
+  const [brand, setBrand] = useState(editItem?.description || "");
+  const [quantity, setQuantity] = useState(editItem?.quantity?.toString() || "");
+  const [releaseDate, setReleaseDate] = useState(editItem?.releaseDate || "");
 
   const handleCancel = () => {
-    setProductName("");
-    setBrand("");
-    setQuantity("");
-    setReleaseDate("");
+    navigation.goBack();
   };
 
-  const handleAddProduct = () => {
-    console.log("Adding Product with data:", {
-      productName,
-      brand,
-      quantity,
-      releaseDate,
-    });
+  const handleSaveProduct = () => {
+    const updatedProduct = {
+      id: editItem?.id || Date.now().toString(),
+      name: productName,
+      description: brand,
+      quantity: parseInt(quantity) || 0,
+      url: editItem?.url || 'https://via.placeholder.com/60',
+      releaseDate
+    };
+    dispatch(updateInventory(updatedProduct));
+    navigation.goBack();
   };
 
   return (
@@ -33,41 +41,41 @@ const InventoryFormScreen = () => {
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
-        <MyHeader title="Add Product" hasIcon={true} isBack={true} />
+        <MyHeader title={editItem ? "Edit Product" : "Add Product"} hasIcon={true} isBack={true} />
 
         <MyTextInput
-          title="Product Name"
+          title={t("prod_name")}
           value={productName}
           onChangeText={setProductName}
-          placeholder="Enter Product Name"
+          placeholder={t("ent_prod_name")}
         />
 
         <MyTextInput
-          title="Brand"
+          title={t("brand")}
           value={brand}
           onChangeText={setBrand}
-          placeholder="Enter Brand"
+          placeholder={t("ent_brand")}
         />
 
         <MyTextInput
-          title="Quantity"
+          title={t("quantity")}
           value={quantity}
           onChangeText={setQuantity}
-          placeholder="Enter Quantity"
+          placeholder={t("ent_quantity")}
           keyboardType="numeric"
         />
 
         <MyTextInput
-          title="Release Date"
+          title={t("release_date")}
           value={releaseDate}
           onChangeText={setReleaseDate}
-          placeholder="Enter Release Date (YYYY-MM-DD)"
+          placeholder={t("ent_release_date")}
         />
       </ScrollView>
 
       <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>
-        <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
-        <MyButton title="Add Product" onPress={handleAddProduct} />
+        <MyButton title={t("cancel")} onPress={handleCancel} color="#DC4C64" />
+        <MyButton title={editItem ? "Save Changes" : "Add Product"} onPress={handleSaveProduct} />
       </View>
     </ContainerComponent>
   );

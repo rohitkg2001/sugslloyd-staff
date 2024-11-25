@@ -18,6 +18,7 @@ const SitesFormScreen = () => {
   const [caNumber, setCaNumber] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [vendorName, setVendorName] = useState("");
+  const { t } = useTranslation();
 
   const handleCancel = () => {
     setState("");
@@ -45,7 +46,7 @@ const SitesFormScreen = () => {
     });
   };
 
-  const { t } = useTranslation();
+
 
   return (
     <ContainerComponent>

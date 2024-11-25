@@ -26,6 +26,7 @@ export default function TotalSitesScreen({ navigation, route }) {
   const siteState = useSelector((state) => state.sites);
   const searchText = siteState ? siteState.searchText : "";
   const [filteredData, setFilteredData] = useState([]);
+  const { t } = useTranslation();
 
   const { pageTitle, data } = route.params || {
     pageTitle: "Site Management",
@@ -52,7 +53,7 @@ export default function TotalSitesScreen({ navigation, route }) {
     dispatch(viewSite(siteData));
     navigation.navigate("ViewDetailScreen", { site: siteData });
   };
-  const { t } = useTranslation();
+
   const handleDelete = () => {
     fakeDelete({
       title: t("error"),

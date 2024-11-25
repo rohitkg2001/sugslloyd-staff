@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 export default function TotalProjectsScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
   const [filteredProjects, setFilteredProjects] = useState(project);
+  const { t } = useTranslation();
 
   const filterProjects = (text) => {
     setSearchText(text);
@@ -36,7 +37,6 @@ export default function TotalProjectsScreen({ navigation }) {
     });
   };
 
-  const { t } = useTranslation();
 
   return (
     <ContainerComponent>

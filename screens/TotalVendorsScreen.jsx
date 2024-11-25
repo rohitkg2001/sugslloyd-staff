@@ -1,4 +1,6 @@
-import { View } from "react-native";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fakeDelete, totalVendorsData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -7,27 +9,47 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { ICON_LARGE, ICON_MEDIUM, LIGHT, SCREEN_WIDTH, spacing, styles } from "../styles";
-import { fakeDelete, totalVendorsData } from "../utils/faker";
-import { useTranslation } from "react-i18next";
+import {
+  viewVendor,
+  searchVendor,
+  countVendor,
+} from "../redux/actions/vendorAction";
 
-export default function TotalVendorsScreen({ navigation, route }) {
-  const { pageTitle, data } = route.params || {
-    pageTitle: "Vendor Management",
-    data: totalVendorsData,
-  };
+export default function TotalVendorsScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const vendorState = useSelector((state) => state.vendors);
+  const filteredVendors = vendorState?.filteredVendors || totalVendorsData;
+  const searchText = vendorState?.searchText || "";
+  const count = vendorState?.count || totalVendorsData.length;
+
+  useEffect(() => {
+    dispatch(countVendor());
+  }, [dispatch]);
 
   const handleViewDetails = (item) => {
-    const dataType = item.projectName ? "project" : "vendor";
-    navigation.navigate("ViewDetailScreen", { site: item, formType: dataType });
+    dispatch(viewVendor(item));
+    navigation.navigate("ViewDetailScreen", { site: item, formType: "vendor" });
   };
 
-  const { t } = useTranslation();
+  const handleSearch = (text) => {
+    dispatch(searchVendor(text));
+  };
+
+  const handleEdit = (item) => {
+    navigation.navigate("VendorFormScreen", { vendor: item });
+  };
+
+
   return (
     <ContainerComponent>
-      <MyHeader title={pageTitle} isBack={true} hasIcon={true} />
+      <MyHeader
+        title={`Vendor Management (${count})`}
+        isBack={true}
+        hasIcon={true}
+      />
       <MyFlatList
-        data={data}
+        data={filteredVendors}
         loading={false}
         renderItem={({ item }) => (
           <ClickableCard
@@ -39,12 +61,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
                 message: t("error_msg"),
               })
             }
-            handleEdit={(item) =>
-              navigation.navigate("EditDetailsScreen", {
-                item,
-                formType: "vendor",
-              })
-            }
+            handleEdit={() => handleEdit(item)}
             isVendor={true}
           />
         )}
@@ -52,17 +69,11 @@ export default function TotalVendorsScreen({ navigation, route }) {
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
         ListEmptyComponent={() => <NoRecord msg={t("norecord_msg")} />}
         ListHeaderComponent={() => (
-          <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
-            <SearchBar
-              placeholder="Search"
-              style={{ width: SCREEN_WIDTH - 70 }}
-            />
-            <Button
-              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
-            >
-              <Ionicons name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
-            </Button>
-          </View>
+          <SearchBar
+            placeholder="Search by name, state or project code"
+            value={searchText}
+            onChangeText={handleSearch}
+          />
         )}
       />
       <Button

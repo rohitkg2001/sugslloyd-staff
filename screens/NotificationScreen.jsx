@@ -11,6 +11,7 @@ import { PRIMARY_COLOR, ICON_LARGE } from "../styles/constant";
 import { useTranslation } from "react-i18next";
 
 export default function NotificationScreen() {
+  const { t } = useTranslation();
   const renderItem = ({ item }) => (
     <TouchableOpacity>
       <List.Item
@@ -29,7 +30,7 @@ export default function NotificationScreen() {
       <Divider />
     </TouchableOpacity>
   );
-  const { t } = useTranslation();
+
   return (
     <ContainerComponent>
       <MyHeader
