@@ -97,7 +97,7 @@ export default function LoginScreen({ navigation }) {
               fakeDelete({
                 title: "Forgot Password",
                 message:
-                  "No worries. Contact admin to change your existing password",
+                  "Forgot your password? Don’t worry—we’re here to help! Please contact your admin for assistance with resetting your password and getting back into your account quickly",
                 positiveText: "OK",
               })
             }
