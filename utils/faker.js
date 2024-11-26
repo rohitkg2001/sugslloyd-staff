@@ -13,17 +13,16 @@ export const fakeDelete = ({
   ]);
 };
 
-export const tasks = [
+export const ProjectcardsForDashboard = [
   {
     id: 1,
     title: "Task 1",
     description: "This is task 1",
-    count: 28,
+    count: 1,
     status: "Total Projects ",
     page: "totalProjectsScreen",
     backgroundColor: "#A0D3E8",
   },
- 
 ];
 export const project = [
   {
@@ -34,6 +33,7 @@ export const project = [
     date: "",
   },
 ];
+
 export const siteCardsForDashboard = [
   {
     id: 1,
@@ -101,7 +101,7 @@ export const vendorCardForDashboard = [
   {
     id: "1",
     title: "total_vendors",
-    count: 67,
+    count: 1,
     page: "totalVendorsScreen",
     data: vendors,
     backgroundColor: "#FFB7B2",
@@ -109,7 +109,7 @@ export const vendorCardForDashboard = [
   {
     id: "2",
     title: "active_vendors",
-    count: 53,
+    count: 1,
     page: "totalVendorsScreen",
     data: vendors,
     backgroundColor: "#B6F4D3",
@@ -117,7 +117,7 @@ export const vendorCardForDashboard = [
   {
     id: "3",
     title: "inactive_vendors",
-    count: 10,
+    count: 0,
     page: "totalVendorsScreen",
     data: vendors,
     backgroundColor: "#C4C3D0",
@@ -325,7 +325,6 @@ export const staff = {
   created_date: "",
 };
 
-
 export const taskslistdata = [
   {
     id: 1,
@@ -348,7 +347,6 @@ export const taskslistdata = [
 ];
 
 export const PRIVACY_POLICY = "lorem ipsum sit dolor amet";
-
 
 // statuscode=0->Project,
 //statuscode = 1 -> Site,

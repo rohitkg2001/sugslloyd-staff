@@ -26,7 +26,8 @@ import {
 import {
   siteCardsForDashboard,
   vendorCardForDashboard,
-  tasks,
+  ProjectcardsForDashboard ,
+ 
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -36,8 +37,8 @@ export default function DashboardScreen({ navigation }) {
   const today = useState(moment().format("DD MMM YYYY"));
   const [dueTasks, setDueTasks] = useState(4);
   const [ greeting, setGreeting ] = useState( "Good morning" );
-    const [showDatePicker, setShowDatePicker] = useState(false); 
-    const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false); 
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const { first_name } = useSelector((state) => state);
   const { t } = useTranslation();
 
@@ -57,26 +58,8 @@ export default function DashboardScreen({ navigation }) {
 
    const showCalendar = () => {
      setShowDatePicker(true); 
-   };
-
-  const navigateToTaskCardScreen = () => {
-    navigation.navigate("TaskCardScreen");
   };
-
-  const navigateToToDoTaskCardScreen = () => {
-    navigation.navigate("ToDoTaskCardScreen");
-  };
-
-  const navigateToTotalProjectsScreen = () => {
-    navigation.navigate("totalProjectsScreen");
-  };
-
-  const navigateToTotalSitesScreen = () => {
-    navigation.navigate("totalSitesScreen");
-  };
-
-  const firstTwoTasks = tasks.slice(0, 2);
-
+  
   return (
     <ContainerComponent>
       <View
@@ -179,7 +162,7 @@ export default function DashboardScreen({ navigation }) {
         )}
 
         <MyFlatList
-          data={firstTwoTasks}
+          data={ProjectcardsForDashboard}
           renderItem={({ item }) => (
             <StatCard
               key={item.id}
@@ -303,6 +286,7 @@ export default function DashboardScreen({ navigation }) {
           numColumns={2}
         />
       </ScrollView>
+
     </ContainerComponent>
   );
 }
