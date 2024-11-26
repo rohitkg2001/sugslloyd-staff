@@ -8,8 +8,8 @@ import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
 const ViewDetailScreen = ({ route, navigation }) => {
   const { site, formType } = route.params;
-  const [ isMenuVisible, setIsMenuVisible ] = useState( false );
-    const { t } = useTranslation();
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const { t } = useTranslation();
 
   const renderDetailRow = (label, value) => (
     <View style={{ flexDirection: "row", paddingVertical: 8 }}>
@@ -19,7 +19,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
       </H5>
     </View>
   );
-
 
   const renderSiteDetails = () => (
     <>
@@ -49,7 +48,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("Vendor Name", site.name)}
       {renderDetailRow("Mail ID", site.mailId)}
       {renderDetailRow("Contact No", site.contactNumber)}
-      {renderDetailRow("Location", site.location)}
       {renderDetailRow("GST Number", site.gstNumber)}
       {renderDetailRow("Status", site.status)}
     </>
@@ -79,23 +77,25 @@ const ViewDetailScreen = ({ route, navigation }) => {
               : renderSiteDetails()}
           </View>
         </ScrollView>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: 16,
-          }}
-        >
-          <MyButton
-            title={t("create_task")}
-            onPress={() => navigation.navigate("taskListFormScreen")}
-            color="#DC4C64"
-          />
-          <MyButton
-            title={t("view_task")}
-            onPress={() => navigation.navigate("taskScreen")}
-          />
-        </View>
+        {
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginVertical: 16,
+            }}
+          >
+            <MyButton
+              title={t("create_task")}
+              onPress={() => navigation.navigate("taskListFormScreen")}
+              color="#DC4C64"
+            />
+            <MyButton
+              title={t("view_task")}
+              onPress={() => navigation.navigate("taskScreen")}
+            />
+          </View>
+        }
       </View>
     </ContainerComponent>
   );

@@ -1,8 +1,9 @@
 import React from "react";
 import { View, Image } from "react-native";
 import ModalPopup from "./ModalPopup";
-import { P, Span } from "./text";
-import { layouts } from "../styles";
+import { P, H4 } from "./text";
+import { layouts, typography } from "../styles";
+import Button from "./buttons/Button";
 
 export default function InventoryDetailsModal({
   visible,
@@ -25,7 +26,7 @@ export default function InventoryDetailsModal({
       </P>
       <P>
         {" "}
-        Site Name: {selectedItem.location}, Dist:{selectedItem.dist}{" "}
+        {selectedItem.location}, {selectedItem.dist}{" "}
       </P>
       <P> Initial Quantity: {selectedItem.initial_quantity}</P>
       <P> Material Dispatch Date: {selectedItem.material_dispatch_date}</P>
@@ -41,7 +42,23 @@ export default function InventoryDetailsModal({
           resizeMode="contain"
         />
 
-        <Span style={[{ marginLeft: "auto" }]}>View Details</Span>
+        <Button
+          style={{
+            marginLeft: "auto",
+          }}
+          //  onPress={action}
+        >
+          <H4
+            style={[
+              typography.textBold,
+              typography.font16,
+              typography.textPrimary,
+              { textTransform: "uppercase" },
+            ]}
+          >
+            View Details
+          </H4>
+        </Button>
       </View>
     </ModalPopup>
   );

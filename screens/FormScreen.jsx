@@ -49,7 +49,7 @@ const FormScreen = () => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title="Create Project " hasIcon />
+        <MyHeader title="Create Project " isBack={true} hasIcon={true} />
 
         <MyTextInput
           title="Project Name"

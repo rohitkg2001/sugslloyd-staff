@@ -7,7 +7,6 @@ import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
 
-
 const VendorFormScreen = () => {
   const [name, setName] = useState("");
   const [gstNumber, setGstNumber] = useState("");
@@ -21,8 +20,8 @@ const VendorFormScreen = () => {
   const [bankName, setBankName] = useState("");
   const [branch, SetBranch] = useState("");
   const [pan, setPan] = useState("");
-  const [ mailId, setMailId ] = useState( "" );
-   const { t } = useTranslation();
+  const [mailId, setMailId] = useState("");
+  const { t } = useTranslation();
 
   const handleCancel = () => {
     setName("");
@@ -55,7 +54,7 @@ const VendorFormScreen = () => {
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
-        <MyHeader title={t("total_vendors")} hasIcon={true} isBack={true} />
+        <MyHeader title={t("Create vendor")} hasIcon={true} isBack={true} />
 
         <MyTextInput
           title={t("name")}

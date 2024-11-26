@@ -47,9 +47,12 @@ export default function ClickableCard({
             )}
             {
               isSite && (
-                <P style={{ fontSize: 14 }}>
-                  {item.location}, {item.dist}
-                </P>
+                <>
+                  <H6 style={[typography.textBold]}>{item.siteName},</H6>
+                  <P style={{ fontSize: 14 }}>
+                    {item.location}, {item.dist}
+                  </P>
+                </>
               )
               // {/* TODO: Add site specific changes */}
             }

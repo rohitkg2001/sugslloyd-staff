@@ -6,12 +6,10 @@ import Button from "./buttons/Button";
 import {
   typography,
   styles,
-  DANGER_COLOR,
   LIGHT,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
   SECONDARY_COLOR,
-  ICON_LARGE,
   layouts,
   ICON_MEDIUM,
 } from "../styles";
