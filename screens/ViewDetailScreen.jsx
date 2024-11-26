@@ -71,25 +71,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
           marginVertical: 16,
         }}
       >
-        <MyButton
-          title={t("create_task")}
-          onPress={() => {
-            if (siteCreated) {
-              navigation.navigate("taskListFormScreen");
-            } else {
-              Alert.alert(
-                "Error",
-                "Sorry, first create the site to create a task."
-              );
-            }
-          }}
-          color="#DC4C64"
-          disabled={!siteCreated}
-        />
-        <MyButton
-          title={t("view_task")}
-          onPress={() => navigation.navigate("taskScreen")}
-        />
       </View>
     </>
   );
