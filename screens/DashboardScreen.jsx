@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { View, ScrollView, TouchableOpacity } from "react-native";
 import moment from "moment";
 import Icon from "react-native-vector-icons/Ionicons";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import { greet } from "../redux/actions/staffActions";
 import MyFlatList from "../components/utility/MyFlatList";
@@ -34,13 +35,29 @@ import { useTranslation } from "react-i18next";
 export default function DashboardScreen({ navigation }) {
   const today = useState(moment().format("DD MMM YYYY"));
   const [dueTasks, setDueTasks] = useState(4);
-  const [greeting, setGreeting] = useState("Good morning");
+  const [ greeting, setGreeting ] = useState( "Good morning" );
+    const [showDatePicker, setShowDatePicker] = useState(false); 
+    const [selectedDate, setSelectedDate] = useState(new Date());
   const { first_name } = useSelector((state) => state);
   const { t } = useTranslation();
 
   useEffect(() => {
     setGreeting(greet());
-  }, []);
+  }, [] );
+  
+   const handleDateChange = (event, date) => {
+     if (event.type === "set") {
+       setShowDatePicker(false);
+       setSelectedDate(date);
+       setToday(moment(date).format("DD MMM YYYY")); 
+     } else {
+       setShowDatePicker(false);
+     }
+   };
+
+   const showCalendar = () => {
+     setShowDatePicker(true); 
+   };
 
   const navigateToTaskCardScreen = () => {
     navigation.navigate("TaskCardScreen");
@@ -145,10 +162,21 @@ export default function DashboardScreen({ navigation }) {
         >
           <H4>{t("today")}</H4>
           <View style={{ flexDirection: "row" }}>
-            <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
+            <TouchableOpacity onPress={showCalendar}>
+              <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
+            </TouchableOpacity>
             <H5 style={spacing.ml1}>{today}</H5>
           </View>
         </View>
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={selectedDate}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
 
         <MyFlatList
           data={firstTwoTasks}
@@ -253,16 +281,12 @@ export default function DashboardScreen({ navigation }) {
             ]}
           >
             <View style={{ alignItems: "center" }}>
-              <TouchableOpacity onPress={navigateToToDoTaskCardScreen}>
-                <P style={typography.textBold}>To Do</P>
-                <P style={spacing.ml2}>2</P>
-              </TouchableOpacity>
+              <P style={typography.textBold}>To Do</P>
+              <P style={spacing.ml2}>2</P>
             </View>
             <View style={{ alignItems: "center", marginRight: 140 }}>
-              <TouchableOpacity onPress={navigateToTaskCardScreen}>
-                <P style={typography.textBold}>Done</P>
-                <P style={spacing.ml2}>3</P>
-              </TouchableOpacity>
+              <P style={typography.textBold}>Done</P>
+              <P style={spacing.ml2}>3</P>
             </View>
           </View>
         </CardFullWidth>

@@ -413,24 +413,7 @@ export const totalsitesData = [
     dist: "Purnia",
     location: "BANMANKHI",
   },
-  {
-    id: 3,
-    siteName: "P S MIRCHAIBARI UTTAR",
-    dist: "Purnia",
-    location: "BANMANKHI",
-  },
-  {
-    id: 4,
-    siteName: "P S MIRCHAIBARI UTTAR",
-    dist: "Purnia",
-    location: "BANMANKHI",
-  },
-  {
-    id: 5,
-    siteName: "P S MIRCHAIBARI UTTAR",
-    dist: "Purnia",
-    location: "BANMANKHI",
-  },
+  
 ];
 
 export const vendors = [
@@ -565,7 +548,7 @@ export const siteCardsForDashboard = [
     id: 1,
     title: "Total Sites",
     name: "total_sites",
-    count: 46,
+    count: 2,
     page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#f9caa7",
@@ -574,15 +557,16 @@ export const siteCardsForDashboard = [
   {
     id: 2,
     title: "Completed Sites",
-    count: 17,
+    count: 2,
     page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#ffeead",
+    
   },
   {
     id: 3,
     title: "Sites in Progress",
-    count: 22,
+    count: 2,
     page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#bdeaee",
@@ -590,7 +574,7 @@ export const siteCardsForDashboard = [
   {
     id: 4,
     title: "Pending Sites",
-    count: 7,
+    count: 2,
     page: "totalSitesScreen",
     data: totalsitesData,
     backgroundColor: "#ffbbee",
