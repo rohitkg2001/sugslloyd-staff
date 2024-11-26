@@ -46,14 +46,12 @@ const SitesFormScreen = () => {
     });
   };
 
-
-
   return (
     <ContainerComponent>
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 18 }]}
       >
-        <MyHeader title={t('create_site')} hasIcon />
+        <MyHeader title={t("create_site")} hasIcon={true} isBack={true} />
 
         <MyPickerInput
           title={t("site_State")}
