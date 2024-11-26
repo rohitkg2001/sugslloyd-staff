@@ -102,7 +102,12 @@
     "name": "नाम",
     "create_task": "कार्य बनाएँ",
     "view_task": "कार्य देखें",
-    "site_management": "साइट प्रबंधन" ,
-    "create_vendor" : "विक्रेता बनाएँ" 
+    "site_management": "साइट प्रबंधन",
+    "create_vendor": "विक्रेता बनाएँ",
+    "crete_project": "परियोजना बनाएं",
+    "word_order_number": "कार्य आदेश संख्या",
+    "date": "तारीख",
+    "rate": "दर",
+    "total_earnings": "कुल कमाई"
   }
 }

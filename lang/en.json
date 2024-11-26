@@ -105,6 +105,12 @@
     "create_vendor": "Create Vendor",
     "total_vendors": "Total Vendors",
     "active_vendors": "Active Vendors",
-    "inactive_vendors": "Inactive Vendors"
+    "inactive_vendors": "Inactive Vendors",
+    "crete_project": "Create Project",
+    "project_name": "Project Name",
+    "word_order_number": "Work Order Number",
+    "date": "Date",
+    "rate": "Rate",
+    "total_earnings": "Total Earnings"
   }
 }

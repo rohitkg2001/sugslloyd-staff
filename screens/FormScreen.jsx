@@ -6,13 +6,14 @@ import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
+import { useTranslation } from "react-i18next";
 
 const FormScreen = () => {
   const [projectName, setProjectName] = useState("");
   const [workOrderNumber, setWorkOrderNumber] = useState("");
   const [rate, setRate] = useState("");
   const [location, setLocation] = useState("");
-
+  const { t } = useTranslation();
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -49,16 +50,16 @@ const FormScreen = () => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title="Create Project " isBack={true} hasIcon={true} />
+        <MyHeader title={t("crete_project")} isBack={true} hasIcon={true} />
 
         <MyTextInput
-          title="Project Name"
+          title={t("project_name")}
           value={projectName}
           onChangeText={setProjectName}
           placeholder="Enter Project Name"
         />
         <MyTextInput
-          title="Work Order Number"
+          title={t("word_order_number")}
           value={workOrderNumber}
           onChangeText={setWorkOrderNumber}
           placeholder="Enter Work Order Number"
@@ -66,7 +67,7 @@ const FormScreen = () => {
 
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
           <MyTextInput
-            title="Date"
+            title={t("date")}
             value={date.toLocaleDateString()}
             placeholder="Select Date"
             editable={false}
@@ -81,7 +82,7 @@ const FormScreen = () => {
           />
         )}
         <MyTextInput
-          title="Rate"
+          title={t("rate")}
           value={rate}
           onChangeText={setRate}
           placeholder="Rate"
@@ -95,8 +96,12 @@ const FormScreen = () => {
             },
           ]}
         >
-          <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
-          <MyButton title="Create" onPress={handleCreate} />
+          <MyButton
+            title={t("cancel")}
+            onPress={handleCancel}
+            color="#DC4C64"
+          />
+          <MyButton title={t("create")} onPress={handleCreate} />
         </View>
       </ScrollView>
     </ContainerComponent>

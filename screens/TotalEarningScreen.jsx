@@ -7,13 +7,15 @@ import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import MyFlatList from "../components/utility/MyFlatList";
 import { spacing, styles } from "../styles";
+import { useTranslation } from "react-i18next";
 
 export default function TotalEarningScreen() {
   const [filteredEarnings, setFilteredEarnings] = useState(earnings);
+  const { t } = useTranslation();
 
   return (
     <ContainerComponent>
-      <MyHeader title="Total Earnings" isBack={true} hasIcon={true} />
+      <MyHeader title={t("total_earnings")} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredEarnings}
         keyExtractor={(item) => item.id.toString()}
