@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { project } from "../utils/faker";
+import { projects } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import { spacing, styles, LIGHT, SCREEN_WIDTH, ICON_MEDIUM } from "../styles";
 import SearchBar from "../components/input/SearchBar";
@@ -14,7 +14,7 @@ export default function CurrentProjectsScreen({ navigation }) {
   const [searchText] = useState("");
   const { t } = useTranslation();
 
-  const filteredProjects = project.filter((item) =>
+  const filteredProjects = projects.filter((item) =>
     item.projectName.toLowerCase().includes(searchText.toLowerCase())
   );
 

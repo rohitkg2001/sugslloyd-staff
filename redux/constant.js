@@ -1,7 +1,7 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
 
 export const initialState = {
-  userId: null,
+
 };
 
 export const FETCH_PROJECTS = "FETCH_PROJECTS";

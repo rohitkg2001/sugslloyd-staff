@@ -8,7 +8,7 @@ import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { updateTask } from "../redux/actions/taskActions";
-import { project } from "../utils/faker";
+import { projects } from "../utils/faker";
 import { useTranslation } from "react-i18next";
 
 const TaskListFormScreen = ({ navigation }) => {
@@ -29,7 +29,7 @@ const TaskListFormScreen = ({ navigation }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const [projects, setProjects] = useState(
-    project.map((proj) => ({
+    projects.map((proj) => ({
       label: proj.projectName,
       value: proj.id,
     }))
