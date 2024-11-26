@@ -10,7 +10,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import { viewTask, initializeTasks } from "../redux/actions/taskActions";
 import Button from "../components/buttons/Button";
-import { SCREEN_WIDTH, spacing, styles, typography, ICON_LARGE, ICON_MEDIUM, LIGHT } from "../styles";
+import { SCREEN_WIDTH, spacing, styles, typography,  ICON_MEDIUM, LIGHT } from "../styles";
 
 export default function TaskListScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -73,12 +73,6 @@ export default function TaskListScreen({ navigation }) {
           </View>
         )}
       />
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => navigation.navigate("taskListFormScreen")}
-      >
-        <Ionicons name="add" size={ICON_LARGE} color="white" />
-      </TouchableOpacity>
     </ContainerComponent>
   );
 }
