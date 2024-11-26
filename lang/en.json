@@ -115,6 +115,15 @@
     "word_order_number": "Work Order Number",
     "date": "Date",
     "rate": "Rate",
-    "total_earnings": "Total Earnings"
+    "total_earnings": "Total Earnings",
+    "sanction_load": "Sanction Load",
+    "meter_no": "Meter Number",
+    "load_enhancementstatus": "Load Enhancement Status",
+    "site_surveystatus": "Site Survey Status",
+    "net_meterserialnumber": "Net Meter Sr. No.",
+    "solar_meterserialnumber": "Solar Metre Sr. No.",
+    "material_inspectiondate": "Material Inspection Date",
+    "spp_installationiondate": "SPP Installation Date"
+
   }
 }

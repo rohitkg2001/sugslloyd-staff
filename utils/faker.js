@@ -34,7 +34,7 @@ export const projects = [
     date: "26-Nov-2024",
     sites: [1, 2],
     vendor: [1],
-    tasks: [1, 2]
+    tasks: [1, 2],
   },
 ];
 
@@ -50,6 +50,16 @@ export const totalsitesData = [
     cANumber: "CA123456",
     ContactNo: "9199502622",
     iCVendorName: "Pankaj Singh",
+    sanctionLoad: "5 kW",
+    meterNumber: "123456789",
+    loadEnhancementStatus: "Approved",
+    siteSurveyStatus: "Done",
+    netMetereSrNo: "NM-987654",
+    solarMeterSrNO: "SM-543210",
+    materialInspectionDate: "2024-11-20",
+    sPPINSTALLATIONDATE: "2024-11-25",
+    cOMISSIONINGDATE: "2024-11-30",
+    remarks: "All systems operational and inspected.",
   },
   {
     id: 2,
@@ -62,6 +72,16 @@ export const totalsitesData = [
     cANumber: "CA789101",
     ContactNo: "9123456789",
     iCVendorName: "Rajesh Kumar",
+    sanctionLoad: "10 kW",
+    meterNumber: "AB123456789",
+    loadEnhancementStatus: "Pending Approval",
+    siteSurveyStatus: "Pending",
+    netMetereSrNo: "NM20241127001",
+    solarMeterSrNO: "SM20241127002",
+    materialInspectionDate: "2024-11-25",
+    sPPINSTALLATIONDATE: "2024-12-05",
+    cOMISSIONINGDATE: "2024-12-10",
+    remarks: "Site survey and installation scheduled as per plan.",
   },
 ];
 

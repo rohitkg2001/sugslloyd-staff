@@ -30,11 +30,22 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("State", site.state)}
       {renderDetailRow("District", site.dist)}
       {renderDetailRow("Location", site.location)}
+      {renderDetailRow("Contact No", site.ContactNo)}
       {renderDetailRow("Project Serial Code", site.projectSerialCode)}
       {renderDetailRow("Project Capacity", site.ProjectCapacity)}
       {renderDetailRow("CA Number", site.cANumber)}
-      {renderDetailRow("I&C Vendor Name", site.iCVendorName)}
-      {renderDetailRow("Contact No", site.ContactNo)}
+      {renderDetailRow("Sanction Load", site.sanctionLoad)}
+      {renderDetailRow("Meter Number", site.meterNumber)}
+      {renderDetailRow("Load Enhancement Status", site.loadEnhancementStatus)}
+      {renderDetailRow("Site Survey Status", site.siteSurveyStatus)}
+      {renderDetailRow("Net Meter Sr No", site.netMetereSrNo)}
+      {renderDetailRow("Solar Meter Sr NO", site.solarMeterSrNO)}
+      {renderDetailRow("Material Inspection Date", site.materialInspectionDate)}
+      {renderDetailRow("SPP INSTALLATION DATE", site.sPPINSTALLATIONDATE)}
+      {renderDetailRow("COMISSIONING DATE", site.cOMISSIONINGDATE)}
+      {renderDetailRow("Remarks", site.remarks)}
+
+      {renderDetailRow("I & C Vendor Name", site.iCVendorName)}
     </>
   );
 
