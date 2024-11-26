@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, TouchableOpacity } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
@@ -8,6 +9,15 @@ import MyHeader from "../components/header/MyHeader";
 const EditDetailsScreen = ({ route, navigation, onSave }) => {
   const { site, formType } = route.params || {};
   const [formData, setFormData] = useState({});
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+  };
 
   useEffect(() => {
     if (site) {
@@ -92,13 +102,23 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               value={formData.rate}
               onChangeText={(text) => handleChange(" rate", text)}
             />
-            <MyTextInput
-              title="Date"
-              placeholder="date"
-              value={formData.date}
-              onChangeText={(text) => handleChange("date", text)}
-            />
-           
+
+            <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+              <MyTextInput
+                title="Date"
+                value={date.toLocaleDateString()}
+                placeholder="Select Date"
+                editable={false}
+              />
+            </TouchableOpacity>
+            {showDatePicker && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
           </>
         )}
 
