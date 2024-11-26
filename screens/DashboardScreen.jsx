@@ -26,8 +26,8 @@ import {
 import {
   siteCardsForDashboard,
   vendorCardForDashboard,
-  ProjectcardsForDashboard ,
- 
+  ProjectcardsForDashboard,
+
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -36,30 +36,30 @@ import { useTranslation } from "react-i18next";
 export default function DashboardScreen({ navigation }) {
   const today = useState(moment().format("DD MMM YYYY"));
   const [dueTasks, setDueTasks] = useState(4);
-  const [ greeting, setGreeting ] = useState( "Good morning" );
-  const [showDatePicker, setShowDatePicker] = useState(false); 
+  const [greeting, setGreeting] = useState("Good morning");
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { first_name } = useSelector((state) => state);
   const { t } = useTranslation();
 
   useEffect(() => {
     setGreeting(greet());
-  }, [] );
-  
-   const handleDateChange = (event, date) => {
-     if (event.type === "set") {
-       setShowDatePicker(false);
-       setSelectedDate(date);
-       setToday(moment(date).format("DD MMM YYYY")); 
-     } else {
-       setShowDatePicker(false);
-     }
-   };
+  }, []);
 
-   const showCalendar = () => {
-     setShowDatePicker(true); 
+  const handleDateChange = (event, date) => {
+    if (event.type === "set") {
+      setShowDatePicker(false);
+      setSelectedDate(date);
+      setToday(moment(date).format("DD MMM YYYY"));
+    } else {
+      setShowDatePicker(false);
+    }
   };
-  
+
+  const showCalendar = () => {
+    setShowDatePicker(true);
+  };
+
   return (
     <ContainerComponent>
       <View
@@ -224,7 +224,7 @@ export default function DashboardScreen({ navigation }) {
                 key={item.id}
                 backgroundColor={item.backgroundColor}
                 tasks={item.count}
-                status={item.title}
+                status={t(item.name)}
                 onPress={() =>
                   navigation.navigate(item.page, {
                     pageTitle: item.name,

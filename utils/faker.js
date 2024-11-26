@@ -24,52 +24,20 @@ export const ProjectcardsForDashboard = [
     backgroundColor: "#A0D3E8",
   },
 ];
-export const project = [
+
+export const projects = [
   {
     id: 1,
     projectName: "Project 01B",
     workOrderNumber: "12345",
     rate: "100",
-    date: "",
+    date: "26-Nov-2024",
+    sites: [1, 2],
+    vendor: [1],
+    tasks: [1, 2]
   },
 ];
 
-export const siteCardsForDashboard = [
-  {
-    id: 1,
-    title: "Total Sites",
-    name: "total_sites",
-    count: 2,
-    page: "totalSitesScreen",
-    data: totalsitesData,
-    backgroundColor: "#f9caa7",
-    status: 1,
-  },
-  {
-    id: 2,
-    title: "Completed Sites",
-    count: 2,
-    page: "totalSitesScreen",
-    data: totalsitesData,
-    backgroundColor: "#ffeead",
-  },
-  {
-    id: 3,
-    title: "Sites in Progress",
-    count: 2,
-    page: "totalSitesScreen",
-    data: totalsitesData,
-    backgroundColor: "#bdeaee",
-  },
-  {
-    id: 4,
-    title: "Pending Sites",
-    count: 2,
-    page: "totalSitesScreen",
-    data: totalsitesData,
-    backgroundColor: "#ffbbee",
-  },
-];
 export const totalsitesData = [
   {
     id: 1,
@@ -94,6 +62,42 @@ export const totalsitesData = [
     cANumber: "CA789101",
     ContactNo: "9123456789",
     iCVendorName: "Rajesh Kumar",
+  },
+];
+
+export const siteCardsForDashboard = [
+  {
+    id: 1,
+    name: "total_sites",
+    count: totalsitesData.length,
+    page: "totalSitesScreen",
+    data: totalsitesData,
+    backgroundColor: "#f9caa7",
+    status: 1,
+  },
+  {
+    id: 2,
+    name: "completed_sites",
+    count: totalsitesData.length,
+    page: "totalSitesScreen",
+    data: totalsitesData,
+    backgroundColor: "#ffeead",
+  },
+  {
+    id: 3,
+    name: "in_progress_sites",
+    count: totalsitesData.length,
+    page: "totalSitesScreen",
+    data: totalsitesData,
+    backgroundColor: "#bdeaee",
+  },
+  {
+    id: 4,
+    name: "pending_sites",
+    count: totalsitesData.length,
+    page: "totalSitesScreen",
+    data: totalsitesData,
+    backgroundColor: "#ffbbee",
   },
 ];
 
@@ -123,6 +127,7 @@ export const vendorCardForDashboard = [
     backgroundColor: "#C4C3D0",
   },
 ];
+
 export const vendors = [
   {
     id: 1,
@@ -150,6 +155,7 @@ export const vendors = [
     created_date: "2024-11-22",
   },
 ];
+
 export const inventoryData = [
   {
     id: 1,

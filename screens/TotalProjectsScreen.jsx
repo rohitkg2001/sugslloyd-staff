@@ -7,7 +7,7 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { fakeDelete, project } from "../utils/faker";
+import { fakeDelete, projects } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import {
@@ -22,12 +22,12 @@ import { useTranslation } from "react-i18next";
 
 export default function TotalProjectsScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
-  const [filteredProjects, setFilteredProjects] = useState(project);
+  const [filteredProjects, setFilteredProjects] = useState(projects);
   const { t } = useTranslation();
 
   const filterProjects = (text) => {
     setSearchText(text);
-    const filtered = project.filter((item) =>
+    const filtered = projects.filter((item) =>
       item.projectName.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredProjects(filtered);
