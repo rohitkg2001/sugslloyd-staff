@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Alert } from "react-native";
 import { SCREEN_WIDTH, spacing, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
 import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
+
 const ViewDetailScreen = ({ route, navigation }) => {
   const { site, formType } = route.params;
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [siteCreated, setSiteCreated] = useState(false);
   const { t } = useTranslation();
 
   const renderDetailRow = (label, value) => (
@@ -40,6 +42,55 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("Work Order Number", site.workOrderNumber)}
       {renderDetailRow("Rate", site.rate)}
       {renderDetailRow("Date", site.date)}
+
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginVertical: 16,
+        }}
+      >
+        <MyButton
+          title={t("create_site")}
+          onPress={() => {
+            setSiteCreated(true);
+            navigation.navigate("sitesFormScreen");
+          }}
+          color="#DC4C64"
+        />
+        <MyButton
+          title={t("view_site")}
+          onPress={() => navigation.navigate("totalSitesScreen")}
+        />
+      </View>
+
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginVertical: 16,
+        }}
+      >
+        <MyButton
+          title={t("create_task")}
+          onPress={() => {
+            if (siteCreated) {
+              navigation.navigate("taskListFormScreen");
+            } else {
+              Alert.alert(
+                "Error",
+                "Sorry, first create the site to create a task."
+              );
+            }
+          }}
+          color="#DC4C64"
+          disabled={!siteCreated}
+        />
+        <MyButton
+          title={t("view_task")}
+          onPress={() => navigation.navigate("taskScreen")}
+        />
+      </View>
     </>
   );
 
@@ -79,25 +130,23 @@ const ViewDetailScreen = ({ route, navigation }) => {
               : renderSiteDetails()}
           </View>
         </ScrollView>
-        {
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginVertical: 16,
-            }}
-          >
-            <MyButton
-              title={t("create_task")}
-              onPress={() => navigation.navigate("taskListFormScreen")}
-              color="#DC4C64"
-            />
-            <MyButton
-              title={t("view_task")}
-              onPress={() => navigation.navigate("taskScreen")}
-            />
-          </View>
-        }
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginVertical: 16,
+          }}
+        >
+          <MyButton
+            title={t("create_task")}
+            onPress={() => navigation.navigate("taskListFormScreen")}
+            color="#DC4C64"
+          />
+          <MyButton
+            title={t("view_task")}
+            onPress={() => navigation.navigate("taskScreen")}
+          />
+        </View>
       </View>
     </ContainerComponent>
   );

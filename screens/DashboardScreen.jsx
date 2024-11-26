@@ -215,12 +215,12 @@ export default function DashboardScreen({ navigation }) {
           >
             <View style={{ alignItems: "center", textAlign: "center" }}>
               <P style={typography.textBold}>Project</P>
-              <P style={(typography.font20, spacing.m2)}>20</P>
+              <P style={(typography.font20, spacing.m2)}>Project 01B</P>
             </View>
 
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>Site</P>
-              <P style={(typography.font20, spacing.m2)}>7</P>
+              <P style={(typography.font20, spacing.m2)}>2</P>
             </View>
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>Completed</P>
