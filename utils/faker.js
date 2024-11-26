@@ -224,7 +224,7 @@ export const menuItems = [
     icon: "pie-chart-outline",
   },
   {
-    label: "setting",
+    label: "settings",
     page: "",
     icon: "cog-outline",
     page: "InternalSetting",
