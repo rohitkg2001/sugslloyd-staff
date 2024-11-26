@@ -206,41 +206,30 @@ export default function DashboardScreen({ navigation }) {
               Project Overview
             </H5>
           </View>
-          <View style={[spacing.bbw05, spacing.mv1]} />
+          <View style={[spacing.bbw05, spacing.mv2]} />
           <View
             style={[
               styles.row,
               { justifyContent: "space-between", paddingVertical: 10 },
             ]}
           >
-            <TouchableOpacity
-              style={{ alignItems: "center" }}
-              onPress={navigateToTotalProjectsScreen}
-            >
+            <View style={{ alignItems: "center", textAlign: "center" }}>
               <P style={typography.textBold}>Project</P>
-              <P>20</P>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ alignItems: "center" }}
-              onPress={navigateToTotalSitesScreen}
-            >
+              <P style={(typography.font20, spacing.m2)}>20</P>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>Site</P>
-              <P>7</P>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ alignItems: "center" }}
-              // onPress={navigateToNoRecord}
-            >
+              <P style={(typography.font20, spacing.m2)}>7</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>Completed</P>
-              <P>1</P>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ alignItems: "center" }}
-              // onPress={navigateToNoRecord}
-            >
+              <P style={(typography.font20, spacing.m2)}>1</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>Pending</P>
-              <P>1</P>
-            </TouchableOpacity>
+              <P style={(typography.font20, spacing.m2)}>1</P>
+            </View>
           </View>
         </CardFullWidth>
 

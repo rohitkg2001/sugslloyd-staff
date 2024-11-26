@@ -101,6 +101,7 @@
     "name": "Name",
     "create_task": "Create Task",
     "view_task": "View Tasks",
+    "View_site" : "View Sites" ,
     "site_management": "Site Management",
     "create_vendor": "Create Vendor",
     "total_vendors": "Total Vendors",
