@@ -101,13 +101,25 @@
     "name": "नाम",
     "create_task": "कार्य बनाएँ",
     "view_task": "कार्य देखें",
-    "View_site" : "साइट देखें" ,
+    "View_site": "साइट देखें",
     "site_management": "साइट प्रबंधन",
     "create_vendor": "विक्रेता बनाएँ",
     "crete_project": "परियोजना बनाएं",
     "word_order_number": "कार्य आदेश संख्या",
     "date": "तारीख",
     "rate": "दर",
-    "total_earnings": "कुल कमाई"
+    "total_earnings": "कुल कमाई",
+    "sanction_load": "अनुमोदित लोड",
+    "meter_no": "मीटर संख्या",
+    "load_enhancementstatus": "लोड वृद्धि स्थिति",
+    "site_surveystatus": "साइट सर्वे स्थिति",
+    "net_meterserialnumber": "नेट मीटर सीरियल संख्या",
+    "solar_meterserialnumber": "सोलर मीटर सीरियल संख्या",
+    "material_inspectiondate": "सामग्री निरीक्षण तिथि",
+    "spp_installationiondate": "एसपीपी स्थापना तिथि",
+    "commissioning_date": "कमिशनिंग तिथि",
+    "done": "पूर्ण",
+    "pending": "लंबित",
+    "remarks": "टिप्पणियाँ"
   }
 }
