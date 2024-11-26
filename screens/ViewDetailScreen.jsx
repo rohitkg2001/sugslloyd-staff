@@ -99,7 +99,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
           color="#DC4C64"
         />
         <MyButton
-          title={t("view_site")}
+          title={t("View_site")}
           onPress={() => navigation.navigate("totalSitesScreen")}
         />
       </View>
