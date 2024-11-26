@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { View, ScrollView, Alert } from "react-native";
+import { useState, useCallback } from "react";
+import { View, ScrollView } from "react-native";
 import { SCREEN_WIDTH, spacing, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
@@ -13,6 +13,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const [siteCreated, setSiteCreated] = useState(false);
   const { t } = useTranslation();
 
+  // Optimize rendering of the row components
   const renderDetailRow = (label, value) => (
     <View style={{ flexDirection: "row", paddingVertical: 8 }}>
       <H5 style={[typography.textBold]}>{label}</H5>
@@ -22,6 +23,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
     </View>
   );
 
+  // Site details rendering
   const renderSiteDetails = () => (
     <>
       {renderDetailRow("Site Name", site.siteName)}
@@ -36,6 +38,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
     </>
   );
 
+  // Project details rendering
   const renderProjectDetails = () => (
     <>
       {renderDetailRow("Project Name", site.projectName)}
@@ -63,6 +66,22 @@ const ViewDetailScreen = ({ route, navigation }) => {
           onPress={() => navigation.navigate("totalSitesScreen")}
         />
       </View>
+    </>
+  );
+
+  // Vendor details rendering
+  const renderVendorDetails = () => (
+    <>
+      {renderDetailRow("Vendor Name", site.name)}
+      {renderDetailRow("Mail ID", site.email)}
+      {renderDetailRow("Contact Number", site.contact_number)}
+      {renderDetailRow("Aadhar Number", site.aadhar_number)}
+      {renderDetailRow("Account Name", site.account_name)}
+      {renderDetailRow("Ifsc", site.ifsc)}
+      {renderDetailRow("Bank_name", site.bank_name)}
+      {renderDetailRow("Gst_number", site.gst_number)}
+      {renderDetailRow("Pan_number", site.pan_number)}
+      {renderDetailRow("Status", site.status)}
 
       <View
         style={{
@@ -71,22 +90,30 @@ const ViewDetailScreen = ({ route, navigation }) => {
           marginVertical: 16,
         }}
       >
-  
+        <MyButton
+          title={t("create_site")}
+          onPress={() => {
+            setSiteCreated(true);
+            navigation.navigate("sitesFormScreen");
+          }}
+          color="#DC4C64"
+        />
+        <MyButton
+          title={t("view_site")}
+          onPress={() => navigation.navigate("totalSitesScreen")}
+        />
       </View>
     </>
   );
 
-  const renderVendorDetails = () => (
-    <>
-      {renderDetailRow("Vendor Name", site.name)}
-      {renderDetailRow("Mail ID", site.email)}
-      {renderDetailRow("Contact Number", site.contact_number)}
-      {renderDetailRow("Aadhar Number", site.aadhar_number)}
-      {renderDetailRow("Account Name", site.account_name)}
-      {renderDetailRow("GST Number", site.gstNumber)}
-      {renderDetailRow("Status", site.status)}
-    </>
-  );
+  // Optimized button handler using useCallback
+  const handleViewTask = useCallback(() => {
+    navigation.navigate("taskScreen");
+  }, [navigation]);
+
+  const handleCreateTask = useCallback(() => {
+    navigation.navigate("taskListFormScreen");
+  }, [navigation]);
 
   return (
     <ContainerComponent>
@@ -112,23 +139,24 @@ const ViewDetailScreen = ({ route, navigation }) => {
               : renderSiteDetails()}
           </View>
         </ScrollView>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: 16,
-          }}
-        >
-          <MyButton
-            title={t("create_task")}
-            onPress={() => navigation.navigate("taskListFormScreen")}
-            color="#DC4C64"
-          />
-          <MyButton
-            title={t("view_task")}
-            onPress={() => navigation.navigate("taskScreen")}
-          />
-        </View>
+
+        {/* Conditionally render the Create Task and View Task buttons */}
+        {formType !== "vendor" && (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginVertical: 16,
+            }}
+          >
+            <MyButton
+              title={t("create_task")}
+              onPress={handleCreateTask}
+              color="#DC4C64"
+            />
+            <MyButton title={t("view_task")} onPress={handleViewTask} />
+          </View>
+        )}
       </View>
     </ContainerComponent>
   );
