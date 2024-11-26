@@ -70,7 +70,9 @@ const ViewDetailScreen = ({ route, navigation }) => {
           justifyContent: "space-between",
           marginVertical: 16,
         }}
-      ></View>
+      >
+  
+      </View>
     </>
   );
 
@@ -81,11 +83,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("Contact Number", site.contact_number)}
       {renderDetailRow("Aadhar Number", site.aadhar_number)}
       {renderDetailRow("Account Name", site.account_name)}
-      {renderDetailRow("Ifsc", site.ifsc)}
-      {renderDetailRow("Bank_name", site.bank_name)}
-      {renderDetailRow("Gst_number", site.gst_number)}
-      {renderDetailRow("Pan_number", site.pan_number)}
-
+      {renderDetailRow("GST Number", site.gstNumber)}
       {renderDetailRow("Status", site.status)}
     </>
   );
