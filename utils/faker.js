@@ -57,6 +57,10 @@ export const totalsitesData = [
     state: "Uttar Pradesh",
     dist: "Varanasi",
     location: "Lanka",
+    geo: {
+      lat: 25.2902024,
+      lng: 82.9832034
+    },
     projectSerialCode: "45",
     ProjectCapacity: "50",
     cANumber: "CA789101",
