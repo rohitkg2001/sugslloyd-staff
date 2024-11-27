@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Image } from "react-native";
+import { View,  Image } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { documentData, staff } from "../utils/faker";
@@ -12,7 +12,7 @@ import {
 } from "../styles";
 import CardFullWidth from "../components/card/CardFullWidth";
 import Avatar from "../components/Avatar";
-import { H6, H4 } from "../components/text";
+import { H6 } from "../components/text";
 import MyFlatList from "../components/utility/MyFlatList";
 import { useTranslation } from "react-i18next";
 
@@ -74,6 +74,7 @@ export default function ProfileScreen() {
         data={documentData}
         renderItem={({ item }, index) => (
           <ProfileItem
+            style = {[]}
             key={index}
             iconName={item.documentImage}
             label={item.documentName}
