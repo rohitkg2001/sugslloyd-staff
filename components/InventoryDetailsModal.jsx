@@ -28,7 +28,7 @@ export default function InventoryDetailsModal({
         {" "}
         {selectedItem.location}, {selectedItem.dist}{" "}
       </P>
-      <P> Initial Quantity: {selectedItem.initialQuantity}</P>
+      <P> Initial Quantity: {selectedItem.initialQuantity} {selectedItem.unit}</P>
       <P> Material Dispatch Date: {selectedItem.materialDispatchDate}</P>
       <P> Delivery Date: {selectedItem.deliveryDate} </P>
       <P> Allocated To : {selectedItem.allocationOfficer} </P>
@@ -46,7 +46,7 @@ export default function InventoryDetailsModal({
           style={{
             marginLeft: "auto",
           }}
-          //  onPress={action}
+        //  onPress={action}
         >
           <H4
             style={[

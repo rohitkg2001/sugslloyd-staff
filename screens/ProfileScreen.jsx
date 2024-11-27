@@ -1,4 +1,4 @@
-import { View,  Image } from "react-native";
+import { View, Image } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { documentData, staff } from "../utils/faker";
@@ -34,7 +34,7 @@ const ProfileItem = ({ iconName, label }) => {
         <H6 style={[typography.font16, { color: "black", flex: 1 }]}>
           {label}
         </H6>
-       
+
       </View>
     </View>
   );
@@ -51,13 +51,13 @@ export default function ProfileScreen() {
         <View style={[styles.row, { alignItems: "center", marginTop: -10 }]}>
           <Avatar
             avatar={staff.image}
-            name={`${staff.firstName} ${staff.last_name}`}
+            name={`${staff.firstName} ${staff.lastName}`}
             online={false}
           />
 
           <View style={spacing.mh1}>
             <H6 style={[typography.font12, { color: LIGHT }]}>
-              {staff.firstName} {staff.last_name}
+              {staff.firstName} {staff.lastName}
             </H6>
             <H6 style={[typography.font12, { color: LIGHT }]}>{staff.email}</H6>
             <H6 style={[typography.font12, { color: LIGHT }]}>
@@ -74,7 +74,7 @@ export default function ProfileScreen() {
         data={documentData}
         renderItem={({ item }, index) => (
           <ProfileItem
-            style = {[]}
+            style={[]}
             key={index}
             iconName={item.documentImage}
             label={item.documentName}
