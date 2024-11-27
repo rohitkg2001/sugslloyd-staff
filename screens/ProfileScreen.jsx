@@ -34,20 +34,7 @@ const ProfileItem = ({ iconName, label }) => {
         <H6 style={[typography.font16, { color: "black", flex: 1 }]}>
           {label}
         </H6>
-        <View
-          style={[
-            styles.row,
-            { width: SCREEN_WIDTH - 248, justifyContent: "space-between" },
-          ]}
-        >
-          <TouchableOpacity>
-            <H4 style={typography.textInfo}>Edit </H4>
-          </TouchableOpacity>
-          <H4> | </H4>
-          <TouchableOpacity>
-            <H4 style={typography.textDanger}> Delete</H4>
-          </TouchableOpacity>
-        </View>
+       
       </View>
     </View>
   );
