@@ -93,14 +93,13 @@ const TaskListFormScreen = ({ navigation }) => {
 
   return (
     <ContainerComponent>
+      <MyHeader title={t("create_task")} isBack={true} hasIcon={true} />
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: spacing.mh1,
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title={t("create_task")} isBack={true} hasIcon={true} />
-
         <MyTextInput
           title={t("task_name")}
           value={taskName}
