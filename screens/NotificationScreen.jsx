@@ -38,13 +38,11 @@ export default function NotificationScreen() {
         isBack={true}
         hasIcon={true}
       />
-      <View>
-        <MyFlatList
-          data={notifications}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+      <MyFlatList
+        data={notifications}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
     </ContainerComponent>
   );
 }

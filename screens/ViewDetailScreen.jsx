@@ -140,14 +140,12 @@ const ViewDetailScreen = ({ route, navigation }) => {
           hasIcon={true}
           onIconPress={() => setIsMenuVisible(!isMenuVisible)}
         />
-        <ScrollView contentContainerStyle>
-          <View>
-            {formType === "vendor"
-              ? renderVendorDetails()
-              : site.projectName
-                ? renderProjectDetails()
-                : renderSiteDetails()}
-          </View>
+        <ScrollView>
+          {formType === "vendor"
+            ? renderVendorDetails()
+            : site.projectName
+              ? renderProjectDetails()
+              : renderSiteDetails()}
         </ScrollView>
 
         {/* Conditionally render the Create Task and View Task buttons */}
