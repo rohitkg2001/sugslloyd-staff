@@ -155,7 +155,7 @@ export const vendorCardForDashboard = [
 export const vendors = [
   {
     id: 1,
-    first_name: "Rakesh",
+    firstName: "Rakesh",
     last_name: "Sharma",
     name: "Rakesh Sharma",
     contact_person: "Amit Kumar",
@@ -234,7 +234,6 @@ export const menuItems = [
   },
   {
     label: "task_management_title",
-    page: "",
     icon: "grid-outline",
     page: "taskScreen",
   },
@@ -245,7 +244,6 @@ export const menuItems = [
   },
   {
     label: "settings",
-    page: "",
     icon: "cog-outline",
     page: "InternalSetting",
   },
@@ -253,11 +251,15 @@ export const menuItems = [
 
 export const internal = [
   {
-    label: "Notification",
+    label: "notification_title",
     page: "notificationScreen",
     icon: "notifications-outline",
   },
-  { label: "Privacy", page: "privacyPolicy", icon: "shield-checkmark-outline" },
+  {
+    label: "privacy_policy_title",
+    page: "privacyPolicy",
+    icon: "shield-checkmark-outline",
+  },
 ];
 
 export const notifications = [
@@ -324,35 +326,22 @@ export const documentData = [
 
 export const staff = {
   id: 1,
-  first_name: "Rakesh",
+  firstName: "Rakesh",
   last_name: "Sharma",
   user_type: "staff",
   is_admin: 0,
-  role_id: 0,
+  role_id: 1,
+  // 0-admin,1-staff/store incharge, 2-project manager, 3-vendor
   email: "rakesh.sharma@gmail.com",
   password: "12345678",
   image: "https://randomuser.me/api/portraits/men/1.jpg",
   status: "active",
-  job_title: "Technical Assistant",
-  salary: "20000",
-  salary_term: "Monthly",
-  Date_of_hire: "2024-08-27",
   disable_login: 0,
-  note: [],
   address: "123 gali, jhajjar, Haryana",
-  alternative_address: "",
   contactNo: "9909230912",
-  alternative_phone: "",
-  dob: "",
-  gender: "male",
-  sticky_note: [],
-  skype: "",
-  language: "",
   last_online: "2024-10-03 05:41:49",
-  file: "file-pdf",
-  size: "",
-  uploaded_by: "rakesh sharma",
-  created_date: "",
+  created_at: "",
+  updated_at: "",
 };
 
 export const taskslistdata = [
@@ -377,11 +366,6 @@ export const taskslistdata = [
 ];
 
 export const PRIVACY_POLICY = "lorem ipsum sit dolor amet";
-
-// statuscode=0->Project,
-//statuscode = 1 -> Site,
-//statuscode = 2 -> Completed ,
-//statuscode = 3 -> Pending
 
 export const PageData = [
   {

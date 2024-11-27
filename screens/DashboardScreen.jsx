@@ -43,7 +43,7 @@ export default function DashboardScreen({ navigation }) {
   const [greeting, setGreeting] = useState("Good morning");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const { first_name } = useSelector((state) => state.staff);
+  const { firstName } = useSelector((state) => state.staff);
   const { t } = useTranslation();
 
 
@@ -76,7 +76,7 @@ export default function DashboardScreen({ navigation }) {
       >
         <View>
           <H4 style={typography.textBold}>
-            {greeting},{first_name}
+            {greeting},{firstName}
           </H4>
           <P style={spacing.ml1}>You have {dueTasks} due tasks Today</P>
         </View>

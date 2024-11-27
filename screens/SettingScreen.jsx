@@ -24,7 +24,7 @@ export default function SettingsScreen({ navigation }) {
     <ContainerComponent justifyContent="space-between">
       <ProfileCard
         imageUri={staff.image}
-        name={`${staff.first_name} ${staff.last_name}`}
+        name={`${staff.firstName} ${staff.last_name}`}
         phoneNumber={staff.contactNo}
         onPress={() => navigation.navigate("profileScreen")}
       />
