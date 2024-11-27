@@ -55,12 +55,7 @@ const InventoryFormScreen = ({ navigation, route }) => {
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
-        <MyHeader
-          title={editItem ? "Edit Product" : "Add Product"}
-          hasIcon={true}
-          isBack={true}
-        />
-
+       
         <MyTextInput
           title={t("prod_name")}
           value={productName}
@@ -84,7 +79,6 @@ const InventoryFormScreen = ({ navigation, route }) => {
         />
         <MyTextInput
           title={t("unit")}
-          value={quantity}
           onChangeText={setUnit}
           placeholder={t("ent_unit")}
         />
