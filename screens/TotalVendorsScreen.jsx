@@ -36,7 +36,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
 
   const { pageTitle, data } = route.params || {
     pageTitle: "vendor_management_title",
-    data: totalVendorsData,
+    data: viewVendor,
   };
 
   useEffect(() => {

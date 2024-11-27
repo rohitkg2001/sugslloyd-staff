@@ -5,7 +5,6 @@ import { staff } from "../../utils/faker";
 export const greet = () => {
   // Write a logic to get morning, afternoon, evening and night as per time from moment
   const currentTime = moment().format("HH");
-
   if (0 < currentTime && currentTime < 12) {
     return "Good Morning";
   } else if (12 < currentTime && currentTime < 16) {
