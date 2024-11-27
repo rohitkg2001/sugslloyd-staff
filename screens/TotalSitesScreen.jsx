@@ -35,7 +35,7 @@ export default function TotalSitesScreen({ navigation, route }) {
 
   useEffect(() => {
     setFilteredData(data);
-    console.log(pageTitle);
+
   }, [data]);
 
   const handleSearch = (text) => {

@@ -25,15 +25,7 @@ const FormScreen = () => {
     setDate(new Date());
   };
 
-  const handleCreate = () => {
-    console.log("Creating Project with data:", {
-      projectName,
-      workOrderNumber,
-      rate,
-      location,
-      date,
-    });
-  };
+  const handleCreate = () => { };
 
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);

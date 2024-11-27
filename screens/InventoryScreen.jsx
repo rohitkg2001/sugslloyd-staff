@@ -27,7 +27,6 @@ export default function InventoryScreen({ navigation }) {
     const thisProject = projects.find((item) => item.id === thisItem.projectId);
     const thisSite = totalsitesData.find((item) => item.id === thisItem.siteId);
     const itemDetails = { ...thisItem, ...thisProject, ...thisSite };
-    console.log(itemDetails);
     setSelectedItem(itemDetails);
   };
 

@@ -1,4 +1,5 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
+export const BASE_URL = "http://192.168.1.2:8000" //TODO: replace with production server url
 
 export const initialState = {
 
@@ -29,3 +30,4 @@ export const VIEW_VENDOR = "VIEW_VENDOR";
 export const UPDATE_VENDOR = "UPDATE_VENDOR";
 export const SEARCH_VENDOR = "SEARCH_VENDOR";
 export const COUNT_VENDOR = "COUNT_VENDOR";
+export const GET_ALL_VENDORS = "GET_ALL_VENDORS"

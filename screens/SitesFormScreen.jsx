@@ -36,17 +36,7 @@ const SitesFormScreen = () => {
   };
 
   const handleCreate = () => {
-    console.log("Creating Project with data:", {
-      state,
-      city,
-      projectSerial,
-      siteName,
-      location,
-      projectCapacity,
-      caNumber,
-      contactNo,
-      vendorName,
-    });
+
   };
 
   const handleDateChange = (event, selectedDate) => {

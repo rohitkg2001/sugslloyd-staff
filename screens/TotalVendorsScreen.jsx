@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete, vendors } from "../utils/faker";
+import { fakeDelete } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -29,10 +29,7 @@ import {
 export default function TotalVendorsScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const vendorState = useSelector((state) => state.vendors);
-  const filteredVendors = vendorState?.filteredVendors || vendors;
-  const searchText = vendorState?.searchText || "";
-  const count = vendorState?.count || vendors.length;
+  const { vendors } = useSelector((state) => state.vendor);
 
   const { pageTitle, data } = route.params || {
     pageTitle: "vendor_management_title",
@@ -41,6 +38,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
 
   useEffect(() => {
     dispatch(countVendor());
+    console.log(vendors)
   }, [dispatch]);
 
   const handleViewDetails = (item) => {
@@ -53,14 +51,14 @@ export default function TotalVendorsScreen({ navigation, route }) {
   };
 
   const handleEdit = (item) => {
-    navigation.navigate("VendorFormScreen", { vendor: item });
+    navigation.navigate("VendorFormScreen", { id: item.id, email: item.email });
   };
 
   return (
     <ContainerComponent>
       <MyHeader title={t(pageTitle)} isBack={true} hasIcon={true} />
       <MyFlatList
-        data={filteredVendors}
+        data={vendors}
         loading={false}
         renderItem={({ item }) => (
           <ClickableCard

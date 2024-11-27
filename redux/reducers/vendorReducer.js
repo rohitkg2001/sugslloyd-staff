@@ -1,16 +1,17 @@
-import { VIEW_VENDOR, UPDATE_VENDOR, SEARCH_VENDOR, COUNT_VENDOR } from '../constant';
-import { vendors } from "../../utils/faker";
+import { VIEW_VENDOR, UPDATE_VENDOR, SEARCH_VENDOR, COUNT_VENDOR, GET_ALL_VENDORS } from '../constant';
 
 const initialState = {
-  vendors: vendors,
-  filteredVendors: vendors,
+  vendors: [],
+  filteredVendors: [],
   currentVendor: null,
   searchText: '',
-  count: vendors.length
+  count: 0
 };
 
 export const vendorReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_ALL_VENDORS:
+      return { ...state, vendors: action.payload };
     case VIEW_VENDOR:
       return {
         ...state,

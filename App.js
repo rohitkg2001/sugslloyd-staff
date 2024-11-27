@@ -77,8 +77,8 @@ export default function App() {
     const message = {
       to: expoPushToken,
       sound: 'default',
-      title: 'Original Title',
-      body: 'And here is the body!',
+      title: 'New Task Created',
+      body: 'New task created at PS SHIKSHA NAGAR BANMANKHI for you!',
       experienceId: '@sumitranjan245/smdnd',
       scopeKey: '@sumitranjan245/smdnd'
     };
@@ -101,15 +101,13 @@ export default function App() {
     registerForPushNotificationsAsync()
       .then(token => setExpoPushToken(token ?? ''))
       .catch(error => setExpoPushToken(`${error}`));
-    // console.log(expoPushToken)
     sendPushNotification(expoPushToken).then(() => console.log(1)).catch((err) => console.log(err))
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      console.log(notification)
       setNotification(notification);
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+
     });
 
     return () => {
