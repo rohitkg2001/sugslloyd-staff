@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { View, ScrollView } from "react-native";
-import { spacing, styles, LIGHT, SCREEN_WIDTH } from "../styles";
+import { View } from "react-native";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -8,16 +7,27 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { fakeDelete, project } from "../utils/faker";
+import { fakeDelete, projects } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
+import ContainerComponent from "../components/ContainerComponent";
+import {
+  spacing,
+  styles,
+  LIGHT,
+  SCREEN_WIDTH,
+  ICON_MEDIUM,
+  ICON_LARGE,
+} from "../styles";
+import { useTranslation } from "react-i18next";
 
 export default function TotalProjectsScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
-  const [filteredProjects, setFilteredProjects] = useState(project);
+  const [filteredProjects, setFilteredProjects] = useState(projects);
+  const { t } = useTranslation();
 
   const filterProjects = (text) => {
     setSearchText(text);
-    const filtered = project.filter((item) =>
+    const filtered = projects.filter((item) =>
       item.projectName.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredProjects(filtered);
@@ -35,8 +45,8 @@ export default function TotalProjectsScreen({ navigation }) {
   };
 
   return (
-    <View>
-      <MyHeader title="Total Projects" isBack={true} hasIcon={true} />
+    <ContainerComponent>
+      <MyHeader title={t("total_projects")} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredProjects}
         loading={false}
@@ -46,9 +56,8 @@ export default function TotalProjectsScreen({ navigation }) {
             handleViewDetails={handleViewDetails}
             handleDelete={() =>
               fakeDelete({
-                title: "Error!!!",
-                message:
-                  "You cannot delete this project. Please contact admin!",
+                title: t("error"),
+                message: t("error_msg"),
               })
             }
             handleEdit={handleEdit}
@@ -57,11 +66,16 @@ export default function TotalProjectsScreen({ navigation }) {
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
-        ListEmptyComponent={() => (
-          <NoRecord msg="Oops! No projects available. Start creating or contact admin." />
-        )}
+        ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
         ListHeaderComponent={() => (
-          <View>
+          <View
+            style={[
+              spacing.mv4,
+              styles.row,
+              spacing.mh1,
+              { alignItems: "center" },
+            ]}
+          >
             <SearchBar
               placeholder="Search"
               style={{ width: SCREEN_WIDTH - 70 }}
@@ -69,7 +83,7 @@ export default function TotalProjectsScreen({ navigation }) {
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
             >
-              <Icon name="options-outline" size={28} color={LIGHT} />
+              <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
             </Button>
           </View>
         )}
@@ -79,8 +93,8 @@ export default function TotalProjectsScreen({ navigation }) {
         style={styles.addButton}
         onPress={() => navigation.navigate("formScreen")}
       >
-        <Ionicons name="add" size={32} color="white" />
+        <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
-    </View>
+    </ContainerComponent>
   );
 }

@@ -1,45 +1,66 @@
 import { useState } from "react";
-import { View, TouchableOpacity } from "react-native";
-import { projecttask } from "../utils/faker";
+import { View } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
+import { projects } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
-import { spacing } from "../styles";
-import { styles } from "../styles/components.styles";
-import MyHeader from "../components/header/MyHeader";
-import { H5, P } from "../components/text";
+import { spacing, styles, LIGHT, SCREEN_WIDTH, ICON_MEDIUM } from "../styles";
 import SearchBar from "../components/input/SearchBar";
+import Button from "../components/buttons/Button";
 import MyFlatList from "../components/utility/MyFlatList";
+import { useTranslation } from "react-i18next";
+import ClickableCard from "../components/card/ClickableCard";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const [searchText] = useState("");
+  const { t } = useTranslation();
 
-  const filteredProjects = projecttask.filter((item) =>
+  const filteredProjects = projects.filter((item) =>
     item.projectName.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
     <ContainerComponent>
       <View>
-        <MyHeader title="Current Projects" isBack={true} hasIcon={true} />
         <MyFlatList
           data={filteredProjects}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => navigation.navigate("taskScreen")}
-            >
-              <View style={{ flex: 1 }}>
-                <H5>{item.projectName}</H5>
-                <P>{` ${item.siteName}`}</P>
-              </View>
-            </TouchableOpacity>
+          renderItem={({ item, index }) => (
+            <ClickableCard
+              key={index}
+              item={item}
+              isProject={true}
+              hideIcons={true}
+              handleViewDetails={() =>
+                navigation.navigate("taskScreen", { projectId: item.id })
+              }
+            />
           )}
           contentContainerStyle={[spacing.mh2, spacing.mt1]}
-          ListEmptyComponent={() => (
-            <NoRecord msg="Oops! There are no current projects available. Start creating or contact admin" />
-          )}
+          ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
           ListHeaderComponent={() => (
-            <SearchBar placeholder="Search current projects..." />
+            <View
+              style={[
+                spacing.mv4,
+                styles.row,
+                spacing.mh1,
+                { alignItems: "center" },
+              ]}
+            >
+              <SearchBar
+                placeholder="Search"
+                style={{ width: SCREEN_WIDTH - 70 }}
+              />
+              <Button
+                style={[
+                  styles.btn,
+                  styles.bgPrimary,
+                  spacing.mh1,
+                  { width: 50 },
+                ]}
+              >
+                <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+              </Button>
+            </View>
           )}
         />
       </View>

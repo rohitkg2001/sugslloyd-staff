@@ -1,23 +1,43 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fakeDelete, totalVendorsData } from "../utils/faker";
+import React, { useEffect } from "react";
+import { View } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { fakeDelete, vendors } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { spacing, styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { viewVendor, searchVendor, countVendor } from '../redux/actions/vendorAction';
+import {
+  LIGHT,
+  ICON_LARGE,
+  ICON_MEDIUM,
+  spacing,
+  SCREEN_WIDTH,
+  styles,
+} from "../styles";
+import { useTranslation } from "react-i18next";
+import {
+  viewVendor,
+  searchVendor,
+  countVendor,
+} from "../redux/actions/vendorAction";
 
-export default function TotalVendorsScreen({ navigation }) {
+export default function TotalVendorsScreen({ navigation, route }) {
   const dispatch = useDispatch();
-  const vendorState = useSelector(state => state.vendors);
-  const filteredVendors = vendorState?.filteredVendors || totalVendorsData;
-  const searchText = vendorState?.searchText || '';
-  const count = vendorState?.count || totalVendorsData.length;
+  const { t } = useTranslation();
+  const vendorState = useSelector((state) => state.vendors);
+  const filteredVendors = vendorState?.filteredVendors || vendors;
+  const searchText = vendorState?.searchText || "";
+  const count = vendorState?.count || vendors.length;
+
+  const { pageTitle, data } = route.params || {
+    pageTitle: "vendor_management_title",
+    data: viewVendor,
+  };
 
   useEffect(() => {
     dispatch(countVendor());
@@ -38,7 +58,7 @@ export default function TotalVendorsScreen({ navigation }) {
 
   return (
     <ContainerComponent>
-      <MyHeader title={`Vendor Management (${count})`} isBack={true} hasIcon={true} />
+      <MyHeader title={t(pageTitle)} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredVendors}
         loading={false}
@@ -48,8 +68,8 @@ export default function TotalVendorsScreen({ navigation }) {
             handleViewDetails={handleViewDetails}
             handleDelete={() =>
               fakeDelete({
-                title: "Error!!!",
-                message: "You cannot delete this vendor. Please contact Admin!",
+                title: t("error"),
+                message: t("error_msg"),
               })
             }
             handleEdit={() => handleEdit(item)}
@@ -58,22 +78,33 @@ export default function TotalVendorsScreen({ navigation }) {
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
-        ListEmptyComponent={() => (
-          <NoRecord msg="Oops! No Vendors available. Create the new one." />
-        )}
+        ListEmptyComponent={() => <NoRecord msg={t("norecord_msg")} />}
         ListHeaderComponent={() => (
-          <SearchBar 
-            placeholder="Search by name, state or project code"
-            value={searchText}
-            onChangeText={handleSearch}
-          />
+          <View
+            style={[
+              spacing.mv4,
+              styles.row,
+              spacing.mh1,
+              { alignItems: "center" },
+            ]}
+          >
+            <SearchBar
+              placeholder="Search"
+              style={{ width: SCREEN_WIDTH - 70 }}
+            />
+            <Button
+              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+            >
+              <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+            </Button>
+          </View>
         )}
       />
       <Button
         style={styles.addButton}
         onPress={() => navigation.navigate("VendorFormScreen")}
       >
-        <Ionicons name="add" size={32} color="white" />
+        <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
     </ContainerComponent>
   );

@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyPickerInput from "../components/input/MyPickerInput";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import MyButton from "../components/buttons/MyButton";
+import { useTranslation } from "react-i18next";
 
 const SitesFormScreen = () => {
   const [state, setState] = useState("");
@@ -16,7 +18,10 @@ const SitesFormScreen = () => {
   const [projectCapacity, setProjectCapacity] = useState("");
   const [caNumber, setCaNumber] = useState("");
   const [contactNo, setContactNo] = useState("");
-  const [vendorName, setVendorName] = useState("");
+  const [ vendorName, setVendorName ] = useState( "" );
+  const [ date, setDate ] = useState( new Date() );
+    const [showDatePicker, setShowDatePicker] = useState(false);
+  const { t } = useTranslation();
 
   const handleCancel = () => {
     setState("");
@@ -44,18 +49,21 @@ const SitesFormScreen = () => {
     });
   };
 
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+  };
   return (
     <ContainerComponent>
       <ScrollView
-        contentContainerStyle={[
-          spacing.mh1,
-          { width: SCREEN_WIDTH - 18 }]
-        }
+        contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 18 }]}
       >
-        <MyHeader title="Sites Details" hasIcon icon="ellipsis-vertical" />
+        <MyHeader title={t("create_site")} hasIcon={true} isBack={true} />
 
         <MyPickerInput
-          title="State"
+          title={t("site_State")}
           value={state}
           onChange={setState}
           options={[
@@ -66,7 +74,7 @@ const SitesFormScreen = () => {
         />
 
         <MyPickerInput
-          title="City"
+          title={t("site_city")}
           value={city}
           onChange={setCity}
           options={[
@@ -76,55 +84,136 @@ const SitesFormScreen = () => {
           ]}
         />
         <MyTextInput
-          title="Location"
+          title={t("site_location")}
           value={location}
           onChangeText={setLocation}
           placeholder="Enter Location"
         />
         <MyTextInput
-          title="Project Serial Code"
+          title={t("site_Projectcode")}
           value={projectSerial}
           onChangeText={setProjectSerial}
           placeholder="Enter Project Serial Code"
         />
         <MyTextInput
-          title="Site Name"
+          title={t("site_name")}
           value={siteName}
           onChangeText={setSiteName}
           placeholder="Enter Site Name"
         />
 
         <MyTextInput
-          title="Project Capacity"
+          title={t("site_projectcapacity")}
           value={projectCapacity}
           onChangeText={setProjectCapacity}
           placeholder="Enter Project Capacity"
         />
         <MyTextInput
-          title="CA Number"
+          title={t("site_canumber")}
           value={caNumber}
           onChangeText={setCaNumber}
           placeholder="Enter CA Number"
         />
         <MyTextInput
-          title="Contact No."
+          title={t("site_ContactNo")}
           value={contactNo}
           onChangeText={setContactNo}
           placeholder="Enter Contact No."
           keyboardType="numeric"
         />
         <MyTextInput
-          title="I & C Vendor Name"
+          title={t("site_I&CVendorName")}
           value={vendorName}
           onChangeText={setVendorName}
           placeholder="Enter I & C Vendor Name"
         />
+        <MyTextInput
+          title={t("sanction_load")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Enter Sanction Value"
+        />
+        <MyTextInput
+          title={t("meter_no")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Enter Meter Number"
+        />
+        <MyTextInput
+          title={t("load_enhancementstatus")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Enter Load Enhancement Status"
+        />
+        <MyPickerInput
+          title={t("site_surveystatus")}
+          value={state}
+          onChange={setState}
+          options={[{ label: t("done") }, { label: t("pending") }]}
+        />
+        <MyTextInput
+          title={t("net_meterserialnumber")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Put serial Number"
+        />
+        <MyTextInput
+          title={t("solar_meterserialnumber")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Put serial Number"
+        />
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <MyTextInput
+            title={t("material_inspectiondate")}
+            value={date.toLocaleDateString()}
+            placeholder="Select Date"
+            editable={false}
+          />
+        </TouchableOpacity>
 
-        <View
-          style={[styles.row, { width: SCREEN_WIDTH - 20 }]}
-        >
-          <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
-          <MyButton title="Create" onPress={handleCreate} />
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <MyTextInput
+            title={t("spp_installationiondate")}
+            value={date.toLocaleDateString()}
+            placeholder="Select Date"
+            editable={false}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <MyTextInput
+            title={t("commissioning_date")}
+            value={date.toLocaleDateString()}
+            placeholder="Select Date"
+            editable={false}
+          />
+        </TouchableOpacity>
+
+        <MyTextInput
+          title={t("remarks")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Description here"
+          style={{ height: 100, padding: 10 }}
+        />
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
+
+        <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>
+          <MyButton
+            title={t("cancel")}
+            onPress={handleCancel}
+            color="#DC4C64"
+          />
+          <MyButton title={t("create")} onPress={handleCreate} />
         </View>
       </ScrollView>
     </ContainerComponent>

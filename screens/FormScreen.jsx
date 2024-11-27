@@ -1,62 +1,45 @@
 import { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, TouchableOpacity } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
-import MyPickerInput from "../components/input/MyPickerInput";
 import MyButton from "../components/buttons/MyButton";
+import { useTranslation } from "react-i18next";
 
 const FormScreen = () => {
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
-  const [projectSerial, setProjectSerial] = useState("");
-  const [siteName, setSiteName] = useState("");
+  const [projectName, setProjectName] = useState("");
+  const [workOrderNumber, setWorkOrderNumber] = useState("");
+  const [rate, setRate] = useState("");
   const [location, setLocation] = useState("");
-  const [sanctionLoad, setSanctionLoad] = useState("");
-  const [projectCapacity, setProjectCapacity] = useState("");
-  const [caNumber, setCaNumber] = useState("");
-  const [meterNo, setMeterNo] = useState("");
-  const [loadEnhancementStatus, setLoadEnhancementStatus] = useState("");
-  const [surveyStatus, setSurveyStatus] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [solarMeterSerial, setSolarMeterSerial] = useState("");
-  const [vendorName, setVendorName] = useState("");
+  const { t } = useTranslation();
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleCancel = () => {
-    setState("");
-    setCity("");
-    setProjectSerial("");
-    setSiteName("");
-    setLocation("");
-    setSanctionLoad("");
-    setProjectCapacity("");
-    setCaNumber("");
-    setMeterNo("");
-    setLoadEnhancementStatus("");
-    setSurveyStatus("");
-    setContactNo("");
-    setSolarMeterSerial("");
-    setVendorName("");
+    setProjectName("");
+    setWorkOrderNumber("");
+    setRate("");
+    // setLocation("");
+    setDate(new Date());
   };
 
   const handleCreate = () => {
     console.log("Creating Project with data:", {
-      state,
-      city,
-      projectSerial,
-      siteName,
+      projectName,
+      workOrderNumber,
+      rate,
       location,
-      sanctionLoad,
-      projectCapacity,
-      caNumber,
-      meterNo,
-      loadEnhancementStatus,
-      surveyStatus,
-      contactNo,
-      solarMeterSerial,
-      vendorName,
+      date,
     });
+  };
+
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
   };
 
   return (
@@ -67,113 +50,43 @@ const FormScreen = () => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title="Project Details" hasIcon icon="ellipsis-vertical" />
-
-        <MyPickerInput
-          title="State"
-          value={state}
-          onChange={setState}
-          options={[
-            { label: "Andhra Pradesh", value: "CA" },
-            { label: "Bihar", value: "TX" },
-            { label: "Chattishgarh", value: "NY" },
-          ]}
-        />
-
-        <MyPickerInput
-          title="City"
-          value={city}
-          onChange={setCity}
-          options={[
-            { label: "Patna", value: "LA" },
-            { label: "Purniea", value: "HOU" },
-            { label: "Gaya", value: "NYC" },
-          ]}
-        />
+        <MyHeader title={t("crete_project")} isBack={true} hasIcon={true} />
 
         <MyTextInput
-          title="Project Serial Code"
-          value={projectSerial}
-          onChangeText={setProjectSerial}
-          placeholder="Enter Project Serial Code"
+          title={t("project_name")}
+          value={projectName}
+          onChangeText={setProjectName}
+          placeholder="Enter Project Name"
         />
         <MyTextInput
-          title="Site Name"
-          value={siteName}
-          onChangeText={setSiteName}
-          placeholder="Enter Site Name"
-        />
-        <MyTextInput
-          title="Location"
-          value={location}
-          onChangeText={setLocation}
-          placeholder="Enter Location"
-        />
-        <MyTextInput
-          title="Sanction Load"
-          value={sanctionLoad}
-          onChangeText={setSanctionLoad}
-          placeholder="Enter Sanction Load"
-        />
-        <MyTextInput
-          title="Project Capacity"
-          value={projectCapacity}
-          onChangeText={setProjectCapacity}
-          placeholder="Enter Project Capacity"
-        />
-        <MyTextInput
-          title="CA Number"
-          value={caNumber}
-          onChangeText={setCaNumber}
-          placeholder="Enter CA Number"
-        />
-        <MyTextInput
-          title="Meter No."
-          value={meterNo}
-          onChangeText={setMeterNo}
-          placeholder="Enter Meter No."
+          title={t("word_order_number")}
+          value={workOrderNumber}
+          onChangeText={setWorkOrderNumber}
+          placeholder="Enter Work Order Number"
         />
 
-        <MyPickerInput
-          title="Load Enhancement Status"
-          value={loadEnhancementStatus}
-          onChange={setLoadEnhancementStatus}
-          options={[
-            { label: "Pending", value: "Pending" },
-            { label: "Approved", value: "Approved" },
-          ]}
-        />
-
-        <MyPickerInput
-          title="Survey Status"
-          value={surveyStatus}
-          onChange={setSurveyStatus}
-          options={[
-            { label: "Completed", value: "Completed" },
-            { label: "Pending", value: "Pending" },
-          ]}
-        />
-
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <MyTextInput
+            title={t("date")}
+            value={date.toLocaleDateString()}
+            placeholder="Select Date"
+            editable={false}
+          />
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
         <MyTextInput
-          title="Contact No."
-          value={contactNo}
-          onChangeText={setContactNo}
-          placeholder="Enter Contact No."
-          keyboardType="numeric"
+          title={t("rate")}
+          value={rate}
+          onChangeText={setRate}
+          placeholder="Rate"
         />
-        <MyTextInput
-          title="Solar Meter Serial No."
-          value={solarMeterSerial}
-          onChangeText={setSolarMeterSerial}
-          placeholder="Enter Solar Meter Serial No."
-        />
-        <MyTextInput
-          title="I & C Vendor Name"
-          value={vendorName}
-          onChangeText={setVendorName}
-          placeholder="Enter I & C Vendor Name"
-        />
-
         <View
           style={[
             {
@@ -183,8 +96,12 @@ const FormScreen = () => {
             },
           ]}
         >
-          <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
-          <MyButton title="Create" onPress={handleCreate} />
+          <MyButton
+            title={t("cancel")}
+            onPress={handleCancel}
+            color="#DC4C64"
+          />
+          <MyButton title={t("create")} onPress={handleCreate} />
         </View>
       </ScrollView>
     </ContainerComponent>

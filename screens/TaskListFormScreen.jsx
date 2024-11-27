@@ -1,33 +1,53 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Platform } from "react-native";
-import { useDispatch, useSelector } from 'react-redux';
+import { View, ScrollView, TouchableOpacity } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import DropDownPicker from "react-native-dropdown-picker";
-import { updateTask } from '../redux/actions/taskActions';
-import { project } from "../utils/faker";
+import { updateTask } from "../redux/actions/taskActions";
+import { projects } from "../utils/faker";
+import { useTranslation } from "react-i18next";
 
 const TaskListFormScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const currentTask = useSelector(state => state.tasks?.currentTask);
+  const { t } = useTranslation();
+  const currentTask = useSelector((state) => state.tasks?.currentTask);
 
-  const [projectName, setProjectName] = useState(currentTask?.projectName || null);
+  const [projectName, setProjectName] = useState(
+    currentTask?.projectName || null
+  );
   const [taskName, setTaskName] = useState(currentTask?.taskName || "");
-  const [description, setDescription] = useState(currentTask?.description || "");
-  const [deadline, setDeadline] = useState(currentTask?.deadline ? new Date(currentTask.deadline) : new Date());
+  const [description, setDescription] = useState(
+    currentTask?.description || ""
+  );
+  const [deadline, setDeadline] = useState(
+    currentTask?.deadline ? new Date(currentTask.deadline) : new Date()
+  );
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState(
-    project.map((proj) => ({
+    projects.map((proj) => ({
       label: proj.projectName,
       value: proj.id,
     }))
   );
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [isSelectingStartDate, setIsSelectingStartDate] = useState(true);
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      if (isSelectingStartDate) {
+        setStartDate(selectedDate);
+      } else {
+        setEndDate(selectedDate);
+      }
+    }
+  };
 
   useEffect(() => {
     if (currentTask) {
@@ -42,7 +62,9 @@ const TaskListFormScreen = ({ navigation }) => {
     setProjectName(currentTask?.projectName || null);
     setTaskName(currentTask?.taskName || "");
     setDescription(currentTask?.description || "");
-    setDeadline(currentTask?.deadline ? new Date(currentTask.deadline) : new Date());
+    setDeadline(
+      currentTask?.deadline ? new Date(currentTask.deadline) : new Date()
+    );
   };
 
   const handleSubmit = () => {
@@ -77,33 +99,17 @@ const TaskListFormScreen = ({ navigation }) => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title="Update Task" hasIcon icon="ellipsis-vertical" />
-
-        <DropDownPicker
-          open={open}
-          value={projectName}
-          items={projects}
-          setOpen={setOpen}
-          setValue={setProjectName}
-          placeholder="Select a Project"
-          searchable={true}
-          searchPlaceholder="Search Project"
-          style={{ marginBottom: 16, backgroundColor: "#E1F3E1" }}
-          searchTextInputStyle={{
-            color: "black",
-          }}
-          zIndex={3000}
-        />
+        <MyHeader title={t("create_task")} isBack={true} hasIcon={true} />
 
         <MyTextInput
-          title="Task Name"
+          title={t("task_name")}
           value={taskName}
           onChangeText={setTaskName}
           placeholder="Enter Task Name"
         />
 
         <MyTextInput
-          title="Description"
+          title={t("description")}
           value={description}
           onChangeText={setDescription}
           placeholder="Enter Description"
@@ -112,19 +118,40 @@ const TaskListFormScreen = ({ navigation }) => {
         />
 
         <View>
-          <MyTextInput
-            title="Select Deadline"
-            value={deadline.toLocaleDateString()}
-            editable={false}
-            onPressIn={showPicker}
-          />
+          <TouchableOpacity
+            onPress={() => {
+              setIsSelectingStartDate(true);
+              setShowDatePicker(true);
+            }}
+          >
+            <MyTextInput
+              title="Start Date"
+              value={startDate.toLocaleDateString()}
+              placeholder="Select Start Date"
+              editable={false}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              setIsSelectingStartDate(false);
+              setShowDatePicker(true);
+            }}
+          >
+            <MyTextInput
+              title="End Date"
+              value={endDate.toLocaleDateString()}
+              placeholder="Select End Date"
+              editable={false}
+            />
+          </TouchableOpacity>
 
           {showDatePicker && (
             <DateTimePicker
-              value={deadline}
+              value={isSelectingStartDate ? startDate : endDate}
               mode="date"
-              display={Platform.OS === "ios" ? "spinner" : "default"}
-              onChange={onChange}
+              display="default"
+              onChange={handleDateChange}
             />
           )}
         </View>
@@ -136,8 +163,12 @@ const TaskListFormScreen = ({ navigation }) => {
             marginVertical: 16,
           }}
         >
-          <MyButton title="Reset" onPress={handleReset} color="#DC4C64" />
-          <MyButton title="Update" onPress={handleSubmit} />
+          <MyButton
+            title={t("reset_button")}
+            onPress={handleReset}
+            color="#DC4C64"
+          />
+          <MyButton title={t("update_button")} onPress={handleSubmit} />
         </View>
       </ScrollView>
     </ContainerComponent>
@@ -145,4 +176,3 @@ const TaskListFormScreen = ({ navigation }) => {
 };
 
 export default TaskListFormScreen;
-

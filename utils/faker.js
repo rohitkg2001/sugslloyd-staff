@@ -4,333 +4,258 @@ export const fakeDelete = ({
   title,
   message,
   negativeTextClick = null,
+  positiveText,
   positiveTextClick = null,
 }) => {
   Alert.alert(title, message, [
     { text: "Cancel", style: "cancel", onPress: negativeTextClick },
-    { text: "Delete", onPress: positiveTextClick },
+    { text: positiveText, onPress: positiveTextClick },
   ]);
 };
 
-export const tasks = [
+export const ProjectcardsForDashboard = [
   {
     id: 1,
     title: "Task 1",
     description: "This is task 1",
-    count: 28,
+    count: 1,
     status: "Total Projects ",
     page: "totalProjectsScreen",
     backgroundColor: "#A0D3E8",
   },
-  {
-    id: 2,
-    title: "Task 2",
-    description: "This is task 2",
-    count: 31,
-    status: "Total Earning",
-    page: "totalEarningScreen",
-    backgroundColor: "#C8E6C9",
-  },
-
-  {
-    id: 7,
-    title: "Task 6",
-    description: "This is task 5",
-    count: 67,
-    status: "Total Vendors",
-    page: "totalVendorsScreen",
-    backgroundColor: "#FFB7B2",
-  },
-  {
-    id: 8,
-    title: "Task 6",
-    description: "This is task 5",
-    count: 53,
-    status: "Active Vendors",
-    page: "activeVendorsScreen",
-    backgroundColor: "#B6F4D3",
-  },
-  {
-    id: 9,
-    title: "Task 6",
-    description: "This is task 5",
-    count: 10,
-    status: "Inactive Vendors",
-    page: "inactiveVendorsScreen",
-    backgroundColor: "#C4C3D0",
-  },
-  {
-    id: 10,
-    title: "Task 6",
-    description: "This is task 5",
-    count: 4,
-    status: "Blocklisted Vendor",
-    page: "blockListedVendorsScreen",
-    backgroundColor: "#F5F5DC",
-  },
 ];
 
-export const project = [
+export const projects = [
   {
     id: 1,
     projectName: "Project 01B",
-    duration: "6 days",
-    status: "completed",
-    projectSerial: "76",
-    siteName: "Site Delta", // Added siteName
-    sanctionLoad: "200KW",
-    projectCapacity: "400KW",
-    caNumber: "CA44556",
-    surveyStatus: "In Progress",
-    contactNo: "2233445566",
-    solarMeterSerial: "SM004D",
-    vendorName: "Raju Das",
-  },
-  {
-    id: 2,
-    projectName: "Project 02B",
-    duration: "5 days",
-    status: "completed",
-    projectSerial: "",
-    siteName: "Site Alpha", // Added siteName
-    sanctionLoad: "",
-    projectCapacity: "",
-    caNumber: "",
-    surveyStatus: "",
-    contactNo: "",
-    solarMeterSerial: "",
-    vendorName: "Md. Sohail Ansari",
-  },
-  {
-    id: 3,
-    projectName: "Project 03C",
-    duration: "3 days",
-    status: "ongoing",
-    siteName: "Site Beta", // Added siteName
-    vendorName: "Ayush Ranjan",
-  },
-  {
-    id: 4,
-    projectName: "Project 04D",
-    duration: "7 days",
-    status: "completed",
-    siteName: "Site Gamma", // Added siteName
-    vendorName: "Md Munna",
-  },
-  {
-    id: 5,
-    projectName: "Project 05E",
-    duration: "4 days",
-    status: "ongoing",
-    siteName: "Site Delta", // Added siteName
-    vendorName: "Suresh Tripathy",
-  },
-  {
-    id: 6,
-    projectName: "Project 06F",
-    duration: "6 days",
-    status: "ongoing",
-    siteName: "Site Omega", // Added siteName
-  },
-  {
-    id: 7,
-    projectName: "Project 07G",
-    duration: "1 day",
-    status: "completed",
-    siteName: "Site Alpha", // Added siteName
-  },
-  {
-    id: 8,
-    projectName: "Project 08H",
-    duration: "8 days",
-    status: "ongoing",
-    siteName: "Site Beta", // Added siteName
-  },
-  {
-    id: 9,
-    projectName: "Project 09I",
-    duration: "10 days",
-    status: "completed",
-    siteName: "Site Gamma", // Added siteName
-  },
-  {
-    id: 10,
-    projectName: "Project 10J",
-    duration: "3 days",
-    status: "ongoing",
-    siteName: "Site Omega", // Added siteName
+    workOrderNumber: "12345",
+    rate: "100",
+    date: "26-Nov-2024",
+    sites: [1, 2],
+    vendor: [1],
+    tasks: [1, 2],
   },
 ];
 
-export const projecttask = [
+export const totalsitesData = [
   {
     id: 1,
-    projectName: "Project 01A",
-    siteName: " SBI Bank , Rampur School , Lakhisarai",
+    siteName: "P S SHIKSHA NAGAR BANMANKHI",
+    state: "Bihar",
+    dist: "Purnia",
+    location: "BANMANKHI",
+    projectSerialCode: "12",
+    ProjectCapacity: "30",
+    cANumber: "CA123456",
+    ContactNo: "9199502622",
+    iCVendorName: "Pankaj Singh",
+    sanctionLoad: "5 kW",
+    meterNumber: "123456789",
+    loadEnhancementStatus: "Approved",
+    siteSurveyStatus: "Done",
+    netMetereSrNo: "NM-987654",
+    solarMeterSrNO: "SM-543210",
+    materialInspectionDate: "2024-11-20",
+    sppInstallationDate: "2024-11-25",
+    cOMISSIONINGDATE: "2024-11-30",
+    remarks: "All systems operational and inspected.",
   },
   {
     id: 2,
-    projectName: "Project 02B",
-    siteName: "Block Office, Shershah Road ,Madhepura",
+    siteName: "Gyan Kendra High School",
+    state: "Uttar Pradesh",
+    dist: "Varanasi",
+    location: "Lanka",
+    geo: {
+      lat: 25.2902024,
+      lng: 82.9832034
+    },
+    projectSerialCode: "45",
+    ProjectCapacity: "50",
+    cANumber: "CA789101",
+    ContactNo: "9123456789",
+    iCVendorName: "Rajesh Kumar",
+    sanctionLoad: "10 kW",
+    meterNumber: "AB123456789",
+    loadEnhancementStatus: "Pending Approval",
+    siteSurveyStatus: "Pending",
+    netMetereSrNo: "NM20241127001",
+    solarMeterSrNO: "SM20241127002",
+    materialInspectionDate: "2024-11-25",
+    sppInstallationDate: "2024-12-05",
+    cOMISSIONINGDATE: "2024-12-10",
+    remarks: "Site survey and installation scheduled as per plan.",
+  },
+];
+
+export const siteCardsForDashboard = [
+  {
+    id: 1,
+    name: "total_sites",
+    count: totalsitesData.length,
+    page: "totalSitesScreen",
+    data: totalsitesData,
+    backgroundColor: "#f9caa7",
+    status: 1,
+  },
+  {
+    id: 2,
+    name: "completed_sites",
+    count: totalsitesData.length,
+    page: "totalSitesScreen",
+    data: totalsitesData,
+    backgroundColor: "#ffeead",
   },
   {
     id: 3,
-    projectName: "Project 03C",
-    siteName: "Purnea Mahila College , Sipahi Tola , Purnea",
+    name: "in_progress_sites",
+    count: totalsitesData.length,
+    page: "totalSitesScreen",
+    data: totalsitesData,
+    backgroundColor: "#bdeaee",
+  },
+  {
+    id: 4,
+    name: "pending_sites",
+    count: totalsitesData.length,
+    page: "totalSitesScreen",
+    data: totalsitesData,
+    backgroundColor: "#ffbbee",
   },
 ];
-export const tasksData = [
+
+export const vendorCardForDashboard = [
   {
     id: "1",
-    taskName: "Solar Panel Installlation at railway station.",
-    installation: "Install the panel on top of the platform of 5kw of power.",
+    title: "total_vendors",
+    count: 1,
+    page: "totalVendorsScreen",
+    data: vendors,
+    backgroundColor: "#FFB7B2",
+  },
+  {
+    id: "2",
+    title: "active_vendors",
+    count: 1,
+    page: "totalVendorsScreen",
+    data: vendors,
+    backgroundColor: "#B6F4D3",
+  },
+  {
+    id: "3",
+    title: "inactive_vendors",
+    count: 0,
+    page: "totalVendorsScreen",
+    data: vendors,
+    backgroundColor: "#C4C3D0",
+  },
+];
+
+export const vendors = [
+  {
+    id: 1,
+    first_name: "Rakesh",
+    last_name: "Sharma",
+    name: "Rakesh Sharma",
+    contact_person: "Amit Kumar",
+    contact_number: "9876543210",
+    aadhar_number: "1234-5678-9101",
+    account_name: "Rakesh Sharma",
+    account_number: "123456789012",
+    ifsc: "SBIN0001234",
+    bank_name: "State Bank of India",
+    gst_number: "07ABCDE1234F1Z5",
+    pan_number: "ABCDE1234F",
+    user_type: "vendor",
+    is_admin: 0,
+    role_id: 1,
+    email: "rakesh.sharma@gmail.com",
+    password: "12345678",
+    status: "Active",
+    disable_login: 0,
+    address: "123 gali, Jhajjar, Haryana",
+    last_online: "2024-10-03 05:41:49",
+    created_date: "2024-11-22",
   },
 ];
 
 export const inventoryData = [
   {
-    id: "1",
-    name: "Solar LED Street Light",
-    description: "Eco-friendly solar-powered street light with motion sensor.",
-    quantity: 1,
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfaVettxgHxUSbCpPamGNdUB8g_9t_qYFhgQ&s",
-  },
-  {
-    id: "2",
-    name: "Smart Street Light System",
-    description: "Automated street light system with IoT connectivity.",
-    quantity: 2,
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
-  },
-  {
-    id: "3",
-    name: "LED Floodlight for Streets",
-    description: "High brightness LED floodlight for outdoor use.",
-    quantity: 3,
-    url: "https://m.media-amazon.com/images/I/81hIbQn03RL._AC_UF1000,1000_QL80_.jpg",
-  },
-  {
-    id: "4",
-    name: "Solar Street Light with Camera",
-    description: "Integrated street light with a security camera.",
-    quantity: 1,
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfaVettxgHxUSbCpPamGNdUB8g_9t_qYFhgQ&s",
-  },
-  {
-    id: "5",
-    name: "Street Light Pole",
-    description: "Durable street light pole for various applications.",
-    quantity: 5,
-    url: "https://th.bing.com/th?id=OPAC.9GyQh8O0Qccugw474C474&w=592&h=550&o=5&dpr=1.1&pid=21.1",
-  },
-  {
-    id: "6",
-    name: "Motion Sensor Street Light",
-    description:
-      "Street light with a built-in motion sensor for energy savings.",
-    quantity: 2,
-    url: "  https://th.bing.com/th?id=OPAC.CS1gpu%2fn0Pggmw474C474&w=592&h=550&o=5&dpr=1.1&pid=21.1 ",
-  },
-];
-
-export const earnings = [
-  {
     id: 1,
-    projectName: "Solar Lighting Installation for Homes",
-    totalEarnings: 12034,
-    completionDate: "2023-10-10",
+    projectId: 1,
+    siteId: 1,
+    productName: "Solar LED Street Light",
+    description: "Eco-friendly solar-powered street light with motion sensor.",
+    unit: "pieces",
+    initialQuantity: "1000 units",
+    quantityStock: "1000",
+    materialDispatchDate: "20 Nov 2024",
+    deliveryDate: "20 Nov 2024",
+    allocationOfficer: "Bittu Gupta",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfaVettxgHxUSbCpPamGNdUB8g_9t_qYFhgQ&s",
   },
   {
     id: 2,
-    projectName: "Community Solar Street Lights Project",
-    totalEarnings: 8500.0,
-    completionDate: "2023-09-15",
-  },
-  {
-    id: 3,
-    projectName: "Solar Panel Setup for Schools",
-    totalEarnings: 4730.75,
-    completionDate: "2023-08-20",
-  },
-  {
-    id: 4,
-    projectName: "Solar Energy Solutions for Farms",
-    totalEarnings: 20500.0,
-    completionDate: "2023-07-30",
-  },
-  {
-    id: 5,
-    projectName: "Solar Roof Panels for Businesses",
-    totalEarnings: 13500.25,
-    completionDate: "2023-06-12",
-  },
-  {
-    id: 6,
-    projectName: "Solar Roof Panels for Businesses",
-    totalEarnings: 13500.25,
-    completionDate: "2023-06-12",
-  },
-  {
-    id: 7,
-    projectName: "Solar Roof Panels for Businesses",
-    totalEarnings: 13500.25,
-    completionDate: "2023-06-12",
-  },
-  {
-    id: 8,
-    projectName: "Solar Roof Panels for Businesses",
-    totalEarnings: 13500.25,
-    completionDate: "2023-06-12",
-  },
-  {
-    id: 9,
-    projectName: "Solar Roof Panels for Businesses",
-    totalEarnings: 13500.25,
-    completionDate: "2023-06-12",
-  },
-  {
-    id: 10,
-    projectName: "Solar Roof Panels for Businesses",
-    totalEarnings: 13500.25,
-    completionDate: "2023-06-12",
+    projectId: 1,
+    siteId: 1,
+    productName: "Smart Street Light System",
+    description: "Automated street light system with IoT connectivity.",
+    unit: "pcs",
+    initialQuantity: "1000",
+    quantityStock: "200",
+    materialDispatchDate: "20 Nov 2024",
+    deliveryDate: "24 Nov 2024",
+    allocationOfficer: "Bittu Mishra",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
   },
 ];
 
 export const menuItems = [
   {
-    label: "Inventory Management",
+    label: "inventory_title",
     icon: "cart-outline",
     page: "inventoryScreen",
   },
-  { label: "Site Management", icon: "map-outline", page: "totalSitesScreen" },
   {
-    label: "Vendor Management",
+    label: "site_management_title",
+    icon: "map-outline",
+    page: "totalSitesScreen",
+  },
+  {
+    label: "vendor_management_title",
     icon: "people-outline",
     page: "totalVendorsScreen",
   },
   {
-    label: "Project Management",
+    label: "project_management_title",
     icon: "reader-outline",
     page: "totalProjectsScreen",
   },
   {
-    label: "Task Management",
-    page: "",
+    label: "task_management_title",
     icon: "grid-outline",
     page: "taskScreen",
   },
-  { label: "Reports", page: "", icon: "pie-chart-outline" },
-  { label: "Settings", page: "", icon: "cog-outline", page: "InternalSetting" },
+  {
+    label: "report_title",
+    page: "",
+    icon: "pie-chart-outline",
+  },
+  {
+    label: "settings",
+    icon: "cog-outline",
+    page: "InternalSetting",
+  },
 ];
 
 export const internal = [
   {
-    label: "Notification",
+    label: "notification_title",
     page: "notificationScreen",
     icon: "notifications-outline",
   },
-  { label: "Privacy", page: "privacyPolicy", icon: "shield-checkmark-outline" },
-  { label: "Data Usage", page: "", icon: "folder-outline" },
+  { label: "privacy_policy_title", page: "privacyPolicy", icon: "shield-checkmark-outline" },
 ];
 
 export const notifications = [
@@ -393,23 +318,6 @@ export const documentData = [
     documentImage:
       "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png",
   },
-  // { id: "5", staffId: 1, documentName: "Salary Slip", documentImage: "https://static.dexform.com/media/docs/6915/sample-job-offer-letter_1.png" },
-];
-
-export const profileImages = [
-  "https://randomuser.me/api/portraits/men/1.jpg",
-  "https://randomuser.me/api/portraits/women/1.jpg",
-];
-
-export const miniCards = [
-  { id: 1, icon: "time-outline", text: "Est: 20h" },
-  { id: 2, icon: "calendar-outline", text: "Due: 25 Apr" },
-  { id: 3, icon: "checkmark-circle-outline", text: "Tasks: 1/3" },
-];
-
-export const taskCards = [
-  { id: 1, text: "Design Concept", progress: 0.7, bgColor: "#54B4D3" },
-  { id: 2, text: "Development Phase", progress: 0.4, bgColor: "#2b87b0" },
 ];
 
 export const staff = {
@@ -418,259 +326,19 @@ export const staff = {
   last_name: "Sharma",
   user_type: "staff",
   is_admin: 0,
-  role_id: 0,
+  role_id: 1,
+  // 0-admin,1-staff/store incharge, 2-project manager, 3-vendor
   email: "rakesh.sharma@gmail.com",
   password: "12345678",
   image: "https://randomuser.me/api/portraits/men/1.jpg",
   status: "active",
-  job_title: "Technical Assistant",
-  salary: "20000",
-  salary_term: "Monthly",
-  Date_of_hire: "2024-08-27",
   disable_login: 0,
-  note: [],
   address: "123 gali, jhajjar, Haryana",
-  alternative_address: "",
   contactNo: "9909230912",
-  alternative_phone: "",
-  dob: "",
-  gender: "male",
-  sticky_note: [],
-  skype: "",
-  language: "",
   last_online: "2024-10-03 05:41:49",
-  file: "file-pdf",
-  size: "",
-  uploaded_by: "rakesh sharma",
-  created_date: "",
+  created_at: "",
+  updated_at: ""
 };
-
-export const taskslist = [
-  {
-    id: 1,
-    title: "Design in Solidworks",
-    status: "done",
-    deadline: "2024-10-13",
-    start: "2024-10-08",
-    project: "Robotic Cell",
-    assignedTo: "Rakesh Sharma",
-  },
-  {
-    id: 2,
-    title: "Purchase Parts",
-    status: "critical",
-    deadline: "2024-08-28",
-    start: "2024-08-28",
-    project: "Coffee Vending Machine",
-    assignedTo: "Rakesh Sharma",
-  },
-  {
-    id: 3,
-    title: "Purchase Parts",
-    status: "blocker",
-    deadline: "2024-08-28",
-    start: "2024-08-28",
-    project: "Automatic Soap Dispenser Machine Jig",
-    assignedTo: "Rakesh Sharma",
-  },
-];
-
-export const totalsitesData = [
-  {
-    id: "1",
-    siteName: "P S SHIKSHA NAGAR BANMANKHI",
-    State: "",
-    City: "",
-    dist: "Purnia",
-    location: "BANMANKHI",
-    ProjectSerialCode: "12",
-    ProjectCapacity: "30",
-    CANumber: "",
-    ContactNo: "9199502622",
-    ICVendorName: "",
-  },
-  {
-    id: "2",
-    siteName: "P S MIRCHAIBARI UTTAR",
-    dist: "Purnia",
-    location: "BANMANKHI",
-  },
-  {
-    id: "3",
-    siteName: "P S MIRCHAIBARI UTTAR",
-    dist: "Purnia",
-    location: "BANMANKHI",
-  },
-  {
-    id: "4",
-    siteName: "P S MIRCHAIBARI UTTAR",
-    dist: "Purnia",
-    location: "BANMANKHI",
-  },
-  {
-    id: "5",
-    siteName: "P S MIRCHAIBARI UTTAR",
-    dist: "Purnia",
-    location: "BANMANKHI",
-  },
-];
-
-export const totalVendorsData = [
-  {
-    id: "1",
-    name: "Raju Das",
-    location: "Patna",
-    contactNumber: "123-456-7890",
-    gstNumber: "",
-    contactPerson: "",
-    mailId: "",
-  },
-  {
-    id: "2",
-    name: "Md. Sohail Ansari",
-    location: "Saharanpur",
-    contactNumber: "987-654-3210",
-  },
-  {
-    id: "3",
-    name: "Ayush Ranjan",
-    location: "Kanpur",
-    contactNumber: "456-789-1230",
-  },
-  {
-    id: "4",
-    name: "Md Munna",
-    location: "Purniea",
-    contactNumber: "321-654-9870",
-  },
-  {
-    id: "5",
-    name: "Suresh Tripathy",
-    location: "Betiah",
-    contactNumber: "789-123-4560",
-  },
-];
-
-export const inactiveVendorsData = [
-  {
-    id: 1,
-    name: "Ramesh Chaurasiya",
-    location: "Saharanpur",
-    contactNumber: "+91 234 567 890",
-    status: "Inactive",
-  },
-  {
-    id: 2,
-    name: "Danish akhtar",
-    location: "Muradabad",
-    contactNumber: "+91 345 678 901",
-    status: "Inactive",
-  },
-];
-
-export const activeVendorsData = [
-  {
-    id: 1,
-    name: "Ahmad",
-    location: "Lucknow",
-    contactNumber: "(123) 456-7890",
-    status: "active",
-  },
-  {
-    id: 2,
-    name: "Vinay Tiwary",
-    location: "Patna",
-    contactNumber: "(987) 654-3210",
-    status: "active",
-  },
-  {
-    id: 3,
-    name: "Ravi Singh",
-    location: "Varanasi",
-    contactNumber: "(312) 555-1234",
-    status: "active",
-  },
-  {
-    id: 4,
-    name: "Priya Chaturvedi",
-    location: "Gaya",
-    contactNumber: "(424) 555-5678",
-    status: "active",
-  },
-  {
-    id: 5,
-    name: "Suresh Kumar",
-    location: "Agra",
-    contactNumber: "(512) 555-9012",
-    status: "active",
-  },
-  {
-    id: 6,
-    name: "Neha Devi",
-    location: "Patna",
-    contactNumber: "(206) 555-3456",
-    status: "active",
-  },
-  {
-    id: 7,
-    name: "Vikram Yadav",
-    location: "Kanpur",
-    contactNumber: "(305) 555-7890",
-    status: "active",
-  },
-];
-
-export const blocklistedVendorsData = [
-  {
-    id: 1,
-    name: "Amit Kumar",
-    location: "Muzaffarpur",
-    contactNumber: "(305) 555-1234",
-    status: "blocklisted",
-  },
-  {
-    id: 2,
-    name: "Rajeev Singh",
-    location: "Aligarh",
-    contactNumber: "(323) 555-6789",
-    status: "blocklisted",
-  },
-  {
-    id: 3,
-    name: "Pooja Sharma",
-    location: "Jhansi",
-    contactNumber: "(212) 555-9876",
-    status: "blocklisted",
-  },
-  {
-    id: 4,
-    name: "Rakesh Yadav",
-    location: "Bhagalpur",
-    contactNumber: "(312) 555-2468",
-    status: "blocklisted",
-  },
-  {
-    id: 5,
-    name: "Kiran Patel",
-    location: "Bareilly",
-    contactNumber: "(713) 555-1357",
-    status: "blocklisted",
-  },
-  {
-    id: 6,
-    name: "Manoj Jha",
-    location: "Darbhanga",
-    contactNumber: "(206) 555-8642",
-    status: "blocklisted",
-  },
-  {
-    id: 7,
-    name: "Neelam Rani",
-    location: "Sultanpur",
-    contactNumber: "(415) 555-4200",
-    status: "blocklisted",
-  },
-];
 
 export const taskslistdata = [
   {
@@ -695,72 +363,26 @@ export const taskslistdata = [
 
 export const PRIVACY_POLICY = "lorem ipsum sit dolor amet";
 
-export const siteCardsForDashboard = [
+export const PageData = [
+  {
+    description:
+      "Streamline Your Projects with Sugs Lloyd – Efficiency at Its Best!",
+  },
+
   {
     id: 1,
-    title: "Total Sites",
-    count: 46,
-    page: "totalSitesScreen",
-    data: totalsitesData,
-    backgroundColor: "#f9caa7",
+    text: "Manage & Track Projects Anytime, Anywhere!",
   },
   {
     id: 2,
-    title: "Completed Sites",
-    count: 17,
-    page: "totalSitesScreen",
-    data: totalsitesData,
-    backgroundColor: "#ffeead",
+    text: "Stay Updated – Receive Tasks & Progress Instantly!",
   },
   {
     id: 3,
-    title: "Sites in Progress",
-    count: 22,
-    page: "totalSitesScreen",
-    data: totalsitesData,
-    backgroundColor: "#bdeaee",
+    text: "Share Work Details with Real-Time Location & Visuals!",
   },
   {
     id: 4,
-    title: "Pending Sites",
-    count: 7,
-    page: "totalSitesScreen",
-    data: totalsitesData,
-    backgroundColor: "#ffbbee",
-  },
-];
-
-export const vendorCardForDashboard = [
-  {
-    id: "1",
-    title: "Total Vendors",
-    count: 67,
-    page: "totalVendorsScreen",
-    data: totalVendorsData,
-    backgroundColor: "#FFB7B2",
-  },
-  {
-    id: "2",
-    title: "Active Vendors",
-    count: 53,
-    page: "totalVendorsScreen",
-    data: totalVendorsData,
-    backgroundColor: "#B6F4D3",
-  },
-  {
-    id: "3",
-    title: "Inactive Vendors",
-    count: 10,
-    page: "totalVendorsScreen",
-    data: totalVendorsData,
-    backgroundColor: "#C4C3D0",
-  },
-  {
-    id: "4",
-    title: "Blocklisted Vendors",
-    count: 44,
-    page: "totalVendorsScreen",
-    data: totalVendorsData,
-    backgroundColor: "#F5F5DC",
+    text: "Keep a Sharp Eye on Your Stock Levels with Ease!",
   },
 ];

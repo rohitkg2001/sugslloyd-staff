@@ -3,10 +3,15 @@
 # dependencies
 node_modules/
 
+#Dont push anything over git
+android/
+
 # Expo
 .expo/
 dist/
 web-build/
+#Dont push anything over git
+android/
 
 # Native
 *.orig.*

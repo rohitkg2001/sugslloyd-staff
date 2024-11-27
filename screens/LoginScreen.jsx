@@ -11,22 +11,20 @@ import MyImageBackground from "../components/MyImageBackground";
 import { H1, H5, Span, H2 } from "../components/text";
 import MyTextInput from "../components/input/MyTextInput";
 import Button from "../components/buttons/Button";
-import { styles } from "../styles/components.styles";
-import { layouts, spacing, typography } from "../styles";
+import { layouts, spacing, typography, styles, ICON_LARGE } from "../styles";
 import { useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import { login } from "../redux/actions/staffActions";
+import { fakeDelete } from "../utils/faker";
+import { useTranslation } from "react-i18next";
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
   const dispatch = useDispatch();
-  useEffect(() => {
-    setError("");
-  }, []);
+  const { t } = useTranslation();
 
   const onSubmit = async () => {
     setError("");
@@ -52,8 +50,8 @@ export default function LoginScreen({ navigation }) {
     <MyImageBackground imageSource={require("../assets/Login.png")}>
       <ScrollView style={{ flex: 1 }}>
         <View style={[layouts.center, spacing.mv5]}>
-          <H1 style={spacing.mv2}>Welcome Back</H1>
-          <H5 style={spacing.mb5}>Sign in to continue</H5>
+          <H1 style={spacing.mv2}>{t("loginTitle")}</H1>
+          <H5 style={spacing.mb5}>{t("loginSubtitle")}</H5>
         </View>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -84,7 +82,7 @@ export default function LoginScreen({ navigation }) {
             >
               <Icon
                 name={isPasswordVisible ? "eye-off" : "eye"}
-                size={32}
+                size={ICON_LARGE}
                 color="gray"
               />
             </TouchableOpacity>
@@ -94,14 +92,25 @@ export default function LoginScreen({ navigation }) {
             <Text style={{ color: "red", marginBottom: 10 }}>{error}</Text>
           ) : null}
 
-          <Span style={styles.rightLink}>Forgot Password?</Span>
+          <TouchableOpacity
+            onPress={() =>
+              fakeDelete({
+                title: "Forgot Password",
+                message:
+                  "Forgot your password? Don’t worry—we’re here to help! Please contact your admin for assistance with resetting your password and getting back into your account quickly",
+                positiveText: "OK",
+              })
+            }
+          >
+            <Span style={styles.rightLink}>{t("forgotPasswordText")}</Span>
+          </TouchableOpacity>
         </KeyboardAvoidingView>
         <Button
           style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
           onPress={onSubmit}
         >
           <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-            Login
+            {t("loginBtnText")}
           </H2>
         </Button>
       </ScrollView>

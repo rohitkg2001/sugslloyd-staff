@@ -8,6 +8,7 @@ import Button from "../buttons/Button";
 export default function ClickableCard({
   item,
   handleViewDetails,
+  hideIcons,
   handleDelete,
   handleEdit,
   isSite = false,
@@ -31,45 +32,53 @@ export default function ClickableCard({
           style={{ flexDirection: "row", alignItems: "center", padding: 16 }}
         >
           <View style={{ flex: 1 }}>
-            <H6 style={[typography.textBold]}>{item.siteName}</H6>
             {isProject && (
               <>
-                <P style={{ fontSize: 14 }}>{item.projectName}</P>
-                <P style={{ fontSize: 14 }}>{item.duration}</P>
-                <P style={{ fontSize: 14 }}>{item.status}</P>
+                <H6 style={[typography.textBold]}>
+                  Project Name: {item.projectName}
+                </H6>
+                <P style={{ fontSize: 14 }}>
+                  Work Order Number: {item.workOrderNumber}
+                </P>
+                <P style={{ fontSize: 14 }}>Rate: {item.rate}</P>
 
                 {/* TODO: Add project specific changes */}
               </>
             )}
             {
               isSite && (
-                <P style={{ fontSize: 14 }}>
-                  {item.location}, {item.dist}
-                </P>
+                <>
+                  <H6 style={[typography.textBold]}>{item.siteName},</H6>
+                  <P style={{ fontSize: 14 }}>
+                    {item.location}, {item.dist}
+                  </P>
+                </>
               )
               // {/* TODO: Add site specific changes */}
             }
             {isVendor && (
               <>
                 <H6 style={[typography.textBold]}>{item.name}</H6>
-                <P style={{ fontSize: 14 }}>{item.location}</P>
-                <P style={{ fontSize: 14 }}>{item.contactNumber}</P>
+                <P style={{ fontSize: 14 }}>{item.address}</P>
+                <P style={{ fontSize: 14 }}>{item.contact_number}</P>
 
                 {/* TODO: Add vendor specific changes */}
               </>
             )}
           </View>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Button
-              onPress={() => handleEdit(item)}
-              style={{ marginRight: 12 }}
-            >
-              <Ionicons name="pencil-outline" size={24} color="black" />
-            </Button>
-            <Button onPress={() => handleDelete(item)}>
-              <Ionicons name="trash-outline" size={24} color="red" />
-            </Button>
-          </View>
+          {!hideIcons && (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Button
+                onPress={() => handleEdit(item)}
+                style={{ marginRight: 12 }}
+              >
+                <Ionicons name="pencil-outline" size={24} color="black" />
+              </Button>
+              <Button onPress={() => handleDelete(item)}>
+                <Ionicons name="trash-outline" size={24} color="red" />
+              </Button>
+            </View>
+          )}
         </View>
       </Card>
     </TouchableOpacity>

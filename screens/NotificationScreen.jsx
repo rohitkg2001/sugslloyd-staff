@@ -7,9 +7,11 @@ import { TouchableOpacity } from "react-native";
 import { styles } from "../styles/components.styles";
 import { H2, H5, P } from "../components/text";
 import MyFlatList from "../components/utility/MyFlatList";
-import { PRIMARY_COLOR } from "../styles/constant";
+import { PRIMARY_COLOR, ICON_LARGE } from "../styles/constant";
+import { useTranslation } from "react-i18next";
 
 export default function NotificationScreen() {
+  const { t } = useTranslation();
   const renderItem = ({ item }) => (
     <TouchableOpacity>
       <List.Item
@@ -18,7 +20,7 @@ export default function NotificationScreen() {
         left={() => (
           <Avatar.Icon
             backgroundColor={PRIMARY_COLOR}
-            size={32}
+            size={ICON_LARGE}
             icon={item.icon}
             style={{ backgroundColor: "#2b87b0" }}
           />
@@ -32,10 +34,9 @@ export default function NotificationScreen() {
   return (
     <ContainerComponent>
       <MyHeader
-        title="Notification"
+        title={t("notification_title")}
         isBack={true}
         hasIcon={true}
-        icon={"search-outline"}
       />
       <View>
         <MyFlatList

@@ -1,34 +1,35 @@
 import { useState, useEffect } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, TouchableOpacity } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { SCREEN_WIDTH, spacing } from "../styles";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 import MyHeader from "../components/header/MyHeader";
 
 const EditDetailsScreen = ({ route, navigation, onSave }) => {
-
   const { site, formType } = route.params || {};
+  const [formData, setFormData] = useState({});
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const [ formData, setFormData ] = useState( {} );
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+  };
 
   useEffect(() => {
     if (site) {
       setFormData(site);
     } else {
       setFormData({
-        name: "",
         location: "",
-        state: formType === "project" ? "" : undefined,
-        city: formType === "project" ? "" : undefined,
-        projectSerial: formType === "project" ? "" : undefined,
-        siteName: formType === "project" ? "" : undefined,
-        sanctionLoad: formType === "project" ? "" : undefined,
-        projectCapacity: formType === "project" ? "" : undefined,
-        caNumber: formType === "project" ? "" : undefined,
-        surveyStatus: formType === "project" ? "" : undefined,
-        contactNo: formType === "project" ? "" : undefined,
-        solarMeterSerial: formType === "project" ? "" : undefined,
-        vendorName: formType === "project" ? "" : undefined,
+        projectname: formType === "project" ? "" : undefined,
+        workOrderNumber: formType === "project" ? "" : undefined,
+        rate: formType === "project" ? "" : undefined,
+        date: formType === "project" ? "" : undefined,
+        workOrderNumber: formType === "project" ? "" : undefined,
         contactNumber: formType === "vendor" ? "" : undefined,
         gstNumber: formType === "vendor" ? "" : undefined,
         contactPerson: formType === "vendor" ? "" : undefined,
@@ -68,8 +69,8 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
     formType === "project"
       ? "Edit Project"
       : formType === "vendor"
-        ? "Edit Vendor"
-        : "Edit Site";
+      ? "Edit Vendor"
+      : "Edit Site";
 
   return (
     <ScrollView
@@ -77,94 +78,47 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
       showsVerticalScrollIndicator={false}
     >
       <View>
-        <MyHeader
-          title={headerTitle}
-          isBack={true}
-          hasIcon={true}
-        />
-
-        <MyTextInput
-          title="Name"
-          placeholder="Name"
-          value={formData.name}
-          onChangeText={(text) => handleChange("name", text)}
-        />
-        <MyTextInput
-          title="Location"
-          placeholder="Location"
-          value={formData.location}
-          onChangeText={(text) => handleChange("location", text)}
-        />
+        <MyHeader title={headerTitle} isBack={true} hasIcon={true} />
 
         {formType === "project" && (
           <>
             <MyTextInput
-              title="State"
-              placeholder="State"
-              value={formData.state}
-              onChangeText={(text) => handleChange("state", text)}
+              title="Project Name"
+              placeholder="Enter Project Name"
+              value={formData.projectName}
+              onChangeText={(text) => handleChange("projectName", text)}
             />
+
             <MyTextInput
-              title="City"
-              placeholder="City"
-              value={formData.city}
-              onChangeText={(text) => handleChange("city", text)}
+              title="Work Order Number"
+              placeholder="workOrderNumber"
+              value={formData.workOrderNumber}
+              onChangeText={(text) => handleChange("workOrderNumber", text)}
             />
+
             <MyTextInput
-              title="Project Serial"
-              placeholder="Project Serial"
-              value={formData.projectSerial}
-              onChangeText={(text) => handleChange("projectSerial", text)}
+              title="Rate"
+              placeholder=" rate"
+              value={formData.rate}
+              onChangeText={(text) => handleChange(" rate", text)}
             />
-            <MyTextInput
-              title="Site Name"
-              placeholder="Site Name"
-              value={formData.siteName}
-              onChangeText={(text) => handleChange("siteName", text)}
-            />
-            <MyTextInput
-              title="Sanction Load"
-              placeholder="Sanction Load"
-              value={formData.sanctionLoad}
-              onChangeText={(text) => handleChange("sanctionLoad", text)}
-            />
-            <MyTextInput
-              title="Project Capacity"
-              placeholder="Project Capacity"
-              value={formData.projectCapacity}
-              onChangeText={(text) => handleChange("projectCapacity", text)}
-            />
-            <MyTextInput
-              title="CA Number"
-              placeholder="CA Number"
-              value={formData.caNumber}
-              onChangeText={(text) => handleChange("caNumber", text)}
-            />
-            <MyTextInput
-              title="Survey Status"
-              placeholder="Survey Status"
-              value={formData.surveyStatus}
-              onChangeText={(text) => handleChange("surveyStatus", text)}
-            />
-            <MyTextInput
-              title="Contact No"
-              placeholder="Contact No"
-              value={formData.contactNo}
-              onChangeText={(text) => handleChange("contactNo", text)}
-              keyboardType="phone-pad"
-            />
-            <MyTextInput
-              title="Solar Meter Serial"
-              placeholder="Solar Meter Serial"
-              value={formData.solarMeterSerial}
-              onChangeText={(text) => handleChange("solarMeterSerial", text)}
-            />
-            <MyTextInput
-              title="xName"
-              placeholder="Vendor Name"
-              value={formData.vendorName}
-              onChangeText={(text) => handleChange("vendorName", text)}
-            />
+
+            <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+              <MyTextInput
+                title="Date"
+                value={date.toLocaleDateString()}
+                placeholder="Select Date"
+                editable={false}
+              />
+            </TouchableOpacity>
+            {showDatePicker && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
           </>
         )}
 

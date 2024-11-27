@@ -1,38 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { View } from "react-native";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { fakeDelete, totalsitesData } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { spacing, styles } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { viewSite, searchSite } from '../redux/actions/siteActions';
+import { viewSite, searchSite } from "../redux/actions/siteActions";
+import {
+  ICON_LARGE,
+  ICON_MEDIUM,
+  LIGHT,
+  SCREEN_WIDTH,
+  spacing,
+  styles,
+} from "../styles";
+import { useTranslation } from "react-i18next";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
-  const siteState = useSelector(state => state.sites);
-  const searchText = siteState ? siteState.searchText : '';
+  const siteState = useSelector((state) => state.sites);
+  const searchText = siteState ? siteState.searchText : "";
   const [filteredData, setFilteredData] = useState([]);
+  const { t } = useTranslation();
 
   const { pageTitle, data } = route.params || {
-    pageTitle: "Site Management",
+    pageTitle: t("site_management"),
     data: totalsitesData,
   };
 
   useEffect(() => {
     setFilteredData(data);
+    console.log(pageTitle);
   }, [data]);
 
   const handleSearch = (text) => {
     dispatch(searchSite(text));
-    const filtered = data.filter(site => 
-      site.city.toLowerCase().includes(text.toLowerCase()) ||
-      site.state.toLowerCase().includes(text.toLowerCase()) ||
-      site.projectCode.toLowerCase().includes(text.toLowerCase())
+    const filtered = data.filter(
+      (site) =>
+        site.city.toLowerCase().includes(text.toLowerCase()) ||
+        site.state.toLowerCase().includes(text.toLowerCase()) ||
+        site.projectCode.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -44,8 +56,8 @@ export default function TotalSitesScreen({ navigation, route }) {
 
   const handleDelete = () => {
     fakeDelete({
-      title: "Error!!!",
-      message: "You cannot delete this site. Please contact Admin!",
+      title: t("error"),
+      message: t("total_site_screen_msg"),
     });
   };
 
@@ -58,7 +70,7 @@ export default function TotalSitesScreen({ navigation, route }) {
 
   return (
     <ContainerComponent>
-      <MyHeader title={pageTitle} isBack={true} hasIcon={true} />
+      <MyHeader title={t(pageTitle)} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredData}
         loading={false}
@@ -72,16 +84,31 @@ export default function TotalSitesScreen({ navigation, route }) {
           />
         )}
         keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={[spacing.mh2, spacing.mt1]}
-        ListEmptyComponent={() => (
-          <NoRecord msg="Oops! There are no sites data available. Start creating or contact admin" />
-        )}
+        contentContainerStyle={[spacing.mh1, spacing.mt1]}
+        ListEmptyComponent={() => <NoRecord msg={t("no_site_msg")} />}
         ListHeaderComponent={() => (
-          <SearchBar 
-            placeholder="Search by city, state or project code"
-            value={searchText}
-            onChangeText={handleSearch}
-          />
+          <View
+            style={[
+              spacing.mv4,
+              styles.row,
+              spacing.mh1,
+              { alignItems: "center" },
+            ]}
+          >
+            <SearchBar
+              placeholder="Search"
+              style={{ width: SCREEN_WIDTH - 70 }}
+            />
+            <Button
+              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+            >
+              <Ionicons
+                name="options-outline"
+                size={ICON_MEDIUM}
+                color={LIGHT}
+              />
+            </Button>
+          </View>
         )}
       />
 
@@ -89,7 +116,7 @@ export default function TotalSitesScreen({ navigation, route }) {
         style={styles.addButton}
         onPress={() => navigation.navigate("sitesFormScreen")}
       >
-        <Ionicons name="add" size={32} color="white" />
+        <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
     </ContainerComponent>
   );
