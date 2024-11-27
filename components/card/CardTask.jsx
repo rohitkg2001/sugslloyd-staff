@@ -17,7 +17,7 @@ const CardTask = ({ task }) => {
           <IconButton
             icon="dots-horizontal"
             size={ICON_SMALL}
-            onPress={() => {}}
+            onPress={() => { }}
           />
         </View>
 
@@ -67,7 +67,7 @@ const CardTask = ({ task }) => {
 const TaskList = () => (
   <MyFlatList
     data={cardData}
-    renderItem={({ item }) => <CardTask task={item} />}
+    renderItem={({ item }) => <CardTask task={item} key={item.id} />}
     keyExtractor={(item) => item.id.toString()}
   />
 );

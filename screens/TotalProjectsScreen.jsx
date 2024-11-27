@@ -53,6 +53,7 @@ export default function TotalProjectsScreen({ navigation }) {
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
+            key={item.id}
             handleViewDetails={handleViewDetails}
             handleDelete={() =>
               fakeDelete({

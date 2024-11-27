@@ -264,7 +264,6 @@ export default function DashboardScreen({ navigation }) {
         <MyFlatList
           data={vendorCardForDashboard}
           renderItem={({ item, index }) => {
-            const isRightColumn = index % 2 !== 0;
             return (
               <StatCard
                 key={item.id}

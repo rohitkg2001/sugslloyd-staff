@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 export default function NotificationScreen() {
   const { t } = useTranslation();
   const renderItem = ({ item }) => (
-    <TouchableOpacity>
+    <TouchableOpacity key={item.id}>
       <List.Item
         title={<H5 style={styles.titleText}>{item.title}</H5>}
         description={<P style={styles.description}>{item.description}</P>}

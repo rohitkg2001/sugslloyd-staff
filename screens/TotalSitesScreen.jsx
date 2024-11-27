@@ -77,6 +77,7 @@ export default function TotalSitesScreen({ navigation, route }) {
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
+            key={item.id}
             handleViewDetails={handleViewDetails}
             handleDelete={handleDelete}
             handleEdit={() => handleEdit(item)}

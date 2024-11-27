@@ -10,7 +10,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import { viewTask, initializeTasks } from "../redux/actions/taskActions";
 import Button from "../components/buttons/Button";
-import { SCREEN_WIDTH, spacing, styles, typography,  ICON_MEDIUM, LIGHT } from "../styles";
+import { SCREEN_WIDTH, spacing, styles, typography, ICON_MEDIUM, LIGHT } from "../styles";
 
 export default function TaskListScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export default function TaskListScreen({ navigation }) {
   };
 
   const renderListItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleViewTask(item)}>
+    <TouchableOpacity onPress={() => handleViewTask(item)} key={item.id}>
       <Card
         style={[
           spacing.mv1,
@@ -39,9 +39,8 @@ export default function TaskListScreen({ navigation }) {
             {["taskName", "deadline", "status", "startDate", "endDate"].map(
               (field) => (
                 <P key={field} style={{ fontSize: 14, color: "#020409" }}>
-                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${
-                    item[field]
-                  }`}
+                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${item[field]
+                    }`}
                 </P>
               )
             )}
