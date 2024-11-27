@@ -22,16 +22,16 @@ export default function InventoryDetailsModal({
     >
       <P>
         {" "}
-        {selectedItem.product_name} Allocated for {selectedItem.projectName}{" "}
+        {selectedItem.productName} Allocated for {selectedItem.projectName}{" "}
       </P>
       <P>
         {" "}
         {selectedItem.location}, {selectedItem.dist}{" "}
       </P>
-      <P> Initial Quantity: {selectedItem.initial_quantity}</P>
-      <P> Material Dispatch Date: {selectedItem.material_dispatch_date}</P>
-      <P> Delivery Date: {selectedItem.delivery_date} </P>
-      <P> Allocated To : {selectedItem.allocation_officer} </P>
+      <P> Initial Quantity: {selectedItem.initialQuantity}</P>
+      <P> Material Dispatch Date: {selectedItem.materialDispatchDate}</P>
+      <P> Delivery Date: {selectedItem.deliveryDate} </P>
+      <P> Allocated To : {selectedItem.allocationOfficer} </P>
       <View style={layouts.center}>
         <Image
           source={{ uri: selectedItem.url }}

@@ -28,16 +28,16 @@ export default function InventoryCard({ item, onPress }) {
         />
 
         <View style={{ flex: 1 }}>
-          <H5>{item.product_name}</H5>
+          <H5>{item.productName}</H5>
           <P>{item.description}</P>
           <View
             style={[styles.row, spacing.mv1, { width: SCREEN_WIDTH - 120 }]}
           >
             <P>
-              {t("delivered_title")}: {item.delivery_date}
+              {t("delivered_title")}: {item.deliveryDate}
             </P>
             <P>
-              {t("quantity_title")}: {item.qty_stock} {item.unit}
+              {t("quantity_title")}: {item.quantityStock} {item.unit}
             </P>
           </View>
         </View>
