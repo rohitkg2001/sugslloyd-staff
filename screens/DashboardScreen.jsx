@@ -22,6 +22,7 @@ import {
   ICON_SMALL,
   ICON_MEDIUM,
   ICON_LARGE,
+  PRIMARY_COLOR_TRANSPARENT,
 } from "../styles";
 import {
   siteCardsForDashboard,
@@ -32,15 +33,19 @@ import {
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import { useTranslation } from "react-i18next";
+import BottomSheet from "../components/bottomsheet/BottomSheet";
+import Filter from "../components/Filter";
 
 export default function DashboardScreen({ navigation }) {
-  const today = useState(moment().format("DD MMM YYYY"));
+  const [today, setToday] = useState(moment().format("DD MMM YYYY"));
   const [dueTasks, setDueTasks] = useState(4);
+  const [showBottomSheet, setShowBottomSheet] = useState(false)
   const [greeting, setGreeting] = useState("Good morning");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const { first_name } = useSelector((state) => state);
+  const { first_name } = useSelector((state) => state.staff);
   const { t } = useTranslation();
+
 
   useEffect(() => {
     setGreeting(greet());
@@ -71,7 +76,7 @@ export default function DashboardScreen({ navigation }) {
       >
         <View>
           <H4 style={typography.textBold}>
-            {greeting}, {first_name}
+            {greeting},{first_name}
           </H4>
           <P style={spacing.ml1}>You have {dueTasks} due tasks Today</P>
         </View>
@@ -130,6 +135,7 @@ export default function DashboardScreen({ navigation }) {
           />
           <Button
             style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+            onPress={() => setShowBottomSheet(!showBottomSheet)}
           >
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
@@ -152,14 +158,6 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </View>
 
-        {showDatePicker && (
-          <DateTimePicker
-            value={selectedDate}
-            mode="date"
-            display="default"
-            onChange={handleDateChange}
-          />
-        )}
 
         <MyFlatList
           data={ProjectcardsForDashboard}
@@ -286,6 +284,17 @@ export default function DashboardScreen({ navigation }) {
           numColumns={2}
         />
       </ScrollView>
+      {showDatePicker && (
+        <DateTimePicker
+          value={selectedDate}
+          mode="date"
+          display="default"
+          onChange={handleDateChange}
+        />
+      )}
+      {
+        showBottomSheet && <Filter />
+      }
 
     </ContainerComponent>
   );

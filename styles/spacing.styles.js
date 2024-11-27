@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { SECONDARY_COLOR } from "./constant";
 
 export const spacing = StyleSheet.create({
     // Styles for horizontal padding
@@ -204,6 +205,12 @@ export const spacing = StyleSheet.create({
     },
     br5: {
         borderRadius: 30,
+    },
+    brw1: {
+        borderRightWidth: 1
+    },
+    brc: {
+        borderRightColor: SECONDARY_COLOR
     },
 
     bw05: {

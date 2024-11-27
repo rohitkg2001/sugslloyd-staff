@@ -36,7 +36,7 @@ export default function SettingsScreen({ navigation }) {
   };
   return (
     <ContainerComponent justifyContent="space-between">
-      <MyHeader title={t("setting")} isBack={true} hasIcon={true} />
+      <MyHeader title={t("settings")} isBack={true} hasIcon={true} />
       <View style={{ flex: 1 }}>
         <View
           style={[

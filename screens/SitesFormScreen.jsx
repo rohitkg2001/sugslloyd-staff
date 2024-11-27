@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyPickerInput from "../components/input/MyPickerInput";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
 
@@ -17,7 +18,9 @@ const SitesFormScreen = () => {
   const [projectCapacity, setProjectCapacity] = useState("");
   const [caNumber, setCaNumber] = useState("");
   const [contactNo, setContactNo] = useState("");
-  const [vendorName, setVendorName] = useState("");
+  const [ vendorName, setVendorName ] = useState( "" );
+  const [ date, setDate ] = useState( new Date() );
+    const [showDatePicker, setShowDatePicker] = useState(false);
   const { t } = useTranslation();
 
   const handleCancel = () => {
@@ -46,6 +49,12 @@ const SitesFormScreen = () => {
     });
   };
 
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+  };
   return (
     <ContainerComponent>
       <ScrollView
@@ -118,6 +127,85 @@ const SitesFormScreen = () => {
           onChangeText={setVendorName}
           placeholder="Enter I & C Vendor Name"
         />
+        <MyTextInput
+          title={t("sanction_load")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Enter Sanction Value"
+        />
+        <MyTextInput
+          title={t("meter_no")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Enter Meter Number"
+        />
+        <MyTextInput
+          title={t("load_enhancementstatus")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Enter Load Enhancement Status"
+        />
+        <MyPickerInput
+          title={t("site_surveystatus")}
+          value={state}
+          onChange={setState}
+          options={[{ label: t("done") }, { label: t("pending") }]}
+        />
+        <MyTextInput
+          title={t("net_meterserialnumber")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Put serial Number"
+        />
+        <MyTextInput
+          title={t("solar_meterserialnumber")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Put serial Number"
+        />
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <MyTextInput
+            title={t("material_inspectiondate")}
+            value={date.toLocaleDateString()}
+            placeholder="Select Date"
+            editable={false}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <MyTextInput
+            title={t("spp_installationiondate")}
+            value={date.toLocaleDateString()}
+            placeholder="Select Date"
+            editable={false}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <MyTextInput
+            title={t("commissioning_date")}
+            value={date.toLocaleDateString()}
+            placeholder="Select Date"
+            editable={false}
+          />
+        </TouchableOpacity>
+
+        <MyTextInput
+          title={t("remarks")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Description here"
+          style={{ height: 100, padding: 10 }}
+        />
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
 
         <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>
           <MyButton
