@@ -30,21 +30,20 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("State", site.state)}
       {renderDetailRow("District", site.dist)}
       {renderDetailRow("Location", site.location)}
-      {renderDetailRow("Contact No", site.ContactNo)}
+      {renderDetailRow("Contact No", site.contactNo)}
       {renderDetailRow("Project Serial Code", site.projectSerialCode)}
-      {renderDetailRow("Project Capacity", site.ProjectCapacity)}
+      {renderDetailRow("Project Capacity", site.projectCapacity)}
       {renderDetailRow("CA Number", site.cANumber)}
       {renderDetailRow("Sanction Load", site.sanctionLoad)}
       {renderDetailRow("Meter Number", site.meterNumber)}
       {renderDetailRow("Load Enhancement Status", site.loadEnhancementStatus)}
       {renderDetailRow("Site Survey Status", site.siteSurveyStatus)}
-      {renderDetailRow("Net Meter Sr No", site.netMetereSrNo)}
+      {renderDetailRow("Net Meter Sr No", site.netMeterSrNo)}
       {renderDetailRow("Solar Meter Sr NO", site.solarMeterSrNO)}
       {renderDetailRow("Material Inspection Date", site.materialInspectionDate)}
       {renderDetailRow("SPP INSTALLATION DATE", site.sppInstallationDate)}
-      {renderDetailRow("COMISSIONING DATE", site.cOMISSIONINGDATE)}
+      {renderDetailRow("COMMISSIONING DATE", site.commissioningDate)}
       {renderDetailRow("Remarks", site.remarks)}
-
       {renderDetailRow("I & C Vendor Name", site.iCVendorName)}
     </>
   );
@@ -132,10 +131,10 @@ const ViewDetailScreen = ({ route, navigation }) => {
         <MyHeader
           title={
             formType === "vendor"
-              ? t('vendor_details')
+              ? t("vendor_details")
               : site.projectName
-                ? t('project_details')
-                : t('site_details')
+                ? t("project_details")
+                : t("site_details")
           }
           isBack={true}
           hasIcon={true}

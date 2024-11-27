@@ -5,6 +5,7 @@ import { SCREEN_WIDTH, spacing } from "../styles";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 import MyHeader from "../components/header/MyHeader";
+import ContainerComponent from "../components/ContainerComponent";
 
 const EditDetailsScreen = ({ route, navigation, onSave }) => {
   const { site, formType } = route.params || {};
@@ -69,16 +70,16 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
     formType === "project"
       ? "Edit Project"
       : formType === "vendor"
-      ? "Edit Vendor"
-      : "Edit Site";
+        ? "Edit Vendor"
+        : "Edit Site";
 
   return (
-    <ScrollView
-      style={[spacing.mh2, { width: SCREEN_WIDTH - 16, paddingVertical: 6 }]}
-      showsVerticalScrollIndicator={false}
-    >
-      <View>
-        <MyHeader title={headerTitle} isBack={true} hasIcon={true} />
+    <ContainerComponent>
+      <MyHeader title={headerTitle} isBack={true} hasIcon={true} />
+      <ScrollView
+        style={[spacing.mh2, { width: SCREEN_WIDTH - 16, paddingVertical: 6 }]}
+        showsVerticalScrollIndicator={false}
+      >
 
         {formType === "project" && (
           <>
@@ -213,8 +214,8 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
           <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
           <MyButton title="Save" onPress={handleSave} />
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </ContainerComponent>
   );
 };
 

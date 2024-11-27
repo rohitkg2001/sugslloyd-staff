@@ -20,50 +20,48 @@ export default function CurrentProjectsScreen({ navigation }) {
 
   return (
     <ContainerComponent>
-      <View>
-        <MyFlatList
-          data={filteredProjects}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item, index }) => (
-            <ClickableCard
-              key={index}
-              item={item}
-              isProject={true}
-              hideIcons={true}
-              handleViewDetails={() =>
-                navigation.navigate("taskScreen", { projectId: item.id })
-              }
+      <MyFlatList
+        data={filteredProjects}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item, index }) => (
+          <ClickableCard
+            key={index}
+            item={item}
+            isProject={true}
+            hideIcons={true}
+            handleViewDetails={() =>
+              navigation.navigate("taskScreen", { projectId: item.id })
+            }
+          />
+        )}
+        contentContainerStyle={[spacing.mh2, spacing.mt1]}
+        ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
+        ListHeaderComponent={() => (
+          <View
+            style={[
+              spacing.mv4,
+              styles.row,
+              spacing.mh1,
+              { alignItems: "center" },
+            ]}
+          >
+            <SearchBar
+              placeholder="Search"
+              style={{ width: SCREEN_WIDTH - 70 }}
             />
-          )}
-          contentContainerStyle={[spacing.mh2, spacing.mt1]}
-          ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
-          ListHeaderComponent={() => (
-            <View
+            <Button
               style={[
-                spacing.mv4,
-                styles.row,
+                styles.btn,
+                styles.bgPrimary,
                 spacing.mh1,
-                { alignItems: "center" },
+                { width: 50 },
               ]}
             >
-              <SearchBar
-                placeholder="Search"
-                style={{ width: SCREEN_WIDTH - 70 }}
-              />
-              <Button
-                style={[
-                  styles.btn,
-                  styles.bgPrimary,
-                  spacing.mh1,
-                  { width: 50 },
-                ]}
-              >
-                <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
-              </Button>
-            </View>
-          )}
-        />
-      </View>
+              <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+            </Button>
+          </View>
+        )}
+      />
     </ContainerComponent>
   );
 }

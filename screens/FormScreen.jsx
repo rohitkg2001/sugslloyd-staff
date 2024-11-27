@@ -44,13 +44,13 @@ const FormScreen = () => {
 
   return (
     <ContainerComponent>
+      <MyHeader title={t("crete_project")} isBack={true} hasIcon={true} />
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: spacing.mh1,
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyHeader title={t("crete_project")} isBack={true} hasIcon={true} />
 
         <MyTextInput
           title={t("project_name")}

@@ -18,9 +18,9 @@ const SitesFormScreen = () => {
   const [projectCapacity, setProjectCapacity] = useState("");
   const [caNumber, setCaNumber] = useState("");
   const [contactNo, setContactNo] = useState("");
-  const [ vendorName, setVendorName ] = useState( "" );
-  const [ date, setDate ] = useState( new Date() );
-    const [showDatePicker, setShowDatePicker] = useState(false);
+  const [vendorName, setVendorName] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const { t } = useTranslation();
 
   const handleCancel = () => {
@@ -57,10 +57,11 @@ const SitesFormScreen = () => {
   };
   return (
     <ContainerComponent>
+      <MyHeader title={t("create_site")} hasIcon={true} isBack={true} />
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 18 }]}
+        showsVerticalScrollIndicator={false}
       >
-        <MyHeader title={t("create_site")} hasIcon={true} isBack={true} />
 
         <MyPickerInput
           title={t("site_State")}
@@ -155,13 +156,13 @@ const SitesFormScreen = () => {
           title={t("net_meterserialnumber")}
           value={vendorName}
           onChangeText={setVendorName}
-          placeholder="Put serial Number"
+          placeholder="Net Meter Sl. No"
         />
         <MyTextInput
           title={t("solar_meterserialnumber")}
           value={vendorName}
           onChangeText={setVendorName}
-          placeholder="Put serial Number"
+          placeholder="Solar Meter Sl. No"
         />
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
           <MyTextInput
