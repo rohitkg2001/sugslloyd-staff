@@ -65,6 +65,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
+            key={item.id}
             handleViewDetails={handleViewDetails}
             handleDelete={() =>
               fakeDelete({

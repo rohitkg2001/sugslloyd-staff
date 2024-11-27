@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { useState } from "react";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
@@ -18,7 +19,10 @@ const InventoryFormScreen = ({ navigation, route }) => {
   const [quantity, setQuantity] = useState(
     editItem?.quantity?.toString() || ""
   );
+  const [unit, setUnit] = useState(editItem?.unit || "");
   const [releaseDate, setReleaseDate] = useState(editItem?.releaseDate || "");
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleCancel = () => {
     navigation.goBack();
@@ -35,6 +39,12 @@ const InventoryFormScreen = ({ navigation, route }) => {
     };
     dispatch(updateInventory(updatedProduct));
     navigation.goBack();
+  };
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
   };
 
   return (
@@ -68,12 +78,27 @@ const InventoryFormScreen = ({ navigation, route }) => {
           placeholder={t("ent_quantity")}
           keyboardType="numeric"
         />
+        <MyTextInput
+          title={t("unit")}
+          value={quantity}
+          onChangeText={setUnit}
+          placeholder={t("ent_unit")}
+        />
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <MyTextInput
+            title={t("release_date")}
+            value={date.toLocaleDateString()}
+            placeholder="Select Date"
+            editable={false}
+          />
+        </TouchableOpacity>
 
         <MyTextInput
-          title={t("release_date")}
-          value={releaseDate}
-          onChangeText={setReleaseDate}
-          placeholder={t("ent_release_date")}
+          title={t("description")}
+          value={unit}
+          onChangeText={setUnit}
+          placeholder="Description here"
+          style={{ height: 100, padding: 10 }}
         />
       </ScrollView>
 
@@ -84,6 +109,15 @@ const InventoryFormScreen = ({ navigation, route }) => {
           onPress={handleSaveProduct}
         />
       </View>
+
+      {showDatePicker && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="default"
+          onChange={handleDateChange}
+        />
+      )}
     </ContainerComponent>
   );
 };

@@ -10,7 +10,14 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import { viewTask, initializeTasks } from "../redux/actions/taskActions";
 import Button from "../components/buttons/Button";
-import { SCREEN_WIDTH, spacing, styles, typography,  ICON_MEDIUM, LIGHT } from "../styles";
+import {
+  SCREEN_WIDTH,
+  spacing,
+  styles,
+  typography,
+  ICON_MEDIUM,
+  LIGHT,
+} from "../styles";
 
 export default function TaskListScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -26,7 +33,7 @@ export default function TaskListScreen({ navigation }) {
   };
 
   const renderListItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleViewTask(item)}>
+    <TouchableOpacity onPress={() => handleViewTask(item)} key={item.id}>
       <Card
         style={[
           spacing.mv1,
@@ -60,7 +67,14 @@ export default function TaskListScreen({ navigation }) {
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
         ListHeaderComponent={() => (
-          <View style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}>
+          <View
+            style={[
+              spacing.mv4,
+              styles.row,
+              spacing.mh1,
+              { alignItems: "center" },
+            ]}
+          >
             <SearchBar
               placeholder="Search"
               style={{ width: SCREEN_WIDTH - 70 }}
@@ -68,7 +82,11 @@ export default function TaskListScreen({ navigation }) {
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
             >
-              <Ionicons name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+              <Ionicons
+                name="options-outline"
+                size={ICON_MEDIUM}
+                color={LIGHT}
+              />
             </Button>
           </View>
         )}

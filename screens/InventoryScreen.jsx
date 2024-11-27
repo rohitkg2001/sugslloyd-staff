@@ -60,7 +60,7 @@ export default function InventoryScreen({ navigation }) {
         )}
         ListEmptyComponent={() => <NoRecord msg={t("no_inventory")} />}
         renderItem={({ item }) => (
-          <InventoryCard item={item} onPress={() => viewItem(item.id)} />
+          <InventoryCard key={item.id} item={item} onPress={() => viewItem(item.id)} />
         )}
       />
       <InventoryDetailsModal

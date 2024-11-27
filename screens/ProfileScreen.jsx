@@ -74,7 +74,6 @@ export default function ProfileScreen() {
         data={documentData}
         renderItem={({ item }, index) => (
           <ProfileItem
-            style={[]}
             key={index}
             iconName={item.documentImage}
             label={item.documentName}
