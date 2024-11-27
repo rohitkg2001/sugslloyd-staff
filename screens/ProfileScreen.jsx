@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Image } from "react-native";
+import { View,  Image } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { documentData, staff } from "../utils/faker";
@@ -12,7 +12,7 @@ import {
 } from "../styles";
 import CardFullWidth from "../components/card/CardFullWidth";
 import Avatar from "../components/Avatar";
-import { H6, H4 } from "../components/text";
+import { H6 } from "../components/text";
 import MyFlatList from "../components/utility/MyFlatList";
 import { useTranslation } from "react-i18next";
 
@@ -34,20 +34,7 @@ const ProfileItem = ({ iconName, label }) => {
         <H6 style={[typography.font16, { color: "black", flex: 1 }]}>
           {label}
         </H6>
-        <View
-          style={[
-            styles.row,
-            { width: SCREEN_WIDTH - 248, justifyContent: "space-between" },
-          ]}
-        >
-          <TouchableOpacity>
-            <H4 style={typography.textInfo}>Edit </H4>
-          </TouchableOpacity>
-          <H4> | </H4>
-          <TouchableOpacity>
-            <H4 style={typography.textDanger}> Delete</H4>
-          </TouchableOpacity>
-        </View>
+       
       </View>
     </View>
   );
@@ -87,6 +74,7 @@ export default function ProfileScreen() {
         data={documentData}
         renderItem={({ item }, index) => (
           <ProfileItem
+            style = {[]}
             key={index}
             iconName={item.documentImage}
             label={item.documentName}
