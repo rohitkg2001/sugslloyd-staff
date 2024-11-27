@@ -50,6 +50,7 @@ const FormScreen = () => {
           paddingHorizontal: spacing.mh1,
           width: SCREEN_WIDTH - 18,
         }}
+        showsVerticalScrollIndicator={false}
       >
 
         <MyTextInput
