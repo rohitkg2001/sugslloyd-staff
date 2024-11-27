@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
-import { updateInventory } from '../redux/actions/inventoryAction';
+import { updateInventory } from "../redux/actions/inventoryAction";
 import { useTranslation } from "react-i18next";
-
 
 const InventoryFormScreen = ({ navigation, route }) => {
   const { t } = useTranslation();
@@ -16,7 +15,9 @@ const InventoryFormScreen = ({ navigation, route }) => {
   const editItem = route.params?.item;
   const [productName, setProductName] = useState(editItem?.name || "");
   const [brand, setBrand] = useState(editItem?.description || "");
-  const [quantity, setQuantity] = useState(editItem?.quantity?.toString() || "");
+  const [quantity, setQuantity] = useState(
+    editItem?.quantity?.toString() || ""
+  );
   const [releaseDate, setReleaseDate] = useState(editItem?.releaseDate || "");
 
   const handleCancel = () => {
@@ -29,8 +30,8 @@ const InventoryFormScreen = ({ navigation, route }) => {
       name: productName,
       description: brand,
       quantity: parseInt(quantity) || 0,
-      url: editItem?.url || 'https://via.placeholder.com/60',
-      releaseDate
+      url: editItem?.url || "https://via.placeholder.com/60",
+      releaseDate,
     };
     dispatch(updateInventory(updatedProduct));
     navigation.goBack();
@@ -38,11 +39,14 @@ const InventoryFormScreen = ({ navigation, route }) => {
 
   return (
     <ContainerComponent>
+      <MyHeader
+        title={editItem ? "Edit Product" : "Add Product"}
+        hasIcon={true}
+        isBack={true}
+      />
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
-        <MyHeader title={editItem ? "Edit Product" : "Add Product"} hasIcon={true} isBack={true} />
-
         <MyTextInput
           title={t("prod_name")}
           value={productName}
@@ -75,7 +79,10 @@ const InventoryFormScreen = ({ navigation, route }) => {
 
       <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>
         <MyButton title={t("cancel")} onPress={handleCancel} color="#DC4C64" />
-        <MyButton title={editItem ? "Save Changes" : "Add Product"} onPress={handleSaveProduct} />
+        <MyButton
+          title={editItem ? "Save Changes" : "Add Product"}
+          onPress={handleSaveProduct}
+        />
       </View>
     </ContainerComponent>
   );
