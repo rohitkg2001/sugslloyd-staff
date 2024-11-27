@@ -9,6 +9,7 @@ export default function ClickableCard({
   item,
   handleViewDetails,
   hideIcons,
+  showArrow,
   handleDelete,
   handleEdit,
   isSite = false,
@@ -40,7 +41,8 @@ export default function ClickableCard({
                 <P style={{ fontSize: 14 }}>
                   Work Order Number: {item.workOrderNumber}
                 </P>
-                <P style={{ fontSize: 14 }}>Rate: {item.rate}</P>
+                <P style={{ fontSize: 14 }}>Start Date: {item.startDate}</P>
+                <P style={{ fontSize: 14 }}>Price: {item.price}</P>
 
                 {/* TODO: Add project specific changes */}
               </>
@@ -80,6 +82,18 @@ export default function ClickableCard({
             </View>
           )}
         </View>
+
+        {showArrow && (
+          <Button
+            style={{
+              position: "absolute",
+              right: spacing.mr2.marginRight,
+              top: 40,
+            }}
+          >
+            <Ionicons name="chevron-forward-outline" size={32} color="gray" />
+          </Button>
+        )}
       </Card>
     </TouchableOpacity>
   );

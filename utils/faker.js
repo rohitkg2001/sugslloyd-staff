@@ -28,10 +28,10 @@ export const ProjectcardsForDashboard = [
 export const projects = [
   {
     id: 1,
-    projectName: "Project 01B",
-    workOrderNumber: "12345",
-    rate: "100",
-    date: "26-Nov-2024",
+    projectName: "Breda",
+    workOrderNumber: "P0763e",
+    startDate: "26-Nov-2024",
+    price: "3L",
     sites: [1, 2],
     vendor: [1],
     tasks: [1, 2],

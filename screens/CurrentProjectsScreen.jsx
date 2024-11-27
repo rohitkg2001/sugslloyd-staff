@@ -29,6 +29,7 @@ export default function CurrentProjectsScreen({ navigation }) {
             item={item}
             isProject={true}
             hideIcons={true}
+            showArrow={true}
             handleViewDetails={() =>
               navigation.navigate("taskScreen", { projectId: item.id })
             }
@@ -50,12 +51,7 @@ export default function CurrentProjectsScreen({ navigation }) {
               style={{ width: SCREEN_WIDTH - 70 }}
             />
             <Button
-              style={[
-                styles.btn,
-                styles.bgPrimary,
-                spacing.mh1,
-                { width: 50 },
-              ]}
+              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
             >
               <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
             </Button>
