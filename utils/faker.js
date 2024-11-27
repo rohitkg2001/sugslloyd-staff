@@ -69,7 +69,7 @@ export const totalsitesData = [
     location: "Lanka",
     geo: {
       lat: 25.2902024,
-      lng: 82.9832034
+      lng: 82.9832034,
     },
     projectSerialCode: "45",
     ProjectCapacity: "50",
@@ -156,7 +156,7 @@ export const vendors = [
   {
     id: 1,
     firstName: "Rakesh",
-    last_name: "Sharma",
+    lastName: "Sharma",
     name: "Rakesh Sharma",
     contact_person: "Amit Kumar",
     contact_number: "9876543210",
@@ -255,7 +255,11 @@ export const internal = [
     page: "notificationScreen",
     icon: "notifications-outline",
   },
-  { label: "privacy_policy_title", page: "privacyPolicy", icon: "shield-checkmark-outline" },
+  {
+    label: "privacy_policy_title",
+    page: "privacyPolicy",
+    icon: "shield-checkmark-outline",
+  },
 ];
 
 export const notifications = [
@@ -323,21 +327,21 @@ export const documentData = [
 export const staff = {
   id: 1,
   firstName: "Rakesh",
-  last_name: "Sharma",
-  user_type: "staff",
-  is_admin: 0,
-  role_id: 1,
+  lastName: "Sharma",
+  userType: "staff",
+  isAdmin: 0,
+  roleId: 1,
   // 0-admin,1-staff/store incharge, 2-project manager, 3-vendor
   email: "rakesh.sharma@gmail.com",
   password: "12345678",
   image: "https://randomuser.me/api/portraits/men/1.jpg",
   status: "active",
-  disable_login: 0,
+  disableLogin: 0,
   address: "123 gali, jhajjar, Haryana",
   contactNo: "9909230912",
-  last_online: "2024-10-03 05:41:49",
-  created_at: "",
-  updated_at: ""
+  lastOnline: "2024-10-03 05:41:49",
+  createdAt: "",
+  updatedAt: "",
 };
 
 export const taskslistdata = [
