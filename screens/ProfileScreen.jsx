@@ -64,13 +64,13 @@ export default function ProfileScreen() {
         <View style={[styles.row, { alignItems: "center", marginTop: -10 }]}>
           <Avatar
             avatar={staff.image}
-            name={`${staff.first_name} ${staff.last_name}`}
+            name={`${staff.firstName} ${staff.last_name}`}
             online={false}
           />
 
           <View style={spacing.mh1}>
             <H6 style={[typography.font12, { color: LIGHT }]}>
-              {staff.first_name} {staff.last_name}
+              {staff.firstName} {staff.last_name}
             </H6>
             <H6 style={[typography.font12, { color: LIGHT }]}>{staff.email}</H6>
             <H6 style={[typography.font12, { color: LIGHT }]}>

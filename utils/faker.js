@@ -155,7 +155,7 @@ export const vendorCardForDashboard = [
 export const vendors = [
   {
     id: 1,
-    first_name: "Rakesh",
+    firstName: "Rakesh",
     last_name: "Sharma",
     name: "Rakesh Sharma",
     contact_person: "Amit Kumar",
@@ -322,7 +322,7 @@ export const documentData = [
 
 export const staff = {
   id: 1,
-  first_name: "Rakesh",
+  firstName: "Rakesh",
   last_name: "Sharma",
   user_type: "staff",
   is_admin: 0,
