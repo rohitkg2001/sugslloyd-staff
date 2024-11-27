@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { useState } from "react";
+import { View, ScrollView , TouchableOpacity } from "react-native";
 import { useDispatch } from 'react-redux';
+import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
@@ -16,8 +17,11 @@ const InventoryFormScreen = ({ navigation, route }) => {
   const editItem = route.params?.item;
   const [productName, setProductName] = useState(editItem?.name || "");
   const [brand, setBrand] = useState(editItem?.description || "");
-  const [quantity, setQuantity] = useState(editItem?.quantity?.toString() || "");
-  const [releaseDate, setReleaseDate] = useState(editItem?.releaseDate || "");
+  const [ quantity, setQuantity ] = useState( editItem?.quantity?.toString() || "" );
+  const [ unit, setUnit ] = useState( editItem?.unit || "" );
+  const [ releaseDate, setReleaseDate ] = useState( editItem?.releaseDate || "" );
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleCancel = () => {
     navigation.goBack();
@@ -35,13 +39,23 @@ const InventoryFormScreen = ({ navigation, route }) => {
     dispatch(updateInventory(updatedProduct));
     navigation.goBack();
   };
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+  };
 
   return (
     <ContainerComponent>
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
-        <MyHeader title={editItem ? "Edit Product" : "Add Product"} hasIcon={true} isBack={true} />
+        <MyHeader
+          title={editItem ? "Edit Product" : "Add Product"}
+          hasIcon={true}
+          isBack={true}
+        />
 
         <MyTextInput
           title={t("prod_name")}
@@ -64,19 +78,46 @@ const InventoryFormScreen = ({ navigation, route }) => {
           placeholder={t("ent_quantity")}
           keyboardType="numeric"
         />
+        <MyTextInput
+          title={t("unit")}
+          value={quantity}
+          onChangeText={setUnit}
+          placeholder={t("ent_unit")}
+        />
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <MyTextInput
+            title={t("release_date")}
+            value={date.toLocaleDateString()}
+            placeholder="Select Date"
+            editable={false}
+          />
+        </TouchableOpacity>
 
         <MyTextInput
-          title={t("release_date")}
-          value={releaseDate}
-          onChangeText={setReleaseDate}
-          placeholder={t("ent_release_date")}
+          title={t("description")}
+          value={unit}
+          onChangeText={setUnit}
+          placeholder="Description here"
+          style={{ height: 100, padding: 10 }}
         />
       </ScrollView>
 
       <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>
         <MyButton title={t("cancel")} onPress={handleCancel} color="#DC4C64" />
-        <MyButton title={editItem ? "Save Changes" : "Add Product"} onPress={handleSaveProduct} />
+        <MyButton
+          title={editItem ? "Save Changes" : "Add Product"}
+          onPress={handleSaveProduct}
+        />
       </View>
+
+      {showDatePicker && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="default"
+          onChange={handleDateChange}
+        />
+      )}
     </ContainerComponent>
   );
 };
