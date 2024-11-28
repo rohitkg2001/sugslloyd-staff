@@ -1,4 +1,4 @@
-import { VIEW_SITE, SEARCH_SITE } from '../actions/siteActions';
+import { VIEW_SITE, SEARCH_SITE , ADD_SITE} from '../actions/siteActions';
 import { totalsitesData } from "..//../utils/faker";
 
 const initialState = {
@@ -9,7 +9,14 @@ const initialState = {
 };
 
 export const siteReducer = (state = initialState, action) => {
-  switch (action.type) {
+  switch ( action.type )
+  {
+    case ADD_SITE:
+      return {
+        ...state,
+        sites: [ ...state.sites, action.site ]
+      };  
+    
     case VIEW_SITE:
       return {
         ...state,

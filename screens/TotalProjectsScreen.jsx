@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -7,7 +8,7 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { fakeDelete, projects } from "../utils/faker";
+import { fakeDelete } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import {
@@ -18,24 +19,42 @@ import {
   ICON_MEDIUM,
   ICON_LARGE,
 } from "../styles";
+import {
+  fetchProjects,
+  searchProjects,
+  viewProject,
+  UPDATE_PROJECT,
+  countProjects,
+  changeProjectStatus,
+  ADD_PROJECT,
+} from "../redux/actions/projectAction";
 import { useTranslation } from "react-i18next";
 
-export default function TotalProjectsScreen({ navigation }) {
+export default function TotalProjectsScreen ( { navigation } )
+{
+   const dispatch = useDispatch(); 
   const [searchText, setSearchText] = useState("");
-  const [filteredProjects, setFilteredProjects] = useState(projects);
   const { t } = useTranslation();
 
-  const filterProjects = (text) => {
-    setSearchText(text);
-    const filtered = projects.filter((item) =>
-      item.projectName.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredProjects(filtered);
+
+const projects = useSelector((state) => state.project.projects); 
+const filteredProjects = useSelector((state) => state.project.filteredProjects); 
+const loading = useSelector((state) => state.project.loading); 
+
+useEffect(() => {
+  dispatch(fetchProjects());
+}, [ dispatch ] );
+  
+  const handleViewDetails = (item) => {
+    dispatch(viewProject(item));
+    navigation.navigate("ViewDetailScreen", { site: item, formType: "project" });
   };
 
-  const handleViewDetails = (projectData) => {
-    navigation.navigate("ViewDetailScreen", { site: projectData });
+const handleSearch = (text) => {
+  setSearchText(text);
+  dispatch(searchProjects(text)); 
   };
+  
 
   const handleEdit = (item) => {
     navigation.navigate("EditDetailsScreen", {

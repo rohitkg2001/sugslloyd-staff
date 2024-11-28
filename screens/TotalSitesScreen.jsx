@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete, totalsitesData } from "../utils/faker";
+import { fakeDelete} from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -10,7 +10,6 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { viewSite, searchSite } from "../redux/actions/siteActions";
 import {
   ICON_LARGE,
   ICON_MEDIUM,
@@ -19,6 +18,10 @@ import {
   spacing,
   styles,
 } from "../styles";
+import {
+ viewSite , searchSite ,fetchSites
+} from "../redux/actions/siteActions";
+
 import { useTranslation } from "react-i18next";
 
 export default function TotalSitesScreen({ navigation, route }) {
@@ -48,6 +51,9 @@ export default function TotalSitesScreen({ navigation, route }) {
     );
     setFilteredData(filtered);
   };
+  useEffect(() => {
+    dispatch(fetchSites());
+  }, [dispatch]);
 
   const handleViewDetails = (siteData) => {
     dispatch(viewSite(siteData));

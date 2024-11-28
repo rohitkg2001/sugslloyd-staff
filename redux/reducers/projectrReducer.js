@@ -5,6 +5,7 @@ import {
   UPDATE_PROJECT,
   COUNT_PROJECTS,
   CHANGE_PROJECT_STATUS,
+  ADD_PROJECT,
 } from "../constant";
 
 const initialState = {
@@ -17,6 +18,14 @@ const initialState = {
 
 export const projectReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_PROJECT:
+      return {
+        ...state,
+        projects: [action.payload, ...state.projects],
+        filteredProjects: [action.payload, ...state.filteredProjects],
+        projectCount: state.projectCount + 1,
+      };
+
     case FETCH_PROJECTS:
       return {
         ...state,
