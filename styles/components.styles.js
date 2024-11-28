@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
 
   cardFullWidth: {
     width: SCREEN_WIDTH / 1.05,
-    height: SCREEN_WIDTH / 3,
+    minHeight: SCREEN_WIDTH / 3,
     elevation: 2,
   },
 

@@ -21,7 +21,7 @@ export const typography = StyleSheet.create({
     },
     textLight: {
         color: LIGHT,
-    }, 
+    },
     textDark: {
         color: DARK,
     },
@@ -35,7 +35,7 @@ export const typography = StyleSheet.create({
         color: WARNING_COLOR
     },
     textSuccess: {
-        color: SUCCESS_COLOR 
+        color: SUCCESS_COLOR
     },
     textPrimaryTransparent: {
         color: PRIMARY_COLOR_TRANSPARENT,
@@ -57,7 +57,9 @@ export const typography = StyleSheet.create({
     font20: {
         fontSize: 20
     },
-
+    font40: {
+        fontSize: 40
+    },
     // uppercase,lowercase,capitalize
     textCapitalize: {
         textTransform: 'capitalize'
