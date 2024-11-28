@@ -9,16 +9,17 @@ import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
+import moment from "moment";
 
 const FormScreen = () => {
-  const [projectName, setProjectName] = useState("");
-  const [workOrderNumber, setWorkOrderNumber] = useState("");
+  const [project_name, setProjectName] = useState("");
+  const [work_order_number, setWorkOrderNumber] = useState("");
   const [rate, setRate] = useState("");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const dispatch = useDispatch(); 
-  const navigation = useNavigation(); 
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const handleCancel = () => {
     setProjectName("");
@@ -26,8 +27,8 @@ const FormScreen = () => {
     setDate(new Date());
   };
 
-  const handleCreate = () => {
-    if (!projectName || !workOrderNumber || !rate ) {
+  const handleCreate = async () => {
+    if (!project_name || !work_order_number || !rate) {
       Alert.alert(
         "Fields Are Required",
         "Please fill all the fields before creating a project."
@@ -36,18 +37,18 @@ const FormScreen = () => {
     }
 
     const newProject = {
-      id: Date.now().toString(),
-      projectName,
-      workOrderNumber,
+      project_name,
+      work_order_number,
       rate,
-      date: date.toLocaleDateString(),
+      date: moment(date).format("YYYY-MM-DD"),
     };
+    const response = await dispatch(addProject(newProject));
+    if (response) {
+      Alert.alert("Success", "Project created successfully!");
+      handleCancel();
+      navigation.goBack();
+    }
 
-    dispatch(addProject(newProject));
-    Alert.alert("Success", "Project created successfully!");
-
-    handleCancel();
-    navigation.goBack();
   };
 
   const handleDateChange = (event, selectedDate) => {
@@ -69,13 +70,13 @@ const FormScreen = () => {
 
         <MyTextInput
           title="Project Name"
-          value={projectName}
+          value={project_name}
           onChangeText={setProjectName}
           placeholder="Enter Project Name"
         />
         <MyTextInput
           title="Work Order Number"
-          value={workOrderNumber}
+          value={work_order_number}
           onChangeText={setWorkOrderNumber}
           placeholder="Enter Work Order Number"
         />
@@ -102,7 +103,7 @@ const FormScreen = () => {
           onChangeText={setRate}
           placeholder="Enter Price"
         />
-  
+
         <View
           style={{
             flexDirection: "row",
