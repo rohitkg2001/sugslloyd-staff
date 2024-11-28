@@ -6,7 +6,7 @@ import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
 import MyButton from "../components/buttons/MyButton";
-import ViewDetailsModal from "../components/ViewDetailsModal";
+import ViewDetailsModal from "../components/ViewDetailsModel";
 import { SCREEN_WIDTH, spacing, typography } from "../styles";
 import { PRIMARY_COLOR } from "../styles/constant";
 
@@ -216,6 +216,8 @@ const styles = StyleSheet.create({
   },
   dispatchButtonContainer: {
     marginBottom: 16,
+     flexDirection: "row",
+    justifyContent: "center"
   },
   tableContainer: {
     borderWidth: 1,
@@ -244,4 +246,3 @@ const styles = StyleSheet.create({
 });
 
 export default ViewDetailScreen;
-

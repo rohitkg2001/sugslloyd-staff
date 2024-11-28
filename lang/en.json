@@ -129,6 +129,8 @@
     "pending": "Pending",
     "remarks": "Remarks",
     "settings": "Settings",
-    "today": "Today"
+    "today": "Today",
+    "dispatch_inventory":"Dispatch Inventory"
+    
   }
 }
