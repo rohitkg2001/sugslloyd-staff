@@ -47,7 +47,7 @@ const SitesFormScreen = () => {
   };
   return (
     <ContainerComponent>
-      <MyHeader title={t("create_site")} hasIcon={true} isBack={true} />
+      <MyHeader title={t("create_sites")} hasIcon={true} isBack={true} />
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 18 }]}
         showsVerticalScrollIndicator={false}

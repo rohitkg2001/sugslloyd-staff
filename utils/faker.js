@@ -157,7 +157,6 @@ export const totalsitesData = [
   },
 ];
 // INcoming from database
-
 export const vendors = [
   {
     id: 1,
@@ -311,7 +310,6 @@ export const notifications = [
 // 1. Task submitted by vendor
 // 2. Task submitted to vendor
 
-
 export const siteCardsForDashboard = [
   {
     id: 1,
@@ -390,3 +388,22 @@ export const ProjectcardsForDashboard = [
 ];
 // Event generated
 
+export const staff = {
+  id: 1,
+  firstName: "Rakesh",
+  lastName: "Sharma",
+  userType: "staff",
+  isAdmin: 0,
+  roleId: 1,
+  // 0-admin,1-staff/store incharge, 2-project manager, 3-vendor
+  email: "rakesh.sharma@gmail.com",
+  password: "12345678",
+  image: "https://randomuser.me/api/portraits/men/1.jpg",
+  status: "active",
+  disableLogin: 0,
+  address: "123 gali, jhajjar, Haryana",
+  contactNo: "9909230912",
+  lastOnline: "2024-10-03 05:41:49",
+  createdAt: "",
+  updatedAt: "",
+};

@@ -19,11 +19,13 @@ import {
   spacing,
   styles,
 } from "../styles";
+import Filter from "../components/Filter";
 import { useTranslation } from "react-i18next";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const siteState = useSelector((state) => state.sites);
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const searchText = siteState ? siteState.searchText : "";
   const [filteredData, setFilteredData] = useState([]);
   const { t } = useTranslation();
@@ -35,19 +37,18 @@ export default function TotalSitesScreen({ navigation, route }) {
 
   useEffect(() => {
     setFilteredData(data);
-
   }, [data]);
 
-  const handleSearch = (text) => {
-    dispatch(searchSite(text));
-    const filtered = data.filter(
-      (site) =>
-        site.city.toLowerCase().includes(text.toLowerCase()) ||
-        site.state.toLowerCase().includes(text.toLowerCase()) ||
-        site.projectCode.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredData(filtered);
-  };
+  // const handleSearch = (text) => {
+  //   dispatch(searchSite(text));
+  //   const filtered = data.filter(
+  //     (site) =>
+  //       site.city.toLowerCase().includes(text.toLowerCase()) ||
+  //       site.state.toLowerCase().includes(text.toLowerCase()) ||
+  //       site.projectCode.toLowerCase().includes(text.toLowerCase())
+  //   );
+  //   setFilteredData(filtered);
+  // };
 
   const handleViewDetails = (siteData) => {
     dispatch(viewSite(siteData));
@@ -102,6 +103,7 @@ export default function TotalSitesScreen({ navigation, route }) {
             />
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+              onPress={() => setShowBottomSheet(!showBottomSheet)}
             >
               <Ionicons
                 name="options-outline"
@@ -112,7 +114,7 @@ export default function TotalSitesScreen({ navigation, route }) {
           </View>
         )}
       />
-
+      {showBottomSheet && <Filter />}
       <Button
         style={styles.addButton}
         onPress={() => navigation.navigate("sitesFormScreen")}

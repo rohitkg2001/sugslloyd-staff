@@ -1,5 +1,6 @@
 import { BASE_URL, LOGIN_STAFF } from "../constant";
 import moment from "moment";
+import { staff } from "../../utils/faker";
 
 export const greet = () => {
   // Write a logic to get morning, afternoon, evening and night as per time from moment
@@ -15,29 +16,37 @@ export const greet = () => {
   }
 };
 
-export const login = (user, pass) => async (dispatch) => {
-  try {
-    const response = await fetch(`${BASE_URL}/api/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email: user, password: pass })
-    });
+// export const login = (user, pass) => async (dispatch) => {
+//   try {
+//     const response = await fetch(`${BASE_URL}/api/login`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify({ email: user, password: pass })
+//     });
 
-    const data = await response.json();
-    if (response.ok && data.user) {
-      // Dispatch the user object to the store
-      dispatch({
-        type: LOGIN_STAFF,
-        payload: data.user,  // Use the user data from the API response
-      });
-      return true;
-    } else {
-      return false;
-    }
-  } catch (err) {
+//     const data = await response.json();
+//     if (response.ok && data.user) {
+//       // Dispatch the user object to the store
+//       dispatch({
+//         type: LOGIN_STAFF,
+//         payload: data.user,  // Use the user data from the API response
+//       });
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } catch (err) {
+//     return false;
+//   }
+// };
+
+export const login = (user, pass) => async (dispatch) => {
+  if (user === staff.email && pass === staff.password) {
+    dispatch({ type: LOGIN_STAFF, payload: staff });
+    return true;
+  } else {
     return false;
   }
 };
-

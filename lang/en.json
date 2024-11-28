@@ -51,7 +51,7 @@
     "site_I&CVendorName": "I & C Vendor Name",
     "no_site_msg": "Oops! There are no sites data available. Start creating or contact admin",
     "total_site_screen_msg": "You cannot delete this site. Please contact Admin!",
-    "create_site": "Create Site",
+    "create_sites": "Create Sites",
     "view_site": "View Sites",
     "site_management": "Site Management",
     "vendor_details": "Vendor Details",
