@@ -8,7 +8,6 @@ import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { updateTask } from "../redux/actions/taskActions";
-import { projects } from "../utils/faker";
 import { useTranslation } from "react-i18next";
 
 const TaskListFormScreen = ({ navigation }) => {
@@ -27,14 +26,6 @@ const TaskListFormScreen = ({ navigation }) => {
     currentTask?.deadline ? new Date(currentTask.deadline) : new Date()
   );
   const [showDatePicker, setShowDatePicker] = useState(false);
-
-  const [projects, setProjects] = useState(
-    projects.map((proj) => ({
-      label: proj.projectName,
-      value: proj.id,
-    }))
-  );
-
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [isSelectingStartDate, setIsSelectingStartDate] = useState(true);

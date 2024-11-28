@@ -24,7 +24,6 @@ export default function SettingsScreen({ navigation }) {
     const fetchLanguage = async () => {
       const storedLanguage = await AsyncStorage.getItem("appLanguage");
       setLanguage(storedLanguage);
-      console.log(language);
     };
 
     fetchLanguage();

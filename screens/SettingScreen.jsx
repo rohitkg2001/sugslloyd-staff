@@ -6,15 +6,14 @@ import { View, TouchableOpacity } from "react-native";
 import { H5 } from "../components/text";
 import { DANGER_COLOR, ICON_MEDIUM } from "../styles/constant";
 import Icon from "react-native-vector-icons/Ionicons";
-import { staff } from "../utils/faker";
 import { useTranslation } from "react-i18next";
-
+import { useSelector } from "react-redux";
 
 export default function SettingsScreen({ navigation }) {
   const { t } = useTranslation();
+  const { staff } = useSelector(state => state)
 
   const handleLogoutPress = () => {
-    console.log("Logout pressed");
     navigation.navigate("loginScreen");
     // Insert logout logic
   };

@@ -1,7 +1,7 @@
 import { View, Image } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { documentData, staff } from "../utils/faker";
+import { documentData } from "../utils/faker";
 import {
   LIGHT,
   PRIMARY_COLOR,
@@ -15,6 +15,7 @@ import Avatar from "../components/Avatar";
 import { H6 } from "../components/text";
 import MyFlatList from "../components/utility/MyFlatList";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const ProfileItem = ({ iconName, label }) => {
 
@@ -42,6 +43,7 @@ const ProfileItem = ({ iconName, label }) => {
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
+  const { staff } = useSelector(state => state)
   return (
     <ContainerComponent>
       <MyHeader title={t("profile_title")} isBack={true} hasIcon={true} />

@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete, totalsitesData } from "../utils/faker";
+import { fakeDelete} from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -10,7 +10,6 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
-import { viewSite, searchSite } from "../redux/actions/siteActions";
 import {
   ICON_LARGE,
   ICON_MEDIUM,
@@ -19,11 +18,16 @@ import {
   spacing,
   styles,
 } from "../styles";
+import {
+ viewSite , searchSite ,fetchSites , addSite
+} from "../redux/actions/siteActions";
+
 import { useTranslation } from "react-i18next";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const siteState = useSelector((state) => state.sites);
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const searchText = siteState ? siteState.searchText : "";
   const [filteredData, setFilteredData] = useState([]);
   const { t } = useTranslation();
@@ -32,11 +36,10 @@ export default function TotalSitesScreen({ navigation, route }) {
     pageTitle: t("site_management"),
     data: totalsitesData,
   };
-
+  
   useEffect(() => {
-    setFilteredData(data);
-    console.log(pageTitle);
-  }, [data]);
+    dispatch(fetchSites());
+  }, [dispatch]);
 
   const handleSearch = (text) => {
     dispatch(searchSite(text));
@@ -48,6 +51,7 @@ export default function TotalSitesScreen({ navigation, route }) {
     );
     setFilteredData(filtered);
   };
+  
 
   const handleViewDetails = (siteData) => {
     dispatch(viewSite(siteData));
@@ -102,6 +106,7 @@ export default function TotalSitesScreen({ navigation, route }) {
             />
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+              onPress={() => setShowBottomSheet(!showBottomSheet)}
             >
               <Ionicons
                 name="options-outline"
@@ -112,7 +117,7 @@ export default function TotalSitesScreen({ navigation, route }) {
           </View>
         )}
       />
-
+      {showBottomSheet && <Filter />}
       <Button
         style={styles.addButton}
         onPress={() => navigation.navigate("sitesFormScreen")}

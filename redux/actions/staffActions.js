@@ -1,4 +1,4 @@
-import { LOGIN_STAFF } from "../constant";
+import { BASE_URL, LOGIN_STAFF } from "../constant";
 import moment from "moment";
 import { staff } from "../../utils/faker";
 
@@ -15,6 +15,32 @@ export const greet = () => {
     return "Come Tomorrow";
   }
 };
+
+// export const login = (user, pass) => async (dispatch) => {
+//   try {
+//     const response = await fetch(`${BASE_URL}/api/login`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify({ email: user, password: pass })
+//     });
+
+//     const data = await response.json();
+//     if (response.ok && data.user) {
+//       // Dispatch the user object to the store
+//       dispatch({
+//         type: LOGIN_STAFF,
+//         payload: data.user,  // Use the user data from the API response
+//       });
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } catch (err) {
+//     return false;
+//   }
+// };
 
 export const login = (user, pass) => async (dispatch) => {
   if (user === staff.email && pass === staff.password) {

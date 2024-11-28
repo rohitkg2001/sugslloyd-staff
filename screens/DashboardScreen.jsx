@@ -9,7 +9,6 @@ import MyFlatList from "../components/utility/MyFlatList";
 import { H4, H5, P, Span } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
-import { useSelector } from "react-redux";
 import {
   layouts,
   LIGHT,
@@ -22,7 +21,6 @@ import {
   ICON_SMALL,
   ICON_MEDIUM,
   ICON_LARGE,
-  PRIMARY_COLOR_TRANSPARENT,
 } from "../styles";
 import {
   siteCardsForDashboard,
@@ -33,8 +31,9 @@ import {
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import { useTranslation } from "react-i18next";
-import BottomSheet from "../components/bottomsheet/BottomSheet";
 import Filter from "../components/Filter";
+import { getAllVendors } from "../redux/actions/vendorAction";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function DashboardScreen({ navigation }) {
   const [today, setToday] = useState(moment().format("DD MMM YYYY"));
@@ -45,11 +44,15 @@ export default function DashboardScreen({ navigation }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { firstName } = useSelector((state) => state.staff);
   const { t } = useTranslation();
+  const dispatch = useDispatch()
+
 
 
   useEffect(() => {
     setGreeting(greet());
+    dispatch(getAllVendors())
   }, []);
+
 
   const handleDateChange = (event, date) => {
     if (event.type === "set") {

@@ -95,10 +95,10 @@ export const PageData = [
 export const projects = [
   {
     id: 1,
-    projectName: "Project 01B",
-    workOrderNumber: "12345",
-    rate: "100",
-    date: "26-Nov-2024",
+    projectName: "Breda",
+    workOrderNumber: "P0763e",
+    startDate: "26-Nov-2024",
+    price: "3L",
     sites: [1, 2],
     vendor: [1],
     tasks: [1, 2],
@@ -157,7 +157,6 @@ export const totalsitesData = [
   },
 ];
 // INcoming from database
-
 export const vendors = [
   {
     id: 1,
@@ -174,8 +173,7 @@ export const vendors = [
     gstNumber: "07ABCDE1234F1Z5",
     panNumber: "ABCDE1234F",
     userType: "vendor",
-    isAdmin: 0,
-    roleId: 1,
+    role: 3,
     email: "rakesh.sharma@gmail.com",
     password: "12345678",
     status: "Active",
@@ -253,6 +251,7 @@ export const documentData = [
 ];
 // INcoming from database
 
+<<<<<<< HEAD
 export const staff = {
   id: 1,
   firstName: "Rakesh",
@@ -274,6 +273,8 @@ export const staff = {
 };
 // INcoming from database
 
+=======
+>>>>>>> 27ba4f62bf23edec849d74035b65a8e1ba9f44cb
 export const taskslistdata = [
   {
     id: 1,
@@ -410,3 +411,25 @@ export const ProjectcardsForDashboard = [
   },
 ];
 // Event generated
+<<<<<<< HEAD
+=======
+export const staff = {
+  id: 1,
+  firstName: "Rakesh",
+  lastName: "Sharma",
+  userType: "staff",
+  isAdmin: 0,
+  roleId: 1,
+  // 0-admin,1-staff/store incharge, 2-project manager, 3-vendor
+  email: "rakesh.sharma@gmail.com",
+  password: "12345678",
+  image: "https://randomuser.me/api/portraits/men/1.jpg",
+  status: "active",
+  disableLogin: 0,
+  address: "123 gali, jhajjar, Haryana",
+  contactNo: "9909230912",
+  lastOnline: "2024-10-03 05:41:49",
+  createdAt: "",
+  updatedAt: "",
+};
+>>>>>>> 27ba4f62bf23edec849d74035b65a8e1ba9f44cb

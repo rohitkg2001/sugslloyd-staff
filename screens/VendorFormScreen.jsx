@@ -6,8 +6,10 @@ import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { editVendor } from "../redux/actions/vendorAction";
 
-const VendorFormScreen = () => {
+const VendorFormScreen = ({ route }) => {
   const [name, setName] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [contactPerson, setContactPerson] = useState("");
@@ -22,6 +24,8 @@ const VendorFormScreen = () => {
   const [pan, setPan] = useState("");
   const [mailId, setMailId] = useState("");
   const { t } = useTranslation();
+  const dispatch = useDispatch()
+  const { id, email } = route.params
 
   const handleCancel = () => {
     setName("");
@@ -40,13 +44,12 @@ const VendorFormScreen = () => {
     setPan("");
   };
 
-  const handleCreate = () => {
-    console.log("Creating Vendor with data:", {
-      gstNumber,
-      contactPerson,
-      contactNumber,
-      mailId,
-    });
+  const handleCreate = async () => {
+    const data = {
+      email: email,
+      name: name,
+    }
+    await dispatch(editVendor(data, id))
   };
 
   return (
