@@ -257,9 +257,9 @@ export const staff = {
   id: 1,
   firstName: "Rakesh",
   lastName: "Sharma",
-  userType: "staff",
+
   isAdmin: 0,
-  roleId: 1,
+  role: 1,
   // 0-admin,1-staff/store incharge, 2-project manager, 3-vendor
   email: "rakesh.sharma@gmail.com",
   password: "12345678",
@@ -332,7 +332,6 @@ export const notifications = [
 // Event generated
 // 1. Task submitted by vendor
 // 2. Task submitted to vendor
-
 
 export const siteCardsForDashboard = [
   {
@@ -411,4 +410,3 @@ export const ProjectcardsForDashboard = [
   },
 ];
 // Event generated
-
