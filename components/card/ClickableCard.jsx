@@ -36,13 +36,13 @@ export default function ClickableCard({
             {isProject && (
               <>
                 <H6 style={[typography.textBold]}>
-                  Project Name: {item.projectName}
+                  Project Name: {item.project_name}
                 </H6>
                 <P style={{ fontSize: 14 }}>
-                  Work Order Number: {item.workOrderNumber}
+                  Work Order Number: {item.work_order_number}
                 </P>
-                <P style={{ fontSize: 14 }}>Start Date: {item.startDate}</P>
-                <P style={{ fontSize: 14 }}>Price: {item.price}</P>
+                <P style={{ fontSize: 14 }}>Start Date: {item.start_date}</P>
+                <P style={{ fontSize: 14 }}>Price: {item.rate}</P>
 
                 {/* TODO: Add project specific changes */}
               </>

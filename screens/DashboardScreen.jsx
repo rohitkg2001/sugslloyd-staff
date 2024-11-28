@@ -32,7 +32,7 @@ import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import { useTranslation } from "react-i18next";
 import Filter from "../components/Filter";
-import { getAllVendors } from "../redux/actions/vendorAction";
+import { getAllVendors, getVendorCounts } from "../redux/actions/vendorAction";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function DashboardScreen({ navigation }) {
@@ -42,15 +42,25 @@ export default function DashboardScreen({ navigation }) {
   const [greeting, setGreeting] = useState("Good morning");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [totalVendors, setTotalVendors] = useState(0)
+  const [activeVendors, setActiveVendors] = useState(0)
+  const [inActiveVendors, setInActiveVendors] = useState(0)
   const { firstName } = useSelector((state) => state.staff);
   const { t } = useTranslation();
   const dispatch = useDispatch()
 
+  const getCounts = async () => {
+    const { totalVendors, activeVendors, inactiveVendors } = await getVendorCounts()
+    setActiveVendors(activeVendors)
+    setTotalVendors(totalVendors)
+    setInActiveVendors(inactiveVendors)
 
+  }
 
   useEffect(() => {
     setGreeting(greet());
     dispatch(getAllVendors())
+    getCounts()
   }, []);
 
 
@@ -263,7 +273,7 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
 
-        <MyFlatList
+        {/* <MyFlatList
           data={vendorCardForDashboard}
           renderItem={({ item, index }) => {
             return (
@@ -283,7 +293,41 @@ export default function DashboardScreen({ navigation }) {
           }}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
-        />
+        /> */}
+        {/* //Project OverView  */}
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="person-circle"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>
+              Vendors
+            </H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv2]} />
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <View style={{ alignItems: "center", textAlign: "center" }}>
+              <P style={typography.textBold}>Total Vendors</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>{totalVendors}</P>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Active</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>{activeVendors}</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Inactive</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>{inActiveVendors}</P>
+            </View>
+          </View>
+        </CardFullWidth>
       </ScrollView>
       {showDatePicker && (
         <DateTimePicker

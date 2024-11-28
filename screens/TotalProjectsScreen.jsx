@@ -30,31 +30,39 @@ import {
 } from "../redux/actions/projectAction";
 import { useTranslation } from "react-i18next";
 
-export default function TotalProjectsScreen ( { navigation } )
-{
-   const dispatch = useDispatch(); 
+export default function TotalProjectsScreen({ navigation }) {
+  const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
+  const [filteredProjects, setFilteredProjects] = useState([])
+  const [loading, setLoading] = useState(true)
   const { t } = useTranslation();
+  const { projects } = useSelector(state => state.project)
+
+  useEffect(() => {
+    if (loading && Array.isArray(projects) && projects.length > 0) {
+      setFilteredProjects(projects)
+      setLoading(false)
+    }
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
+  }, [loading, projects])
 
 
-const projects = useSelector((state) => state.project.projects); 
-const filteredProjects = useSelector((state) => state.project.filteredProjects); 
-const loading = useSelector((state) => state.project.loading); 
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
 
-useEffect(() => {
-  dispatch(fetchProjects());
-}, [ dispatch ] );
-  
   const handleViewDetails = (item) => {
     dispatch(viewProject(item));
-    navigation.navigate("ViewDetailScreen", { site: item, formType: "project" });
+    navigation.navigate("ViewDetailScreen", { formType: "project" });
   };
 
-const handleSearch = (text) => {
-  setSearchText(text);
-  dispatch(searchProjects(text)); 
+  const handleSearch = (text) => {
+    setSearchText(text);
+    dispatch(searchProjects(text));
   };
-  
+
 
   const handleEdit = (item) => {
     navigation.navigate("EditDetailsScreen", {
@@ -68,12 +76,12 @@ const handleSearch = (text) => {
       <MyHeader title={t("total_projects")} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredProjects}
-        loading={false}
+        loading={loading}
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
             key={item.id}
-            handleViewDetails={handleViewDetails}
+            handleViewDetails={() => handleViewDetails(item.id)}
             handleDelete={() =>
               fakeDelete({
                 title: t("error"),

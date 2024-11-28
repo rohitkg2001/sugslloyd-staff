@@ -22,7 +22,6 @@ export const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         projects: [action.payload, ...state.projects],
-        filteredProjects: [action.payload, ...state.filteredProjects],
         projectCount: state.projectCount + 1,
       };
 
@@ -30,7 +29,6 @@ export const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         projects: action.payload,
-        filteredProjects: action.payload,
         projectCount: action.payload.length,
       };
     case SEARCH_PROJECTS:
@@ -44,26 +42,9 @@ export const projectReducer = (state = initialState, action) => {
         ),
       };
     case VIEW_PROJECT:
-      return {
-        ...state,
-        currentProject: state.projects.find(
-          (project) => project.id === action.payload
-        ),
-      };
+      return { ...state, currentProject: action.payload };
     case UPDATE_PROJECT:
-      return {
-        ...state,
-        projects: state.projects.map((project) =>
-          project.id === action.payload.id ? action.payload : project
-        ),
-        filteredProjects: state.filteredProjects.map((project) =>
-          project.id === action.payload.id ? action.payload : project
-        ),
-        currentProject:
-          state.currentProject && state.currentProject.id === action.payload.id
-            ? action.payload
-            : state.currentProject,
-      };
+      return { ...state, project: action.payload };
     case COUNT_PROJECTS:
       return {
         ...state,
@@ -84,7 +65,7 @@ export const projectReducer = (state = initialState, action) => {
         ),
         currentProject:
           state.currentProject &&
-          state.currentProject.id === action.payload.projectId
+            state.currentProject.id === action.payload.projectId
             ? { ...state.currentProject, status: action.payload.newStatus }
             : state.currentProject,
       };

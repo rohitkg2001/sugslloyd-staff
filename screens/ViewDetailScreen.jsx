@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { View, ScrollView } from "react-native";
 import { SCREEN_WIDTH, spacing, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
@@ -6,12 +6,18 @@ import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
 import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const ViewDetailScreen = ({ route, navigation }) => {
   const { site, formType } = route.params;
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [siteCreated, setSiteCreated] = useState(false);
   const { t } = useTranslation();
+  const { currentProject } = useSelector(state => state.project);
+  useEffect(() => {
+    console.log(currentProject)
+  }, [currentProject])
+
 
   // Optimize rendering of the row components
   const renderDetailRow = (label, value) => (
@@ -51,10 +57,10 @@ const ViewDetailScreen = ({ route, navigation }) => {
   // Project details rendering
   const renderProjectDetails = () => (
     <>
-      {renderDetailRow("Project Name", site.projectName)}
-      {renderDetailRow("Work Order Number", site.workOrderNumber)}
-      {renderDetailRow("Price", site.price)}
-      {renderDetailRow("Date", site.date)}
+      {renderDetailRow("Project Name", currentProject.project_name)}
+      {renderDetailRow("Work Order Number", currentProject.work_order_number)}
+      {renderDetailRow("Price", currentProject.rate)}
+      {renderDetailRow("Date", currentProject.start_date)}
 
       <View
         style={{
@@ -132,7 +138,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
           title={
             formType === "vendor"
               ? t("vendor_details")
-              : site.projectName
+              : formType === "project"
                 ? t("project_details")
                 : t("site_details")
           }
@@ -143,7 +149,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
         <ScrollView>
           {formType === "vendor"
             ? renderVendorDetails()
-            : site.projectName
+            : formType === "project"
               ? renderProjectDetails()
               : renderSiteDetails()}
         </ScrollView>
