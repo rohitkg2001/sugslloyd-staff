@@ -251,30 +251,6 @@ export const documentData = [
 ];
 // INcoming from database
 
-<<<<<<< HEAD
-export const staff = {
-  id: 1,
-  firstName: "Rakesh",
-  lastName: "Sharma",
-
-  isAdmin: 0,
-  role: 1,
-  // 0-admin,1-staff/store incharge, 2-project manager, 3-vendor
-  email: "rakesh.sharma@gmail.com",
-  password: "12345678",
-  image: "https://randomuser.me/api/portraits/men/1.jpg",
-  status: "active",
-  disableLogin: 0,
-  address: "123 gali, jhajjar, Haryana",
-  contactNo: "9909230912",
-  lastOnline: "2024-10-03 05:41:49",
-  createdAt: "",
-  updatedAt: "",
-};
-// INcoming from database
-
-=======
->>>>>>> 27ba4f62bf23edec849d74035b65a8e1ba9f44cb
 export const taskslistdata = [
   {
     id: 1,
@@ -411,8 +387,6 @@ export const ProjectcardsForDashboard = [
   },
 ];
 // Event generated
-<<<<<<< HEAD
-=======
 export const staff = {
   id: 1,
   firstName: "Rakesh",
@@ -432,4 +406,3 @@ export const staff = {
   createdAt: "",
   updatedAt: "",
 };
->>>>>>> 27ba4f62bf23edec849d74035b65a8e1ba9f44cb

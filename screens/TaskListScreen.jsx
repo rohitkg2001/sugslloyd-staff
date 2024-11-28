@@ -10,6 +10,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import { viewTask, initializeTasks } from "../redux/actions/taskActions";
 import Button from "../components/buttons/Button";
+import { useTranslation } from "react-i18next";
 import {
   SCREEN_WIDTH,
   spacing,
@@ -21,6 +22,7 @@ import {
 
 export default function TaskListScreen({ navigation }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const tasks = useSelector((state) => state.tasks?.tasks || []);
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export default function TaskListScreen({ navigation }) {
 
   return (
     <ContainerComponent>
-      <MyHeader title="Task List" isBack={true} hasIcon={true} />
+      <MyHeader title={t("task_list")} isBack={true} hasIcon={true} />
       <MyFlatList
         data={tasks}
         renderItem={renderListItem}

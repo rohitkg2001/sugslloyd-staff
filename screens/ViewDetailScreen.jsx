@@ -64,7 +64,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
         }}
       >
         <MyButton
-          title={t("create_site")}
+          title={t("create_sites")}
           onPress={() => {
             setSiteCreated(true);
             navigation.navigate("sitesFormScreen");
@@ -133,8 +133,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             formType === "vendor"
               ? t("vendor_details")
               : site.projectName
-                ? t("project_details")
-                : t("site_details")
+              ? t("project_details")
+              : t("site_details")
           }
           isBack={true}
           hasIcon={true}
@@ -144,8 +144,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
           {formType === "vendor"
             ? renderVendorDetails()
             : site.projectName
-              ? renderProjectDetails()
-              : renderSiteDetails()}
+            ? renderProjectDetails()
+            : renderSiteDetails()}
         </ScrollView>
 
         {/* Conditionally render the Create Task and View Task buttons */}

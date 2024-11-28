@@ -23,7 +23,7 @@
     "task_management": "कार्य प्रबंधन",
     "placeholder": "खोजें",
     "task_list": "कार्य सूची",
-    "total_sites": "कुल साइट्स",
+    "total_site": "कुल साइट्स",
     "submit_task": "कार्य सबमिट करें",
     "description": "विवरण",
     "select_material": "सामग्री चुनें",
@@ -120,6 +120,7 @@
     "commissioning_date": "कमिशनिंग तिथि",
     "done": "पूर्ण",
     "pending": "लंबित",
-    "remarks": "टिप्पणियाँ"
+    "remarks": "टिप्पणियाँ",
+    "project_name": "परियोजना का नाम"
   }
 }
