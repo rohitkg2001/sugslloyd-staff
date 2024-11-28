@@ -5,7 +5,7 @@ node_modules/
 
 #Dont push anything over git
 android/
-actions/staffAction.js
+redux/actions/staffActions.js
 
 # Expo
 .expo/
