@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, ScrollView, TouchableOpacity } from "react-native";
+import { View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
@@ -8,7 +8,8 @@ import MyPickerInput from "../components/input/MyPickerInput";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
-import { addSite } from "../redux/actions/siteActions";
+import { useDispatch } from "react-redux";
+import { addSite, fetchSites } from "../redux/actions/siteActions"; // Import actions
 
 const SitesFormScreen = () => {
   const [state, setState] = useState("");
@@ -19,17 +20,19 @@ const SitesFormScreen = () => {
   const [projectCapacity, setProjectCapacity] = useState("");
   const [caNumber, setCaNumber] = useState("");
   const [contactNo, setContactNo] = useState("");
-  const [ vendorName, setVendorName ] = useState( "" );
-  const [ sancationLoad, setSancationLoad ] = useState( "" );
-  const [ meterNumber, setMeterNumber ] = useState( "" );
-  const [ loadEnhancementStatus, setLoadEnhancementStatus ] = useState( "" );
-  const [ netMeter, setNetMetre ] = useState( "" );
-  const [ solarMeter, setSolarMetre ] = useState( " " ); 
-  const [ remarks, setRemarks ] = useState( " " );
+  const [vendorName, setVendorName] = useState("");
+  const [sancationLoad, setSancationLoad] = useState("");
+  const [meterNumber, setMeterNumber] = useState("");
+  const [loadEnhancementStatus, setLoadEnhancementStatus] = useState("");
+  const [netMeter, setNetMetre] = useState("");
+  const [solarMeter, setSolarMetre] = useState("");
+  const [remarks, setRemarks] = useState("");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
+  // Reset form fields
   const handleCancel = () => {
     setState("");
     setCity("");
@@ -39,31 +42,65 @@ const SitesFormScreen = () => {
     setProjectCapacity("");
     setCaNumber("");
     setContactNo("");
-    setVendorName( "" );
-    setSancationLoad( "" );
-    setMeterNumber( "" );
-    setLoadEnhancementStatus ( "" );
-    setNetMetre( "" );
-    setSolarMetre( " " );
-    setRemarks( " " );
+    setVendorName("");
+    setSancationLoad("");
+    setMeterNumber("");
+    setLoadEnhancementStatus("");
+    setNetMetre("");
+    setSolarMetre("");
+    setRemarks("");
   };
 
-  const handleCreate = () =>
-  {
+  // Handle create button press
+  const handleCreate = () => {
     if (!location || !solarMeter || !remarks || !netMeter) {
       Alert.alert(
         "Fields Are Required",
         "Please fill all the fields before creating a project."
       );
-    }
-  }
+    } else {
+      // Create site data
+      const siteData = {
+        state,
+        city,
+        projectSerial,
+        siteName,
+        location,
+        projectCapacity,
+        caNumber,
+        contactNo,
+        vendorName,
+        sancationLoad,
+        meterNumber,
+        loadEnhancementStatus,
+        netMeter,
+        solarMeter,
+        remarks,
+        materialInspectionDate: date,
+        installationDate: date,
+        commissioningDate: date,
+      };
 
+      // Dispatch addSite action to add the new site
+      dispatch(addSite(siteData));
+
+      // Refresh the list of sites
+      dispatch(fetchSites());
+
+      // Clear form fields
+      handleCancel();
+      Alert.alert("Site Created", "The site has been created successfully.");
+    }
+  };
+
+  // Handle date picker change
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
       setDate(selectedDate);
     }
   };
+
   return (
     <ContainerComponent>
       <MyHeader title={t("create_site")} hasIcon={true} isBack={true} />
@@ -92,6 +129,7 @@ const SitesFormScreen = () => {
             { label: "Gaya", value: "NYC" },
           ]}
         />
+
         <MyTextInput
           title={t("site_location")}
           value={location}
@@ -110,7 +148,6 @@ const SitesFormScreen = () => {
           onChangeText={setSiteName}
           placeholder="Enter Site Name"
         />
-
         <MyTextInput
           title={t("site_projectcapacity")}
           value={projectCapacity}
@@ -172,6 +209,7 @@ const SitesFormScreen = () => {
           onChangeText={setSolarMetre}
           placeholder="Solar Meter Sl. No"
         />
+
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
           <MyTextInput
             title={t("material_inspectiondate")}
@@ -199,7 +237,7 @@ const SitesFormScreen = () => {
         <MyTextInput
           title={t("remarks")}
           value={remarks}
-          onChangeText={ setRemarks }
+          onChangeText={setRemarks}
           placeholder="Description here"
           style={{ height: 100, padding: 10 }}
         />

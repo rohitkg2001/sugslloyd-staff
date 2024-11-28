@@ -19,7 +19,7 @@ import {
   styles,
 } from "../styles";
 import {
- viewSite , searchSite ,fetchSites
+ viewSite , searchSite ,fetchSites , addSite
 } from "../redux/actions/siteActions";
 
 import { useTranslation } from "react-i18next";
@@ -35,11 +35,10 @@ export default function TotalSitesScreen({ navigation, route }) {
     pageTitle: t("site_management"),
     data: totalsitesData,
   };
-
+  
   useEffect(() => {
-    setFilteredData(data);
-
-  }, [data]);
+    dispatch(fetchSites());
+  }, [dispatch]);
 
   const handleSearch = (text) => {
     dispatch(searchSite(text));
@@ -51,9 +50,7 @@ export default function TotalSitesScreen({ navigation, route }) {
     );
     setFilteredData(filtered);
   };
-  useEffect(() => {
-    dispatch(fetchSites());
-  }, [dispatch]);
+  
 
   const handleViewDetails = (siteData) => {
     dispatch(viewSite(siteData));
