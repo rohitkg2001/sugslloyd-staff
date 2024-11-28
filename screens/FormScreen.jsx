@@ -14,23 +14,20 @@ const FormScreen = () => {
   const [projectName, setProjectName] = useState("");
   const [workOrderNumber, setWorkOrderNumber] = useState("");
   const [rate, setRate] = useState("");
-  const [location, setLocation] = useState("");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const dispatch = useDispatch(); // Initialize dispatch
-  const navigation = useNavigation(); // Initialize navigation
+  const dispatch = useDispatch(); 
+  const navigation = useNavigation(); 
 
   const handleCancel = () => {
     setProjectName("");
     setWorkOrderNumber("");
-    setRate("");
-    setLocation("");
     setDate(new Date());
   };
 
   const handleCreate = () => {
-    if (!projectName || !workOrderNumber || !rate || !location) {
+    if (!projectName || !workOrderNumber || !rate ) {
       Alert.alert(
         "Fields Are Required",
         "Please fill all the fields before creating a project."
@@ -43,7 +40,6 @@ const FormScreen = () => {
       projectName,
       workOrderNumber,
       rate,
-      location,
       date: date.toLocaleDateString(),
     };
 
@@ -101,17 +97,12 @@ const FormScreen = () => {
           />
         )}
         <MyTextInput
-          title="Rate"
+          title="Price"
           value={rate}
           onChangeText={setRate}
-          placeholder="Enter Rate"
+          placeholder="Enter Price"
         />
-        <MyTextInput
-          title="Location"
-          value={location}
-          onChangeText={setLocation}
-          placeholder="Enter Location"
-        />
+  
         <View
           style={{
             flexDirection: "row",
