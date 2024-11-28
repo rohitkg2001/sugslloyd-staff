@@ -27,6 +27,7 @@ export const login = (user, pass) => async (dispatch) => {
     });
 
     const data = await response.json();
+    console.log(data)
     if (response.ok && data.user) {
       // Dispatch the user object to the store
       dispatch({
