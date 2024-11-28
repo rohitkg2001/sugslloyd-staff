@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { View, ScrollView, TouchableOpacity } from "react-native";
+import { View, ScrollView, TouchableOpacity, Alert } from "react-native";
+import { useDispatch } from "react-redux";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
@@ -8,6 +9,7 @@ import MyPickerInput from "../components/input/MyPickerInput";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
+import { addSite } from "../redux/actions/siteActions";
 
 const SitesFormScreen = () => {
   const [state, setState] = useState("");
@@ -19,9 +21,17 @@ const SitesFormScreen = () => {
   const [caNumber, setCaNumber] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [vendorName, setVendorName] = useState("");
+  const [sancationLoad, setSancationLoad] = useState("");
+  const [meterNumber, setMeterNumber] = useState("");
+  const [loadEnhancementStatus, setLoadEnhancementStatus] = useState("");
+  const [netMeter, setNetMetre] = useState("");
+  const [solarMeter, setSolarMetre] = useState(" ");
+  const [remarks, setRemarks] = useState(" ");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const { t } = useTranslation();
+
+  const dispatch = useDispatch();
 
   const handleCancel = () => {
     setState("");
@@ -33,10 +43,31 @@ const SitesFormScreen = () => {
     setCaNumber("");
     setContactNo("");
     setVendorName("");
+    setSancationLoad("");
+    setMeterNumber("");
+    setLoadEnhancementStatus("");
+    setNetMetre("");
+    setSolarMetre(" ");
+    setRemarks(" ");
   };
 
   const handleCreate = () => {
-
+    if (!location || !solarMeter || !remarks || !netMeter) {
+      Alert.alert(
+        "Fields Are Required",
+        "Please fill all the fields before creating a project."
+      );
+    }
+    const newSite = {
+      id: Date.now().toString(),
+      location,
+      solarMeter,
+      remarks,
+      netMeter,
+      date: date.toLocaleDateString(),
+    };
+    dispatch(addSite(newSite));
+    Alert.alert("Success", "Project created successfully!");
   };
 
   const handleDateChange = (event, selectedDate) => {
@@ -119,20 +150,20 @@ const SitesFormScreen = () => {
         />
         <MyTextInput
           title={t("sanction_load")}
-          value={vendorName}
-          onChangeText={setVendorName}
+          value={sancationLoad}
+          onChangeText={setSancationLoad}
           placeholder="Enter Sanction Value"
         />
         <MyTextInput
           title={t("meter_no")}
-          value={vendorName}
-          onChangeText={setVendorName}
+          value={meterNumber}
+          onChangeText={setMeterNumber}
           placeholder="Enter Meter Number"
         />
         <MyTextInput
           title={t("load_enhancementstatus")}
-          value={vendorName}
-          onChangeText={setVendorName}
+          value={loadEnhancementStatus}
+          onChangeText={setLoadEnhancementStatus}
           placeholder="Enter Load Enhancement Status"
         />
         <MyPickerInput
@@ -143,21 +174,20 @@ const SitesFormScreen = () => {
         />
         <MyTextInput
           title={t("net_meterserialnumber")}
-          value={vendorName}
-          onChangeText={setVendorName}
+          value={netMeter}
+          onChangeText={setNetMetre}
           placeholder="Net Meter Sl. No"
         />
         <MyTextInput
           title={t("solar_meterserialnumber")}
-          value={vendorName}
-          onChangeText={setVendorName}
+          value={solarMeter}
+          onChangeText={setSolarMetre}
           placeholder="Solar Meter Sl. No"
         />
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
           <MyTextInput
             title={t("material_inspectiondate")}
             value={date.toLocaleDateString()}
-            placeholder="Select Date"
             editable={false}
           />
         </TouchableOpacity>
@@ -166,7 +196,6 @@ const SitesFormScreen = () => {
           <MyTextInput
             title={t("spp_installationiondate")}
             value={date.toLocaleDateString()}
-            placeholder="Select Date"
             editable={false}
           />
         </TouchableOpacity>
@@ -175,15 +204,14 @@ const SitesFormScreen = () => {
           <MyTextInput
             title={t("commissioning_date")}
             value={date.toLocaleDateString()}
-            placeholder="Select Date"
             editable={false}
           />
         </TouchableOpacity>
 
         <MyTextInput
           title={t("remarks")}
-          value={vendorName}
-          onChangeText={setVendorName}
+          value={remarks}
+          onChangeText={setRemarks}
           placeholder="Description here"
           style={{ height: 100, padding: 10 }}
         />
