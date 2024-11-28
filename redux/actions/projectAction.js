@@ -9,6 +9,7 @@ import {
   BASE_URL,
 } from '../constant';
 
+
 import { projects as mockProjects } from "../../utils/faker";
 
 export const fetchProjects = () => async (dispatch) => {
@@ -46,8 +47,23 @@ export const changeProjectStatus = (projectId, newStatus) => ({
   payload: { projectId, newStatus },
 });
 
-export const addProject = (project) => ({
-  type: ADD_PROJECT,
-  payload: project,
-});
+export const addProject = (project) => async (dispatch) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/projects`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(project)
+      }
+    )
+    const data = await response.json()
+    dispatch({ type: ADD_PROJECT, payload: data.project })
+    return true
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+};
 

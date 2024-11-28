@@ -23,10 +23,6 @@ import {
   fetchProjects,
   searchProjects,
   viewProject,
-  UPDATE_PROJECT,
-  countProjects,
-  changeProjectStatus,
-  ADD_PROJECT,
 } from "../redux/actions/projectAction";
 import { useTranslation } from "react-i18next";
 
@@ -81,7 +77,7 @@ export default function TotalProjectsScreen({ navigation }) {
           <ClickableCard
             item={item}
             key={item.id}
-            handleViewDetails={() => handleViewDetails(item.id)}
+            handleViewDetails={(item) => handleViewDetails(item.id)}
             handleDelete={() =>
               fakeDelete({
                 title: t("error"),
@@ -93,7 +89,7 @@ export default function TotalProjectsScreen({ navigation }) {
           />
         )}
         keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={[spacing.mh2, spacing.mt1]}
+        contentContainerStyle={[spacing.mh2, spacing.mt1, { paddingBottom: 80 }]}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
         ListHeaderComponent={() => (
           <View

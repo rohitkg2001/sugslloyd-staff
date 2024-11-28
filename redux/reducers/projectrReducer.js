@@ -21,8 +21,7 @@ export const projectReducer = (state = initialState, action) => {
     case ADD_PROJECT:
       return {
         ...state,
-        projects: [action.payload, ...state.projects],
-        projectCount: state.projectCount + 1,
+        projects: [...state.projects, action.payload],
       };
 
     case FETCH_PROJECTS:

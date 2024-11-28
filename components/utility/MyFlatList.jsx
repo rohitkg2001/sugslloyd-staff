@@ -21,7 +21,7 @@ export default function MyFlatList({
             data={data}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
-            showsVerticalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
             {...props}
           />
         </>
