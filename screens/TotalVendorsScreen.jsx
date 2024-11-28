@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete } from "../utils/faker";
+import { fakeDelete  } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -38,7 +38,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
 
   useEffect(() => {
     dispatch(countVendor());
-    console.log(vendors)
+    console.log(vendors);
   }, [dispatch]);
 
   const handleViewDetails = (item) => {
@@ -77,7 +77,11 @@ export default function TotalVendorsScreen({ navigation, route }) {
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
-        ListEmptyComponent={() => <NoRecord msg={t("norecord_msg")} />}
+        ListEmptyComponent={() => (
+          <NoRecord
+            msg={t("There is no vendor data. Please contact the admin.")}
+          />
+        )}
         ListHeaderComponent={() => (
           <View
             style={[
