@@ -37,7 +37,7 @@ export default function CurrentProjectsScreen({ navigation }) {
             }
           />
         )}
-        contentContainerStyle={[spacing.mh2, spacing.mt1]}
+        contentContainerStyle={[spacing.mh2, spacing.mt1, { flex: 1 }]}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
         ListHeaderComponent={() => (
           <View
