@@ -18,10 +18,10 @@ export const getVendorCounts = async () => {
   return { totalVendors, activeVendors, inactiveVendors }
 }
 
-export const editVendor = (data, id) => async (dispatch) => {
+export const editVendor = (vendor, id) => async (dispatch) => {
   const response = await fetch(`${BASE_URL}/api/vendor/${id}`, {
     method: 'PUT',
-    body: JSON.stringify(data),
+    body: JSON.stringify(vendor),
     headers: {
       'Content-Type': 'application/json',
     }

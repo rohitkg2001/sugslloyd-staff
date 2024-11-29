@@ -1,34 +1,30 @@
-import {
-  VIEW_SITE,
-  SEARCH_SITE,
-  ADD_SITE,
-  FETCH_SITES,
-} from "../actions/siteActions";
+import { VIEW_SITE, SEARCH_SITE, ADD_SITE, FETCH_SITES } from "../constant";
 import { totalsitesData } from "..//../utils/faker";
 
 const initialState = {
-  sites: totalsitesData,
-  filteredSites: totalsitesData,
+  sites: [],
+  filteredSites: [],
   currentSite: null,
   searchText: "",
+  projectCount: 0,
 };
 
 export const siteReducer = (state = initialState, action) => {
-  switch ( action.type )
-  {
-    case FETCH_SITES: return {
-      ...state,
-      sites: action.payload,
-    };
+  switch (action.type) {
+    case FETCH_SITES:
+      return {
+        ...state,
+        sites: action.payload,
+        filteredSites: action.payload,
+      };
 
     case ADD_SITE:
       return {
         ...state,
-        site: [action.payload, ...state.projects],
+        sites: [action.payload, ...state.sites],
         filteredSites: [action.payload, ...state.filteredSites],
-        projectCount: state.projectCount + 1,
-      };  
-    
+      };
+
     case VIEW_SITE:
       return {
         ...state,
