@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete  } from "../utils/faker";
+import { fakeDelete } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -11,6 +11,7 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
+import Filter from "../components/Filter";
 import {
   LIGHT,
   ICON_LARGE,
@@ -28,6 +29,7 @@ import {
 
 export default function TotalVendorsScreen({ navigation, route }) {
   const dispatch = useDispatch();
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const { t } = useTranslation();
   const { vendors } = useSelector((state) => state.vendor);
 
@@ -97,6 +99,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
             />
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+              onPress={() => setShowBottomSheet(!showBottomSheet)}
             >
               <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
             </Button>
@@ -109,6 +112,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }

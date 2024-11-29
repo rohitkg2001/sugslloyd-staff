@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "react-native-paper";
@@ -10,6 +10,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import { viewTask, initializeTasks } from "../redux/actions/taskActions";
 import Button from "../components/buttons/Button";
+import Filter from "../components/Filter";
 import {
   SCREEN_WIDTH,
   spacing,
@@ -21,6 +22,7 @@ import {
 
 export default function TaskListScreen({ navigation }) {
   const dispatch = useDispatch();
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const tasks = useSelector((state) => state.tasks?.tasks || []);
 
   useEffect(() => {
@@ -81,6 +83,7 @@ export default function TaskListScreen({ navigation }) {
             />
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+              onPress={() => setShowBottomSheet(!showBottomSheet)}
             >
               <Ionicons
                 name="options-outline"
@@ -91,6 +94,7 @@ export default function TaskListScreen({ navigation }) {
           </View>
         )}
       />
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }

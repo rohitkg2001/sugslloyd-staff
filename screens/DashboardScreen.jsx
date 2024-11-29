@@ -171,7 +171,6 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </View>
 
-
         <MyFlatList
           data={ProjectcardsForDashboard}
           renderItem={({ item }) => (
@@ -179,7 +178,7 @@ export default function DashboardScreen({ navigation }) {
               key={item.id}
               backgroundColor={item.backgroundColor}
               tasks={item.count}
-              status={item.status}
+              status={t(item.status)}
               onPress={() => navigation.navigate(item.page)}
             />
           )}
@@ -197,7 +196,7 @@ export default function DashboardScreen({ navigation }) {
               color={PRIMARY_COLOR}
             />
             <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              Project Overview
+              {t("project_overview")}
             </H5>
           </View>
           <View style={[spacing.bbw05, spacing.mv2]} />
@@ -208,20 +207,20 @@ export default function DashboardScreen({ navigation }) {
             ]}
           >
             <View style={{ alignItems: "center", textAlign: "center" }}>
-              <P style={typography.textBold}>Project</P>
+              <P style={typography.textBold}>{t("project")}</P>
               <P style={(typography.font20, spacing.m2)}>Project 01B</P>
             </View>
 
             <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Site</P>
+              <P style={typography.textBold}>{t("total_sites")}</P>
               <P style={(typography.font20, spacing.m2)}>2</P>
             </View>
             <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Completed</P>
+              <P style={typography.textBold}>{t("completed_sites")}</P>
               <P style={(typography.font20, spacing.m2)}>1</P>
             </View>
             <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Pending</P>
+              <P style={typography.textBold}>{t("pending_sites")}</P>
               <P style={(typography.font20, spacing.m2)}>1</P>
             </View>
           </View>
@@ -253,7 +252,7 @@ export default function DashboardScreen({ navigation }) {
           <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
             <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
             <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              All Task Overview
+              {t("all_task_overview")}
             </H5>
           </View>
           <View style={[spacing.bbw05, spacing.mv1]} />
@@ -264,11 +263,11 @@ export default function DashboardScreen({ navigation }) {
             ]}
           >
             <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>To Do</P>
+              <P style={typography.textBold}>{t("to_do")}</P>
               <P style={spacing.ml2}>2</P>
             </View>
             <View style={{ alignItems: "center", marginRight: 140 }}>
-              <P style={typography.textBold}>Done</P>
+              <P style={typography.textBold}>{t("done")}</P>
               <P style={spacing.ml2}>3</P>
             </View>
           </View>
@@ -338,10 +337,7 @@ export default function DashboardScreen({ navigation }) {
           onChange={handleDateChange}
         />
       )}
-      {
-        showBottomSheet && <Filter />
-      }
-
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }

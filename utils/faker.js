@@ -381,7 +381,7 @@ export const ProjectcardsForDashboard = [
     title: "Task 1",
     description: "This is task 1",
     count: 1,
-    status: "Total Projects ",
+    status: "total_projects",
     page: "totalProjectsScreen",
     backgroundColor: "#A0D3E8",
   },
