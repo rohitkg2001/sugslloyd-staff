@@ -30,20 +30,33 @@ import { useTranslation } from "react-i18next";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
-  const siteState = useSelector((state) => state.sites);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const searchText = siteState ? siteState.searchText : "";
   const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const siteState = useSelector((state) => state.sites);
   const { t } = useTranslation();
 
   const { pageTitle, data } = route.params || {
     pageTitle: t("site_management"),
-    data: totalsitesData,
+    data: Sites,
   };
 
   useEffect(() => {
     dispatch(fetchSites());
+    console.log(sites);
   }, [dispatch]);
+
+  useEffect(() => {
+    if (Array.isArray(siteState.sites) && siteState.sites.length > 0) {
+      setFilteredData(siteState.sites);
+      setLoading(false);
+    }
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [siteState.sites]);
 
   const handleSearch = (text) => {
     dispatch(searchSite(text));
@@ -80,7 +93,7 @@ export default function TotalSitesScreen({ navigation, route }) {
       <MyHeader title={t(pageTitle)} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredData}
-        loading={false}
+        loading={loading}
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
