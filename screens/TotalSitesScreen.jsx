@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete} from "../utils/faker";
+import { fakeDelete } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -10,6 +10,7 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
+import Filter from "../components/Filter";
 import {
   ICON_LARGE,
   ICON_MEDIUM,
@@ -19,7 +20,10 @@ import {
   styles,
 } from "../styles";
 import {
- viewSite , searchSite ,fetchSites , addSite
+  viewSite,
+  searchSite,
+  fetchSites,
+  addSite,
 } from "../redux/actions/siteActions";
 
 import { useTranslation } from "react-i18next";
@@ -36,7 +40,7 @@ export default function TotalSitesScreen({ navigation, route }) {
     pageTitle: t("site_management"),
     data: totalsitesData,
   };
-  
+
   useEffect(() => {
     dispatch(fetchSites());
   }, [dispatch]);
@@ -51,7 +55,6 @@ export default function TotalSitesScreen({ navigation, route }) {
     );
     setFilteredData(filtered);
   };
-  
 
   const handleViewDetails = (siteData) => {
     dispatch(viewSite(siteData));
@@ -117,13 +120,14 @@ export default function TotalSitesScreen({ navigation, route }) {
           </View>
         )}
       />
-      {showBottomSheet && <Filter />}
+
       <Button
         style={styles.addButton}
         onPress={() => navigation.navigate("sitesFormScreen")}
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }

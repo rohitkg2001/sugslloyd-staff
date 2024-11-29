@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { View } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -11,7 +12,6 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
 import { ICON_MEDIUM, LIGHT, styles, spacing, SCREEN_WIDTH } from "../styles";
-import { View } from "react-native";
 
 import InventoryDetailsModal from "../components/InventoryDetailsModal";
 
@@ -59,9 +59,14 @@ export default function InventoryScreen({ navigation }) {
         )}
         ListEmptyComponent={() => <NoRecord msg={t("no_inventory")} />}
         renderItem={({ item }) => (
-          <InventoryCard key={item.id} item={item} onPress={() => viewItem(item.id)} />
+          <InventoryCard
+            key={item.id}
+            item={item}
+            onPress={() => viewItem(item.id)}
+          />
         )}
       />
+
       <InventoryDetailsModal
         visible={isVisible}
         onClose={() => setVisible(false)}

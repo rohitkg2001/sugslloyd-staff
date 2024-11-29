@@ -11,6 +11,7 @@ import ClickableCard from "../components/card/ClickableCard";
 import { fakeDelete } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
+import Filter from "../components/Filter";
 import {
   spacing,
   styles,
@@ -29,21 +30,21 @@ import { useTranslation } from "react-i18next";
 export default function TotalProjectsScreen({ navigation }) {
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
-  const [filteredProjects, setFilteredProjects] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
-  const { projects } = useSelector(state => state.project)
+  const { projects } = useSelector((state) => state.project);
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
 
   useEffect(() => {
     if (loading && Array.isArray(projects) && projects.length > 0) {
-      setFilteredProjects(projects)
-      setLoading(false)
+      setFilteredProjects(projects);
+      setLoading(false);
     }
     setTimeout(() => {
-      setLoading(false)
-    }, 2000)
-  }, [loading, projects])
-
+      setLoading(false);
+    }, 2000);
+  }, [loading, projects]);
 
   useEffect(() => {
     dispatch(fetchProjects());
@@ -58,7 +59,6 @@ export default function TotalProjectsScreen({ navigation }) {
     setSearchText(text);
     dispatch(searchProjects(text));
   };
-
 
   const handleEdit = (item) => {
     navigation.navigate("EditDetailsScreen", {
@@ -89,7 +89,11 @@ export default function TotalProjectsScreen({ navigation }) {
           />
         )}
         keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={[spacing.mh2, spacing.mt1, { paddingBottom: 80 }]}
+        contentContainerStyle={[
+          spacing.mh2,
+          spacing.mt1,
+          { paddingBottom: 80 },
+        ]}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
         ListHeaderComponent={() => (
           <View
@@ -106,6 +110,7 @@ export default function TotalProjectsScreen({ navigation }) {
             />
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+              onPress={() => setShowBottomSheet(!showBottomSheet)}
             >
               <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
             </Button>
@@ -119,6 +124,7 @@ export default function TotalProjectsScreen({ navigation }) {
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }
