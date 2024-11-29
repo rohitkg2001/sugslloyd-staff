@@ -12,12 +12,13 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
 import { ICON_MEDIUM, LIGHT, styles, spacing, SCREEN_WIDTH } from "../styles";
-
 import InventoryDetailsModal from "../components/InventoryDetailsModal";
+import Filter from "../components/Filter";
 
 export default function InventoryScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
   const [isVisible, setVisible] = useState(false);
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const { t } = useTranslation();
 
@@ -52,6 +53,7 @@ export default function InventoryScreen({ navigation }) {
             />
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+              onPress={() => setShowBottomSheet(!showBottomSheet)}
             >
               <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
             </Button>
@@ -78,6 +80,7 @@ export default function InventoryScreen({ navigation }) {
       >
         <Ionicons name="add" size={28} color="white" />
       </Button>
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }

@@ -6,6 +6,7 @@ const initialState = {
   filteredSites: [],
   currentSite: null,
   searchText: "",
+  projectCount: 0,
 };
 
 export const siteReducer = (state = initialState, action) => {
@@ -14,14 +15,14 @@ export const siteReducer = (state = initialState, action) => {
       return {
         ...state,
         sites: action.payload,
+        filteredSites: action.payload,
       };
 
     case ADD_SITE:
       return {
         ...state,
-        site: [action.payload, ...state.projects],
+        sites: [action.payload, ...state.sites],
         filteredSites: [action.payload, ...state.filteredSites],
-        projectCount: state.projectCount + 1,
       };
 
     case VIEW_SITE:

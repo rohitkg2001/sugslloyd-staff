@@ -15,6 +15,8 @@ export default function BottomSheet({ children }) {
 
     return (
         <Animated.View style={{
+            position: "absolute",
+            bottom: 0,
             height: 400,
             opacity: height,
             borderTopLeftRadius: 40,
