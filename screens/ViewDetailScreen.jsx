@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
-import { View, ScrollView } from "react-native";
-import { SCREEN_WIDTH, spacing, typography } from "../styles";
+import { View, ScrollView, ActivityIndicator } from "react-native";
+import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
@@ -12,10 +12,15 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const { site, formType } = route.params;
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [siteCreated, setSiteCreated] = useState(false);
+  const [project, setProject] = useState({})
+  const [loading, setLoading] = useState(true)
   const { t } = useTranslation();
   const { currentProject } = useSelector(state => state.project);
   useEffect(() => {
-    console.log(currentProject)
+    if (currentProject) {
+      setProject(currentProject)
+      setLoading(false)
+    }
   }, [currentProject])
 
 
@@ -57,18 +62,12 @@ const ViewDetailScreen = ({ route, navigation }) => {
   // Project details rendering
   const renderProjectDetails = () => (
     <>
-      {renderDetailRow("Project Name", currentProject.project_name)}
-      {renderDetailRow("Work Order Number", currentProject.work_order_number)}
-      {renderDetailRow("Price", currentProject.rate)}
-      {renderDetailRow("Date", currentProject.start_date)}
+      {renderDetailRow("Project Name", project.project_name)}
+      {renderDetailRow("Work Order Number", project.work_order_number)}
+      {renderDetailRow("Price", project.rate)}
+      {renderDetailRow("Date", project.start_date)}
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginVertical: 16,
-        }}
-      >
+      <View style={[styles.row, spacing.mv4]}>
         <MyButton
           title={t("create_site")}
           onPress={() => {
@@ -130,6 +129,10 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const handleCreateTask = useCallback(() => {
     navigation.navigate("taskListFormScreen");
   }, [navigation]);
+
+  if (loading) {
+    return <ActivityIndicator size="large" />
+  }
 
   return (
     <ContainerComponent>

@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { addSite, fetchSites } from "../redux/actions/siteActions"; // Import actions
 
 const SitesFormScreen = () => {
-  const [state, setState] = useState("");
+  const [state, setState] = useState(null);
   const [city, setCity] = useState("");
   const [projectSerial, setProjectSerial] = useState("");
   const [siteName, setSiteName] = useState("");
@@ -103,27 +103,31 @@ const SitesFormScreen = () => {
 
   return (
     <ContainerComponent>
-      <MyHeader title={t("create_sites")} hasIcon={true} isBack={true} />
+      <MyHeader title={t("create_site")} hasIcon={true} isBack={true} />
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 18 }]}
         showsVerticalScrollIndicator={false}
       >
+
         <MyPickerInput
           title={t("site_State")}
           value={state}
           onChange={setState}
           options={[
-            { label: "Andhra Pradesh", value: "CA" },
-            { label: "Bihar", value: "TX" },
-            { label: "Chattishgarh", value: "NY" },
+            { label: "Select State", value: null },
+            { label: "Andhra Pradesh", value: "AP" },
+            { label: "Bihar", value: "BR" },
+            { label: "Chattishgarh", value: "CH" },
           ]}
         />
 
         <MyPickerInput
           title={t("site_city")}
+          enabled={state ? true : false}
           value={city}
           onChange={setCity}
           options={[
+            { label: "Select City", value: null },
             { label: "Patna", value: "LA" },
             { label: "Purniea", value: "HOU" },
             { label: "Gaya", value: "NYC" },

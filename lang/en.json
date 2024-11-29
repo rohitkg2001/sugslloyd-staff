@@ -51,7 +51,7 @@
     "site_I&CVendorName": "I & C Vendor Name",
     "no_site_msg": "Oops! There are no sites data available. Start creating or contact admin",
     "total_site_screen_msg": "You cannot delete this site. Please contact Admin!",
-    "create_sites": "Create Sites",
+    "create_site": "Create Site",
     "view_site": "View Sites",
     "site_management": "Site Management",
     "vendor_details": "Vendor Details",
@@ -98,7 +98,7 @@
     "ent_prod_name": "Enter Produce Name",
     "brand": "Brand",
     "ent_brand": "Enter Brand",
-    "unit" : "Unit" ,
+    "unit": "Unit",
     "ent_unit": "Enter Unit",
     "quantity": "Quantity",
     "ent_quantity": "Enter Quantity",
@@ -127,13 +127,13 @@
     "material_inspectiondate": "Material Inspection Date",
     "spp_installationiondate": "SPP Installation Date",
     "commissioning_date": "Commissioning Date",
-    "all_task_overview" : "All Task Overview" ,
+    "all_task_overview": "All Task Overview",
     "done": "Done",
     "pending": "Pending",
     "remarks": "Remarks",
     "settings": "Settings",
-    "today": "Today" ,
-    "to_do" : "To do" ,
-    "project" : "Project"
+    "today": "Today",
+    "to_do": "To do",
+    "project": "Project"
   }
 }

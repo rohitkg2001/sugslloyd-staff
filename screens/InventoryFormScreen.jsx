@@ -19,8 +19,8 @@ const InventoryFormScreen = ({ navigation, route }) => {
   const [quantity, setQuantity] = useState(
     editItem?.quantity?.toString() || ""
   );
-  const [ unit, setUnit ] = useState( editItem?.unit || "" );
-  const [ description, setDescription ] = useState( editItem?.description || "" );
+  const [unit, setUnit] = useState(editItem?.unit || "");
+  const [description, setDescription] = useState(editItem?.description || "");
   const [releaseDate, setReleaseDate] = useState(editItem?.releaseDate || "");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -95,7 +95,7 @@ const InventoryFormScreen = ({ navigation, route }) => {
 
         <MyTextInput
           title={t("description")}
-          value={ description }
+          value={description}
           onChangeText={setDescription}
           placeholder="Description here"
           style={{ height: 100, padding: 10 }}
@@ -118,6 +118,7 @@ const InventoryFormScreen = ({ navigation, route }) => {
           onChange={handleDateChange}
         />
       )}
+
     </ContainerComponent>
   );
 };
