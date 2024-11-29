@@ -28,13 +28,24 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const renderDetailRow = (label, value) => (
     <View style={{ flexDirection: "row", paddingVertical: 8 }}>
       <H5 style={[typography.textBold]}>{label}</H5>
-      <H5 style={[typography.font16, { textAlign: "right", flex: 1 }]}>
-        {value}
-      </H5>
+      <H5 style={[typography.font16, { textAlign: "right", flex: 1 }]}>{value || "N/A"}</H5>
     </View>
   );
 
-  // Site details rendering
+  const renderButtonsSites = () => (
+    <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 16 }}>
+        <MyButton title={t("create_site")} onPress={() => navigation.navigate("sitesFormScreen")} color="#DC4C64" />
+        <MyButton title={t("view_site")} onPress={() => navigation.navigate("totalSitesScreen")} />
+    </View>
+  );
+
+  const renderButtons = () => (
+    <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 16 }}>
+      <MyButton title={t("create_task")} onPress={() => navigation.navigate("taskListFormScreen")} />
+      <MyButton title={t("view_task")} onPress={() => navigation.navigate("taskScreen")} />
+    </View>
+  );
+
   const renderSiteDetails = () => (
     <>
       {renderDetailRow("Site Name", site.siteName)}
@@ -59,7 +70,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
     </>
   );
 
-  // Project details rendering
   const renderProjectDetails = () => (
     <>
       {renderDetailRow("Project Name", project.project_name)}
@@ -84,7 +94,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
     </>
   );
 
-  // Vendor details rendering
   const renderVendorDetails = () => (
     <>
       {renderDetailRow("Vendor Name", site.name)}
@@ -156,27 +165,107 @@ const ViewDetailScreen = ({ route, navigation }) => {
               ? renderProjectDetails()
               : renderSiteDetails()}
         </ScrollView>
-
-        {/* Conditionally render the Create Task and View Task buttons */}
-        {formType !== "vendor" && (
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginVertical: 16,
-            }}
-          >
-            <MyButton
-              title={t("create_task")}
-              onPress={handleCreateTask}
-              color="#DC4C64"
-            />
-            <MyButton title={t("view_task")} onPress={handleViewTask} />
-          </View>
-        )}
+        <ViewDetailsModal
+          isVisible={isModalVisible}
+          onClose={() => setIsModalVisible(false)}
+          onConfirm={handleConfirmDispatch}
+          newDispatch={newDispatch}
+          handleDispatchDetailsChange={handleDispatchDetailsChange}
+        />
       </View>
     </ContainerComponent>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    backgroundColor: "#f9f9f9",
+    padding: 16,
+  },
+  header: {
+    marginBottom: 16,
+    alignItems: "center",
+  },
+  projectSerial: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  siteName: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  vendorName: {
+    fontSize: 16,
+    color: "#555",
+  },
+  detailsSection: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
+  column: {
+    flex: 1,
+    paddingHorizontal: 8,
+  },
+  detailItem: {
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "#ccc",
+    marginVertical: 16,
+  },
+  surveySection: {
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 16,
+  },
+  button: {
+    flex: 1,
+    marginHorizontal: 8,
+    backgroundColor: PRIMARY_COLOR,
+  },
+  dispatchButtonContainer: {
+    marginBottom: 16,
+     flexDirection: "row",
+    justifyContent: "center"
+  },
+  tableContainer: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 4,
+    overflow: "hidden",
+  },
+  tableRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+  tableHeader: {
+    fontWeight: "bold",
+    fontSize: 14,
+    flex: 1,
+    textAlign: "center",
+  },
+  tableCell: {
+    fontSize: 14,
+    flex: 1,
+    textAlign: "center",
+  },
+});
 
 export default ViewDetailScreen;
