@@ -38,7 +38,7 @@ export default function TotalSitesScreen({ navigation, route }) {
 
   const { pageTitle, data } = route.params || {
     pageTitle: t("site_management"),
-    data: totalsitesData,
+    data: siteState,
   };
 
   useEffect(() => {
