@@ -29,7 +29,6 @@ export const searchPjerocts = (searchText) => ({
 export const viewProject = (projectId) => async (dispatch) => {
   const response = await fetch(`${BASE_URL}/api/projects/${projectId}`)
   const data = await response.json()
-  console.log(data)
   dispatch({ type: VIEW_PROJECT, payload: data })
 }
 

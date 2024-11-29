@@ -1,6 +1,6 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
-// export const BASE_URL="http://192.168.1.6:8000"
-export const BASE_URL = "https://peachpuff-grouse-828635.hostingersite.com" //TODO: replace with production server url
+export const BASE_URL = "http://192.168.1.6:8000"
+// export const BASE_URL = "https://peachpuff-grouse-828635.hostingersite.com" //TODO: replace with production server url
 
 export const initialState = {
 
@@ -29,7 +29,7 @@ export const UPDATE_INVENTORY = "UPDATE_INVENTORY";
 export const SEARCH_INVENTORY = "SEARCH_INVENTORY";
 export const COUNT_INVENTORY = "COUNT_INVENTORY";
 
-VIEW_VENDOR, UPDATE_VENDOR, SEARCH_VENDOR, COUNT_VENDOR;
+// VIEW_VENDOR, UPDATE_VENDOR, SEARCH_VENDOR, COUNT_VENDOR;
 
 export const VIEW_VENDOR = "VIEW_VENDOR";
 export const UPDATE_VENDOR = "UPDATE_VENDOR";
