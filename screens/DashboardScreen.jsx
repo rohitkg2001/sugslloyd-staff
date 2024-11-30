@@ -32,7 +32,7 @@ import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import { useTranslation } from "react-i18next";
 import Filter from "../components/Filter";
-import { getAllVendors } from "../redux/actions/vendorAction";
+import { getAllVendors, getVendorCounts } from "../redux/actions/vendorAction";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function DashboardScreen({ navigation }) {
@@ -42,15 +42,25 @@ export default function DashboardScreen({ navigation }) {
   const [greeting, setGreeting] = useState("Good morning");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [totalVendors, setTotalVendors] = useState(0)
+  const [activeVendors, setActiveVendors] = useState(0)
+  const [inActiveVendors, setInActiveVendors] = useState(0)
   const { firstName } = useSelector((state) => state.staff);
   const { t } = useTranslation();
   const dispatch = useDispatch()
 
+  const getCounts = async () => {
+    const { totalVendors, activeVendors, inactiveVendors } = await getVendorCounts()
+    setActiveVendors(activeVendors)
+    setTotalVendors(totalVendors)
+    setInActiveVendors(inactiveVendors)
 
+  }
 
   useEffect(() => {
     setGreeting(greet());
     dispatch(getAllVendors())
+    getCounts()
   }, []);
 
 
@@ -161,7 +171,6 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </View>
 
-
         <MyFlatList
           data={ProjectcardsForDashboard}
           renderItem={({ item }) => (
@@ -169,7 +178,7 @@ export default function DashboardScreen({ navigation }) {
               key={item.id}
               backgroundColor={item.backgroundColor}
               tasks={item.count}
-              status={item.status}
+              status={t(item.status)}
               onPress={() => navigation.navigate(item.page)}
             />
           )}
@@ -187,7 +196,7 @@ export default function DashboardScreen({ navigation }) {
               color={PRIMARY_COLOR}
             />
             <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              Project Overview
+              {t("project_overview")}
             </H5>
           </View>
           <View style={[spacing.bbw05, spacing.mv2]} />
@@ -198,20 +207,20 @@ export default function DashboardScreen({ navigation }) {
             ]}
           >
             <View style={{ alignItems: "center", textAlign: "center" }}>
-              <P style={typography.textBold}>Project</P>
+              <P style={typography.textBold}>{t("project")}</P>
               <P style={(typography.font20, spacing.m2)}>Project 01B</P>
             </View>
 
             <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Site</P>
+              <P style={typography.textBold}>{t("total_sites")}</P>
               <P style={(typography.font20, spacing.m2)}>2</P>
             </View>
             <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Completed</P>
+              <P style={typography.textBold}>{t("completed_sites")}</P>
               <P style={(typography.font20, spacing.m2)}>1</P>
             </View>
             <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Pending</P>
+              <P style={typography.textBold}>{t("pending_sites")}</P>
               <P style={(typography.font20, spacing.m2)}>1</P>
             </View>
           </View>
@@ -243,7 +252,7 @@ export default function DashboardScreen({ navigation }) {
           <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
             <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
             <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              All Task Overview
+              {t("all_task_overview")}
             </H5>
           </View>
           <View style={[spacing.bbw05, spacing.mv1]} />
@@ -254,17 +263,17 @@ export default function DashboardScreen({ navigation }) {
             ]}
           >
             <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>To Do</P>
+              <P style={typography.textBold}>{t("to_do")}</P>
               <P style={spacing.ml2}>2</P>
             </View>
             <View style={{ alignItems: "center", marginRight: 140 }}>
-              <P style={typography.textBold}>Done</P>
+              <P style={typography.textBold}>{t("done")}</P>
               <P style={spacing.ml2}>3</P>
             </View>
           </View>
         </CardFullWidth>
 
-        <MyFlatList
+        {/* <MyFlatList
           data={vendorCardForDashboard}
           renderItem={({ item, index }) => {
             return (
@@ -284,7 +293,41 @@ export default function DashboardScreen({ navigation }) {
           }}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
-        />
+        /> */}
+        {/* //Project OverView  */}
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="person-circle"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>
+              Vendors
+            </H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv2]} />
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <View style={{ alignItems: "center", textAlign: "center" }}>
+              <P style={typography.textBold}>Total Vendors</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>{totalVendors}</P>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Active</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>{activeVendors}</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Inactive</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>{inActiveVendors}</P>
+            </View>
+          </View>
+        </CardFullWidth>
       </ScrollView>
       {showDatePicker && (
         <DateTimePicker
@@ -294,10 +337,7 @@ export default function DashboardScreen({ navigation }) {
           onChange={handleDateChange}
         />
       )}
-      {
-        showBottomSheet && <Filter />
-      }
-
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }

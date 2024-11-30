@@ -6,20 +6,19 @@ import {
   COUNT_PROJECTS,
   CHANGE_PROJECT_STATUS,
   ADD_PROJECT,
+  BASE_URL,
 } from '../constant';
+
 
 import { projects as mockProjects } from "../../utils/faker";
 
-export const fetchProjects = () => {
-  return (dispatch) => {
-    // Simulating an API call with a small delay
-    setTimeout(() => {
-      dispatch({
-        type: FETCH_PROJECTS,
-        payload: mockProjects,
-      });
-    }, 100);
-  };
+export const fetchProjects = () => async (dispatch) => {
+  const response = await fetch(`${BASE_URL}/api/projects`)
+  const data = await response.json()
+  dispatch({
+    type: FETCH_PROJECTS,
+    payload: data,
+  });
 };
 
 export const searchPjerocts = (searchText) => ({
@@ -27,10 +26,11 @@ export const searchPjerocts = (searchText) => ({
   payload: searchText,
 });
 
-export const viewProject = (projectId) => ({
-  type: VIEW_PROJECT,
-  payload: projectId,
-});
+export const viewProject = (projectId) => async (dispatch) => {
+  const response = await fetch(`${BASE_URL}/api/projects/${projectId}`)
+  const data = await response.json()
+  dispatch({ type: VIEW_PROJECT, payload: data })
+}
 
 export const updateProject = (project) => ({
   type: UPDATE_PROJECT,
@@ -44,10 +44,25 @@ export const countProjects = () => ({
 export const changeProjectStatus = (projectId, newStatus) => ({
   type: CHANGE_PROJECT_STATUS,
   payload: { projectId, newStatus },
-} );
-
-export const addProject = (project) => ({
-  type: ADD_PROJECT,
-  payload: project,
 });
+
+export const addProject = (project) => async (dispatch) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/projects`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(project)
+      }
+    )
+    const data = await response.json()
+    dispatch({ type: ADD_PROJECT, payload: data.project })
+    return true
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+};
 

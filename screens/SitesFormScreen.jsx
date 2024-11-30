@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
@@ -9,88 +9,42 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { addSite, fetchSites } from "../redux/actions/siteActions"; // Import actions
+import { addSite, fetchSites, setStatesAndCities } from "../redux/actions/siteActions"; // Import actions
+import { SiteFields } from "../utils/faker";
 
 const SitesFormScreen = () => {
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
-  const [projectSerial, setProjectSerial] = useState("");
-  const [siteName, setSiteName] = useState("");
-  const [location, setLocation] = useState("");
-  const [projectCapacity, setProjectCapacity] = useState("");
-  const [caNumber, setCaNumber] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [vendorName, setVendorName] = useState("");
-  const [sancationLoad, setSancationLoad] = useState("");
-  const [meterNumber, setMeterNumber] = useState("");
-  const [loadEnhancementStatus, setLoadEnhancementStatus] = useState("");
-  const [netMeter, setNetMetre] = useState("");
-  const [solarMeter, setSolarMetre] = useState("");
-  const [remarks, setRemarks] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date()); //Don't remove
+  const [showDatePicker, setShowDatePicker] = useState(false); //Don't remove
+  const [states, setStates] = useState([]) //Don't remove
+  const [cities, setCities] = useState([]) //Don't remove
+  const [site, setSite] = useState({
+    state: null,
+    city: ""
+  })
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+
   // Reset form fields
   const handleCancel = () => {
-    setState("");
-    setCity("");
-    setLocation("");
-    setProjectSerial("");
-    setSiteName("");
-    setProjectCapacity("");
-    setCaNumber("");
-    setContactNo("");
-    setVendorName("");
-    setSancationLoad("");
-    setMeterNumber("");
-    setLoadEnhancementStatus("");
-    setNetMetre("");
-    setSolarMetre("");
-    setRemarks("");
+    setSite({})
   };
 
   // Handle create button press
   const handleCreate = () => {
-    if (!location || !solarMeter || !remarks || !netMeter) {
-      Alert.alert(
-        "Fields Are Required",
-        "Please fill all the fields before creating a project."
-      );
-    } else {
-      // Create site data
-      const siteData = {
-        state,
-        city,
-        projectSerial,
-        siteName,
-        location,
-        projectCapacity,
-        caNumber,
-        contactNo,
-        vendorName,
-        sancationLoad,
-        meterNumber,
-        loadEnhancementStatus,
-        netMeter,
-        solarMeter,
-        remarks,
-        materialInspectionDate: date,
-        installationDate: date,
-        commissioningDate: date,
-      };
+    // Create site data
+    console.log(site)
 
-      // Dispatch addSite action to add the new site
-      dispatch(addSite(siteData));
+    // Dispatch addSite action to add the new site
+    // dispatch(addSite(siteData));
 
-      // Refresh the list of sites
-      dispatch(fetchSites());
+    // Refresh the list of sites
+    // dispatch(fetchSites());
 
-      // Clear form fields
-      handleCancel();
-      Alert.alert("Site Created", "The site has been created successfully.");
-    }
+    // Clear form fields
+    // handleCancel();
+    // Alert.alert("Site Created", "The site has been created successfully.");
+
   };
 
   // Handle date picker change
@@ -101,113 +55,121 @@ const SitesFormScreen = () => {
     }
   };
 
+  const onChangeText = (name, value) => {
+    setSite((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
+
+  const getCityOptions = (selectedState) => {
+    const state = states.find((state) => state.name === selectedState);
+    return state
+      ? state.cities.map((city) => ({
+        label: city,
+        value: city,
+      }))
+      : [];
+  };
+
+  const handleStateChange = (selectedState) => {
+    const cities = getCityOptions(selectedState)
+    setCities(cities)
+    setSite((prevState) => ({
+      ...prevState,
+      state: selectedState
+    }))
+  }
+  useEffect(() => {
+    const { states } = setStatesAndCities()
+    console.log()
+    setStates(states)
+  }, [states])
+
+
   return (
     <ContainerComponent>
-      <MyHeader title={t("create_sites")} hasIcon={true} isBack={true} />
+      <MyHeader title={t("create_site")} hasIcon={true} isBack={true} />
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 18 }]}
         showsVerticalScrollIndicator={false}
       >
+
         <MyPickerInput
           title={t("site_State")}
-          value={state}
-          onChange={setState}
+          value={site.state}
+          onChange={handleStateChange}
           options={[
-            { label: "Andhra Pradesh", value: "CA" },
-            { label: "Bihar", value: "TX" },
-            { label: "Chattishgarh", value: "NY" },
+            { label: "Select State", value: null },
+            ...states.map(state => ({
+              label: state.name,
+              value: state.name
+            }))
           ]}
         />
 
         <MyPickerInput
           title={t("site_city")}
-          value={city}
-          onChange={setCity}
+          enabled={site.state ? true : false}
+          value={site.city}
+          onChange={(value) => onChangeText('city', value)}
           options={[
-            { label: "Patna", value: "LA" },
-            { label: "Purniea", value: "HOU" },
-            { label: "Gaya", value: "NYC" },
+            { label: "Select City", value: null },
+            ...cities
           ]}
         />
 
-        <MyTextInput
-          title={t("site_location")}
-          value={location}
-          onChangeText={setLocation}
-          placeholder="Enter Location"
-        />
-        <MyTextInput
-          title={t("site_Projectcode")}
-          value={projectSerial}
-          onChangeText={setProjectSerial}
-          placeholder="Enter Project Serial Code"
-        />
-        <MyTextInput
-          title={t("site_name")}
-          value={siteName}
-          onChangeText={setSiteName}
-          placeholder="Enter Site Name"
-        />
-        <MyTextInput
-          title={t("site_projectcapacity")}
-          value={projectCapacity}
-          onChangeText={setProjectCapacity}
-          placeholder="Enter Project Capacity"
-        />
-        <MyTextInput
-          title={t("site_canumber")}
-          value={caNumber}
-          onChangeText={setCaNumber}
-          placeholder="Enter CA Number"
-        />
-        <MyTextInput
-          title={t("site_ContactNo")}
-          value={contactNo}
-          onChangeText={setContactNo}
-          placeholder="Enter Contact No."
-          keyboardType="numeric"
-        />
-        <MyTextInput
-          title={t("site_I&CVendorName")}
-          value={vendorName}
-          onChangeText={setVendorName}
-          placeholder="Enter I & C Vendor Name"
-        />
+        {
+          SiteFields.map((item, index) =>
+            <MyTextInput
+              key={index}
+              title={t(item.title)}
+              onChangeText={(value) => onChangeText(item.fieldName, value)}
+              placeholder={item.placeholder}
+              keyboardType={item.keyboardType}
+            />
+          )
+        }
         <MyTextInput
           title={t("sanction_load")}
-          value={sancationLoad}
-          onChangeText={setSancationLoad}
+          onChangeText={(value) => onChangeText('sanctionedLoad', value)}
           placeholder="Enter Sanction Value"
         />
         <MyTextInput
           title={t("meter_no")}
-          value={meterNumber}
-          onChangeText={setMeterNumber}
+          onChangeText={(value) => onChangeText('meterNumber', value)}
           placeholder="Enter Meter Number"
         />
         <MyTextInput
           title={t("load_enhancementstatus")}
-          value={loadEnhancementStatus}
-          onChangeText={setLoadEnhancementStatus}
+          onChangeText={(value) => onChangeText('loadEnhancementStatus', value)}
           placeholder="Enter Load Enhancement Status"
-        />
-        <MyPickerInput
-          title={t("site_surveystatus")}
-          value={state}
-          onChange={setState}
-          options={[{ label: t("done") }, { label: t("pending") }]}
         />
         <MyTextInput
           title={t("net_meterserialnumber")}
-          value={netMeter}
-          onChangeText={setNetMetre}
+          onChangeText={(value) => onChangeText('netMeterNumber', value)}
           placeholder="Net Meter Sl. No"
         />
         <MyTextInput
           title={t("solar_meterserialnumber")}
-          value={solarMeter}
-          onChangeText={setSolarMetre}
+          onChangeText={(value) => onChangeText('solarMeterNumber', value)}
           placeholder="Solar Meter Sl. No"
+        />
+
+        <MyTextInput
+          title={t("site_ContactNo")}
+          onChangeText={(value) => onChangeText('contactNo', value)}
+          placeholder="Enter Contact No."
+          keyboardType="numeric"
+        />
+
+
+
+
+        <MyPickerInput
+          title={t("site_surveystatus")}
+          onChangeText={(value) => onChangeText('surveyStatus', value)}
+          options={[{ label: t("done") }, { label: t("pending") }]}
         />
 
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
@@ -236,8 +198,7 @@ const SitesFormScreen = () => {
 
         <MyTextInput
           title={t("remarks")}
-          value={remarks}
-          onChangeText={setRemarks}
+          onChangeText={(value) => onChangeText('remarks', value)}
           placeholder="Description here"
           style={{ height: 100, padding: 10 }}
         />

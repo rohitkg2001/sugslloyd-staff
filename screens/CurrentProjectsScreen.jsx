@@ -9,9 +9,11 @@ import Button from "../components/buttons/Button";
 import MyFlatList from "../components/utility/MyFlatList";
 import { useTranslation } from "react-i18next";
 import ClickableCard from "../components/card/ClickableCard";
+import Filter from "../components/Filter";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const [searchText] = useState("");
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const { t } = useTranslation();
 
   const filteredProjects = projects.filter((item) =>
@@ -20,6 +22,7 @@ export default function CurrentProjectsScreen({ navigation }) {
 
   return (
     <ContainerComponent>
+
       <MyFlatList
         data={filteredProjects}
         keyExtractor={(item) => item.id.toString()}
@@ -35,7 +38,7 @@ export default function CurrentProjectsScreen({ navigation }) {
             }
           />
         )}
-        contentContainerStyle={[spacing.mh2, spacing.mt1]}
+        contentContainerStyle={[spacing.mh2, spacing.mt1, { flex: 1 }]}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
         ListHeaderComponent={() => (
           <View
@@ -50,14 +53,17 @@ export default function CurrentProjectsScreen({ navigation }) {
               placeholder="Search"
               style={{ width: SCREEN_WIDTH - 70 }}
             />
+
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+              onPress={() => setShowBottomSheet(!showBottomSheet)}
             >
               <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
             </Button>
           </View>
         )}
       />
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }

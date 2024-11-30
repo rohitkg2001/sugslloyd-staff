@@ -1,17 +1,27 @@
-import { useState, useCallback } from "react";
-import { View, ScrollView } from "react-native";
-import { SCREEN_WIDTH, spacing, typography } from "../styles";
+import { useState, useCallback, useEffect } from "react";
+import { View, ScrollView, ActivityIndicator } from "react-native";
+import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
 import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const ViewDetailScreen = ({ route, navigation }) => {
   const { site, formType } = route.params;
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [siteCreated, setSiteCreated] = useState(false);
+  const [project, setProject] = useState({});
+  const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+  const { currentProject } = useSelector((state) => state.project);
+  useEffect(() => {
+    if (currentProject) {
+      setProject(currentProject);
+      setLoading(false);
+    }
+  }, [currentProject]);
 
   // Optimize rendering of the row components
   const renderDetailRow = (label, value) => (
@@ -51,18 +61,12 @@ const ViewDetailScreen = ({ route, navigation }) => {
   // Project details rendering
   const renderProjectDetails = () => (
     <>
-      {renderDetailRow("Project Name", site.projectName)}
-      {renderDetailRow("Work Order Number", site.workOrderNumber)}
-      {renderDetailRow("Rate", site.rate)}
-      {renderDetailRow("Date", site.date)}
+      {renderDetailRow("Project Name", project.project_name)}
+      {renderDetailRow("Work Order Number", project.work_order_number)}
+      {renderDetailRow("Price", project.rate)}
+      {renderDetailRow("Date", project.start_date)}
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginVertical: 16,
-        }}
-      >
+      <View style={[styles.row, spacing.mv4]}>
         <MyButton
           title={t("create_sites")}
           onPress={() => {
@@ -125,6 +129,10 @@ const ViewDetailScreen = ({ route, navigation }) => {
     navigation.navigate("taskListFormScreen");
   }, [navigation]);
 
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
+
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
@@ -132,7 +140,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
           title={
             formType === "vendor"
               ? t("vendor_details")
-              : site.projectName
+              : formType === "project"
               ? t("project_details")
               : t("site_details")
           }
@@ -143,7 +151,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
         <ScrollView>
           {formType === "vendor"
             ? renderVendorDetails()
-            : site.projectName
+            : formType === "project"
             ? renderProjectDetails()
             : renderSiteDetails()}
         </ScrollView>

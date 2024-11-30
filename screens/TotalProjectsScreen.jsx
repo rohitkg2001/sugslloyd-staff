@@ -11,6 +11,7 @@ import ClickableCard from "../components/card/ClickableCard";
 import { fakeDelete } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
+import Filter from "../components/Filter";
 import {
   spacing,
   styles,
@@ -23,38 +24,41 @@ import {
   fetchProjects,
   searchProjects,
   viewProject,
-  UPDATE_PROJECT,
-  countProjects,
-  changeProjectStatus,
-  ADD_PROJECT,
 } from "../redux/actions/projectAction";
 import { useTranslation } from "react-i18next";
 
-export default function TotalProjectsScreen ( { navigation } )
-{
-   const dispatch = useDispatch(); 
+export default function TotalProjectsScreen({ navigation }) {
+  const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+  const { projects } = useSelector((state) => state.project);
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
 
+  useEffect(() => {
+    if (loading && Array.isArray(projects) && projects.length > 0) {
+      setFilteredProjects(projects);
+      setLoading(false);
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [loading, projects]);
 
-const projects = useSelector((state) => state.project.projects); 
-const filteredProjects = useSelector((state) => state.project.filteredProjects); 
-const loading = useSelector((state) => state.project.loading); 
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
 
-useEffect(() => {
-  dispatch(fetchProjects());
-}, [ dispatch ] );
-  
   const handleViewDetails = (item) => {
     dispatch(viewProject(item));
-    navigation.navigate("ViewDetailScreen", { site: item, formType: "project" });
+    navigation.navigate("ViewDetailScreen", { formType: "project" });
   };
 
-const handleSearch = (text) => {
-  setSearchText(text);
-  dispatch(searchProjects(text)); 
+  const handleSearch = (text) => {
+    setSearchText(text);
+    dispatch(searchProjects(text));
   };
-  
 
   const handleEdit = (item) => {
     navigation.navigate("EditDetailsScreen", {
@@ -68,12 +72,12 @@ const handleSearch = (text) => {
       <MyHeader title={t("total_projects")} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredProjects}
-        loading={false}
+        loading={loading}
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
             key={item.id}
-            handleViewDetails={handleViewDetails}
+            handleViewDetails={(item) => handleViewDetails(item.id)}
             handleDelete={() =>
               fakeDelete({
                 title: t("error"),
@@ -85,7 +89,11 @@ const handleSearch = (text) => {
           />
         )}
         keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={[spacing.mh2, spacing.mt1]}
+        contentContainerStyle={[
+          spacing.mh2,
+          spacing.mt1,
+          { paddingBottom: 80 },
+        ]}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
         ListHeaderComponent={() => (
           <View
@@ -102,6 +110,7 @@ const handleSearch = (text) => {
             />
             <Button
               style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+              onPress={() => setShowBottomSheet(!showBottomSheet)}
             >
               <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
             </Button>
@@ -115,6 +124,7 @@ const handleSearch = (text) => {
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }

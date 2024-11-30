@@ -8,6 +8,7 @@ export default function MyPickerInput({
   value,
   onChange,
   options = [],
+  enabled
 }) {
   return (
     <View style={styles.textInput}>
@@ -18,6 +19,7 @@ export default function MyPickerInput({
         mode="dropdown"
         onValueChange={(val) => onChange(val)}
         prompt="Select an option"
+        enabled={enabled}
       >
         {options.map((option, index) => (
           <Picker.Item

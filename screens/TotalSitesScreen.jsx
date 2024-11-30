@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete} from "../utils/faker";
+import { fakeDelete } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -10,6 +10,7 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard from "../components/card/ClickableCard";
+import Filter from "../components/Filter";
 import {
   ICON_LARGE,
   ICON_MEDIUM,
@@ -19,27 +20,45 @@ import {
   styles,
 } from "../styles";
 import {
- viewSite , searchSite ,fetchSites , addSite
+  viewSite,
+  searchSite,
+  fetchSites,
+  addSite,
 } from "../redux/actions/siteActions";
 
 import { useTranslation } from "react-i18next";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
-  const siteState = useSelector((state) => state.sites);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const searchText = siteState ? siteState.searchText : "";
   const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const siteState = useSelector((state) => state.site);
+
   const { t } = useTranslation();
 
   const { pageTitle, data } = route.params || {
     pageTitle: t("site_management"),
-    data: totalsitesData,
+    data: siteState,
   };
-  
+
   useEffect(() => {
+    console.log(siteState)
     dispatch(fetchSites());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (loading && Array.isArray(siteState) && siteState.length > 0) {
+      setFilteredData(siteState);
+      setLoading(false);
+    }
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [loading, siteState]);
 
   const handleSearch = (text) => {
     dispatch(searchSite(text));
@@ -51,7 +70,6 @@ export default function TotalSitesScreen({ navigation, route }) {
     );
     setFilteredData(filtered);
   };
-  
 
   const handleViewDetails = (siteData) => {
     dispatch(viewSite(siteData));
@@ -72,12 +90,16 @@ export default function TotalSitesScreen({ navigation, route }) {
     });
   };
 
+  if (loading) {
+    return <ActivityIndicator size="large" />
+  }
+
   return (
     <ContainerComponent>
       <MyHeader title={t(pageTitle)} isBack={true} hasIcon={true} />
       <MyFlatList
         data={filteredData}
-        loading={false}
+        loading={loading}
         renderItem={({ item }) => (
           <ClickableCard
             item={item}
@@ -117,13 +139,14 @@ export default function TotalSitesScreen({ navigation, route }) {
           </View>
         )}
       />
-      {showBottomSheet && <Filter />}
+
       <Button
         style={styles.addButton}
         onPress={() => navigation.navigate("sitesFormScreen")}
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }
