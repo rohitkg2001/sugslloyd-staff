@@ -9,8 +9,11 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { editVendor } from "../redux/actions/vendorAction";
 
-const VendorFormScreen = ({ route }) => {
-  const [name, setName] = useState("");
+const VendorFormScreen = ( { route } ) =>
+{
+  const [ vendorName, setVendorName ] = useState( "" );
+  const [ firstName, setFirstName ] = useState( "" );
+  const [ lastName, setLastName ] = useState( "" );
   const [gstNumber, setGstNumber] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [contactNumber, setContactNumber] = useState("");
@@ -22,13 +25,18 @@ const VendorFormScreen = ({ route }) => {
   const [bankName, setBankName] = useState("");
   const [branch, SetBranch] = useState("");
   const [pan, setPan] = useState("");
-  const [mailId, setMailId] = useState("");
+  const [ mailId, setMailId ] = useState( "" );
+  const [ password, setPassword ] = useState( "" );
+  const [ confirmPassword, setConfirmPassword ] = useState( "" );
   const { t } = useTranslation();
   const dispatch = useDispatch()
 
 
-  const handleCancel = () => {
-    setName("");
+  const handleCancel = () =>
+  {
+    setVendorName( "" );
+    setFirstName( "" );
+    setLastName( "" );
     setGstNumber("");
     setContactPerson("");
     setContactNumber("");
@@ -41,7 +49,9 @@ const VendorFormScreen = ({ route }) => {
     setIfsc("");
     setBankName("");
     SetBranch("");
-    setPan("");
+    setPan( "" );
+    setPassword( "" );
+    setConfirmPassword( "" );
   };
 
   const handleCreate = async () => {
@@ -60,10 +70,22 @@ const VendorFormScreen = ({ route }) => {
         showsVerticalScrollIndicator={false}
       >
         <MyTextInput
-          title={t("name")}
-          value={name}
-          onChangeText={setName}
-          placeholder="Enter Name"
+          title={t("vendor_form_name")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Enter VendorName"
+        />
+        <MyTextInput
+          title={t("first_name")}
+          value={firstName}
+          onChangeText={setFirstName}
+          placeholder="Enter First Name"
+        />
+        <MyTextInput
+          title={t("last_name")}
+          value={lastName}
+          onChangeText={setLastName}
+          placeholder="Enter Last Name"
         />
 
         <MyTextInput
@@ -83,14 +105,13 @@ const VendorFormScreen = ({ route }) => {
 
         <MyTextInput
           title={t("vendor_aadhar_number")}
-          value={contactPerson}
           onChangeText={setAadharNumber}
           placeholder="Enter Aadhar Number"
         />
 
         <MyTextInput
           title="Mail ID"
-          value={t("vendor_mail_id")}
+          value={mailId}
           onChangeText={setMailId}
           placeholder="Enter Mail ID"
           keyboardType="email-address"
@@ -146,9 +167,21 @@ const VendorFormScreen = ({ route }) => {
 
         <MyTextInput
           title={t("pan_number")}
-          value={bankName}
+          value={pan}
           onChangeText={setPan}
           placeholder="Enter PAN Number"
+        />
+        <MyTextInput
+          title={t("password")}
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Password for Vendor"
+        />
+        <MyTextInput
+          title={t("confirm_password")}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          placeholder="Confirm Password for Vendor"
         />
       </ScrollView>
       <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>
