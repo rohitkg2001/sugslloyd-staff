@@ -94,7 +94,6 @@ const SitesFormScreen = () => {
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 18 }]}
         showsVerticalScrollIndicator={false}
       >
-
         <MyPickerInput
           title={t("site_State")}
           value={site.state}
