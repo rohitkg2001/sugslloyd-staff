@@ -32,33 +32,32 @@ import { ActivityIndicator } from "react-native-paper";
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const [showBottomSheet, setShowBottomSheet] = useState(false);
-  const searchText = siteState ? siteState.searchText : "";
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const siteState = useSelector((state) => state.site);
+  const { sites } = useSelector((state) => state.site);
 
   const { t } = useTranslation();
 
   const { pageTitle, data } = route.params || {
     pageTitle: t("site_management"),
-    data: siteState,
+    data: sites,
   };
 
   useEffect(() => {
-    console.log(siteState)
+    console.log(sites)
     dispatch(fetchSites());
   }, [dispatch]);
 
   useEffect(() => {
-    if (loading && Array.isArray(siteState) && siteState.length > 0) {
-      setFilteredData(siteState);
+    if (loading && Array.isArray(sites) && sites.length > 0) {
+      setFilteredData(sites);
       setLoading(false);
     }
 
     setTimeout(() => {
       setLoading(false);
     }, 2000);
-  }, [loading, siteState]);
+  }, [loading, sites]);
 
   const handleSearch = (text) => {
     dispatch(searchSite(text));
@@ -98,7 +97,7 @@ export default function TotalSitesScreen({ navigation, route }) {
     <ContainerComponent>
       <MyHeader title={t(pageTitle)} isBack={true} hasIcon={true} />
       <MyFlatList
-        data={filteredData}
+        data={sites}
         loading={loading}
         renderItem={({ item }) => (
           <ClickableCard

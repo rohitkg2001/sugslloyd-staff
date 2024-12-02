@@ -19,7 +19,7 @@ const SitesFormScreen = () => {
   const [cities, setCities] = useState([]) //Don't remove
   const [site, setSite] = useState({
     state: null,
-    city: ""
+    district: ""
   })
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -34,6 +34,7 @@ const SitesFormScreen = () => {
   const handleCreate = () => {
     // Create site data
     console.log(site)
+
 
     // Dispatch addSite action to add the new site
     // dispatch(addSite(siteData));
@@ -111,7 +112,7 @@ const SitesFormScreen = () => {
           title={t("site_city")}
           enabled={site.state ? true : false}
           value={site.city}
-          onChange={(value) => onChangeText('city', value)}
+          onChange={(value) => onChangeText('district', value)}
           options={[
             { label: "Select City", value: null },
             ...cities
@@ -129,45 +130,16 @@ const SitesFormScreen = () => {
             />
           )
         }
-        <MyTextInput
-          title={t("sanction_load")}
-          onChangeText={(value) => onChangeText('sanctionedLoad', value)}
-          placeholder="Enter Sanction Value"
-        />
-        <MyTextInput
-          title={t("meter_no")}
-          onChangeText={(value) => onChangeText('meterNumber', value)}
-          placeholder="Enter Meter Number"
-        />
+
         <MyTextInput
           title={t("load_enhancementstatus")}
-          onChangeText={(value) => onChangeText('loadEnhancementStatus', value)}
+          onChangeText={(value) => onChangeText('load_enhancement_status', value)}
           placeholder="Enter Load Enhancement Status"
         />
-        <MyTextInput
-          title={t("net_meterserialnumber")}
-          onChangeText={(value) => onChangeText('netMeterNumber', value)}
-          placeholder="Net Meter Sl. No"
-        />
-        <MyTextInput
-          title={t("solar_meterserialnumber")}
-          onChangeText={(value) => onChangeText('solarMeterNumber', value)}
-          placeholder="Solar Meter Sl. No"
-        />
-
-        <MyTextInput
-          title={t("site_ContactNo")}
-          onChangeText={(value) => onChangeText('contactNo', value)}
-          placeholder="Enter Contact No."
-          keyboardType="numeric"
-        />
-
-
-
-
+        {/* Picker Input with value only yes or no */}
         <MyPickerInput
           title={t("site_surveystatus")}
-          onChangeText={(value) => onChangeText('surveyStatus', value)}
+          onChangeText={(value) => onChangeText('site_survey_status', value)}
           options={[{ label: t("done") }, { label: t("pending") }]}
         />
 

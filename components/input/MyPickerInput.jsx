@@ -11,7 +11,7 @@ export default function MyPickerInput({
   enabled
 }) {
   return (
-    <View style={styles.textInput}>
+    <View>
       <H5>{title}</H5>
       <View style={[spacing.ph1, {
         borderColor: PRIMARY_COLOR,

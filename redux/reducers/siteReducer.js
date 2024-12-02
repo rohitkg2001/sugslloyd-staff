@@ -15,7 +15,6 @@ export const siteReducer = (state = initialState, action) => {
       return {
         ...state,
         sites: action.payload,
-        filteredSites: action.payload,
       };
 
     case ADD_SITE:
