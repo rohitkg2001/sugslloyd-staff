@@ -42,8 +42,8 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         cANumber: formType === "site" ? "" : undefined,
         iCVendorName: formType === "site" ? "" : undefined,
         vendorName: formType === "site" ? "" : undefined,
-        firstName : formType === "site"  ? "" : undefined,
-        lastName : formType === "site" ? "" : undefined,
+        firstName: formType === "site" ? "" : undefined,
+        lastName: formType === "site" ? "" : undefined,
         contactPerson: formType === "site" ? "" : undefined,
         aadharNumber: formType === "site" ? "" : undefined,
         address: formType === "site" ? "" : undefined,
@@ -54,7 +54,7 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         branch: formType === "site" ? "" : undefined,
         pan: formType === "site" ? "" : undefined,
         changePassword: formType === "site" ? "" : undefined,
-        confirmchangePassword : formType === "site" ? "" : undefined,
+        confirmchangePassword: formType === "site" ? "" : undefined,
       });
     }
   }, [site, formType]);
