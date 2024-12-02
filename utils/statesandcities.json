@@ -397,7 +397,7 @@
             "Punch",
             "Udhampur"
         ]
-    }
+    },
         {
             "id": 13,
             "name": "Jharkhand",
@@ -1383,4 +1383,5 @@
         "Adra"
       ]
     }
+  ]
 }
