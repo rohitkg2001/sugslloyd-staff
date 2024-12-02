@@ -22,7 +22,9 @@ const VendorFormScreen = ({ route }) => {
   const [bankName, setBankName] = useState("");
   const [branch, SetBranch] = useState("");
   const [pan, setPan] = useState("");
-  const [mailId, setMailId] = useState("");
+  const [ mailId, setMailId ] = useState( "" );
+  const [ password, setPassword ] = useState( "" );
+  const [ confirmPassword, setConfirmPassword ] = useState( "" );
   const { t } = useTranslation();
   const dispatch = useDispatch()
 
@@ -41,7 +43,9 @@ const VendorFormScreen = ({ route }) => {
     setIfsc("");
     setBankName("");
     SetBranch("");
-    setPan("");
+    setPan( "" );
+    setPassword( "" );
+    setConfirmPassword( "" );
   };
 
   const handleCreate = async () => {
@@ -145,9 +149,21 @@ const VendorFormScreen = ({ route }) => {
 
         <MyTextInput
           title={t("pan_number")}
-          value={bankName}
+          value={pan}
           onChangeText={setPan}
           placeholder="Enter PAN Number"
+        />
+        <MyTextInput
+          title={t("password")}
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Password for Vendor"
+        />
+        <MyTextInput
+          title={t("confirm_password")}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          placeholder="Confirm Password for Vendor"
         />
       </ScrollView>
       <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>

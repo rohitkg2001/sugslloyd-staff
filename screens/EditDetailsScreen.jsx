@@ -51,6 +51,8 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         ifsc: formType === "site" ? "" : undefined,
         branch: formType === "site" ? "" : undefined,
         pan: formType === "site" ? "" : undefined,
+        changePassword: formType === "site" ? "" : undefined,
+        confirmchangePassword : formType === "site" ? "" : undefined,
       });
     }
   }, [site, formType]);
@@ -209,6 +211,20 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               placeholder="PAN Number"
               value={formData.pan}
               onChangeText={(text) => handleChange("pan", text)}
+            />
+            <MyTextInput
+              title="Change Password"
+              placeholder="change password"
+              value={formData.changePassword}
+              onChangeText={(text) => handleChange("changePassword", text)}
+            />
+            <MyTextInput
+              title="Confirm Change Password"
+              placeholder="confirm changepassword"
+              value={formData.confirmchangePassword}
+              onChangeText={(text) =>
+                handleChange("confirmchangePassword", text)
+              }
             />
           </>
         )}

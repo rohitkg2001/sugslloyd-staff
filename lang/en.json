@@ -134,6 +134,8 @@
     "settings": "Settings",
     "today": "Today",
     "to_do": "To do",
-    "project": "Project"
+    "project": "Project",
+    "password" : "Password",
+    "confirm_password" : "Confirm Password"
   }
 }
