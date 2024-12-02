@@ -10,8 +10,6 @@ import {
 } from '../constant';
 
 
-import { projects as mockProjects } from "../../utils/faker";
-
 export const fetchProjects = () => async (dispatch) => {
   const response = await fetch(`${BASE_URL}/api/projects`)
   const data = await response.json()
@@ -20,6 +18,21 @@ export const fetchProjects = () => async (dispatch) => {
     payload: data,
   });
 };
+
+export const getProjectCounts = async () => {
+  const response = await fetch(`${BASE_URL}/api/projects/`)
+  const data = await response.json()
+  const projectCounts = data.length
+  return [
+    {
+      id: 1,
+      count: projectCounts,
+      status: "total_projects",
+      page: "totalProjectsScreen",
+      backgroundColor: "#A0D3E8",
+    },
+  ];
+}
 
 export const searchPjerocts = (searchText) => ({
   type: SEARCH_PROJECTS,

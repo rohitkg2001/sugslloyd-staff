@@ -25,7 +25,7 @@ const VendorFormScreen = ({ route }) => {
   const [mailId, setMailId] = useState("");
   const { t } = useTranslation();
   const dispatch = useDispatch()
-  const { id, email } = route.params
+  // const { id, email } = route.params
 
   const handleCancel = () => {
     setName("");

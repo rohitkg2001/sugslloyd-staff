@@ -50,9 +50,9 @@ export default function ClickableCard({
             {
               isSite && (
                 <>
-                  <H6 style={[typography.textBold]}>{item.siteName},</H6>
+                  <H6 style={[typography.textBold]}>{item.site_name}</H6>
                   <P style={{ fontSize: 14 }}>
-                    {item.location}, {item.dist}
+                    {item.location}, {item.district}
                   </P>
                 </>
               )

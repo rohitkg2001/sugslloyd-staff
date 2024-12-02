@@ -23,33 +23,60 @@ export const SiteFields = [
   },
   {
     title: "site_Projectcode",
-    fieldName: "projectcode",
+    fieldName: "project_id",
     placeholder: "Enter Project Code",
     keyboardType: "text"
   },
   {
     title: "site_name",
-    fieldName: "siteName",
+    fieldName: "site_name",
     placeholder: "Enter Site Name",
     keyboardType: "text"
   },
   {
     title: "site_projectcapacity",
-    fieldName: "projectCapacity",
+    fieldName: "project_capacity",
     placeholder: "Enter Project Capacity",
-    keyboardType: "text"
+    keyboardType: "numeric"
   },
   {
     title: "site_I&CVendorName",
-    fieldName: "vendorName",
+    fieldName: "ic_vendor_name",
     placeholder: "Enter I & C Vendor Name",
     keyboardType: "text"
   },
   {
     title: "site_canumber",
-    fieldName: "caNumber",
+    fieldName: "ca_number",
     placeholder: "Enter CA Number",
     keyboardType: "text"
+  },
+  {
+    title: "sanction_load",
+    fieldName: "sanction_load",
+    placeholder: "Enter Sanctioned Load",
+    keyboardType: "numeric"
+  },
+  {
+    title: "meter_no",
+    fieldName: "meter_number",
+    placeholder: "Enter Meter Number",
+  },
+  {
+    title: "net_meterserialnumber",
+    fieldName: "net_meter_sr_number",
+    placeholder: "Net Meter Sl No."
+  },
+  {
+    title: "solar_meterserialnumber",
+    placeholder: "Solar Meter Sl No",
+    fieldName: "solar_meter_sr_number"
+  },
+  {
+    title: "site_ContactNo",
+    placeholder: 'Enter Contact No.',
+    fieldName: "contact_no",
+    keyboardType: "numeric"
   }
 ]
 
@@ -414,17 +441,7 @@ export const vendorCardForDashboard = [
 ];
 // Event generated
 
-export const ProjectcardsForDashboard = [
-  {
-    id: 1,
-    title: "Task 1",
-    description: "This is task 1",
-    count: 1,
-    status: "total_projects",
-    page: "totalProjectsScreen",
-    backgroundColor: "#A0D3E8",
-  },
-];
+
 // Event generated
 export const staff = {
   id: 1,
