@@ -41,7 +41,9 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         contactNo: formType === "site" ? "" : undefined,
         cANumber: formType === "site" ? "" : undefined,
         iCVendorName: formType === "site" ? "" : undefined,
-        name: formType === "site" ? "" : undefined,
+        vendorName: formType === "site" ? "" : undefined,
+        firstName : formType === "site"  ? "" : undefined,
+        lastName : formType === "site" ? "" : undefined,
         contactPerson: formType === "site" ? "" : undefined,
         aadharNumber: formType === "site" ? "" : undefined,
         address: formType === "site" ? "" : undefined,
@@ -137,10 +139,22 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         {formType === "vendor" && (
           <>
             <MyTextInput
-              title="Name"
+              title="Vendor Name"
               placeholder="Name"
-              value={formData.name}
-              onChangeText={(text) => handleChange("name", text)}
+              value={formData.vendorName}
+              onChangeText={(text) => handleChange("vendorName", text)}
+            />
+            <MyTextInput
+              title="First Name"
+              placeholder="First Name"
+              value={formData.firstName}
+              onChangeText={(text) => handleChange("firstName", text)}
+            />
+            <MyTextInput
+              title="Last Name"
+              placeholder="Last Name"
+              value={formData.lastName}
+              onChangeText={(text) => handleChange("lastName", text)}
             />
             <MyTextInput
               title="Contact Person"
