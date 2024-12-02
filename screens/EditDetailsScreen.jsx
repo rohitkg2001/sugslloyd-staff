@@ -166,7 +166,7 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
             <MyTextInput
               title="Mail ID"
               placeholder="Mail ID"
-              value={formData.mailId}
+              value={formData.maillId}
               onChangeText={(text) => handleChange("email", text)}
               keyboardType="email-address"
             />
