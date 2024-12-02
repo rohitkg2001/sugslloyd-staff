@@ -26,6 +26,8 @@ import {
   siteCardsForDashboard,
   vendorCardForDashboard,
   ProjectcardsForDashboard,
+  projects,
+
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -33,6 +35,7 @@ import { useTranslation } from "react-i18next";
 import Filter from "../components/Filter";
 import { getAllVendors, getVendorCounts } from "../redux/actions/vendorAction";
 import { useDispatch, useSelector } from "react-redux";
+import { getProjectCounts } from "../redux/actions/projectAction";
 
 export default function DashboardScreen({ navigation }) {
   const [today, setToday] = useState(moment().format("DD MMM YYYY"));
@@ -41,26 +44,30 @@ export default function DashboardScreen({ navigation }) {
   const [greeting, setGreeting] = useState("Good morning");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [totalVendors, setTotalVendors] = useState(0);
-  const [activeVendors, setActiveVendors] = useState(0);
-  const [inActiveVendors, setInActiveVendors] = useState(0);
+  const [projectCounts, setProjectCounts] = useState([])
+  const [totalVendors, setTotalVendors] = useState(0)
+  const [activeVendors, setActiveVendors] = useState(0)
+  const [inActiveVendors, setInActiveVendors] = useState(0)
   const { firstName } = useSelector((state) => state.staff);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const getCounts = async () => {
-    const { totalVendors, activeVendors, inactiveVendors } =
-      await getVendorCounts();
-    setActiveVendors(activeVendors);
-    setTotalVendors(totalVendors);
-    setInActiveVendors(inactiveVendors);
-  };
+    const { totalVendors, activeVendors, inactiveVendors } = await getVendorCounts()
+    const projects = await getProjectCounts()
+    setProjectCounts(projects)
+    setActiveVendors(activeVendors)
+    setTotalVendors(totalVendors)
+    setInActiveVendors(inactiveVendors)
+
+  }
 
   useEffect(() => {
     setGreeting(greet());
-    dispatch(getAllVendors());
-    getCounts();
-  }, []);
+    dispatch(getAllVendors())
+    getCounts()
+  }, [projectCounts]);
+
 
   const handleDateChange = (event, date) => {
     if (event.type === "set") {
@@ -171,7 +178,7 @@ export default function DashboardScreen({ navigation }) {
         </View>
 
         <MyFlatList
-          data={ProjectcardsForDashboard}
+          data={projectCounts}
           renderItem={({ item }) => (
             <StatCard
               key={item.id}

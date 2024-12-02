@@ -1,4 +1,4 @@
-import { VIEW_SITE, SEARCH_SITE, FETCH_SITES, ADD_SITE } from "../constant";
+import { VIEW_SITE, SEARCH_SITE, FETCH_SITES, ADD_SITE, BASE_URL } from "../constant";
 import statesandcities from '../../utils/statesandcities.json'
 
 export const setStatesAndCities = () => {
@@ -6,9 +6,15 @@ export const setStatesAndCities = () => {
 }
 
 export const fetchSites = () => async (dispatch) => {
-  const response = await fetch(`${BASE_URL}/api/sites`);
-  const data = await response.json();
-  dispatch({ type: FETCH_SITES, payload: data });
+  try {
+    const response = await fetch(`${BASE_URL}/api/sites`);
+    const data = await response.json();
+    console.log(data)
+    dispatch({ type: FETCH_SITES, payload: data });
+  } catch (error) {
+    console.log(error)
+  }
+
 };
 
 export const viewSite = (site) => ({
