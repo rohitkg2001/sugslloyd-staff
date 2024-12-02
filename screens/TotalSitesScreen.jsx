@@ -35,7 +35,7 @@ export default function TotalSitesScreen({ navigation, route }) {
   const searchText = siteState ? siteState.searchText : "";
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const siteState = useSelector((state) => state);
+  const siteState = useSelector((state) => state.site);
 
   const { t } = useTranslation();
 
@@ -50,15 +50,15 @@ export default function TotalSitesScreen({ navigation, route }) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (loading && siteState.sites.length > 0) {
-      setFilteredData(siteState.sites);
+    if (loading && Array.isArray(siteState) && siteState.length > 0) {
+      setFilteredData(siteState);
       setLoading(false);
     }
 
     setTimeout(() => {
       setLoading(false);
     }, 2000);
-  }, [loading, siteState.sites]);
+  }, [loading, siteState]);
 
   const handleSearch = (text) => {
     dispatch(searchSite(text));
