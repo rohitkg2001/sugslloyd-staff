@@ -6,7 +6,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import { greet } from "../redux/actions/staffActions";
 import MyFlatList from "../components/utility/MyFlatList";
-import { H4, H5, P, Span } from "../components/text";
+import { H4, H5, H6, P, Span } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
 import {
@@ -26,7 +26,6 @@ import {
   siteCardsForDashboard,
   vendorCardForDashboard,
   ProjectcardsForDashboard,
-
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -38,31 +37,30 @@ import { useDispatch, useSelector } from "react-redux";
 export default function DashboardScreen({ navigation }) {
   const [today, setToday] = useState(moment().format("DD MMM YYYY"));
   const [dueTasks, setDueTasks] = useState(4);
-  const [showBottomSheet, setShowBottomSheet] = useState(false)
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [greeting, setGreeting] = useState("Good morning");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [totalVendors, setTotalVendors] = useState(0)
-  const [activeVendors, setActiveVendors] = useState(0)
-  const [inActiveVendors, setInActiveVendors] = useState(0)
+  const [totalVendors, setTotalVendors] = useState(0);
+  const [activeVendors, setActiveVendors] = useState(0);
+  const [inActiveVendors, setInActiveVendors] = useState(0);
   const { firstName } = useSelector((state) => state.staff);
   const { t } = useTranslation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const getCounts = async () => {
-    const { totalVendors, activeVendors, inactiveVendors } = await getVendorCounts()
-    setActiveVendors(activeVendors)
-    setTotalVendors(totalVendors)
-    setInActiveVendors(inactiveVendors)
-
-  }
+    const { totalVendors, activeVendors, inactiveVendors } =
+      await getVendorCounts();
+    setActiveVendors(activeVendors);
+    setTotalVendors(totalVendors);
+    setInActiveVendors(inactiveVendors);
+  };
 
   useEffect(() => {
     setGreeting(greet());
-    dispatch(getAllVendors())
-    getCounts()
+    dispatch(getAllVendors());
+    getCounts();
   }, []);
-
 
   const handleDateChange = (event, date) => {
     if (event.type === "set") {
@@ -153,22 +151,23 @@ export default function DashboardScreen({ navigation }) {
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
         </View>
-
         <View
           style={[
-            spacing.mv2,
-            spacing.mr3,
             styles.row,
-            { alignItems: "center" },
+            spacing.mh1,
+            { alignItems: "center", width: SCREEN_WIDTH - 16 },
           ]}
         >
           <H4>{t("today")}</H4>
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity onPress={showCalendar}>
-              <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
-            </TouchableOpacity>
-            <H5 style={spacing.ml1}>{today}</H5>
-          </View>
+          <Button
+            style={[styles.btn, styles.bgPrimary, spacing.ph3]}
+            onPress={() => setShowDatePicker(true)}
+          >
+            <Icon name="calendar-outline" size={ICON_SMALL} color={LIGHT} />
+            <H5 style={[spacing.ml1, { color: "#fff", fontWeight: "600" }]}>
+              {today}
+            </H5>
+          </Button>
         </View>
 
         <MyFlatList
@@ -302,9 +301,7 @@ export default function DashboardScreen({ navigation }) {
               size={ICON_LARGE}
               color={PRIMARY_COLOR}
             />
-            <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              Vendors
-            </H5>
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>Vendors</H5>
           </View>
           <View style={[spacing.bbw05, spacing.mv2]} />
           <View
@@ -315,16 +312,22 @@ export default function DashboardScreen({ navigation }) {
           >
             <View style={{ alignItems: "center", textAlign: "center" }}>
               <P style={typography.textBold}>Total Vendors</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>{totalVendors}</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {totalVendors}
+              </P>
             </View>
 
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>Active</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>{activeVendors}</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {activeVendors}
+              </P>
             </View>
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>Inactive</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>{inActiveVendors}</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {inActiveVendors}
+              </P>
             </View>
           </View>
         </CardFullWidth>

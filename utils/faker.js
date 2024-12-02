@@ -14,6 +14,45 @@ export const fakeDelete = ({
 };
 // Static method
 
+export const SiteFields = [
+  {
+    title: "site_location",
+    fieldName: "location",
+    placeholder: "Enter Location",
+    keyboardType: "text"
+  },
+  {
+    title: "site_Projectcode",
+    fieldName: "projectcode",
+    placeholder: "Enter Project Code",
+    keyboardType: "text"
+  },
+  {
+    title: "site_name",
+    fieldName: "siteName",
+    placeholder: "Enter Site Name",
+    keyboardType: "text"
+  },
+  {
+    title: "site_projectcapacity",
+    fieldName: "projectCapacity",
+    placeholder: "Enter Project Capacity",
+    keyboardType: "text"
+  },
+  {
+    title: "site_I&CVendorName",
+    fieldName: "vendorName",
+    placeholder: "Enter I & C Vendor Name",
+    keyboardType: "text"
+  },
+  {
+    title: "site_canumber",
+    fieldName: "caNumber",
+    placeholder: "Enter CA Number",
+    keyboardType: "text"
+  }
+]
+
 export const menuItems = [
   {
     label: "inventory_title",
