@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 import { useState } from "react";
 import { View, ScrollView, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
-=======
-import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
-import { useDispatch } from "react-redux";
->>>>>>> 7f72c2f7444e9e65d4dc36f39f6566a31b08786e
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
@@ -25,11 +19,8 @@ const InventoryFormScreen = ({ navigation, route }) => {
   const [quantity, setQuantity] = useState(
     editItem?.quantity?.toString() || ""
   );
-<<<<<<< HEAD
   const [unit, setUnit] = useState(editItem?.unit || "");
   const [description, setDescription] = useState(editItem?.description || "");
-=======
->>>>>>> 7f72c2f7444e9e65d4dc36f39f6566a31b08786e
   const [releaseDate, setReleaseDate] = useState(editItem?.releaseDate || "");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -67,15 +58,6 @@ const InventoryFormScreen = ({ navigation, route }) => {
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
-<<<<<<< HEAD
-=======
-        <MyHeader
-          title={editItem ? "Edit Product" : "Add Product"}
-          hasIcon={true}
-          isBack={true}
-        />
-
->>>>>>> 7f72c2f7444e9e65d4dc36f39f6566a31b08786e
         <MyTextInput
           title={t("prod_name")}
           value={productName}

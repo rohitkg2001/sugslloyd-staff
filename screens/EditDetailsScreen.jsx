@@ -41,6 +41,18 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         contactNo: formType === "site" ? "" : undefined,
         cANumber: formType === "site" ? "" : undefined,
         iCVendorName: formType === "site" ? "" : undefined,
+        name: formType === "site" ? "" : undefined,
+        contactPerson: formType === "site" ? "" : undefined,
+        aadharNumber: formType === "site" ? "" : undefined,
+        address: formType === "site" ? "" : undefined,
+        accountNumber: formType === "site" ? "" : undefined,
+        accountName: formType === "site" ? "" : undefined,
+        bankName: formType === "site" ? "" : undefined,
+        ifsc: formType === "site" ? "" : undefined,
+        branch: formType === "site" ? "" : undefined,
+        pan: formType === "site" ? "" : undefined,
+        changePassword: formType === "site" ? "" : undefined,
+        confirmchangePassword : formType === "site" ? "" : undefined,
       });
     }
   }, [site, formType]);
@@ -125,11 +137,68 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         {formType === "vendor" && (
           <>
             <MyTextInput
+              title="Name"
+              placeholder="Name"
+              value={formData.name}
+              onChangeText={(text) => handleChange("name", text)}
+            />
+            <MyTextInput
+              title="Contact Person"
+              placeholder="Contact Person"
+              value={formData.contactPerson}
+              onChangeText={(text) => handleChange("contactPerson", text)}
+            />
+
+            <MyTextInput
               title="Contact Number"
               placeholder="Contact Number"
               value={formData.contactNumber}
               onChangeText={(text) => handleChange("contact_no", text)}
               keyboardType="phone-pad"
+            />
+            <MyTextInput
+              title="Aadhar Number"
+              placeholder="Aadhar Number"
+              value={formData.contactNumber}
+              onChangeText={(text) => handleChange("aadhar_number", text)}
+              keyboardType="phone-pad"
+            />
+            <MyTextInput
+              title="Mail ID"
+              placeholder="Mail ID"
+              value={formData.maillId}
+              onChangeText={(text) => handleChange("email", text)}
+              keyboardType="email-address"
+            />
+            <MyTextInput
+              title="Address"
+              placeholder="Address"
+              value={formData.address}
+              onChangeText={(text) => handleChange("address", text)}
+            />
+            <MyTextInput
+              title="Account Name"
+              placeholder="Account Name"
+              value={formData.accountName}
+              onChangeText={(text) => handleChange("accountName", text)}
+            />
+            <MyTextInput
+              title="Account Number"
+              placeholder="Account Number"
+              value={formData.accountNumber}
+              onChangeText={(text) => handleChange("accountNumber", text)}
+            />
+            <MyTextInput
+              title="IFSC"
+              placeholder="IFSC code"
+              value={formData.ifsc}
+              onChangeText={(text) => handleChange("ifsc", text)}
+            />
+            <MyTextInput
+              title="Branch"
+              placeholder="Branch"
+              value={formData.branch}
+              onChangeText={(text) => handleChange("branch", text)}
             />
             <MyTextInput
               title="GST Number"
@@ -144,11 +213,18 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               onChangeText={(text) => handleChange("contact_person", text)}
             />
             <MyTextInput
-              title="Mail ID"
-              placeholder="Mail ID"
-              value={formData.mailId}
-              onChangeText={(text) => handleChange("email", text)}
-              keyboardType="email-address"
+              title="Change Password"
+              placeholder="change password"
+              value={formData.changePassword}
+              onChangeText={(text) => handleChange("change_password", text)}
+            />
+            <MyTextInput
+              title="Confirm Change Password"
+              placeholder="confirm change password"
+              value={formData.confirmchangePassword}
+              onChangeText={(text) =>
+                handleChange("confirm_change_password", text)
+              }
             />
           </>
         )}
@@ -217,7 +293,9 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               title="SPP Installation Date"
               placeholder="SPP Installation Date"
               value={formData.sppInstallationDate}
-              onChangeText={(text) => handleChange("spp_installation_date", text)}
+              onChangeText={(text) =>
+                handleChange("spp_installation_date", text)
+              }
             />
             <MyTextInput
               title="Commissioning Date"

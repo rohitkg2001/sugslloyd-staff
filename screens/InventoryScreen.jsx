@@ -13,7 +13,6 @@ import { useTranslation } from "react-i18next";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
-<<<<<<< HEAD
 import { H4, H5 } from "../components/text";
 import {
   ICON_MEDIUM,
@@ -23,10 +22,6 @@ import {
   spacing,
   SCREEN_WIDTH,
 } from "../styles";
-=======
-import { ICON_MEDIUM, LIGHT, styles, spacing, SCREEN_WIDTH } from "../styles";
-import { View } from "react-native";
->>>>>>> 7f72c2f7444e9e65d4dc36f39f6566a31b08786e
 import InventoryDetailsModal from "../components/InventoryDetailsModal";
 import Filter from "../components/Filter";
 
