@@ -166,15 +166,15 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
             <MyTextInput
               title="Contact Number"
               placeholder="Contact Number"
-              value={formData.contactNumber}
+              value={formData.contactNo}
               onChangeText={(text) => handleChange("contactNo", text)}
               keyboardType="phone-pad"
             />
             <MyTextInput
               title="Aadhar Number"
               placeholder="Aadhar Number"
-              value={formData.contactNumber}
-              onChangeText={(text) => handleChange("contactNo", text)}
+              value={formData.aadharNumber}
+              onChangeText={(text) => handleChange("aadharNumber", text)}
               keyboardType="phone-pad"
             />
             <MyTextInput
