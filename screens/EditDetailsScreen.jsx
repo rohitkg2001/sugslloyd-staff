@@ -41,6 +41,16 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         contactNo: formType === "site" ? "" : undefined,
         cANumber: formType === "site" ? "" : undefined,
         iCVendorName: formType === "site" ? "" : undefined,
+        name: formType === "site" ? "" : undefined,
+        contactPerson: formType === "site" ? "" : undefined,
+        aadharNumber: formType === "site" ? "" : undefined,
+        address: formType === "site" ? "" : undefined,
+        accountNumber: formType === "site" ? "" : undefined,
+        accountName: formType === "site" ? "" : undefined,
+        bankName: formType === "site" ? "" : undefined,
+        ifsc: formType === "site" ? "" : undefined,
+        branch: formType === "site" ? "" : undefined,
+        pan: formType === "site" ? "" : undefined,
       });
     }
   }, [site, formType]);
@@ -80,28 +90,27 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         style={[spacing.mh2, { width: SCREEN_WIDTH - 16, paddingVertical: 6 }]}
         showsVerticalScrollIndicator={false}
       >
-
         {formType === "project" && (
           <>
             <MyTextInput
               title="Project Name"
               placeholder="Enter Project Name"
               value={formData.projectName}
-              onChangeText={(text) => handleChange("projectName", text)}
+              onChangeText={(text) => handleChange("project_name", text)}
             />
 
             <MyTextInput
               title="Work Order Number"
               placeholder="workOrderNumber"
               value={formData.workOrderNumber}
-              onChangeText={(text) => handleChange("workOrderNumber", text)}
+              onChangeText={(text) => handleChange("work_order_number", text)}
             />
 
             <MyTextInput
               title="Rate"
               placeholder=" rate"
               value={formData.rate}
-              onChangeText={(text) => handleChange(" rate", text)}
+              onChangeText={(text) => handleChange("rate", text)}
             />
 
             <TouchableOpacity onPress={() => setShowDatePicker(true)}>
@@ -126,11 +135,68 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         {formType === "vendor" && (
           <>
             <MyTextInput
+              title="Name"
+              placeholder="Name"
+              value={formData.name}
+              onChangeText={(text) => handleChange("name", text)}
+            />
+            <MyTextInput
+              title="Contact Person"
+              placeholder="Contact Person"
+              value={formData.contactPerson}
+              onChangeText={(text) => handleChange("contactPerson", text)}
+            />
+
+            <MyTextInput
               title="Contact Number"
               placeholder="Contact Number"
               value={formData.contactNumber}
-              onChangeText={(text) => handleChange("contactNumber", text)}
+              onChangeText={(text) => handleChange("contactNo", text)}
               keyboardType="phone-pad"
+            />
+            <MyTextInput
+              title="Aadhar Number"
+              placeholder="Aadhar Number"
+              value={formData.contactNumber}
+              onChangeText={(text) => handleChange("contactNo", text)}
+              keyboardType="phone-pad"
+            />
+            <MyTextInput
+              title="Mail ID"
+              placeholder="Mail ID"
+              value={formData.mailId}
+              onChangeText={(text) => handleChange("email", text)}
+              keyboardType="email-address"
+            />
+            <MyTextInput
+              title="Address"
+              placeholder="Address"
+              value={formData.address}
+              onChangeText={(text) => handleChange("gstNumber", text)}
+            />
+            <MyTextInput
+              title="Account Name"
+              placeholder="Account Name"
+              value={formData.accountName}
+              onChangeText={(text) => handleChange("accountName", text)}
+            />
+            <MyTextInput
+              title="Account Number"
+              placeholder="Account Number"
+              value={formData.accountNumber}
+              onChangeText={(text) => handleChange("accountNumber", text)}
+            />
+            <MyTextInput
+              title="IFSC"
+              placeholder="IFSC code"
+              value={formData.ifsc}
+              onChangeText={(text) => handleChange("ifsc", text)}
+            />
+            <MyTextInput
+              title="Branch"
+              placeholder="Branch"
+              value={formData.branch}
+              onChangeText={(text) => handleChange("branch", text)}
             />
             <MyTextInput
               title="GST Number"
@@ -139,17 +205,10 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               onChangeText={(text) => handleChange("gstNumber", text)}
             />
             <MyTextInput
-              title="Contact Person"
-              placeholder="Contact Person"
-              value={formData.contactPerson}
-              onChangeText={(text) => handleChange("contactPerson", text)}
-            />
-            <MyTextInput
-              title="Mail ID"
-              placeholder="Mail ID"
-              value={formData.mailId}
-              onChangeText={(text) => handleChange("mailId", text)}
-              keyboardType="email-address"
+              title="PAN Number"
+              placeholder="PAN Number"
+              value={formData.pan}
+              onChangeText={(text) => handleChange("pan", text)}
             />
           </>
         )}

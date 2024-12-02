@@ -53,7 +53,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
   };
 
   const handleEdit = (item) => {
-    navigation.navigate("VendorFormScreen", { id: item.id, email: item.email });
+    navigation.navigate("EditDetailsScreen", { item, formType: "vendor" });
   };
 
   return (
