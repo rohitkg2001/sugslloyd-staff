@@ -12,17 +12,16 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const { site, formType } = route.params;
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [siteCreated, setSiteCreated] = useState(false);
-  const [project, setProject] = useState({})
-  const [loading, setLoading] = useState(true)
+  const [project, setProject] = useState({});
+  const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
-  const { currentProject } = useSelector(state => state.project);
+  const { currentProject } = useSelector((state) => state.project);
   useEffect(() => {
     if (currentProject) {
-      setProject(currentProject)
-      setLoading(false)
+      setProject(currentProject);
+      setLoading(false);
     }
-  }, [currentProject])
-
+  }, [currentProject]);
 
   // Optimize rendering of the row components
   const renderDetailRow = (label, value) => (
@@ -37,23 +36,23 @@ const ViewDetailScreen = ({ route, navigation }) => {
   // Site details rendering
   const renderSiteDetails = () => (
     <>
-      {renderDetailRow("Site Name", site.siteName)}
+      {renderDetailRow("Site Name", site.site_name)}
       {renderDetailRow("State", site.state)}
       {renderDetailRow("District", site.dist)}
       {renderDetailRow("Location", site.location)}
-      {renderDetailRow("Contact No", site.contactNo)}
-      {renderDetailRow("Project Serial Code", site.projectSerialCode)}
-      {renderDetailRow("Project Capacity", site.projectCapacity)}
-      {renderDetailRow("CA Number", site.cANumber)}
-      {renderDetailRow("Sanction Load", site.sanctionLoad)}
-      {renderDetailRow("Meter Number", site.meterNumber)}
-      {renderDetailRow("Load Enhancement Status", site.loadEnhancementStatus)}
-      {renderDetailRow("Site Survey Status", site.siteSurveyStatus)}
-      {renderDetailRow("Net Meter Sr No", site.netMeterSrNo)}
-      {renderDetailRow("Solar Meter Sr NO", site.solarMeterSrNO)}
-      {renderDetailRow("Material Inspection Date", site.materialInspectionDate)}
-      {renderDetailRow("SPP INSTALLATION DATE", site.sppInstallationDate)}
-      {renderDetailRow("COMMISSIONING DATE", site.commissioningDate)}
+      {renderDetailRow("Contact No", site.contact_no)}
+      {renderDetailRow("Project Serial Code", site.project_serial_code)}
+      {renderDetailRow("Project Capacity", site.project_capacity)}
+      {renderDetailRow("CA Number", site.ca_number)}
+      {renderDetailRow("Sanction Load", site.sanction_load)}
+      {renderDetailRow("Meter Number", site.meter_number)}
+      {renderDetailRow("Load Enhancement Status", site.load_enhancement_status)}
+      {renderDetailRow("Site Survey Status", site.site_survey_status)}
+      {renderDetailRow("Net Meter Sr No", site.net_meter_sr_no)}
+      {renderDetailRow("Solar Meter Sr NO", site.solar_meter_sr_no)}
+      {renderDetailRow("Material Inspection Date", site.material_inspection_date  )}
+      {renderDetailRow("SPP INSTALLATION DATE", site.spp_installation_date)}
+      {renderDetailRow("COMMISSIONING DATE", site.commissioning_date)}
       {renderDetailRow("Remarks", site.remarks)}
       {renderDetailRow("I & C Vendor Name", site.iCVendorName)}
     </>
@@ -131,7 +130,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
   }, [navigation]);
 
   if (loading) {
-    return <ActivityIndicator size="large" />
+    return <ActivityIndicator size="large" />;
   }
 
   return (
@@ -142,8 +141,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             formType === "vendor"
               ? t("vendor_details")
               : formType === "project"
-                ? t("project_details")
-                : t("site_details")
+              ? t("project_details")
+              : t("site_details")
           }
           isBack={true}
           hasIcon={true}
@@ -153,8 +152,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
           {formType === "vendor"
             ? renderVendorDetails()
             : formType === "project"
-              ? renderProjectDetails()
-              : renderSiteDetails()}
+            ? renderProjectDetails()
+            : renderSiteDetails()}
         </ScrollView>
 
         {/* Conditionally render the Create Task and View Task buttons */}

@@ -1,6 +1,6 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
- export const BASE_URL = "https://dashandots.tech"
-//export const BASE_URL = "http://192.168.1.9:8000"
+export const BASE_URL = "https://dashandots.tech"
+// export const BASE_URL = "http://192.168.1.9:8000"
 // export const BASE_URL = "https://peachpuff-grouse-828635.hostingersite.com" //TODO: replace with production server url
 
 export const initialState = {

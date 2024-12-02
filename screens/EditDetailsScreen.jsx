@@ -70,8 +70,8 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
     formType === "project"
       ? "Edit Project"
       : formType === "vendor"
-        ? "Edit Vendor"
-        : "Edit Site";
+      ? "Edit Vendor"
+      : "Edit Site";
 
   return (
     <ContainerComponent>
@@ -80,28 +80,27 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         style={[spacing.mh2, { width: SCREEN_WIDTH - 16, paddingVertical: 6 }]}
         showsVerticalScrollIndicator={false}
       >
-
         {formType === "project" && (
           <>
             <MyTextInput
               title="Project Name"
               placeholder="Enter Project Name"
               value={formData.projectName}
-              onChangeText={(text) => handleChange("projectName", text)}
+              onChangeText={(text) => handleChange("project_name", text)}
             />
 
             <MyTextInput
               title="Work Order Number"
               placeholder="workOrderNumber"
               value={formData.workOrderNumber}
-              onChangeText={(text) => handleChange("workOrderNumber", text)}
+              onChangeText={(text) => handleChange("work_order_number", text)}
             />
 
             <MyTextInput
               title="Rate"
               placeholder=" rate"
               value={formData.rate}
-              onChangeText={(text) => handleChange(" rate", text)}
+              onChangeText={(text) => handleChange("rate", text)}
             />
 
             <TouchableOpacity onPress={() => setShowDatePicker(true)}>
@@ -129,26 +128,26 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               title="Contact Number"
               placeholder="Contact Number"
               value={formData.contactNumber}
-              onChangeText={(text) => handleChange("contactNumber", text)}
+              onChangeText={(text) => handleChange("contact_no", text)}
               keyboardType="phone-pad"
             />
             <MyTextInput
               title="GST Number"
               placeholder="GST Number"
               value={formData.gstNumber}
-              onChangeText={(text) => handleChange("gstNumber", text)}
+              onChangeText={(text) => handleChange("gst_number", text)}
             />
             <MyTextInput
               title="Contact Person"
               placeholder="Contact Person"
               value={formData.contactPerson}
-              onChangeText={(text) => handleChange("contactPerson", text)}
+              onChangeText={(text) => handleChange("contact_person", text)}
             />
             <MyTextInput
               title="Mail ID"
               placeholder="Mail ID"
               value={formData.mailId}
-              onChangeText={(text) => handleChange("mailId", text)}
+              onChangeText={(text) => handleChange("email", text)}
               keyboardType="email-address"
             />
           </>
@@ -157,47 +156,80 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
         {formType === "site" && (
           <>
             <MyTextInput
-              title="State"
-              placeholder="State"
-              value={formData.state}
-              onChangeText={(text) => handleChange("state", text)}
+              title="IC Vendor Name"
+              placeholder="IC Vendor Name"
+              value={formData.icVendorName}
+              onChangeText={(text) => handleChange("ic_vendor_name", text)}
             />
             <MyTextInput
-              title="District"
-              placeholder="District"
-              value={formData.dist}
-              onChangeText={(text) => handleChange("dist", text)}
+              title="Section Load"
+              placeholder="Section Load"
+              value={formData.sectionLoad}
+              onChangeText={(text) => handleChange("section_load", text)}
             />
             <MyTextInput
-              title="Project Serial Code"
-              placeholder="Project Serial Code"
-              value={formData.projectSerialCode}
-              onChangeText={(text) => handleChange("projectSerialCode", text)}
+              title="Meter Number"
+              placeholder="Meter Number"
+              value={formData.meterName}
+              onChangeText={(text) => handleChange("meter_number", text)}
             />
             <MyTextInput
-              title="Project Capacity"
-              placeholder="Project Capacity"
-              value={formData.projectCapacity}
-              onChangeText={(text) => handleChange("projectCapacity", text)}
+              title="Load Enhancement Status"
+              placeholder="Load Enhancement Status"
+              value={formData.loadEnhancementStatus}
+              onChangeText={(text) =>
+                handleChange("load_enhancement_status", text)
+              }
             />
             <MyTextInput
-              title="Contact No"
-              placeholder="Contact No"
-              value={formData.contactNo}
-              onChangeText={(text) => handleChange("contactNo", text)}
-              keyboardType="phone-pad"
+              title="Site Survey Status"
+              placeholder="Site Survey Status"
+              value={formData.siteSurvey}
+              onChangeText={(text) => handleChange("site_survey_status", text)}
             />
             <MyTextInput
-              title="CA Number"
-              placeholder="CA Number"
-              value={formData.cANumber}
-              onChangeText={(text) => handleChange("cANumber", text)}
+              title="Status"
+              placeholder="Status"
+              value={formData.status}
+              onChangeText={(text) => handleChange("status", text)}
             />
             <MyTextInput
-              title="Vendor Name"
-              placeholder="Vendor Name"
-              value={formData.iCVendorName}
-              onChangeText={(text) => handleChange("iCVendorName", text)}
+              title="Net Meter SR No"
+              placeholder="Net Meter SR No"
+              value={formData.netMeterSrNo}
+              onChangeText={(text) => handleChange("net_meter_sr_no", text)}
+            />
+            <MyTextInput
+              title="Solar Meter SR No"
+              placeholder="Solar Meter SR No"
+              value={formData.solarMeterSrNo}
+              onChangeText={(text) => handleChange("solar_meter_sr_no", text)}
+            />
+            <MyTextInput
+              title="Materiel Inspection Date"
+              placeholder="Materiel Inspection Date"
+              value={formData.materialInspectionDate}
+              onChangeText={(text) =>
+                handleChange("materiel_inspection_date", text)
+              }
+            />
+            <MyTextInput
+              title="SPP Installation Date"
+              placeholder="SPP Installation Date"
+              value={formData.sppInstallationDate}
+              onChangeText={(text) => handleChange("spp_installation_date", text)}
+            />
+            <MyTextInput
+              title="Commissioning Date"
+              placeholder="Commissioning Date"
+              value={formData.commissioningDate}
+              onChangeText={(text) => handleChange("commissioning_date", text)}
+            />
+            <MyTextInput
+              title="Remarks"
+              placeholder="Remarks"
+              value={formData.remarks}
+              onChangeText={(text) => handleChange("remarks", text)}
             />
           </>
         )}

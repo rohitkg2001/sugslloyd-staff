@@ -25,7 +25,7 @@ const VendorFormScreen = ({ route }) => {
   const [mailId, setMailId] = useState("");
   const { t } = useTranslation();
   const dispatch = useDispatch()
-  const { id, email } = route.params
+
 
   const handleCancel = () => {
     setName("");
@@ -57,6 +57,7 @@ const VendorFormScreen = ({ route }) => {
       <MyHeader title={t("create_vendor")} hasIcon={true} isBack={true} />
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
+        showsVerticalScrollIndicator={false}
       >
         <MyTextInput
           title={t("name")}
