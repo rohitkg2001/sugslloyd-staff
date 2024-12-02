@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
@@ -14,6 +14,7 @@ import Button from "../components/buttons/Button";
 import { ICON_MEDIUM, LIGHT, styles, spacing, SCREEN_WIDTH } from "../styles";
 import InventoryDetailsModal from "../components/InventoryDetailsModal";
 import Filter from "../components/Filter";
+import { useSelector } from "react-redux";
 
 export default function InventoryScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
@@ -21,6 +22,7 @@ export default function InventoryScreen({ navigation }) {
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const { t } = useTranslation();
+  const { inventory } = useSelector(state => state.inventory)
 
   const viewItem = (id) => {
     setVisible(true);
@@ -31,11 +33,16 @@ export default function InventoryScreen({ navigation }) {
     setSelectedItem(itemDetails);
   };
 
+  useEffect(() => {
+    console.log(inventory)
+  }, [inventory])
+
+
   return (
     <ContainerComponent>
       <MyHeader title={t("inventory_title")} hasIcon={true} isBack={true} />
       <MyFlatList
-        data={inventoryData}
+        data={inventory}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={() => (
           <View

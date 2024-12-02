@@ -7,16 +7,26 @@ import { H5 } from "../components/text";
 import { DANGER_COLOR, ICON_MEDIUM } from "../styles/constant";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getAllItems } from "../redux/actions/inventoryAction";
+import { getAllTasks } from "../redux/actions/taskActions";
 
 export default function SettingsScreen({ navigation }) {
   const { t } = useTranslation();
   const { staff } = useSelector(state => state)
+  const dispatch = useDispatch()
 
   const handleLogoutPress = () => {
     navigation.navigate("loginScreen");
     // Insert logout logic
   };
+
+  useEffect(() => {
+    dispatch(getAllItems())
+    dispatch(getAllTasks())
+  }, [])
+
 
 
   return (

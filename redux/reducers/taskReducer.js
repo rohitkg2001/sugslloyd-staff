@@ -1,7 +1,5 @@
 import { UPDATE_TASK, VIEW_TASK, INITIALIZE_TASKS } from "../constant";
 
-import { taskslistdata } from "../../utils/faker";
-
 const initialState = {
   tasks: [],
   currentTask: null,
@@ -12,7 +10,7 @@ export const taskReducer = (state = initialState, action) => {
     case INITIALIZE_TASKS:
       return {
         ...state,
-        tasks: taskslistdata,
+        tasks: action.payload,
       };
     case UPDATE_TASK:
       return {

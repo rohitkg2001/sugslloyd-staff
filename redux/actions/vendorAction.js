@@ -7,6 +7,7 @@ export const getAllVendors = () => async (dispatch) => {
   const { vendors } = await response.json()
   dispatch({ type: GET_ALL_VENDORS, payload: vendors })
 }
+
 export const getVendorCounts = async () => {
   const response = await fetch(`${BASE_URL}/api/vendor`, {
     method: 'GET'
@@ -43,8 +44,4 @@ export const updateVendor = (vendor) => ({
 export const searchVendor = (searchText) => ({
   type: SEARCH_VENDOR,
   payload: searchText
-});
-
-export const countVendor = () => ({
-  type: COUNT_VENDOR
 });

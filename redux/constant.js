@@ -1,6 +1,6 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
-export const BASE_URL = "https://dashandots.tech"
-// export const BASE_URL = "http://192.168.1.9:8000"
+// export const BASE_URL = "https://dashandots.tech"
+export const BASE_URL = "http://192.168.1.9:8000"
 // export const BASE_URL = "https://peachpuff-grouse-828635.hostingersite.com" //TODO: replace with production server url
 
 export const initialState = {
@@ -25,6 +25,7 @@ export const UPDATE_SITE = "UPDATE_SITE";
 export const ADD_SITE = "ADD_SITE";
 export const SEARCH_SITE = "SEARCH_SITE";
 
+export const GET_ALL_INVENTORY = "GET_ALL_INVENTORY";
 export const VIEW_INVENTORY = "VIEW_INVENTORY";
 export const UPDATE_INVENTORY = "UPDATE_INVENTORY";
 export const SEARCH_INVENTORY = "SEARCH_INVENTORY";

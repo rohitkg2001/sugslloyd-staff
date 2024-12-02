@@ -8,7 +8,10 @@ import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
-import { viewTask, initializeTasks } from "../redux/actions/taskActions";
+import {
+  viewTask,
+  // initializeTasks
+} from "../redux/actions/taskActions";
 import Button from "../components/buttons/Button";
 import Filter from "../components/Filter";
 import {
@@ -26,8 +29,8 @@ export default function TaskListScreen({ navigation }) {
   const tasks = useSelector((state) => state.tasks?.tasks || []);
 
   useEffect(() => {
-    dispatch(initializeTasks());
-  }, [dispatch]);
+    console.log(tasks)
+  }, [tasks]);
 
   const handleViewTask = (task) => {
     dispatch(viewTask(task.id));
@@ -48,9 +51,8 @@ export default function TaskListScreen({ navigation }) {
             {["taskName", "deadline", "status", "startDate", "endDate"].map(
               (field) => (
                 <P key={field} style={{ fontSize: 14, color: "#020409" }}>
-                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${
-                    item[field]
-                  }`}
+                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${item[field]
+                    }`}
                 </P>
               )
             )}
