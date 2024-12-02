@@ -188,7 +188,7 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               title="Address"
               placeholder="Address"
               value={formData.address}
-              onChangeText={(text) => handleChange("gstNumber", text)}
+              onChangeText={(text) => handleChange("address", text)}
             />
             <MyTextInput
               title="Account Name"
