@@ -87,21 +87,21 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               title="Project Name"
               placeholder="Enter Project Name"
               value={formData.projectName}
-              onChangeText={(text) => handleChange("projectName", text)}
+              onChangeText={(text) => handleChange("project_name", text)}
             />
 
             <MyTextInput
               title="Work Order Number"
               placeholder="workOrderNumber"
               value={formData.workOrderNumber}
-              onChangeText={(text) => handleChange("workOrderNumber", text)}
+              onChangeText={(text) => handleChange("work_order_number", text)}
             />
 
             <MyTextInput
               title="Rate"
               placeholder=" rate"
               value={formData.rate}
-              onChangeText={(text) => handleChange(" rate", text)}
+              onChangeText={(text) => handleChange("rate", text)}
             />
 
             <TouchableOpacity onPress={() => setShowDatePicker(true)}>
@@ -129,7 +129,7 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               title="Contact Number"
               placeholder="Contact Number"
               value={formData.contactNumber}
-              onChangeText={(text) => handleChange("contactNumber", text)}
+              onChangeText={(text) => handleChange("contactNo", text)}
               keyboardType="phone-pad"
             />
             <MyTextInput
@@ -148,7 +148,7 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               title="Mail ID"
               placeholder="Mail ID"
               value={formData.mailId}
-              onChangeText={(text) => handleChange("mailId", text)}
+              onChangeText={(text) => handleChange("email", text)}
               keyboardType="email-address"
             />
           </>
