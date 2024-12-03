@@ -50,11 +50,14 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("Site Survey Status", site.site_survey_status)}
       {renderDetailRow("Net Meter Sr No", site.net_meter_sr_no)}
       {renderDetailRow("Solar Meter Sr NO", site.solar_meter_sr_no)}
-      {renderDetailRow("Material Inspection Date", site.material_inspection_date  )}
+      {renderDetailRow(
+        "Material Inspection Date",
+        site.material_inspection_date
+      )}
       {renderDetailRow("SPP INSTALLATION DATE", site.spp_installation_date)}
       {renderDetailRow("COMMISSIONING DATE", site.commissioning_date)}
       {renderDetailRow("Remarks", site.remarks)}
-      {renderDetailRow("I & C Vendor Name", site.iCVendorName)}
+      {renderDetailRow("I & C Vendor Name", site.ic_vendor_name)}
     </>
   );
 
