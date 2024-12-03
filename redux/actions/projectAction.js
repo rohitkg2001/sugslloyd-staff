@@ -13,6 +13,7 @@ import {
 export const fetchProjects = () => async (dispatch) => {
   const response = await fetch(`${BASE_URL}/api/projects`)
   const data = await response.json()
+  console.log(data)
   dispatch({
     type: FETCH_PROJECTS,
     payload: data,

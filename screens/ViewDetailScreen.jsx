@@ -91,13 +91,13 @@ const ViewDetailScreen = ({ route, navigation }) => {
     <>
       {renderDetailRow("Vendor Name", site.name)}
       {renderDetailRow("Mail ID", site.email)}
-      {renderDetailRow("Contact Number", site.contactNumber)}
-      {renderDetailRow("Aadhar Number", site.aadharNumber)}
-      {renderDetailRow("Account Name", site.accountName)}
+      {renderDetailRow("Contact Number", site.contact_number)}
+      {renderDetailRow("Aadhar Number", site.aadhar_number)}
+      {renderDetailRow("Account Name", site.account_name)}
       {renderDetailRow("Ifsc", site.ifsc)}
-      {renderDetailRow("Bank Name", site.bankName)}
-      {renderDetailRow("Gst Number", site.gstNumber)}
-      {renderDetailRow("Pan Number", site.panNumber)}
+      {renderDetailRow("Bank Name", site.bank_name)}
+      {renderDetailRow("Gst Number", site.gst_number)}
+      {renderDetailRow("Pan Number", site.pan_number)}
       {renderDetailRow("Status", site.status)}
 
       <View

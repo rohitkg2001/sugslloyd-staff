@@ -1,23 +1,24 @@
-import { VIEW_INVENTORY, UPDATE_INVENTORY, SEARCH_INVENTORY, COUNT_INVENTORY } from '../constant';
-import { inventoryData } from "../../utils/faker";
+import { VIEW_INVENTORY, UPDATE_INVENTORY, SEARCH_INVENTORY, COUNT_INVENTORY, GET_ALL_INVENTORY } from '../constant';
+
 
 const initialState = {
-  inventory: inventoryData,
-  filteredInventory: inventoryData,
+  inventory: [],
   currentItem: null,
   searchText: '',
-  count: inventoryData.length
+  count: 0
 };
 
 export const inventoryReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_ALL_INVENTORY:
+      return { ...state, inventory: action.payload };
     case VIEW_INVENTORY:
       return {
         ...state,
         currentItem: action.payload
       };
     case UPDATE_INVENTORY:
-      const updatedInventory = state.inventory.map(item => 
+      const updatedInventory = state.inventory.map(item =>
         item.id === action.payload.id ? action.payload : item
       );
       return {

@@ -1,11 +1,9 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
-export const BASE_URL = "https://dashandots.tech"
-// export const BASE_URL = "http://192.168.1.9:8000"
+export const BASE_URL = "https://dashandots.tech";
+//export const BASE_URL = "http://192.168.1.9:8000"
 // export const BASE_URL = "https://peachpuff-grouse-828635.hostingersite.com" //TODO: replace with production server url
 
-export const initialState = {
-
-};
+export const initialState = {};
 
 export const FETCH_PROJECTS = "FETCH_PROJECTS";
 export const SEARCH_PROJECTS = "SEARCH_PROJECTS";
@@ -25,6 +23,7 @@ export const UPDATE_SITE = "UPDATE_SITE";
 export const ADD_SITE = "ADD_SITE";
 export const SEARCH_SITE = "SEARCH_SITE";
 
+export const GET_ALL_INVENTORY = "GET_ALL_INVENTORY";
 export const VIEW_INVENTORY = "VIEW_INVENTORY";
 export const UPDATE_INVENTORY = "UPDATE_INVENTORY";
 export const SEARCH_INVENTORY = "SEARCH_INVENTORY";
@@ -36,4 +35,4 @@ export const VIEW_VENDOR = "VIEW_VENDOR";
 export const UPDATE_VENDOR = "UPDATE_VENDOR";
 export const SEARCH_VENDOR = "SEARCH_VENDOR";
 export const COUNT_VENDOR = "COUNT_VENDOR";
-export const GET_ALL_VENDORS = "GET_ALL_VENDORS"
+export const GET_ALL_VENDORS = "GET_ALL_VENDORS";

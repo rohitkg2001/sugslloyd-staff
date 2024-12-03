@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import moment from "moment";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -24,6 +24,7 @@ import {
 } from "../styles";
 import InventoryDetailsModal from "../components/InventoryDetailsModal";
 import Filter from "../components/Filter";
+import { useSelector } from "react-redux";
 
 export default function InventoryScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
@@ -34,6 +35,7 @@ export default function InventoryScreen({ navigation }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { t } = useTranslation();
+  const { inventory } = useSelector(state => state.inventory)
 
   const handleDateChange = (event, date) => {
     if (event.type === "set") {
@@ -56,12 +58,17 @@ export default function InventoryScreen({ navigation }) {
     setSelectedItem(itemDetails);
   };
 
+  useEffect(() => {
+    console.log(inventory)
+  }, [inventory])
+
+
   return (
     <ContainerComponent>
       <MyHeader title={t("inventory_title")} hasIcon={true} isBack={true} />
 
       <MyFlatList
-        data={inventoryData}
+        data={inventory}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={() => (
           <View>

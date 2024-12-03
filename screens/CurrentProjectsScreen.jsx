@@ -22,7 +22,6 @@ export default function CurrentProjectsScreen({ navigation }) {
 
   return (
     <ContainerComponent>
-
       <MyFlatList
         data={filteredProjects}
         keyExtractor={(item) => item.id.toString()}

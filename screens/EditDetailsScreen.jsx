@@ -160,7 +160,7 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               title="Contact Person"
               placeholder="Contact Person"
               value={formData.contactPerson}
-              onChangeText={(text) => handleChange("contactPerson", text)}
+              onChangeText={(text) => handleChange("contact_person", text)}
             />
 
             <MyTextInput
@@ -194,13 +194,13 @@ const EditDetailsScreen = ({ route, navigation, onSave }) => {
               title="Account Name"
               placeholder="Account Name"
               value={formData.accountName}
-              onChangeText={(text) => handleChange("accountName", text)}
+              onChangeText={(text) => handleChange("account_name", text)}
             />
             <MyTextInput
               title="Account Number"
               placeholder="Account Number"
               value={formData.accountNumber}
-              onChangeText={(text) => handleChange("accountNumber", text)}
+              onChangeText={(text) => handleChange("account_number", text)}
             />
             <MyTextInput
               title="IFSC"
