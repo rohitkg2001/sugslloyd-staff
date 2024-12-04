@@ -9,11 +9,10 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { editVendor } from "../redux/actions/vendorAction";
 
-const VendorFormScreen = ( { route } ) =>
-{
-  const [ vendorName, setVendorName ] = useState( "" );
-  const [ firstName, setFirstName ] = useState( "" );
-  const [ lastName, setLastName ] = useState( "" );
+const VendorFormScreen = ({ route }) => {
+  const [vendorName, setVendorName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [contactNumber, setContactNumber] = useState("");
@@ -25,18 +24,16 @@ const VendorFormScreen = ( { route } ) =>
   const [bankName, setBankName] = useState("");
   const [branch, SetBranch] = useState("");
   const [pan, setPan] = useState("");
-  const [ mailId, setMailId ] = useState( "" );
-  const [ password, setPassword ] = useState( "" );
-  const [ confirmPassword, setConfirmPassword ] = useState( "" );
+  const [mailId, setMailId] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { t } = useTranslation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-
-  const handleCancel = () =>
-  {
-    setVendorName( "" );
-    setFirstName( "" );
-    setLastName( "" );
+  const handleCancel = () => {
+    setVendorName("");
+    setFirstName("");
+    setLastName("");
     setGstNumber("");
     setContactPerson("");
     setContactNumber("");
@@ -49,17 +46,17 @@ const VendorFormScreen = ( { route } ) =>
     setIfsc("");
     setBankName("");
     SetBranch("");
-    setPan( "" );
-    setPassword( "" );
-    setConfirmPassword( "" );
+    setPan("");
+    setPassword("");
+    setConfirmPassword("");
   };
 
   const handleCreate = async () => {
     const data = {
       email: email,
       name: name,
-    }
-    await dispatch(editVendor(data, id))
+    };
+    await dispatch(editVendor(data, id));
   };
 
   return (
@@ -102,21 +99,6 @@ const VendorFormScreen = ( { route } ) =>
           placeholder="Enter Contact Number"
           keyboardType="numeric"
         />
-
-        <MyTextInput
-          title={t("vendor_aadhar_number")}
-          onChangeText={setAadharNumber}
-          placeholder="Enter Aadhar Number"
-        />
-
-        <MyTextInput
-          title="Mail ID"
-          value={mailId}
-          onChangeText={setMailId}
-          placeholder="Enter Mail ID"
-          keyboardType="email-address"
-        />
-
         <MyTextInput
           title={t("vendor_address")}
           value={address}
@@ -124,6 +106,24 @@ const VendorFormScreen = ( { route } ) =>
           placeholder="Enter Address"
         />
 
+        <MyTextInput
+          title={t("vendor_aadhar_number")}
+          onChangeText={setAadharNumber}
+          placeholder="Enter Aadhar Number"
+        />
+        <MyTextInput
+          title={t("gst_number")}
+          value={gstNumber}
+          onChangeText={setGstNumber}
+          placeholder="Enter GST Number"
+        />
+
+        <MyTextInput
+          title={t("pan_number")}
+          value={pan}
+          onChangeText={setPan}
+          placeholder="Enter PAN Number"
+        />
         <MyTextInput
           title={t("vendor_account_name")}
           value={accountName}
@@ -151,26 +151,21 @@ const VendorFormScreen = ( { route } ) =>
           onChangeText={setBankName}
           placeholder="Enter Bank Name"
         />
-
         <MyTextInput
           title={t("branch")}
           value={branch}
           onChangeText={SetBranch}
           placeholder="Enter Branch"
         />
-        <MyTextInput
-          title={t("gst_number")}
-          value={gstNumber}
-          onChangeText={setGstNumber}
-          placeholder="Enter GST Number"
-        />
 
         <MyTextInput
-          title={t("pan_number")}
-          value={pan}
-          onChangeText={setPan}
-          placeholder="Enter PAN Number"
+          title="Mail ID"
+          value={mailId}
+          onChangeText={setMailId}
+          placeholder="Enter Mail ID"
+          keyboardType="email-address"
         />
+
         <MyTextInput
           title={t("password")}
           value={password}

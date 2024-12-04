@@ -108,7 +108,7 @@ export const menuItems = [
   },
   {
     label: "report_title",
-    page: "",
+    page: "reportScreen",
     icon: "pie-chart-outline",
   },
   {
@@ -120,11 +120,11 @@ export const menuItems = [
 // Static
 
 export const internal = [
-  {
-    label: "notification_title",
-    page: "notificationScreen",
-    icon: "notifications-outline",
-  },
+  // {
+  //   label: "notification_title",
+  //   page: "notificationScreen",
+  //   icon: "notifications-outline",
+  // },
   {
     label: "privacy_policy_title",
     page: "privacyPolicy",

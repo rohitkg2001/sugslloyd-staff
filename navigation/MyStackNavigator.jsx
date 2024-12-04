@@ -21,6 +21,8 @@ import VendorFormScreen from "../screens/VendorFormScreen";
 import TaskListScreen from "../screens/TaskListScreen";
 import TaskListFormScreen from "../screens/TaskListFormScreen";
 import InventoryFormScreen from "../screens/InventoryFormScreen";
+import StockApprovalScreen from "../screens/StockApprovalScreen";
+import ReportScreen from "../screens/ReportScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
@@ -59,6 +61,11 @@ export default function MyStackNavigator() {
         name="inventoryFormScreen"
         component={InventoryFormScreen}
       />
+      <Stack.Screen
+        name="stockApprovalScreen"
+        component={StockApprovalScreen}
+      />
+      <Stack.Screen name="reportScreen" component={ReportScreen} />
     </Stack.Navigator>
   );
 }

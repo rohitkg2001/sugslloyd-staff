@@ -27,7 +27,6 @@ import {
   vendorCardForDashboard,
   ProjectcardsForDashboard,
   projects,
-
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -44,30 +43,29 @@ export default function DashboardScreen({ navigation }) {
   const [greeting, setGreeting] = useState("Good morning");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [projectCounts, setProjectCounts] = useState([])
-  const [totalVendors, setTotalVendors] = useState(0)
-  const [activeVendors, setActiveVendors] = useState(0)
-  const [inActiveVendors, setInActiveVendors] = useState(0)
+  const [projectCounts, setProjectCounts] = useState([]);
+  const [totalVendors, setTotalVendors] = useState(0);
+  const [activeVendors, setActiveVendors] = useState(0);
+  const [inActiveVendors, setInActiveVendors] = useState(0);
   const { firstName } = useSelector((state) => state.staff);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const getCounts = async () => {
-    const { totalVendors, activeVendors, inactiveVendors } = await getVendorCounts()
-    const projects = await getProjectCounts()
-    setProjectCounts(projects)
-    setActiveVendors(activeVendors)
-    setTotalVendors(totalVendors)
-    setInActiveVendors(inactiveVendors)
-
-  }
+    const { totalVendors, activeVendors, inactiveVendors } =
+      await getVendorCounts();
+    const projects = await getProjectCounts();
+    setProjectCounts(projects);
+    setActiveVendors(activeVendors);
+    setTotalVendors(totalVendors);
+    setInActiveVendors(inactiveVendors);
+  };
 
   useEffect(() => {
     setGreeting(greet());
-    dispatch(getAllVendors())
-    getCounts()
+    dispatch(getAllVendors());
+    getCounts();
   }, [projectCounts]);
-
 
   const handleDateChange = (event, date) => {
     if (event.type === "set") {
@@ -106,6 +104,7 @@ export default function DashboardScreen({ navigation }) {
             spacing.br5,
             { position: "relative" },
           ]}
+          onPress={() => navigation.navigate("notificationScreen")}
         >
           <Icon name="notifications-outline" size={ICON_MEDIUM} color={DARK} />
           <View
