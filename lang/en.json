@@ -36,6 +36,7 @@
     "site_title": "Site Name",
     "total_sites": "Total Sites",
     "completed_sites": "Completed Sites",
+    "completed" : "Completed",
     "pending_sites": "Pending Sites",
     "in_progress_sites": "Sites in Progress",
     "site_details": "Site Details",
