@@ -48,6 +48,7 @@ export default function DashboardScreen({ navigation }) {
   const [activeVendors, setActiveVendors] = useState(0);
   const [inActiveVendors, setInActiveVendors] = useState(0);
   const { firstName } = useSelector((state) => state.staff);
+  const [selectedProject, setSelectedProject] = useState(null);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -175,7 +176,6 @@ export default function DashboardScreen({ navigation }) {
             </H5>
           </Button>
         </View>
-
         <MyFlatList
           data={projectCounts}
           renderItem={({ item }) => (
@@ -192,7 +192,7 @@ export default function DashboardScreen({ navigation }) {
           contentContainerStyle={spacing.mv4}
         />
 
-        {/* //Project OverView  */}
+        {/* Project Overview */}
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -205,29 +205,32 @@ export default function DashboardScreen({ navigation }) {
             </H5>
           </View>
           <View style={[spacing.bbw05, spacing.mv2]} />
-          <View
-            style={[
-              styles.row,
-              { justifyContent: "space-between", paddingVertical: 10 },
-            ]}
-          >
-            <View style={{ alignItems: "center", textAlign: "center" }}>
-              <P style={typography.textBold}>{t("project")}</P>
-              <P style={(typography.font20, spacing.m2)}>Project 01B</P>
-            </View>
+          <View>
+            {projectCounts.map((project, index) => (
+              <View
+                key={project.id}
+                style={[
+                  styles.row,
+                  { justifyContent: "space-between", paddingVertical: 10 },
+                ]}
+              >
+                <View style={{ alignItems: "center", textAlign: "center" }}>
+                  <P style={typography.textBold}>{t("project")}</P>
+                  <P style={(typography.font20, spacing.m2)}>{project.count}</P>
+                </View>
 
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("total_sites")}</P>
-              <P style={(typography.font20, spacing.m2)}>2</P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("completed_sites")}</P>
-              <P style={(typography.font20, spacing.m2)}>1</P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("pending_sites")}</P>
-              <P style={(typography.font20, spacing.m2)}>1</P>
-            </View>
+                <View style={{ alignItems: "center" }}>
+                  <P style={typography.textBold}>{t("total_sites")}</P>
+                </View>
+
+                <View style={{ alignItems: "center" }}>
+                  <P style={typography.textBold}>{t("Completed")}</P>
+                </View>
+                <View style={{ alignItems: "center" }}>
+                  <P style={typography.textBold}>{t("Pending")}</P>
+                </View>
+              </View>
+            ))}
           </View>
         </CardFullWidth>
 
