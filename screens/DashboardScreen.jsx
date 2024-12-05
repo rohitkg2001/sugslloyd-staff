@@ -34,7 +34,10 @@ import { useTranslation } from "react-i18next";
 import Filter from "../components/Filter";
 import { getAllVendors, getVendorCounts } from "../redux/actions/vendorAction";
 import { useDispatch, useSelector } from "react-redux";
-import { getProjectCounts } from "../redux/actions/projectAction";
+import {
+  fetchProjects,
+  getProjectCounts,
+} from "../redux/actions/projectAction";
 
 export default function DashboardScreen({ navigation }) {
   const [today, setToday] = useState(moment().format("DD MMM YYYY"));
@@ -48,7 +51,9 @@ export default function DashboardScreen({ navigation }) {
   const [activeVendors, setActiveVendors] = useState(0);
   const [inActiveVendors, setInActiveVendors] = useState(0);
   const { firstName } = useSelector((state) => state.staff);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const projectsArray = useSelector((state) => state.project?.projects);
+  const [projectsArr, setProjectsArr] = useState([]);
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -56,6 +61,7 @@ export default function DashboardScreen({ navigation }) {
     const { totalVendors, activeVendors, inactiveVendors } =
       await getVendorCounts();
     const projects = await getProjectCounts();
+
     setProjectCounts(projects);
     setActiveVendors(activeVendors);
     setTotalVendors(totalVendors);
@@ -65,8 +71,13 @@ export default function DashboardScreen({ navigation }) {
   useEffect(() => {
     setGreeting(greet());
     dispatch(getAllVendors());
+    dispatch(fetchProjects());
     getCounts();
   }, [projectCounts]);
+
+  useEffect(() => {
+    setProjectsArr(projectsArray);
+  }, [projectsArray]);
 
   const handleDateChange = (event, date) => {
     if (event.type === "set") {
@@ -192,47 +203,7 @@ export default function DashboardScreen({ navigation }) {
           contentContainerStyle={spacing.mv4}
         />
 
-        {/* Project Overview */}
-        <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Icon
-              name="calendar-clear"
-              size={ICON_LARGE}
-              color={PRIMARY_COLOR}
-            />
-            <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              {t("project_overview")}
-            </H5>
-          </View>
-          <View style={[spacing.bbw05, spacing.mv2]} />
-          <View>
-            {projectCounts.map((project, index) => (
-              <View
-                key={project.id}
-                style={[
-                  styles.row,
-                  { justifyContent: "space-between", paddingVertical: 10 },
-                ]}
-              >
-                <View style={{ alignItems: "center", textAlign: "center" }}>
-                  <P style={typography.textBold}>{t("project")}</P>
-                  <P style={(typography.font20, spacing.m2)}>{project.count}</P>
-                </View>
-
-                <View style={{ alignItems: "center" }}>
-                  <P style={typography.textBold}>{t("total_sites")}</P>
-                </View>
-
-                <View style={{ alignItems: "center" }}>
-                  <P style={typography.textBold}>{t("Completed")}</P>
-                </View>
-                <View style={{ alignItems: "center" }}>
-                  <P style={typography.textBold}>{t("Pending")}</P>
-                </View>
-              </View>
-            ))}
-          </View>
-        </CardFullWidth>
+        {/* //Project OverView  */}
 
         <MyFlatList
           data={siteCardsForDashboard}
@@ -281,28 +252,6 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
 
-        {/* <MyFlatList
-          data={vendorCardForDashboard}
-          renderItem={({ item, index }) => {
-            return (
-              <StatCard
-                key={item.id}
-                backgroundColor={item.backgroundColor}
-                tasks={item.count}
-                status={t(item.title)}
-                onPress={() =>
-                  navigation.navigate(item.page, {
-                    pageTitle: item.title,
-                    data: item.data,
-                  })
-                }
-              />
-            );
-          }}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
-        /> */}
-        {/* //Project OverView  */}
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -339,6 +288,103 @@ export default function DashboardScreen({ navigation }) {
               </P>
             </View>
           </View>
+        </CardFullWidth>
+
+        {/* <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="calendar-clear"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>
+              {t("project_overview")}
+            </H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv2]} />
+          <View>
+            <View style={styles.row}>
+              <P style={typography.textBold}>{t("project")}</P>
+              <P style={typography.textBold}>{t("total_sites")}</P>
+              <P style={typography.textBold}>{t("Completed")}</P>
+              <P style={typography.textBold}>{t("Pending")}</P>
+            </View>
+            {projectsArr.map((project, index) => (
+              <View
+                key={project.id}
+                style={[
+                  styles.row,
+                  { justifyContent: "space-between", paddingVertical: 10 },
+                ]}
+              >
+                <View style={{ alignItems: "center", textAlign: "center" }}>
+                  <P style={(typography.font20, spacing.m2)}>
+                    {project.project_name}
+                  </P>
+                </View>
+
+                <View style={{ alignItems: "flex-start" }}>
+                  <Span>0</Span>
+                </View>
+
+                <View style={{ alignItems: "flex-start" }}>
+                  <Span>0</Span>
+                </View>
+                <View style={{ alignItems: "flex-start" }}>
+                  <Span>0</Span>
+                </View>
+              </View>
+            ))}
+          </View>
+        </CardFullWidth> */}
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="calendar-clear"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 140 }]}>
+              {t("project_overview")}
+            </H5>
+          </View>
+
+          <View style={[spacing.bbw05, spacing.mv2]} />
+
+          {/* Table Header */}
+          <View style={[styles.row, spacing.pv2]}>
+            <P style={typography.textBold}>{t("project")}</P>
+            <P style={typography.textBold}>{t("total_sites")}</P>
+            <P style={typography.textBold}>{t("Completed")}</P>
+            <P style={typography.textBold}>{t("Pending")}</P>
+          </View>
+
+          <View style={[spacing.bbw05, spacing.mv1]} />
+
+          {projectsArr.map((project) => (
+            <View key={project.id}>
+              <View style={[styles.row, spacing.pv2]}>
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.project_name}
+                </P>
+
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.total_sites || 0}
+                </P>
+
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.completed_sites || 0}
+                </P>
+
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.pending_sites || 0}
+                </P>
+              </View>
+
+              <View style={[spacing.bbw05, spacing.mv1]} />
+            </View>
+          ))}
         </CardFullWidth>
       </ScrollView>
       {showDatePicker && (
