@@ -1,25 +1,35 @@
 import { View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { H5 } from "../text";
-import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, spacing, styles } from "../../styles";
+import {
+  PRIMARY_COLOR,
+  PRIMARY_COLOR_TRANSPARENT,
+  spacing,
+  styles,
+} from "../../styles";
 
 export default function MyPickerInput({
   title,
   value,
   onChange,
   options = [],
-  enabled
+  enabled,
 }) {
   return (
     <View>
       <H5>{title}</H5>
-      <View style={[spacing.ph1, {
-        borderColor: PRIMARY_COLOR,
-        backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-        borderWidth: 1,
-        borderRadius: 6,
-        position: "relative", // Ensures layout control
-      }]}>
+      <View
+        style={[
+          spacing.ph1,
+          {
+            borderColor: PRIMARY_COLOR,
+            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+            borderWidth: 1,
+            borderRadius: 6,
+            position: "relative", // Ensures layout control
+          },
+        ]}
+      >
         <Picker
           selectedValue={value}
           style={[styles.textInputField, { height: 52 }]}
