@@ -6,7 +6,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import { greet } from "../redux/actions/staffActions";
 import MyFlatList from "../components/utility/MyFlatList";
-import { H4, H5, H6, P, Span } from "../components/text";
+import { H4, H5, P, Span } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
 import {
@@ -169,6 +169,7 @@ export default function DashboardScreen({ navigation }) {
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
         </View>
+
         <View
           style={[
             styles.row,
@@ -203,8 +204,6 @@ export default function DashboardScreen({ navigation }) {
           contentContainerStyle={spacing.mv4}
         />
 
-        {/* //Project OverView  */}
-
         <MyFlatList
           data={siteCardsForDashboard}
           renderItem={({ item, index }) => {
@@ -228,7 +227,7 @@ export default function DashboardScreen({ navigation }) {
         />
 
         <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
+          <View style={[styles.row, { alignItems: "center" }]}>
             <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
             <H5 style={[typography.textBold, { marginRight: 130 }]}>
               {t("all_task_overview")}
@@ -242,11 +241,15 @@ export default function DashboardScreen({ navigation }) {
             ]}
           >
             <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("to_do")}</P>
+              <P style={typography.textBold}>{t("installation")}</P>
               <P style={spacing.ml2}>2</P>
             </View>
-            <View style={{ alignItems: "center", marginRight: 140 }}>
-              <P style={typography.textBold}>{t("done")}</P>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("rms_status")}</P>
+              <P style={spacing.ml2}>3</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("final_inspection")}</P>
               <P style={spacing.ml2}>3</P>
             </View>
           </View>
@@ -367,6 +370,7 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
       </ScrollView>
+
       {showDatePicker && (
         <DateTimePicker
           value={selectedDate}
