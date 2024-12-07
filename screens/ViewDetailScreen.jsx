@@ -17,6 +17,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("Sites");
   const { currentProject } = useSelector((state) => state.project);
+
   useEffect(() => {
     if (currentProject) {
       setProject(currentProject);
@@ -165,8 +166,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
             formType === "vendor"
               ? t("vendor_details")
               : formType === "project"
-              ? t("project_details")
-              : t("site_details")
+                ? t("project_details")
+                : t("site_details")
           }
           isBack={true}
           hasIcon={true}
@@ -176,8 +177,8 @@ const ViewDetailScreen = ({ route, navigation }) => {
           {formType === "vendor"
             ? renderVendorDetails()
             : formType === "project"
-            ? renderProjectDetails()
-            : renderSiteDetails()}
+              ? renderProjectDetails()
+              : renderSiteDetails()}
         </ScrollView>
       </View>
     </ContainerComponent>
