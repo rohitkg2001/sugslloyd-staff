@@ -27,6 +27,7 @@ import {
   vendorCardForDashboard,
   ProjectcardsForDashboard,
   projects,
+  totalsitesData,
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -169,7 +170,6 @@ export default function DashboardScreen({ navigation }) {
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
         </View>
-
         <View
           style={[
             styles.row,
@@ -203,96 +203,6 @@ export default function DashboardScreen({ navigation }) {
           numColumns={2}
           contentContainerStyle={spacing.mv4}
         />
-
-        <MyFlatList
-          data={siteCardsForDashboard}
-          renderItem={({ item, index }) => {
-            return (
-              <StatCard
-                key={item.id}
-                backgroundColor={item.backgroundColor}
-                tasks={item.count}
-                status={t(item.name)}
-                onPress={() =>
-                  navigation.navigate(item.page, {
-                    pageTitle: item.name,
-                    data: item.data,
-                  })
-                }
-              />
-            );
-          }}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
-        />
-
-        <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
-            <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              {t("all_task_overview")}
-            </H5>
-          </View>
-          <View style={[spacing.bbw05, spacing.mv1]} />
-          <View
-            style={[
-              styles.row,
-              { justifyContent: "space-between", paddingVertical: 10 },
-            ]}
-          >
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("installation")}</P>
-              <P style={spacing.ml2}>2</P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("rms_status")}</P>
-              <P style={spacing.ml2}>3</P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("final_inspection")}</P>
-              <P style={spacing.ml2}>3</P>
-            </View>
-          </View>
-        </CardFullWidth>
-
-        <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Icon
-              name="person-circle"
-              size={ICON_LARGE}
-              color={PRIMARY_COLOR}
-            />
-            <H5 style={[typography.textBold, { marginRight: 120 }]}>Vendors</H5>
-          </View>
-          <View style={[spacing.bbw05, spacing.mv2]} />
-          <View
-            style={[
-              styles.row,
-              { justifyContent: "space-between", paddingVertical: 10 },
-            ]}
-          >
-            <View style={{ alignItems: "center", textAlign: "center" }}>
-              <P style={typography.textBold}>Total Vendors</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>
-                {totalVendors}
-              </P>
-            </View>
-
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Active</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>
-                {activeVendors}
-              </P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Inactive</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>
-                {inActiveVendors}
-              </P>
-            </View>
-          </View>
-        </CardFullWidth>
-
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -367,6 +277,94 @@ export default function DashboardScreen({ navigation }) {
                 </P>
               </View>
             ))}
+          </View>
+        </CardFullWidth>
+
+        <MyFlatList
+          data={siteCardsForDashboard}
+          renderItem={({ item, index }) => {
+            return (
+              <StatCard
+                key={item.id}
+                backgroundColor={item.backgroundColor}
+                tasks={item.count}
+                status={t(item.name)}
+                onPress={() =>
+                  navigation.navigate(item.page, {
+                    pageTitle: item.name,
+                    data: item.data,
+                  })
+                }
+              />
+            );
+          }}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+        />
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>
+              {t("all_task_overview")}
+            </H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv1]} />
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("installation")}</P>
+              <P style={spacing.ml2}>2</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("rms_status")}</P>
+              <P style={spacing.ml2}>3</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("final_inspection")}</P>
+              <P style={spacing.ml2}>3</P>
+            </View>
+          </View>
+        </CardFullWidth>
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="person-circle"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 200 }]}>Vendors</H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv2]} />
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <View style={{ alignItems: "center", textAlign: "center" }}>
+              <P style={typography.textBold}>Total Vendors</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {totalVendors}
+              </P>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Active</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {activeVendors}
+              </P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Inactive</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {inActiveVendors}
+              </P>
+            </View>
           </View>
         </CardFullWidth>
       </ScrollView>
