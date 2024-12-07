@@ -76,7 +76,7 @@ export default function DashboardScreen({ navigation }) {
   }, [projectCounts]);
 
   useEffect(() => {
-  setProjectsArr ( projectsArray);
+    setProjectsArr(projectsArray);
   }, [projectsArray]);
 
   const handleDateChange = (event, date) => {
@@ -190,7 +190,6 @@ export default function DashboardScreen({ navigation }) {
             </H5>
           </Button>
         </View>
-
         <MyFlatList
           data={projectCounts}
           renderItem={({ item }) => (
@@ -292,7 +291,7 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
 
-        <CardFullWidth backgroundColor={LIGHT}>
+        {/* <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
               name="calendar-clear"
@@ -338,6 +337,55 @@ export default function DashboardScreen({ navigation }) {
               </View>
             ))}
           </View>
+        </CardFullWidth> */}
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="calendar-clear"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 140 }]}>
+              {t("project_overview")}
+            </H5>
+          </View>
+
+          <View style={[spacing.bbw05, spacing.mv2]} />
+
+          {/* Table Header */}
+          <View style={[styles.row, spacing.pv2]}>
+            <P style={typography.textBold}>{t("project")}</P>
+            <P style={typography.textBold}>{t("total_sites")}</P>
+            <P style={typography.textBold}>{t("Completed")}</P>
+            <P style={typography.textBold}>{t("Pending")}</P>
+          </View>
+
+          <View style={[spacing.bbw05, spacing.mv1]} />
+
+          {projectsArr.map((project) => (
+            <View key={project.id}>
+              <View style={[styles.row, spacing.pv2]}>
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.project_name}
+                </P>
+
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.total_sites || 0}
+                </P>
+
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.completed_sites || 0}
+                </P>
+
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.pending_sites || 0}
+                </P>
+              </View>
+
+              <View style={[spacing.bbw05, spacing.mv1]} />
+            </View>
+          ))}
         </CardFullWidth>
 
       </ScrollView>

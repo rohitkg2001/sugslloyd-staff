@@ -15,6 +15,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const [project, setProject] = useState({});
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState("Sites");
   const { currentProject } = useSelector((state) => state.project);
   useEffect(() => {
     if (currentProject) {
@@ -69,20 +70,27 @@ const ViewDetailScreen = ({ route, navigation }) => {
       {renderDetailRow("Price", project.rate)}
       {renderDetailRow("Date", project.start_date)}
 
-      <View style={[styles.row, spacing.mv4]}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ gap: 8 }}
+      >
         <MyButton
-          title={t("create_site")}
-          onPress={() => {
-            setSiteCreated(true);
-            navigation.navigate("sitesFormScreen");
-          }}
-          color="#DC4C64"
+          title="Sites"
+          color={activeTab === "Sites" ? "#76885B" : "#CCCCCC"}
+          onPress={() => setActiveTab("Sites")}
         />
         <MyButton
-          title={t("view_site")}
-          onPress={() => navigation.navigate("totalSitesScreen")}
+          title="Inventory"
+          color={activeTab === "Inventory" ? "#76885B" : "#CCCCCC"}
+          onPress={() => setActiveTab("Inventory")}
         />
-      </View>
+        <MyButton
+          title="Tasks"
+          color={activeTab === "Tasks" ? "#76885B" : "#CCCCCC"}
+          onPress={() => setActiveTab("Tasks")}
+        />
+      </ScrollView>
     </>
   );
 
@@ -158,24 +166,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
             ? renderProjectDetails()
             : renderSiteDetails()}
         </ScrollView>
-
-        {/* Conditionally render the Create Task and View Task buttons */}
-        {formType !== "vendor" && (
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginVertical: 16,
-            }}
-          >
-            <MyButton
-              title={t("create_task")}
-              onPress={handleCreateTask}
-              color="#DC4C64"
-            />
-            <MyButton title={t("view_task")} onPress={handleViewTask} />
-          </View>
-        )}
       </View>
     </ContainerComponent>
   );
