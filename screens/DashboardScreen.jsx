@@ -94,9 +94,7 @@ export default function DashboardScreen({ navigation }) {
   };
 
   return (
-
     <ContainerComponent>
-      
       <View
         style={[
           styles.row,
@@ -229,7 +227,7 @@ export default function DashboardScreen({ navigation }) {
         />
 
         <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, spacing.mr5, { alignItems: "center" }]}>
+          <View style={[styles.row,  { alignItems: "center" }]}>
             <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
             <H5 style={[typography.textBold, { marginRight: 130 }]}>
               {t("all_task_overview")}
@@ -243,11 +241,15 @@ export default function DashboardScreen({ navigation }) {
             ]}
           >
             <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("to_do")}</P>
+              <P style={typography.textBold}>{t("installation")}</P>
               <P style={spacing.ml2}>2</P>
             </View>
-            <View style={{ alignItems: "center", marginRight: 140 }}>
-              <P style={typography.textBold}>{t("done")}</P>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("rms_status")}</P>
+              <P style={spacing.ml2}>3</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("final_inspection")}</P>
               <P style={spacing.ml2}>3</P>
             </View>
           </View>
@@ -291,54 +293,7 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
 
-        {/* <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Icon
-              name="calendar-clear"
-              size={ICON_LARGE}
-              color={PRIMARY_COLOR}
-            />
-            <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              {t("project_overview")}
-            </H5>
-          </View>
-          <View style={[spacing.bbw05, spacing.mv2]} />
-          <View>
-            <View style={styles.row}>
-              <P style={typography.textBold}>{t("project")}</P>
-              <P style={typography.textBold}>{t("total_sites")}</P>
-              <P style={typography.textBold}>{t("Completed")}</P>
-              <P style={typography.textBold}>{t("Pending")}</P>
-            </View>
-            {projectsArr.map((project, index) => (
-              <View
-                key={project.id}
-                style={[
-                  styles.row,
-                  { justifyContent: "space-between", paddingVertical: 10 },
-                ]}
-              >
-                <View style={{ alignItems: "center", textAlign: "center" }}>
-                  <P style={(typography.font20, spacing.m2)}>
-                    {project.project_name}
-                  </P>
-                </View>
-
-                <View style={{ alignItems: "flex-start" }}>
-                  <Span>0</Span>
-                </View>
-
-                <View style={{ alignItems: "flex-start" }}>
-                  <Span>0</Span>
-                </View>
-                <View style={{ alignItems: "flex-start" }}>
-                  <Span>0</Span>
-                </View>
-              </View>
-            ))}
-          </View>
-        </CardFullWidth> */}
-
+       
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -387,7 +342,6 @@ export default function DashboardScreen({ navigation }) {
             </View>
           ))}
         </CardFullWidth>
-
       </ScrollView>
 
       {showDatePicker && (
@@ -398,8 +352,7 @@ export default function DashboardScreen({ navigation }) {
           onChange={handleDateChange}
         />
       )}
-      { showBottomSheet && <Filter /> }
-      
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }
