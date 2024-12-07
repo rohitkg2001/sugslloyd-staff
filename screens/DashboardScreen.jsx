@@ -262,7 +262,7 @@ export default function DashboardScreen({ navigation }) {
               size={ICON_LARGE}
               color={PRIMARY_COLOR}
             />
-            <H5 style={[typography.textBold, { marginRight: 130 }]}>Vendors</H5>
+            <H5 style={[typography.textBold, { marginRight: 120 }]}>Vendors</H5>
           </View>
           <View style={[spacing.bbw05, spacing.mv2]} />
           <View
