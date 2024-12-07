@@ -290,54 +290,6 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
 
-        {/* <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Icon
-              name="calendar-clear"
-              size={ICON_LARGE}
-              color={PRIMARY_COLOR}
-            />
-            <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              {t("project_overview")}
-            </H5>
-          </View>
-          <View style={[spacing.bbw05, spacing.mv2]} />
-          <View>
-            <View style={styles.row}>
-              <P style={typography.textBold}>{t("project")}</P>
-              <P style={typography.textBold}>{t("total_sites")}</P>
-              <P style={typography.textBold}>{t("Completed")}</P>
-              <P style={typography.textBold}>{t("Pending")}</P>
-            </View>
-            {projectsArr.map((project, index) => (
-              <View
-                key={project.id}
-                style={[
-                  styles.row,
-                  { justifyContent: "space-between", paddingVertical: 10 },
-                ]}
-              >
-                <View style={{ alignItems: "center", textAlign: "center" }}>
-                  <P style={(typography.font20, spacing.m2)}>
-                    {project.project_name}
-                  </P>
-                </View>
-
-                <View style={{ alignItems: "flex-start" }}>
-                  <Span>0</Span>
-                </View>
-
-                <View style={{ alignItems: "flex-start" }}>
-                  <Span>0</Span>
-                </View>
-                <View style={{ alignItems: "flex-start" }}>
-                  <Span>0</Span>
-                </View>
-              </View>
-            ))}
-          </View>
-        </CardFullWidth> */}
-
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -352,39 +304,67 @@ export default function DashboardScreen({ navigation }) {
 
           <View style={[spacing.bbw05, spacing.mv2]} />
 
-          {/* Table Header */}
-          <View style={[styles.row, spacing.pv2]}>
-            <P style={typography.textBold}>{t("project")}</P>
-            <P style={typography.textBold}>{t("total_sites")}</P>
-            <P style={typography.textBold}>{t("Completed")}</P>
-            <P style={typography.textBold}>{t("Pending")}</P>
-          </View>
+          <View style={{ flexDirection: "column" }}>
+            <View
+              style={[
+                typography.textBold,
+                spacing.bbw05,
+                spacing.pv3,
+                {
+                  flexDirection: "row",
+                },
+              ]}
+            >
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("project")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("total_sites")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Completed")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Pending")}
+              </P>
+            </View>
 
-          <View style={[spacing.bbw05, spacing.mv1]} />
-
-          {projectsArr.map((project) => (
-            <View key={project.id}>
-              <View style={[styles.row, spacing.pv2]}>
-                <P style={(typography.font20, spacing.m2)}>
+            {projectsArr.map((project) => (
+              <View
+                key={project.id}
+                style={[spacing.bbw05, spacing.pv3, { flexDirection: "row" }]}
+              >
+                <P
+                  style={[typography.font16, { flex: 1, textAlign: "center" }]}
+                >
                   {project.project_name}
                 </P>
-
-                <P style={(typography.font20, spacing.m2)}>
+                <P
+                  style={[typography.font16, { flex: 1, textAlign: "center" }]}
+                >
                   {project.total_sites || 0}
                 </P>
-
-                <P style={(typography.font20, spacing.m2)}>
+                <P
+                  style={[typography.font16, { flex: 1, textAlign: "center" }]}
+                >
                   {project.completed_sites || 0}
                 </P>
-
-                <P style={(typography.font20, spacing.m2)}>
+                <P
+                  style={[typography.font16, { flex: 1, textAlign: "center" }]}
+                >
                   {project.pending_sites || 0}
                 </P>
               </View>
-
-              <View style={[spacing.bbw05, spacing.mv1]} />
-            </View>
-          ))}
+            ))}
+          </View>
         </CardFullWidth>
       </ScrollView>
       {showDatePicker && (
