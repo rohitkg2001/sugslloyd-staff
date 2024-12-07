@@ -89,10 +89,13 @@ export default function DashboardScreen({ navigation }) {
     }
   };
 
-  const showCalendar = () => {
-    setShowDatePicker(true);
-  };
+  const closeFilter = () => {
+    setShowBottomSheet(!showBottomSheet)
+  }
+  const applyFilterFromRedux = (...args) => {
+    console.log(args)
 
+  }
   return (
     <ContainerComponent>
       <View
@@ -379,7 +382,7 @@ export default function DashboardScreen({ navigation }) {
           onChange={handleDateChange}
         />
       )}
-      {showBottomSheet && <Filter />}
+      {showBottomSheet && <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />}
     </ContainerComponent>
   );
 }
