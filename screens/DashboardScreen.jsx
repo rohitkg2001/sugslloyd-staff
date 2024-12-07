@@ -94,7 +94,9 @@ export default function DashboardScreen({ navigation }) {
   };
 
   return (
+
     <ContainerComponent>
+      
       <View
         style={[
           styles.row,
@@ -169,6 +171,7 @@ export default function DashboardScreen({ navigation }) {
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
         </View>
+
         <View
           style={[
             styles.row,
@@ -203,8 +206,6 @@ export default function DashboardScreen({ navigation }) {
           numColumns={2}
           contentContainerStyle={spacing.mv4}
         />
-
-        {/* //Project OverView  */}
 
         <MyFlatList
           data={siteCardsForDashboard}
@@ -252,28 +253,6 @@ export default function DashboardScreen({ navigation }) {
             </View>
           </View>
         </CardFullWidth>
-
-        {/* <MyFlatList
-          data={vendorCardForDashboard}
-          renderItem={({ item, index }) => {
-            return (
-              <StatCard
-                key={item.id}
-                backgroundColor={item.backgroundColor}
-                tasks={item.count}
-                status={t(item.title)}
-                onPress={() =>
-                  navigation.navigate(item.page, {
-                    pageTitle: item.title,
-                    data: item.data,
-                  })
-                }
-              />
-            );
-          }}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
-        /> */}
 
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
@@ -360,7 +339,9 @@ export default function DashboardScreen({ navigation }) {
             ))}
           </View>
         </CardFullWidth>
+
       </ScrollView>
+
       {showDatePicker && (
         <DateTimePicker
           value={selectedDate}
@@ -369,7 +350,8 @@ export default function DashboardScreen({ navigation }) {
           onChange={handleDateChange}
         />
       )}
-      {showBottomSheet && <Filter />}
+      { showBottomSheet && <Filter /> }
+      
     </ContainerComponent>
   );
 }
