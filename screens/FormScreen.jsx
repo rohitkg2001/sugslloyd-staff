@@ -16,6 +16,7 @@ const FormScreen = () => {
   const [work_order_number, setWorkOrderNumber] = useState("");
   const [rate, setRate] = useState("");
   const [date, setDate] = useState(new Date());
+  const { t } = useTranslation();
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const dispatch = useDispatch();
@@ -48,7 +49,6 @@ const FormScreen = () => {
       handleCancel();
       navigation.goBack();
     }
-
   };
 
   const handleDateChange = (event, selectedDate) => {
@@ -60,14 +60,13 @@ const FormScreen = () => {
 
   return (
     <ContainerComponent>
-      <MyHeader title="Create Project " hasIcon={true} isBack={true} />
+      <MyHeader title={t("crete_project")} hasIcon={true} isBack={true} />
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: spacing.mh1,
           width: SCREEN_WIDTH - 18,
         }}
       >
-
         <MyTextInput
           title="Project Name"
           value={project_name}
@@ -83,7 +82,7 @@ const FormScreen = () => {
 
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
           <MyTextInput
-            title="Date"
+            title={t("date")}
             value={date.toLocaleDateString()}
             placeholder="Select Date"
             editable={false}
@@ -111,8 +110,12 @@ const FormScreen = () => {
             marginVertical: 16,
           }}
         >
-          <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
-          <MyButton title="Create" onPress={handleCreate} />
+          <MyButton
+            title={t("cancel")}
+            onPress={handleCancel}
+            color="#DC4C64"
+          />
+          <MyButton title={t("create")} onPress={handleCreate} />
         </View>
       </ScrollView>
     </ContainerComponent>

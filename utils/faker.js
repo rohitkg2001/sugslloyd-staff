@@ -82,9 +82,9 @@ export const SiteFields = [
 
 export const menuItems = [
   {
-    label: "inventory_title",
-    icon: "cart-outline",
-    page: "inventoryScreen",
+    label: "project_overview",
+    icon: "reader-outline",
+    page: "totalProjectsScreen",
   },
   {
     label: "site_management_title",
@@ -92,20 +92,22 @@ export const menuItems = [
     page: "totalSitesScreen",
   },
   {
-    label: "vendor_management_title",
-    icon: "people-outline",
-    page: "totalVendorsScreen",
-  },
-  {
-    label: "project_management_title",
-    icon: "reader-outline",
-    page: "totalProjectsScreen",
+    label: "inventory_title",
+    icon: "cart-outline",
+    page: "inventoryScreen",
   },
   {
     label: "task_management_title",
     icon: "grid-outline",
     page: "taskScreen",
   },
+
+  {
+    label: "vendor_management_title",
+    icon: "people-outline",
+    page: "totalVendorsScreen",
+  },
+
   {
     label: "report_title",
     page: "reportScreen",

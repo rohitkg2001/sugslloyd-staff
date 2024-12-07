@@ -64,7 +64,7 @@ export default function TaskListScreen({ navigation }) {
 
   return (
     <ContainerComponent>
-      <MyHeader title="Task List" isBack={true} hasIcon={true} />
+      <MyHeader title={t("task_list")} isBack={true} hasIcon={true} />
       <MyFlatList
         data={tasks}
         renderItem={renderListItem}

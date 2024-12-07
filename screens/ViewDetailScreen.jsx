@@ -67,7 +67,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
     <>
       {renderDetailRow("Project Name", project.project_name)}
       {renderDetailRow("Work Order Number", project.work_order_number)}
-      {renderDetailRow("Price", project.rate)}
+      {renderDetailRow("Order Value", project.rate)}
       {renderDetailRow("Date", project.start_date)}
 
       <View style={{ flex: 1, paddingVertical: 20 }}>
