@@ -24,7 +24,7 @@ import { useTranslation } from "react-i18next";
 import {
   viewVendor,
   searchVendor,
-  countVendor,
+  // countVendor,
 } from "../redux/actions/vendorAction";
 
 export default function TotalVendorsScreen({ navigation, route }) {
@@ -38,10 +38,10 @@ export default function TotalVendorsScreen({ navigation, route }) {
     data: viewVendor,
   };
 
-  useEffect(() => {
-    dispatch(countVendor());
-    console.log(vendors);
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(countVendor());
+  //   console.log(vendors);
+  // }, [dispatch]);
 
   const handleViewDetails = (item) => {
     dispatch(viewVendor(item));
@@ -53,7 +53,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
   };
 
   const handleEdit = (item) => {
-    navigation.navigate("VendorFormScreen", { id: item.id, email: item.email });
+    navigation.navigate("EditDetailsScreen", { item, formType: "vendor" });
   };
 
   return (

@@ -6,6 +6,7 @@ import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
+import MyPickerInput from "../components/input/MyPickerInput";
 import MyButton from "../components/buttons/MyButton";
 import { updateInventory } from "../redux/actions/inventoryAction";
 import { useTranslation } from "react-i18next";
@@ -24,6 +25,9 @@ const InventoryFormScreen = ({ navigation, route }) => {
   const [releaseDate, setReleaseDate] = useState(editItem?.releaseDate || "");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+  const [subCategories, setSubCategories] = useState("");
 
   const handleCancel = () => {
     navigation.goBack();
@@ -58,6 +62,19 @@ const InventoryFormScreen = ({ navigation, route }) => {
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
       >
+        <MyPickerInput
+          title={t("Category")}
+          selectedValue={category}
+          onValueChange={(value) => {
+            setCategory(value);
+          }}
+        />
+        <MyPickerInput
+          title={t("Sub category")}
+          selectedValue={subCategory}
+          onValueChange={setSubCategory}
+          disabled={subCategories.length === 0}
+        />
         <MyTextInput
           title={t("prod_name")}
           value={productName}
@@ -84,6 +101,7 @@ const InventoryFormScreen = ({ navigation, route }) => {
           onChangeText={setUnit}
           placeholder={t("ent_unit")}
         />
+
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
           <MyTextInput
             title={t("release_date")}
@@ -118,7 +136,6 @@ const InventoryFormScreen = ({ navigation, route }) => {
           onChange={handleDateChange}
         />
       )}
-
     </ContainerComponent>
   );
 };

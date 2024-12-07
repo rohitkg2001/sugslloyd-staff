@@ -14,7 +14,7 @@
     "quantity_title": "Quantity",
     "duration_title": "Duration",
     "status_title": "Status",
-    "priceTitle": "Price",
+    "priceTitle": "Order Value",
     "total_title": "Total",
     "option_title": "Select an option",
     "total_earning": "Total Earnings",
@@ -26,7 +26,7 @@
     "rejected_projects": "Rejected Projects",
     "total_projects": "Total Projects",
     "project_details": "Project Details",
-    "project_management_title": "Project Management",
+
     "my_projects": "My Projects",
     "project_overview": "Project Overview",
     "no_project": "Oops! No Projects available. Please contact admin.",
@@ -36,6 +36,7 @@
     "site_title": "Site Name",
     "total_sites": "Total Sites",
     "completed_sites": "Completed Sites",
+    "completed": "Completed",
     "pending_sites": "Pending Sites",
     "in_progress_sites": "Sites in Progress",
     "site_details": "Site Details",
@@ -134,6 +135,10 @@
     "settings": "Settings",
     "today": "Today",
     "to_do": "To do",
-    "project": "Project"
+    "project": "Project",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "first_name": "First Name",
+    "last_name": "Last Name"
   }
 }

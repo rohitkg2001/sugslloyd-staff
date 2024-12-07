@@ -7,18 +7,31 @@ import {
   CHANGE_PROJECT_STATUS,
   ADD_PROJECT,
   BASE_URL,
-} from '../constant';
-
-
-import { projects as mockProjects } from "../../utils/faker";
+} from "../constant";
 
 export const fetchProjects = () => async (dispatch) => {
-  const response = await fetch(`${BASE_URL}/api/projects`)
-  const data = await response.json()
+  const response = await fetch(`${BASE_URL}/api/projects`);
+  const data = await response.json();
+  console.log(data);
   dispatch({
     type: FETCH_PROJECTS,
     payload: data,
   });
+};
+
+export const getProjectCounts = async () => {
+  const response = await fetch(`${BASE_URL}/api/projects/`);
+  const data = await response.json();
+  const projectCounts = data.length;
+  return [
+    {
+      id: 1,
+      count: projectCounts,
+      status: "total_projects",
+      page: "totalProjectsScreen",
+      backgroundColor: "#A0D3E8",
+    },
+  ];
 };
 
 export const searchPjerocts = (searchText) => ({
@@ -27,10 +40,10 @@ export const searchPjerocts = (searchText) => ({
 });
 
 export const viewProject = (projectId) => async (dispatch) => {
-  const response = await fetch(`${BASE_URL}/api/projects/${projectId}`)
-  const data = await response.json()
-  dispatch({ type: VIEW_PROJECT, payload: data })
-}
+  const response = await fetch(`${BASE_URL}/api/projects/${projectId}`);
+  const data = await response.json();
+  dispatch({ type: VIEW_PROJECT, payload: data });
+};
 
 export const updateProject = (project) => ({
   type: UPDATE_PROJECT,
@@ -48,21 +61,18 @@ export const changeProjectStatus = (projectId, newStatus) => ({
 
 export const addProject = (project) => async (dispatch) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/projects`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(project)
-      }
-    )
-    const data = await response.json()
-    dispatch({ type: ADD_PROJECT, payload: data.project })
-    return true
+    const response = await fetch(`${BASE_URL}/api/projects`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(project),
+    });
+    const data = await response.json();
+    dispatch({ type: ADD_PROJECT, payload: data.project });
+    return true;
   } catch (error) {
-    console.log(error)
-    return false
+    console.log(error);
+    return false;
   }
 };
-

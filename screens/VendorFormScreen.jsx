@@ -10,7 +10,9 @@ import { useDispatch } from "react-redux";
 import { editVendor } from "../redux/actions/vendorAction";
 
 const VendorFormScreen = ({ route }) => {
-  const [name, setName] = useState("");
+  const [vendorName, setVendorName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [contactNumber, setContactNumber] = useState("");
@@ -23,12 +25,15 @@ const VendorFormScreen = ({ route }) => {
   const [branch, SetBranch] = useState("");
   const [pan, setPan] = useState("");
   const [mailId, setMailId] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { t } = useTranslation();
-  const dispatch = useDispatch()
-  const { id, email } = route.params
+  const dispatch = useDispatch();
 
   const handleCancel = () => {
-    setName("");
+    setVendorName("");
+    setFirstName("");
+    setLastName("");
     setGstNumber("");
     setContactPerson("");
     setContactNumber("");
@@ -42,14 +47,16 @@ const VendorFormScreen = ({ route }) => {
     setBankName("");
     SetBranch("");
     setPan("");
+    setPassword("");
+    setConfirmPassword("");
   };
 
   const handleCreate = async () => {
     const data = {
       email: email,
       name: name,
-    }
-    await dispatch(editVendor(data, id))
+    };
+    await dispatch(editVendor(data, id));
   };
 
   return (
@@ -57,12 +64,25 @@ const VendorFormScreen = ({ route }) => {
       <MyHeader title={t("create_vendor")} hasIcon={true} isBack={true} />
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
+        showsVerticalScrollIndicator={false}
       >
         <MyTextInput
-          title={t("name")}
-          value={name}
-          onChangeText={setName}
-          placeholder="Enter Name"
+          title={t("vendor_form_name")}
+          value={vendorName}
+          onChangeText={setVendorName}
+          placeholder="Enter VendorName"
+        />
+        <MyTextInput
+          title={t("first_name")}
+          value={firstName}
+          onChangeText={setFirstName}
+          placeholder="Enter First Name"
+        />
+        <MyTextInput
+          title={t("last_name")}
+          value={lastName}
+          onChangeText={setLastName}
+          placeholder="Enter Last Name"
         />
 
         <MyTextInput
@@ -79,22 +99,6 @@ const VendorFormScreen = ({ route }) => {
           placeholder="Enter Contact Number"
           keyboardType="numeric"
         />
-
-        <MyTextInput
-          title={t("vendor_aadhar_number")}
-          value={contactPerson}
-          onChangeText={setAadharNumber}
-          placeholder="Enter Aadhar Number"
-        />
-
-        <MyTextInput
-          title="Mail ID"
-          value={t("vendor_mail_id")}
-          onChangeText={setMailId}
-          placeholder="Enter Mail ID"
-          keyboardType="email-address"
-        />
-
         <MyTextInput
           title={t("vendor_address")}
           value={address}
@@ -102,6 +106,24 @@ const VendorFormScreen = ({ route }) => {
           placeholder="Enter Address"
         />
 
+        <MyTextInput
+          title={t("vendor_aadhar_number")}
+          onChangeText={setAadharNumber}
+          placeholder="Enter Aadhar Number"
+        />
+        <MyTextInput
+          title={t("gst_number")}
+          value={gstNumber}
+          onChangeText={setGstNumber}
+          placeholder="Enter GST Number"
+        />
+
+        <MyTextInput
+          title={t("pan_number")}
+          value={pan}
+          onChangeText={setPan}
+          placeholder="Enter PAN Number"
+        />
         <MyTextInput
           title={t("vendor_account_name")}
           value={accountName}
@@ -129,25 +151,32 @@ const VendorFormScreen = ({ route }) => {
           onChangeText={setBankName}
           placeholder="Enter Bank Name"
         />
-
         <MyTextInput
           title={t("branch")}
           value={branch}
           onChangeText={SetBranch}
           placeholder="Enter Branch"
         />
+
         <MyTextInput
-          title={t("gst_number")}
-          value={gstNumber}
-          onChangeText={setGstNumber}
-          placeholder="Enter GST Number"
+          title="Mail ID"
+          value={mailId}
+          onChangeText={setMailId}
+          placeholder="Enter Mail ID"
+          keyboardType="email-address"
         />
 
         <MyTextInput
-          title={t("pan_number")}
-          value={bankName}
-          onChangeText={setPan}
-          placeholder="Enter PAN Number"
+          title={t("password")}
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Password for Vendor"
+        />
+        <MyTextInput
+          title={t("confirm_password")}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          placeholder="Confirm Password for Vendor"
         />
       </ScrollView>
       <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>

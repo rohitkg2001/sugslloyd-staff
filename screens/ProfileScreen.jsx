@@ -18,7 +18,6 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 const ProfileItem = ({ iconName, label }) => {
-
   return (
     <View
       style={[
@@ -35,7 +34,6 @@ const ProfileItem = ({ iconName, label }) => {
         <H6 style={[typography.font16, { color: "black", flex: 1 }]}>
           {label}
         </H6>
-
       </View>
     </View>
   );
@@ -43,7 +41,7 @@ const ProfileItem = ({ iconName, label }) => {
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
-  const { staff } = useSelector(state => state)
+  const { staff } = useSelector((state) => state);
   return (
     <ContainerComponent>
       <MyHeader title={t("profile_title")} isBack={true} hasIcon={true} />
@@ -85,4 +83,4 @@ export default function ProfileScreen() {
       />
     </ContainerComponent>
   );
-};
+}

@@ -21,19 +21,16 @@ export const login = (user, pass) => async (dispatch) => {
     const response = await fetch(`${BASE_URL}/api/login`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: user, password: pass })
+      body: JSON.stringify({ email: user, password: pass }),
     });
 
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     if (response.ok && data.user) {
       // Dispatch the user object to the store
-      dispatch({
-        type: LOGIN_STAFF,
-        payload: data.user,  // Use the user data from the API response
-      });
+      dispatch({ type: LOGIN_STAFF, payload: data.user });
       return true;
     } else {
       return false;
@@ -53,4 +50,3 @@ export const login = (user, pass) => async (dispatch) => {
 // };
 
 // export const login=()=>{}
-

@@ -16,6 +16,7 @@ export default function ProfileCard({ imageUri, name, phoneNumber, onPress }) {
         <P style={typography.textBold}>{name}</P>
         <Span>{phoneNumber}</Span>
       </View>
+
       <Icon name="chevron-forward-outline" size={ICON_SMALL} color="#333" />
     </TouchableOpacity>
   );

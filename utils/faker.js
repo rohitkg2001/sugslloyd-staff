@@ -19,39 +19,66 @@ export const SiteFields = [
     title: "site_location",
     fieldName: "location",
     placeholder: "Enter Location",
-    keyboardType: "text"
+    keyboardType: "text",
   },
   {
     title: "site_Projectcode",
-    fieldName: "projectcode",
+    fieldName: "project_id",
     placeholder: "Enter Project Code",
-    keyboardType: "text"
+    keyboardType: "text",
   },
   {
     title: "site_name",
-    fieldName: "siteName",
+    fieldName: "site_name",
     placeholder: "Enter Site Name",
-    keyboardType: "text"
+    keyboardType: "text",
   },
   {
     title: "site_projectcapacity",
-    fieldName: "projectCapacity",
+    fieldName: "project_capacity",
     placeholder: "Enter Project Capacity",
-    keyboardType: "text"
+    keyboardType: "numeric",
   },
   {
     title: "site_I&CVendorName",
-    fieldName: "vendorName",
+    fieldName: "ic_vendor_name",
     placeholder: "Enter I & C Vendor Name",
-    keyboardType: "text"
+    keyboardType: "text",
   },
   {
     title: "site_canumber",
-    fieldName: "caNumber",
+    fieldName: "ca_number",
     placeholder: "Enter CA Number",
-    keyboardType: "text"
-  }
-]
+    keyboardType: "text",
+  },
+  {
+    title: "sanction_load",
+    fieldName: "sanction_load",
+    placeholder: "Enter Sanctioned Load",
+    keyboardType: "numeric",
+  },
+  {
+    title: "meter_no",
+    fieldName: "meter_number",
+    placeholder: "Enter Meter Number",
+  },
+  {
+    title: "net_meterserialnumber",
+    fieldName: "net_meter_sr_number",
+    placeholder: "Net Meter Sl No.",
+  },
+  {
+    title: "solar_meterserialnumber",
+    placeholder: "Solar Meter Sl No",
+    fieldName: "solar_meter_sr_number",
+  },
+  {
+    title: "site_ContactNo",
+    placeholder: "Enter Contact No.",
+    fieldName: "contact_no",
+    keyboardType: "numeric",
+  },
+];
 
 export const menuItems = [
   {
@@ -70,7 +97,7 @@ export const menuItems = [
     page: "totalVendorsScreen",
   },
   {
-    label: "project_management_title",
+    label: "project_overview",
     icon: "reader-outline",
     page: "totalProjectsScreen",
   },
@@ -81,7 +108,7 @@ export const menuItems = [
   },
   {
     label: "report_title",
-    page: "",
+    page: "reportScreen",
     icon: "pie-chart-outline",
   },
   {
@@ -93,11 +120,11 @@ export const menuItems = [
 // Static
 
 export const internal = [
-  {
-    label: "notification_title",
-    page: "notificationScreen",
-    icon: "notifications-outline",
-  },
+  // {
+  //   label: "notification_title",
+  //   page: "notificationScreen",
+  //   icon: "notifications-outline",
+  // },
   {
     label: "privacy_policy_title",
     page: "privacyPolicy",
@@ -148,29 +175,29 @@ export const projects = [
 export const totalsitesData = [
   {
     id: 1,
-    siteName: "P S SHIKSHA NAGAR BANMANKHI",
+    site_name: "P S SHIKSHA NAGAR BANMANKHI",
     state: "Bihar",
     dist: "Purnia",
     location: "BANMANKHI",
-    projectSerialCode: "12",
-    projectCapacity: "30",
-    cANumber: "CA123456",
-    contactNo: "9199502622",
-    iCVendorName: "Pankaj Singh",
-    sanctionLoad: "5 kW",
-    meterNumber: "123456789",
-    loadEnhancementStatus: "Approved",
-    siteSurveyStatus: "Done",
-    netMeterSrNo: "NM-987654",
-    solarMeterSrNO: "SM-543210",
-    materialInspectionDate: "2024-11-20",
-    sppInstallationDate: "2024-11-25",
-    commissioningDate: "2024-11-30",
+    project_serial_code: "12",
+    project_capacity: "30",
+    ca_number: "CA123456",
+    contact_no: "9199502622",
+    ic_vendor_name: "Pankaj Singh",
+    sanction_load: "5 kW",
+    meter_number: "123456789",
+    load_enhancement_status: "Approved",
+    site_survey_status: "Done",
+    net_meter_sr_no: "NM-987654",
+    solar_meter_sr_no: "SM-543210",
+    material_inspection_date: "2024-11-20",
+    spp_installation_date: "2024-11-25",
+    commissioning_date: "2024-11-30",
     remarks: "All systems operational and inspected.",
   },
   {
     id: 2,
-    siteName: "Gyan Kendra High School",
+    site_name: "Gyan Kendra High School",
     state: "Uttar Pradesh",
     dist: "Varanasi",
     location: "Lanka",
@@ -178,20 +205,20 @@ export const totalsitesData = [
       lat: 25.2902024,
       lng: 82.9832034,
     },
-    projectSerialCode: "45",
-    projectCapacity: "50",
-    cANumber: "CA789101",
-    contactNo: "9123456789",
-    iCVendorName: "Rajesh Kumar",
-    sanctionLoad: "10 kW",
-    meterNumber: "AB123456789",
-    loadEnhancementStatus: "Pending Approval",
-    siteSurveyStatus: "Pending",
-    netMeterSrNo: "NM20241127001",
-    solarMeterSrNO: "SM20241127002",
-    materialInspectionDate: "2024-11-25",
-    sppInstallationDate: "2024-12-05",
-    commissioningDate: "2024-12-10",
+    project_serial_code: "45",
+    project_capacity: "50",
+    ca_number: "CA789101",
+    contact_no: "9123456789",
+    ic_vendor_name: "Rajesh Kumar",
+    sanction_load: "10 kW",
+    meter_number: "AB123456789",
+    load_enhancement_status: "Pending Approval",
+    site_survey_status: "Pending",
+    net_meter_sr_no: "NM20241127001",
+    solar_meter_sr_no: "SM20241127002",
+    material_inspection_date: "2024-11-25",
+    spp_installation_date: "2024-12-05",
+    commissioning_date: "2024-12-10",
     remarks: "Site survey and installation scheduled as per plan.",
   },
 ];
@@ -414,17 +441,6 @@ export const vendorCardForDashboard = [
 ];
 // Event generated
 
-export const ProjectcardsForDashboard = [
-  {
-    id: 1,
-    title: "Task 1",
-    description: "This is task 1",
-    count: 1,
-    status: "total_projects",
-    page: "totalProjectsScreen",
-    backgroundColor: "#A0D3E8",
-  },
-];
 // Event generated
 export const staff = {
   id: 1,

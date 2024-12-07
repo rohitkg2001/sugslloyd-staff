@@ -6,7 +6,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import { greet } from "../redux/actions/staffActions";
 import MyFlatList from "../components/utility/MyFlatList";
-import { H4, H5, P, Span } from "../components/text";
+import { H4, H5, H6, P, Span } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
 import StatCard from "../components/card/Statcard";
 import {
@@ -26,7 +26,7 @@ import {
   siteCardsForDashboard,
   vendorCardForDashboard,
   ProjectcardsForDashboard,
-
+  projects,
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -34,35 +34,50 @@ import { useTranslation } from "react-i18next";
 import Filter from "../components/Filter";
 import { getAllVendors, getVendorCounts } from "../redux/actions/vendorAction";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchProjects,
+  getProjectCounts,
+} from "../redux/actions/projectAction";
 
 export default function DashboardScreen({ navigation }) {
   const [today, setToday] = useState(moment().format("DD MMM YYYY"));
   const [dueTasks, setDueTasks] = useState(4);
-  const [showBottomSheet, setShowBottomSheet] = useState(false)
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [greeting, setGreeting] = useState("Good morning");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [totalVendors, setTotalVendors] = useState(0)
-  const [activeVendors, setActiveVendors] = useState(0)
-  const [inActiveVendors, setInActiveVendors] = useState(0)
+  const [projectCounts, setProjectCounts] = useState([]);
+  const [totalVendors, setTotalVendors] = useState(0);
+  const [activeVendors, setActiveVendors] = useState(0);
+  const [inActiveVendors, setInActiveVendors] = useState(0);
   const { firstName } = useSelector((state) => state.staff);
+  const projectsArray = useSelector((state) => state.project?.projects);
+  const [projectsArr, setProjectsArr] = useState([]);
+
   const { t } = useTranslation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const getCounts = async () => {
-    const { totalVendors, activeVendors, inactiveVendors } = await getVendorCounts()
-    setActiveVendors(activeVendors)
-    setTotalVendors(totalVendors)
-    setInActiveVendors(inactiveVendors)
+    const { totalVendors, activeVendors, inactiveVendors } =
+      await getVendorCounts();
+    const projects = await getProjectCounts();
 
-  }
+    setProjectCounts(projects);
+    setActiveVendors(activeVendors);
+    setTotalVendors(totalVendors);
+    setInActiveVendors(inactiveVendors);
+  };
 
   useEffect(() => {
     setGreeting(greet());
-    dispatch(getAllVendors())
-    getCounts()
-  }, []);
+    dispatch(getAllVendors());
+    dispatch(fetchProjects());
+    getCounts();
+  }, [projectCounts]);
 
+  useEffect(() => {
+    setProjectsArr(projectsArray);
+  }, [projectsArray]);
 
   const handleDateChange = (event, date) => {
     if (event.type === "set") {
@@ -101,6 +116,7 @@ export default function DashboardScreen({ navigation }) {
             spacing.br5,
             { position: "relative" },
           ]}
+          onPress={() => navigation.navigate("notificationScreen")}
         >
           <Icon name="notifications-outline" size={ICON_MEDIUM} color={DARK} />
           <View
@@ -153,26 +169,26 @@ export default function DashboardScreen({ navigation }) {
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
         </View>
-
         <View
           style={[
-            spacing.mv2,
-            spacing.mr3,
             styles.row,
-            { alignItems: "center" },
+            spacing.mh1,
+            { alignItems: "center", width: SCREEN_WIDTH - 16 },
           ]}
         >
           <H4>{t("today")}</H4>
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity onPress={showCalendar}>
-              <Icon name="calendar-outline" size={ICON_SMALL} color={DARK} />
-            </TouchableOpacity>
-            <H5 style={spacing.ml1}>{today}</H5>
-          </View>
+          <Button
+            style={[styles.btn, styles.bgPrimary, spacing.ph3]}
+            onPress={() => setShowDatePicker(true)}
+          >
+            <Icon name="calendar-outline" size={ICON_SMALL} color={LIGHT} />
+            <H5 style={[spacing.ml1, { color: "#fff", fontWeight: "600" }]}>
+              {today}
+            </H5>
+          </Button>
         </View>
-
         <MyFlatList
-          data={ProjectcardsForDashboard}
+          data={projectCounts}
           renderItem={({ item }) => (
             <StatCard
               key={item.id}
@@ -188,43 +204,6 @@ export default function DashboardScreen({ navigation }) {
         />
 
         {/* //Project OverView  */}
-        <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Icon
-              name="calendar-clear"
-              size={ICON_LARGE}
-              color={PRIMARY_COLOR}
-            />
-            <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              {t("project_overview")}
-            </H5>
-          </View>
-          <View style={[spacing.bbw05, spacing.mv2]} />
-          <View
-            style={[
-              styles.row,
-              { justifyContent: "space-between", paddingVertical: 10 },
-            ]}
-          >
-            <View style={{ alignItems: "center", textAlign: "center" }}>
-              <P style={typography.textBold}>{t("project")}</P>
-              <P style={(typography.font20, spacing.m2)}>Project 01B</P>
-            </View>
-
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("total_sites")}</P>
-              <P style={(typography.font20, spacing.m2)}>2</P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("completed_sites")}</P>
-              <P style={(typography.font20, spacing.m2)}>1</P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("pending_sites")}</P>
-              <P style={(typography.font20, spacing.m2)}>1</P>
-            </View>
-          </View>
-        </CardFullWidth>
 
         <MyFlatList
           data={siteCardsForDashboard}
@@ -273,28 +252,6 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
 
-        {/* <MyFlatList
-          data={vendorCardForDashboard}
-          renderItem={({ item, index }) => {
-            return (
-              <StatCard
-                key={item.id}
-                backgroundColor={item.backgroundColor}
-                tasks={item.count}
-                status={t(item.title)}
-                onPress={() =>
-                  navigation.navigate(item.page, {
-                    pageTitle: item.title,
-                    data: item.data,
-                  })
-                }
-              />
-            );
-          }}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
-        /> */}
-        {/* //Project OverView  */}
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -302,9 +259,7 @@ export default function DashboardScreen({ navigation }) {
               size={ICON_LARGE}
               color={PRIMARY_COLOR}
             />
-            <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              Vendors
-            </H5>
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>Vendors</H5>
           </View>
           <View style={[spacing.bbw05, spacing.mv2]} />
           <View
@@ -315,18 +270,121 @@ export default function DashboardScreen({ navigation }) {
           >
             <View style={{ alignItems: "center", textAlign: "center" }}>
               <P style={typography.textBold}>Total Vendors</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>{totalVendors}</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {totalVendors}
+              </P>
             </View>
 
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>Active</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>{activeVendors}</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {activeVendors}
+              </P>
             </View>
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>Inactive</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>{inActiveVendors}</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {inActiveVendors}
+              </P>
             </View>
           </View>
+        </CardFullWidth>
+
+        {/* <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="calendar-clear"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>
+              {t("project_overview")}
+            </H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv2]} />
+          <View>
+            <View style={styles.row}>
+              <P style={typography.textBold}>{t("project")}</P>
+              <P style={typography.textBold}>{t("total_sites")}</P>
+              <P style={typography.textBold}>{t("Completed")}</P>
+              <P style={typography.textBold}>{t("Pending")}</P>
+            </View>
+            {projectsArr.map((project, index) => (
+              <View
+                key={project.id}
+                style={[
+                  styles.row,
+                  { justifyContent: "space-between", paddingVertical: 10 },
+                ]}
+              >
+                <View style={{ alignItems: "center", textAlign: "center" }}>
+                  <P style={(typography.font20, spacing.m2)}>
+                    {project.project_name}
+                  </P>
+                </View>
+
+                <View style={{ alignItems: "flex-start" }}>
+                  <Span>0</Span>
+                </View>
+
+                <View style={{ alignItems: "flex-start" }}>
+                  <Span>0</Span>
+                </View>
+                <View style={{ alignItems: "flex-start" }}>
+                  <Span>0</Span>
+                </View>
+              </View>
+            ))}
+          </View>
+        </CardFullWidth> */}
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="calendar-clear"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 140 }]}>
+              {t("project_overview")}
+            </H5>
+          </View>
+
+          <View style={[spacing.bbw05, spacing.mv2]} />
+
+          {/* Table Header */}
+          <View style={[styles.row, spacing.pv2]}>
+            <P style={typography.textBold}>{t("project")}</P>
+            <P style={typography.textBold}>{t("total_sites")}</P>
+            <P style={typography.textBold}>{t("Completed")}</P>
+            <P style={typography.textBold}>{t("Pending")}</P>
+          </View>
+
+          <View style={[spacing.bbw05, spacing.mv1]} />
+
+          {projectsArr.map((project) => (
+            <View key={project.id}>
+              <View style={[styles.row, spacing.pv2]}>
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.project_name}
+                </P>
+
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.total_sites || 0}
+                </P>
+
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.completed_sites || 0}
+                </P>
+
+                <P style={(typography.font20, spacing.m2)}>
+                  {project.pending_sites || 0}
+                </P>
+              </View>
+
+              <View style={[spacing.bbw05, spacing.mv1]} />
+            </View>
+          ))}
         </CardFullWidth>
       </ScrollView>
       {showDatePicker && (

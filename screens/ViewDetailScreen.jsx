@@ -15,6 +15,7 @@ const ViewDetailScreen = ({ route, navigation }) => {
   const [project, setProject] = useState({});
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState("Sites");
   const { currentProject } = useSelector((state) => state.project);
   useEffect(() => {
     if (currentProject) {
@@ -36,25 +37,28 @@ const ViewDetailScreen = ({ route, navigation }) => {
   // Site details rendering
   const renderSiteDetails = () => (
     <>
-      {renderDetailRow("Site Name", site.siteName)}
+      {renderDetailRow("Site Name", site.site_name)}
       {renderDetailRow("State", site.state)}
       {renderDetailRow("District", site.dist)}
       {renderDetailRow("Location", site.location)}
-      {renderDetailRow("Contact No", site.contactNo)}
-      {renderDetailRow("Project Serial Code", site.projectSerialCode)}
-      {renderDetailRow("Project Capacity", site.projectCapacity)}
-      {renderDetailRow("CA Number", site.cANumber)}
-      {renderDetailRow("Sanction Load", site.sanctionLoad)}
-      {renderDetailRow("Meter Number", site.meterNumber)}
-      {renderDetailRow("Load Enhancement Status", site.loadEnhancementStatus)}
-      {renderDetailRow("Site Survey Status", site.siteSurveyStatus)}
-      {renderDetailRow("Net Meter Sr No", site.netMeterSrNo)}
-      {renderDetailRow("Solar Meter Sr NO", site.solarMeterSrNO)}
-      {renderDetailRow("Material Inspection Date", site.materialInspectionDate)}
-      {renderDetailRow("SPP INSTALLATION DATE", site.sppInstallationDate)}
-      {renderDetailRow("COMMISSIONING DATE", site.commissioningDate)}
+      {renderDetailRow("Contact No", site.contact_no)}
+      {renderDetailRow("Project Serial Code", site.project_serial_code)}
+      {renderDetailRow("Project Capacity", site.project_capacity)}
+      {renderDetailRow("CA Number", site.ca_number)}
+      {renderDetailRow("Sanction Load", site.sanction_load)}
+      {renderDetailRow("Meter Number", site.meter_number)}
+      {renderDetailRow("Load Enhancement Status", site.load_enhancement_status)}
+      {renderDetailRow("Site Survey Status", site.site_survey_status)}
+      {renderDetailRow("Net Meter Sr No", site.net_meter_sr_no)}
+      {renderDetailRow("Solar Meter Sr NO", site.solar_meter_sr_no)}
+      {renderDetailRow(
+        "Material Inspection Date",
+        site.material_inspection_date
+      )}
+      {renderDetailRow("SPP INSTALLATION DATE", site.spp_installation_date)}
+      {renderDetailRow("COMMISSIONING DATE", site.commissioning_date)}
       {renderDetailRow("Remarks", site.remarks)}
-      {renderDetailRow("I & C Vendor Name", site.iCVendorName)}
+      {renderDetailRow("I & C Vendor Name", site.ic_vendor_name)}
     </>
   );
 
@@ -63,23 +67,30 @@ const ViewDetailScreen = ({ route, navigation }) => {
     <>
       {renderDetailRow("Project Name", project.project_name)}
       {renderDetailRow("Work Order Number", project.work_order_number)}
-      {renderDetailRow("Price", project.rate)}
+      {renderDetailRow("Order Value", project.rate)}
       {renderDetailRow("Date", project.start_date)}
 
-      <View style={[styles.row, spacing.mv4]}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ gap: 8 }}
+      >
         <MyButton
-          title={t("create_sites")}
-          onPress={() => {
-            setSiteCreated(true);
-            navigation.navigate("sitesFormScreen");
-          }}
-          color="#DC4C64"
+          title="Sites"
+          color={activeTab === "Sites" ? "#76885B" : "#CCCCCC"}
+          onPress={() => setActiveTab("Sites")}
         />
         <MyButton
-          title={t("view_site")}
-          onPress={() => navigation.navigate("totalSitesScreen")}
+          title="Inventory"
+          color={activeTab === "Inventory" ? "#76885B" : "#CCCCCC"}
+          onPress={() => setActiveTab("Inventory")}
         />
-      </View>
+        <MyButton
+          title="Tasks"
+          color={activeTab === "Tasks" ? "#76885B" : "#CCCCCC"}
+          onPress={() => setActiveTab("Tasks")}
+        />
+      </ScrollView>
     </>
   );
 
@@ -88,13 +99,13 @@ const ViewDetailScreen = ({ route, navigation }) => {
     <>
       {renderDetailRow("Vendor Name", site.name)}
       {renderDetailRow("Mail ID", site.email)}
-      {renderDetailRow("Contact Number", site.contactNumber)}
-      {renderDetailRow("Aadhar Number", site.aadharNumber)}
-      {renderDetailRow("Account Name", site.accountName)}
+      {renderDetailRow("Contact Number", site.contact_number)}
+      {renderDetailRow("Aadhar Number", site.aadhar_number)}
+      {renderDetailRow("Account Name", site.account_name)}
       {renderDetailRow("Ifsc", site.ifsc)}
-      {renderDetailRow("Bank Name", site.bankName)}
-      {renderDetailRow("Gst Number", site.gstNumber)}
-      {renderDetailRow("Pan Number", site.panNumber)}
+      {renderDetailRow("Bank Name", site.bank_name)}
+      {renderDetailRow("Gst Number", site.gst_number)}
+      {renderDetailRow("Pan Number", site.pan_number)}
       {renderDetailRow("Status", site.status)}
 
       <View
@@ -155,24 +166,6 @@ const ViewDetailScreen = ({ route, navigation }) => {
             ? renderProjectDetails()
             : renderSiteDetails()}
         </ScrollView>
-
-        {/* Conditionally render the Create Task and View Task buttons */}
-        {formType !== "vendor" && (
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginVertical: 16,
-            }}
-          >
-            <MyButton
-              title={t("create_task")}
-              onPress={handleCreateTask}
-              color="#DC4C64"
-            />
-            <MyButton title={t("view_task")} onPress={handleViewTask} />
-          </View>
-        )}
       </View>
     </ContainerComponent>
   );

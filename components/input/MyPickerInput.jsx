@@ -1,36 +1,55 @@
 import { View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { styles } from "../../styles/components.styles";
 import { H5 } from "../text";
+import {
+  PRIMARY_COLOR,
+  PRIMARY_COLOR_TRANSPARENT,
+  spacing,
+  styles,
+} from "../../styles";
 
 export default function MyPickerInput({
   title,
   value,
   onChange,
   options = [],
-  enabled
+  enabled,
 }) {
   return (
-    <View style={styles.textInput}>
+    <View>
       <H5>{title}</H5>
-      <Picker
-        selectedValue={value}
-        style={styles.textInputField}
-        mode="dropdown"
-        onValueChange={(val) => onChange(val)}
-        prompt="Select an option"
-        enabled={enabled}
+      <View
+        style={[
+          spacing.ph1,
+          {
+            borderColor: PRIMARY_COLOR,
+            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+            borderWidth: 1,
+            borderRadius: 6,
+            position: "relative", // Ensures layout control
+          },
+        ]}
       >
-        {options.map((option, index) => (
-          <Picker.Item
-            enabled={option.enabled}
-            label={option.label}
-            value={option.value}
-            key={index}
-            style={styles.textInputField}
-          />
-        ))}
-      </Picker>
+        <Picker
+          selectedValue={value}
+          style={[styles.textInputField, { height: 52 }]}
+          mode="dropdown"
+          onValueChange={(val) => onChange(val)}
+          prompt="Select an option"
+          enabled={enabled}
+          dropdownIconColor={PRIMARY_COLOR}
+        >
+          {options.map((option, index) => (
+            <Picker.Item
+              enabled={option.enabled}
+              label={option.label}
+              value={option.value}
+              key={index}
+              style={styles.textInputField}
+            />
+          ))}
+        </Picker>
+      </View>
     </View>
   );
 }
