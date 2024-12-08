@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { View, ScrollView, ActivityIndicator } from "react-native";
-import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
+import { SCREEN_WIDTH, spacing,typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H4, H5 } from "../components/text";

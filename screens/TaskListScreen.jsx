@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
@@ -34,6 +35,12 @@ export default function TaskListScreen({ navigation }) {
     dispatch(viewTask(task.id));
     navigation.navigate("taskListFormScreen");
   };
+  const { t } = useTranslation();
+  
+    const closeFilter = () => {
+      setShowBottomSheet(!showBottomSheet);
+    };
+    const applyFilterFromRedux = (...args) => {};
 
   const renderListItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleViewTask(item)} key={item.id}>
@@ -93,7 +100,9 @@ export default function TaskListScreen({ navigation }) {
           </View>
         )}
       />
-      {showBottomSheet && <Filter />}
+      {showBottomSheet && (
+        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
+      )}
     </ContainerComponent>
   );
 }

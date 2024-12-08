@@ -84,24 +84,48 @@ export default function Filter({ onClose, onApply }) {
           style={[spacing.brw1, spacing.brc, { height: "100%", width: "40%" }]}
         >
           <TouchableOpacity
-            style={[spacing.bbw05, spacing.p3, spacing.mh1]}
+            style={[
+              spacing.bbw05,
+              spacing.p3,
+              spacing.mh1,
+              {
+                backgroundColor: filterState === 0 ? "#D1E7DD" : "#FFFFFF",
+              },
+            ]}
             onPress={() => setFilterState(0)}
           >
             <Span style={typography.font16}>State</Span>
           </TouchableOpacity>
+
           <TouchableOpacity
-            style={[spacing.bbw05, spacing.p3, spacing.mh1]}
+            style={[
+              spacing.bbw05,
+              spacing.p3,
+              spacing.mh1,
+              {
+                backgroundColor: filterState === 1 ? "#D1E7DD" : "#FFFFFF",
+              },
+            ]}
             onPress={() => setFilterState(1)}
           >
             <Span style={typography.font16}>Project</Span>
           </TouchableOpacity>
+
           <TouchableOpacity
-            style={[spacing.bbw05, spacing.p3, spacing.mh1]}
+            style={[
+              spacing.bbw05,
+              spacing.p3,
+              spacing.mh1,
+              {
+                backgroundColor: filterState === 2 ? "#D1E7DD" : "#FFFFFF",
+              },
+            ]}
             onPress={() => setFilterState(2)}
           >
             <Span style={typography.font16}>Date</Span>
           </TouchableOpacity>
         </View>
+
         <ScrollView>
           {/* Filters based on left selection */}
           {/* array of states */}
