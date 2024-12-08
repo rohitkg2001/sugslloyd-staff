@@ -19,6 +19,10 @@ export default function CurrentProjectsScreen({ navigation }) {
   const filteredProjects = projects.filter((item) =>
     item.projectName.toLowerCase().includes(searchText.toLowerCase())
   );
+    const closeFilter = () => {
+      setShowBottomSheet(!showBottomSheet);
+    };
+    const applyFilterFromRedux = (...args) => {};
 
   return (
     <ContainerComponent>
@@ -62,7 +66,9 @@ export default function CurrentProjectsScreen({ navigation }) {
           </View>
         )}
       />
-      {showBottomSheet && <Filter />}
+      {showBottomSheet && (
+        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
+      )}
     </ContainerComponent>
   );
 }

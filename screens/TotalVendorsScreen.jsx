@@ -43,6 +43,11 @@ export default function TotalVendorsScreen({ navigation, route }) {
   //   console.log(vendors);
   // }, [dispatch]);
 
+   const closeFilter = () => {
+     setShowBottomSheet(!showBottomSheet);
+   };
+   const applyFilterFromRedux = (...args) => {};
+
   const handleViewDetails = (item) => {
     dispatch(viewVendor(item));
     navigation.navigate("ViewDetailScreen", { site: item, formType: "vendor" });
@@ -112,7 +117,9 @@ export default function TotalVendorsScreen({ navigation, route }) {
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
-      {showBottomSheet && <Filter />}
+      {showBottomSheet && (
+        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
+      )}
     </ContainerComponent>
   );
 }

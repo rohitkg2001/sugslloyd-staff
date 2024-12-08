@@ -42,6 +42,10 @@ export default function TotalSitesScreen({ navigation, route }) {
     pageTitle: t("site_management"),
     data: sites,
   };
+  const closeFilter = () => {
+    setShowBottomSheet(!showBottomSheet);
+  };
+    const applyFilterFromRedux = (...args) => {};
 
   useEffect(() => {
     dispatch(fetchSites());
@@ -144,7 +148,9 @@ export default function TotalSitesScreen({ navigation, route }) {
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
-      {showBottomSheet && <Filter />}
+      {showBottomSheet && (
+        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
+      )}
     </ContainerComponent>
   );
 }
