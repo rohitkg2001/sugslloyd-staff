@@ -1,20 +1,23 @@
-import { VIEW_SITE, SEARCH_SITE, FETCH_SITES, ADD_SITE, BASE_URL } from "../constant";
-import statesandcities from '../../utils/statesandcities.json'
+import {
+  VIEW_SITE,
+  SEARCH_SITE,
+  FETCH_SITES,
+  ADD_SITE,
+  BASE_URL,
+} from "../constant";
+import statesandcities from "../../utils/statesandcities.json";
 
 export const setStatesAndCities = () => {
-  return statesandcities
-}
+  return statesandcities;
+};
 
 export const fetchSites = () => async (dispatch) => {
   try {
     const response = await fetch(`${BASE_URL}/api/sites`);
     const data = await response.json();
-    console.log(data)
-    dispatch({ type: FETCH_SITES, payload: data });
-  } catch (error) {
-    console.log(error)
-  }
 
+    dispatch({ type: FETCH_SITES, payload: data });
+  } catch (error) {}
 };
 
 export const viewSite = (site) => ({

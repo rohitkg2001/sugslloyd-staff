@@ -44,7 +44,6 @@ export default function TotalSitesScreen({ navigation, route }) {
   };
 
   useEffect(() => {
-    console.log(sites)
     dispatch(fetchSites());
   }, [dispatch]);
 
@@ -90,7 +89,7 @@ export default function TotalSitesScreen({ navigation, route }) {
   };
 
   if (loading) {
-    return <ActivityIndicator size="large" />
+    return <ActivityIndicator size="large" />;
   }
 
   return (

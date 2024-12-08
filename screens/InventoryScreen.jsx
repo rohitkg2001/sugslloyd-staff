@@ -35,7 +35,7 @@ export default function InventoryScreen({ navigation }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { t } = useTranslation();
-  const { inventory } = useSelector(state => state.inventory)
+  const { inventory } = useSelector((state) => state.inventory);
 
   const handleDateChange = (event, date) => {
     if (event.type === "set") {
@@ -58,10 +58,7 @@ export default function InventoryScreen({ navigation }) {
     setSelectedItem(itemDetails);
   };
 
-  useEffect(() => {
-    console.log(inventory)
-  }, [inventory])
-
+  useEffect(() => {}, [inventory]);
 
   return (
     <ContainerComponent>

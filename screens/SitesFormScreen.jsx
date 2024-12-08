@@ -9,43 +9,40 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { addSite, fetchSites, setStatesAndCities } from "../redux/actions/siteActions"; // Import actions
+import {
+  addSite,
+  fetchSites,
+  setStatesAndCities,
+} from "../redux/actions/siteActions"; // Import actions
 import { SiteFields } from "../utils/faker";
 
 const SitesFormScreen = () => {
   const [date, setDate] = useState(new Date()); //Don't remove
   const [showDatePicker, setShowDatePicker] = useState(false); //Don't remove
-  const [states, setStates] = useState([]) //Don't remove
-  const [cities, setCities] = useState([]) //Don't remove
+  const [states, setStates] = useState([]); //Don't remove
+  const [cities, setCities] = useState([]); //Don't remove
   const [site, setSite] = useState({
     state: null,
-    district: ""
-  })
+    district: "",
+  });
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-
   // Reset form fields
   const handleCancel = () => {
-    setSite({})
+    setSite({});
   };
 
   // Handle create button press
   const handleCreate = () => {
     // Create site data
-    console.log(site)
-
-
     // Dispatch addSite action to add the new site
     // dispatch(addSite(siteData));
-
     // Refresh the list of sites
     // dispatch(fetchSites());
-
     // Clear form fields
     // handleCancel();
     // Alert.alert("Site Created", "The site has been created successfully.");
-
   };
 
   // Handle date picker change
@@ -60,33 +57,32 @@ const SitesFormScreen = () => {
     setSite((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const getCityOptions = (selectedState) => {
     const state = states.find((state) => state.name === selectedState);
     return state
       ? state.cities.map((city) => ({
-        label: city,
-        value: city,
-      }))
+          label: city,
+          value: city,
+        }))
       : [];
   };
 
   const handleStateChange = (selectedState) => {
-    const cities = getCityOptions(selectedState)
-    setCities(cities)
+    const cities = getCityOptions(selectedState);
+    setCities(cities);
     setSite((prevState) => ({
       ...prevState,
-      state: selectedState
-    }))
-  }
+      state: selectedState,
+    }));
+  };
   useEffect(() => {
-    const { states } = setStatesAndCities()
-    console.log()
-    setStates(states)
-  }, [states])
+    const { states } = setStatesAndCities();
 
+    setStates(states);
+  }, [states]);
 
   return (
     <ContainerComponent>
@@ -101,10 +97,10 @@ const SitesFormScreen = () => {
           onChange={handleStateChange}
           options={[
             { label: "Select State", value: null },
-            ...states.map(state => ({
+            ...states.map((state) => ({
               label: state.name,
-              value: state.name
-            }))
+              value: state.name,
+            })),
           ]}
         />
 
@@ -112,34 +108,31 @@ const SitesFormScreen = () => {
           title={t("site_city")}
           enabled={site.state ? true : false}
           value={site.city}
-          onChange={(value) => onChangeText('district', value)}
-          options={[
-            { label: "Select City", value: null },
-            ...cities
-          ]}
+          onChange={(value) => onChangeText("district", value)}
+          options={[{ label: "Select City", value: null }, ...cities]}
         />
 
-        {
-          SiteFields.map((item, index) =>
-            <MyTextInput
-              key={index}
-              title={t(item.title)}
-              onChangeText={(value) => onChangeText(item.fieldName, value)}
-              placeholder={item.placeholder}
-              keyboardType={item.keyboardType}
-            />
-          )
-        }
+        {SiteFields.map((item, index) => (
+          <MyTextInput
+            key={index}
+            title={t(item.title)}
+            onChangeText={(value) => onChangeText(item.fieldName, value)}
+            placeholder={item.placeholder}
+            keyboardType={item.keyboardType}
+          />
+        ))}
 
         <MyTextInput
           title={t("load_enhancementstatus")}
-          onChangeText={(value) => onChangeText('load_enhancement_status', value)}
+          onChangeText={(value) =>
+            onChangeText("load_enhancement_status", value)
+          }
           placeholder="Enter Load Enhancement Status"
         />
         {/* Picker Input with value only yes or no */}
         <MyPickerInput
           title={t("site_surveystatus")}
-          onChangeText={(value) => onChangeText('site_survey_status', value)}
+          onChangeText={(value) => onChangeText("site_survey_status", value)}
           options={[{ label: t("done") }, { label: t("pending") }]}
         />
 
@@ -169,7 +162,7 @@ const SitesFormScreen = () => {
 
         <MyTextInput
           title={t("remarks")}
-          onChangeText={(value) => onChangeText('remarks', value)}
+          onChangeText={(value) => onChangeText("remarks", value)}
           placeholder="Description here"
           style={{ height: 100, padding: 10 }}
         />
