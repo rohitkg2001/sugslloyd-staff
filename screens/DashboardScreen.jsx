@@ -38,6 +38,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProjects,
   getProjectCounts,
+  viewProject,
 } from "../redux/actions/projectAction";
 
 export default function DashboardScreen({ navigation }) {
@@ -51,17 +52,15 @@ export default function DashboardScreen({ navigation }) {
   const [totalVendors, setTotalVendors] = useState(0);
   const [activeVendors, setActiveVendors] = useState(0);
   const [inActiveVendors, setInActiveVendors] = useState(0);
+  const [installation, setInstallation] = useState(0);
+  const [rmsStatus, setRmsStatus] = useState(0);
+  const [finalInspection, setFinalInspection] = useState(0);
+  const [totalSites, setTotalSites] = useState(0);
+  const [completedSites, setCompletedSites] = useState(0);
+  const [progressSites, setProgressSites] = useState(0);
   const { firstName } = useSelector((state) => state.staff);
   const projectsArray = useSelector((state) => state.project?.projects);
   const [projectsArr, setProjectsArr] = useState([]);
-
-  const totalSites = siteCardsForDashboard.length;
-  const completedSites = siteCardsForDashboard.filter(
-    (site) => site.status === "Completed"
-  ).length;
-  const progressSites = siteCardsForDashboard.filter(
-    (site) => site.status === "In Progress"
-  ).length;
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -105,6 +104,11 @@ export default function DashboardScreen({ navigation }) {
     setShowBottomSheet(!showBottomSheet);
   };
   const applyFilterFromRedux = (...args) => {};
+
+  const handleViewDetails = (item) => {
+    dispatch(viewProject(item));
+    navigation.navigate("ViewDetailScreen", { formType: "project" });
+  };
   return (
     <ContainerComponent>
       <View
@@ -262,8 +266,9 @@ export default function DashboardScreen({ navigation }) {
             </View>
 
             {projectsArr.map((project) => (
-              <View
+              <TouchableOpacity
                 key={project.id}
+                onPress={() => handleViewDetails(project)}
                 style={[spacing.bbw05, spacing.pv3, { flexDirection: "row" }]}
               >
                 <P
@@ -286,7 +291,7 @@ export default function DashboardScreen({ navigation }) {
                 >
                   {project.pending_sites || 0}
                 </P>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </CardFullWidth>
@@ -343,18 +348,19 @@ export default function DashboardScreen({ navigation }) {
           >
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>{t("installation")}</P>
-              <P style={spacing.ml2}>2</P>
+              <P style={spacing.ml2}>{installation}</P>
             </View>
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>{t("rms_status")}</P>
-              <P style={spacing.ml2}>3</P>
+              <P style={spacing.ml2}>{rmsStatus}</P>
             </View>
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>{t("final_inspection")}</P>
-              <P style={spacing.ml2}>3</P>
+              <P style={spacing.ml2}>{finalInspection}</P>
             </View>
           </View>
         </CardFullWidth>
+
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
