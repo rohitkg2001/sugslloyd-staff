@@ -169,7 +169,7 @@ export default function Filter({ onClose, onApply }) {
               >
                 <H4 style={[typography.font16, { color: "black" }]}>
                   {fromDate
-                    ? `From: ${fromDate.toLocaleDateString()}`
+                    ? `${fromDate.toLocaleDateString()}`
                     : "Select From Date"}
                 </H4>
               </Button>
@@ -197,9 +197,7 @@ export default function Filter({ onClose, onApply }) {
                 ]}
               >
                 <H4 style={[typography.font16, { color: "black" }]}>
-                  {toDate
-                    ? `To: ${toDate.toLocaleDateString()}`
-                    : "Select To Date"}
+                  {toDate ? `${toDate.toLocaleDateString()}` : "Select To Date"}
                 </H4>
               </Button>
             </>

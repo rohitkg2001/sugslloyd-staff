@@ -55,6 +55,14 @@ export default function DashboardScreen({ navigation }) {
   const projectsArray = useSelector((state) => state.project?.projects);
   const [projectsArr, setProjectsArr] = useState([]);
 
+  const totalSites = siteCardsForDashboard.length;
+  const completedSites = siteCardsForDashboard.filter(
+    (site) => site.status === "Completed"
+  ).length;
+  const progressSites = siteCardsForDashboard.filter(
+    (site) => site.status === "In Progress"
+  ).length;
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -90,10 +98,10 @@ export default function DashboardScreen({ navigation }) {
     }
   };
 
-  const closeFilter = () => {
-    setShowBottomSheet(!showBottomSheet);
+  const showCalendar = () => {
+    setShowDatePicker(true);
   };
-  const applyFilterFromRedux = (...args) => {};
+
   return (
     <ContainerComponent>
       <View
@@ -280,27 +288,41 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
 
-        <MyFlatList
-          data={siteCardsForDashboard}
-          renderItem={({ item, index }) => {
-            return (
-              <StatCard
-                key={item.id}
-                backgroundColor={item.backgroundColor}
-                tasks={item.count}
-                status={t(item.name)}
-                onPress={() =>
-                  navigation.navigate(item.page, {
-                    pageTitle: item.name,
-                    data: item.data,
-                  })
-                }
-              />
-            );
-          }}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
-        />
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon name="card-outline" size={ICON_LARGE} color={PRIMARY_COLOR} />
+            <H5 style={[typography.textBold, { marginRight: 230 }]}>Sites</H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv2]} />
+
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <View style={{ alignItems: "center", textAlign: "center" }}>
+              <P style={typography.textBold}>Total Sites</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {totalSites}
+              </P>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Completed Sites</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {completedSites}
+              </P>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Progress Sites</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {progressSites}
+              </P>
+            </View>
+          </View>
+        </CardFullWidth>
 
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
@@ -377,9 +399,7 @@ export default function DashboardScreen({ navigation }) {
           onChange={handleDateChange}
         />
       )}
-      {showBottomSheet && (
-        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
-      )}
+      {showBottomSheet && <Filter />}
     </ContainerComponent>
   );
 }
