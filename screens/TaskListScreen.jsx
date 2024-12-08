@@ -28,9 +28,7 @@ export default function TaskListScreen({ navigation }) {
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const tasks = useSelector((state) => state.tasks?.tasks || []);
 
-  useEffect(() => {
-    console.log(tasks)
-  }, [tasks]);
+  useEffect(() => {}, [tasks]);
 
   const handleViewTask = (task) => {
     dispatch(viewTask(task.id));
@@ -48,14 +46,13 @@ export default function TaskListScreen({ navigation }) {
         <View style={{ flexDirection: "row", padding: 16 }}>
           <View style={{ flex: 1 }}>
             <H5 style={[typography.textBold]}>{item.project.project_name}</H5>
-            {["task_name", "status", "start_date", "end_date"].map(
-              (field) => (
-                <P key={field} style={{ fontSize: 14, color: "#020409" }}>
-                  {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${item[field]
-                    }`}
-                </P>
-              )
-            )}
+            {["task_name", "status", "start_date", "end_date"].map((field) => (
+              <P key={field} style={{ fontSize: 14, color: "#020409" }}>
+                {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${
+                  item[field]
+                }`}
+              </P>
+            ))}
           </View>
         </View>
       </Card>

@@ -91,12 +91,9 @@ export default function DashboardScreen({ navigation }) {
   };
 
   const closeFilter = () => {
-    setShowBottomSheet(!showBottomSheet)
-  }
-  const applyFilterFromRedux = (...args) => {
-    console.log(args)
-
-  }
+    setShowBottomSheet(!showBottomSheet);
+  };
+  const applyFilterFromRedux = (...args) => {};
   return (
     <ContainerComponent>
       <View
@@ -380,7 +377,9 @@ export default function DashboardScreen({ navigation }) {
           onChange={handleDateChange}
         />
       )}
-      {showBottomSheet && <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />}
+      {showBottomSheet && (
+        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
+      )}
     </ContainerComponent>
   );
 }
