@@ -9,6 +9,7 @@ import { H5, P } from "../components/text";
 import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
+import NoRecord from "./NoRecord";
 import {
   viewTask,
   // initializeTasks
@@ -36,11 +37,11 @@ export default function TaskListScreen({ navigation }) {
     navigation.navigate("taskListFormScreen");
   };
   const { t } = useTranslation();
-  
-    const closeFilter = () => {
-      setShowBottomSheet(!showBottomSheet);
-    };
-    const applyFilterFromRedux = (...args) => {};
+
+  const closeFilter = () => {
+    setShowBottomSheet(!showBottomSheet);
+  };
+  const applyFilterFromRedux = (...args) => {};
 
   const renderListItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleViewTask(item)} key={item.id}>
@@ -65,41 +66,33 @@ export default function TaskListScreen({ navigation }) {
       </Card>
     </TouchableOpacity>
   );
-
   return (
     <ContainerComponent>
       <MyHeader title={t("task_list")} isBack={true} hasIcon={true} />
-      <MyFlatList
-        data={tasks}
-        renderItem={renderListItem}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={[spacing.mh2, spacing.mt1]}
-        ListHeaderComponent={() => (
-          <View
-            style={[
-              spacing.mv4,
-              styles.row,
-              spacing.mh1,
-              { alignItems: "center" },
-            ]}
-          >
-            <SearchBar
-              placeholder="Search"
-              style={{ width: SCREEN_WIDTH - 70 }}
-            />
-            <Button
-              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
-              onPress={() => setShowBottomSheet(!showBottomSheet)}
-            >
-              <Ionicons
-                name="options-outline"
-                size={ICON_MEDIUM}
-                color={LIGHT}
-              />
-            </Button>
-          </View>
-        )}
-      />
+
+      <View
+        style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}
+      >
+        <SearchBar placeholder="Search" style={{ width: SCREEN_WIDTH - 70 }} />
+        <Button
+          style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
+          onPress={() => setShowBottomSheet(!showBottomSheet)}
+        >
+          <Ionicons name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+        </Button>
+      </View>
+
+      {tasks.length > 0 ? (
+        <MyFlatList
+          data={tasks}
+          renderItem={renderListItem}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={[spacing.mh2, spacing.mt1]}
+        />
+      ) : (
+        <NoRecord msg={t("No tasks available !")} />
+      )}
+
       {showBottomSheet && (
         <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
       )}
