@@ -28,6 +28,7 @@ import {
   ProjectcardsForDashboard,
   projects,
   totalsitesData,
+  targetManagementData,
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -337,6 +338,42 @@ export default function DashboardScreen({ navigation }) {
                 {t("Pending")}
               </P>
             </View>
+
+            {targetManagementData.map((data) => (
+              <View
+                key={data.id}
+                style={{
+                  flexDirection: "row",
+                  paddingVertical: 10,
+                  borderBottomWidth: 0.5,
+                }}
+              >
+                <P
+                  style={[
+                    typography.textBold,
+                    { flex: 1, textAlign: "center" },
+                  ]}
+                >
+                  {data.total}
+                </P>
+                <P
+                  style={[
+                    typography.textBold,
+                    { flex: 1, textAlign: "center" },
+                  ]}
+                >
+                  {data.completed}
+                </P>
+                <P
+                  style={[
+                    typography.textBold,
+                    { flex: 1, textAlign: "center" },
+                  ]}
+                >
+                  {data.pending}
+                </P>
+              </View>
+            ))}
           </View>
         </CardFullWidth>
 

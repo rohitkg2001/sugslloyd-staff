@@ -468,3 +468,9 @@ export const staff = {
   createdAt: "",
   updatedAt: "",
 };
+
+// data/targetManagementData.js
+
+export const targetManagementData = [
+  { id: 1, total: 1, completed: 1, pending: 1 },
+];
