@@ -298,6 +298,50 @@ export default function DashboardScreen({ navigation }) {
 
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="tennisball-outline"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 120 }]}>
+              {t("Target Management")}
+            </H5>
+          </View>
+
+          <View style={[spacing.bbw05, spacing.mv2]} />
+
+          <View style={{ flexDirection: "column" }}>
+            <View
+              style={[
+                typography.textBold,
+                spacing.bbw05,
+                spacing.pv3,
+                {
+                  flexDirection: "row",
+                },
+              ]}
+            >
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Total")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Completed")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Pending")}
+              </P>
+            </View>
+          </View>
+        </CardFullWidth>
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
             <Icon name="card-outline" size={ICON_LARGE} color={PRIMARY_COLOR} />
             <H5 style={[typography.textBold, { marginRight: 230 }]}>Sites</H5>
           </View>

@@ -87,6 +87,11 @@ export const menuItems = [
     page: "totalProjectsScreen",
   },
   {
+    label: "Target Management",
+    icon: "tennisball-outline",
+    page: "",
+  },
+  {
     label: "site_management_title",
     icon: "map-outline",
     page: "totalSitesScreen",
