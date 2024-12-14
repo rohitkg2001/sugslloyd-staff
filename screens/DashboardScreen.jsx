@@ -309,19 +309,24 @@ export default function DashboardScreen({ navigation }) {
             </H5>
           </View>
 
-          <View style={[spacing.bbw05, spacing.mv2]} />
+          <View style={[spacing.bbw05, spacing.mv1]} />
 
           <View style={{ flexDirection: "column" }}>
             <View
               style={[
                 typography.textBold,
                 spacing.bbw05,
-                spacing.pv3,
+                spacing.pv2,
                 {
                   flexDirection: "row",
                 },
               ]}
             >
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Site Engineer")}
+              </P>
               <P
                 style={[typography.textBold, { flex: 1, textAlign: "center" }]}
               >
@@ -348,6 +353,14 @@ export default function DashboardScreen({ navigation }) {
                   borderBottomWidth: 0.5,
                 }}
               >
+                <P
+                  style={[
+                    typography.textBold,
+                    { flex: 1, textAlign: "center" },
+                  ]}
+                >
+                  {data.siteengineer}
+                </P>
                 <P
                   style={[
                     typography.textBold,

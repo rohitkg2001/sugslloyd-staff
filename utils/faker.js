@@ -89,7 +89,7 @@ export const menuItems = [
   {
     label: "Target Management",
     icon: "tennisball-outline",
-    page: "",
+    page: "targetManagementScreen",
   },
   {
     label: "site_management_title",
@@ -473,4 +473,14 @@ export const staff = {
 
 export const targetManagementData = [
   { id: 1, total: 1, completed: 1, pending: 1 },
+];
+
+export const projectDetails = [
+  {
+    id: 1,
+    projectName: "Project A",
+    totalSites: 5,
+    allocatedTo: "Bittu ",
+    deadline: "2024-12-31",
+  },
 ];
