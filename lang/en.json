@@ -46,13 +46,14 @@
     "site_location": "Location",
     "site_Projectcode": "Project Serial Code",
     "site_name": "Site Name",
-    "site_projectcapacity": "Project Capacity",
+    "site_projectcapacity": "Project Capacity (kw)",
     "site_canumber": "CA Number",
     "site_ContactNo": "Contact No.",
     "site_I&CVendorName": "I & C Vendor Name",
     "no_site_msg": "Oops! There are no sites data available. Start creating or contact admin",
     "total_site_screen_msg": "You cannot delete this site. Please contact Admin!",
     "create_site": "Create Site",
+    "create_project" : "Create Project",
     "view_site": "View Sites",
     "site_management": "Site Management",
     "vendor_details": "Vendor Details",
@@ -142,6 +143,7 @@
     "password": "Password",
     "confirm_password": "Confirm Password",
     "first_name": "First Name",
-    "last_name": "Last Name"
+    "last_name": "Last Name" ,
+    "rate" : "Rate(per kw including all taxes and duties in rupees)" 
   }
 }

@@ -30,7 +30,7 @@ const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="loginScreen"
+      initialRouteName="formScreen"
       screenOptions={{
         headerShown: false,
       }}
