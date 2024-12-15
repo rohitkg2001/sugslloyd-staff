@@ -35,7 +35,13 @@ export default function InventoryScreen({ navigation }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { t } = useTranslation();
-  const { inventory } = useSelector(state => state.inventory)
+  const { inventory } = useSelector( ( state ) => state.inventory );
+  
+
+   const closeFilter = () => {
+     setShowBottomSheet(!showBottomSheet);
+   };
+   const applyFilterFromRedux = (...args) => {};
 
   const handleDateChange = (event, date) => {
     if (event.type === "set") {
@@ -58,10 +64,8 @@ export default function InventoryScreen({ navigation }) {
     setSelectedItem(itemDetails);
   };
 
-  useEffect(() => {
-    console.log(inventory)
-  }, [inventory])
 
+  useEffect(() => {}, [inventory]);
 
   return (
     <ContainerComponent>
@@ -150,7 +154,9 @@ export default function InventoryScreen({ navigation }) {
       >
         <Ionicons name="add" size={28} color="white" />
       </Button>
-      {showBottomSheet && <Filter />}
+      {showBottomSheet && (
+        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
+      )}
     </ContainerComponent>
   );
 }

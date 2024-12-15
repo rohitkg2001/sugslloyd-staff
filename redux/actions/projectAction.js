@@ -12,7 +12,7 @@ import {
 export const fetchProjects = () => async (dispatch) => {
   const response = await fetch(`${BASE_URL}/api/projects`);
   const data = await response.json();
-  console.log(data);
+
   dispatch({
     type: FETCH_PROJECTS,
     payload: data,
@@ -72,7 +72,6 @@ export const addProject = (project) => async (dispatch) => {
     dispatch({ type: ADD_PROJECT, payload: data.project });
     return true;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };

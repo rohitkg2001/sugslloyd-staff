@@ -27,6 +27,7 @@ import {
   vendorCardForDashboard,
   ProjectcardsForDashboard,
   projects,
+  totalsitesData,
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -37,6 +38,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProjects,
   getProjectCounts,
+  viewProject,
 } from "../redux/actions/projectAction";
 
 export default function DashboardScreen({ navigation }) {
@@ -50,6 +52,12 @@ export default function DashboardScreen({ navigation }) {
   const [totalVendors, setTotalVendors] = useState(0);
   const [activeVendors, setActiveVendors] = useState(0);
   const [inActiveVendors, setInActiveVendors] = useState(0);
+  const [installation, setInstallation] = useState(0);
+  const [rmsStatus, setRmsStatus] = useState(0);
+  const [finalInspection, setFinalInspection] = useState(0);
+  const [totalSites, setTotalSites] = useState(0);
+  const [completedSites, setCompletedSites] = useState(0);
+  const [progressSites, setProgressSites] = useState(0);
   const { firstName } = useSelector((state) => state.staff);
   const projectsArray = useSelector((state) => state.project?.projects);
   const [projectsArr, setProjectsArr] = useState([]);
@@ -89,13 +97,18 @@ export default function DashboardScreen({ navigation }) {
     }
   };
 
+  const showCalendar = () => {
+    setShowDatePicker(true);
+  };
   const closeFilter = () => {
-    setShowBottomSheet(!showBottomSheet)
-  }
-  const applyFilterFromRedux = (...args) => {
-    console.log(args)
+    setShowBottomSheet(!showBottomSheet);
+  };
+  const applyFilterFromRedux = (...args) => { };
 
-  }
+  const handleViewDetails = (item) => {
+    dispatch(viewProject(item));
+    navigation.navigate("ViewDetailScreen", { formType: "project" });
+  };
   return (
     <ContainerComponent>
       <View
@@ -172,7 +185,6 @@ export default function DashboardScreen({ navigation }) {
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
         </View>
-
         <View
           style={[
             styles.row,
@@ -206,96 +218,6 @@ export default function DashboardScreen({ navigation }) {
           numColumns={2}
           contentContainerStyle={spacing.mv4}
         />
-
-        <MyFlatList
-          data={siteCardsForDashboard}
-          renderItem={({ item, index }) => {
-            return (
-              <StatCard
-                key={item.id}
-                backgroundColor={item.backgroundColor}
-                tasks={item.count}
-                status={t(item.name)}
-                onPress={() =>
-                  navigation.navigate(item.page, {
-                    pageTitle: item.name,
-                    data: item.data,
-                  })
-                }
-              />
-            );
-          }}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
-        />
-
-        <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
-            <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              {t("all_task_overview")}
-            </H5>
-          </View>
-          <View style={[spacing.bbw05, spacing.mv1]} />
-          <View
-            style={[
-              styles.row,
-              { justifyContent: "space-between", paddingVertical: 10 },
-            ]}
-          >
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("installation")}</P>
-              <P style={spacing.ml2}>2</P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("rms_status")}</P>
-              <P style={spacing.ml2}>3</P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("final_inspection")}</P>
-              <P style={spacing.ml2}>3</P>
-            </View>
-          </View>
-        </CardFullWidth>
-
-        <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Icon
-              name="person-circle"
-              size={ICON_LARGE}
-              color={PRIMARY_COLOR}
-            />
-            <H5 style={[typography.textBold, { marginRight: 120 }]}>Vendors</H5>
-          </View>
-          <View style={[spacing.bbw05, spacing.mv2]} />
-          <View
-            style={[
-              styles.row,
-              { justifyContent: "space-between", paddingVertical: 10 },
-            ]}
-          >
-            <View style={{ alignItems: "center", textAlign: "center" }}>
-              <P style={typography.textBold}>Total Vendors</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>
-                {totalVendors}
-              </P>
-            </View>
-
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Active</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>
-                {activeVendors}
-              </P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Inactive</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>
-                {inActiveVendors}
-              </P>
-            </View>
-          </View>
-        </CardFullWidth>
-
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -344,8 +266,9 @@ export default function DashboardScreen({ navigation }) {
             </View>
 
             {projectsArr.map((project) => (
-              <View
+              <TouchableOpacity
                 key={project.id}
+                onPress={() => handleViewDetails(project)}
                 style={[spacing.bbw05, spacing.pv3, { flexDirection: "row" }]}
               >
                 <P
@@ -368,8 +291,111 @@ export default function DashboardScreen({ navigation }) {
                 >
                   {project.pending_sites || 0}
                 </P>
-              </View>
+              </TouchableOpacity>
             ))}
+          </View>
+        </CardFullWidth>
+
+        {/* <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon name="card-outline" size={ICON_LARGE} color={PRIMARY_COLOR} />
+            <H5 style={[typography.textBold, { marginRight: 230 }]}>Sites</H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv2]} />
+
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <View style={{ alignItems: "center", textAlign: "center" }}>
+              <P style={typography.textBold}>Total Sites</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {totalSites}
+              </P>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Completed Sites</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {completedSites}
+              </P>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Progress Sites</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {progressSites}
+              </P>
+            </View>
+          </View>
+        </CardFullWidth> */}
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>
+              {t("all_task_overview")}
+            </H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv1]} />
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("installation")}</P>
+              <P style={spacing.ml2}>{installation}</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("rms_status")}</P>
+              <P style={spacing.ml2}>{rmsStatus}</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("final_inspection")}</P>
+              <P style={spacing.ml2}>{finalInspection}</P>
+            </View>
+          </View>
+        </CardFullWidth>
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="person-circle"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 200 }]}>Vendors</H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv2]} />
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <View style={{ alignItems: "center", textAlign: "center" }}>
+              <P style={typography.textBold}>Total Vendors</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {totalVendors}
+              </P>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Active</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {activeVendors}
+              </P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>Inactive</P>
+              <P style={[typography.font20, typography.textBold, spacing.m2]}>
+                {inActiveVendors}
+              </P>
+            </View>
           </View>
         </CardFullWidth>
       </ScrollView>
@@ -382,7 +408,9 @@ export default function DashboardScreen({ navigation }) {
           onChange={handleDateChange}
         />
       )}
-      {showBottomSheet && <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />}
+      {showBottomSheet && (
+        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
+      )}
     </ContainerComponent>
   );
 }

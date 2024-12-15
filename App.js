@@ -101,9 +101,8 @@ export default function App() {
     registerForPushNotificationsAsync()
       .then((token) => setExpoPushToken(token ?? ""))
       .catch((error) => setExpoPushToken(`${error}`));
-    sendPushNotification(expoPushToken)
-      .then(() => console.log(1))
-      .catch((err) => console.log(err));
+    sendPushNotification(expoPushToken);
+
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
         setNotification(notification);

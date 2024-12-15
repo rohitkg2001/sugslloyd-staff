@@ -42,9 +42,12 @@ export default function TotalSitesScreen({ navigation, route }) {
     pageTitle: t("site_management"),
     data: sites,
   };
+  const closeFilter = () => {
+    setShowBottomSheet(!showBottomSheet);
+  };
+    const applyFilterFromRedux = (...args) => {};
 
   useEffect(() => {
-    console.log(sites)
     dispatch(fetchSites());
   }, [dispatch]);
 
@@ -90,7 +93,7 @@ export default function TotalSitesScreen({ navigation, route }) {
   };
 
   if (loading) {
-    return <ActivityIndicator size="large" />
+    return <ActivityIndicator size="large" />;
   }
 
   return (
@@ -145,7 +148,9 @@ export default function TotalSitesScreen({ navigation, route }) {
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
-      {showBottomSheet && <Filter />}
+      {showBottomSheet && (
+        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
+      )}
     </ContainerComponent>
   );
 }

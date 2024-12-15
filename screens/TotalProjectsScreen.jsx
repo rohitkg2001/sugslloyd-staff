@@ -66,7 +66,10 @@ export default function TotalProjectsScreen({ navigation }) {
       formType: "project",
     });
   };
-
+  const closeFilter = () => {
+    setShowBottomSheet(!showBottomSheet);
+  };
+  const applyFilterFromRedux = (...args) => {};
   return (
     <ContainerComponent>
       <MyHeader title={t("total_projects")} isBack={true} hasIcon={true} />
@@ -124,7 +127,10 @@ export default function TotalProjectsScreen({ navigation }) {
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
-      {showBottomSheet && <Filter />}
+      {/* {showBottomSheet && <Filter />} */}
+      {showBottomSheet && (
+        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
+      )}
     </ContainerComponent>
   );
 }
