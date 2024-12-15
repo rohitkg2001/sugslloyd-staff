@@ -482,9 +482,8 @@ export const targetManagementData = [
     total: 1,
     completed: 1,
     pending: 1,
-    pending: 1,
     completedPhotos: [
-      "https://example.com/photo1.jpg",
+      "https://preview.redd.it/some-images-generated-using-the-new-bing-image-creator-v0-zfohxnf8t3pa1.jpg?width=1024&format=pjpg&auto=webp&s=33274aadae0e0332e60dd15c87617ea6652365b5",
       "https://example.com/photo2.jpg",
     ],
     incompleteRemark: "Delay due to weather conditions",
