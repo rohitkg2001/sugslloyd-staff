@@ -109,8 +109,8 @@ const TargetManagementForm = () => {
         <MyTextInput
           title="Project Name"
           value={project_name}
-          onChangeText={setProjectName}
-          placeholder="Enter Project Name"
+          placeholder="Project Name"
+          editable={false}
         />
 
         <View>

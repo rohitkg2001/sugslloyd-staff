@@ -472,15 +472,34 @@ export const staff = {
 // data/targetManagementData.js
 
 export const targetManagementData = [
-  { id: 1, total: 1, completed: 1, pending: 1 },
-];
-
-export const projectDetails = [
   {
     id: 1,
-    projectName: "Project A",
-    totalSites: 5,
-    allocatedTo: "Bittu ",
+    projectName: "Breada",
+    allocatedTo: "Akash",
     deadline: "2024-12-31",
+    totalSites: 5,
+    siteengineer: "Akash",
+    total: 1,
+    completed: 1,
+    pending: 1,
+    pending: 1,
+    completedPhotos: [
+      "https://example.com/photo1.jpg",
+      "https://example.com/photo2.jpg",
+    ],
+    incompleteRemark: "Delay due to weather conditions",
+  },
+  {
+    id: 2,
+    projectName: "Solar",
+    allocatedTo: "Himanshu",
+    deadline: "2024-12-31",
+    totalSites: 4,
+    siteengineer: "Himanshu",
+    total: 1,
+    completed: 1,
+    pending: 1,
+    completedPhotos: ["https://example.com/photo2.jpg"],
+    incompleteRemark: "Shortage of materials",
   },
 ];

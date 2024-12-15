@@ -110,6 +110,7 @@ export default function DashboardScreen({ navigation }) {
     dispatch(viewProject(item));
     navigation.navigate("ViewDetailScreen", { formType: "project" });
   };
+
   return (
     <ContainerComponent>
       <View
@@ -236,12 +237,10 @@ export default function DashboardScreen({ navigation }) {
           <View style={{ flexDirection: "column" }}>
             <View
               style={[
+                styles.row,
                 typography.textBold,
                 spacing.bbw05,
                 spacing.pv3,
-                {
-                  flexDirection: "row",
-                },
               ]}
             >
               <P
@@ -314,12 +313,10 @@ export default function DashboardScreen({ navigation }) {
           <View style={{ flexDirection: "column" }}>
             <View
               style={[
+                styles.row,
                 typography.textBold,
                 spacing.bbw05,
                 spacing.pv2,
-                {
-                  flexDirection: "row",
-                },
               ]}
             >
               <P
@@ -345,47 +342,49 @@ export default function DashboardScreen({ navigation }) {
             </View>
 
             {targetManagementData.map((data) => (
-              <View
+              <TouchableOpacity
                 key={data.id}
-                style={{
-                  flexDirection: "row",
-                  paddingVertical: 10,
-                  borderBottomWidth: 0.5,
-                }}
+                onPress={() =>
+                  navigation.navigate("targetManagementScreen", {
+                    engineerData: data,
+                  })
+                }
               >
-                <P
-                  style={[
-                    typography.textBold,
-                    { flex: 1, textAlign: "center" },
-                  ]}
-                >
-                  {data.siteengineer}
-                </P>
-                <P
-                  style={[
-                    typography.textBold,
-                    { flex: 1, textAlign: "center" },
-                  ]}
-                >
-                  {data.total}
-                </P>
-                <P
-                  style={[
-                    typography.textBold,
-                    { flex: 1, textAlign: "center" },
-                  ]}
-                >
-                  {data.completed}
-                </P>
-                <P
-                  style={[
-                    typography.textBold,
-                    { flex: 1, textAlign: "center" },
-                  ]}
-                >
-                  {data.pending}
-                </P>
-              </View>
+                <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.siteengineer}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.total}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.completed}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.pending}
+                  </P>
+                </View>
+              </TouchableOpacity>
             ))}
           </View>
         </CardFullWidth>
