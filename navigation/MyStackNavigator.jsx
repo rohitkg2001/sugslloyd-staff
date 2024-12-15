@@ -25,12 +25,13 @@ import StockApprovalScreen from "../screens/StockApprovalScreen";
 import ReportScreen from "../screens/ReportScreen";
 import TargetManagementScreen from "../screens/TargetManagementScreen";
 import TargetManagementForm from "../screens/TargetManagementForm";
+import ProjectDetailsScreen from "../screens/ProjectDetailScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="formScreen"
+      initialRouteName="loginScreen"
       screenOptions={{
         headerShown: false,
       }}
@@ -75,6 +76,10 @@ export default function MyStackNavigator() {
       <Stack.Screen
         name="targetmanagementform"
         component={TargetManagementForm}
+      />
+      <Stack.Screen
+        name="projectDetailScreen"
+        component={ProjectDetailsScreen}
       />
     </Stack.Navigator>
   );
