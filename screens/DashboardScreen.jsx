@@ -28,6 +28,7 @@ import {
   ProjectcardsForDashboard,
   projects,
   totalsitesData,
+  targetManagementData,
 } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -109,6 +110,7 @@ export default function DashboardScreen({ navigation }) {
     dispatch(viewProject(item));
     navigation.navigate("ViewDetailScreen", { formType: "project" });
   };
+
   return (
     <ContainerComponent>
       <View
@@ -235,12 +237,10 @@ export default function DashboardScreen({ navigation }) {
           <View style={{ flexDirection: "column" }}>
             <View
               style={[
+                styles.row,
                 typography.textBold,
                 spacing.bbw05,
                 spacing.pv3,
-                {
-                  flexDirection: "row",
-                },
               ]}
             >
               <P
@@ -297,6 +297,99 @@ export default function DashboardScreen({ navigation }) {
         </CardFullWidth>
 
         {/* <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="tennisball-outline"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 120 }]}>
+              {t("Target Management")}
+            </H5>
+          </View>
+
+          <View style={[spacing.bbw05, spacing.mv1]} />
+
+          <View style={{ flexDirection: "column" }}>
+            <View
+              style={[
+                styles.row,
+                typography.textBold,
+                spacing.bbw05,
+                spacing.pv2,
+              ]}
+            >
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Site Engineer")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Total")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Completed")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Pending")}
+              </P>
+            </View>
+
+            {targetManagementData.map((data) => (
+              <TouchableOpacity
+                key={data.id}
+                onPress={() =>
+                  navigation.navigate("targetManagementScreen", {
+                    engineerData: data,
+                  })
+                }
+              >
+                <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.siteengineer}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.total}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.completed}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.pending}
+                  </P>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </CardFullWidth>
+
+        <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon name="card-outline" size={ICON_LARGE} color={PRIMARY_COLOR} />
             <H5 style={[typography.textBold, { marginRight: 230 }]}>Sites</H5>

@@ -87,6 +87,11 @@ export const menuItems = [
     page: "totalProjectsScreen",
   },
   {
+    label: "Target Management",
+    icon: "tennisball-outline",
+    page: "targetManagementScreen",
+  },
+  {
     label: "site_management_title",
     icon: "map-outline",
     page: "totalSitesScreen",
@@ -463,3 +468,37 @@ export const staff = {
   createdAt: "",
   updatedAt: "",
 };
+
+// data/targetManagementData.js
+
+export const targetManagementData = [
+  {
+    id: 1,
+    projectName: "Breada",
+    allocatedTo: "Akash",
+    deadline: "2024-12-31",
+    totalSites: 5,
+    siteengineer: "Akash",
+    total: 1,
+    completed: 1,
+    pending: 1,
+    completedPhotos: [
+      "https://preview.redd.it/some-images-generated-using-the-new-bing-image-creator-v0-zfohxnf8t3pa1.jpg?width=1024&format=pjpg&auto=webp&s=33274aadae0e0332e60dd15c87617ea6652365b5",
+      "https://example.com/photo2.jpg",
+    ],
+    incompleteRemark: "Delay due to weather conditions",
+  },
+  {
+    id: 2,
+    projectName: "Solar",
+    allocatedTo: "Himanshu",
+    deadline: "2024-12-31",
+    totalSites: 4,
+    siteengineer: "Himanshu",
+    total: 1,
+    completed: 1,
+    pending: 1,
+    completedPhotos: ["https://example.com/photo2.jpg"],
+    incompleteRemark: "Shortage of materials",
+  },
+];
