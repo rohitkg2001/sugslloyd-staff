@@ -10,17 +10,20 @@ import {
 } from "../constant";
 
 export const fetchProjects = () => async (dispatch) => {
-  const response = await fetch(`${BASE_URL}/api/projects`);
-  const data = await response.json();
-
-  dispatch({
-    type: FETCH_PROJECTS,
-    payload: data,
-  });
+  try {
+    const response = await fetch(`${BASE_URL}/api/project`);
+    const data = await response.json();
+    dispatch({
+      type: FETCH_PROJECTS,
+      payload: data,
+    });
+  } catch (error) {
+    console.error(error)
+  }
 };
 
 export const getProjectCounts = async () => {
-  const response = await fetch(`${BASE_URL}/api/projects/`);
+  const response = await fetch(`${BASE_URL}/api/project/`);
   const data = await response.json();
   const projectCounts = data.length;
   return [
@@ -40,9 +43,18 @@ export const searchPjerocts = (searchText) => ({
 });
 
 export const viewProject = (projectId) => async (dispatch) => {
-  const response = await fetch(`${BASE_URL}/api/projects/${projectId}`);
-  const data = await response.json();
-  dispatch({ type: VIEW_PROJECT, payload: data });
+  try {
+    setTimeout(() => {
+      const getData = async () => {
+        const response = await fetch(`${BASE_URL}/api/project/${projectId}`);
+        const data = await response.json();
+        dispatch({ type: VIEW_PROJECT, payload: data });
+      }
+      getData()
+    }, 1500);
+  } catch (error) {
+    console.error(error)
+  }
 };
 
 export const updateProject = (project) => ({
@@ -61,7 +73,7 @@ export const changeProjectStatus = (projectId, newStatus) => ({
 
 export const addProject = (project) => async (dispatch) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/projects`, {
+    const response = await fetch(`${BASE_URL}/api/project`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
