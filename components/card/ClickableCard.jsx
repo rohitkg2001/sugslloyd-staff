@@ -16,6 +16,8 @@ export default function ClickableCard({
   isVendor = false,
   isProject = false,
   isSiteData = false,
+  isInventoryData = false,
+  isTargetManagementData,
 }) {
   return (
     <TouchableOpacity>
@@ -78,8 +80,34 @@ export default function ClickableCard({
                 <P style={{ fontSize: 14 }}>State: {item.state}</P>
                 <P style={{ fontSize: 14 }}>vendor: {item.vendor}</P>
                 <P style={{ fontSize: 14 }}>Contact No: {item.contactNo}</P>
-
-                {/* TODO: Add vendor specific changes */}
+              </>
+            )}
+            {isInventoryData && (
+              <>
+                <H6 style={[typography.textBold]}>
+                  Product Name: {item.productName}
+                </H6>
+                <P style={{ fontSize: 14 }}>Brand: {item.brand}</P>
+                <P style={{ fontSize: 14 }}>
+                  Initial Quantity: {item.initialQuantity}
+                </P>
+                <P style={{ fontSize: 14 }}>
+                  Delivery Date: {item.deliveryDate}
+                </P>
+                <P style={{ fontSize: 14 }}>
+                  Allocation Officer: {item.allocationOfficer}
+                </P>
+              </>
+            )}
+            {isTargetManagementData && (
+              <>
+                <H6 style={[typography.textBold]}>
+                  Project Name: {item.projectName}
+                </H6>
+                <P style={{ fontSize: 14 }}>
+                  Site Engineer: {item.siteengineer}
+                </P>
+                <P style={{ fontSize: 14 }}>Total Sites: {item.totalSites}</P>
               </>
             )}
           </View>

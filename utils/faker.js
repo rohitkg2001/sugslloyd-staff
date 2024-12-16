@@ -505,7 +505,7 @@ export const targetManagementData = [
 
 export const sitesData = [
   {
-    siteName: "Site A",
+    siteName: "Breda",
     location: "123 Street",
     city: "Patna",
     state: "Bihar",
@@ -513,7 +513,7 @@ export const sitesData = [
     contactNo: "8723095634",
   },
   {
-    siteName: "Site B",
+    siteName: "Solar",
     location: "456 Avenue",
     state: "Bihar",
     city: "samastipur",

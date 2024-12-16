@@ -24,12 +24,7 @@ const VendorDetailScreen = ({ route, navigation }) => {
   return (
     <ContainerComponent>
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-        <MyHeader
-          title={t("vendor_details")}
-          isBack={true}
-          hasIcon={true}
-          onIconPress={() => setIsMenuVisible(!isMenuVisible)}
-        />
+        <MyHeader title={t("vendor_details")} isBack={true} hasIcon={true} />
         <ScrollView>
           {renderDetailRow("Vendor Name", site.name)}
           {renderDetailRow("Mail ID", site.email)}

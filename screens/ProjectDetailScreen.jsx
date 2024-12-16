@@ -1,16 +1,10 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
-import {
-  SCREEN_WIDTH,
-  spacing,
-  typography,
-  styles,
-  TouchableOpacity,
-} from "../styles";
+import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import { H5 } from "../components/text";
 import { useTranslation } from "react-i18next";
-import { sitesData } from "../utils/faker";
+import { sitesData, inventoryData, targetManagementData } from "../utils/faker";
 import MyFlatList from "../components/utility/MyFlatList";
 import ClickableCard from "../components/card/ClickableCard";
 
@@ -37,15 +31,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     </>
   );
 
-  const renderDetailRowForTab = (label, value) => (
-    <View style={[styles.row, spacing.pv3]}>
-      <H5 style={[typography.textBold, { flex: 1 }]}>{label}</H5>
-      <H5 style={[typography.font16, { textAlign: "right", flex: 2 }]}>
-        {value}
-      </H5>
-    </View>
-  );
-
   const renderSitesTab = () => (
     <MyFlatList
       data={sitesData}
@@ -59,16 +44,49 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           isSiteData={true}
           hideIcons={true}
           showArrow={true}
-          handleViewDetails={() => console.log("Navigating to site:", item)}
         />
       )}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
     />
   );
 
-  const renderInventoryTab = () => <View style={spacing.mt4}></View>;
+  const renderInventoryTab = () => (
+    <MyFlatList
+      data={inventoryData}
+      keyExtractor={(item) =>
+        item?.id ? item.id.toString() : `${Math.random()}`
+      }
+      renderItem={({ item, index }) => (
+        <ClickableCard
+          key={item.id || index}
+          item={item}
+          isInventoryData={true}
+          hideIcons={true}
+          showArrow={true}
+        />
+      )}
+      ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
+    />
+  );
 
-  const renderTargetTab = () => <View style={spacing.mt4}></View>;
+  const renderTargetTab = () => (
+    <MyFlatList
+      data={targetManagementData}
+      keyExtractor={(item) =>
+        item?.id ? item.id.toString() : `${Math.random()}`
+      }
+      renderItem={({ item, index }) => (
+        <ClickableCard
+          key={item.id || index}
+          item={item}
+          isTargetManagementData={true}
+          hideIcons={true}
+          showArrow={true}
+        />
+      )}
+      ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
+    />
+  );
 
   // Main render function for tabs
   const renderActiveTab = () => {
@@ -86,11 +104,10 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   return (
     <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-      <MyHeader title={t("project_details")} isBack={true} />
+      <MyHeader title={t("project_details")} isBack={true} hasIcon={true} />
       <ScrollView>
         {renderProjectDetails()}
 
-        {/* Tabs */}
         <View>
           <ScrollView
             horizontal
