@@ -46,7 +46,7 @@ export const viewProject = (projectId) => async (dispatch) => {
   try {
     setTimeout(() => {
       const getData = async () => {
-        const response = await fetch(`${BASE_URL}/api/project/${projectId}`);
+        const response = await fetch(`${BASE_URL}/api/projects/${projectId}`);
         const data = await response.json();
         dispatch({ type: VIEW_PROJECT, payload: data });
       };
