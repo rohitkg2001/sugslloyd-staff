@@ -13,6 +13,7 @@ import MyButton from "../components/buttons/MyButton";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { P } from "../components/text";
+import MyPickerInput from "../components/input/MyPickerInput";
 
 const TargetManagementForm = () => {
   const [project_name, setProjectName] = useState("");
@@ -34,9 +35,9 @@ const TargetManagementForm = () => {
     { label: "Site D", value: "site_d" },
   ]);
   const [engineerOptions, setEngineerOptions] = useState([
-    { label: "Engineer 1", value: "engineer_1" },
-    { label: "Engineer 2", value: "engineer_2" },
-    { label: "Engineer 3", value: "engineer_3" },
+    { label: "Mihir kr Mishra", value: "engineer_1" },
+    { label: "Rohit kr Gupta", value: "engineer_2" },
+    { label: "Bittu Pratihast", value: "engineer_3" },
   ]);
 
   const { t } = useTranslation();
@@ -90,11 +91,26 @@ const TargetManagementForm = () => {
     borderRadius: 8,
     padding: 12,
     backgroundColor: "#F0FAF0",
+    zIndex: 10, 
   };
 
   const dropdownTextStyle = {
     fontSize: 16,
     color: "#333",
+  };
+
+  const toggleSiteDropdown = () => {
+    setOpenSiteDropdown(!openSiteDropdown);
+    if (openEngineerDropdown) {
+      setOpenEngineerDropdown(false); 
+    }
+  };
+
+  const toggleEngineerDropdown = () => {
+    setOpenEngineerDropdown(!openEngineerDropdown);
+    if (openSiteDropdown) {
+      setOpenSiteDropdown(false); 
+    }
   };
 
   return (
@@ -106,13 +122,6 @@ const TargetManagementForm = () => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <MyTextInput
-          title="Project Name"
-          value={project_name}
-          placeholder="Project Name"
-          editable={false}
-        />
-
         <View>
           <P style={{ fontSize: 14, fontWeight: "bold", marginBottom: 8 }}>
             Select Site
@@ -131,21 +140,20 @@ const TargetManagementForm = () => {
             searchable={true}
             searchPlaceholder="Search Site"
             mode="BADGE"
+            onOpen={toggleSiteDropdown}
           />
         </View>
 
-        <MyTextInput
-          title="Category"
-          value={category}
-          onChangeText={setCategory}
-          placeholder="Enter Category"
-        />
-
-        <MyTextInput
-          title="Name"
-          value={name}
-          onChangeText={setName}
-          placeholder="Enter Name"
+        <MyPickerInput
+          title="Activity"
+          Value={category}
+          onChange={(value) => setCategory(value)}
+          options={[
+            { label: "Installation", value: "Category 1" },
+            { label: "RMS", value: "Category 2" },
+            { label: "Add Team", value: "Category 3" },
+            { label: "Billing", value: "Category 4" },
+          ]}
         />
 
         <View>
@@ -164,8 +172,10 @@ const TargetManagementForm = () => {
             textStyle={dropdownTextStyle}
             searchable={true}
             searchPlaceholder="Search Engineer"
+            onOpen={toggleEngineerDropdown}
           />
         </View>
+
         <TouchableOpacity onPress={() => setShowDatePicker("start")}>
           <MyTextInput
             title={t("Start Date")}

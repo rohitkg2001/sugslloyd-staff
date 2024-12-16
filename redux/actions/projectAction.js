@@ -23,7 +23,7 @@ export const fetchProjects = () => async (dispatch) => {
 };
 
 export const getProjectCounts = async () => {
-  const response = await fetch(`${BASE_URL}/api/project/`);
+  const response = await fetch(`${BASE_URL}/api/projects/`);
   const data = await response.json();
   const projectCounts = data.length;
   return [
@@ -73,7 +73,7 @@ export const changeProjectStatus = (projectId, newStatus) => ({
 
 export const addProject = (project) => async (dispatch) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/project`, {
+    const response = await fetch(`${BASE_URL}/api/projects`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
