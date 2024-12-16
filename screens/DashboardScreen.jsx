@@ -107,6 +107,7 @@ export default function DashboardScreen({ navigation }) {
   const applyFilterFromRedux = (...args) => {};
 
   const handleViewDetails = (item) => {
+    console.log(item);
     dispatch(viewProject(item));
     navigation.navigate("ViewDetailScreen", { formType: "project" });
   };
@@ -205,7 +206,7 @@ export default function DashboardScreen({ navigation }) {
             </H5>
           </Button>
         </View>
-        <MyFlatList
+        {/* <MyFlatList
           data={projectCounts}
           renderItem={({ item }) => (
             <StatCard
@@ -219,7 +220,7 @@ export default function DashboardScreen({ navigation }) {
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
           contentContainerStyle={spacing.mv4}
-        />
+        /> */}
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -268,7 +269,7 @@ export default function DashboardScreen({ navigation }) {
             {projectsArr.map((project) => (
               <TouchableOpacity
                 key={project.id}
-                onPress={() => handleViewDetails(project)}
+                onPress={() => handleViewDetails(project.id)}
                 style={[spacing.bbw05, spacing.pv3, { flexDirection: "row" }]}
               >
                 <P
@@ -389,7 +390,7 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
 
-        <CardFullWidth backgroundColor={LIGHT}>
+        {/* <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon name="card-outline" size={ICON_LARGE} color={PRIMARY_COLOR} />
             <H5 style={[typography.textBold, { marginRight: 230 }]}>Sites</H5>
@@ -423,7 +424,7 @@ export default function DashboardScreen({ navigation }) {
               </P>
             </View>
           </View>
-        </CardFullWidth>
+        </CardFullWidth> */}
 
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>

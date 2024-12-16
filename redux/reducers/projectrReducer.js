@@ -25,11 +25,7 @@ export const projectReducer = (state = initialState, action) => {
       };
 
     case FETCH_PROJECTS:
-      return {
-        ...state,
-        projects: action.payload,
-        projectCount: action.payload.length,
-      };
+      return { ...state, projects: action.payload };
     case SEARCH_PROJECTS:
       return {
         ...state,

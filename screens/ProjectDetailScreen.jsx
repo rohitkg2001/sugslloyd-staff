@@ -6,7 +6,7 @@ import { H5 } from "../components/text";
 import { useTranslation } from "react-i18next";
 
 const ProjectDetailsScreen = ({ route, navigation }) => {
-  const { project } = route.params; // Pass project data through route params
+  const { project } = route.params;
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("Sites");
 
