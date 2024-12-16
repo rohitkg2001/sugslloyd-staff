@@ -32,7 +32,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={[spacing.pv4, spacing.ph4]}
         >
-          {["Sites", "Inventory", "Tasks"].map((tab) => (
+          {["Sites", "Inventory", "Target"].map((tab) => (
             <View key={tab} style={[spacing.mh4]}>
               <H5
                 onPress={() => setActiveTab(tab)}

@@ -221,6 +221,7 @@ export default function DashboardScreen({ navigation }) {
           numColumns={2}
           contentContainerStyle={spacing.mv4}
         /> */}
+
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
@@ -269,7 +270,9 @@ export default function DashboardScreen({ navigation }) {
             {projectsArr.map((project) => (
               <TouchableOpacity
                 key={project.id}
-                onPress={() => handleViewDetails(project.id)}
+                onPress={() =>
+                  navigation.navigate("projectDetailScreen", { project })
+                }
                 style={[spacing.bbw05, spacing.pv3, { flexDirection: "row" }]}
               >
                 <P

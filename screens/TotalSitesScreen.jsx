@@ -45,7 +45,7 @@ export default function TotalSitesScreen({ navigation, route }) {
   const closeFilter = () => {
     setShowBottomSheet(!showBottomSheet);
   };
-    const applyFilterFromRedux = (...args) => {};
+  const applyFilterFromRedux = (...args) => {};
 
   useEffect(() => {
     dispatch(fetchSites());
@@ -75,7 +75,7 @@ export default function TotalSitesScreen({ navigation, route }) {
 
   const handleViewDetails = (siteData) => {
     dispatch(viewSite(siteData));
-    navigation.navigate("ViewDetailScreen", { site: siteData });
+    navigation.navigate("siteDetailScreen", { site: siteData });
   };
 
   const handleDelete = () => {
