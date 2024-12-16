@@ -15,6 +15,7 @@ export default function ClickableCard({
   isSite = false,
   isVendor = false,
   isProject = false,
+  isSiteData = false,
 }) {
   return (
     <TouchableOpacity>
@@ -63,6 +64,20 @@ export default function ClickableCard({
                 <H6 style={[typography.textBold]}>{item.name}</H6>
                 <P style={{ fontSize: 14 }}>{item.address}</P>
                 <P style={{ fontSize: 14 }}>{item.contactNo}</P>
+
+                {/* TODO: Add vendor specific changes */}
+              </>
+            )}
+            {isSiteData && (
+              <>
+                <H6 style={[typography.textBold]}>
+                  Site Name: {item.siteName}
+                </H6>
+                <P style={{ fontSize: 14 }}>Location: {item.location}</P>
+                <P style={{ fontSize: 14 }}>City: {item.city}</P>
+                <P style={{ fontSize: 14 }}>State: {item.state}</P>
+                <P style={{ fontSize: 14 }}>vendor: {item.vendor}</P>
+                <P style={{ fontSize: 14 }}>Contact No: {item.contactNo}</P>
 
                 {/* TODO: Add vendor specific changes */}
               </>

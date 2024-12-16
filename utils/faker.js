@@ -502,3 +502,22 @@ export const targetManagementData = [
     incompleteRemark: "Shortage of materials",
   },
 ];
+
+export const sitesData = [
+  {
+    siteName: "Site A",
+    location: "123 Street",
+    city: "Patna",
+    state: "Bihar",
+    vendor: "Vikash",
+    contactNo: "8723095634",
+  },
+  {
+    siteName: "Site B",
+    location: "456 Avenue",
+    state: "Bihar",
+    city: "samastipur",
+    vendor: "rahul",
+    contactNo: "9823764534",
+  },
+];
