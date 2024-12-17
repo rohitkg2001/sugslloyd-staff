@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
-import { H5 } from "../components/text";
+import { H5, H6, P } from "../components/text";
 import { useTranslation } from "react-i18next";
 import { sitesData, inventoryData, targetManagementData } from "../utils/faker";
 import MyFlatList from "../components/utility/MyFlatList";
@@ -14,11 +14,35 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const [activeTab, setActiveTab] = useState("Sites");
 
   const renderDetailRow = (label, value) => (
-    <View style={[styles.row, spacing.pv3]}>
-      <H5 style={[typography.textBold]}>{label}</H5>
-      <H5 style={[typography.font16, { textAlign: "right", flex: 1 }]}>
-        {value}
-      </H5>
+    <View style={[styles.row, spacing.pv1, { position: "relative" }]}>
+      {label !== "Date" && (
+        <H6
+          style={[
+            { textAlign: "left" },
+            label === "Project Name"
+              ? [typography.textBold, typography.font20]
+              : { fontSize: 16 },
+          ]}
+        >
+          {value}
+        </H6>
+      )}
+
+      {label === "Date" && (
+        <H6
+          style={[
+            {
+              textAlign: "right",
+              position: "absolute",
+              right: 0,
+              bottom: 70,
+              fontSize: 16,
+            },
+          ]}
+        >
+          {value}
+        </H6>
+      )}
     </View>
   );
 
@@ -88,7 +112,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     />
   );
 
- 
   const renderActiveTab = () => {
     switch (activeTab) {
       case "Sites":
@@ -112,7 +135,11 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={[spacing.pv5, spacing.ph1 , { paddingLeft: 38 }]}
+            contentContainerStyle={[
+              spacing.pv5,
+              spacing.ph5,
+              // { paddingLeft: 38 },
+            ]}
           >
             {["Sites", "Inventory", "Target"].map((tab) => (
               <View key={tab} style={[spacing.mh5]}>
@@ -134,7 +161,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
                       height: 4,
                       backgroundColor: "#76885B",
                       width: "100%",
-                      marginTop: 4,
+                      marginTop: 10,
                     }}
                   />
                 )}
