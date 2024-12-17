@@ -5,6 +5,7 @@ import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import { H5, H6, P } from "../components/text";
 import MyHeader from "../components/header/MyHeader";
 import { useTranslation } from "react-i18next";
+import { targetManagementData } from "../utils/faker";
 
 const TargetManagementScreen = ({ route }) => {
   const { engineerData } = route.params;
@@ -16,7 +17,7 @@ const TargetManagementScreen = ({ route }) => {
 
       <View style={{ width: SCREEN_WIDTH - 16 }}>
         <ScrollView>
-          {engineerData ? (
+          {targetManagementData ? (
             <>
               {[
                 { title: "Project Name", value: engineerData.projectName },

@@ -28,6 +28,7 @@ import TargetManagementForm from "../screens/TargetManagementForm";
 import ProjectDetailsScreen from "../screens/ProjectDetailScreen";
 import SiteDetailsScreen from "../screens/SiteDetailsScreen";
 import VendorDetailScreen from "../screens/VendorDetailScreen";
+import InventoryDetailsModal from "../components/InventoryDetailsModal";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
@@ -85,6 +86,10 @@ export default function MyStackNavigator() {
       />
       <Stack.Screen name="siteDetailScreen" component={SiteDetailsScreen} />
       <Stack.Screen name="vendorDetailScreen" component={VendorDetailScreen} />
+      <Stack.Screen
+        name="inventoryDetailScreen"
+        component={InventoryDetailsModal}
+      />
     </Stack.Navigator>
   );
 }

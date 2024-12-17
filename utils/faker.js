@@ -510,6 +510,7 @@ export const sitesData = [
     city: "Patna",
     state: "Bihar",
     vendor: "Vikash",
+    siteEngineer: "Amit Kumar",
     contactNo: "8723095634",
   },
   {
@@ -518,6 +519,7 @@ export const sitesData = [
     state: "Bihar",
     city: "samastipur",
     vendor: "rahul",
+    siteEngineer: "Ravi Sharma",
     contactNo: "9823764534",
   },
 ];

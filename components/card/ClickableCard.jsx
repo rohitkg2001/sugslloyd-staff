@@ -10,6 +10,8 @@ export default function ClickableCard({
   handleViewDetails,
   hideIcons,
   showArrow,
+  showView,
+  onEyePress,
   handleDelete,
   handleEdit,
   isSite = false,
@@ -72,42 +74,83 @@ export default function ClickableCard({
             )}
             {isSiteData && (
               <>
-                <H6 style={[typography.textBold]}>
-                  Site Name: {item.siteName}
+                <H6
+                  style={[typography.textBold, typography.font20, spacing.pv1]}
+                >
+                  {item.siteName}
                 </H6>
-                <P style={{ fontSize: 14 }}>Location: {item.location}</P>
-                <P style={{ fontSize: 14 }}>City: {item.city}</P>
-                <P style={{ fontSize: 14 }}>State: {item.state}</P>
-                <P style={{ fontSize: 14 }}>vendor: {item.vendor}</P>
-                <P style={{ fontSize: 14 }}>Contact No: {item.contactNo}</P>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}
+                >
+                  <P style={{ fontSize: 16, flexShrink: 1 }}>{item.location}</P>
+                  <P style={{ fontSize: 14, flexShrink: 1 }}>,{item.city}</P>
+                  <P style={{ fontSize: 14, flexShrink: 1 }}>,{item.state}</P>
+                </View>
+
+                <P style={[spacing.pv2]}>
+                  <H6 style={[typography.textBold, typography.font16]}>
+                    Site Engineer:
+                  </H6>
+
+                  <P style={{ fontSize: 16 }}> {item.siteEngineer}</P>
+                </P>
+
+                <P style={[spacing.pv1]}>
+                  <H6 style={[typography.textBold, typography.font16]}>
+                    Vendor:
+                  </H6>
+
+                  <P style={{ fontSize: 16 }}> {item.vendor}</P>
+                </P>
               </>
             )}
+
             {isInventoryData && (
               <>
-                <H6 style={[typography.textBold]}>
-                  Product Name: {item.productName}
+                <H6 style={[typography.textBold, typography.font20]}>
+                  {item.productName}
                 </H6>
-                <P style={{ fontSize: 14 }}>Brand: {item.brand}</P>
-                <P style={{ fontSize: 14 }}>
-                  Initial Quantity: {item.initialQuantity}
+                <P style={[spacing.pv1]}>
+                  <H6 style={[typography.textBold, typography.font16]}>
+                    Brand:
+                  </H6>
+
+                  <P style={{ fontSize: 16 }}> {item.brand}</P>
                 </P>
-                <P style={{ fontSize: 14 }}>
-                  Delivery Date: {item.deliveryDate}
+                <P style={[spacing.pv1]}>
+                  <H6 style={[typography.textBold, typography.font16]}>
+                    Allocation Officer:
+                  </H6>
+
+                  <P style={{ fontSize: 16 }}> {item.allocationOfficer}</P>
                 </P>
-                <P style={{ fontSize: 14 }}>
-                  Allocation Officer: {item.allocationOfficer}
-                </P>
+                <P style={{ fontSize: 14 }}>{item.deliveryDate}</P>
               </>
             )}
             {isTargetManagementData && (
               <>
-                <H6 style={[typography.textBold]}>
-                  Project Name: {item.projectName}
+                <H6 style={[typography.textBold, typography.font20]}>
+                  {item.projectName}
                 </H6>
-                <P style={{ fontSize: 14 }}>
-                  Site Engineer: {item.siteengineer}
+
+                <P style={[spacing.pv1]}>
+                  <H6 style={[typography.textBold, typography.font16]}>
+                    Site Engineer:
+                  </H6>
+
+                  <P style={{ fontSize: 16 }}> {item.siteengineer}</P>
                 </P>
-                <P style={{ fontSize: 14 }}>Total Sites: {item.totalSites}</P>
+
+                <P style={[spacing.pv1]}>
+                  <H6 style={[typography.textBold, typography.font16]}>
+                    Total Sites :
+                  </H6>
+
+                  <P style={{ fontSize: 16 }}> {item.totalSites}</P>
+                </P>
               </>
             )}
           </View>
@@ -135,6 +178,23 @@ export default function ClickableCard({
             }}
           >
             <Ionicons name="chevron-forward-outline" size={32} color="gray" />
+          </Button>
+        )}
+        {showView && (
+          <Button
+            style={{
+              position: "absolute",
+              right: spacing.mr3.marginRight,
+              top: 15,
+              backgroundColor: "#76885B",
+              padding: 4,
+              borderRadius: 8,
+            }}
+          >
+            {/* <Ionicons name="eye-outline" size={32} color="white" /> */}
+            <TouchableOpacity onPress={onEyePress}>
+              <Ionicons name="eye-outline" size={32} color="white" />
+            </TouchableOpacity>
           </Button>
         )}
       </Card>

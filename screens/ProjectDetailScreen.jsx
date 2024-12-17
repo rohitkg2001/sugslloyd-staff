@@ -27,6 +27,10 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [showBottomSheet, setShowBottomSheet] = useState(false);
 
+  const handleViewDetails = (siteData) => {
+    dispatch(viewSite(siteData));
+  };
+
   const renderDetailRow = (label, value) => (
     <View style={[styles.row, spacing.pv1, { position: "relative" }]}>
       {label !== "Date" && (
@@ -64,7 +68,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     <>
       {renderDetailRow("Project Name", project.project_name)}
       {renderDetailRow("Work Order Number", project.work_order_number)}
-      {renderDetailRow("Order Value", `₹ - ${project.rate}`)}
+      {renderDetailRow("Order Value", `₹  ${project.rate}`)}
       {renderDetailRow("Date", project.start_date)}
     </>
   );
@@ -81,7 +85,11 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           item={item}
           isSiteData={true}
           hideIcons={true}
-          showArrow={true}
+          showView={true}
+          onPress={() => console.log("Site Card Pressed")}
+          onEyePress={() =>
+            navigation.navigate("siteDetailScreen", { site: item })
+          }
         />
       )}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
@@ -100,7 +108,10 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           item={item}
           isInventoryData={true}
           hideIcons={true}
-          showArrow={true}
+          showView={true}
+          onEyePress={() =>
+            navigation.navigate("inventoryDetailScreen", { site: item })
+          }
         />
       )}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
@@ -119,9 +130,9 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           item={item}
           isTargetManagementData={true}
           hideIcons={true}
-          showArrow={true}
-          onPress={() =>
-            navigation.navigate("SiteDetailsScreen", { site: item })
+          showView={true}
+          onEyePress={() =>
+            navigation.navigate("targetManagementScreen", { site: item })
           }
         />
       )}
