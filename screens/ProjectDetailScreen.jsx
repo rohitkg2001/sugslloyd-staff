@@ -88,7 +88,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     />
   );
 
-  // Main render function for tabs
+ 
   const renderActiveTab = () => {
     switch (activeTab) {
       case "Sites":
@@ -112,10 +112,10 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={[spacing.pv5, spacing.ph1]}
+            contentContainerStyle={[spacing.pv5, spacing.ph1 , { paddingLeft: 38 }]}
           >
             {["Sites", "Inventory", "Target"].map((tab) => (
-              <View key={tab} style={[spacing.mh4]}>
+              <View key={tab} style={[spacing.mh5]}>
                 <H5
                   onPress={() => setActiveTab(tab)}
                   style={[
