@@ -105,6 +105,17 @@ export default function ClickableCard({
 
                   <P style={{ fontSize: 16 }}> {item.vendor}</P>
                 </P>
+
+                <P
+                  style={{
+                    fontSize: 16,
+                    color: "green",
+                    textAlign: "right",
+                    flexShrink: 1,
+                  }}
+                >
+                  {item.status}
+                </P>
               </>
             )}
 
@@ -113,27 +124,36 @@ export default function ClickableCard({
                 <H6 style={[typography.textBold, typography.font20]}>
                   {item.productName}
                 </H6>
-                <P style={[spacing.pv1]}>
-                  <H6 style={[typography.textBold, typography.font16]}>
-                    Brand:
-                  </H6>
+                {/* <P style={{ fontSize: 16 }}>Category: {item.category}</P>
+                <P style={{ fontSize: 16 }}>
+                  {" "}
+                  Subcategory:: {item.subcategory}
+                </P> */}
 
-                  <P style={{ fontSize: 16 }}> {item.brand}</P>
-                </P>
-                <P style={[spacing.pv1]}>
-                  <H6 style={[typography.textBold, typography.font16]}>
-                    Allocation Officer:
-                  </H6>
-
-                  <P style={{ fontSize: 16 }}> {item.allocationOfficer}</P>
-                </P>
-                <P style={{ fontSize: 14 }}>{item.deliveryDate}</P>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <P
+                    style={{
+                      fontWeight: "bold",
+                      flexDirection: "row",
+                      display: "flex",
+                    }}
+                  >
+                    * {item.category} | *{item.subcategory}
+                  </P>
+                </View>
               </>
             )}
+
             {isTargetManagementData && (
               <>
                 <H6 style={[typography.textBold, typography.font20]}>
-                  {item.projectName}
+                  {item.activity}
                 </H6>
 
                 <P style={[spacing.pv1]}>
