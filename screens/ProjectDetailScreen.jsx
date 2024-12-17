@@ -76,9 +76,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const renderSitesTab = () => (
     <MyFlatList
       data={sitesData}
-      keyExtractor={(item) =>
-        item?.id ? item.id.toString() : `${Math.random()}`
-      }
       renderItem={({ item, index }) => (
         <ClickableCard
           key={item.id || index}
@@ -99,9 +96,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const renderInventoryTab = () => (
     <MyFlatList
       data={inventoryData}
-      keyExtractor={(item) =>
-        item?.id ? item.id.toString() : `${Math.random()}`
-      }
       renderItem={({ item, index }) => (
         <ClickableCard
           key={item.id || index}
@@ -110,7 +104,9 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           hideIcons={true}
           showView={true}
           onEyePress={() =>
-            navigation.navigate("inventoryDetailScreen", { site: item })
+            navigation.navigate("inventoryDetailScreen", {
+              item: item,
+            })
           }
         />
       )}
@@ -121,9 +117,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const renderTargetTab = () => (
     <MyFlatList
       data={targetManagementData}
-      keyExtractor={(item) =>
-        item?.id ? item.id.toString() : `${Math.random()}`
-      }
       renderItem={({ item, index }) => (
         <ClickableCard
           key={item.id || index}
@@ -132,7 +125,9 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           hideIcons={true}
           showView={true}
           onEyePress={() =>
-            navigation.navigate("targetManagementScreen", { site: item })
+            navigation.navigate("targetManagementScreen", {
+              target: item,
+            })
           }
         />
       )}

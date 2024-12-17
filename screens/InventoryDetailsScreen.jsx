@@ -1,31 +1,25 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
-import { typography } from "../styles";
-import { H5 } from "../components/text";
-import { useTranslation } from "react-i18next";
+import { View, ScrollView, Text } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { inventoryData } from "../utils/faker";
 
-const InventoryDetailsScreen = ({ navigation }) => {
-  const { t } = useTranslation();
-
+const InventoryDetailsScreen = ({ route }) => {
+  const { item } = route.params || {};
   const renderDetailRow = (label, value) => (
     <View style={{ flexDirection: "row", paddingVertical: 8 }}>
-      <H5 style={[typography.textBold]}>{label}</H5>
-      <H5 style={[typography.font16, { textAlign: "right", flex: 1 }]}>
-        {value}
-      </H5>
+      <Text style={{ fontWeight: "bold", fontSize: 16 }}>{label}:</Text>
+      <Text style={{ flex: 1, textAlign: "right", fontSize: 16 }}>{value}</Text>
     </View>
   );
 
   return (
     <ContainerComponent>
-      <MyHeader title={t("Inventory Details")} hasIcon={true} isBack={true} />
+      <MyHeader title="Inventory Details" hasIcon={true} isBack={true} />
 
       <ScrollView contentContainerStyle={{ padding: 8 }}>
         {inventoryData.map((item) => (
-          <View key={item.id}>
+          <View key={item.id} style={{ marginBottom: 20 }}>
             {renderDetailRow("Product Name", item.productName)}
             {renderDetailRow("Brand", item.brand)}
             {renderDetailRow("Description", item.description)}
@@ -38,6 +32,8 @@ const InventoryDetailsScreen = ({ navigation }) => {
             )}
             {renderDetailRow("Delivery Date", item.deliveryDate)}
             {renderDetailRow("Allocation Officer", item.allocationOfficer)}
+            {renderDetailRow("Category", item.category)}
+            {renderDetailRow("Subcategory", item.subcategory)}
           </View>
         ))}
       </ScrollView>
