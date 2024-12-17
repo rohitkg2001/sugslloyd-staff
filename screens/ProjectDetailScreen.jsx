@@ -18,6 +18,7 @@ import MyFlatList from "../components/utility/MyFlatList";
 import ClickableCard from "../components/card/ClickableCard";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
+import NoRecord from "./NoRecord";
 
 const ProjectDetailsScreen = ({ route, navigation }) => {
   const { project } = route.params;
@@ -63,7 +64,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     <>
       {renderDetailRow("Project Name", project.project_name)}
       {renderDetailRow("Work Order Number", project.work_order_number)}
-      {renderDetailRow("Order Value", project.rate)}
+      {renderDetailRow("Order Value", `₹ - ${project.rate}`)}
       {renderDetailRow("Date", project.start_date)}
     </>
   );
