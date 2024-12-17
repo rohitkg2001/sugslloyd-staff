@@ -1,17 +1,30 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
-import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
+import Icon from "react-native-vector-icons/Ionicons";
+import {
+  SCREEN_WIDTH,
+  spacing,
+  typography,
+  styles,
+  ICON_MEDIUM,
+  LIGHT,
+  PRIMARY_COLOR, 
+} from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import { H5 } from "../components/text";
 import { useTranslation } from "react-i18next";
 import { sitesData, inventoryData, targetManagementData } from "../utils/faker";
 import MyFlatList from "../components/utility/MyFlatList";
 import ClickableCard from "../components/card/ClickableCard";
+import SearchBar from "../components/input/SearchBar";
+import Button from "../components/buttons/Button";
 
 const ProjectDetailsScreen = ({ route, navigation }) => {
   const { project } = route.params;
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("Sites");
+  const [searchText, setSearchText] = useState("");
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
 
   const renderDetailRow = (label, value) => (
     <View style={[styles.row, spacing.pv3]}>
@@ -82,13 +95,15 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           isTargetManagementData={true}
           hideIcons={true}
           showArrow={true}
+          onPress={() =>
+            navigation.navigate("SiteDetailsScreen", { site: item })
+          }
         />
       )}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
     />
   );
 
- 
   const renderActiveTab = () => {
     switch (activeTab) {
       case "Sites":
@@ -108,39 +123,114 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       <ScrollView>
         {renderProjectDetails()}
 
-        <View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={[spacing.pv5, spacing.ph1 , { paddingLeft: 38 }]}
-          >
-            {["Sites", "Inventory", "Target"].map((tab) => (
-              <View key={tab} style={[spacing.mh5]}>
-                <H5
-                  onPress={() => setActiveTab(tab)}
-                  style={[
-                    typography.textBold,
-                    {
-                      color: activeTab === tab ? "#000000" : "#888888",
-                    },
-                  ]}
-                >
-                  {tab.toUpperCase()}
-                </H5>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: SCREEN_WIDTH - 16,
+            paddingHorizontal: 16,
+            marginTop: 40,
+          }}
+        >
+          <View style={{ flex: 1, alignItems: "flex-start" }}>
+            <H5
+              onPress={() => setActiveTab("Sites")}
+              style={[
+                typography.textBold,
+                {
+                  color: activeTab === "Sites" ? PRIMARY_COLOR : "#888888", 
+                },
+              ]}
+            >
+              {t("Sites").toUpperCase()}
+            </H5>
+            {activeTab === "Sites" && (
+              <View
+                style={{
+                  height: 3,
+                  backgroundColor: PRIMARY_COLOR,
+                  width: "37%",
+                  marginTop: 4, 
+                }}
+              />
+            )}
+          </View>
 
-                {activeTab === tab && (
-                  <View
-                    style={{
-                      height: 4,
-                      backgroundColor: "#76885B",
-                      width: "100%",
-                      marginTop: 4,
-                    }}
-                  />
-                )}
-              </View>
-            ))}
-          </ScrollView>
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <H5
+              onPress={() => setActiveTab("Inventory")}
+              style={[
+                typography.textBold,
+                {
+                  color: activeTab === "Inventory" ? PRIMARY_COLOR : "#888888", 
+                },
+              ]}
+            >
+              {t("Inventory").toUpperCase()}
+            </H5>
+            {activeTab === "Inventory" && (
+              <View
+                style={{
+                  height: 3,
+                  backgroundColor: PRIMARY_COLOR,
+                  width: "80%",
+                  marginTop: 4, 
+                }}
+              />
+            )}
+          </View>
+
+          <View style={{ flex: 1, alignItems: "flex-end" }}>
+            <H5
+              onPress={() => setActiveTab("Target")}
+              style={[
+                typography.textBold,
+                {
+                  color: activeTab === "Target" ? PRIMARY_COLOR : "#888888", 
+                },
+              ]}
+            >
+              {t("Target").toUpperCase()}
+            </H5>
+            {activeTab === "Target" && (
+              <View
+                style={{
+                  height: 3,
+                  backgroundColor: PRIMARY_COLOR,
+                  width: "50%",
+                  marginTop: 4, 
+                }}
+              />
+            )}
+          </View>
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            width: SCREEN_WIDTH - 16,
+            marginTop: 20,
+          }}
+        >
+          <SearchBar
+            value={searchText}
+            onChangeText={setSearchText}
+            placeholder={t("search_placeholder")}
+            style={{ width: SCREEN_WIDTH - 82, marginLeft: 5 }}
+          />
+          <Button
+            style={[
+              styles.btn,
+              styles.bgPrimary,
+              spacing.mh1,
+              { width: 50, marginLeft: 8 },
+            ]}
+            onPress={() => setShowBottomSheet(!showBottomSheet)}
+          >
+            <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+          </Button>
         </View>
 
         {renderActiveTab()}
