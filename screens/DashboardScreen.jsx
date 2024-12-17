@@ -350,7 +350,7 @@ export default function DashboardScreen({ navigation }) {
                 key={data.id}
                 onPress={() =>
                   navigation.navigate("targetManagementScreen", {
-                    engineerData: data,
+                    target: data,
                   })
                 }
               >

@@ -272,6 +272,8 @@ export const inventoryData = [
     materialDispatchDate: "20 Nov 2024",
     deliveryDate: "20 Nov 2024",
     allocationOfficer: "Bittu Gupta",
+    category: "Lighting",
+    subcategory: "Solar Products",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfaVettxgHxUSbCpPamGNdUB8g_9t_qYFhgQ&s",
   },
   {
@@ -287,9 +289,12 @@ export const inventoryData = [
     materialDispatchDate: "20 Nov 2024",
     deliveryDate: "24 Nov 2024",
     allocationOfficer: "Bittu Mishra",
+    category: "Lighting",
+    subcategory: "IoT Systems",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
   },
 ];
+
 // INcoming from database
 
 export const documentData = [
@@ -479,6 +484,7 @@ export const targetManagementData = [
     deadline: "2024-12-31",
     totalSites: 5,
     siteengineer: "Akash",
+    activity: "Installation",
     total: 1,
     completed: 1,
     pending: 1,
@@ -498,6 +504,7 @@ export const targetManagementData = [
     total: 1,
     completed: 1,
     pending: 1,
+    activity: "Final Inspection",
     completedPhotos: ["https://example.com/photo2.jpg"],
     incompleteRemark: "Shortage of materials",
   },
@@ -512,6 +519,7 @@ export const sitesData = [
     vendor: "Vikash",
     siteEngineer: "Amit Kumar",
     contactNo: "8723095634",
+    status: "Active",
   },
   {
     siteName: "Solar",
@@ -521,5 +529,6 @@ export const sitesData = [
     vendor: "rahul",
     siteEngineer: "Ravi Sharma",
     contactNo: "9823764534",
+    status: "Active",
   },
 ];

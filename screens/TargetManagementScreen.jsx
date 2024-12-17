@@ -5,11 +5,12 @@ import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import { H5, H6, P } from "../components/text";
 import MyHeader from "../components/header/MyHeader";
 import { useTranslation } from "react-i18next";
-import { targetManagementData } from "../utils/faker";
 
 const TargetManagementScreen = ({ route }) => {
-  const { engineerData } = route.params;
+  const { target } = route.params || {};
   const { t } = useTranslation();
+
+  const isDataAvailable = target && Object.keys(target).length > 0;
 
   return (
     <ContainerComponent>
@@ -17,18 +18,18 @@ const TargetManagementScreen = ({ route }) => {
 
       <View style={{ width: SCREEN_WIDTH - 16 }}>
         <ScrollView>
-          {targetManagementData ? (
+          {isDataAvailable ? (
             <>
               {[
-                { title: "Project Name", value: engineerData.projectName },
-                { title: "Allocated To", value: engineerData.allocatedTo },
-                { title: "Deadline", value: engineerData.deadline },
-                { title: "Total Sites", value: engineerData.totalSites },
-                { title: "Completed", value: engineerData.completed },
-                { title: "Pending", value: engineerData.pending },
+                { title: "Project Name", value: target.projectName || "N/A" },
+                { title: "Allocated To", value: target.allocatedTo || "N/A" },
+                { title: "Deadline", value: target.deadline || "N/A" },
+                { title: "Total Sites", value: target.totalSites || "N/A" },
+                { title: "Completed", value: target.completed || "N/A" },
+                { title: "Pending", value: target.pending || "N/A" },
                 {
                   title: "Incomplete Remark",
-                  value: engineerData.incompleteRemark,
+                  value: target.incompleteRemark || "N/A",
                 },
               ].map((item, index) => (
                 <View
@@ -40,11 +41,11 @@ const TargetManagementScreen = ({ route }) => {
                 </View>
               ))}
 
-              {engineerData.completedPhotos && (
+              {target.completedPhotos && target.completedPhotos.length > 0 && (
                 <View style={[spacing.bbw05, spacing.pv4]}>
                   <H6>Completed Photos</H6>
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {engineerData.completedPhotos.map((url, index) => (
+                    {target.completedPhotos.map((url, index) => (
                       <Image
                         key={index}
                         source={{ uri: url }}
