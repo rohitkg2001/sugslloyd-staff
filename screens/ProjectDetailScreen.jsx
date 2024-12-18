@@ -155,14 +155,12 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         {renderProjectDetails()}
 
         <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: SCREEN_WIDTH - 16,
-            paddingHorizontal: 16,
-            marginTop: 40,
-          }}
+          style={[
+            styles.row,
+            {
+              marginTop: 40,
+            },
+          ]}
         >
           <View style={{ flex: 1, alignItems: "flex-start" }}>
             <H5
@@ -238,12 +236,13 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         </View>
 
         <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            width: SCREEN_WIDTH - 16,
-            marginTop: 20,
-          }}
+          style={[
+            styles.row,
+            {
+              alignItems: "center",
+              marginTop: 20,
+            },
+          ]}
         >
           <SearchBar
             value={searchText}
