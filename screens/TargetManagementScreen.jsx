@@ -22,18 +22,10 @@ const TargetManagementScreen = ({ route }) => {
             <>
               {[
                 { title: "Project Name", value: target.projectName },
-                { title: "Task Name", value: target.task_name },
                 { title: "Allocated To", value: target.allocatedTo },
                 { title: "Deadline", value: target.deadline },
-                { title: "Start Date", value: target.start_date },
-                { title: "End Date", value: target.end_date },
                 { title: "Total Sites", value: target.totalSites },
                 { title: "Description", value: target.description },
-                { title: "Approved By", value: target.approved_by },
-                {
-                  title: "Materials consumed",
-                  value: target.materials_consumed,
-                },
                 { title: "Activity", value: target.activity },
                 { title: "Engineer id", value: target.engineer_id },
                 { title: "Completed", value: target.completed },
