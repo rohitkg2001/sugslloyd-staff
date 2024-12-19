@@ -52,6 +52,12 @@ export const SiteFields = [
     keyboardType: "text",
   },
   {
+    title: "site_engineer",
+    fieldName: "site_engineer",
+    placeholder: "Enter Site Engineer",
+    keyboardType: "text",
+  },
+  {
     title: "sanction_load",
     fieldName: "sanction_load",
     placeholder: "Enter Sanctioned Load",
@@ -64,13 +70,13 @@ export const SiteFields = [
   },
   {
     title: "net_meterserialnumber",
-    fieldName: "net_meter_sr_number",
+    fieldName: "net_meter_sr_no",
     placeholder: "Net Meter Sl No.",
   },
   {
     title: "solar_meterserialnumber",
     placeholder: "Solar Meter Sl No",
-    fieldName: "solar_meter_sr_number",
+    fieldName: "solar_meter_sr_no",
   },
   {
     title: "site_ContactNo",
@@ -273,7 +279,7 @@ export const inventoryData = [
     deliveryDate: "20 Nov 2024",
     allocationOfficer: "Bittu Gupta",
     category: "Lighting",
-    subcategory: "Solar Products",
+    sub_category: "Solar Products",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfaVettxgHxUSbCpPamGNdUB8g_9t_qYFhgQ&s",
   },
   {
@@ -290,7 +296,7 @@ export const inventoryData = [
     deliveryDate: "24 Nov 2024",
     allocationOfficer: "Bittu Mishra",
     category: "Lighting",
-    subcategory: "IoT Systems",
+    sub_category: "IoT Systems",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
   },
 ];

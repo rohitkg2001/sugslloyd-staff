@@ -124,11 +124,6 @@ export default function ClickableCard({
                 <H6 style={[typography.textBold, typography.font20]}>
                   {item.productName}
                 </H6>
-                {/* <P style={{ fontSize: 16 }}>Category: {item.category}</P>
-                <P style={{ fontSize: 16 }}>
-                  {" "}
-                  Subcategory:: {item.subcategory}
-                </P> */}
 
                 <View
                   style={{
@@ -144,7 +139,7 @@ export default function ClickableCard({
                       display: "flex",
                     }}
                   >
-                    * {item.category} | *{item.subcategory}
+                    * {item.category} | *{item.sub_category}
                   </P>
                 </View>
               </>

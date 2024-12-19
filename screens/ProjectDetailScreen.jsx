@@ -70,6 +70,10 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       {renderDetailRow("Work Order Number", project.work_order_number)}
       {renderDetailRow("Order Value", `₹  ${project.rate}`)}
       {renderDetailRow("Date", project.start_date)}
+      {renderDetailRow("End Date", project.end_date)}
+      {renderDetailRow("Project Capacity", project.project_capacity)}
+      {renderDetailRow("Description", project.description)}
+      {renderDetailRow("Project in State", project.project_in_state)}
     </>
   );
 

@@ -27,7 +27,7 @@ const SiteDetailsScreen = ({ route, navigation }) => {
         <ScrollView>
           {renderDetailRow("Site Name", site.site_name)}
           {renderDetailRow("State", site.state)}
-          {renderDetailRow("District", site.dist)}
+          {renderDetailRow("District", site.district)}
           {renderDetailRow("Location", site.location)}
           {renderDetailRow("Contact No", site.contact_no)}
           {renderDetailRow("Project Serial Code", site.project_serial_code)}
@@ -50,6 +50,7 @@ const SiteDetailsScreen = ({ route, navigation }) => {
           {renderDetailRow("COMMISSIONING DATE", site.commissioning_date)}
           {renderDetailRow("Remarks", site.remarks)}
           {renderDetailRow("I & C Vendor Name", site.ic_vendor_name)}
+          {renderDetailRow("I & C Vendor Name", site.site_engineer)}
 
           <View
             style={{

@@ -31,9 +31,10 @@ const InventoryDetailsScreen = ({ route }) => {
               item.materialDispatchDate
             )}
             {renderDetailRow("Delivery Date", item.deliveryDate)}
+            {renderDetailRow("Received Date", item.receivedDate)}
             {renderDetailRow("Allocation Officer", item.allocationOfficer)}
             {renderDetailRow("Category", item.category)}
-            {renderDetailRow("Subcategory", item.subcategory)}
+            {renderDetailRow("Subcategory", item.sub_category)}
           </View>
         ))}
       </ScrollView>
