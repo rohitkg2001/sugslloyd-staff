@@ -20,6 +20,7 @@ import SitesFormScreen from "../screens/SitesFormScreen";
 import VendorFormScreen from "../screens/VendorFormScreen";
 import TaskListScreen from "../screens/TaskListScreen";
 import TaskListFormScreen from "../screens/TaskListFormScreen";
+import TaskDetailsScreen from "../screens/TaskDetailsScreen";
 import InventoryFormScreen from "../screens/InventoryFormScreen";
 import StockApprovalScreen from "../screens/StockApprovalScreen";
 import ReportScreen from "../screens/ReportScreen";
@@ -28,7 +29,7 @@ import TargetManagementForm from "../screens/TargetManagementForm";
 import ProjectDetailsScreen from "../screens/ProjectDetailScreen";
 import SiteDetailsScreen from "../screens/SiteDetailsScreen";
 import VendorDetailScreen from "../screens/VendorDetailScreen";
-import InventoryDetailsModal from "../components/InventoryDetailsModal";
+import InventoryDetailsScreen from "../screens/InventoryDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
@@ -86,9 +87,10 @@ export default function MyStackNavigator() {
       />
       <Stack.Screen name="siteDetailScreen" component={SiteDetailsScreen} />
       <Stack.Screen name="vendorDetailScreen" component={VendorDetailScreen} />
+      <Stack.Screen name="taskDetailsScreen" component={TaskDetailsScreen} />
       <Stack.Screen
         name="inventoryDetailScreen"
-        component={InventoryDetailsModal}
+        component={InventoryDetailsScreen}
       />
     </Stack.Navigator>
   );

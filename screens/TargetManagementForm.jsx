@@ -13,31 +13,30 @@ import MyButton from "../components/buttons/MyButton";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { P } from "../components/text";
-import MyPickerInput from "../components/input/MyPickerInput";
 
 const TargetManagementForm = () => {
+  const [taskName, setTaskName] = useState("");
   const [project_name, setProjectName] = useState("");
   const [site, setSite] = useState(null);
   const [category, setCategory] = useState("");
-  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [approvedBy, setApprovedBy] = useState("");
+  const [materialsConsumed, setMaterialsConsumed] = useState("");
+  const [engineerID, setEngineerID] = useState("");
   const [siteEngineer, setSiteEngineer] = useState(null);
-  const [date, setDate] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const [openSiteDropdown, setOpenSiteDropdown] = useState(false);
   const [openEngineerDropdown, setOpenEngineerDropdown] = useState(false);
   const [siteOptions, setSiteOptions] = useState([
     { label: "Site A", value: "site_a" },
     { label: "Site B", value: "site_b" },
-    { label: "Site C", value: "site_c" },
-    { label: "Site D", value: "site_d" },
   ]);
   const [engineerOptions, setEngineerOptions] = useState([
     { label: "Mihir kr Mishra", value: "engineer_1" },
     { label: "Rohit kr Gupta", value: "engineer_2" },
-    { label: "Bittu Pratihast", value: "engineer_3" },
   ]);
 
   const { t } = useTranslation();
@@ -45,16 +44,31 @@ const TargetManagementForm = () => {
   const navigation = useNavigation();
 
   const handleCancel = () => {
+    setTaskName("");
     setProjectName("");
     setSite(null);
     setCategory("");
-    setName("");
+    setDescription("");
+    setApprovedBy("");
+    setMaterialsConsumed("");
+    setEngineerID("");
     setSiteEngineer(null);
-    setDate(new Date());
+    setStartDate(new Date());
+    setEndDate(new Date());
   };
 
   const handleCreate = async () => {
-    if (!project_name || !site || !category || !name || !siteEngineer) {
+    if (
+      !taskName ||
+      !project_name ||
+      !site ||
+      !category ||
+      !description ||
+      !approvedBy ||
+      !materialsConsumed ||
+      !engineerID ||
+      !siteEngineer
+    ) {
       Alert.alert(
         "Fields Are Required",
         "Please fill all the fields before creating a project."
@@ -63,53 +77,23 @@ const TargetManagementForm = () => {
     }
 
     const newProject = {
+      taskName,
       project_name,
       site,
       category,
-      name,
+      description,
+      approvedBy,
+      materialsConsumed,
+      engineerID,
       siteEngineer,
-      date: moment(date).format("YYYY-MM-DD"),
+      startDate: moment(startDate).format("YYYY-MM-DD"),
+      endDate: moment(endDate).format("YYYY-MM-DD"),
     };
     const response = await dispatch(addProject(newProject));
     if (response) {
       Alert.alert("Success", "Target created successfully!");
       handleCancel();
       navigation.goBack();
-    }
-  };
-
-  const handleDateChange = (event, selectedDate) => {
-    setShowDatePicker(false);
-    if (selectedDate) {
-      setDate(selectedDate);
-    }
-  };
-
-  const dropdownStyle = {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 12,
-    backgroundColor: "#F0FAF0",
-    zIndex: 10, 
-  };
-
-  const dropdownTextStyle = {
-    fontSize: 16,
-    color: "#333",
-  };
-
-  const toggleSiteDropdown = () => {
-    setOpenSiteDropdown(!openSiteDropdown);
-    if (openEngineerDropdown) {
-      setOpenEngineerDropdown(false); 
-    }
-  };
-
-  const toggleEngineerDropdown = () => {
-    setOpenEngineerDropdown(!openEngineerDropdown);
-    if (openSiteDropdown) {
-      setOpenSiteDropdown(false); 
     }
   };
 
@@ -122,76 +106,86 @@ const TargetManagementForm = () => {
           width: SCREEN_WIDTH - 18,
         }}
       >
-        <View>
-          <P style={{ fontSize: 14, fontWeight: "bold", marginBottom: 8 }}>
-            Select Site
-          </P>
-          <DropDownPicker
-            multiple={true}
-            open={openSiteDropdown}
-            value={site}
-            items={siteOptions}
-            setOpen={setOpenSiteDropdown}
-            setValue={setSite}
-            setItems={setSiteOptions}
-            placeholder="Select Site"
-            style={dropdownStyle}
-            textStyle={dropdownTextStyle}
-            searchable={true}
-            searchPlaceholder="Search Site"
-            mode="BADGE"
-            onOpen={toggleSiteDropdown}
-          />
-        </View>
-
-        <MyPickerInput
-          title="Activity"
-          Value={category}
-          onChange={(value) => setCategory(value)}
-          options={[
-            { label: "Installation", value: "Category 1" },
-            { label: "RMS", value: "Category 2" },
-            { label: "Add Team", value: "Category 3" },
-            { label: "Billing", value: "Category 4" },
-          ]}
+        <MyTextInput
+          title="Task Name"
+          value={taskName}
+          onChangeText={setTaskName}
+          placeholder="Enter Task Name"
         />
 
-        <View>
-          <P style={{ fontSize: 14, fontWeight: "bold", marginBottom: 8 }}>
-            Select Site Engineer
-          </P>
-          <DropDownPicker
-            open={openEngineerDropdown}
-            value={siteEngineer}
-            items={engineerOptions}
-            setOpen={setOpenEngineerDropdown}
-            setValue={setSiteEngineer}
-            setItems={setEngineerOptions}
-            placeholder="Select Site Engineer"
-            style={dropdownStyle}
-            textStyle={dropdownTextStyle}
-            searchable={true}
-            searchPlaceholder="Search Engineer"
-            onOpen={toggleEngineerDropdown}
-          />
-        </View>
+        <MyTextInput
+          title="Project Name"
+          value={project_name}
+          onChangeText={setProjectName}
+          placeholder="Enter Project Name"
+        />
+
+        <P>Select Site</P>
+        <DropDownPicker
+          open={openSiteDropdown}
+          value={site}
+          items={siteOptions}
+          setOpen={setOpenSiteDropdown}
+          setValue={setSite}
+          setItems={setSiteOptions}
+          placeholder="Select Site"
+        />
+
+        <MyTextInput
+          title="Description"
+          value={description}
+          onChangeText={setDescription}
+          placeholder="Enter Description"
+        />
+
+        <MyTextInput
+          title="Approved By"
+          value={approvedBy}
+          onChangeText={setApprovedBy}
+          placeholder="Enter Approver's Name"
+        />
+
+        <MyTextInput
+          title="Materials Consumed"
+          value={materialsConsumed}
+          onChangeText={setMaterialsConsumed}
+          placeholder="Enter Materials Consumed"
+        />
+
+        <MyTextInput
+          title="Engineer ID"
+          value={engineerID}
+          onChangeText={setEngineerID}
+          placeholder="Enter Engineer ID"
+        />
+
+        <P>Select Site Engineer</P>
+        <DropDownPicker
+          open={openEngineerDropdown}
+          value={siteEngineer}
+          items={engineerOptions}
+          setOpen={setOpenEngineerDropdown}
+          setValue={setSiteEngineer}
+          setItems={setEngineerOptions}
+          placeholder="Select Site Engineer"
+        />
 
         <TouchableOpacity onPress={() => setShowDatePicker("start")}>
           <MyTextInput
-            title={t("Start Date")}
-            value={startDate.toLocaleDateString()}
-            placeholder="Select Start Date"
+            title="Start Date"
+            value={moment(startDate).format("YYYY-MM-DD")}
             editable={false}
           />
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => setShowDatePicker("end")}>
           <MyTextInput
-            title={t("End Date")}
-            value={endDate.toLocaleDateString()}
-            placeholder="Select End Date"
+            title="End Date"
+            value={moment(endDate).format("YYYY-MM-DD")}
             editable={false}
           />
         </TouchableOpacity>
+
         {showDatePicker && (
           <DateTimePicker
             value={showDatePicker === "start" ? startDate : endDate}
@@ -208,19 +202,9 @@ const TargetManagementForm = () => {
           />
         )}
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: 16,
-          }}
-        >
-          <MyButton
-            title={t("cancel")}
-            onPress={handleCancel}
-            color="#DC4C64"
-          />
-          <MyButton title={t("Save")} onPress={handleCreate} />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <MyButton title="Cancel" onPress={handleCancel} color="#DC4C64" />
+          <MyButton title="Save" onPress={handleCreate} />
         </View>
       </ScrollView>
     </ContainerComponent>

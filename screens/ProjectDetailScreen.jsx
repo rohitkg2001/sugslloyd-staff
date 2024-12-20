@@ -66,19 +66,20 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   const renderProjectDetails = () => (
     <>
+      {renderDetailRow("Project in State", project.project_in_state)}
       {renderDetailRow("Project Name", project.project_name)}
       {renderDetailRow("Work Order Number", project.work_order_number)}
-      {renderDetailRow("Order Value", `₹  ${project.rate}`)}
+      {/* {renderDetailRow("Order Value", `₹  ${project.rate}`)} */}
       {renderDetailRow("Date", project.start_date)}
+      {renderDetailRow("End Date", project.end_date)}
+      {renderDetailRow("Project Capacity", project.project_capacity)}
+      {renderDetailRow("Description", project.description)}
     </>
   );
 
   const renderSitesTab = () => (
     <MyFlatList
       data={sitesData}
-      keyExtractor={(item) =>
-        item?.id ? item.id.toString() : `${Math.random()}`
-      }
       renderItem={({ item, index }) => (
         <ClickableCard
           key={item.id || index}
@@ -99,9 +100,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const renderInventoryTab = () => (
     <MyFlatList
       data={inventoryData}
-      keyExtractor={(item) =>
-        item?.id ? item.id.toString() : `${Math.random()}`
-      }
       renderItem={({ item, index }) => (
         <ClickableCard
           key={item.id || index}
@@ -110,7 +108,9 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           hideIcons={true}
           showView={true}
           onEyePress={() =>
-            navigation.navigate("inventoryDetailScreen", { site: item })
+            navigation.navigate("inventoryDetailScreen", {
+              item: item,
+            })
           }
         />
       )}
@@ -121,9 +121,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const renderTargetTab = () => (
     <MyFlatList
       data={targetManagementData}
-      keyExtractor={(item) =>
-        item?.id ? item.id.toString() : `${Math.random()}`
-      }
       renderItem={({ item, index }) => (
         <ClickableCard
           key={item.id || index}
@@ -132,7 +129,9 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           hideIcons={true}
           showView={true}
           onEyePress={() =>
-            navigation.navigate("targetManagementScreen", { site: item })
+            navigation.navigate("targetManagementScreen", {
+              target: item,
+            })
           }
         />
       )}
@@ -160,14 +159,12 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         {renderProjectDetails()}
 
         <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: SCREEN_WIDTH - 16,
-            paddingHorizontal: 16,
-            marginTop: 40,
-          }}
+          style={[
+            styles.row,
+            {
+              marginTop: 40,
+            },
+          ]}
         >
           <View style={{ flex: 1, alignItems: "flex-start" }}>
             <H5
@@ -243,12 +240,13 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         </View>
 
         <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            width: SCREEN_WIDTH - 16,
-            marginTop: 20,
-          }}
+          style={[
+            styles.row,
+            {
+              alignItems: "center",
+              marginTop: 20,
+            },
+          ]}
         >
           <SearchBar
             value={searchText}

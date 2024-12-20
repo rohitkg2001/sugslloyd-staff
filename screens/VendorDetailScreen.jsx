@@ -23,21 +23,26 @@ const VendorDetailScreen = ({ route, navigation }) => {
 
   return (
     <ContainerComponent>
+      <MyHeader title={t("vendor_details")} isBack={true} hasIcon={true} />
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-        <MyHeader title={t("vendor_details")} isBack={true} hasIcon={true} />
         <ScrollView>
           {renderDetailRow("Vendor Name", site.name)}
           {renderDetailRow("Mail ID", site.email)}
-          {renderDetailRow("Contact Number", site.contact_number)}
-          {renderDetailRow("Aadhar Number", site.aadhar_number)}
-          {renderDetailRow("Account Name", site.account_name)}
+          {renderDetailRow("Contact Number", site.contactNo)}
+          {renderDetailRow("Pan Number", site.pan)}
+          {renderDetailRow("Aadhar Number", site.aadharNumber)}
+          {renderDetailRow("Account Name", site.accountName)}
+          {renderDetailRow("Account Number", site.accountNumber)}
           {renderDetailRow("Ifsc", site.ifsc)}
-          {renderDetailRow("Bank Name", site.bank_name)}
-          {renderDetailRow("Gst Number", site.gst_number)}
-          {renderDetailRow("Pan Number", site.pan_number)}
+          {renderDetailRow("Bank Name", site.bankName)}
+          {renderDetailRow("Branch", site.branch)}
+          {renderDetailRow("Gst Number", site.gstNumber)}
+          {renderDetailRow("First Name", site.firstName)}
+          {renderDetailRow("Last Name", site.lastName)}
+          {renderDetailRow("Address", site.address)}
           {renderDetailRow("Status", site.status)}
 
-          <View
+          {/* <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
@@ -53,7 +58,7 @@ const VendorDetailScreen = ({ route, navigation }) => {
               title={t("view_site")}
               onPress={() => navigation.navigate("totalSitesScreen")}
             />
-          </View>
+          </View> */}
         </ScrollView>
       </View>
     </ContainerComponent>

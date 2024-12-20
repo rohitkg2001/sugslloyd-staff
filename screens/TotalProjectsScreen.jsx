@@ -52,7 +52,7 @@ export default function TotalProjectsScreen({ navigation }) {
 
   const handleViewDetails = (item) => {
     dispatch(viewProject(item));
-    navigation.navigate("targetManagementScreen", { formType: "project" });
+    navigation.navigate("projectDetailScreen", { project: item });
   };
 
   const handleSearch = (text) => {

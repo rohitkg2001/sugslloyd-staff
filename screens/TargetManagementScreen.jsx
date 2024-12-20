@@ -21,15 +21,18 @@ const TargetManagementScreen = ({ route }) => {
           {isDataAvailable ? (
             <>
               {[
-                { title: "Project Name", value: target.projectName || "N/A" },
-                { title: "Allocated To", value: target.allocatedTo || "N/A" },
-                { title: "Deadline", value: target.deadline || "N/A" },
-                { title: "Total Sites", value: target.totalSites || "N/A" },
-                { title: "Completed", value: target.completed || "N/A" },
-                { title: "Pending", value: target.pending || "N/A" },
+                { title: "Project Name", value: target.projectName },
+                { title: "Allocated To", value: target.allocatedTo },
+                { title: "Deadline", value: target.deadline },
+                { title: "Total Sites", value: target.totalSites },
+                { title: "Description", value: target.description },
+                { title: "Activity", value: target.activity },
+                { title: "Engineer id", value: target.engineer_id },
+                { title: "Completed", value: target.completed },
+                { title: "Pending", value: target.pending },
                 {
                   title: "Incomplete Remark",
-                  value: target.incompleteRemark || "N/A",
+                  value: target.incompleteRemark,
                 },
               ].map((item, index) => (
                 <View

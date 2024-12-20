@@ -1,53 +1,64 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
-import { typography } from "../styles";
-import { H5 } from "../components/text";
-import { useTranslation } from "react-i18next";
+import { View, ScrollView, Text } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { inventoryData } from "../utils/faker";
+import { SCREEN_WIDTH, styles, spacing, typography } from "../styles";
+import { H5, H6, P } from "../components/text";
 
-const InventoryDetailsScreen = ({ navigation }) => {
-  const { t } = useTranslation();
+const InventoryDetailsScreen = ({ route }) => {
+  const { item } = route.params || {};
 
-
-  
   const renderDetailRow = (label, value) => (
-    <View style={{ flexDirection: "row", paddingVertical: 8 }}>
-      <H5 style={[typography.textBold]}>{label}</H5>
-      <H5 style={[typography.font16, { textAlign: "right", flex: 1 }]}>
-        {value}
-      </H5>
+    <View style={[styles.row, spacing.pv1, { position: "relative" }]}>
+      {label !== "Subcategory" && (
+        <H6
+          style={[
+            { textAlign: "left" },
+            label === "Product Name"
+              ? [typography.textBold, typography.font20]
+              : { fontSize: 16 },
+          ]}
+        >
+          {value}
+        </H6>
+      )}
+
+      {label === "Subcategory" && (
+        <H6
+          style={[
+            {
+              position: "absolute",
+              left: 90,
+              bottom: 10,
+              fontSize: 16,
+            },
+          ]}
+        >
+          {value}
+        </H6>
+      )}
     </View>
   );
 
   return (
     <ContainerComponent>
-      <MyHeader title={t("Inventory Details")} hasIcon={true} isBack={true} />
-
-      <ScrollView contentContainerStyle={{ padding: 8 }}>
-        {inventoryData.map((item) => (
-          <View key={item.id}>
-            {renderDetailRow("Product Name", item.productName)}
-            {renderDetailRow("Brand", item.brand)}
-            {renderDetailRow("Description", item.description)}
-            {renderDetailRow("Unit", item.unit)}
-            {renderDetailRow("Initial Quantity", item.initialQuantity)}
-            {renderDetailRow("Quantity in Stock", item.quantityStock)}
-            {renderDetailRow(
-              "Material Dispatch Date",
-              item.materialDispatchDate
-            )}
-            {renderDetailRow("Delivery Date", item.deliveryDate)}
-            { renderDetailRow( "Allocation Officer", item.allocationOfficer ) }
-             handleViewDetails={() =>
-              navigation.navigate("taskScreen", { projectId: item.id })
-            }
-
-          </View>
-          
-        ))}
-      </ScrollView>
+      <MyHeader title="Inventory Details" hasIcon={true} isBack={true} />
+      <View style={{ width: SCREEN_WIDTH - 16 }}>
+        <ScrollView>
+          {item ? (
+            <>
+              {renderDetailRow("Product Name", item.productName)}
+              {renderDetailRow("Initial Quantity", item.initialQuantity)}
+              {renderDetailRow("Quantity in Stock", item.quantityStock)}
+              {renderDetailRow("Received Date", item.receivedDate)}
+              {renderDetailRow("Category", item.category)}
+              {renderDetailRow("Subcategory", item.sub_category)}
+            </>
+          ) : (
+            <Text>No item details available</Text>
+          )}
+        </ScrollView>
+      </View>
     </ContainerComponent>
   );
 };

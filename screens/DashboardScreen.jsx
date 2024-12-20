@@ -302,6 +302,35 @@ export default function DashboardScreen({ navigation }) {
 
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
+            <H5 style={[typography.textBold, { marginRight: 130 }]}>
+              {t("all_task_overview")}
+            </H5>
+          </View>
+          <View style={[spacing.bbw05, spacing.mv1]} />
+          <View
+            style={[
+              styles.row,
+              { justifyContent: "space-between", paddingVertical: 10 },
+            ]}
+          >
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("installation")}</P>
+              <P style={spacing.ml2}>{installation}</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("rms_status")}</P>
+              <P style={spacing.ml2}>{rmsStatus}</P>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <P style={typography.textBold}>{t("final_inspection")}</P>
+              <P style={spacing.ml2}>{finalInspection}</P>
+            </View>
+          </View>
+        </CardFullWidth>
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
             <Icon
               name="tennisball-outline"
               size={ICON_LARGE}
@@ -326,7 +355,7 @@ export default function DashboardScreen({ navigation }) {
               <P
                 style={[typography.textBold, { flex: 1, textAlign: "center" }]}
               >
-                {t("Site Engineer")}
+                {t("Vendor")}
               </P>
               <P
                 style={[typography.textBold, { flex: 1, textAlign: "center" }]}
@@ -428,35 +457,6 @@ export default function DashboardScreen({ navigation }) {
             </View>
           </View>
         </CardFullWidth> */}
-
-        <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
-            <H5 style={[typography.textBold, { marginRight: 130 }]}>
-              {t("all_task_overview")}
-            </H5>
-          </View>
-          <View style={[spacing.bbw05, spacing.mv1]} />
-          <View
-            style={[
-              styles.row,
-              { justifyContent: "space-between", paddingVertical: 10 },
-            ]}
-          >
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("installation")}</P>
-              <P style={spacing.ml2}>{installation}</P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("rms_status")}</P>
-              <P style={spacing.ml2}>{rmsStatus}</P>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>{t("final_inspection")}</P>
-              <P style={spacing.ml2}>{finalInspection}</P>
-            </View>
-          </View>
-        </CardFullWidth>
 
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>

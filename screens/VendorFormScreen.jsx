@@ -36,7 +36,7 @@ const VendorFormScreen = ({ route }) => {
     setLastName("");
     setGstNumber("");
     setContactPerson("");
-    setContactNumber("");
+    setcontactNo("");
     setMailId("");
     setName("");
     setAadharNumber("");
@@ -95,7 +95,7 @@ const VendorFormScreen = ({ route }) => {
         <MyTextInput
           title={t("site_ContactNo")}
           value={contactNumber}
-          onChangeText={setContactNumber}
+          onChangeText={setcontactNo}
           placeholder="Enter Contact Number"
           keyboardType="numeric"
         />
