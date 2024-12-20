@@ -10,6 +10,8 @@ import { inventoryData } from "../utils/faker";
 const InventoryDetailsScreen = ({ navigation }) => {
   const { t } = useTranslation();
 
+
+  
   const renderDetailRow = (label, value) => (
     <View style={{ flexDirection: "row", paddingVertical: 8 }}>
       <H5 style={[typography.textBold]}>{label}</H5>
@@ -37,8 +39,13 @@ const InventoryDetailsScreen = ({ navigation }) => {
               item.materialDispatchDate
             )}
             {renderDetailRow("Delivery Date", item.deliveryDate)}
-            {renderDetailRow("Allocation Officer", item.allocationOfficer)}
+            { renderDetailRow( "Allocation Officer", item.allocationOfficer ) }
+             handleViewDetails={() =>
+              navigation.navigate("taskScreen", { projectId: item.id })
+            }
+
           </View>
+          
         ))}
       </ScrollView>
     </ContainerComponent>

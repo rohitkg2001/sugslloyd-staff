@@ -34,7 +34,7 @@ const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="loginScreen"
+      initialRouteName="inventoryDetailScreen"
       screenOptions={{
         headerShown: false,
       }}
