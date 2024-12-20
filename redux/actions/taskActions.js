@@ -5,12 +5,15 @@ import {
   BASE_URL,
 } from "../constant";
 
-export const getAllTasks = () => async (dispatch) => {
+export const getAllTasks = (my_id) => async (dispatch) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/tasks`);
+    const response = await fetch(`${BASE_URL}/api/task`);
     const data = await response.json();
 
-    dispatch({ type: INITIALIZE_TASKS, payload: data });
+    const myTasks =
+      Array.isArray(data) && data.filter((task) => task.engineer_id === my_id);
+    // console.log(myTasks);
+    dispatch({ type: INITIALIZE_TASKS, payload: myTasks });
   } catch (error) {
     console.error(error);
   }

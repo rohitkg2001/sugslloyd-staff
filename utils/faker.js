@@ -512,7 +512,7 @@ export const sitesData = [
     state: "Bihar",
     vendor: "Vikash",
     contactNo: "8723095634",
-    status: "Active",
+    status: "Complete",
   },
   {
     siteName: "Solar",
@@ -521,6 +521,6 @@ export const sitesData = [
     city: "samastipur",
     vendor: "rahul",
     contactNo: "9823764534",
-    status: "Active",
+    status: "Pending",
   },
 ];
