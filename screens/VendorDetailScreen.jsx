@@ -23,8 +23,8 @@ const VendorDetailScreen = ({ route, navigation }) => {
 
   return (
     <ContainerComponent>
+      <MyHeader title={t("vendor_details")} isBack={true} hasIcon={true} />
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
-        <MyHeader title={t("vendor_details")} isBack={true} hasIcon={true} />
         <ScrollView>
           {renderDetailRow("Vendor Name", site.name)}
           {renderDetailRow("Mail ID", site.email)}
@@ -42,7 +42,7 @@ const VendorDetailScreen = ({ route, navigation }) => {
           {renderDetailRow("Address", site.address)}
           {renderDetailRow("Status", site.status)}
 
-          <View
+          {/* <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
@@ -58,7 +58,7 @@ const VendorDetailScreen = ({ route, navigation }) => {
               title={t("view_site")}
               onPress={() => navigation.navigate("totalSitesScreen")}
             />
-          </View>
+          </View> */}
         </ScrollView>
       </View>
     </ContainerComponent>
