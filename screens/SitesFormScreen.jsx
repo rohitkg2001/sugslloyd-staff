@@ -129,7 +129,7 @@ const SitesFormScreen = () => {
           }
           placeholder="Enter Load Enhancement Status"
         />
-        {/* Picker Input with value only yes or no */}
+      
         <MyPickerInput
           title={t("site_surveystatus")}
           onChangeText={(value) => onChangeText("site_survey_status", value)}
