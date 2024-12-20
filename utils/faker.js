@@ -513,7 +513,7 @@ export const sitesData = [
     vendor: "Vikash",
     siteEngineer: "Amit Kumar",
     contactNo: "8723095634",
-    status: "Active",
+    status: "Complete",
   },
   {
     siteName: "Solar",
@@ -523,6 +523,6 @@ export const sitesData = [
     vendor: "rahul",
     siteEngineer: "Ravi Sharma",
     contactNo: "9823764534",
-    status: "Active",
+    status: "Pending",
   },
 ];

@@ -32,8 +32,10 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   };
 
   const renderDetailRow = (label, value) => (
-    <View style={[styles.row, spacing.pv1, { position: "relative" }]}>
-      {label !== "Date" && (
+    <View style={[styles.row, spacing.pv1]}>
+      {label === "Start Date" && <H6 style={[typography.font16]}>{value}</H6>}
+
+      {label !== "Start Date" && label !== "End Date" && (
         <H6
           style={[
             { textAlign: "left" },
@@ -45,15 +47,13 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           {value}
         </H6>
       )}
-
-      {label === "Date" && (
+      {label === "End Date" && (
         <H6
           style={[
             {
-              textAlign: "right",
               position: "absolute",
-              right: 0,
-              bottom: 70,
+              right: 100,
+              bottom: 10,
               fontSize: 16,
             },
           ]}
@@ -69,10 +69,10 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       {renderDetailRow("Project in State", project.project_in_state)}
       {renderDetailRow("Project Name", project.project_name)}
       {renderDetailRow("Work Order Number", project.work_order_number)}
-      {/* {renderDetailRow("Order Value", `₹  ${project.rate}`)} */}
-      {renderDetailRow("Date", project.start_date)}
+      {renderDetailRow("Start Date", project.start_date)}
       {renderDetailRow("End Date", project.end_date)}
-      {renderDetailRow("Project Capacity", project.project_capacity)}
+      {renderDetailRow("Project Capacity", `${project.project_capacity} KW`)}
+
       {renderDetailRow("Description", project.description)}
     </>
   );
@@ -87,7 +87,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           isSiteData={true}
           hideIcons={true}
           showView={true}
-          onPress={() => console.log("Site Card Pressed")}
           onEyePress={() =>
             navigation.navigate("siteDetailScreen", { site: item })
           }

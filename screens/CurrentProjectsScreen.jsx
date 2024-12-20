@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { projects } from "../utils/faker";
@@ -10,30 +11,46 @@ import MyFlatList from "../components/utility/MyFlatList";
 import { useTranslation } from "react-i18next";
 import ClickableCard from "../components/card/ClickableCard";
 import Filter from "../components/Filter";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllTasks } from "../redux/actions/taskActions";
+import NoRecord from "./NoRecord";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const [searchText] = useState("");
+  const { staff } = useSelector((state) => state);
+  const { tasks } = useSelector((state) => state.tasks);
+  const [currentTasks, setCurrentTasks] = useState([]);
+  const dispatch = useDispatch();
+
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const { t } = useTranslation();
 
   const filteredProjects = projects.filter((item) =>
     item.projectName.toLowerCase().includes(searchText.toLowerCase())
   );
-    const closeFilter = () => {
-      setShowBottomSheet(!showBottomSheet);
-    };
-    const applyFilterFromRedux = (...args) => {};
+  const closeFilter = () => {
+    setShowBottomSheet(!showBottomSheet);
+  };
+  useEffect(() => {
+    dispatch(getAllTasks(staff.id));
+  }, [staff]);
+  useEffect(() => {
+    // dispatch(getAllTasks(staff.id));
+    Array.isArray(tasks) && setCurrentTasks(tasks);
+  }, [tasks]);
+
+  const applyFilterFromRedux = (...args) => {};
 
   return (
     <ContainerComponent>
       <MyFlatList
-        data={filteredProjects}
+        data={currentTasks}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => (
           <ClickableCard
             key={index}
             item={item}
-            isProject={true}
+            isTargetManagementData={true}
             hideIcons={true}
             showArrow={true}
             handleViewDetails={() =>
