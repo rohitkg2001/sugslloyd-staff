@@ -50,8 +50,6 @@ const InventoryDetailsScreen = ({ route }) => {
               {renderDetailRow("Product Name", item.productName)}
               {renderDetailRow("Category", item.category)}
               {renderDetailRow("Subcategory", item.sub_category)}
-              {/* {renderDetailRow("Initial Quantity", item.initialQuantity)}
-              {renderDetailRow("Quantity in Stock", item.quantityStock)} */}
 
               <View>
                 <H4 style={{ fontSize: 16, fontWeight: "bold" }}>

@@ -34,7 +34,7 @@ export default function TaskListScreen({ navigation }) {
 
   const handleViewTask = (task) => {
     dispatch(viewTask(task.id));
-    navigation.navigate("targetmanagementform");
+    // navigation.navigate("targetmanagementform");
   };
   const { t } = useTranslation();
 
@@ -51,21 +51,48 @@ export default function TaskListScreen({ navigation }) {
           { width: SCREEN_WIDTH - 18, backgroundColor: "#ffffff" },
         ]}
       >
-        <View style={{ flexDirection: "row", padding: 16 }}>
-          <View style={{ flex: 1 }}>
+        <View style={[spacing.pv5, { flexDirection: "row", padding: 16 }]}>
+          <View style={[spacing.pv1, { flex: 1 }]}>
             <H5 style={[typography.textBold]}>{item.project.project_name}</H5>
-            {["task_name", "status", "start_date", "end_date"].map((field) => (
-              <P key={field} style={{ fontSize: 14, color: "#020409" }}>
-                {`${field.charAt(0).toUpperCase() + field.slice(1)}: ${
-                  item[field]
-                }`}
+
+            <P style={{ fontSize: 16 }}>Task Name: {item.task_name}</P>
+
+            <View style={[spacing.pv1, { flexDirection: "row" }]}>
+              <P style={{ fontSize: 16, color: "#020409" }}>
+                {item.start_date}
               </P>
-            ))}
+              <P style={{ fontSize: 14, color: "#020409", marginLeft: 15 }}>
+                {item.end_date}
+              </P>
+            </View>
+          </View>
+
+          <View
+            style={{
+              position: "absolute",
+              top: 90,
+              right: 8,
+            }}
+          >
+            <P
+              style={{
+                fontSize: 14,
+                color:
+                  item.status === "Completed"
+                    ? "green"
+                    : item.status === "Pending"
+                    ? "red"
+                    : "red",
+              }}
+            >
+              {item.status}
+            </P>
           </View>
         </View>
       </Card>
     </TouchableOpacity>
   );
+
   return (
     <ContainerComponent>
       <MyHeader title={t("task_list")} isBack={true} hasIcon={true} />

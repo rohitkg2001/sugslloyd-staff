@@ -54,7 +54,9 @@ export default function CurrentProjectsScreen({ navigation }) {
             hideIcons={true}
             showArrow={true}
             handleViewDetails={() =>
-              navigation.navigate("taskScreen", { projectId: item.id })
+              navigation.navigate("targetManagementScreen", {
+                target: item,
+              })
             }
           />
         )}
