@@ -34,7 +34,7 @@ export default function TaskListScreen({ navigation }) {
 
   const handleViewTask = (task) => {
     dispatch(viewTask(task.id));
-    // navigation.navigate("targetmanagementform");
+ 
   };
   const { t } = useTranslation();
 
