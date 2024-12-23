@@ -147,25 +147,67 @@ export default function ClickableCard({
 
             {isTargetManagementData && (
               <>
-                <H6 style={[typography.textBold, typography.font20]}>
+                <View
+                  style={{
+                    position: "absolute",
+                    top: 90,
+                    right: 4,
+                    width: 15,
+                    height: 15,
+                    borderRadius: 10,
+                    backgroundColor: (() => {
+                      const currentDate = new Date();
+                      const startDate = new Date(item.start_date);
+                      const endDate = new Date(item.end_date);
+
+                      if (startDate < currentDate && endDate < currentDate) {
+                        // If both start and end date are in the past
+                        return "red"; // Red dot for past dates
+                      } else if (
+                        startDate <= currentDate &&
+                        endDate >= currentDate
+                      ) {
+                        return "orange";
+                      } else if (
+                        startDate > currentDate &&
+                        endDate > currentDate
+                      ) {
+                        return "green";
+                      } else {
+                        return "#FF6347";
+                      }
+                    })(),
+                  }}
+                />
+
+                <P style={[spacing.pv1]}>
+                  <H6 style={[typography.textBold, typography.font16]}>
+                    Site Name:
+                  </H6>
+                  <P style={{ fontSize: 16 }}>{item.site_name}</P>
+                </P>
+
+                <P>
+                  <H6 style={[typography.textBold, typography.font16]}>
+                    Location:
+                  </H6>
+                  <P style={[spacing.pv1, { fontSize: 16 }]}>{item.location}</P>
+                </P>
+
+                <H6
+                  style={[typography.textBold, typography.font20, spacing.pv2]}
+                >
                   {item.activity}
                 </H6>
 
-                <P style={[spacing.pv1]}>
-                  <H6 style={[typography.textBold, typography.font16]}>
-                    Site Engineer:
-                  </H6>
-
-                  <P style={{ fontSize: 16 }}> {item.siteengineer}</P>
-                </P>
-
-                <P style={[spacing.pv1]}>
-                  <H6 style={[typography.textBold, typography.font16]}>
-                    Total Sites :
-                  </H6>
-
-                  <P style={{ fontSize: 16 }}> {item.totalSites}</P>
-                </P>
+                <View style={[spacing.pv1, { flexDirection: "row" }]}>
+                  <P style={{ fontSize: 16, color: "#020409" }}>
+                    {item.start_date}
+                  </P>
+                  <P style={{ fontSize: 14, color: "#020409", marginLeft: 15 }}>
+                    {item.end_date}
+                  </P>
+                </View>
               </>
             )}
           </View>

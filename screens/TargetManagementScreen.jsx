@@ -1,15 +1,20 @@
 import React from "react";
 import { View, ScrollView, Image } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing, styles } from "../styles";
-import { H5, H6, P } from "../components/text";
+import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
+import { H5, H6, P, H2 } from "../components/text";
 import MyHeader from "../components/header/MyHeader";
 import { useTranslation } from "react-i18next";
 import NoRecord from "./NoRecord";
+import Button from "../components/buttons/Button";
 
-const TargetManagementScreen = ({ route }) => {
+const TargetManagementScreen = ({ route, navigation }) => {
   const { target } = route.params || {};
   const { t } = useTranslation();
+
+  const navigateToForm = () => {
+    navigation.navigate("targetmanagementform", { target });
+  };
 
   const isDataAvailable = target && Object.keys(target).length > 0;
 
@@ -21,15 +26,12 @@ const TargetManagementScreen = ({ route }) => {
         {isDataAvailable ? (
           <ScrollView>
             {[
-              { title: "Project Name", value: target.projectName },
-              { title: "Allocated To", value: target.allocatedTo },
-              { title: "Deadline", value: target.deadline },
+              { title: "Site Name", value: target.site_name },
+              { title: "Location", value: target.location },
+              { title: "Start Date", value: target.start_date },
+              { title: "End Date", value: target.end_date },
               { title: "Total Sites", value: target.totalSites },
-              { title: "Description", value: target.description },
               { title: "Activity", value: target.activity },
-              { title: "Engineer id", value: target.engineer_id },
-              { title: "Completed", value: target.completed },
-              { title: "Pending", value: target.pending },
               {
                 title: "Incomplete Remark",
                 value: target.incompleteRemark,
@@ -63,6 +65,14 @@ const TargetManagementScreen = ({ route }) => {
           <NoRecord msg="No data found" />
         )}
       </View>
+      <Button
+        style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
+        onPress={navigateToForm}
+      >
+        <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
+          Assign to Vendor
+        </H2>
+      </Button>
     </ContainerComponent>
   );
 };
