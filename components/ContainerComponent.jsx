@@ -5,7 +5,7 @@ import { PRIMARY_COLOR } from '../styles/constant'
 
 export default function ContainerComponent({ children, ...propStyle }) {
     return (
-        <SafeAreaView style={[styles.container, { ...propStyle }]}>
+        <SafeAreaView style={[styles.container, { ...propStyle, backgroundColor: "#f9f6ee" }]}>
             <StatusBar backgroundColor={PRIMARY_COLOR} />
             {children}
         </SafeAreaView>
