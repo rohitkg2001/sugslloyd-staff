@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { View, ScrollView, Image, TouchableOpacity } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import { H6 } from "../components/text";
@@ -18,6 +19,9 @@ import {
 const TargetManagementScreen = ({ route, navigation }) => {
   const { target } = route.params || {};
   const { t } = useTranslation();
+
+  // State to manage the visibility of the BottomSheet
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
 
   const navigateToForm = () => {
     navigation.navigate("targetmanagementform", { target });
@@ -117,7 +121,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
             {renderProjectDetails()}
 
             {target.completedPhotos && target.completedPhotos.length > 0 && (
-              <View style={[spacing.bbw05, spacing.pv4]}>
+              <View style={[spacing.pv4]}>
                 <H6>Completed Photos</H6>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {target.completedPhotos.map((url, index) => (
@@ -152,6 +156,12 @@ const TargetManagementScreen = ({ route, navigation }) => {
       <Button style={styles.addButton} onPress={() => navigation.navigate("")}>
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
+
+      {showBottomSheet && (
+        <BottomSheet onClose={() => setShowBottomSheet(false)}>
+          <Button title="Close" onPress={() => setShowBottomSheet(false)} />
+        </BottomSheet>
+      )}
     </ContainerComponent>
   );
 };

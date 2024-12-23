@@ -87,13 +87,13 @@ export default function ClickableCard({
                     flexDirection: "row",
                   }}
                 >
-                  <P style={{ fontSize: 16, flexShrink: 1 }}>{item.location}</P>
-                  <P style={{ fontSize: 14, flexShrink: 1 }}>,{item.city}</P>
-                  <P style={{ fontSize: 14, flexShrink: 1 }}>,{item.state}</P>
+                  <P style={{ fontSize: 12, flexShrink: 1 }}>{item.location}</P>
+                  <P style={{ fontSize: 12, flexShrink: 1 }}>,{item.city}</P>
+                  <P style={{ fontSize: 12, flexShrink: 1 }}>,{item.state}</P>
                 </View>
 
                 <P style={[spacing.pv2]}>
-                  <H6 style={[typography.textBold, typography.font16]}>
+                  <H6 style={[typography.textBold, typography.font14]}>
                     Site Engineer:
                   </H6>
 
@@ -101,7 +101,7 @@ export default function ClickableCard({
                 </P>
 
                 <P style={[spacing.pv1]}>
-                  <H6 style={[typography.textBold, typography.font16]}>
+                  <H6 style={[typography.textBold, typography.font14]}>
                     Vendor:
                   </H6>
 
