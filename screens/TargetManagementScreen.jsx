@@ -6,8 +6,7 @@ import { H5, H6, P, H2 } from "../components/text";
 import MyHeader from "../components/header/MyHeader";
 import { useTranslation } from "react-i18next";
 import NoRecord from "./NoRecord";
-import Button from "../components/buttons/Button";
-
+import MyButton from "../components/buttons/MyButton";
 const TargetManagementScreen = ({ route, navigation }) => {
   const { target } = route.params || {};
   const { t } = useTranslation();
@@ -64,15 +63,21 @@ const TargetManagementScreen = ({ route, navigation }) => {
         ) : (
           <NoRecord msg="No data found" />
         )}
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginVertical: 16,
+          }}
+        >
+          <MyButton title={t("Assign Vendor")} color="#DC4C64" />
+          <MyButton
+            title={t(" Assign Material")}
+            onPress={() => navigation.navigate("taskMaterialScreen")}
+          />
+        </View>
       </View>
-      <Button
-        style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
-        onPress={navigateToForm}
-      >
-        <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-          Assign to Vendor
-        </H2>
-      </Button>
     </ContainerComponent>
   );
 };
