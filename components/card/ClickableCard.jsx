@@ -1,9 +1,11 @@
 import { View, TouchableOpacity } from "react-native";
 import { Card } from "react-native-paper";
-import { H6, P } from "../text";
+import { H2, H6, P, Span } from "../text";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { spacing, typography, SCREEN_WIDTH, LIGHT } from "../../styles";
+import { spacing, typography, SCREEN_WIDTH, LIGHT, DANGER_COLOR } from "../../styles";
 import Button from "../buttons/Button";
+import moment from "moment";
+import { SUCCESS_COLOR, WARNING_COLOR } from "../../styles/constant";
 
 export default function ClickableCard({
   item,
@@ -150,68 +152,45 @@ export default function ClickableCard({
                 <View
                   style={{
                     position: "absolute",
-                    top: 90,
+                    bottom: 2,
                     right: 4,
-                    width: 15,
-                    height: 15,
+                    width: 20,
+                    height: 20,
                     borderRadius: 10,
-                    backgroundColor: (() => {
-                      const currentDate = new Date();
-                      const startDate = new Date(item.start_date);
-                      const endDate = new Date(item.end_date);
-
-                      if (startDate < currentDate && endDate < currentDate) {
-                        // If both start and end date are in the past
-                        return "red"; // Red dot for past dates
-                      } else if (
-                        startDate <= currentDate &&
-                        endDate >= currentDate
-                      ) {
-                        return "orange";
-                      } else if (
-                        startDate > currentDate &&
-                        endDate > currentDate
-                      ) {
-                        return "green";
-                      } else {
-                        return "#FF6347";
-                      }
-                    })(),
+                    backgroundColor:
+                      item.priority === 0 ? DANGER_COLOR :
+                        item.priority === 1 ? WARNING_COLOR :
+                          SUCCESS_COLOR
                   }}
                 />
 
-                <P style={[spacing.pv1]}>
-                  <H6 style={[typography.textBold, typography.font16]}>
-                    Site Name:
-                  </H6>
-                  <P style={{ fontSize: 16 }}>{item.site_name}</P>
-                </P>
 
-                <P>
-                  <H6 style={[typography.textBold, typography.font16]}>
-                    Location:
-                  </H6>
-                  <P style={[spacing.pv1, { fontSize: 16 }]}>{item.location}</P>
-                </P>
+                <H2 style={[typography.font20, { textTransform: "capitalize" }]}>
+                  {item.site?.site_name}
+                </H2>
+                <H6 style={[typography.font12, { textTransform: "capitalize" }]}>
+                  {item.site?.location},{item.site?.district}- {item.site?.state}
+                </H6>
 
                 <H6
-                  style={[typography.textBold, typography.font20, spacing.pv2]}
+                  style={[typography.textBold, typography.font16, { textTransform: "uppercase" }]}
                 >
                   {item.activity}
                 </H6>
 
-                <View style={[spacing.pv1, { flexDirection: "row" }]}>
-                  <P style={{ fontSize: 16, color: "#020409" }}>
+                <View style={{ flexDirection: "row" }}>
+                  <Span>
                     {item.start_date}
-                  </P>
-                  <P style={{ fontSize: 14, color: "#020409", marginLeft: 15 }}>
+                  </Span>
+                  <Span> - </Span>
+                  <Span>
                     {item.end_date}
-                  </P>
+                  </Span>
                 </View>
               </>
             )}
           </View>
-          {!hideIcons && (
+          {/* {!hideIcons && (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Button
                 onPress={() => handleEdit(item)}
@@ -223,37 +202,8 @@ export default function ClickableCard({
                 <Ionicons name="trash-outline" size={24} color="red" />
               </Button>
             </View>
-          )}
+          )} */}
         </View>
-
-        {showArrow && (
-          <Button
-            style={{
-              position: "absolute",
-              right: spacing.mr2.marginRight,
-              top: 40,
-            }}
-          >
-            <Ionicons name="chevron-forward-outline" size={32} color="gray" />
-          </Button>
-        )}
-        {showView && (
-          <Button
-            style={{
-              position: "absolute",
-              right: spacing.mr3.marginRight,
-              top: 15,
-              backgroundColor: "#76885B",
-              padding: 4,
-              borderRadius: 8,
-            }}
-          >
-            {/* <Ionicons name="eye-outline" size={32} color="white" /> */}
-            <TouchableOpacity onPress={onEyePress}>
-              <Ionicons name="eye-outline" size={32} color="white" />
-            </TouchableOpacity>
-          </Button>
-        )}
       </Card>
     </TouchableOpacity>
   );

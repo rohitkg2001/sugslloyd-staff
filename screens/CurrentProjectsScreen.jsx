@@ -25,9 +25,9 @@ export default function CurrentProjectsScreen({ navigation }) {
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const { t } = useTranslation();
 
-  const filteredProjects = projects.filter((item) =>
-    item.projectName.toLowerCase().includes(searchText.toLowerCase())
-  );
+  // const filteredProjects = projects.filter((item) =>
+  //   item.projectName.toLowerCase().includes(searchText.toLowerCase())
+  // );
   const closeFilter = () => {
     setShowBottomSheet(!showBottomSheet);
   };
@@ -39,7 +39,7 @@ export default function CurrentProjectsScreen({ navigation }) {
     Array.isArray(tasks) && setCurrentTasks(tasks);
   }, [tasks]);
 
-  const applyFilterFromRedux = (...args) => {};
+  const applyFilterFromRedux = (...args) => { };
 
   return (
     <ContainerComponent>
@@ -51,8 +51,6 @@ export default function CurrentProjectsScreen({ navigation }) {
             key={index}
             item={item}
             isTargetManagementData={true}
-            hideIcons={true}
-            showArrow={true}
             handleViewDetails={() =>
               navigation.navigate("targetManagementScreen", {
                 target: item,

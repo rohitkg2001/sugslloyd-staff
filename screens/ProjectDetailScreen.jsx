@@ -85,8 +85,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           key={item.id || index}
           item={item}
           isSiteData={true}
-          hideIcons={true}
-          showView={true}
           onEyePress={() =>
             navigation.navigate("siteDetailScreen", { site: item })
           }
@@ -104,8 +102,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           key={item.id || index}
           item={item}
           isInventoryData={true}
-          hideIcons={true}
-          showView={true}
           onEyePress={() =>
             navigation.navigate("inventoryDetailScreen", {
               item: item,
@@ -125,8 +121,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           key={item.id || index}
           item={item}
           isTargetManagementData={true}
-          hideIcons={true}
-          showView={true}
           onEyePress={() =>
             navigation.navigate("targetManagementScreen", {
               target: item,

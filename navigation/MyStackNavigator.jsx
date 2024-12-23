@@ -30,6 +30,7 @@ import ProjectDetailsScreen from "../screens/ProjectDetailScreen";
 import SiteDetailsScreen from "../screens/SiteDetailsScreen";
 import VendorDetailScreen from "../screens/VendorDetailScreen";
 import InventoryDetailsScreen from "../screens/InventoryDetailsScreen";
+import TaskMaterialScreen from "../screens/TaskMaterialScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
@@ -92,6 +93,7 @@ export default function MyStackNavigator() {
         name="inventoryDetailScreen"
         component={InventoryDetailsScreen}
       />
+      <Stack.Screen name="taskMaterialScreen" component={TaskMaterialScreen} />
     </Stack.Navigator>
   );
 }
