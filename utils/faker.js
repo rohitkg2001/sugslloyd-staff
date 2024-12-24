@@ -14,6 +14,13 @@ export const fakeDelete = ({
 };
 // Static method
 
+export function transformArray(inputArray) {
+  return inputArray.map(item => ({
+    label: `${item.firstName} ${item.lastName}`, // Concatenate firstName and lastName
+    value: item.firstName                              // Use id as value
+  }));
+}
+
 export const SiteFields = [
   {
     title: "site_location",
@@ -481,7 +488,7 @@ export const targetManagementData = [
     activity: "Installation",
     total: 1,
     completed: 1,
-    pending: 1,
+    pending: 0,
     completedPhotos: [
       "https://preview.redd.it/some-images-generated-using-the-new-bing-image-creator-v0-zfohxnf8t3pa1.jpg?width=1024&format=pjpg&auto=webp&s=33274aadae0e0332e60dd15c87617ea6652365b5",
       "https://example.com/photo2.jpg",
@@ -496,7 +503,7 @@ export const targetManagementData = [
     totalSites: 4,
     siteengineer: "Himanshu",
     total: 1,
-    completed: 1,
+    completed: 0,
     pending: 1,
     activity: "Final Inspection",
     completedPhotos: ["https://example.com/photo2.jpg"],

@@ -26,7 +26,7 @@ export const taskReducer = (state = initialState, action) => {
     case VIEW_TASK:
       return {
         ...state,
-        currentTask: state.tasks.find((task) => task.id === action.payload),
+        currentTask: action.payload,
       };
     default:
       return state;

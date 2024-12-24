@@ -18,6 +18,12 @@ export const getAllTasks = (my_id) => async (dispatch) => {
     console.error(error);
   }
 };
+export const getTaskById = async (task_id) => {
+  const response = await fetch(`${BASE_URL}/api/task/${task_id}`)
+  const data = await response.json()
+  return data
+  // dispatch({ type: VIEW_TASK, payload: data })
+}
 
 export const updateTask = (task) => ({
   type: UPDATE_TASK,
