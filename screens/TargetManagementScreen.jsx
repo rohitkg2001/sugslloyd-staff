@@ -84,7 +84,12 @@ const TargetManagementScreen = ({ route, navigation }) => {
               left: 240,
             }}
           >
-            <Ionicons name="pencil-outline" size={24} color="black" />
+            <Ionicons
+              name="pencil-outline"
+              size={24}
+              color="black"
+              onPress={() => setShowBottomSheet(!showBottomSheet)}
+            />
           </TouchableOpacity>
         </View>
       )}
@@ -147,7 +152,6 @@ const TargetManagementScreen = ({ route, navigation }) => {
           <MyButton
             title={t("Inventory")}
             color="#DC4C64"
-            onPress={() => setShowBottomSheet(!showBottomSheet)}
           />
           <MyButton
             title={t("Progress")}
