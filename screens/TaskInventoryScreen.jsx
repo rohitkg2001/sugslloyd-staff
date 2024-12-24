@@ -117,7 +117,7 @@ const TaskInventoryScreen = () => {
               justifyContent: "center",
               alignItems: "center",
               position: "absolute",
-              top: 600,
+              top: 260,
             },
           ]}
         >
@@ -131,7 +131,7 @@ const TaskInventoryScreen = () => {
             {
               justifyContent: "center",
               position: "absolute",
-              top: 670,
+              top: 320,
               left: 0,
               right: 0,
             },
