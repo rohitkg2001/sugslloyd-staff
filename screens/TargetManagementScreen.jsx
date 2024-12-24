@@ -17,6 +17,7 @@ import {
   ICON_LARGE,
 } from "../styles";
 import VendorSelectionScreen from "./VendorSelectionScreen";
+import TaskInventoryScreen from "./TaskInventoryScreen";
 const TargetManagementScreen = ({ route, navigation }) => {
   const { target } = route.params || {};
   const { t } = useTranslation();
@@ -26,6 +27,10 @@ const TargetManagementScreen = ({ route, navigation }) => {
   const closeVendorSelectionScreen = () => {
     setShowBottomSheet(!showBottomSheet);
   };
+  const closeTaskInventoryScreen = () =>
+  {
+    setShowBottomSheet( !showBottomSheet );
+  }
 
   const renderDetailRow = (label, value) => (
     <View style={[styles.row, spacing.pv1]}>
@@ -149,13 +154,10 @@ const TargetManagementScreen = ({ route, navigation }) => {
             marginVertical: 16,
           }}
         >
-          <MyButton
-            title={t("Inventory")}
-            color="#DC4C64"
-          />
+          <MyButton title={t("Inventory")} color="#DC4C64" />
           <MyButton
             title={t("Progress")}
-            onPress={() => navigation.navigate("taskMaterialScreen")}
+            onPress={() => setShowBottomSheet(!showBottomSheet)}
           />
         </View>
       </View>
@@ -165,6 +167,9 @@ const TargetManagementScreen = ({ route, navigation }) => {
 
       {showBottomSheet && (
         <VendorSelectionScreen onClose={closeVendorSelectionScreen} />
+      )}
+      {showBottomSheet && (
+        <TaskInventoryScreen onClose={closeTaskInventoryScreen} />
       )}
     </ContainerComponent>
   );
