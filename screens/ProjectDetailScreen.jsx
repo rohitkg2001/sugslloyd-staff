@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Animated, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import {
   SCREEN_WIDTH,
@@ -11,7 +11,7 @@ import {
   PRIMARY_COLOR,
 } from "../styles";
 import MyHeader from "../components/header/MyHeader";
-import { H5, H6, P } from "../components/text";
+import { H5, H6 } from "../components/text";
 import { useTranslation } from "react-i18next";
 import { sitesData, inventoryData, targetManagementData } from "../utils/faker";
 import MyFlatList from "../components/utility/MyFlatList";
@@ -26,11 +26,17 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const [activeTab, setActiveTab] = useState("Sites");
   const [searchText, setSearchText] = useState("");
   const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const [showFullDetails, setShowFullDetails] = useState(false);
+  const [expandHeight] = useState(new Animated.Value(0));
+
+  
+  const MAX_HEIGHT = 330; 
 
   const handleViewDetails = (siteData) => {
     dispatch(viewSite(siteData));
   };
 
+ 
   const renderDetailRow = (label, value) => (
     <View style={[styles.row, spacing.pv1]}>
       {label === "Start Date" && <H6 style={[typography.font16]}>{value}</H6>}
@@ -66,14 +72,25 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   const renderProjectDetails = () => (
     <>
+      {/* Initially displayed details */}
       {renderDetailRow("Project in State", project.project_in_state)}
       {renderDetailRow("Project Name", project.project_name)}
       {renderDetailRow("Work Order Number", project.work_order_number)}
       {renderDetailRow("Start Date", project.start_date)}
       {renderDetailRow("End Date", project.end_date)}
-      {renderDetailRow("Project Capacity", `${project.project_capacity} KW`)}
 
+   
+    </>
+  );
+
+
+  const renderHiddenDetails = () => (
+    <>
+      {renderDetailRow("Project Capacity", `${project.project_capacity} KW`)}
       {renderDetailRow("Description", project.description)}
+      {renderDetailRow("Additional Detail 1", project.additional_detail_1)}
+      {renderDetailRow("Additional Detail 2", project.additional_detail_2)}
+      {renderDetailRow("Additional Detail 3", project.additional_detail_3)}
     </>
   );
 
@@ -145,12 +162,37 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     }
   };
 
+  // Function to toggle the view of project details
+  const toggleDetails = () => {
+    setShowFullDetails(!showFullDetails);
+    Animated.timing(expandHeight, {
+      toValue: showFullDetails ? 0 : MAX_HEIGHT, 
+      duration: 300, 
+      useNativeDriver: false,
+    }).start();
+  };
+
   return (
     <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
       <MyHeader title={t("project_details")} isBack={true} hasIcon={true} />
       <ScrollView>
+
         {renderProjectDetails()}
 
+        <Animated.View style={{ height: expandHeight }}>
+          {showFullDetails && renderHiddenDetails()}
+        </Animated.View>
+
+        <Button
+          style={[styles.btn, styles.bgPrimary, spacing.mt2]}
+          onPress={toggleDetails}
+        >
+          <H6 style={{ color: "#FFF" }}>
+            {showFullDetails ? t("view Less") : t("View More")}
+          </H6>
+        </Button>
+
+        {/* Tabs for Sites, Inventory, Target */}
         <View
           style={[
             styles.row,
@@ -232,15 +274,8 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           </View>
         </View>
 
-        <View
-          style={[
-            styles.row,
-            {
-              alignItems: "center",
-              marginTop: 20,
-            },
-          ]}
-        >
+        {/* Search and Bottom Sheet Button */}
+        <View style={[styles.row, { alignItems: "center", marginTop: 20 }]}>
           <SearchBar
             value={searchText}
             onChangeText={setSearchText}
@@ -260,6 +295,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           </Button>
         </View>
 
+        {/* Render Active Tab */}
         {renderActiveTab()}
       </ScrollView>
     </View>
