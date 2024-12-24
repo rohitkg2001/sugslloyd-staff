@@ -22,7 +22,6 @@ const TargetManagementScreen = ({ route, navigation }) => {
   const { target } = route.params || {};
   const { t } = useTranslation();
 
-  
   const [showVendorSelection, setShowVendorSelection] = useState(false);
   const [showTaskInventory, setShowTaskInventory] = useState(false);
 
@@ -36,11 +35,15 @@ const TargetManagementScreen = ({ route, navigation }) => {
     setShowTaskInventory(false);
   };
 
-  // Render a row of project details
   const renderDetailRow = (label, value) => (
-    <View style={[styles.row, spacing.pv1]}>
+    <View style={[]}>
       {(label === "Site Name" || label === "Location") && (
-        <H6 style={[typography.textBold, { textAlign: "left", fontSize: 12 }]}>
+        <H6
+          style={[
+            typography.textBold,
+            { textAlign: "left", fontSize: 16, top: 25 },
+          ]}
+        >
           {label}:
         </H6>
       )}
@@ -51,7 +54,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
             {
               position: "absolute",
               right: 0,
-              bottom: 70,
+              bottom: 76,
               textAlign: "right",
               fontSize: 20,
             },
@@ -60,15 +63,15 @@ const TargetManagementScreen = ({ route, navigation }) => {
           {value}
         </H6>
       )}
-
-      {label === "Start Date" && <H6 style={[typography.font16]}>{value}</H6>}
+      {label === "Start Date" && (
+        <H6 style={[typography.font16, { top: 20 }]}>{value}</H6>
+      )}
       {label === "End Date" && (
         <H6
           style={[
             {
               position: "absolute",
               right: 100,
-              bottom: 13,
               fontSize: 16,
             },
           ]}
@@ -82,7 +85,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            marginTop: 10,
+            marginTop: 25,
           }}
         >
           <H6 style={[typography.font16]}>
@@ -93,7 +96,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
             style={{
               left: 240,
             }}
-            onPress={() => setShowVendorSelection(!showVendorSelection)} 
+            onPress={() => setShowVendorSelection(!showVendorSelection)}
           >
             <Ionicons name="pencil-outline" size={24} color="black" />
           </TouchableOpacity>
@@ -162,7 +165,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
           />
           <MyButton
             title={t("Progress")}
-            onPress={() => setShowVendorSelection(!showVendorSelection)} 
+            onPress={() => setShowVendorSelection(!showVendorSelection)}
           />
         </View>
       </View>
@@ -174,7 +177,6 @@ const TargetManagementScreen = ({ route, navigation }) => {
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
 
-     
       {showVendorSelection && (
         <VendorSelectionScreen onClose={closeVendorSelectionScreen} />
       )}

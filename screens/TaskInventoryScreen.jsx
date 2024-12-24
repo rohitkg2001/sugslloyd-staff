@@ -89,7 +89,7 @@ const TaskInventoryScreen = () => {
                 spacing.p1,
                 spacing.br2,
                 spacing.mb3,
-                { alignItems: "center", backgroundColor: "#ccc", top: 410 },
+                { alignItems: "center", backgroundColor: "#ccc", top: 70 },
               ]}
             >
               <TouchableOpacity
