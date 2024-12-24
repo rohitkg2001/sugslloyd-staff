@@ -9,6 +9,15 @@ import {
   BASE_URL,
 } from "../constant";
 
+export const getStateById = async (id) => {
+  const response = await fetch(`${BASE_URL}/api/fetch-states`, {
+    method: "POST"
+  });
+  const data = await response.json();
+  const state = await data?.states.find((item) => item.id === id)
+  return state.name;
+}
+
 export const fetchProjects = () => async (dispatch) => {
   try {
     const response = await fetch(`${BASE_URL}/api/projects`);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import {
@@ -19,17 +19,32 @@ import ClickableCard from "../components/card/ClickableCard";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import NoRecord from "./NoRecord";
+import { getStateById } from "../redux/actions/projectAction";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSites } from "../redux/actions/siteActions";
 
 const ProjectDetailsScreen = ({ route, navigation }) => {
   const { project } = route.params;
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("Sites");
+  const [state, setState] = useState("")
   const [searchText, setSearchText] = useState("");
   const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const [sites, setSites] = useState([])
+  const storeState = useSelector(state => state)
+  const dispatch = useDispatch()
 
-  const handleViewDetails = (siteData) => {
-    dispatch(viewSite(siteData));
-  };
+  const setAsyncState = async () => {
+    const state = await getStateById(4)
+    setState(state)
+  }
+  useEffect(() => {
+    setAsyncState()
+    dispatch(fetchSites())
+    console.log(project.sites)
+    setSites(storeState.project.projects[0].sites)
+  }, [storeState])
+
 
   const renderDetailRow = (label, value) => (
     <View style={[styles.row, spacing.pv1]}>
@@ -66,7 +81,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   const renderProjectDetails = () => (
     <>
-      {renderDetailRow("Project in State", project.project_in_state)}
+      {renderDetailRow("Project in State", state)}
       {renderDetailRow("Project Name", project.project_name)}
       {renderDetailRow("Work Order Number", project.work_order_number)}
       {renderDetailRow("Start Date", project.start_date)}
@@ -79,13 +94,13 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   const renderSitesTab = () => (
     <MyFlatList
-      data={sitesData}
+      data={sites}
       renderItem={({ item, index }) => (
         <ClickableCard
           key={item.id || index}
           item={item}
-          isSiteData={true}
-          onEyePress={() =>
+          isSite={true}
+          handleViewDetails={() =>
             navigation.navigate("siteDetailScreen", { site: item })
           }
         />

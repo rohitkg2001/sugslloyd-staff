@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, ScrollView, Image, TouchableOpacity } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
-import { H6 } from "../components/text";
+import { H1, H3, H4, H5, H6 } from "../components/text";
 import MyHeader from "../components/header/MyHeader";
 import { useTranslation } from "react-i18next";
 import NoRecord from "./NoRecord";
@@ -17,111 +17,47 @@ import {
 } from "../styles";
 import VendorSelectionScreen from "./VendorSelectionScreen";
 import TaskInventoryScreen from "./TaskInventoryScreen";
+import { useDispatch, useSelector } from "react-redux";
+import { getTaskById } from "../redux/actions/taskActions";
+import { IconButton } from "react-native-paper";
+import { getAllVendors } from "../redux/actions/vendorAction";
 
 const TargetManagementScreen = ({ route, navigation }) => {
-  const { target } = route.params || {};
+  const { target, id } = route.params || {};
+  const [currentTarget, setCurrentTarget] = useState({
+    site_name: "",
+    location: "",
+    activity: "",
+    start_date: "",
+    end_date: "",
+    vendor: "",
+    remarks: ""
+  })
   const { t } = useTranslation();
+  const dispatch = useDispatch()
+
+
+  const getCurrentTask = async () => {
+    const thisTask = await getTaskById(id)
+    setCurrentTarget(thisTask)
+  }
+  useEffect(() => {
+    getCurrentTask()
+    dispatch(getAllVendors())
+  }, [])
+
 
   const [showVendorSelection, setShowVendorSelection] = useState(false);
   const [showTaskInventory, setShowTaskInventory] = useState(false);
 
   const isDataAvailable = target && Object.keys(target).length > 0;
 
-  const closeVendorSelectionScreen = () => {
-    setShowVendorSelection(false);
-  };
+
 
   const closeTaskInventoryScreen = () => {
     setShowTaskInventory(false);
   };
 
-  const renderDetailRow = (label, value) => (
-    <View style={[]}>
-      {(label === "Site Name" || label === "Location") && (
-        <H6
-          style={[
-            typography.textBold,
-            { textAlign: "left", fontSize: 16, top: 25 },
-          ]}
-        >
-          {label}:
-        </H6>
-      )}
-
-      {label === "Activity" && (
-        <H6
-          style={[
-            {
-              position: "absolute",
-              right: 0,
-              bottom: 76,
-              textAlign: "right",
-              fontSize: 20,
-            },
-          ]}
-        >
-          {value}
-        </H6>
-      )}
-      {label === "Start Date" && (
-        <H6 style={[typography.font16, { top: 20 }]}>{value}</H6>
-      )}
-      {label === "End Date" && (
-        <H6
-          style={[
-            {
-              position: "absolute",
-              right: 100,
-              fontSize: 16,
-            },
-          ]}
-        >
-          {value}
-        </H6>
-      )}
-
-      {(label === "Vendor" || label === "Remark") && (
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginTop: 25,
-          }}
-        >
-          <H6 style={[typography.font16]}>
-            {label}: {value}
-          </H6>
-
-          <TouchableOpacity
-            style={{
-              left: 240,
-            }}
-            onPress={() => setShowVendorSelection(!showVendorSelection)}
-          >
-            <Ionicons name="pencil-outline" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-      )}
-
-      {label !== "Start Date" &&
-        label !== "End Date" &&
-        label !== "Activity" &&
-        label !== "Vendor" &&
-        label !== "Remark" && <H6>{value}</H6>}
-    </View>
-  );
-
-  const renderProjectDetails = () => (
-    <>
-      {renderDetailRow("Site Name", target.site_name)}
-      {renderDetailRow("Location", target.location)}
-      {renderDetailRow("Start Date", target.start_date)}
-      {renderDetailRow("End Date", target.end_date)}
-      {renderDetailRow("Activity", target.activity)}
-      {renderDetailRow("Vendor", target.vendor)}
-      {renderDetailRow("Remark", target.incompleteRemark)}
-    </>
-  );
 
   return (
     <ContainerComponent>
@@ -130,7 +66,26 @@ const TargetManagementScreen = ({ route, navigation }) => {
       <View style={{ width: SCREEN_WIDTH - 16 }}>
         {isDataAvailable ? (
           <ScrollView>
-            {renderProjectDetails()}
+            {/* <View style={{ width: SCREEN_WIDTH }}> */}
+            <H5 style={{ textAlign: 'right', marginRight: 20, textTransform: 'uppercase' }}>{currentTarget.activity}</H5>
+            <H4>{currentTarget.site?.site_name}</H4>
+            <H6>{currentTarget.site?.location}</H6>
+            <H6>{currentTarget.start_date} - {currentTarget.end_date}</H6>
+            <View style={[styles.row, spacing.mv2, { justifyContent: 'space-between', flex: 1 }]}>
+              <H6>Vendor Name</H6>
+              <View style={[styles.row, { alignItems: 'center' }]}>
+                <H6>{!currentTarget.vendor ? "................................." : currentTarget.vendor?.vendor_name}</H6>
+                <IconButton onPress={() => setShowVendorSelection(true)} icon={"pencil"} />
+              </View>
+            </View>
+            <View style={[styles.row, spacing.mv2, { justifyContent: 'space-between', flex: 1 }]}>
+              <H6>Remarks</H6>
+              <View style={[styles.row, { alignItems: 'center' }]}>
+                <H6>{!currentTarget.description ? "................................." : currentTarget.description}</H6>
+                <IconButton onPress={() => setShowVendorSelection(true)} icon={"pencil"} />
+              </View>
+            </View>
+            {/* </View> */}
 
             {target.completedPhotos && target.completedPhotos.length > 0 && (
               <View style={[spacing.pv4]}>
@@ -178,7 +133,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
       </Button>
 
       {showVendorSelection && (
-        <VendorSelectionScreen onClose={closeVendorSelectionScreen} />
+        <VendorSelectionScreen onClose={() => setShowVendorSelection(false)} setVendor={(value) => setCurrentTarget({ ...currentTarget, vendor: { vendor_name: value } })} />
       )}
       {showTaskInventory && (
         <TaskInventoryScreen onClose={closeTaskInventoryScreen} />

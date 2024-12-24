@@ -54,6 +54,7 @@ export default function CurrentProjectsScreen({ navigation }) {
             handleViewDetails={() =>
               navigation.navigate("targetManagementScreen", {
                 target: item,
+                id: item.id
               })
             }
           />

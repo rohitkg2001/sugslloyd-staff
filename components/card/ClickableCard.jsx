@@ -10,12 +10,6 @@ import { SUCCESS_COLOR, WARNING_COLOR } from "../../styles/constant";
 export default function ClickableCard({
   item,
   handleViewDetails,
-  hideIcons,
-  showArrow,
-  showView,
-  onEyePress,
-  handleDelete,
-  handleEdit,
   isSite = false,
   isVendor = false,
   isProject = false,
