@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { View, ScrollView, Image, TouchableOpacity } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import { H6 } from "../components/text";
@@ -18,20 +17,26 @@ import {
 } from "../styles";
 import VendorSelectionScreen from "./VendorSelectionScreen";
 import TaskInventoryScreen from "./TaskInventoryScreen";
+
 const TargetManagementScreen = ({ route, navigation }) => {
   const { target } = route.params || {};
   const { t } = useTranslation();
 
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
-  const isDataAvailable = target && Object.keys( target ).length > 0;
-  const closeVendorSelectionScreen = () => {
-    setShowBottomSheet(!showBottomSheet);
-  };
-  const closeTaskInventoryScreen = () =>
-  {
-    setShowBottomSheet( !showBottomSheet );
-  }
+  
+  const [showVendorSelection, setShowVendorSelection] = useState(false);
+  const [showTaskInventory, setShowTaskInventory] = useState(false);
 
+  const isDataAvailable = target && Object.keys(target).length > 0;
+
+  const closeVendorSelectionScreen = () => {
+    setShowVendorSelection(false);
+  };
+
+  const closeTaskInventoryScreen = () => {
+    setShowTaskInventory(false);
+  };
+
+  // Render a row of project details
   const renderDetailRow = (label, value) => (
     <View style={[styles.row, spacing.pv1]}>
       {(label === "Site Name" || label === "Location") && (
@@ -88,13 +93,9 @@ const TargetManagementScreen = ({ route, navigation }) => {
             style={{
               left: 240,
             }}
+            onPress={() => setShowVendorSelection(!showVendorSelection)} 
           >
-            <Ionicons
-              name="pencil-outline"
-              size={24}
-              color="black"
-              onPress={() => setShowBottomSheet(!showBottomSheet)}
-            />
+            <Ionicons name="pencil-outline" size={24} color="black" />
           </TouchableOpacity>
         </View>
       )}
@@ -154,21 +155,30 @@ const TargetManagementScreen = ({ route, navigation }) => {
             marginVertical: 16,
           }}
         >
-          <MyButton title={t("Inventory")} color="#DC4C64" />
+          <MyButton
+            title={t("Inventory")}
+            color="#DC4C64"
+            onPress={() => setShowTaskInventory(!showTaskInventory)}
+          />
           <MyButton
             title={t("Progress")}
-            onPress={() => setShowBottomSheet(!showBottomSheet)}
+            onPress={() => setShowVendorSelection(!showVendorSelection)} 
           />
         </View>
       </View>
-      <Button style={styles.addButton} onPress={() => navigation.navigate("")}>
+
+      <Button
+        style={styles.addButton}
+        onPress={() => navigation.navigate("AddTarget")}
+      >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
 
-      {showBottomSheet && (
+     
+      {showVendorSelection && (
         <VendorSelectionScreen onClose={closeVendorSelectionScreen} />
       )}
-      {showBottomSheet && (
+      {showTaskInventory && (
         <TaskInventoryScreen onClose={closeTaskInventoryScreen} />
       )}
     </ContainerComponent>
