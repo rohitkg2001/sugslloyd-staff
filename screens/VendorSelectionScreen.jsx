@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import {
-  ScrollView,
-  View,
-  Text,
-} from "react-native";
+import { View, Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useTranslation } from "react-i18next";
-import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyButton from "../components/buttons/MyButton";
+import BottomSheet from "../components/bottomsheet/BottomSheet";
 
 const VendorSelectionScreen = () => {
   const [vendors, setVendors] = useState([]);
@@ -29,12 +25,13 @@ const VendorSelectionScreen = () => {
     borderColor: "#ccc",
     borderRadius: 8,
     padding: 12,
+    height: 20,
     backgroundColor: "#F0FAF0",
-    zIndex: 10, 
+    zIndex: 10,
   };
 
   const dropdownTextStyle = {
-    fontSize: 16,
+    fontSize: 14,
     color: "#333",
   };
 
@@ -43,16 +40,12 @@ const VendorSelectionScreen = () => {
   };
 
   return (
-    <ContainerComponent>
-      <ScrollView
-        contentContainerStyle={{
-          paddingHorizontal: spacing.mh1,
-          width: SCREEN_WIDTH - 18,
-          paddingBottom: 100,
-        }}
-      >
-        <View style={styles.vendorContainer}>
-          <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>
+    <BottomSheet>
+      <View>
+        <View
+          style={[styles.vendorContainer, { marginLeft: 20, marginTop: 10 , marginRight: 10 }]}
+        >
+          <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 15 }}>
             {t("Select Vendor")}
           </Text>
 
@@ -69,7 +62,7 @@ const VendorSelectionScreen = () => {
             searchable={true}
             searchPlaceholder="Search Vendor"
             zIndex={10}
-            dropDownMaxHeight={200}
+            dropDownMaxHeight={100}
             dropDownDirection="BOTTOM"
             modalTitle="Select Vendor"
             modalAnimationType="slide"
@@ -81,16 +74,16 @@ const VendorSelectionScreen = () => {
             styles.row,
             {
               width: SCREEN_WIDTH - 20,
-              marginTop: 480,
-              justifyContent: "center", 
-              alignItems: "center", 
+              marginTop: 250,
+              justifyContent: "center",
+              alignItems: "center",
             },
           ]}
         >
           <MyButton title={t("Assign Vendor")} onPress={handleAssignVendor} />
         </View>
-      </ScrollView>
-    </ContainerComponent>
+      </View>
+    </BottomSheet>
   );
 };
 

@@ -16,18 +16,16 @@ import {
   typography,
   ICON_LARGE,
 } from "../styles";
+import VendorSelectionScreen from "./VendorSelectionScreen";
 const TargetManagementScreen = ({ route, navigation }) => {
   const { target } = route.params || {};
   const { t } = useTranslation();
 
-  // State to manage the visibility of the BottomSheet
   const [showBottomSheet, setShowBottomSheet] = useState(false);
-
-  const navigateToForm = () => {
-    navigation.navigate("targetmanagementform", { target });
+  const isDataAvailable = target && Object.keys( target ).length > 0;
+  const closeVendorSelectionScreen = () => {
+    setShowBottomSheet(!showBottomSheet);
   };
-
-  const isDataAvailable = target && Object.keys(target).length > 0;
 
   const renderDetailRow = (label, value) => (
     <View style={[styles.row, spacing.pv1]}>
@@ -146,7 +144,11 @@ const TargetManagementScreen = ({ route, navigation }) => {
             marginVertical: 16,
           }}
         >
-          <MyButton title={t("Inventory")} color="#DC4C64" />
+          <MyButton
+            title={t("Inventory")}
+            color="#DC4C64"
+            onPress={() => setShowBottomSheet(!showBottomSheet)}
+          />
           <MyButton
             title={t("Progress")}
             onPress={() => navigation.navigate("taskMaterialScreen")}
@@ -158,9 +160,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
       </Button>
 
       {showBottomSheet && (
-        <BottomSheet onClose={() => setShowBottomSheet(false)}>
-          <Button title="Close" onPress={() => setShowBottomSheet(false)} />
-        </BottomSheet>
+        <VendorSelectionScreen onClose={closeVendorSelectionScreen} />
       )}
     </ContainerComponent>
   );
