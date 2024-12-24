@@ -32,12 +32,13 @@ import VendorDetailScreen from "../screens/VendorDetailScreen";
 import InventoryDetailsScreen from "../screens/InventoryDetailsScreen";
 import TaskMaterialScreen from "../screens/TaskMaterialScreen";
 import VendorSelectionScreen from "../screens/VendorSelectionScreen";
+import TaskInventoryScreen from "../screens/TaskInventoryScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="loginScreen"
+      initialRouteName="taskInventoryScreen"
       screenOptions={{
         headerShown: false,
       }}
@@ -98,6 +99,10 @@ export default function MyStackNavigator() {
       <Stack.Screen
         name="vendorSelectionScreen"
         component={VendorSelectionScreen}
+      />
+      <Stack.Screen
+        name="taskInventoryScreen"
+        component={TaskInventoryScreen}
       />
     </Stack.Navigator>
   );
