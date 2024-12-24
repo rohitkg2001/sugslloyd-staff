@@ -41,7 +41,7 @@ export default function Filter({ onClose, onApply }) {
   };
 
   const onClear = () => {
-    // implement logic to delete currentFilter
+  
     setFilterState(0);
     setSelectedState("");
     setSelectedProject("");
