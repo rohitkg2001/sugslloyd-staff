@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Animated } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import {
   SCREEN_WIDTH,
@@ -32,7 +32,9 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [sites, setSites] = useState([])
   const storeState = useSelector(state => state)
+  const [showFullDetails, setShowFullDetails] = useState(false);
   const dispatch = useDispatch()
+  const expandHeight = new Animated.Value(80);
 
   const setAsyncState = async () => {
     const state = await getStateById(4)
@@ -87,7 +89,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       {renderDetailRow("Start Date", project.start_date)}
       {renderDetailRow("End Date", project.end_date)}
 
-   
+
     </>
   );
 
@@ -174,8 +176,8 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const toggleDetails = () => {
     setShowFullDetails(!showFullDetails);
     Animated.timing(expandHeight, {
-      toValue: showFullDetails ? 0 : MAX_HEIGHT, 
-      duration: 300, 
+      toValue: showFullDetails ? 0 : 300,
+      duration: 300,
       useNativeDriver: false,
     }).start();
   };

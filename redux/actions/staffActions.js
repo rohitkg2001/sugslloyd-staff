@@ -24,7 +24,7 @@ export const login = (user, pass) => async (dispatch) => {
       { email: user, password: pass }
     );
     const { data, status } = response
-    alert(data)
+    alert(status)
     if (status === 200) {
       // Dispatch the user object to the store
       dispatch({ type: LOGIN_STAFF, payload: data.user });
@@ -33,6 +33,7 @@ export const login = (user, pass) => async (dispatch) => {
       return false;
     }
   } catch (err) {
+    console.log(err);
     alert(err)
     return false;
   }

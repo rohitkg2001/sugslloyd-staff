@@ -1,5 +1,5 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
-export const BASE_URL = "https://slldm.com";
+export const BASE_URL = "http://slldm.com";
 
 export const initialState = {};
 
