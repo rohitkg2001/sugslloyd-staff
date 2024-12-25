@@ -4,7 +4,7 @@
 node_modules/
 
 #Dont push anything over git
-android/
+# android/
 redux/actions/staffActions.js
 
 # Expo
@@ -12,7 +12,7 @@ redux/actions/staffActions.js
 dist/
 web-build/
 #Dont push anything over git
-android/
+# android/
 
 # Native
 *.orig.*

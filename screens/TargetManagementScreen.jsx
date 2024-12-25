@@ -132,7 +132,6 @@ const TargetManagementScreen = ({ route, navigation }) => {
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
 
-
       {showVendorSelection && (
         <VendorSelectionScreen onClose={() => setShowVendorSelection(false)} setVendor={(value) => setCurrentTarget({ ...currentTarget, vendor: { vendor_name: value } })} />
       )}
