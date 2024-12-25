@@ -36,6 +36,7 @@ export const login = (user, pass) => async (dispatch) => {
       return false;
     }
   } catch (err) {
+    alert(err)
     return false;
   }
 };
