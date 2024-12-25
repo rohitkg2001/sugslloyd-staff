@@ -42,7 +42,7 @@ export default function MyMaterialBottomNavigator() {
         name="CurrentProjectsScreen"
         component={CurrentProjectsScreen}
         options={{
-          tabBarLabel: "Projects",
+          tabBarLabel: "Targets",
           tabBarIcon: ({ color }) => (
             <Icon name="grid-outline" size={ICON_SMALL} color={color} />
           ),

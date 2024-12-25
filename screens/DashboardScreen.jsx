@@ -104,10 +104,9 @@ export default function DashboardScreen({ navigation }) {
   const closeFilter = () => {
     setShowBottomSheet(!showBottomSheet);
   };
-  const applyFilterFromRedux = (...args) => {};
+  const applyFilterFromRedux = (...args) => { };
 
   const handleViewDetails = (item) => {
-    console.log(item);
     dispatch(viewProject(item));
     navigation.navigate("ViewDetailScreen", { formType: "project" });
   };
