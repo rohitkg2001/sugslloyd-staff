@@ -26,9 +26,8 @@ export const login = (user, pass) => async (dispatch) => {
       },
       body: JSON.stringify({ email: user, password: pass }),
     });
-    // console.log(response)
     const data = await response.json();
-    // console.log(data);
+    alert(data)
     if (response.ok && data.user) {
       // Dispatch the user object to the store
       dispatch({ type: LOGIN_STAFF, payload: data.user });
