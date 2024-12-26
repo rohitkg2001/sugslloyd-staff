@@ -39,7 +39,7 @@ export default function CurrentProjectsScreen({ navigation }) {
     Array.isArray(tasks) && setCurrentTasks(tasks);
   }, [tasks]);
 
-  const applyFilterFromRedux = (...args) => { };
+  const applyFilterFromRedux = (...args) => {};
 
   return (
     <ContainerComponent>
@@ -54,12 +54,12 @@ export default function CurrentProjectsScreen({ navigation }) {
             handleViewDetails={() =>
               navigation.navigate("targetManagementScreen", {
                 target: item,
-                id: item.id
+                id: item.id,
               })
             }
           />
         )}
-        contentContainerStyle={[spacing.mh2, spacing.mt1, { flex: 1 }]}
+        contentContainerStyle={[spacing.mh2, spacing.mt1, { flexGrow: 1 }]}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
         ListHeaderComponent={() => (
           <View
