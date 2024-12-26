@@ -1,6 +1,7 @@
 import { BASE_URL, LOGIN_STAFF } from "../constant";
 import moment from "moment";
 import { staff } from "../../utils/faker";
+import axios from "axios";
 
 export const greet = () => {
   // Write a logic to get morning, afternoon, evening and night as per time from moment
@@ -19,17 +20,12 @@ export const greet = () => {
 export const login = (user, pass) => async (dispatch) => {
   try {
     console.log(user, pass);
-    const response = await fetch(`${BASE_URL}/api/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: user, password: pass }),
-    });
-    // console.log(response)
-    const data = await response.json();
-    // console.log(data);
-    if (response.ok && data.user) {
+    const response = await axios.post(`${BASE_URL}/api/login`,
+      { email: user, password: pass }
+    );
+    const { data, status } = response
+    alert(status)
+    if (status === 200) {
       // Dispatch the user object to the store
       dispatch({ type: LOGIN_STAFF, payload: data.user });
       return true;
@@ -37,6 +33,8 @@ export const login = (user, pass) => async (dispatch) => {
       return false;
     }
   } catch (err) {
+    console.log(err);
+    alert(err)
     return false;
   }
 };
