@@ -7,8 +7,9 @@ import MyButton from "../components/buttons/MyButton";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
 import { useDispatch, useSelector } from "react-redux";
 import { transformArray } from "../utils/faker";
+import { BASE_URL } from "../redux/constant";
 
-const VendorSelectionScreen = ({ onClose, setVendor }) => {
+const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
   const [vendors, setVendors] = useState([]);
   const [openVendorDropdown, setOpenVendorDropdown] = useState(false);
   const vendorInStore = useSelector(state => state.vendor.vendors)
@@ -37,8 +38,22 @@ const VendorSelectionScreen = ({ onClose, setVendor }) => {
     color: "#333",
   };
 
-  const handleAssignVendor = () => {
-    console.log("Assigned vendor(s):", vendors);
+  const handleAssignVendor = async () => {
+    console.log(vendors)
+    const vendor_id = vendorInStore.find(vendor => vendor.firstName === vendors).id
+
+    const response = await fetch(`${BASE_URL}/api/task/${task_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        vendor_id: vendor_id,
+      }),
+    })
+    console.log(response)
+    const data = await response.json()
+    console.log(data)
     // TODO: Assign vendor to task
     setVendor(vendors)
     onClose();

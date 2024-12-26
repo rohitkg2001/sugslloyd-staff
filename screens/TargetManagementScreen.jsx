@@ -133,7 +133,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
       </Button>
 
       {showVendorSelection && (
-        <VendorSelectionScreen onClose={() => setShowVendorSelection(false)} setVendor={(value) => setCurrentTarget({ ...currentTarget, vendor: { vendor_name: value } })} />
+        <VendorSelectionScreen onClose={() => setShowVendorSelection(false)} setVendor={(value) => setCurrentTarget({ ...currentTarget, vendor: { vendor_name: value } })} task_id={currentTarget.id} />
       )}
       {showTaskInventory && (
         <TaskInventoryScreen onClose={closeTaskInventoryScreen} />

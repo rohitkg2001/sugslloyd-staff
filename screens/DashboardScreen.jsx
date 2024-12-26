@@ -5,10 +5,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import { greet } from "../redux/actions/staffActions";
-import MyFlatList from "../components/utility/MyFlatList";
 import { H4, H5, P, Span } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
-import StatCard from "../components/card/Statcard";
 import {
   layouts,
   LIGHT,
@@ -22,14 +20,7 @@ import {
   ICON_MEDIUM,
   ICON_LARGE,
 } from "../styles";
-import {
-  siteCardsForDashboard,
-  vendorCardForDashboard,
-  ProjectcardsForDashboard,
-  projects,
-  totalsitesData,
-  targetManagementData,
-} from "../utils/faker";
+import { targetManagementData } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import { useTranslation } from "react-i18next";
@@ -37,10 +28,9 @@ import Filter from "../components/Filter";
 import { getAllVendors, getVendorCounts } from "../redux/actions/vendorAction";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchProjects,
-  getProjectCounts,
-  viewProject,
+  fetchProjects, getProjectCounts
 } from "../redux/actions/projectAction";
+import { getAllTasks } from "../redux/actions/taskActions";
 
 export default function DashboardScreen({ navigation }) {
   const [today, setToday] = useState(moment().format("DD MMM YYYY"));
@@ -54,13 +44,14 @@ export default function DashboardScreen({ navigation }) {
   const [activeVendors, setActiveVendors] = useState(0);
   const [inActiveVendors, setInActiveVendors] = useState(0);
   const [installation, setInstallation] = useState(0);
+  const [doneInstallation, setDoneInstallation] = useState(0);
   const [rmsStatus, setRmsStatus] = useState(0);
+  const [donRMS, setDoneRMS] = useState(0);
   const [finalInspection, setFinalInspection] = useState(0);
-  const [totalSites, setTotalSites] = useState(0);
-  const [completedSites, setCompletedSites] = useState(0);
-  const [progressSites, setProgressSites] = useState(0);
-  const { firstName } = useSelector((state) => state.staff);
+  const [doneFinalInspection, setDoneFinalInspection] = useState(0);
+  const { firstName, id } = useSelector((state) => state.staff);
   const projectsArray = useSelector((state) => state.project?.projects);
+  const { tasks } = useSelector(state => state.tasks)
   const [projectsArr, setProjectsArr] = useState([]);
 
   const { t } = useTranslation();
@@ -78,9 +69,21 @@ export default function DashboardScreen({ navigation }) {
   };
 
   useEffect(() => {
+    const installationCount = tasks.filter(task => task.activity === "Installation").length
+    setInstallation(installationCount)
+    const rmsCount = tasks.filter(task => task.activity === "RMS").length
+    setRmsStatus(rmsCount)
+    const finalCount = tasks.filter(task => task.activity === "Final Inspection").length
+    setFinalInspection(finalCount)
+    setDueTasks(installationCount + rmsCount + finalCount)
+  }, [tasks])
+
+
+  useEffect(() => {
     setGreeting(greet());
     dispatch(getAllVendors());
     dispatch(fetchProjects());
+    dispatch(getAllTasks(id));
     getCounts();
   }, [projectCounts]);
 
@@ -98,18 +101,11 @@ export default function DashboardScreen({ navigation }) {
     }
   };
 
-  const showCalendar = () => {
-    setShowDatePicker(true);
-  };
+
   const closeFilter = () => {
     setShowBottomSheet(!showBottomSheet);
   };
-  const applyFilterFromRedux = (...args) => { };
 
-  const handleViewDetails = (item) => {
-    dispatch(viewProject(item));
-    navigation.navigate("ViewDetailScreen", { formType: "project" });
-  };
 
   return (
     <ContainerComponent>
@@ -205,21 +201,6 @@ export default function DashboardScreen({ navigation }) {
             </H5>
           </Button>
         </View>
-        {/* <MyFlatList
-          data={projectCounts}
-          renderItem={({ item }) => (
-            <StatCard
-              key={item.id}
-              backgroundColor={item.backgroundColor}
-              tasks={item.count}
-              status={t(item.status)}
-              onPress={() => navigation.navigate(item.page)}
-            />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
-          contentContainerStyle={spacing.mv4}
-        /> */}
 
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
@@ -315,15 +296,15 @@ export default function DashboardScreen({ navigation }) {
           >
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>{t("installation")}</P>
-              <P style={spacing.ml2}>{installation}</P>
+              <H5 style={spacing.ml2}>{doneInstallation}/<H5 style={typography.textDanger}>{installation}</H5></H5>
             </View>
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>{t("rms_status")}</P>
-              <P style={spacing.ml2}>{rmsStatus}</P>
+              <H5 style={spacing.ml2}>{donRMS}/<H5 style={typography.textDanger}>{rmsStatus}</H5></H5>
             </View>
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>{t("final_inspection")}</P>
-              <P style={spacing.ml2}>{finalInspection}</P>
+              <H5 style={spacing.ml2}>{doneFinalInspection}/<H5 style={typography.textDanger}>{finalInspection}</H5></H5>
             </View>
           </View>
         </CardFullWidth>
