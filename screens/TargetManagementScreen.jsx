@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Image, TouchableOpacity } from "react-native";
+import { View, ScrollView, Image } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
-import { H1, H3, H4, H5, H6 } from "../components/text";
+import { H4, H5, H6 } from "../components/text";
 import MyHeader from "../components/header/MyHeader";
 import { useTranslation } from "react-i18next";
 import NoRecord from "./NoRecord";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MyButton from "../components/buttons/MyButton";
+import Tabs from "../components/Tabs";
 import Button from "../components/buttons/Button";
-import {
-  SCREEN_WIDTH,
-  spacing,
-  styles,
-  typography,
-  ICON_LARGE,
-} from "../styles";
+import { SCREEN_WIDTH, spacing, styles, ICON_LARGE } from "../styles";
 import VendorSelectionScreen from "./VendorSelectionScreen";
 import TaskInventoryScreen from "./TaskInventoryScreen";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,33 +25,22 @@ const TargetManagementScreen = ({ route, navigation }) => {
     start_date: "",
     end_date: "",
     vendor: "",
-    remarks: ""
-  })
+    remarks: "",
+  });
   const { t } = useTranslation();
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
+  const [activeTab, setActiveTab] = useState(null);
 
   const getCurrentTask = async () => {
-    const thisTask = await getTaskById(id)
-    setCurrentTarget(thisTask)
-  }
+    const thisTask = await getTaskById(id);
+    setCurrentTarget(thisTask);
+  };
   useEffect(() => {
-    getCurrentTask()
-    dispatch(getAllVendors())
-  }, [])
-
-
-  const [showVendorSelection, setShowVendorSelection] = useState(false);
-  const [showTaskInventory, setShowTaskInventory] = useState(false);
+    getCurrentTask();
+    dispatch(getAllVendors());
+  }, []);
 
   const isDataAvailable = target && Object.keys(target).length > 0;
-
-
-
-  const closeTaskInventoryScreen = () => {
-    setShowTaskInventory(false);
-  };
-
 
   return (
     <ContainerComponent>
@@ -66,26 +49,60 @@ const TargetManagementScreen = ({ route, navigation }) => {
       <View style={{ width: SCREEN_WIDTH - 16 }}>
         {isDataAvailable ? (
           <ScrollView>
-            {/* <View style={{ width: SCREEN_WIDTH }}> */}
-            <H5 style={{ textAlign: 'right', marginRight: 20, textTransform: 'uppercase' }}>{currentTarget.activity}</H5>
+            <H5
+              style={{
+                textAlign: "right",
+                marginRight: 20,
+                textTransform: "uppercase",
+              }}
+            >
+              {currentTarget.activity}
+            </H5>
             <H4>{currentTarget.site?.site_name}</H4>
             <H6>{currentTarget.site?.location}</H6>
-            <H6>{currentTarget.start_date} - {currentTarget.end_date}</H6>
-            <View style={[styles.row, spacing.mv2, { justifyContent: 'space-between', flex: 1 }]}>
+            <H6>
+              {currentTarget.start_date} - {currentTarget.end_date}
+            </H6>
+            <View
+              style={[
+                styles.row,
+                spacing.mv2,
+                { justifyContent: "space-between", flex: 1 },
+              ]}
+            >
               <H6>Vendor Name</H6>
-              <View style={[styles.row, { alignItems: 'center' }]}>
-                <H6>{!currentTarget.vendor ? "................................." : currentTarget.vendor?.vendor_name}</H6>
-                <IconButton onPress={() => setShowVendorSelection(true)} icon={"pencil"} />
+              <View style={[styles.row, { alignItems: "center" }]}>
+                <H6>
+                  {!currentTarget.vendor
+                    ? "................................."
+                    : currentTarget.vendor?.vendor_name}
+                </H6>
+                <IconButton
+                  onPress={() => setShowVendorSelection(true)}
+                  icon={"pencil"}
+                />
               </View>
             </View>
-            <View style={[styles.row, spacing.mv2, { justifyContent: 'space-between', flex: 1 }]}>
+            <View
+              style={[
+                styles.row,
+                spacing.mv2,
+                { justifyContent: "space-between", flex: 1 },
+              ]}
+            >
               <H6>Remarks</H6>
-              <View style={[styles.row, { alignItems: 'center' }]}>
-                <H6>{!currentTarget.description ? "................................." : currentTarget.description}</H6>
-                <IconButton onPress={() => setShowVendorSelection(true)} icon={"pencil"} />
+              <View style={[styles.row, { alignItems: "center" }]}>
+                <H6>
+                  {!currentTarget.description
+                    ? "................................."
+                    : currentTarget.description}
+                </H6>
+                <IconButton
+                  onPress={() => setShowVendorSelection(true)}
+                  icon={"pencil"}
+                />
               </View>
             </View>
-            {/* </View> */}
 
             {target.completedPhotos && target.completedPhotos.length > 0 && (
               <View style={[spacing.pv4]}>
@@ -106,23 +123,10 @@ const TargetManagementScreen = ({ route, navigation }) => {
           <NoRecord msg="No data found" />
         )}
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: 16,
-          }}
-        >
-          <MyButton
-            title={t("Inventory")}
-            color="#DC4C64"
-            onPress={() => setShowTaskInventory(!showTaskInventory)}
-          />
-          <MyButton
-            title={t("Progress")}
-            onPress={() => setShowVendorSelection(!showVendorSelection)}
-          />
-        </View>
+        <Tabs
+          tabs={[t("Inventory"), t("Progress")]}
+          onTabPress={(index) => setActiveTab(index)}
+        />
       </View>
 
       <Button
@@ -132,12 +136,20 @@ const TargetManagementScreen = ({ route, navigation }) => {
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
 
-      {showVendorSelection && (
-        <VendorSelectionScreen onClose={() => setShowVendorSelection(false)} setVendor={(value) => setCurrentTarget({ ...currentTarget, vendor: { vendor_name: value } })} />
+      {activeTab === 0 && (
+        <TaskInventoryScreen onClose={() => setActiveTab(null)} />
       )}
-      {showTaskInventory && (
-        <TaskInventoryScreen onClose={closeTaskInventoryScreen} />
-      )}
+      {/* {activeTab === 1 && (
+        <VendorSelectionScreen
+          onClose={() => setActiveTab(null)}
+          setVendor={(value) =>
+            setCurrentTarget({
+              ...currentTarget,
+              vendor: { vendor_name: value },
+            })
+          }
+        />
+      )} */}
     </ContainerComponent>
   );
 };
