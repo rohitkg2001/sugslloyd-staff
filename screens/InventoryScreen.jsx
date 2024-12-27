@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import moment from "moment";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -13,15 +11,8 @@ import { useTranslation } from "react-i18next";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
-import { H4, H5 } from "../components/text";
-import {
-  ICON_MEDIUM,
-  LIGHT,
-  ICON_SMALL,
-  styles,
-  spacing,
-  SCREEN_WIDTH,
-} from "../styles";
+import DashboardFilter from "../components/filters/DashboardFilter";
+import { ICON_MEDIUM, LIGHT, styles, spacing, SCREEN_WIDTH } from "../styles";
 import InventoryDetailsModal from "../components/InventoryDetailsModal";
 import Filter from "../components/Filter";
 import { useSelector } from "react-redux";
@@ -31,9 +22,6 @@ export default function InventoryScreen({ navigation }) {
   const [isVisible, setVisible] = useState(false);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [today, setToday] = useState(moment().format("DD MMM YYYY"));
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const { t } = useTranslation();
   const { inventory } = useSelector((state) => state.inventory);
 
@@ -41,18 +29,6 @@ export default function InventoryScreen({ navigation }) {
     setShowBottomSheet(!showBottomSheet);
   };
   const applyFilterFromRedux = (...args) => {};
-
-  const handleDateChange = (event, date) => {
-    if (event.type === "set") {
-      setShowDatePicker(false);
-      if (date) {
-        setSelectedDate(date);
-        setToday(moment(date).format("DD MMM YYYY"));
-      }
-    } else {
-      setShowDatePicker(false);
-    }
-  };
 
   const viewItem = (id) => {
     setVisible(true);
@@ -74,7 +50,6 @@ export default function InventoryScreen({ navigation }) {
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={() => (
           <View>
-            {/* SearchBar Section */}
             <View
               style={[
                 styles.row,
@@ -101,34 +76,7 @@ export default function InventoryScreen({ navigation }) {
               </Button>
             </View>
 
-            {/* Date Selector Section */}
-            <View
-              style={[
-                styles.row,
-                spacing.m2,
-                { alignItems: "center", width: SCREEN_WIDTH - 16 },
-              ]}
-            >
-              <H4>Today</H4>
-              <Button
-                style={[styles.btn, styles.bgPrimary, spacing.ph3]}
-                onPress={() => setShowDatePicker(true)}
-              >
-                <Icon name="calendar-outline" size={ICON_SMALL} color={LIGHT} />
-                <H5 style={[spacing.ml1, { color: "#fff", fontWeight: "600" }]}>
-                  {today}
-                </H5>
-              </Button>
-            </View>
-
-            {showDatePicker && (
-              <DateTimePicker
-                value={selectedDate}
-                mode="date"
-                display="default"
-                onChange={handleDateChange}
-              />
-            )}
+            <DashboardFilter />
           </View>
         )}
         ListEmptyComponent={() => <NoRecord msg={t("no_inventory")} />}
