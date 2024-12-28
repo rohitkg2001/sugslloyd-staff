@@ -131,7 +131,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
 
       <Button
         style={styles.addButton}
-        onPress={() => navigation.navigate("AddTarget")}
+        onPress={() => navigation.navigate("taskMaterialScreen")}
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>

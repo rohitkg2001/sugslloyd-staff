@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -10,7 +9,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
-import ClickableCard from "../components/card/ClickableCard";
+import ClickableCard1 from "../components/card/ClickableCard1";
 import Filter from "../components/Filter";
 import {
   LIGHT,
@@ -19,6 +18,7 @@ import {
   spacing,
   SCREEN_WIDTH,
   styles,
+  typography,
 } from "../styles";
 import { useTranslation } from "react-i18next";
 import {
@@ -26,6 +26,7 @@ import {
   searchVendor,
   // countVendor,
 } from "../redux/actions/vendorAction";
+import { H6 } from "../components/text";
 
 export default function TotalVendorsScreen({ navigation, route }) {
   const dispatch = useDispatch();
@@ -48,21 +49,13 @@ export default function TotalVendorsScreen({ navigation, route }) {
   };
   const applyFilterFromRedux = (...args) => {};
 
-  const handleViewDetails = (item) => {
-    dispatch(viewVendor(item));
-    navigation.navigate("vendorDetailScreen", {
-      site: item,
-      formType: "vendor",
-    });
-  };
-
-  const handleSearch = (text) => {
-    dispatch(searchVendor(text));
-  };
-
-  const handleEdit = (item) => {
-    navigation.navigate("EditDetailsScreen", { item, formType: "vendor" });
-  };
+  // const handleViewDetails = (item) => {
+  //   dispatch(viewVendor(item));
+  //   navigation.navigate("vendorDetailScreen", {
+  //     site: item,
+  //     formType: "vendor",
+  //   });
+  // };
 
   return (
     <ContainerComponent>
@@ -70,20 +63,17 @@ export default function TotalVendorsScreen({ navigation, route }) {
       <MyFlatList
         data={vendors}
         loading={false}
-        renderItem={({ item }) => (
-          <ClickableCard
+        renderItem={({ item, index }) => (
+          <ClickableCard1
+            key={index}
             item={item}
-            key={item.id}
-            handleViewDetails={handleViewDetails}
-            handleDelete={() =>
-              fakeDelete({
-                title: t("error"),
-                message: t("error_msg"),
-              })
-            }
-            handleEdit={() => handleEdit(item)}
-            isVendor={true}
-          />
+            title={item.name}
+            subtitle={item.address}
+          >
+            <View>
+              <H6 style={[typography.font16]}>{item.contactNo}</H6>
+            </View>
+          </ClickableCard1>
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}

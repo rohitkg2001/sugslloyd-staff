@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, ScrollView, TouchableOpacity } from "react-native";
-import moment from "moment";
 import Icon from "react-native-vector-icons/Ionicons";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import { greet } from "../redux/actions/staffActions";
 import { H5, P } from "../components/text";
@@ -32,12 +30,9 @@ import {
 import DashboardFilter from "../components/filters/DashboardFilter";
 import DashboardHeader from "../components/header/DashboardHeader";
 export default function DashboardScreen({ navigation }) {
-  const [today, setToday] = useState(moment().format("DD MMM YYYY"));
   const [dueTasks, setDueTasks] = useState(4);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [greeting, setGreeting] = useState("Good morning");
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [projectCounts, setProjectCounts] = useState([]);
   const [totalVendors, setTotalVendors] = useState(0);
   const [activeVendors, setActiveVendors] = useState(0);
@@ -73,16 +68,6 @@ export default function DashboardScreen({ navigation }) {
   useEffect(() => {
     setProjectsArr(projectsArray);
   }, [projectsArray]);
-
-  const handleDateChange = (event, date) => {
-    if (event.type === "set") {
-      setShowDatePicker(false);
-      setSelectedDate(date);
-      setToday(moment(date).format("DD MMM YYYY"));
-    } else {
-      setShowDatePicker(false);
-    }
-  };
 
   const closeFilter = () => {
     setShowBottomSheet(!showBottomSheet);
@@ -362,15 +347,6 @@ export default function DashboardScreen({ navigation }) {
           </View>
         </CardFullWidth>
       </ScrollView>
-
-      {showDatePicker && (
-        <DateTimePicker
-          value={selectedDate}
-          mode="date"
-          display="default"
-          onChange={handleDateChange}
-        />
-      )}
       {showBottomSheet && (
         <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
       )}

@@ -78,13 +78,6 @@ const TargetManagementForm = () => {
     }
   };
 
-  const handleDateChange = (event, selectedDate) => {
-    setShowDatePicker(false);
-    if (selectedDate) {
-      setDate(selectedDate);
-    }
-  };
-
   const dropdownStyle = {
     borderWidth: 1,
     borderColor: "#ccc",

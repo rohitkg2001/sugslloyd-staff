@@ -11,6 +11,7 @@ import MyTextInput from "../components/input/MyTextInput";
 import { useTranslation } from "react-i18next";
 import { P } from "../components/text";
 import MyButton from "../components/buttons/MyButton";
+import DashboardFilter from "../components/filters/DashboardFilter";
 
 const TaskMaterialScreen = () => {
   const [site, setSite] = useState(null);
@@ -86,14 +87,15 @@ const TaskMaterialScreen = () => {
           />
         </View>
 
-        <TouchableOpacity onPress={() => setShowDatePicker("start")}>
+        {/* <TouchableOpacity onPress={() => setShowDatePicker("start")}>
           <MyTextInput
             title={t("Dispatch Date")}
             value={startDate.toLocaleDateString()}
             placeholder="Select Dispatch Date"
             editable={false}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <DashboardFilter />
 
         {showDatePicker && (
           <DateTimePicker

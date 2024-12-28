@@ -19,6 +19,7 @@ import {
   SCREEN_WIDTH,
   ICON_MEDIUM,
   ICON_LARGE,
+  typography,
 } from "../styles";
 import {
   fetchProjects,
@@ -26,6 +27,8 @@ import {
   viewProject,
 } from "../redux/actions/projectAction";
 import { useTranslation } from "react-i18next";
+import ClickableCard1 from "../components/card/ClickableCard1";
+import { H5, P, Span } from "../components/text";
 
 export default function TotalProjectsScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -76,20 +79,49 @@ export default function TotalProjectsScreen({ navigation }) {
       <MyFlatList
         data={filteredProjects}
         loading={loading}
-        renderItem={({ item }) => (
-          <ClickableCard
+        // renderItem={({ item }) => (
+        //   <ClickableCard
+        //     item={item}
+        //     key={item.id}
+        //     handleViewDetails={(item) => handleViewDetails(item.id)}
+        //     handleDelete={() =>
+        //       fakeDelete({
+        //         title: t("error"),
+        //         message: t("error_msg"),
+        //       })
+        //     }
+        //     handleEdit={handleEdit}
+        //     isProject={true}
+        //   />
+        // )}
+        renderItem={({ item, index }) => (
+          <ClickableCard1
+            key={index}
             item={item}
-            key={item.id}
-            handleViewDetails={(item) => handleViewDetails(item.id)}
-            handleDelete={() =>
-              fakeDelete({
-                title: t("error"),
-                message: t("error_msg"),
-              })
-            }
-            handleEdit={handleEdit}
-            isProject={true}
-          />
+            title={item.project_name}
+            subtitle={item.work_order_number}
+          >
+            <View>
+              <View style={[spacing.mt1, styles.row]}>
+                <View>
+                  <Span
+                    style={[typography.font16, { textTransform: "capitalize" }]}
+                  >
+                    start date
+                  </Span>
+                  <P style={[typography.font16]}>{item.start_date}</P>
+                </View>
+                <View>
+                  <Span
+                    style={[typography.font16, { textTransform: "capitalize" }]}
+                  >
+                    end date
+                  </Span>
+                  <P style={[typography.font16]}>{item.start_date}</P>
+                </View>
+              </View>
+            </View>
+          </ClickableCard1>
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[

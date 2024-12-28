@@ -20,7 +20,6 @@ import { H4, H5, H6, Span, P, H3 } from "../components/text";
 import { useTranslation } from "react-i18next";
 import { inventoryData, targetManagementData } from "../utils/faker";
 import MyFlatList from "../components/utility/MyFlatList";
-import ClickableCard from "../components/card/ClickableCard";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import Tabs from "../components/Tabs";
@@ -28,6 +27,7 @@ import NoRecord from "./NoRecord";
 import { getStateById } from "../redux/actions/projectAction";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSites } from "../redux/actions/siteActions";
+import ClickableCard1 from "../components/card/ClickableCard1";
 
 const ProjectDetailsScreen = ({ route, navigation, description }) => {
   const { project } = route.params;
@@ -70,14 +70,15 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
     <MyFlatList
       data={sites}
       renderItem={({ item, index }) => (
-        <ClickableCard
-          key={item.id || index}
+        <ClickableCard1
+          key={index}
           item={item}
-          isSite={true}
-          handleViewDetails={() =>
+          title={item.site_name}
+          subtitle={`${item.location}, ${item.district}, `}
+          positiveAction={() =>
             navigation.navigate("siteDetailScreen", { site: item })
           }
-        />
+        ></ClickableCard1>
       )}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
     />
@@ -87,16 +88,17 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
     <MyFlatList
       data={inventoryData}
       renderItem={({ item, index }) => (
-        <ClickableCard
-          key={item.id || index}
+        <ClickableCard1
+          key={index}
           item={item}
-          isInventoryData={true}
-          handleViewDetails={() =>
+          title={item.productName}
+          subtitle={`${item.category} || ${item.sub_category}, `}
+          positiveAction={() =>
             navigation.navigate("inventoryDetailScreen", {
               item: item,
             })
           }
-        />
+        ></ClickableCard1>
       )}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
     />
@@ -106,16 +108,17 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
     <MyFlatList
       data={targetManagementData}
       renderItem={({ item, index }) => (
-        <ClickableCard
-          key={item.id || index}
+        <ClickableCard1
+          key={index}
           item={item}
-          isTargetManagementData={true}
-          handleViewDetails={() =>
+          title={item.site?.site_name}
+          subtitle={item.activity}
+          positiveAction={() =>
             navigation.navigate("targetManagementScreen", {
               target: item,
             })
           }
-        />
+        ></ClickableCard1>
       )}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
     />
