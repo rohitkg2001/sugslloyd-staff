@@ -9,7 +9,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
-import ClickableCard from "../components/card/ClickableCard";
+import ClickableCard1 from "../components/card/ClickableCard1";
 import Filter from "../components/Filter";
 import {
   ICON_LARGE,
@@ -102,15 +102,34 @@ export default function TotalSitesScreen({ navigation, route }) {
       <MyFlatList
         data={sites}
         loading={loading}
-        renderItem={({ item }) => (
-          <ClickableCard
+        renderItem={({ item, index }) => (
+          <ClickableCard1
+            key={index}
             item={item}
-            key={item.id}
-            handleViewDetails={handleViewDetails}
-            handleDelete={handleDelete}
-            handleEdit={() => handleEdit(item)}
-            isSite={true}
-          />
+            title={item.siteName}
+            subtitle={`${item.location}, ${item.city},${item.state}, `}
+          >
+            <View>
+              <View style={[spacing.mt1, styles.row]}>
+                <View>
+                  <Span
+                    style={[typography.font16, { textTransform: "capitalize" }]}
+                  >
+                    Site Engineer
+                  </Span>
+                  <P style={[typography.font16]}>{item.siteEngineer}</P>
+                </View>
+                <View>
+                  <Span
+                    style={[typography.font16, { textTransform: "capitalize" }]}
+                  >
+                    Activity
+                  </Span>
+                  <P style={[typography.font16]}>{item.status}</P>
+                </View>
+              </View>
+            </View>
+          </ClickableCard1>
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh1, spacing.mt1]}

@@ -9,8 +9,6 @@ export default function MyFlatList({
   holidays,
   ...props
 }) {
-
-
   return (
     <View>
       {loading ? (
@@ -21,7 +19,8 @@ export default function MyFlatList({
             data={data}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
-              showsVerticalScrollIndicator={false}
+            initialNumToRender={50}
+            showsVerticalScrollIndicator={false}
             {...props}
           />
         </>

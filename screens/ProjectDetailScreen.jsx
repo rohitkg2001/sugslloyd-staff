@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  ScrollView,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import {
   SCREEN_WIDTH,
@@ -44,8 +39,8 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
   const [activeTab, setActiveTab] = useState("Sites");
   const [state, setState] = useState("");
   const [searchText, setSearchText] = useState("");
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [sites, setSites] = useState([]);
+  const [loading, setLoading] = useState(false);
   const storeState = useSelector((state) => state);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const dispatch = useDispatch();
@@ -54,16 +49,29 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
     const state = await getStateById(4);
     setState(state);
   };
+
   useEffect(() => {
+    setLoading(true);
     setAsyncState();
     setProject(project);
-    dispatch(fetchSites());
-    console.log(project.sites);
-    setSites(storeState.project.projects[0].sites);
+    dispatch(fetchSites())
+      .then(() => {
+        setSites(storeState.project.projects[0].sites);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, [storeState]);
 
   const toggleDescription = () => {
     setIsDescriptionExpanded((prevState) => !prevState);
+  };
+
+  const getTruncatedDescription = (description) => {
+    const words = description.split(" ");
+    if (words.length <= 20) {
+      return description;
+    }
+    return words.slice(0, 20).join(" ") + "...";
   };
 
   const renderSitesTab = () => (
@@ -81,6 +89,7 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
         ></ClickableCard1>
       )}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
+      loading={loading}
     />
   );
 
@@ -101,6 +110,7 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
         ></ClickableCard1>
       )}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
+      loading={loading}
     />
   );
 
@@ -121,6 +131,7 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
         ></ClickableCard1>
       )}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
+      loading={loading}
     />
   );
 
@@ -137,114 +148,63 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
     }
   };
 
-  const isDataAvailable = project && Object.keys(project).length > 0;
-  // const toggleDescription = () => {
-  //   setIsDescriptionExpanded((prevState) => !prevState);
-  // };
-  // const truncatedDescription =
-  //   Project.description && Project.description.length > 100
-  //     ? Project.description.slice(0, 100)
-  //     : Project.description;
-
   return (
-    <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
+    <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16, flex: 1 }]}>
       <MyHeader title={t("project_details")} isBack={true} hasIcon={true} />
-      <ScrollView>
+      <ScrollView stickyHeaderIndices={[1]}>
         <View>
-          {isDataAvailable ? (
-            <ScrollView>
-              <H5
-                style={{
-                  textTransform: "uppercase",
-                }}
-              >
-                {state}
-              </H5>
-              <H3>{Project.project_name}</H3>
-              <H6
-                style={{
-                  position: "absolute",
-                  top: 5,
-                  right: 10,
-                  textAlign: "right",
-                  fontSize: 12,
-                }}
-              >
-                {Project.work_order_number}
-              </H6>
-
-              <View>
-                <Span style={[typography.font14, spacing.pv1]}>Capacity</Span>
-                <P style={[typography.font16]}>{Project.project_capacity} KW</P>
-              </View>
-
-              <View style={[spacing.mt1, styles.row, spacing.pv2]}>
-                <View>
-                  <Span
-                    style={[typography.font14, { textTransform: "capitalize" }]}
-                  >
-                    start date
-                  </Span>
-                  <P style={[typography.font16]}>{Project.start_date}</P>
-                </View>
-                <View>
-                  <Span
-                    style={[typography.font14, { textTransform: "capitalize" }]}
-                  >
-                    end date
-                  </Span>
-                  <P style={[typography.font16]}>{Project.end_date}</P>
-                </View>
-              </View>
-
-              {/* <H6>{Project.description}</H6> */}
-              {/* <View>
-                <H6 style={[typography.font16]}>
-                  {isDescriptionExpanded
-                    ? Project.description
-                    : ${truncatedDescription}...}
-                  <Span
-                    style={{ color: PRIMARY_COLOR, fontSize: 18 }}
-                    onPress={toggleDescription}
-                  >
-                    {isDescriptionExpanded ? " Read Less" : " Read More"}
-                  </Span>
-                </H6>
-              </View> */}
-
-              <View>
-                <TouchableOpacity onPress={toggleDescription}>
-                  <P
-                    style={[typography.font16]}
-                    numberOfLines={3}
-                    ellipsizeMode="tail"
-                  >
-                    {Project.description}
-                  </P>
-                </TouchableOpacity>
-                {Project.description.length > 100 && (
-                  <Span
-                    style={{ color: PRIMARY_COLOR, fontSize: 18 }}
-                    onPress={toggleDescription}
-                  >
-                    {isDescriptionExpanded ? " Read Less" : " Read More"}
-                  </Span>
-                )}
-              </View>
-            </ScrollView>
-          ) : (
-            <NoRecord msg="No data found" />
+          <H5 style={{ textTransform: "uppercase" }}>{state}</H5>
+          <H3>{Project.project_name}</H3>
+          <H6
+            style={{
+              position: "absolute",
+              top: 5,
+              right: 10,
+              textAlign: "right",
+              fontSize: 12,
+            }}
+          >
+            {Project.work_order_number}
+          </H6>
+          <View>
+            <Span style={[typography.font14, spacing.pv1]}>Capacity</Span>
+            <P style={[typography.font16]}>{Project.project_capacity} KW</P>
+          </View>
+          <View style={[spacing.mt1, styles.row, spacing.pv2]}>
+            <View>
+              <Span style={[typography.font14]}>start date</Span>
+              <P style={[typography.font16]}>{Project.start_date}</P>
+            </View>
+            <View>
+              <Span style={[typography.font14]}>end date</Span>
+              <P style={[typography.font16]}>{Project.end_date}</P>
+            </View>
+          </View>
+          <TouchableOpacity onPress={toggleDescription}>
+            <P style={[typography.font16]}>
+              {isDescriptionExpanded
+                ? Project.description
+                : getTruncatedDescription(Project.description)}
+            </P>
+          </TouchableOpacity>
+          {Project.description.split(" ").length > 20 && (
+            <Span
+              style={{ color: PRIMARY_COLOR, fontSize: 16 }}
+              onPress={toggleDescription}
+            >
+              {isDescriptionExpanded ? "Read Less" : "Read More"}
+            </Span>
           )}
         </View>
-
-        <Tabs
-          tabs={[t("Sites"), t("Inventory"), t("Target")]}
-          onTabPress={(index) => {
-            const tabName = ["Sites", "Inventory", "Target"][index];
-            setActiveTab(tabName);
-            setShowBottomSheet(true);
-          }}
-        />
+        <View>
+          <Tabs
+            tabs={[t("Sites"), t("Inventory"), t("Target")]}
+            onTabPress={(index) => {
+              const tabName = ["Sites", "Inventory", "Target"][index];
+              setActiveTab(tabName);
+            }}
+          />
+        </View>
 
         <View style={[styles.row, { alignItems: "center", marginTop: 20 }]}>
           <SearchBar
@@ -265,7 +225,6 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
         </View>
-
         {renderActiveTab()}
       </ScrollView>
     </View>
