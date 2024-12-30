@@ -69,6 +69,11 @@ export default function TotalVendorsScreen({ navigation, route }) {
             item={item}
             title={item.name}
             subtitle={item.address}
+            positiveAction={() =>
+              navigation.navigate("vendorDetailScreen", {
+                site: item,
+              })
+            }
           >
             <View>
               <H6 style={[typography.font16]}>{item.contactNo}</H6>

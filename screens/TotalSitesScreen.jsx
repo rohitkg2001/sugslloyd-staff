@@ -1,7 +1,6 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -19,12 +18,7 @@ import {
   spacing,
   styles,
 } from "../styles";
-import {
-  viewSite,
-  searchSite,
-  fetchSites,
-  addSite,
-} from "../redux/actions/siteActions";
+import { fetchSites } from "../redux/actions/siteActions";
 
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator } from "react-native-paper";
@@ -61,36 +55,6 @@ export default function TotalSitesScreen({ navigation, route }) {
       setLoading(false);
     }, 2000);
   }, [loading, sites]);
-
-  const handleSearch = (text) => {
-    dispatch(searchSite(text));
-    const filtered = data.filter(
-      (site) =>
-        site.city.toLowerCase().includes(text.toLowerCase()) ||
-        site.state.toLowerCase().includes(text.toLowerCase()) ||
-        site.projectCode.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredData(filtered);
-  };
-
-  const handleViewDetails = (siteData) => {
-    dispatch(viewSite(siteData));
-    navigation.navigate("siteDetailScreen", { site: siteData });
-  };
-
-  const handleDelete = () => {
-    fakeDelete({
-      title: t("error"),
-      message: t("total_site_screen_msg"),
-    });
-  };
-
-  const handleEdit = (item) => {
-    navigation.navigate("EditDetailsScreen", {
-      item,
-      formType: "site",
-    });
-  };
 
   if (loading) {
     return <ActivityIndicator size="large" />;

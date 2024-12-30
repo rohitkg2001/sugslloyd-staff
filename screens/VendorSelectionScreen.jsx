@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useTranslation } from "react-i18next";
-import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
-import MyButton from "../components/buttons/MyButton";
+import {
+  SCREEN_WIDTH,
+  spacing,
+  styles,
+  typography,
+  DANGER_COLOR,
+  ICON_LARGE,
+} from "../styles";
 import Button from "../components/buttons/Button";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
 import { useDispatch, useSelector } from "react-redux";
 import { transformArray } from "../utils/faker";
-import { H2 } from "../components/text";
+import { H1, H2 } from "../components/text";
 
 const VendorSelectionScreen = ({ onClose, setVendor }) => {
   const [vendors, setVendors] = useState([]);
@@ -38,23 +45,22 @@ const VendorSelectionScreen = ({ onClose, setVendor }) => {
     color: "#333",
   };
 
-  const handleAssignVendor = () => {
-    console.log("Assigned vendor(s):", vendors);
-    // TODO: Assign vendor to task
-    setVendor(vendors);
-    onClose();
-  };
-
   return (
     <BottomSheet>
       <View>
         <View
           style={[
             styles.vendorContainer,
-            { marginLeft: 20, marginTop: 10, marginRight: 10 },
+            { marginLeft: 16, marginTop: 16, marginRight: 16 },
           ]}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 15 }}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              marginBottom: 15,
+            }}
+          >
             {t("Select Vendor")}
           </Text>
 
@@ -78,6 +84,21 @@ const VendorSelectionScreen = ({ onClose, setVendor }) => {
           />
         </View>
 
+        {/* <View
+          style={[
+            styles.row,
+            spacing.mh1,
+            spacing.bbw05,
+            spacing.p4,
+            { height: "16%" },
+          ]}
+        >
+          <H1 style={[typography.font16, typography.textBold]}>Apply Filter</H1>
+          <TouchableOpacity onPress={onClose}>
+            <Icon name="close-outline" color={DANGER_COLOR} size={ICON_LARGE} />
+          </TouchableOpacity>
+        </View> */}
+
         <Button
           style={[
             styles.btn,
@@ -86,7 +107,6 @@ const VendorSelectionScreen = ({ onClose, setVendor }) => {
               justifyContent: "center",
               marginTop: 260,
               width: SCREEN_WIDTH - 16,
-
               marginHorizontal: 8,
             },
           ]}
