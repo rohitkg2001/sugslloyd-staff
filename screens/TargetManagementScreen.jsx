@@ -30,6 +30,8 @@ const TargetManagementScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(null);
+  const [showVendorSelection, setShowVendorSelection] = useState(false);
+  const [showTaskInventory, setShowTaskInventory] = useState(false);
 
   const getCurrentTask = async () => {
     const thisTask = await getTaskById(id);
@@ -41,6 +43,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
   }, []);
 
   const isDataAvailable = target && Object.keys(target).length > 0;
+  const closeTaskInventoryScreen = () => setShowTaskInventory(false);
 
   return (
     <ContainerComponent>
