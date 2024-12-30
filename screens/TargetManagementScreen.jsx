@@ -45,6 +45,11 @@ const TargetManagementScreen = ({ route, navigation }) => {
   const isDataAvailable = target && Object.keys(target).length > 0;
   const closeTaskInventoryScreen = () => setShowTaskInventory(false);
 
+  useEffect(() => {
+
+  }, [])
+
+
   return (
     <ContainerComponent>
       <MyHeader title={t("Task")} hasIcon={true} isBack={true} />
@@ -107,7 +112,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
               </View>
             </View>
 
-            {target.completedPhotos && target.completedPhotos.length > 0 && (
+            {currentTarget.image && (
               <View style={[spacing.pv4]}>
                 <H6>Completed Photos</H6>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -145,17 +150,6 @@ const TargetManagementScreen = ({ route, navigation }) => {
       {showTaskInventory && (
         <TaskInventoryScreen onClose={closeTaskInventoryScreen} />
       )}
-      {/* {activeTab === 1 && (
-        <VendorSelectionScreen
-          onClose={() => setActiveTab(null)}
-          setVendor={(value) =>
-            setCurrentTarget({
-              ...currentTarget,
-              vendor: { vendor_name: value },
-            })
-          }
-        />
-      )} */}
     </ContainerComponent>
   );
 };
