@@ -78,7 +78,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
                 <H6>
                   {!currentTarget.vendor
                     ? "................................."
-                    : currentTarget.vendor?.vendor_name}
+                    : currentTarget.vendor?.name}
                 </H6>
                 <IconButton
                   onPress={() => setShowVendorSelection(true)}

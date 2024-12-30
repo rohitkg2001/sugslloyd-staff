@@ -17,7 +17,6 @@ import {
   ICON_MEDIUM,
   ICON_LARGE,
 } from "../styles";
-import { targetManagementData } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import { useTranslation } from "react-i18next";
@@ -29,7 +28,7 @@ import {
 } from "../redux/actions/projectAction";
 import DashboardFilter from "../components/filters/DashboardFilter";
 import DashboardHeader from "../components/header/DashboardHeader";
-import { getAllTasks } from "../redux/actions/taskActions";
+import { getAllTasks, getStaffPerformance, getVendorPerformance } from "../redux/actions/taskActions";
 
 export default function DashboardScreen({ navigation }) {
   const [today, setToday] = useState(moment().format("DD MMM YYYY"));
@@ -52,19 +51,26 @@ export default function DashboardScreen({ navigation }) {
   const projectsArray = useSelector((state) => state.project?.projects);
   const { tasks } = useSelector(state => state.tasks)
   const [projectsArr, setProjectsArr] = useState([]);
+  const [targetManagementData, setTargetManagementData] = useState([]);
+  const [staffPerformance, setStaffPerformance] = useState([])
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const getCounts = async () => {
-    const { totalVendors, activeVendors, inactiveVendors } =
-      await getVendorCounts();
-    const projects = await getProjectCounts();
-
-    setProjectCounts(projects);
-    setActiveVendors(activeVendors);
-    setTotalVendors(totalVendors);
-    setInActiveVendors(inactiveVendors);
+    if (targetManagementData.length === 0 || staffPerformance.length === 0) {
+      const { totalVendors, activeVendors, inactiveVendors } =
+        await getVendorCounts();
+      const projects = await getProjectCounts();
+      const tasksByVendor = await getVendorPerformance(id)
+      const staffTargetPerformance = await getStaffPerformance()
+      setTargetManagementData(tasksByVendor);
+      setStaffPerformance(staffTargetPerformance)
+      setProjectCounts(projects);
+      setActiveVendors(activeVendors);
+      setTotalVendors(totalVendors);
+      setInActiveVendors(inactiveVendors);
+    }
   };
 
   useEffect(() => {
@@ -83,8 +89,9 @@ export default function DashboardScreen({ navigation }) {
     dispatch(getAllVendors());
     dispatch(fetchProjects());
     dispatch(getAllTasks(id));
+
     getCounts();
-  }, [projectCounts]);
+  }, [projectCounts, staffPerformance, targetManagementData]);
 
   useEffect(() => {
     setProjectsArr(projectsArray);
@@ -103,7 +110,7 @@ export default function DashboardScreen({ navigation }) {
   const closeFilter = () => {
     setShowBottomSheet(!showBottomSheet);
   };
-  const applyFilterFromRedux = (...args) => { };
+
 
   return (
     <ContainerComponent>
@@ -255,7 +262,100 @@ export default function DashboardScreen({ navigation }) {
               color={PRIMARY_COLOR}
             />
             <H5 style={[typography.textBold, { marginRight: 120 }]}>
-              {t("Vendor wise Performance")}
+              {t("Team Performance")}
+            </H5>
+          </View>
+
+          <View style={[spacing.bbw05, spacing.mv1]} />
+
+          <View style={{ flexDirection: "column" }}>
+            <View
+              style={[
+                styles.row,
+                typography.textBold,
+                spacing.bbw05,
+                spacing.pv2,
+              ]}
+            >
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Engineer")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Total")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Completed")}
+              </P>
+              <P
+                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
+              >
+                {t("Pending")}
+              </P>
+            </View>
+
+            {staffPerformance.map((data) => (
+              <TouchableOpacity
+                key={data.id}
+                onPress={() =>
+                  navigation.navigate("targetManagementScreen", {
+                    target: data,
+                  })
+                }
+              >
+                <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.name}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.total_alloted}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.completed || 0}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.pending || 0}
+                  </P>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </CardFullWidth>
+
+        <CardFullWidth backgroundColor={LIGHT}>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Icon
+              name="tennisball-outline"
+              size={ICON_LARGE}
+              color={PRIMARY_COLOR}
+            />
+            <H5 style={[typography.textBold, { marginRight: 120 }]}>
+              {t("Vendor Performance")}
             </H5>
           </View>
 
@@ -293,49 +393,47 @@ export default function DashboardScreen({ navigation }) {
             </View>
 
             {targetManagementData.map((data) => (
-              <TouchableOpacity
-                key={data.id}
-                onPress={() =>
-                  navigation.navigate("targetManagementScreen", {
-                    target: data,
-                  })
-                }
-              >
-                <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
-                  <P
-                    style={[
-                      typography.textBold,
-                      { flex: 1, textAlign: "center" },
-                    ]}
-                  >
-                    {data.siteengineer}
-                  </P>
-                  <P
-                    style={[
-                      typography.textBold,
-                      { flex: 1, textAlign: "center" },
-                    ]}
-                  >
-                    {data.total}
-                  </P>
-                  <P
-                    style={[
-                      typography.textBold,
-                      { flex: 1, textAlign: "center" },
-                    ]}
-                  >
-                    {data.completed}
-                  </P>
-                  <P
-                    style={[
-                      typography.textBold,
-                      { flex: 1, textAlign: "center" },
-                    ]}
-                  >
-                    {data.pending}
-                  </P>
-                </View>
-              </TouchableOpacity>
+              // <TouchableOpacity
+              //   key={data.id}
+              //   onPress={() =>
+              //     navigation.navigate("targetManagementScreen")
+              //   }
+              // >
+              <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
+                <P
+                  style={[
+                    typography.textBold,
+                    { flex: 1, textAlign: "center" },
+                  ]}
+                >
+                  {data.name}
+                </P>
+                <P
+                  style={[
+                    typography.textBold,
+                    { flex: 1, textAlign: "center" },
+                  ]}
+                >
+                  {data.total_alloted}
+                </P>
+                <P
+                  style={[
+                    typography.textBold,
+                    { flex: 1, textAlign: "center" },
+                  ]}
+                >
+                  {data.completed || 0}
+                </P>
+                <P
+                  style={[
+                    typography.textBold,
+                    { flex: 1, textAlign: "center" },
+                  ]}
+                >
+                  {data.pending || 0}
+                </P>
+              </View>
+              // </TouchableOpacity>
             ))}
           </View>
         </CardFullWidth>
