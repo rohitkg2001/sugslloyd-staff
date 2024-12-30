@@ -3,10 +3,11 @@ import { View, ScrollView, TouchableOpacity } from "react-native";
 import moment from "moment";
 import Icon from "react-native-vector-icons/Ionicons";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { greet } from "@actions";
 import ContainerComponent from "../components/ContainerComponent";
-import { greet } from "../redux/actions/staffActions";
 import { H4, H5, P, Span } from "../components/text";
-import CardFullWidth from "../components/card/CardFullWidth";
+import CardFullWidth from "@card/CardFullWidth";
+import Filter from "../components/Filter";
 import {
   layouts,
   LIGHT,
@@ -24,7 +25,7 @@ import { targetManagementData } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import { useTranslation } from "react-i18next";
-import Filter from "../components/Filter";
+
 import { getAllVendors, getVendorCounts } from "../redux/actions/vendorAction";
 import { useDispatch, useSelector } from "react-redux";
 import {
