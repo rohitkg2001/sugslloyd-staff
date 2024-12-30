@@ -3,12 +3,10 @@ import { View, ScrollView, TouchableOpacity } from "react-native";
 import moment from "moment";
 import Icon from "react-native-vector-icons/Ionicons";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { greet } from "@actions";
 import ContainerComponent from "../components/ContainerComponent";
 import { greet } from "../redux/actions/staffActions";
 import { H5, P } from "../components/text";
 import CardFullWidth from "../components/card/CardFullWidth";
-
 import {
   LIGHT,
   PRIMARY_COLOR,
@@ -23,7 +21,6 @@ import { targetManagementData } from "../utils/faker";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import { useTranslation } from "react-i18next";
-
 import { getAllVendors, getVendorCounts } from "../redux/actions/vendorAction";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -32,6 +29,8 @@ import {
 } from "../redux/actions/projectAction";
 import DashboardFilter from "../components/filters/DashboardFilter";
 import DashboardHeader from "../components/header/DashboardHeader";
+import { getAllTasks } from "../redux/actions/taskActions";
+
 export default function DashboardScreen({ navigation }) {
   const [today, setToday] = useState(moment().format("DD MMM YYYY"));
   const [dueTasks, setDueTasks] = useState(4);
@@ -48,7 +47,8 @@ export default function DashboardScreen({ navigation }) {
   const [rmsStatus, setRmsStatus] = useState(0);
   const [donRMS, setDoneRMS] = useState(0);
   const [finalInspection, setFinalInspection] = useState(0);
-  const { firstName } = useSelector((state) => state.staff);
+  const [doneFinalInspection, setDoneFinalInspection] = useState(0)
+  const { firstName, id } = useSelector((state) => state.staff);
   const projectsArray = useSelector((state) => state.project?.projects);
   const { tasks } = useSelector(state => state.tasks)
   const [projectsArr, setProjectsArr] = useState([]);
@@ -255,7 +255,7 @@ export default function DashboardScreen({ navigation }) {
               color={PRIMARY_COLOR}
             />
             <H5 style={[typography.textBold, { marginRight: 120 }]}>
-              {t("Target Management")}
+              {t("Vendor wise Performance")}
             </H5>
           </View>
 
