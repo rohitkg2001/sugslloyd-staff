@@ -317,4 +317,12 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  notificationBadgeContainer: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    height: 24,
+    width: 24,
+    borderRadius: 12,
+  },
 });

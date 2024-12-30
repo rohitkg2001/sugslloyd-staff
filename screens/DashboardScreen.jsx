@@ -5,19 +5,17 @@ import Icon from "react-native-vector-icons/Ionicons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { greet } from "@actions";
 import ContainerComponent from "../components/ContainerComponent";
-import { H4, H5, P, Span } from "../components/text";
-import CardFullWidth from "@card/CardFullWidth";
-import Filter from "../components/Filter";
+import { greet } from "../redux/actions/staffActions";
+import { H5, P } from "../components/text";
+import CardFullWidth from "../components/card/CardFullWidth";
+
 import {
-  layouts,
   LIGHT,
-  DARK,
   PRIMARY_COLOR,
   SCREEN_WIDTH,
   spacing,
   styles,
   typography,
-  ICON_SMALL,
   ICON_MEDIUM,
   ICON_LARGE,
 } from "../styles";
@@ -29,10 +27,11 @@ import { useTranslation } from "react-i18next";
 import { getAllVendors, getVendorCounts } from "../redux/actions/vendorAction";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchProjects, getProjectCounts
+  fetchProjects,
+  getProjectCounts,
 } from "../redux/actions/projectAction";
-import { getAllTasks } from "../redux/actions/taskActions";
-
+import DashboardFilter from "../components/filters/DashboardFilter";
+import DashboardHeader from "../components/header/DashboardHeader";
 export default function DashboardScreen({ navigation }) {
   const [today, setToday] = useState(moment().format("DD MMM YYYY"));
   const [dueTasks, setDueTasks] = useState(4);
@@ -49,8 +48,7 @@ export default function DashboardScreen({ navigation }) {
   const [rmsStatus, setRmsStatus] = useState(0);
   const [donRMS, setDoneRMS] = useState(0);
   const [finalInspection, setFinalInspection] = useState(0);
-  const [doneFinalInspection, setDoneFinalInspection] = useState(0);
-  const { firstName, id } = useSelector((state) => state.staff);
+  const { firstName } = useSelector((state) => state.staff);
   const projectsArray = useSelector((state) => state.project?.projects);
   const { tasks } = useSelector(state => state.tasks)
   const [projectsArr, setProjectsArr] = useState([]);
@@ -102,64 +100,20 @@ export default function DashboardScreen({ navigation }) {
     }
   };
 
-
   const closeFilter = () => {
     setShowBottomSheet(!showBottomSheet);
   };
-
+  const applyFilterFromRedux = (...args) => { };
 
   return (
     <ContainerComponent>
-      <View
-        style={[
-          styles.row,
-          spacing.m2,
-          { alignItems: "center", width: SCREEN_WIDTH - 16 },
-        ]}
-      >
-        <View>
-          <H4 style={typography.textBold}>
-            {greeting},{firstName}
-          </H4>
-          <P style={spacing.ml1}>You have {dueTasks} due tasks Today</P>
-        </View>
-        <TouchableOpacity
-          style={[
-            layouts.circle12,
-            layouts.center,
-            spacing.bw05,
-            spacing.br5,
-            { position: "relative" },
-          ]}
-          onPress={() => navigation.navigate("notificationScreen")}
-        >
-          <Icon name="notifications-outline" size={ICON_MEDIUM} color={DARK} />
-          <View
-            style={[
-              styles.bgDanger,
-              layouts.center,
-              {
-                position: "absolute",
-                top: 0,
-                right: 0,
-                height: 24,
-                width: 24,
-                borderRadius: 12,
-              },
-            ]}
-          >
-            <Span
-              style={[
-                typography.textLight,
-                typography.font16,
-                { textAlign: "center" },
-              ]}
-            >
-              6
-            </Span>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <DashboardHeader
+        dueTasks={dueTasks}
+        greeting={greeting}
+        firstName={firstName}
+        navigation={navigation}
+        notificationCount={dueTasks}
+      />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -184,24 +138,7 @@ export default function DashboardScreen({ navigation }) {
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
         </View>
-        <View
-          style={[
-            styles.row,
-            spacing.mh1,
-            { alignItems: "center", width: SCREEN_WIDTH - 16 },
-          ]}
-        >
-          <H4>{t("today")}</H4>
-          <Button
-            style={[styles.btn, styles.bgPrimary, spacing.ph3]}
-            onPress={() => setShowDatePicker(true)}
-          >
-            <Icon name="calendar-outline" size={ICON_SMALL} color={LIGHT} />
-            <H5 style={[spacing.ml1, { color: "#fff", fontWeight: "600" }]}>
-              {today}
-            </H5>
-          </Button>
-        </View>
+        <DashboardFilter />
 
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
@@ -402,42 +339,6 @@ export default function DashboardScreen({ navigation }) {
             ))}
           </View>
         </CardFullWidth>
-
-        {/* <CardFullWidth backgroundColor={LIGHT}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Icon name="card-outline" size={ICON_LARGE} color={PRIMARY_COLOR} />
-            <H5 style={[typography.textBold, { marginRight: 230 }]}>Sites</H5>
-          </View>
-          <View style={[spacing.bbw05, spacing.mv2]} />
-
-          <View
-            style={[
-              styles.row,
-              { justifyContent: "space-between", paddingVertical: 10 },
-            ]}
-          >
-            <View style={{ alignItems: "center", textAlign: "center" }}>
-              <P style={typography.textBold}>Total Sites</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>
-                {totalSites}
-              </P>
-            </View>
-
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Completed Sites</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>
-                {completedSites}
-              </P>
-            </View>
-
-            <View style={{ alignItems: "center" }}>
-              <P style={typography.textBold}>Progress Sites</P>
-              <P style={[typography.font20, typography.textBold, spacing.m2]}>
-                {progressSites}
-              </P>
-            </View>
-          </View>
-        </CardFullWidth> */}
 
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>

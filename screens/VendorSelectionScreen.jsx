@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useTranslation } from "react-i18next";
-import { SCREEN_WIDTH, spacing, styles } from "../styles";
+import { SCREEN_WIDTH, styles } from "../styles";
 import MyButton from "../components/buttons/MyButton";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,14 +12,13 @@ import { BASE_URL } from "../redux/constant";
 const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
   const [vendors, setVendors] = useState([]);
   const [openVendorDropdown, setOpenVendorDropdown] = useState(false);
-  const vendorInStore = useSelector(state => state.vendor.vendors)
-  const [vendorOptions, setVendorOptions] = useState([])
+  const vendorInStore = useSelector((state) => state.vendor.vendors);
+  const [vendorOptions, setVendorOptions] = useState([]);
 
   useEffect(() => {
-    const result = transformArray(vendorInStore)
-    setVendorOptions(result)
-  }, [vendorInStore])
-
+    const result = transformArray(vendorInStore);
+    setVendorOptions(result);
+  }, [vendorInStore]);
 
   const { t } = useTranslation();
 
@@ -55,7 +54,7 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
     const data = await response.json()
     console.log(data)
     // TODO: Assign vendor to task
-    setVendor(vendors)
+    setVendor(vendors);
     onClose();
   };
 
