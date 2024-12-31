@@ -152,17 +152,6 @@ const TargetManagementScreen = ({ route, navigation }) => {
       {showTaskInventory && (
         <TaskInventoryScreen onClose={closeTaskInventoryScreen} />
       )}
-      {/* {activeTab === 1 && (
-        <VendorSelectionScreen
-          onClose={() => setActiveTab(null)}
-          setVendor={(value) =>
-            setCurrentTarget({
-              ...currentTarget,
-              vendor: { vendor_name: value },
-            })
-          }
-        />
-      )} */}
     </ContainerComponent>
   );
 };
