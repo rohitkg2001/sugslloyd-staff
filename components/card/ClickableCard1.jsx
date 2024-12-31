@@ -9,6 +9,7 @@ import {
   LIGHT,
   PRIMARY_COLOR,
 } from "../../styles";
+import { useEffect, useState } from "react";
 
 export default function ClickableCard1({
   title,
@@ -22,21 +23,33 @@ export default function ClickableCard1({
   isPositiveButtonVisible = false,
   positiveText,
   positiveAction,
-  handleViewDetails,
+  onPress,
   onLongPressAction,
-  item,
+  initialBgColor = LIGHT,
+  longPressBgColor,
 }) {
+  const [bgColor, setBgColor] = useState(initialBgColor);
+
+  useEffect(() => {
+    setBgColor(initialBgColor);
+  }, [initialBgColor]);
+
+  const handleLongPress = () => {
+    if (longPressBgColor) {
+      setBgColor(longPressBgColor);
+    }
+    if (onLongPressAction) {
+      onLongPressAction();
+    }
+  };
+
   return (
     <TouchableOpacity
       style={[spacing.mv1, { width: SCREEN_WIDTH - 16 }]}
-      onPress={() => handleViewDetails(item)}
-      onLongPress={onLongPressAction}
+      onPress={onPress}
+      onLongPress={handleLongPress}
     >
-      <Card
-        style={{
-          backgroundColor: LIGHT,
-        }}
-      >
+      <Card style={{ backgroundColor: bgColor, borderRadius: 8 }}>
         <Card.Title
           title={<H5>{title}</H5>}
           subtitle={

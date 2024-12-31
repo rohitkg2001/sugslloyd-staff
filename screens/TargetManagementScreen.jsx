@@ -44,7 +44,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
     console.log("Details Fdtched")
   }, []);
 
-  // const isDataAvailable = currentTarget && Object.keys(currentTarget).length > 0;
+  const isDataAvailable = currentTarget && Object.keys(currentTarget).length > 0;
   const closeTaskInventoryScreen = () => setShowTaskInventory(false);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
                 <H6>
                   {!currentTarget.vendor
                     ? "................................."
-                    : currentTarget.vendor?.vendor_name}
+                    : currentTarget.vendor?.name}
                 </H6>
                 <IconButton
                   onPress={() => setShowVendorSelection(true)}
@@ -114,20 +114,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
               </View>
             </View>
 
-            {target.completedPhotos && target.completedPhotos.length > 0 && (
-              <View style={[spacing.pv4]}>
-                <H6>Completed Photos</H6>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  {target.completedPhotos.map((url, index) => (
-                    <Image
-                      key={index}
-                      source={{ uri: url }}
-                      style={{ width: 100, height: 100, marginRight: 10 }}
-                    />
-                  ))}
-                </ScrollView>
-              </View>
-            )}
+
           </ScrollView>
         ) : (
           <NoRecord msg="No data found" />
@@ -152,17 +139,6 @@ const TargetManagementScreen = ({ route, navigation }) => {
       {showTaskInventory && (
         <TaskInventoryScreen onClose={closeTaskInventoryScreen} />
       )}
-      {/* {activeTab === 1 && (
-        <VendorSelectionScreen
-          onClose={() => setActiveTab(null)}
-          setVendor={(value) =>
-            setCurrentTarget({
-              ...currentTarget,
-              vendor: { vendor_name: value },
-            })
-          }
-        />
-      )} */}
     </ContainerComponent>
   );
 };

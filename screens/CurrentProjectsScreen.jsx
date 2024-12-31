@@ -9,6 +9,8 @@ import {
   SCREEN_WIDTH,
   ICON_MEDIUM,
   typography,
+  PRIMARY_COLOR_TRANSPARENT,
+  DANGER_COLOR,
 } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
@@ -33,6 +35,7 @@ export default function CurrentProjectsScreen({ navigation }) {
   const [showModal, setShowModal] = useState(false);
   const [showVendorSelection, setShowVendorSelection] = useState(false);
   const [clickedText, setClickedText] = useState(null);
+  const [bgColor, setBgColor] = useState(LIGHT);
 
   const { t } = useTranslation();
 
@@ -81,14 +84,16 @@ export default function CurrentProjectsScreen({ navigation }) {
         renderItem={({ item, index }) => (
           <ClickableCard1
             key={index}
-            item={item}
             title={item.site?.site_name}
             subtitle={`${item.site?.location}, ${item.site?.district}, ${item.site?.state}`}
-            handleViewDetails={() =>
-              navigation.navigate("targetManagementScreen", {
-                item: item,
-              })
+            onPress={() =>
+              navigation.navigate("targetManagementScreen", { id: item.id })
             }
+            // onLongPressAction={() => setBgColor(DANGER_COLOR)}
+            // bgColor={bgColor}
+            onLongPressAction={() => setBgColor("#ffffff")}
+            initialBgColor={bgColor}
+            longPressBgColor="#F0FAF0"
           >
             <View>
               <H5 style={[typography.font20]}>{item.activity}</H5>
