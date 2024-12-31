@@ -14,8 +14,8 @@ export default function MyHeader({
   hasBadge,
   badgeCount,
   onIconPress,
-
   rightComponent,
+  iconRef
 }) {
   const navigation = useNavigation();
   return (
@@ -48,10 +48,13 @@ export default function MyHeader({
             <TouchableOpacity
               onPress={onIconPress}
               style={{ position: "absolute", top: 13, right: 2 }}
+            // ref={iconRef}
             >
               <Icon name="ellipsis-vertical" size={ICON_LARGE} color="#000" />
+              {iconRef}
             </TouchableOpacity>
           )}
+
         </TouchableOpacity>
       )}
     </View>

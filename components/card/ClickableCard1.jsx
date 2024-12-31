@@ -8,10 +8,13 @@ import {
   SCREEN_WIDTH,
   LIGHT,
   PRIMARY_COLOR,
+  PRIMARY_COLOR_TRANSPARENT,
+  DANGER_COLOR,
 } from "../../styles";
 import { useEffect, useState } from "react";
 
 export default function ClickableCard1({
+  index,
   title,
   subtitle,
   leftContent,
@@ -25,31 +28,15 @@ export default function ClickableCard1({
   positiveAction,
   onPress,
   onLongPressAction,
-  initialBgColor = LIGHT,
-  longPressBgColor,
+  selected = false
 }) {
-  const [bgColor, setBgColor] = useState(initialBgColor);
-
-  useEffect(() => {
-    setBgColor(initialBgColor);
-  }, [initialBgColor]);
-
-  const handleLongPress = () => {
-    if (longPressBgColor) {
-      setBgColor(longPressBgColor);
-    }
-    if (onLongPressAction) {
-      onLongPressAction();
-    }
-  };
-
   return (
     <TouchableOpacity
       style={[spacing.mv1, { width: SCREEN_WIDTH - 16 }]}
       onPress={onPress}
-      onLongPress={handleLongPress}
+      onLongPress={() => onLongPressAction(index)}
     >
-      <Card style={{ backgroundColor: bgColor, borderRadius: 8 }}>
+      <Card style={{ backgroundColor: selected ? DANGER_COLOR : LIGHT, borderRadius: 8 }}>
         <Card.Title
           title={<H5>{title}</H5>}
           subtitle={

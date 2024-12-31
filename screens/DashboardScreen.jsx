@@ -114,7 +114,7 @@ export default function DashboardScreen({ navigation }) {
     setShowBottomSheet(!showBottomSheet);
   };
 
-  const applyFilterFromRedux = (...args) => {};
+  const applyFilterFromRedux = (...args) => { };
 
   return (
     <ContainerComponent>
@@ -405,47 +405,47 @@ export default function DashboardScreen({ navigation }) {
             </View>
 
             {targetManagementData.map((data) => (
-              // <TouchableOpacity
-              //   key={data.id}
-              //   onPress={() =>
-              //     navigation.navigate("targetManagementScreen")
-              //   }
-              // >
-              <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
-                <P
-                  style={[
-                    typography.textBold,
-                    { flex: 1, textAlign: "center" },
-                  ]}
-                >
-                  {data.name}
-                </P>
-                <P
-                  style={[
-                    typography.textBold,
-                    { flex: 1, textAlign: "center" },
-                  ]}
-                >
-                  {data.total_alloted}
-                </P>
-                <P
-                  style={[
-                    typography.textBold,
-                    { flex: 1, textAlign: "center" },
-                  ]}
-                >
-                  {data.completed || 0}
-                </P>
-                <P
-                  style={[
-                    typography.textBold,
-                    { flex: 1, textAlign: "center" },
-                  ]}
-                >
-                  {data.pending || 0}
-                </P>
-              </View>
-              // </TouchableOpacity>
+              <TouchableOpacity
+                key={data.id}
+                onPress={() =>
+                  navigation.navigate("targetManagementScreen")
+                }
+              >
+                <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.name}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.total_alloted}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.completed || 0}
+                  </P>
+                  <P
+                    style={[
+                      typography.textBold,
+                      { flex: 1, textAlign: "center" },
+                    ]}
+                  >
+                    {data.pending || 0}
+                  </P>
+                </View>
+              </TouchableOpacity>
             ))}
           </View>
         </CardFullWidth>

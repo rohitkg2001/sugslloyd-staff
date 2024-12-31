@@ -3,21 +3,12 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import SearchBar from "../components/input/SearchBar";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard1 from "../components/card/ClickableCard1";
-import Filter from "../components/Filter";
-import {
-  ICON_LARGE,
-  ICON_MEDIUM,
-  LIGHT,
-  SCREEN_WIDTH,
-  spacing,
-  styles,
-} from "../styles";
+import { ICON_LARGE, spacing, styles } from "../styles";
 import { fetchSites } from "../redux/actions/siteActions";
 
 import { useTranslation } from "react-i18next";
@@ -25,7 +16,6 @@ import { ActivityIndicator } from "react-native-paper";
 
 export default function TotalSitesScreen({ navigation, route }) {
   const dispatch = useDispatch();
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { sites } = useSelector((state) => state.site);
@@ -36,10 +26,6 @@ export default function TotalSitesScreen({ navigation, route }) {
     pageTitle: t("site_management"),
     data: sites,
   };
-  const closeFilter = () => {
-    setShowBottomSheet(!showBottomSheet);
-  };
-  const applyFilterFromRedux = (...args) => {};
 
   useEffect(() => {
     dispatch(fetchSites());
@@ -98,31 +84,6 @@ export default function TotalSitesScreen({ navigation, route }) {
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh1, spacing.mt1]}
         ListEmptyComponent={() => <NoRecord msg={t("no_site_msg")} />}
-        ListHeaderComponent={() => (
-          <View
-            style={[
-              spacing.mv4,
-              styles.row,
-              spacing.mh1,
-              { alignItems: "center" },
-            ]}
-          >
-            <SearchBar
-              placeholder="Search"
-              style={{ width: SCREEN_WIDTH - 70 }}
-            />
-            <Button
-              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
-              onPress={() => setShowBottomSheet(!showBottomSheet)}
-            >
-              <Ionicons
-                name="options-outline"
-                size={ICON_MEDIUM}
-                color={LIGHT}
-              />
-            </Button>
-          </View>
-        )}
       />
 
       <Button
@@ -131,9 +92,6 @@ export default function TotalSitesScreen({ navigation, route }) {
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
-      {showBottomSheet && (
-        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
-      )}
     </ContainerComponent>
   );
 }

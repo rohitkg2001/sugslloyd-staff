@@ -4,7 +4,6 @@ import { earnings } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { H5, P } from "../components/text";
-import SearchBar from "../components/input/SearchBar";
 import MyFlatList from "../components/utility/MyFlatList";
 import { spacing, styles } from "../styles";
 import { useTranslation } from "react-i18next";
@@ -32,7 +31,6 @@ export default function TotalEarningScreen() {
         ListEmptyComponent={() => (
           <NoRecord msg="Oops! There are no sites data available. Start creating or contact admin" />
         )}
-        ListHeaderComponent={() => <SearchBar placeholder="Search..." />}
       />
     </ContainerComponent>
   );

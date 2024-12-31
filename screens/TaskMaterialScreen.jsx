@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import { View, ScrollView, Alert, TouchableOpacity } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
-import { useDispatch } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles } from "../styles";
 import MyHeader from "../components/header/MyHeader";
-import MyTextInput from "../components/input/MyTextInput";
 import { useTranslation } from "react-i18next";
 import { P } from "../components/text";
 import MyButton from "../components/buttons/MyButton";
@@ -28,8 +25,6 @@ const TaskMaterialScreen = () => {
   ]);
 
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
 
   const dropdownStyle = {
     borderWidth: 1,
@@ -87,14 +82,6 @@ const TaskMaterialScreen = () => {
           />
         </View>
 
-        {/* <TouchableOpacity onPress={() => setShowDatePicker("start")}>
-          <MyTextInput
-            title={t("Dispatch Date")}
-            value={startDate.toLocaleDateString()}
-            placeholder="Select Dispatch Date"
-            editable={false}
-          />
-        </TouchableOpacity> */}
         <DashboardFilter />
 
         {showDatePicker && (
