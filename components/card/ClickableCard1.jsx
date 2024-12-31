@@ -36,7 +36,7 @@ export default function ClickableCard1({
       onPress={onPress}
       onLongPress={() => onLongPressAction(index)}
     >
-      <Card style={{ backgroundColor: selected ? DANGER_COLOR : LIGHT, borderRadius: 8 }}>
+      <Card style={{ backgroundColor: selected ? PRIMARY_COLOR_TRANSPARENT : LIGHT, borderRadius: 8 }}>
         <Card.Title
           title={<H5>{title}</H5>}
           subtitle={
