@@ -35,7 +35,7 @@ export default function CurrentProjectsScreen({ navigation }) {
   const [showModal, setShowModal] = useState(false);
   const [showVendorSelection, setShowVendorSelection] = useState(false);
   const [clickedText, setClickedText] = useState(null);
-  const [bgColor, setBgColor] = useState(LIGHT);
+  const [selectedTargets, setSelectedTargets] = useState([])
 
   const { t } = useTranslation();
 
@@ -69,6 +69,23 @@ export default function CurrentProjectsScreen({ navigation }) {
     setClickedText(text);
   };
 
+  const selectTargets = (idx) => {
+    setSelectedTargets((prevTargets) => {
+      const existingTargetIndex = prevTargets.findIndex((target) => target.id === idx);
+
+      if (existingTargetIndex > -1) {
+        // If already selected, remove it (unselect)
+        const updatedTargets = [...prevTargets];
+        updatedTargets.splice(existingTargetIndex, 1);
+        return updatedTargets;
+      } else {
+        // If not selected, add it with `select: true`
+        return [...prevTargets, { id: idx, select: true }];
+      }
+    });
+    console.log(selectedTargets)
+  };
+
   return (
     <ContainerComponent>
       <MyHeader
@@ -83,12 +100,13 @@ export default function CurrentProjectsScreen({ navigation }) {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => (
           <ClickableCard1
-            key={index}
+            key={item.id}
+            index={item.id}
             title={item.site?.site_name}
             subtitle={`${item.site?.location}, ${item.site?.district}, ${item.site?.state}`}
             onPress={() => navigation.navigate("targetManagementScreen", { id: item.id })}
-            onLongPressAction={() => setBgColor(DANGER_COLOR)}
-            bgColor={bgColor}
+            onLongPressAction={(idx) => selectTargets(idx)}
+            selected={selectedTargets.find(target => target.id === item.id)}
           >
             <View>
               <H5 style={[typography.font20]}>{item.activity}</H5>
