@@ -26,7 +26,12 @@ import {
 } from "../redux/actions/projectAction";
 import DashboardFilter from "../components/filters/DashboardFilter";
 import DashboardHeader from "../components/header/DashboardHeader";
-import { getAllTasks, getStaffPerformance, getVendorPerformance } from "../redux/actions/taskActions";
+import Filter from "../components/Filter";
+import {
+  getAllTasks,
+  getStaffPerformance,
+  getVendorPerformance,
+} from "../redux/actions/taskActions";
 
 export default function DashboardScreen({ navigation }) {
   const [dueTasks, setDueTasks] = useState(4);
@@ -41,13 +46,13 @@ export default function DashboardScreen({ navigation }) {
   const [rmsStatus, setRmsStatus] = useState(0);
   const [donRMS, setDoneRMS] = useState(0);
   const [finalInspection, setFinalInspection] = useState(0);
-  const [doneFinalInspection, setDoneFinalInspection] = useState(0)
+  const [doneFinalInspection, setDoneFinalInspection] = useState(0);
   const { firstName, id } = useSelector((state) => state.staff);
   const projectsArray = useSelector((state) => state.project?.projects);
-  const { tasks } = useSelector(state => state.tasks)
+  const { tasks } = useSelector((state) => state.tasks);
   const [projectsArr, setProjectsArr] = useState([]);
   const [targetManagementData, setTargetManagementData] = useState([]);
-  const [staffPerformance, setStaffPerformance] = useState([])
+  const [staffPerformance, setStaffPerformance] = useState([]);
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -57,10 +62,10 @@ export default function DashboardScreen({ navigation }) {
       const { totalVendors, activeVendors, inactiveVendors } =
         await getVendorCounts();
       const projects = await getProjectCounts();
-      const tasksByVendor = await getVendorPerformance(id)
-      const staffTargetPerformance = await getStaffPerformance()
+      const tasksByVendor = await getVendorPerformance(id);
+      const staffTargetPerformance = await getStaffPerformance();
       setTargetManagementData(tasksByVendor);
-      setStaffPerformance(staffTargetPerformance)
+      setStaffPerformance(staffTargetPerformance);
       setProjectCounts(projects);
       setActiveVendors(activeVendors);
       setTotalVendors(totalVendors);
@@ -69,15 +74,18 @@ export default function DashboardScreen({ navigation }) {
   };
 
   useEffect(() => {
-    const installationCount = tasks.filter(task => task.activity === "Installation").length
-    setInstallation(installationCount)
-    const rmsCount = tasks.filter(task => task.activity === "RMS").length
-    setRmsStatus(rmsCount)
-    const finalCount = tasks.filter(task => task.activity === "Final Inspection").length
-    setFinalInspection(finalCount)
-    setDueTasks(installationCount + rmsCount + finalCount)
-  }, [tasks])
-
+    const installationCount = tasks.filter(
+      (task) => task.activity === "Installation"
+    ).length;
+    setInstallation(installationCount);
+    const rmsCount = tasks.filter((task) => task.activity === "RMS").length;
+    setRmsStatus(rmsCount);
+    const finalCount = tasks.filter(
+      (task) => task.activity === "Final Inspection"
+    ).length;
+    setFinalInspection(finalCount);
+    setDueTasks(installationCount + rmsCount + finalCount);
+  }, [tasks]);
 
   useEffect(() => {
     setGreeting(greet());
@@ -106,6 +114,7 @@ export default function DashboardScreen({ navigation }) {
     setShowBottomSheet(!showBottomSheet);
   };
 
+  const applyFilterFromRedux = (...args) => {};
 
   return (
     <ContainerComponent>
@@ -236,15 +245,23 @@ export default function DashboardScreen({ navigation }) {
           >
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>{t("installation")}</P>
-              <H5 style={spacing.ml2}>{doneInstallation}/<H5 style={typography.textDanger}>{installation}</H5></H5>
+              <H5 style={spacing.ml2}>
+                {doneInstallation}/
+                <H5 style={typography.textDanger}>{installation}</H5>
+              </H5>
             </View>
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>{t("rms_status")}</P>
-              <H5 style={spacing.ml2}>{donRMS}/<H5 style={typography.textDanger}>{rmsStatus}</H5></H5>
+              <H5 style={spacing.ml2}>
+                {donRMS}/<H5 style={typography.textDanger}>{rmsStatus}</H5>
+              </H5>
             </View>
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>{t("final_inspection")}</P>
-              <H5 style={spacing.ml2}>{doneFinalInspection}/<H5 style={typography.textDanger}>{finalInspection}</H5></H5>
+              <H5 style={spacing.ml2}>
+                {doneFinalInspection}/
+                <H5 style={typography.textDanger}>{finalInspection}</H5>
+              </H5>
             </View>
           </View>
         </CardFullWidth>
