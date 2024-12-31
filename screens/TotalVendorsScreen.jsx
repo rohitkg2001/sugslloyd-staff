@@ -47,15 +47,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
   const closeFilter = () => {
     setShowBottomSheet(!showBottomSheet);
   };
-  const applyFilterFromRedux = (...args) => {};
-
-  // const handleViewDetails = (item) => {
-  //   dispatch(viewVendor(item));
-  //   navigation.navigate("vendorDetailScreen", {
-  //     site: item,
-  //     formType: "vendor",
-  //   });
-  // };
+  const applyFilterFromRedux = (...args) => { };
 
   return (
     <ContainerComponent>

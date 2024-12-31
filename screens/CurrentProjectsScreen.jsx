@@ -1,22 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View, Modal, TouchableWithoutFeedback } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
-import {
-  spacing,
-  styles,
-  LIGHT,
-  SCREEN_WIDTH,
-  ICON_MEDIUM,
-  typography,
-  PRIMARY_COLOR_TRANSPARENT,
-  DANGER_COLOR,
-} from "../styles";
-import SearchBar from "../components/input/SearchBar";
-import Button from "../components/buttons/Button";
+import { spacing, styles, typography } from "../styles";
 import MyFlatList from "../components/utility/MyFlatList";
 import { useTranslation } from "react-i18next";
-import Filter from "../components/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTasks } from "../redux/actions/taskActions";
 import NoRecord from "./NoRecord";
@@ -25,23 +12,21 @@ import MyHeader from "../components/header/MyHeader";
 import { H5, P, Span } from "../components/text";
 import VendorSelectionScreen from "./VendorSelectionScreen";
 import CustomModalContent from "../components/CustomModalContent";
+import { Menu } from "react-native-paper";
+import Button from "../components/buttons/Button";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
   const { tasks } = useSelector((state) => state.tasks);
   const [currentTasks, setCurrentTasks] = useState([]);
   const dispatch = useDispatch();
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showVendorSelection, setShowVendorSelection] = useState(false);
   const [clickedText, setClickedText] = useState(null);
   const [selectedTargets, setSelectedTargets] = useState([])
+  const menuRef = useRef(null)
 
   const { t } = useTranslation();
-
-  const closeFilter = () => {
-    setShowBottomSheet(!showBottomSheet);
-  };
 
   useEffect(() => {
     dispatch(getAllTasks(staff.id));
@@ -51,15 +36,10 @@ export default function CurrentProjectsScreen({ navigation }) {
     Array.isArray(tasks) && setCurrentTasks(tasks);
   }, [tasks]);
 
-  const toggleModal = () => {
-    setShowModal((prev) => !prev);
-  };
 
   const toggleVendorSelection = () => {
     setShowVendorSelection(!showVendorSelection);
   };
-
-  const applyFilterFromRedux = (...args) => { };
 
   const handleTextClick = (text) => {
     if (text === "toggleVendorSelection") {
@@ -68,6 +48,9 @@ export default function CurrentProjectsScreen({ navigation }) {
 
     setClickedText(text);
   };
+
+  const openMenu = () => setShowMenu(true);
+  const closeMenu = () => setShowMenu(false);
 
   const selectTargets = (idx) => {
     setSelectedTargets((prevTargets) => {
@@ -93,7 +76,18 @@ export default function CurrentProjectsScreen({ navigation }) {
         hasIcon={true}
         isBack={true}
         rightComponent={true}
-        onIconPress={toggleModal}
+        onIconPress={() => {
+          menuRef.current?.measure((fx, fy, width, height, px, py) => {
+            openMenu()
+          })
+          console.log(showModal)
+        }}
+        rightIcon={
+          <View
+            ref={menuRef} // Attach ref to the anchor
+            style={{ width: 40, height: 40 }} // Invisible dummy view
+          />
+        }
       />
       <MyFlatList
         data={currentTasks}
@@ -133,64 +127,16 @@ export default function CurrentProjectsScreen({ navigation }) {
         )}
         contentContainerStyle={[spacing.mh2, spacing.mt1, { flexGrow: 1 }]}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
-        ListHeaderComponent={() => (
-          <View
-            style={[
-              spacing.mv4,
-              styles.row,
-              spacing.mh1,
-              { alignItems: "center" },
-            ]}
-          >
-            <SearchBar
-              placeholder="Search"
-              style={{ width: SCREEN_WIDTH - 70 }}
-            />
-            <Button
-              style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
-              onPress={() => setShowBottomSheet(!showBottomSheet)}
-            >
-              <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
-            </Button>
-          </View>
-        )}
       />
 
-      {showBottomSheet && (
-        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
-      )}
-      <Modal
-        transparent={true}
+      <Menu
         visible={showModal}
-        animationType="slide"
-        onRequestClose={toggleModal}
+        onDismiss={() => setShowModal(false)}
+        anchor={menuRef.current} //Put the anchor on top right icon button from MyHeader
       >
-        <TouchableWithoutFeedback onPress={() => toggleModal()}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: "flex-end",
-              paddingTop: 54,
-              paddingRight: 4,
-            }}
-          >
-            <TouchableWithoutFeedback onPress={() => { }}>
-              <CustomModalContent
-                clickedText={clickedText}
-                handleTextClick={handleTextClick}
-                toggleVendorSelection={toggleVendorSelection}
-              />
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+        <Menu.Item title="Assign to Vendor" onPress={() => console.log(selectedTargets)} />
+      </Menu>
 
-      {showVendorSelection && (
-        <VendorSelectionScreen
-          onClose={toggleVendorSelection}
-          setVendor={(vendor) => console.log("Assigned vendor:", vendor)}
-        />
-      )}
-    </ContainerComponent>
+    </ContainerComponent >
   );
 }
