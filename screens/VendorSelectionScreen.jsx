@@ -51,18 +51,23 @@ const VendorSelectionScreen = ({ onClose, setVendor }) => {
         <View
           style={[
             styles.vendorContainer,
-            { marginLeft: 16, marginTop: 16, marginRight: 16 },
+
+            { marginLeft: 16, marginTop: 12, marginRight: 16 },
           ]}
         >
-          <Text
+          <H1 style={[typography.font20, typography.textBold]}>
+            Select Vendor
+          </H1>
+          <TouchableOpacity
+            onPress={onClose}
             style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              marginBottom: 15,
+              position: "absolute",
+              top: 8,
+              left: 290,
             }}
           >
-            {t("Select Vendor")}
-          </Text>
+            <Icon name="close-outline" color={DANGER_COLOR} size={ICON_LARGE} />
+          </TouchableOpacity>
 
           <DropDownPicker
             open={openVendorDropdown}
@@ -83,21 +88,6 @@ const VendorSelectionScreen = ({ onClose, setVendor }) => {
             modalAnimationType="slide"
           />
         </View>
-
-        {/* <View
-          style={[
-            styles.row,
-            spacing.mh1,
-            spacing.bbw05,
-            spacing.p4,
-            { height: "16%" },
-          ]}
-        >
-          <H1 style={[typography.font16, typography.textBold]}>Apply Filter</H1>
-          <TouchableOpacity onPress={onClose}>
-            <Icon name="close-outline" color={DANGER_COLOR} size={ICON_LARGE} />
-          </TouchableOpacity>
-        </View> */}
 
         <Button
           style={[
