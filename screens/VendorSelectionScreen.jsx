@@ -3,12 +3,20 @@ import { View, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useTranslation } from "react-i18next";
-import { SCREEN_WIDTH, styles } from "../styles";
+import {
+  SCREEN_WIDTH,
+  styles,
+  typography,
+  DANGER_COLOR,
+  ICON_LARGE,
+} from "../styles";
 import Button from "../components/buttons/Button";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
 import { useDispatch, useSelector } from "react-redux";
 import { transformArray } from "../utils/faker";
 import { BASE_URL } from "../redux/constant";
+import H1 from "../components/text/H2";
+import { H2 } from "../components/text";
 
 const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
   const [vendors, setVendors] = useState([]);
@@ -39,8 +47,10 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
   };
 
   const handleAssignVendor = async () => {
-    console.log(vendors)
-    const vendor_id = vendorInStore.find(vendor => vendor.firstName === vendors).id
+    console.log(vendors);
+    const vendor_id = vendorInStore.find(
+      (vendor) => vendor.firstName === vendors
+    ).id;
 
     const response = await fetch(`${BASE_URL}/api/task/${task_id}`, {
       method: "PUT",
@@ -50,10 +60,10 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
       body: JSON.stringify({
         vendor_id: vendor_id,
       }),
-    })
-    console.log(response)
-    const data = await response.json()
-    console.log(data)
+    });
+    console.log(response);
+    const data = await response.json();
+    console.log(data);
     // TODO: Assign vendor to task
     setVendor(vendors);
     onClose();
