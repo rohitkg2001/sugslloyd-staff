@@ -84,6 +84,11 @@ export default function CurrentProjectsScreen({ navigation }) {
             item={item}
             title={item.site?.site_name}
             subtitle={`${item.site?.location}, ${item.site?.district}, ${item.site?.state}`}
+            handleViewDetails={() =>
+              navigation.navigate("targetManagementScreen", {
+                item: item,
+              })
+            }
           >
             <View>
               <H5 style={[typography.font20]}>{item.activity}</H5>

@@ -24,11 +24,12 @@ export default function ClickableCard1({
   positiveAction,
   handleViewDetails,
   onLongPressAction,
+  item,
 }) {
   return (
     <TouchableOpacity
       style={[spacing.mv1, { width: SCREEN_WIDTH - 16 }]}
-      // onPress={() => handleViewDetails(item)}
+      onPress={() => handleViewDetails(item)}
       onLongPress={onLongPressAction}
     >
       <Card
