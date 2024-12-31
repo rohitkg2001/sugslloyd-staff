@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
-import {
-  styles,
-  spacing,
-  typography,
-  SCREEN_WIDTH,
-  DANGER_COLOR,
-  ICON_LARGE,
-} from "../styles";
+import { styles, spacing, typography, SCREEN_WIDTH } from "../styles";
 import { H2, H6, P } from "../components/text";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
 

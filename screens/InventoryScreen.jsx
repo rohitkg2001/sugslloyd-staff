@@ -1,34 +1,22 @@
 import { useEffect, useState } from "react";
-import { View } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import SearchBar from "../components/input/SearchBar";
 import MyFlatList from "../components/utility/MyFlatList";
 import { inventoryData, projects, totalsitesData } from "../utils/faker";
 import InventoryCard from "../components/card/InventoryCard";
 import NoRecord from "./NoRecord";
 import { useTranslation } from "react-i18next";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
-import DashboardFilter from "../components/filters/DashboardFilter";
-import { ICON_MEDIUM, LIGHT, styles, spacing, SCREEN_WIDTH } from "../styles";
+import { styles } from "../styles";
 import InventoryDetailsModal from "../components/InventoryDetailsModal";
-import Filter from "../components/Filter";
 import { useSelector } from "react-redux";
 
 export default function InventoryScreen({ navigation }) {
-  const [searchText, setSearchText] = useState("");
   const [isVisible, setVisible] = useState(false);
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const { t } = useTranslation();
   const { inventory } = useSelector((state) => state.inventory);
-
-  const closeFilter = () => {
-    setShowBottomSheet(!showBottomSheet);
-  };
-  const applyFilterFromRedux = (...args) => { };
 
   const viewItem = (id) => {
     setVisible(true);
@@ -39,7 +27,7 @@ export default function InventoryScreen({ navigation }) {
     setSelectedItem(itemDetails);
   };
 
-  useEffect(() => { }, [inventory]);
+  useEffect(() => {}, [inventory]);
 
   return (
     <ContainerComponent>
@@ -69,9 +57,6 @@ export default function InventoryScreen({ navigation }) {
       >
         <Ionicons name="add" size={28} color="white" />
       </Button>
-      {showBottomSheet && (
-        <Filter onClose={closeFilter} onApply={applyFilterFromRedux} />
-      )}
     </ContainerComponent>
   );
 }

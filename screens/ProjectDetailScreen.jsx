@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 import {
   SCREEN_WIDTH,
   spacing,
   typography,
   styles,
-  ICON_MEDIUM,
-  LIGHT,
   PRIMARY_COLOR,
 } from "../styles";
 import MyHeader from "../components/header/MyHeader";
-import { H4, H5, H6, Span, P, H3 } from "../components/text";
+import { H5, H6, Span, P, H3 } from "../components/text";
 import { useTranslation } from "react-i18next";
 import { inventoryData, targetManagementData } from "../utils/faker";
 import MyFlatList from "../components/utility/MyFlatList";
-import SearchBar from "../components/input/SearchBar";
-import Button from "../components/buttons/Button";
 import Tabs from "../components/Tabs";
 import NoRecord from "./NoRecord";
 import { getStateById } from "../redux/actions/projectAction";
@@ -24,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSites } from "../redux/actions/siteActions";
 import ClickableCard1 from "../components/card/ClickableCard1";
 
-const ProjectDetailsScreen = ({ route, navigation, description }) => {
+const ProjectDetailsScreen = ({ route, navigation }) => {
   const { project } = route.params;
   const [Project, setProject] = useState({
     state: "",
@@ -38,7 +33,6 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("Sites");
   const [state, setState] = useState("");
-  const [searchText, setSearchText] = useState("");
   const [sites, setSites] = useState([]);
   const [loading, setLoading] = useState(false);
   const storeState = useSelector((state) => state);
@@ -83,8 +77,8 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
           item={item}
           title={item.site_name}
           subtitle={`${item.location}, ${item.district}, `}
-          positiveAction={() =>
-            navigation.navigate("siteDetailScreen", { site: item })
+          onPress={() =>
+            navigation.navigate("siteDetailScreen", { site: item.id })
           }
         ></ClickableCard1>
       )}
@@ -102,10 +96,8 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
           item={item}
           title={item.productName}
           subtitle={`${item.category} || ${item.sub_category}, `}
-          positiveAction={() =>
-            navigation.navigate("inventoryDetailScreen", {
-              item: item,
-            })
+          onPress={() =>
+            navigation.navigate("inventoryDetailScreen", { item: item.id })
           }
         ></ClickableCard1>
       )}
@@ -123,10 +115,8 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
           item={item}
           title={item.site?.site_name}
           subtitle={item.activity}
-          positiveAction={() =>
-            navigation.navigate("targetManagementScreen", {
-              target: item,
-            })
+          onPress={() =>
+            navigation.navigate("targetManagementScreen", { target: item.id })
           }
         ></ClickableCard1>
       )}
@@ -206,25 +196,6 @@ const ProjectDetailsScreen = ({ route, navigation, description }) => {
           />
         </View>
 
-        <View style={[styles.row, { alignItems: "center", marginTop: 20 }]}>
-          <SearchBar
-            value={searchText}
-            onChangeText={setSearchText}
-            placeholder={t("search_placeholder")}
-            style={{ width: SCREEN_WIDTH - 82, marginLeft: 5 }}
-          />
-          <Button
-            style={[
-              styles.btn,
-              styles.bgPrimary,
-              spacing.mh1,
-              { width: 50, marginLeft: 8 },
-            ]}
-            onPress={() => setShowBottomSheet(!showBottomSheet)}
-          >
-            <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
-          </Button>
-        </View>
         {renderActiveTab()}
       </ScrollView>
     </View>

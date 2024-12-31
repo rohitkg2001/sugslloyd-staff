@@ -16,8 +16,8 @@ export const fakeDelete = ({
 
 export function transformArray(inputArray) {
   return inputArray.map(item => ({
-    label: `${item.firstName} ${item.lastName}`, // Concatenate firstName and lastName
-    value: item.firstName                              // Use id as value
+    label: item.name, // Concatenate firstName and lastName
+    value: item.id                              // Use id as value
   }));
 }
 
