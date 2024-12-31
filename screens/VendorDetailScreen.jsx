@@ -4,13 +4,11 @@ import { SCREEN_WIDTH, spacing, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { H5 } from "../components/text";
-import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
 
 const VendorDetailScreen = ({ route, navigation }) => {
   const { site } = route.params;
   const { t } = useTranslation();
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const renderDetailRow = (label, value) => (
     <View style={{ flexDirection: "row", paddingVertical: 8 }}>
@@ -41,24 +39,6 @@ const VendorDetailScreen = ({ route, navigation }) => {
           {renderDetailRow("Last Name", site.lastName)}
           {renderDetailRow("Address", site.address)}
           {renderDetailRow("Status", site.status)}
-
-          {/* <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginVertical: 16,
-            }}
-          >
-            <MyButton
-              title={t("create_site")}
-              onPress={() => navigation.navigate("sitesFormScreen")}
-              color="#DC4C64"
-            />
-            <MyButton
-              title={t("view_site")}
-              onPress={() => navigation.navigate("totalSitesScreen")}
-            />
-          </View> */}
         </ScrollView>
       </View>
     </ContainerComponent>

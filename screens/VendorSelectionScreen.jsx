@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useTranslation } from "react-i18next";
 import { SCREEN_WIDTH, styles } from "../styles";
-import MyButton from "../components/buttons/MyButton";
+import Button from "../components/buttons/Button";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
 import { useDispatch, useSelector } from "react-redux";
 import { transformArray } from "../utils/faker";
@@ -64,12 +65,23 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
         <View
           style={[
             styles.vendorContainer,
-            { marginLeft: 20, marginTop: 10, marginRight: 10 },
+
+            { marginLeft: 16, marginTop: 12, marginRight: 16 },
           ]}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 15 }}>
-            {t("Select Vendor")}
-          </Text>
+          <H1 style={[typography.font20, typography.textBold]}>
+            Select Vendor
+          </H1>
+          <TouchableOpacity
+            onPress={onClose}
+            style={{
+              position: "absolute",
+              top: 8,
+              left: 290,
+            }}
+          >
+            <Icon name="close-outline" color={DANGER_COLOR} size={ICON_LARGE} />
+          </TouchableOpacity>
 
           <DropDownPicker
             open={openVendorDropdown}
@@ -91,19 +103,22 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
           />
         </View>
 
-        <View
+        <Button
           style={[
-            styles.row,
+            styles.btn,
+            styles.bgPrimary,
             {
-              width: SCREEN_WIDTH - 20,
-              marginTop: 250,
               justifyContent: "center",
-              alignItems: "center",
+              marginTop: 260,
+              width: SCREEN_WIDTH - 16,
+              marginHorizontal: 8,
             },
           ]}
         >
-          <MyButton title={t("Assign Vendor")} onPress={handleAssignVendor} />
-        </View>
+          <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
+            {t("Assign Vendor")}
+          </H2>
+        </Button>
       </View>
     </BottomSheet>
   );

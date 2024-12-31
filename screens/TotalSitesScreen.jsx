@@ -1,7 +1,6 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fakeDelete } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import SearchBar from "../components/input/SearchBar";
@@ -9,7 +8,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
-import ClickableCard from "../components/card/ClickableCard";
+import ClickableCard1 from "../components/card/ClickableCard1";
 import Filter from "../components/Filter";
 import {
   ICON_LARGE,
@@ -19,12 +18,7 @@ import {
   spacing,
   styles,
 } from "../styles";
-import {
-  viewSite,
-  searchSite,
-  fetchSites,
-  addSite,
-} from "../redux/actions/siteActions";
+import { fetchSites } from "../redux/actions/siteActions";
 
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator } from "react-native-paper";
@@ -62,36 +56,6 @@ export default function TotalSitesScreen({ navigation, route }) {
     }, 2000);
   }, [loading, sites]);
 
-  const handleSearch = (text) => {
-    dispatch(searchSite(text));
-    const filtered = data.filter(
-      (site) =>
-        site.city.toLowerCase().includes(text.toLowerCase()) ||
-        site.state.toLowerCase().includes(text.toLowerCase()) ||
-        site.projectCode.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredData(filtered);
-  };
-
-  const handleViewDetails = (siteData) => {
-    dispatch(viewSite(siteData));
-    navigation.navigate("siteDetailScreen", { site: siteData });
-  };
-
-  const handleDelete = () => {
-    fakeDelete({
-      title: t("error"),
-      message: t("total_site_screen_msg"),
-    });
-  };
-
-  const handleEdit = (item) => {
-    navigation.navigate("EditDetailsScreen", {
-      item,
-      formType: "site",
-    });
-  };
-
   if (loading) {
     return <ActivityIndicator size="large" />;
   }
@@ -102,15 +66,34 @@ export default function TotalSitesScreen({ navigation, route }) {
       <MyFlatList
         data={sites}
         loading={loading}
-        renderItem={({ item }) => (
-          <ClickableCard
+        renderItem={({ item, index }) => (
+          <ClickableCard1
+            key={index}
             item={item}
-            key={item.id}
-            handleViewDetails={handleViewDetails}
-            handleDelete={handleDelete}
-            handleEdit={() => handleEdit(item)}
-            isSite={true}
-          />
+            title={item.siteName}
+            subtitle={`${item.location}, ${item.city},${item.state}, `}
+          >
+            <View>
+              <View style={[spacing.mt1, styles.row]}>
+                <View>
+                  <Span
+                    style={[typography.font16, { textTransform: "capitalize" }]}
+                  >
+                    Site Engineer
+                  </Span>
+                  <P style={[typography.font16]}>{item.siteEngineer}</P>
+                </View>
+                <View>
+                  <Span
+                    style={[typography.font16, { textTransform: "capitalize" }]}
+                  >
+                    Activity
+                  </Span>
+                  <P style={[typography.font16]}>{item.status}</P>
+                </View>
+              </View>
+            </View>
+          </ClickableCard1>
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh1, spacing.mt1]}

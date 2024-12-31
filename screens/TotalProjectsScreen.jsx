@@ -7,8 +7,6 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
-import ClickableCard from "../components/card/ClickableCard";
-import { fakeDelete } from "../utils/faker";
 import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import Filter from "../components/Filter";
@@ -19,17 +17,15 @@ import {
   SCREEN_WIDTH,
   ICON_MEDIUM,
   ICON_LARGE,
+  typography,
 } from "../styles";
-import {
-  fetchProjects,
-  searchProjects,
-  viewProject,
-} from "../redux/actions/projectAction";
+import { fetchProjects, viewProject } from "../redux/actions/projectAction";
 import { useTranslation } from "react-i18next";
+import ClickableCard1 from "../components/card/ClickableCard1";
+import { P, Span } from "../components/text";
 
 export default function TotalProjectsScreen({ navigation }) {
   const dispatch = useDispatch();
-  const [searchText, setSearchText] = useState("");
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
@@ -55,17 +51,6 @@ export default function TotalProjectsScreen({ navigation }) {
     navigation.navigate("projectDetailScreen", { project: item });
   };
 
-  const handleSearch = (text) => {
-    setSearchText(text);
-    dispatch(searchProjects(text));
-  };
-
-  const handleEdit = (item) => {
-    navigation.navigate("EditDetailsScreen", {
-      site: item,
-      formType: "project",
-    });
-  };
   const closeFilter = () => {
     setShowBottomSheet(!showBottomSheet);
   };
@@ -76,20 +61,34 @@ export default function TotalProjectsScreen({ navigation }) {
       <MyFlatList
         data={filteredProjects}
         loading={loading}
-        renderItem={({ item }) => (
-          <ClickableCard
+        renderItem={({ item, index }) => (
+          <ClickableCard1
+            key={index}
             item={item}
-            key={item.id}
-            handleViewDetails={(item) => handleViewDetails(item.id)}
-            handleDelete={() =>
-              fakeDelete({
-                title: t("error"),
-                message: t("error_msg"),
-              })
-            }
-            handleEdit={handleEdit}
-            isProject={true}
-          />
+            title={item.project_name}
+            subtitle={item.work_order_number}
+          >
+            <View>
+              <View style={[spacing.mt1, styles.row]}>
+                <View>
+                  <Span
+                    style={[typography.font16, { textTransform: "capitalize" }]}
+                  >
+                    start date
+                  </Span>
+                  <P style={[typography.font16]}>{item.start_date}</P>
+                </View>
+                <View>
+                  <Span
+                    style={[typography.font16, { textTransform: "capitalize" }]}
+                  >
+                    end date
+                  </Span>
+                  <P style={[typography.font16]}>{item.start_date}</P>
+                </View>
+              </View>
+            </View>
+          </ClickableCard1>
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[

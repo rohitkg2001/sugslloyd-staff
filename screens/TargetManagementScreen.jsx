@@ -56,74 +56,92 @@ const TargetManagementScreen = ({ route, navigation }) => {
     <ContainerComponent>
       <MyHeader title={t("Task")} hasIcon={true} isBack={true} />
 
-      <ScrollView contentContainerStyle={{ width: SCREEN_WIDTH - 16 }}>
-        <H5
-          style={{
-            textAlign: "right",
-            marginRight: 20,
-            textTransform: "uppercase",
-          }}
-        >
-          {currentTarget.activity}
-        </H5>
-        <H4>{currentTarget.site?.site_name}</H4>
-        <H6>{currentTarget.site?.location}</H6>
-        <H6>
-          {currentTarget.start_date} - {currentTarget.end_date}
-        </H6>
-        <View
-          style={[
-            styles.row,
-            spacing.mv2,
-            { justifyContent: "space-between", flex: 1 },
-          ]}
-        >
-          <H6>Vendor Name</H6>
-          <View style={[styles.row, { alignItems: "center" }]}>
+      <View style={{ width: SCREEN_WIDTH - 16 }}>
+        {isDataAvailable ? (
+          <ScrollView>
+            <H5
+              style={{
+                textAlign: "right",
+                marginRight: 20,
+                textTransform: "uppercase",
+              }}
+            >
+              {currentTarget.activity}
+            </H5>
+            <H4>{currentTarget.site?.site_name}</H4>
+            <H6>{currentTarget.site?.location}</H6>
             <H6>
-              {!currentTarget.vendor
-                ? "................................."
-                : currentTarget.vendor?.name}
+              {currentTarget.start_date} - {currentTarget.end_date}
             </H6>
-            <IconButton
-              onPress={() => setShowVendorSelection(true)}
-              icon={"pencil"}
-            />
-          </View>
-        </View>
-        <View
-          style={[
-            styles.row,
-            spacing.mv2,
-            { justifyContent: "space-between", flex: 1 },
-          ]}
-        >
-          <H6>Remarks</H6>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <H6>
-              {!currentTarget.description
-                ? "................................."
-                : currentTarget.description}
-            </H6>
-            <IconButton
-              onPress={() => setShowVendorSelection(true)}
-              icon={"pencil"}
-            />
-          </View>
-        </View>
+            <View
+              style={[
+                styles.row,
+                spacing.mv2,
+                { justifyContent: "space-between", flex: 1 },
+              ]}
+            >
+              <H6>Vendor Name</H6>
+              <View style={[styles.row, { alignItems: "center" }]}>
+                <H6>
+                  {!currentTarget.vendor
+                    ? "................................."
+                    : currentTarget.vendor?.vendor_name}
+                </H6>
+                <IconButton
+                  onPress={() => setShowVendorSelection(true)}
+                  icon={"pencil"}
+                />
+              </View>
+            </View>
+            <View
+              style={[
+                styles.row,
+                spacing.mv2,
+                { justifyContent: "space-between", flex: 1 },
+              ]}
+            >
+              <H6>Remarks</H6>
+              <View style={[styles.row, { alignItems: "center" }]}>
+                <H6>
+                  {!currentTarget.description
+                    ? "................................."
+                    : currentTarget.description}
+                </H6>
+                <IconButton
+                  onPress={() => setShowVendorSelection(true)}
+                  icon={"pencil"}
+                />
+              </View>
+            </View>
 
-      </ScrollView>
+            {target.completedPhotos && target.completedPhotos.length > 0 && (
+              <View style={[spacing.pv4]}>
+                <H6>Completed Photos</H6>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {target.completedPhotos.map((url, index) => (
+                    <Image
+                      key={index}
+                      source={{ uri: url }}
+                      style={{ width: 100, height: 100, marginRight: 10 }}
+                    />
+                  ))}
+                </ScrollView>
+              </View>
+            )}
+          </ScrollView>
+        ) : (
+          <NoRecord msg="No data found" />
+        )}
 
-
-      {/* <Tabs
-        tabs={[t("Inventory"), t("Progress")]}
-        onTabPress={(index) => setActiveTab(index)}
-      /> */}
-      {/* </View> */}
+        <Tabs
+          tabs={[t("Inventory"), t("Progress")]}
+          onTabPress={(index) => setActiveTab(index)}
+        />
+      </View>
 
       <Button
         style={styles.addButton}
-        onPress={() => navigation.navigate("AddTarget")}
+        onPress={() => navigation.navigate("taskMaterialScreen")}
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>
@@ -134,6 +152,17 @@ const TargetManagementScreen = ({ route, navigation }) => {
       {showTaskInventory && (
         <TaskInventoryScreen onClose={closeTaskInventoryScreen} />
       )}
+      {/* {activeTab === 1 && (
+        <VendorSelectionScreen
+          onClose={() => setActiveTab(null)}
+          setVendor={(value) =>
+            setCurrentTarget({
+              ...currentTarget,
+              vendor: { vendor_name: value },
+            })
+          }
+        />
+      )} */}
     </ContainerComponent>
   );
 };
