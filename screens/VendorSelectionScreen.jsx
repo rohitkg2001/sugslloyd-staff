@@ -47,18 +47,13 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
   };
 
   const handleAssignVendor = async () => {
-    console.log(vendors);
-    const vendor_id = vendorInStore.find(
-      (vendor) => vendor.firstName === vendors
-    ).id;
-
     const response = await fetch(`${BASE_URL}/api/task/${task_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        vendor_id: vendor_id,
+        vendor_id: vendors,
       }),
     });
     console.log(response);
@@ -124,6 +119,7 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
               marginHorizontal: 8,
             },
           ]}
+          onPress={handleAssignVendor}
         >
           <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
             {t("Assign Vendor")}

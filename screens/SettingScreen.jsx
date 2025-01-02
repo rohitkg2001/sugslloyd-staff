@@ -14,7 +14,7 @@ import { getAllTasks } from "../redux/actions/taskActions";
 
 export default function SettingsScreen({ navigation }) {
   const { t } = useTranslation();
-  const { staff } = useSelector(state => state)
+  const { staff, id } = useSelector(state => state)
   const dispatch = useDispatch()
 
   const handleLogoutPress = () => {
@@ -24,8 +24,8 @@ export default function SettingsScreen({ navigation }) {
 
   useEffect(() => {
     dispatch(getAllItems())
-    dispatch(getAllTasks())
-  }, [])
+    dispatch(getAllTasks(id))
+  }, [id])
 
 
 

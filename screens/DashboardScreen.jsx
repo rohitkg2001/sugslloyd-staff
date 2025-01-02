@@ -30,6 +30,9 @@ import Filter from "../components/Filter";
 import {
   getAllTasks,
   getStaffPerformance,
+  getTaskByCategory,
+  getTaskByEngineer,
+  getTaskByVendor,
   getVendorPerformance,
 } from "../redux/actions/taskActions";
 
@@ -63,7 +66,9 @@ export default function DashboardScreen({ navigation }) {
         await getVendorCounts();
       const projects = await getProjectCounts();
       const tasksByVendor = await getVendorPerformance(id);
+      console.log(tasksByVendor)
       const staffTargetPerformance = await getStaffPerformance();
+      console.log(staffPerformance)
       setTargetManagementData(tasksByVendor);
       setStaffPerformance(staffTargetPerformance);
       setProjectCounts(projects);
@@ -100,21 +105,16 @@ export default function DashboardScreen({ navigation }) {
     setProjectsArr(projectsArray);
   }, [projectsArray]);
 
-  const handleDateChange = (event, date) => {
-    if (event.type === "set") {
-      setShowDatePicker(false);
-      setSelectedDate(date);
-      setToday(moment(date).format("DD MMM YYYY"));
-    } else {
-      setShowDatePicker(false);
-    }
-  };
-
   const closeFilter = () => {
     setShowBottomSheet(!showBottomSheet);
   };
 
-  const applyFilterFromRedux = (...args) => {};
+  const applyFilterFromRedux = (...args) => { };
+
+  const viewTask = async (activity) => {
+    await dispatch(getTaskByCategory(activity))
+    navigation.navigate("taskScreen", { activity });
+  }
 
   return (
     <ContainerComponent>
@@ -243,19 +243,19 @@ export default function DashboardScreen({ navigation }) {
               { justifyContent: "space-between", paddingVertical: 10 },
             ]}
           >
-            <View style={{ alignItems: "center" }}>
+            <TouchableOpacity style={{ alignItems: "center" }} onPress={() => viewTask("Installation")}>
               <P style={typography.textBold}>{t("installation")}</P>
               <H5 style={spacing.ml2}>
                 {doneInstallation}/
                 <H5 style={typography.textDanger}>{installation}</H5>
               </H5>
-            </View>
-            <View style={{ alignItems: "center" }}>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ alignItems: "center" }} onPress={() => viewTask("RMS")}>
               <P style={typography.textBold}>{t("rms_status")}</P>
               <H5 style={spacing.ml2}>
                 {donRMS}/<H5 style={typography.textDanger}>{rmsStatus}</H5>
               </H5>
-            </View>
+            </TouchableOpacity>
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>{t("final_inspection")}</P>
               <H5 style={spacing.ml2}>
@@ -314,11 +314,7 @@ export default function DashboardScreen({ navigation }) {
             {staffPerformance.map((data) => (
               <TouchableOpacity
                 key={data.id}
-                onPress={() =>
-                  navigation.navigate("targetManagementScreen", {
-                    target: data,
-                  })
-                }
+                onPress={() => { dispatch(getTaskByEngineer(data.id)); navigation.navigate("taskScreen", { engineer: data }) }}
               >
                 <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
                   <P
@@ -407,7 +403,7 @@ export default function DashboardScreen({ navigation }) {
             {targetManagementData.map((data) => (
               <TouchableOpacity
                 key={data.id}
-                onPress={() => navigation.navigate("targetManagementScreen")}
+                onPress={() => { dispatch(getTaskByVendor(data.id)); navigation.navigate("taskScreen", { vendor: data }) }}
               >
                 <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
                   <P

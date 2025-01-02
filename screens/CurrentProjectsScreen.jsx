@@ -14,6 +14,7 @@ import VendorSelectionScreen from "./VendorSelectionScreen";
 import CustomModalContent from "../components/CustomModalContent";
 import { Menu } from "react-native-paper";
 import Button from "../components/buttons/Button";
+import TaskCard from "../components/card/TaskCard";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
@@ -92,39 +93,7 @@ export default function CurrentProjectsScreen({ navigation }) {
       <MyFlatList
         data={currentTasks}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item, index }) => (
-          <ClickableCard1
-            key={item.id}
-            index={item.id}
-            title={item.site?.site_name}
-            subtitle={`${item.site?.location}, ${item.site?.district}, ${item.site?.state}`}
-            onPress={() => navigation.navigate("targetManagementScreen", { id: item.id })}
-            onLongPressAction={(idx) => selectTargets(idx)}
-            selected={selectedTargets.find(target => target.id === item.id)}
-          >
-            <View>
-              <H5 style={[typography.font20]}>{item.activity}</H5>
-              <View style={[spacing.mt1, styles.row]}>
-                <View>
-                  <Span
-                    style={[typography.font12, { textTransform: "capitalize" }]}
-                  >
-                    start date
-                  </Span>
-                  <P style={[typography.font12]}>{item.start_date}</P>
-                </View>
-                <View>
-                  <Span
-                    style={[typography.font12, { textTransform: "capitalize" }]}
-                  >
-                    end date
-                  </Span>
-                  <P style={[typography.font12]}>{item.start_date}</P>
-                </View>
-              </View>
-            </View>
-          </ClickableCard1>
-        )}
+        renderItem={({ item, index }) => <TaskCard item={item} navigation={navigation} selectTargets={selectTargets} selectedTargets={selectedTargets} />}
         contentContainerStyle={[spacing.mh2, spacing.mt1, { flexGrow: 1 }]}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
       />

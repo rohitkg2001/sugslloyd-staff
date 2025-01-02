@@ -16,6 +16,7 @@ import { getTaskById } from "../redux/actions/taskActions";
 import { IconButton } from "react-native-paper";
 import { getAllVendors } from "../redux/actions/vendorAction";
 
+
 const TargetManagementScreen = ({ route, navigation }) => {
   const { target, id } = route.params || {};
   const [currentTarget, setCurrentTarget] = useState({
@@ -26,6 +27,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
     end_date: "",
     vendor: "",
     remarks: "",
+    image: []
   });
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -49,7 +51,7 @@ const TargetManagementScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     console.log(currentTarget)
-  }, [])
+  }, [currentTarget])
 
 
   return (
@@ -120,10 +122,11 @@ const TargetManagementScreen = ({ route, navigation }) => {
           <NoRecord msg="No data found" />
         )}
 
-        <Tabs
+        {/* <Tabs
           tabs={[t("Inventory"), t("Progress")]}
           onTabPress={(index) => setActiveTab(index)}
-        />
+        /> */}
+        {/* <PDFCard fileUri={currentTarget.image[0]} /> */}
       </View>
 
       <Button
