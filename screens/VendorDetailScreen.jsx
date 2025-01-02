@@ -24,20 +24,20 @@ const VendorDetailScreen = ({ route, navigation }) => {
       <MyHeader title={t("vendor_details")} isBack={true} hasIcon={true} />
       <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16 }]}>
         <ScrollView>
-          {renderDetailRow("Vendor Name", site.name)}
+          {renderDetailRow("Name", site.name)}
           {renderDetailRow("Mail ID", site.email)}
-          {renderDetailRow("Contact Number", site.contactNo)}
-          {renderDetailRow("Pan Number", site.pan)}
-          {renderDetailRow("Aadhar Number", site.aadharNumber)}
           {renderDetailRow("Account Name", site.accountName)}
           {renderDetailRow("Account Number", site.accountNumber)}
           {renderDetailRow("Ifsc", site.ifsc)}
           {renderDetailRow("Bank Name", site.bankName)}
           {renderDetailRow("Branch", site.branch)}
           {renderDetailRow("Gst Number", site.gstNumber)}
+          {renderDetailRow("Pan Number", site.pan)}
+          {renderDetailRow("Aadhar Number", site.aadharNumber)}
           {renderDetailRow("First Name", site.firstName)}
           {renderDetailRow("Last Name", site.lastName)}
           {renderDetailRow("Address", site.address)}
+          {renderDetailRow("Contact Number", site.contactNo)}
           {renderDetailRow("Status", site.status)}
         </ScrollView>
       </View>

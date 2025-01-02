@@ -46,9 +46,9 @@ export default function TotalProjectsScreen({ navigation }) {
             item={item}
             title={item.project_name}
             subtitle={item.work_order_number}
-            // onPress={() =>
-            //   navigation.navigate("projectDetailScreen", { project: item })
-            // }
+            onPress={() =>
+              navigation.navigate("projectDetailScreen", { project: item })
+            }
           >
             <View>
               <View style={[spacing.mt1, styles.row]}>

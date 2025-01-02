@@ -39,7 +39,7 @@ export default function MyFlatList({
               >
                 <SearchBar
                   placeholder="Search"
-                  style={{ width: SCREEN_WIDTH - 70 }}
+                  style={{ width: SCREEN_WIDTH - 80 }}
                 />
                 <Button
                   style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}

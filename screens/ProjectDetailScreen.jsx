@@ -10,7 +10,7 @@ import {
 import MyHeader from "../components/header/MyHeader";
 import { H5, H6, Span, P, H3 } from "../components/text";
 import { useTranslation } from "react-i18next";
-import { inventoryData, targetManagementData } from "../utils/faker";
+import { inventoryData } from "../utils/faker";
 import MyFlatList from "../components/utility/MyFlatList";
 import Tabs from "../components/Tabs";
 import NoRecord from "./NoRecord";
@@ -37,6 +37,8 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
   const storeState = useSelector((state) => state);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const { tasks } = useSelector((state) => state.tasks);
+  const [currentTasks, setCurrentTasks] = useState([]);
   const dispatch = useDispatch();
 
   const setAsyncState = async () => {
@@ -55,6 +57,10 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       })
       .catch(() => setLoading(false));
   }, [storeState]);
+
+  useEffect(() => {
+    Array.isArray(tasks) && setCurrentTasks(tasks);
+  }, [tasks]);
 
   const toggleDescription = () => {
     setIsDescriptionExpanded((prevState) => !prevState);
@@ -78,7 +84,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           title={item.site_name}
           subtitle={`${item.location}, ${item.district}, `}
           onPress={() =>
-            navigation.navigate("siteDetailScreen", { site: item.id })
+            navigation.navigate("siteDetailScreen", { site: item })
           }
         ></ClickableCard1>
       )}
@@ -97,7 +103,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           title={item.productName}
           subtitle={`${item.category} || ${item.sub_category}, `}
           onPress={() =>
-            navigation.navigate("inventoryDetailScreen", { item: item.id })
+            navigation.navigate("inventoryDetailScreen", { item: item })
           }
         ></ClickableCard1>
       )}
@@ -108,20 +114,43 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   const renderTargetTab = () => (
     <MyFlatList
-      data={targetManagementData}
+      data={currentTasks}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item, index }) => (
         <ClickableCard1
-          key={index}
-          item={item}
+          key={item.id}
+          index={item.id}
           title={item.site?.site_name}
-          subtitle={item.activity}
+          subtitle={`${item.site?.location}, ${item.site?.district}, ${item.site?.state}`}
           onPress={() =>
-            navigation.navigate("targetManagementScreen", { target: item.id })
+            navigation.navigate("targetManagementScreen", { id: item.id })
           }
-        ></ClickableCard1>
+        >
+          <View>
+            <H5 style={[typography.font20]}>{item.activity}</H5>
+            <View style={[spacing.mt1, styles.row]}>
+              <View>
+                <Span
+                  style={[typography.font12, { textTransform: "capitalize" }]}
+                >
+                  start date
+                </Span>
+                <P style={[typography.font12]}>{item.start_date}</P>
+              </View>
+              <View>
+                <Span
+                  style={[typography.font12, { textTransform: "capitalize" }]}
+                >
+                  end date
+                </Span>
+                <P style={[typography.font12]}>{item.end_date}</P>
+              </View>
+            </View>
+          </View>
+        </ClickableCard1>
       )}
+      contentContainerStyle={[spacing.mh2, spacing.mt1, { flexGrow: 1 }]}
       ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
-      loading={loading}
     />
   );
 
@@ -139,7 +168,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={[spacing.mh1, { width: SCREEN_WIDTH - 16, flex: 1 }]}>
+    <View style={[spacing.mh1, { width: SCREEN_WIDTH - 10, flex: 1 }]}>
       <MyHeader title={t("project_details")} isBack={true} hasIcon={true} />
       <ScrollView stickyHeaderIndices={[1]}>
         <View>

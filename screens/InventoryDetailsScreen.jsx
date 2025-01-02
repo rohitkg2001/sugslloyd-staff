@@ -3,7 +3,7 @@ import { View, ScrollView, Text } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { SCREEN_WIDTH, styles, spacing, typography } from "../styles";
-import { H4, H5, H6, P } from "../components/text";
+import { H6, P, Span } from "../components/text";
 
 const InventoryDetailsScreen = ({ route }) => {
   const { item } = route.params || {};
@@ -51,23 +51,21 @@ const InventoryDetailsScreen = ({ route }) => {
               {renderDetailRow("Category", item.category)}
               {renderDetailRow("Subcategory", item.sub_category)}
 
-              <View>
-                <H4 style={{ fontSize: 16, fontWeight: "bold" }}>
-                  Initial Quantity
-                </H4>
-                <P style={{ fontSize: 16, textAlign: "left", color: "green" }}>
-                  {item.initialQuantity}
-                </P>
-              </View>
-
-              <View>
-                <H4 style={{ fontSize: 16, fontWeight: "bold" }}>
-                  Quantity in Stock
-                </H4>
-
-                <P style={{ fontSize: 16, textAlign: "left", color: "red" }}>
-                  {item.initialQuantity}
-                </P>
+              <View style={[spacing.mt1, styles.row, spacing.pv2]}>
+                <View>
+                  <Span style={[typography.font14]}>Initial Quantity</Span>
+                  <P style={[typography.font16, { color: "green" }]}>
+                    {" "}
+                    {item.initialQuantity}
+                  </P>
+                </View>
+                <View>
+                  <Span style={[typography.font14]}>Quantity in Stock</Span>
+                  <P style={[typography.font16, { color: "red" }]}>
+                    {" "}
+                    {item.initialQuantity}
+                  </P>
+                </View>
               </View>
             </>
           ) : (

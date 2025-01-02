@@ -10,10 +10,7 @@ import ClickableCard1 from "../components/card/ClickableCard1";
 
 import { ICON_LARGE, spacing, styles, typography } from "../styles";
 import { useTranslation } from "react-i18next";
-import {
-  viewVendor,
-  // countVendor,
-} from "../redux/actions/vendorAction";
+import { viewVendor } from "../redux/actions/vendorAction";
 import { H6 } from "../components/text";
 
 export default function TotalVendorsScreen({ navigation, route }) {
@@ -21,30 +18,23 @@ export default function TotalVendorsScreen({ navigation, route }) {
   const { t } = useTranslation();
   const { vendors } = useSelector((state) => state.vendor);
 
-  const { pageTitle, data } = route.params || {
+  const { pageTitle } = route.params || {
     pageTitle: "vendor_management_title",
-    data: viewVendor,
   };
-
-  // useEffect(() => {
-  //   dispatch(countVendor());
-  //   console.log(vendors);
-  // }, [dispatch]);
 
   return (
     <ContainerComponent>
       <MyHeader title={t(pageTitle)} isBack={true} hasIcon={true} />
       <MyFlatList
         data={vendors}
-        loading={false}
-        renderItem={({ item, index }) => (
+        loading={!vendors}
+        renderItem={({ item }) => (
           <ClickableCard1
-            key={index}
             item={item}
             title={item.name}
             subtitle={item.address}
             onPress={() =>
-              navigation.navigate("vendorDetailScreen", { site: item.id })
+              navigation.navigate("vendorDetailScreen", { site: item })
             }
           >
             <View>

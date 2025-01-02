@@ -114,7 +114,7 @@ export default function DashboardScreen({ navigation }) {
     setShowBottomSheet(!showBottomSheet);
   };
 
-  const applyFilterFromRedux = (...args) => { };
+  const applyFilterFromRedux = (...args) => {};
 
   return (
     <ContainerComponent>
@@ -407,9 +407,7 @@ export default function DashboardScreen({ navigation }) {
             {targetManagementData.map((data) => (
               <TouchableOpacity
                 key={data.id}
-                onPress={() =>
-                  navigation.navigate("targetManagementScreen")
-                }
+                onPress={() => navigation.navigate("targetManagementScreen")}
               >
                 <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
                   <P
@@ -460,7 +458,8 @@ export default function DashboardScreen({ navigation }) {
             <H5 style={[typography.textBold, { marginRight: 200 }]}>Vendors</H5>
           </View>
           <View style={[spacing.bbw05, spacing.mv2]} />
-          <View
+          <TouchableOpacity
+            onPress={() => navigation.navigate("totalVendorsScreen")}
             style={[
               styles.row,
               { justifyContent: "space-between", paddingVertical: 10 },
@@ -485,7 +484,7 @@ export default function DashboardScreen({ navigation }) {
                 {inActiveVendors}
               </P>
             </View>
-          </View>
+          </TouchableOpacity>
         </CardFullWidth>
       </ScrollView>
       {showBottomSheet && (
