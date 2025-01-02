@@ -191,11 +191,11 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           </View>
           <View style={[spacing.mt1, styles.row, spacing.pv2]}>
             <View>
-              <Span style={[typography.font14]}>start date</Span>
+              <Span style={[typography.font14]}>START DATE</Span>
               <P style={[typography.font16]}>{Project.start_date}</P>
             </View>
             <View>
-              <Span style={[typography.font14]}>end date</Span>
+              <Span style={[typography.font14]}>END DATE</Span>
               <P style={[typography.font16]}>{Project.end_date}</P>
             </View>
           </View>

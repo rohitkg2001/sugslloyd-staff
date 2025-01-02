@@ -458,19 +458,21 @@ export default function DashboardScreen({ navigation }) {
             <H5 style={[typography.textBold, { marginRight: 200 }]}>Vendors</H5>
           </View>
           <View style={[spacing.bbw05, spacing.mv2]} />
-          <TouchableOpacity
-            onPress={() => navigation.navigate("totalVendorsScreen")}
+          <View
             style={[
               styles.row,
               { justifyContent: "space-between", paddingVertical: 10 },
             ]}
           >
-            <View style={{ alignItems: "center", textAlign: "center" }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("totalVendorsScreen")}
+              style={{ alignItems: "center", textAlign: "center" }}
+            >
               <P style={typography.textBold}>Total Vendors</P>
               <P style={[typography.font20, typography.textBold, spacing.m2]}>
                 {totalVendors}
               </P>
-            </View>
+            </TouchableOpacity>
 
             <View style={{ alignItems: "center" }}>
               <P style={typography.textBold}>Active</P>
@@ -484,7 +486,7 @@ export default function DashboardScreen({ navigation }) {
                 {inActiveVendors}
               </P>
             </View>
-          </TouchableOpacity>
+          </View>
         </CardFullWidth>
       </ScrollView>
       {showBottomSheet && (
