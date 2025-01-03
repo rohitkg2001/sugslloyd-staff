@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Modal, TouchableWithoutFeedback } from "react-native";
+import { View } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import { spacing, styles, typography } from "../styles";
 import MyFlatList from "../components/utility/MyFlatList";
@@ -10,21 +10,16 @@ import NoRecord from "./NoRecord";
 import ClickableCard1 from "../components/card/ClickableCard1";
 import MyHeader from "../components/header/MyHeader";
 import { H5, P, Span } from "../components/text";
-import VendorSelectionScreen from "./VendorSelectionScreen";
-import CustomModalContent from "../components/CustomModalContent";
-import { Menu } from "react-native-paper";
-import Button from "../components/buttons/Button";
+import { Menu, Divider } from "react-native-paper";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
   const { tasks } = useSelector((state) => state.tasks);
   const [currentTasks, setCurrentTasks] = useState([]);
   const dispatch = useDispatch();
-  const [showModal, setShowModal] = useState(false);
-  const [showVendorSelection, setShowVendorSelection] = useState(false);
-  const [clickedText, setClickedText] = useState(null);
-  const [selectedTargets, setSelectedTargets] = useState([])
-  const menuRef = useRef(null)
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [selectedTargets, setSelectedTargets] = useState([]);
+  const menuRef = useRef(null);
 
   const { t } = useTranslation();
 
@@ -36,37 +31,24 @@ export default function CurrentProjectsScreen({ navigation }) {
     Array.isArray(tasks) && setCurrentTasks(tasks);
   }, [tasks]);
 
-
-  const toggleVendorSelection = () => {
-    setShowVendorSelection(!showVendorSelection);
-  };
-
-  const handleTextClick = (text) => {
-    if (text === "toggleVendorSelection") {
-      toggleVendorSelection();
-    }
-
-    setClickedText(text);
-  };
-
-  const openMenu = () => setShowMenu(true);
-  const closeMenu = () => setShowMenu(false);
+  const toggleMenu = () => setMenuVisible((prev) => !prev);
+  const closeMenu = () => setMenuVisible(false);
 
   const selectTargets = (idx) => {
     setSelectedTargets((prevTargets) => {
-      const existingTargetIndex = prevTargets.findIndex((target) => target.id === idx);
+      const existingTargetIndex = prevTargets.findIndex(
+        (target) => target.id === idx
+      );
 
       if (existingTargetIndex > -1) {
-        // If already selected, remove it (unselect)
         const updatedTargets = [...prevTargets];
         updatedTargets.splice(existingTargetIndex, 1);
         return updatedTargets;
       } else {
-        // If not selected, add it with `select: true`
         return [...prevTargets, { id: idx, select: true }];
       }
     });
-    console.log(selectedTargets)
+    console.log(selectedTargets);
   };
 
   return (
@@ -76,31 +58,28 @@ export default function CurrentProjectsScreen({ navigation }) {
         hasIcon={true}
         isBack={true}
         rightComponent={true}
-        onIconPress={() => {
-          menuRef.current?.measure((fx, fy, width, height, px, py) => {
-            openMenu()
-          })
-          console.log(showModal)
-        }}
+        onIconPress={toggleMenu}
         rightIcon={
           <View
-            ref={menuRef} // Attach ref to the anchor
-            style={{ width: 40, height: 40 }} // Invisible dummy view
+            ref={menuRef}
+            style={{ width: 40, height: 40, backgroundColor: "gray" }}
           />
         }
       />
       <MyFlatList
         data={currentTasks}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <ClickableCard1
             key={item.id}
             index={item.id}
             title={item.site?.site_name}
             subtitle={`${item.site?.location}, ${item.site?.district}, ${item.site?.state}`}
-            onPress={() => navigation.navigate("targetManagementScreen", { id: item.id })}
+            onPress={() =>
+              navigation.navigate("targetManagementScreen", { id: item.id })
+            }
             onLongPressAction={(idx) => selectTargets(idx)}
-            selected={selectedTargets.find(target => target.id === item.id)}
+            selected={selectedTargets.find((target) => target.id === item.id)}
           >
             <View>
               <H5 style={[typography.font20]}>{item.activity}</H5>
@@ -130,13 +109,24 @@ export default function CurrentProjectsScreen({ navigation }) {
       />
 
       <Menu
-        visible={showModal}
-        onDismiss={() => setShowModal(false)}
-        anchor={menuRef.current} //Put the anchor on top right icon button from MyHeader
+        visible={menuVisible}
+        onDismiss={closeMenu}
+        anchor={<View ref={menuRef} style={{ width: 40, height: 10 }} />}
       >
-        <Menu.Item title="Assign to Vendor" onPress={() => console.log(selectedTargets)} />
+        <Menu.Item
+          onPress={() => console.log("Item 1 clicked")}
+          title="Item 1"
+        />
+        <Menu.Item
+          onPress={() => console.log("Item 2 clicked")}
+          title="Item 2"
+        />
+        <Divider />
+        <Menu.Item
+          onPress={() => console.log("Item 3 clicked")}
+          title="Item 3"
+        />
       </Menu>
-
-    </ContainerComponent >
+    </ContainerComponent>
   );
 }
