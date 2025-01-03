@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
-import { spacing, styles, typography } from "../styles";
+import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
 import MyFlatList from "../components/utility/MyFlatList";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import ClickableCard1 from "../components/card/ClickableCard1";
 import MyHeader from "../components/header/MyHeader";
 import { H5, P, Span } from "../components/text";
 import { Menu, Divider } from "react-native-paper";
+import VendorSelectionScreen from "./VendorSelectionScreen";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
@@ -19,6 +20,7 @@ export default function CurrentProjectsScreen({ navigation }) {
   const dispatch = useDispatch();
   const [menuVisible, setMenuVisible] = useState(false);
   const [selectedTargets, setSelectedTargets] = useState([]);
+  const [showVendorSelection, setShowVendorSelection] = useState(false);
   const menuRef = useRef(null);
 
   const { t } = useTranslation();
@@ -50,6 +52,13 @@ export default function CurrentProjectsScreen({ navigation }) {
     });
     console.log(selectedTargets);
   };
+
+  const assignMultipleTasksToVendor = () => {
+    console.log(selectedTargets)
+    closeMenu();
+    setShowVendorSelection(true);
+
+  }
 
   return (
     <ContainerComponent>
@@ -111,22 +120,33 @@ export default function CurrentProjectsScreen({ navigation }) {
       <Menu
         visible={menuVisible}
         onDismiss={closeMenu}
-        anchor={<View ref={menuRef} style={{ width: 40, height: 10 }} />}
+        style={{ position: 'absolute', top: 50, right: 0, width: SCREEN_WIDTH / 2 }}
+        anchor={<View ref={menuRef}
+          style={{ width: 40, height: 10 }} />}
       >
         <Menu.Item
-          onPress={() => console.log("Item 1 clicked")}
-          title="Item 1"
+          onPress={assignMultipleTasksToVendor}
+          title="Assign to vendor"
         />
+        <Divider />
         <Menu.Item
           onPress={() => console.log("Item 2 clicked")}
-          title="Item 2"
+          title="Approve"
         />
         <Divider />
         <Menu.Item
           onPress={() => console.log("Item 3 clicked")}
-          title="Item 3"
+          title="Reject"
         />
       </Menu>
+      {
+        showVendorSelection && (
+          <VendorSelectionScreen
+            onClose={() => setShowVendorSelection(false)}
+            task_id={selectedTargets}
+          />
+        )
+      }
     </ContainerComponent>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useTranslation } from "react-i18next";
@@ -47,21 +47,37 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
   };
 
   const handleAssignVendor = async () => {
-    const response = await fetch(`${BASE_URL}/api/task/${task_id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        vendor_id: vendors,
-      }),
-    });
-    console.log(response);
-    const data = await response.json();
-    console.log(data);
-    // TODO: Assign vendor to task
-    setVendor(vendors);
-    onClose();
+    if (!Array.isArray(task_id)) {
+      const response = await fetch(`${BASE_URL}/api/task/${task_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          vendor_id: vendors,
+        }),
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log(data);
+      setVendor(vendors);
+      onClose();
+    } else {
+      task_id.map(async (task) => {
+        const { id } = task;
+        const response = await fetch(`${BASE_URL}/api/task/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            vendor_id: vendors,
+          }),
+        });
+        await response.json();
+        Alert.alert("Success", "Vendor assigned successfully", [{ text: 'OK', onPress: onClose }]);
+      });
+    }
   };
 
   return (
