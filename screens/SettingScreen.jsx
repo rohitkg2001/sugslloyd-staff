@@ -24,7 +24,7 @@ export default function SettingsScreen({ navigation }) {
 
   useEffect(() => {
     dispatch(getAllItems())
-    dispatch(getAllTasks(id))
+    // dispatch(getAllTasks(id))
   }, [id])
 
 
