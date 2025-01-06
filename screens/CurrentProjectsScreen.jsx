@@ -111,7 +111,18 @@ export default function CurrentProjectsScreen({ navigation }) {
       <Menu
         visible={menuVisible}
         onDismiss={closeMenu}
-        anchor={<View ref={menuRef} style={{ width: 40, height: 10 }} />}
+        anchor={
+          <View
+            ref={menuRef}
+            style={{
+              width: 40,
+              height: 10,
+              // position: "absolute",
+            //  right: 50,
+             // top: 30,
+            }}
+          />
+        }
       >
         <Menu.Item
           onPress={() => console.log("Item 1 clicked")}
