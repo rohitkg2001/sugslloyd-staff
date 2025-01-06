@@ -45,6 +45,7 @@ export default function MyHeader({
             </Badge>
           )}
           {rightComponent && (
+            
             <TouchableOpacity
               onPress={onIconPress}
               style={{ position: "absolute", top: 13, right: 2 }}

@@ -37,7 +37,7 @@ export const getVendorPerformance = async (my_id) => {
         const vendorName = vendor.name;
 
         if (!acc[vendorId]) {
-          acc[vendorId] = { name: vendorName, total_alloted: 0, status: 0 };
+          acc[vendorId] = { id: vendorId, name: vendorName, total_alloted: 0, status: 0 };
         }
 
         acc[vendorId].total_alloted += 1;
@@ -79,6 +79,7 @@ export const getStaffPerformance = async () => {
       ).length;
 
       return {
+        id: engineer.id,
         name: `${engineer.firstName} ` + `${engineer.lastName}`,
         total_alloted,
         status_not_pending,
@@ -100,6 +101,43 @@ export const getTaskById = async (task_id) => {
   const data = await response.json()
   return data
   // dispatch({ type: VIEW_TASK, payload: data })
+}
+
+export const getTaskByCategory = category => async (dispatch) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/task`);
+    const { data, status } = response
+    const filteredData = data.filter(task => task.activity.toLowerCase() === category.toLowerCase())
+    dispatch({ type: INITIALIZE_TASKS, payload: filteredData });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getTaskByVendor = id => async (dispatch) => {
+  try {
+    console.log(id)
+    const response = await axios.get(`${BASE_URL}/api/task`);
+    const { data, status } = response
+    console.log(data)
+    const filteredData = data.filter(task => task.vendor_id === id)
+    dispatch({ type: INITIALIZE_TASKS, payload: filteredData });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getTaskByEngineer = id => async (dispatch) => {
+  try {
+    console.log(id)
+    const response = await axios.get(`${BASE_URL}/api/task`);
+    const { data, status } = response
+    console.log(data)
+    const filteredData = data.filter(task => task.engineer_id === id)
+    dispatch({ type: INITIALIZE_TASKS, payload: filteredData });
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const updateTask = (task) => ({
