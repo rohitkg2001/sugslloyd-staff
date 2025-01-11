@@ -1,9 +1,9 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useSelector, useDispatch } from "react-redux";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
@@ -36,7 +36,6 @@ export default function TotalSitesScreen({ navigation, route }) {
       setFilteredData(sites);
       setLoading(false);
     }
-
     setTimeout(() => {
       setLoading(false);
     }, 2000);

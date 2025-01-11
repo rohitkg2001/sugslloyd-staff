@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, ScrollView, Alert, TouchableOpacity } from "react-native";
+import { View, ScrollView } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import ContainerComponent from "../components/ContainerComponent";

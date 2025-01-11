@@ -1,16 +1,14 @@
 import { View } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { useSelector, useDispatch } from "react-redux";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard1 from "../components/card/ClickableCard1";
-
 import { ICON_LARGE, spacing, styles, typography } from "../styles";
 import { useTranslation } from "react-i18next";
-import { viewVendor } from "../redux/actions/vendorAction";
 import { H6 } from "../components/text";
 
 export default function TotalVendorsScreen({ navigation, route }) {

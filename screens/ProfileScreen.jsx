@@ -79,6 +79,7 @@ export default function ProfileScreen() {
             label={item.documentName}
           />
         )}
+        ListHeaderComponent={false}
         keyExtractor={(item, index) => index.toString()}
       />
     </ContainerComponent>

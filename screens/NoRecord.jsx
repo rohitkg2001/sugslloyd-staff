@@ -8,17 +8,18 @@ const NoRecord = ({ msg }) => {
     <View
       style={[
         spacing.mh3,
+        spacing.pv5,
         {
           alignItems: "center",
           width: SCREEN_WIDTH - 16,
-          paddingVertical: 10,
         },
       ]}
     >
       <Image
-        source={require('../assets/Error.png')}
+        source={require("../assets/Error.png")}
         style={{ height: SCREEN_WIDTH / 2, width: SCREEN_WIDTH / 2 }}
-        resizeMode="contain" />
+        resizeMode="contain"
+      />
       <P style={{ textAlign: "center" }}>{msg}</P>
     </View>
   );

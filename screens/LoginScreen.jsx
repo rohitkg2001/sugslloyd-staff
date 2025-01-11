@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   KeyboardAvoidingView,
   View,
@@ -25,7 +25,6 @@ export default function LoginScreen({ navigation }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  
 
   const onSubmit = async () => {
     setError("");

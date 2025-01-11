@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ScrollView } from "react-native";
 import MyHeader from "../components/header/MyHeader";
 import { P } from "../components/text";
@@ -22,7 +21,6 @@ export default function PrivacyPolicy() {
           {PRIVACY_POLICY}
         </P>
       </ScrollView>
-
     </ContainerComponent>
   );
-};
+}
