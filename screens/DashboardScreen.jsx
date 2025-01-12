@@ -13,6 +13,7 @@ import ProjectOverview from "../components/dashboard/ProjectOverview";
 import AllTaskOverview from "../components/dashboard/AllTaskOverview";
 import TeamPerformance from "../components/dashboard/TeamPerformance";
 import VendorPerformance from "../components/dashboard/VendorPerformance";
+import TotalVendor from "../components/dashboard/TotalVendor";
 
 export default function DashboardScreen({ navigation }) {
   const [dueTasks, setDueTasks] = useState(0);
@@ -77,9 +78,9 @@ export default function DashboardScreen({ navigation }) {
         </View>
         <ProjectOverview />
         <AllTaskOverview />
-
         <VendorPerformance />
         <TeamPerformance />
+        <TotalVendor />
       </ScrollView>
       {showBottomSheet && <Filter onClose={closeFilter} onApply={() => {}} />}
     </ContainerComponent>

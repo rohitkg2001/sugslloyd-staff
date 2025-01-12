@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
-import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import {
+  SCREEN_WIDTH,
+  spacing,
+  typography,
+  styles,
+  ICON_LARGE,
+} from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
+import Button from "../components/buttons/Button";
 import { H5, P } from "../components/text";
 import { useTranslation } from "react-i18next";
 
-const VendorDetailScreen = ({ route }) => {
+const VendorDetailScreen = ({ route, navigation }) => {
   const { site } = route.params;
   const { t } = useTranslation();
   const [Site, setSite] = useState({
@@ -143,6 +151,12 @@ const VendorDetailScreen = ({ route }) => {
           </View>
         </View>
       </ScrollView>
+      <Button
+        style={styles.addButton}
+        onPress={() => navigation.navigate("VendorFormScreen")}
+      >
+        <Ionicons name="add" size={ICON_LARGE} color="white" />
+      </Button>
     </ContainerComponent>
   );
 };

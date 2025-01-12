@@ -9,10 +9,11 @@ import {
   typography,
   DANGER_COLOR,
   ICON_LARGE,
+  spacing,
 } from "../styles";
 import Button from "../components/buttons/Button";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { transformArray } from "../utils/faker";
 import { BASE_URL } from "../redux/constant";
 import H1 from "../components/text/H2";
@@ -75,7 +76,9 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
           }),
         });
         await response.json();
-        Alert.alert("Success", "Vendor assigned successfully", [{ text: 'OK', onPress: onClose }]);
+        Alert.alert("Success", "Vendor assigned successfully", [
+          { text: "OK", onPress: onClose },
+        ]);
       });
     }
   };
@@ -128,11 +131,11 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
           style={[
             styles.btn,
             styles.bgPrimary,
+            spacing.mh4,
             {
               justifyContent: "center",
               marginTop: 260,
               width: SCREEN_WIDTH - 16,
-              marginHorizontal: 8,
             },
           ]}
           onPress={handleAssignVendor}

@@ -13,7 +13,6 @@ import TotalSitesScreen from "../screens/TotalSitesScreen";
 import InventoryScreen from "../screens/InventoryScreen";
 import FormScreen from "../screens/FormScreen";
 import TotalVendorsScreen from "../screens/TotalVendorsScreen";
-import EditDetailsScreen from "../screens/EditDetailsScreen";
 import SitesFormScreen from "../screens/SitesFormScreen";
 import VendorFormScreen from "../screens/VendorFormScreen";
 import TaskListScreen from "../screens/TaskListScreen";
@@ -58,7 +57,7 @@ export default function MyStackNavigator() {
       <Stack.Screen name="inventoryScreen" component={InventoryScreen} />
       <Stack.Screen name="formScreen" component={FormScreen} />
       <Stack.Screen name="totalVendorsScreen" component={TotalVendorsScreen} />
-      <Stack.Screen name="EditDetailsScreen" component={EditDetailsScreen} />
+
       <Stack.Screen name="sitesFormScreen" component={SitesFormScreen} />
       <Stack.Screen name="VendorFormScreen" component={VendorFormScreen} />
       <Stack.Screen name="taskScreen" component={TaskListScreen} />
