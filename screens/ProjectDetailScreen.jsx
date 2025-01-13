@@ -12,7 +12,6 @@ import { H5, H6, Span, P, H3 } from "../components/text";
 import { useTranslation } from "react-i18next";
 import { inventoryData } from "../utils/faker";
 import MyFlatList from "../components/utility/MyFlatList";
-import Tabs from "../components/Tabs";
 import NoRecord from "./NoRecord";
 import { getStateById } from "../redux/actions/projectAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -214,15 +213,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
               {isDescriptionExpanded ? "Read Less" : "Read More"}
             </Span>
           )}
-        </View>
-        <View>
-          <Tabs
-            tabs={[t("Sites"), t("Inventory"), t("Target")]}
-            onTabPress={(index) => {
-              const tabName = ["Sites", "Inventory", "Target"][index];
-              setActiveTab(tabName);
-            }}
-          />
         </View>
 
         {renderActiveTab()}

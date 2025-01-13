@@ -12,6 +12,7 @@ import MyHeader from "../components/header/MyHeader";
 import { H5, P, Span } from "../components/text";
 import VendorSelectionScreen from "./VendorSelectionScreen";
 import CustomMenu from "../components/TargetScreen/CustomMenu";
+import TabBar from "../components/TabBar";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
@@ -74,6 +75,7 @@ export default function CurrentProjectsScreen({ navigation }) {
           />
         }
       />
+
       <MyFlatList
         data={Array.isArray(currentTasks) ? currentTasks : []}
         keyExtractor={(item) => item.id.toString()}

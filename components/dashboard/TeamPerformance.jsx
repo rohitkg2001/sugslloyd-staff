@@ -15,16 +15,19 @@ import { H5, P } from "../text";
 
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   getAllTasks,
   getStaffPerformance,
+  getTaskByEngineer,
 } from "../../redux/actions/taskActions";
 
-export default function TeamPerformance({ navigation }) {
+export default function TeamPerformance() {
   const [staffPerformance, setStaffPerformance] = useState([]);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigation = useNavigation(); // Hook to access navigation
   const { id } = useSelector((state) => state.staff);
 
   useEffect(() => {
@@ -74,7 +77,7 @@ export default function TeamPerformance({ navigation }) {
           <TouchableOpacity
             key={data.id}
             onPress={() => {
-              dispatch(getAllTasks(data.id));
+              dispatch(getTaskByEngineer(data.id));
               navigation.navigate("taskScreen", { engineer: data });
             }}
           >
