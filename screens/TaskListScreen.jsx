@@ -14,10 +14,10 @@ export default function TaskListScreen({ navigation }) {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks?.tasks) || [];
   const [currentTasks, setCurrentTasks] = useState([]);
-  const [selectedTargets, setSelectedTargets] = useState([])
+  const [selectedTargets, setSelectedTargets] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  const menuRef = useRef(null)
+  const menuRef = useRef(null);
 
   useEffect(() => {
     setCurrentTasks(tasks);
@@ -27,7 +27,9 @@ export default function TaskListScreen({ navigation }) {
 
   const selectTargets = (idx) => {
     setSelectedTargets((prevTargets) => {
-      const existingTargetIndex = prevTargets.findIndex((target) => target.id === idx);
+      const existingTargetIndex = prevTargets.findIndex(
+        (target) => target.id === idx
+      );
 
       if (existingTargetIndex > -1) {
         // If already selected, remove it (unselect)
@@ -39,7 +41,7 @@ export default function TaskListScreen({ navigation }) {
         return [...prevTargets, { id: idx, select: true }];
       }
     });
-    console.log(selectedTargets)
+    console.log(selectedTargets);
   };
 
   const openMenu = () => setShowMenu(true);
@@ -53,20 +55,23 @@ export default function TaskListScreen({ navigation }) {
         rightComponent={true}
         onIconPress={() => {
           menuRef.current?.measure((fx, fy, width, height, px, py) => {
-            openMenu()
-          })
-          console.log(showModal)
+            openMenu();
+          });
+          console.log(showModal);
         }}
-        rightIcon={
-          <View
-            ref={menuRef} // Attach ref to the anchor
-            style={{ width: 40, height: 40 }} // Invisible dummy view
-          />
-        }
-        hasIcon={true} />
+        rightIcon={<View ref={menuRef} style={{ width: 40, height: 40 }} />}
+        hasIcon={true}
+      />
       <MyFlatList
         data={currentTasks}
-        renderItem={({ item }) => <TaskCard item={item} navigation={navigation} selectTargets={selectTargets} selectedTargets={selectedTargets} />}
+        renderItem={({ item }) => (
+          <TaskCard
+            item={item}
+            navigation={navigation}
+            selectTargets={selectTargets}
+            selectedTargets={selectedTargets}
+          />
+        )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
         ListEmptyComponent={() => <NoRecord msg={t("no_task")} />}
@@ -74,11 +79,13 @@ export default function TaskListScreen({ navigation }) {
       <Menu
         visible={showModal}
         onDismiss={() => setShowModal(false)}
-        anchor={menuRef.current} //Put the anchor on top right icon button from MyHeader
+        anchor={menuRef.current}
       >
-        <Menu.Item title="Assign to Vendor" onPress={() => console.log(selectedTargets)} />
+        <Menu.Item
+          title="Assign to Vendor"
+          onPress={() => console.log(selectedTargets)}
+        />
       </Menu>
-
     </ContainerComponent>
   );
 }

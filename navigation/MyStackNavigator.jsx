@@ -9,17 +9,14 @@ import ProfileScreen from "../screens/ProfileScreen";
 import SettingsScreen from "../screens/SettingScreen";
 import InternalSetting from "../screens/InternalSetting";
 import TotalProjectsScreen from "../screens/TotalProjectsScreen";
-import TotalEarningScreen from "../screens/TotalEarningScreen";
 import TotalSitesScreen from "../screens/TotalSitesScreen";
 import InventoryScreen from "../screens/InventoryScreen";
 import FormScreen from "../screens/FormScreen";
 import TotalVendorsScreen from "../screens/TotalVendorsScreen";
-import EditDetailsScreen from "../screens/EditDetailsScreen";
 import SitesFormScreen from "../screens/SitesFormScreen";
 import VendorFormScreen from "../screens/VendorFormScreen";
 import TaskListScreen from "../screens/TaskListScreen";
 import TaskListFormScreen from "../screens/TaskListFormScreen";
-import TaskDetailsScreen from "../screens/TaskDetailsScreen";
 import InventoryFormScreen from "../screens/InventoryFormScreen";
 import StockApprovalScreen from "../screens/StockApprovalScreen";
 import ReportScreen from "../screens/ReportScreen";
@@ -55,12 +52,12 @@ export default function MyStackNavigator() {
         name="totalProjectsScreen"
         component={TotalProjectsScreen}
       />
-      <Stack.Screen name="totalEarningScreen" component={TotalEarningScreen} />
+
       <Stack.Screen name="totalSitesScreen" component={TotalSitesScreen} />
       <Stack.Screen name="inventoryScreen" component={InventoryScreen} />
       <Stack.Screen name="formScreen" component={FormScreen} />
       <Stack.Screen name="totalVendorsScreen" component={TotalVendorsScreen} />
-      <Stack.Screen name="EditDetailsScreen" component={EditDetailsScreen} />
+
       <Stack.Screen name="sitesFormScreen" component={SitesFormScreen} />
       <Stack.Screen name="VendorFormScreen" component={VendorFormScreen} />
       <Stack.Screen name="taskScreen" component={TaskListScreen} />
@@ -88,7 +85,6 @@ export default function MyStackNavigator() {
       />
       <Stack.Screen name="siteDetailScreen" component={SiteDetailsScreen} />
       <Stack.Screen name="vendorDetailScreen" component={VendorDetailScreen} />
-      <Stack.Screen name="taskDetailsScreen" component={TaskDetailsScreen} />
       <Stack.Screen
         name="inventoryDetailScreen"
         component={InventoryDetailsScreen}

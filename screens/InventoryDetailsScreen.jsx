@@ -1,78 +1,87 @@
-import React from "react";
-import { View, ScrollView, Text } from "react-native";
+import React, { useState } from "react";
+import { View, ScrollView } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { SCREEN_WIDTH, styles, spacing, typography } from "../styles";
-import { H6, P, Span } from "../components/text";
+import { H5 } from "../components/text";
+import { spacing, typography } from "../styles";
+import { useTranslation } from "react-i18next";
 
-const InventoryDetailsScreen = ({ route }) => {
-  const { item } = route.params || {};
-
-  const renderDetailRow = (label, value) => (
-    <View style={[styles.row, spacing.pv1, { position: "relative" }]}>
-      {label !== "Subcategory" && (
-        <H6
-          style={[
-            { textAlign: "left" },
-            label === "Product Name"
-              ? [typography.textBold, typography.font20]
-              : { fontSize: 16 },
-          ]}
-        >
-          {value}
-        </H6>
-      )}
-
-      {label === "Subcategory" && (
-        <H6
-          style={[
-            {
-              position: "absolute",
-              left: 90,
-              bottom: 10,
-              fontSize: 16,
-            },
-          ]}
-        >
-          | *{value}
-        </H6>
-      )}
-    </View>
-  );
+const InventoryDetailsScreen = ({ route, navigation }) => {
+  const { t } = useTranslation();
+  const { selectedItem } = route.params;
+  const [Item, setItem] = useState({
+    product_name: "",
+    brand: "",
+    unit: "",
+    intalQuantity: "",
+    quantityStock: "",
+    category: "",
+    sub_category: "",
+  });
 
   return (
     <ContainerComponent>
-      <MyHeader title="Inventory Details" hasIcon={true} isBack={true} />
-      <View style={{ width: SCREEN_WIDTH - 16 }}>
-        <ScrollView>
-          {item ? (
-            <>
-              {renderDetailRow("Product Name", item.productName)}
-              {renderDetailRow("Category", item.category)}
-              {renderDetailRow("Subcategory", item.sub_category)}
+      <MyHeader
+        title={t("inventory_details")}
+        isBack={true}
+        onBackPress={() => navigation.goBack()}
+      />
 
-              <View style={[spacing.mt1, styles.row, spacing.pv2]}>
-                <View>
-                  <Span style={[typography.font14]}>Initial Quantity</Span>
-                  <P style={[typography.font16, { color: "green" }]}>
-                    {" "}
-                    {item.initialQuantity}
-                  </P>
-                </View>
-                <View>
-                  <Span style={[typography.font14]}>Quantity in Stock</Span>
-                  <P style={[typography.font16, { color: "red" }]}>
-                    {" "}
-                    {item.initialQuantity}
-                  </P>
-                </View>
-              </View>
-            </>
-          ) : (
-            <Text>No item details available</Text>
-          )}
-        </ScrollView>
-      </View>
+      <ScrollView stickyHeaderIndices={[1]}>
+        <View>
+          <View style={[styles.row]}>
+            <H5 style={[typography.font16, { textAlign: "left" }]}>
+              Product Name
+            </H5>
+            <P style={[typography.font16, spacing.pv1, { textAlign: "right" }]}>
+              {selectedItem.product_name}
+            </P>
+          </View>
+
+          <View style={[styles.row, spacing.pv2]}>
+            <H5 style={[typography.font16, { textAlign: "left" }]}>Brand</H5>
+            <P style={[typography.font16, { textAlign: "right" }]}>
+              {selectedItem.brand}
+            </P>
+          </View>
+          <View style={[styles.row, spacing.pv2]}>
+            <H5 style={[typography.font16, { textAlign: "left" }]}>Unit</H5>
+            <P style={[typography.font16, { textAlign: "right" }]}>
+              {selectedItem.unit}
+            </P>
+          </View>
+          <View style={[styles.row, spacing.pv2]}>
+            <H5 style={[typography.font16, { textAlign: "left" }]}>
+              Intal Quantity
+            </H5>
+            <P style={[typography.font16, { textAlign: "right" }]}>
+              {selectedItem.intalQuantity}
+            </P>
+          </View>
+          <View style={[styles.row, spacing.pv2]}>
+            <H5 style={[typography.font16, { textAlign: "left" }]}>
+              Quantity Stock
+            </H5>
+            <P style={[typography.font16, { textAlign: "right" }]}>
+              {selectedItem.quantityStock}
+            </P>
+          </View>
+          <View style={[styles.row, spacing.pv2]}>
+            <H5 style={[typography.font16, { textAlign: "left" }]}>Category</H5>
+            <P style={[typography.font16, { textAlign: "right" }]}>
+              {selectedItem.category}
+            </P>
+          </View>
+          <View style={[styles.row, spacing.pv2]}>
+            <H5 style={[typography.font16, { textAlign: "left" }]}>
+              Sub Category
+            </H5>
+            <P style={[typography.font16, { textAlign: "right" }]}>
+              {selectedItem.sub_category}
+            </P>
+          </View>
+        </View>
+      </ScrollView>
     </ContainerComponent>
   );
 };

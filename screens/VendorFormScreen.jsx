@@ -1,21 +1,22 @@
 import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing, styles } from "../styles";
+import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
-import MyButton from "../components/buttons/MyButton";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { editVendor } from "../redux/actions/vendorAction";
+import Button from "../components/buttons/Button";
+import { H2 } from "../components/text";
 
-const VendorFormScreen = ({ route }) => {
+const VendorFormScreen = () => {
   const [vendorName, setVendorName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [contactPerson, setContactPerson] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
+  const [contactNumber, setcontactNo] = useState("");
   const [aadharNumber, setAadharNumber] = useState("");
   const [address, setAddress] = useState("");
   const [accountName, setAccountName] = useState("");
@@ -25,31 +26,8 @@ const VendorFormScreen = ({ route }) => {
   const [branch, SetBranch] = useState("");
   const [pan, setPan] = useState("");
   const [mailId, setMailId] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const handleCancel = () => {
-    setVendorName("");
-    setFirstName("");
-    setLastName("");
-    setGstNumber("");
-    setContactPerson("");
-    setcontactNo("");
-    setMailId("");
-    setName("");
-    setAadharNumber("");
-    setAddress("");
-    setAccountName("");
-    setAccountNumber("");
-    setIfsc("");
-    setBankName("");
-    SetBranch("");
-    setPan("");
-    setPassword("");
-    setConfirmPassword("");
-  };
 
   const handleCreate = async () => {
     const data = {
@@ -61,7 +39,7 @@ const VendorFormScreen = ({ route }) => {
 
   return (
     <ContainerComponent>
-      <MyHeader title={t("create_vendor")} hasIcon={true} isBack={true} />
+      <MyHeader title={t("Edit Vendor")} hasIcon={true} isBack={true} />
       <ScrollView
         contentContainerStyle={[spacing.mh1, { width: SCREEN_WIDTH - 20 }]}
         showsVerticalScrollIndicator={false}
@@ -165,24 +143,21 @@ const VendorFormScreen = ({ route }) => {
           placeholder="Enter Mail ID"
           keyboardType="email-address"
         />
-
-        <MyTextInput
-          title={t("password")}
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Password for Vendor"
-        />
-        <MyTextInput
-          title={t("confirm_password")}
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          placeholder="Confirm Password for Vendor"
-        />
       </ScrollView>
-      <View style={[styles.row, { width: SCREEN_WIDTH - 20 }]}>
-        <MyButton title={t("cancel")} onPress={handleCancel} color="#DC4C64" />
-        <MyButton title={t("create")} onPress={handleCreate} />
-      </View>
+      <Button
+        style={[
+          styles.btn,
+          styles.bgPrimary,
+          {
+            justifyContent: "center",
+          },
+        ]}
+        onPress={handleCreate}
+      >
+        <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
+          {t("Edit Vendor")}
+        </H2>
+      </Button>
     </ContainerComponent>
   );
 };

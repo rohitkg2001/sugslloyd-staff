@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
+import { spacing, styles, typography } from "../styles";
 import MyFlatList from "../components/utility/MyFlatList";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,8 +10,8 @@ import NoRecord from "./NoRecord";
 import ClickableCard1 from "../components/card/ClickableCard1";
 import MyHeader from "../components/header/MyHeader";
 import { H5, P, Span } from "../components/text";
-import { Menu, Divider } from "react-native-paper";
 import VendorSelectionScreen from "./VendorSelectionScreen";
+import CustomMenu from "../components/TargetScreen/CustomMenu";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
@@ -54,11 +54,10 @@ export default function CurrentProjectsScreen({ navigation }) {
   };
 
   const assignMultipleTasksToVendor = () => {
-    console.log(selectedTargets)
+    console.log(selectedTargets);
     closeMenu();
     setShowVendorSelection(true);
-
-  }
+  };
 
   return (
     <ContainerComponent>
@@ -76,7 +75,7 @@ export default function CurrentProjectsScreen({ navigation }) {
         }
       />
       <MyFlatList
-        data={currentTasks}
+        data={Array.isArray(currentTasks) ? currentTasks : []}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <ClickableCard1
@@ -107,7 +106,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                   >
                     end date
                   </Span>
-                  <P style={[typography.font12]}>{item.start_date}</P>
+                  <P style={[typography.font12]}>{item.end_date}</P>
                 </View>
               </View>
             </View>
@@ -117,36 +116,18 @@ export default function CurrentProjectsScreen({ navigation }) {
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
       />
 
-      <Menu
-        visible={menuVisible}
-        onDismiss={closeMenu}
-        style={{ position: 'absolute', top: 50, right: 0, width: SCREEN_WIDTH / 2 }}
-        anchor={<View ref={menuRef}
-          style={{ width: 40, height: 10 }} />}
-      >
-        <Menu.Item
-          onPress={assignMultipleTasksToVendor}
-          title="Assign to vendor"
+      <CustomMenu
+        menuVisible={menuVisible}
+        toggleMenu={toggleMenu}
+        assignTasks={assignMultipleTasksToVendor}
+      />
+
+      {showVendorSelection && (
+        <VendorSelectionScreen
+          onClose={() => setShowVendorSelection(false)}
+          task_id={selectedTargets}
         />
-        <Divider />
-        <Menu.Item
-          onPress={() => console.log("Item 2 clicked")}
-          title="Approve"
-        />
-        <Divider />
-        <Menu.Item
-          onPress={() => console.log("Item 3 clicked")}
-          title="Reject"
-        />
-      </Menu>
-      {
-        showVendorSelection && (
-          <VendorSelectionScreen
-            onClose={() => setShowVendorSelection(false)}
-            task_id={selectedTargets}
-          />
-        )
-      }
+      )}
     </ContainerComponent>
   );
 }

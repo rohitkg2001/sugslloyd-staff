@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View } from "react-native";
 import MenuItem from "../components/MenuItem";
 import { internal } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import Button from "../components/buttons/Button";
 import {
@@ -13,9 +15,7 @@ import {
   typography,
 } from "../styles";
 import { H2, Span } from "../components/text";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import i18n from "../i18n";
-import { useEffect, useState } from "react";
 
 export default function SettingsScreen({ navigation }) {
   const [language, setLanguage] = useState(null);
