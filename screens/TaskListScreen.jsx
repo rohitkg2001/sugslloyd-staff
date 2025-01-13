@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import ContainerComponent from "../components/ContainerComponent";
@@ -8,16 +7,12 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import TaskCard from "../components/card/TaskCard";
 import { spacing } from "../styles";
-import { Menu } from "react-native-paper";
 
 export default function TaskListScreen({ navigation }) {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks?.tasks) || [];
   const [currentTasks, setCurrentTasks] = useState([]);
   const [selectedTargets, setSelectedTargets] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-
-  const menuRef = useRef(null);
 
   useEffect(() => {
     setCurrentTasks(tasks);
@@ -44,22 +39,12 @@ export default function TaskListScreen({ navigation }) {
     console.log(selectedTargets);
   };
 
-  const openMenu = () => setShowMenu(true);
-  const closeMenu = () => setShowMenu(false);
-
   return (
     <ContainerComponent>
       <MyHeader
         title={t("task_list")}
         isBack={true}
         rightComponent={true}
-        onIconPress={() => {
-          menuRef.current?.measure((fx, fy, width, height, px, py) => {
-            openMenu();
-          });
-          console.log(showModal);
-        }}
-        rightIcon={<View ref={menuRef} style={{ width: 40, height: 40 }} />}
         hasIcon={true}
       />
       <MyFlatList
@@ -76,16 +61,6 @@ export default function TaskListScreen({ navigation }) {
         contentContainerStyle={[spacing.mh2, spacing.mt1]}
         ListEmptyComponent={() => <NoRecord msg={t("no_task")} />}
       />
-      <Menu
-        visible={showModal}
-        onDismiss={() => setShowModal(false)}
-        anchor={menuRef.current}
-      >
-        <Menu.Item
-          title="Assign to Vendor"
-          onPress={() => console.log(selectedTargets)}
-        />
-      </Menu>
     </ContainerComponent>
   );
 }

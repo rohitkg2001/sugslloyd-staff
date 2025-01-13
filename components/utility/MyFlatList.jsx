@@ -148,7 +148,10 @@ export default function MyFlatList({
                     />
                   </Button>
                 </View>
-                <TabBar />
+                <TabBar
+                  tabs={["Assigned", "Unassigned", "Pending", "Done"]}
+                  initialActiveTab="Assigned"
+                />
               </View>
             )}
             {...props}

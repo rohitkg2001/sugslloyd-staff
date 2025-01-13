@@ -1,21 +1,41 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+import { spacing, styles, typography } from "../styles";
 
-export default function TabBar() {
-  const [activeTab, setActiveTab] = useState("All");
+export default function TabBar({ tabs, initialActiveTab, onTabPress, style }) {
+  const [activeTab, setActiveTab] = useState(initialActiveTab || tabs[0]);
 
-  const tabs = ["Assigned", "Unassigned", "Pending", "Done"];
+  const handleTabPress = (tab) => {
+    setActiveTab(tab);
+    if (onTabPress) {
+      onTabPress(tab);
+    }
+  };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.row, spacing.p2, style]}>
       {tabs.map((tab) => (
         <TouchableOpacity
           key={tab}
-          style={[styles.tab, activeTab === tab && styles.activeTab]}
-          onPress={() => setActiveTab(tab)}
+          style={[
+            spacing.pv2,
+            spacing.ph3,
+            spacing.br3,
+            {
+              backgroundColor: activeTab === tab ? "#76885B" : "#F0FAF0",
+            },
+          ]}
+          onPress={() => handleTabPress(tab)}
         >
           <Text
-            style={[styles.tabText, activeTab === tab && styles.activeTabText]}
+            style={[
+              typography.font14,
+              {
+                color: activeTab === tab ? "#fff" : "#000",
+                fontWeight: activeTab === tab ? "bold" : "normal",
+                textAlign: "center",
+              },
+            ]}
           >
             {tab}
           </Text>
@@ -24,30 +44,3 @@ export default function TabBar() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    // backgroundColor: "#fff",
-    padding: 12,
-    justifyContent: "space-around",
-  },
-  tab: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 20,
-    backgroundColor: "#F0FAF0",
-  },
-  activeTab: {
-    backgroundColor: "#76885B",
-  },
-  tabText: {
-    fontSize: 14,
-    color: "#000",
-    textAlign: "center",
-  },
-  activeTabText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-});
