@@ -14,12 +14,7 @@ import {
 import { H5, P } from "../text";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-
-import {
-  getVendorPerformance,
-  getAllTasks,
-  getTaskByEngineer,
-} from "../../redux/actions/taskActions";
+import { getVendorPerformance, getAllTasks, getTaskByEngineer, } from "../../redux/actions/taskActions";
 
 export default function VendorPerformance({ navigation }) {
   const [staffPerformance, setStaffPerformance] = useState([]);

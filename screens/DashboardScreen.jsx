@@ -6,7 +6,7 @@ import { LIGHT, SCREEN_WIDTH, spacing, styles, ICON_MEDIUM } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DashboardHeader from "../components/header/DashboardHeader";
 import Filter from "../components/Filter";
 import ProjectOverview from "../components/dashboard/ProjectOverview";
@@ -14,6 +14,8 @@ import AllTaskOverview from "../components/dashboard/AllTaskOverview";
 import TeamPerformance from "../components/dashboard/TeamPerformance";
 import VendorPerformance from "../components/dashboard/VendorPerformance";
 import TotalVendor from "../components/dashboard/TotalVendor";
+import { fetchProjects } from "../redux/actions/projectAction";
+import { getAllVendors } from "../redux/actions/vendorAction";
 
 export default function DashboardScreen({ navigation }) {
   const [dueTasks, setDueTasks] = useState(0);
@@ -22,8 +24,7 @@ export default function DashboardScreen({ navigation }) {
   const { firstName } = useSelector((state) => state.staff);
   const { tasks } = useSelector((state) => state.tasks);
   const { t } = useTranslation();
-  const getCounts = async () => {};
-
+  const dispatch = useDispatch()
   useEffect(() => {
     const installationCount = tasks.filter(
       (task) => task.activity === "Installation"
@@ -37,7 +38,8 @@ export default function DashboardScreen({ navigation }) {
 
   useEffect(() => {
     setGreeting("Good morning");
-    getCounts();
+    dispatch(fetchProjects())
+    dispatch(getAllVendors())
   }, []);
 
   const closeFilter = () => {
@@ -82,7 +84,7 @@ export default function DashboardScreen({ navigation }) {
         <TeamPerformance />
         <TotalVendor />
       </ScrollView>
-      {showBottomSheet && <Filter onClose={closeFilter} onApply={() => {}} />}
+      {showBottomSheet && <Filter onClose={closeFilter} onApply={() => { }} />}
     </ContainerComponent>
   );
 }
