@@ -36,7 +36,6 @@ export default function TaskListScreen({ navigation }) {
         return [...prevTargets, { id: idx, select: true }];
       }
     });
-    console.log(selectedTargets);
   };
 
   return (

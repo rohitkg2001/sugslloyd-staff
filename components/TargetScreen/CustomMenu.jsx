@@ -17,9 +17,9 @@ const CustomMenu = ({ menuVisible, toggleMenu, assignTasks }) => (
   >
     <Menu.Item onPress={assignTasks} title="Assign to vendor" />
     <Divider />
-    <Menu.Item onPress={() => console.log("Approve")} title="Approve" />
+    <Menu.Item onPress={toggleMenu} title="Approve" />
     <Divider />
-    <Menu.Item onPress={() => console.log("Reject")} title="Reject" />
+    <Menu.Item onPress={toggleMenu} title="Reject" />
   </Menu>
 );
 

@@ -51,11 +51,9 @@ export default function CurrentProjectsScreen({ navigation }) {
         return [...prevTargets, { id: idx, select: true }];
       }
     });
-    console.log(selectedTargets);
   };
 
   const assignMultipleTasksToVendor = () => {
-    console.log(selectedTargets);
     closeMenu();
     setShowVendorSelection(true);
   };

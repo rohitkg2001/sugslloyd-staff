@@ -58,9 +58,9 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
           vendor_id: vendors,
         }),
       });
-      console.log(response);
+
       const data = await response.json();
-      console.log(data);
+
       setVendor(vendors);
       onClose();
     } else {

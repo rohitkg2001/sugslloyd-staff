@@ -22,7 +22,6 @@ export default function ProjectOverview() {
   const [projectsArr, setProjectsArr] = useState([]);
 
   useEffect(() => {
-    console.log(projectsArray)
     setProjectsArr(projectsArray);
   }, [projectsArray]);
 
