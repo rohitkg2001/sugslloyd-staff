@@ -113,7 +113,7 @@ android {
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            crunchPngs (true)
+            crunchPngs true
         }
     }
     packagingOptions {
