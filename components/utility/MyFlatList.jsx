@@ -79,6 +79,7 @@
 //   );
 // }
 
+import { useState } from "react";
 import { FlatList, View, ActivityIndicator } from "react-native";
 import SearchBar from "../input/SearchBar";
 import {
@@ -91,7 +92,7 @@ import {
 } from "../../styles";
 import Button from "../buttons/Button";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useState } from "react";
+
 import Filter from "../Filter";
 import TabBar from "../TabBar";
 
@@ -148,10 +149,16 @@ export default function MyFlatList({
                     />
                   </Button>
                 </View>
-                <TabBar
-                  tabs={["Assigned", "Unassigned", "Pending", "Done"]}
-                  initialActiveTab="Assigned"
-                />
+                {/* <TabBar
+                  tabs={[
+                    "Unassigned",
+                    "Assigned",
+                    "Pending",
+                    "Done",
+                    "View All",
+                  ]}
+                  initialActiveTab="Unassigned"
+                /> */}
               </View>
             )}
             {...props}

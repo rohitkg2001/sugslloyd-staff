@@ -22,16 +22,17 @@ export default function CurrentProjectsScreen({ navigation }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [selectedTargets, setSelectedTargets] = useState([]);
   const [showVendorSelection, setShowVendorSelection] = useState(false);
+  const [activeTab, setActiveTab] = useState("Unassigned");
   const menuRef = useRef(null);
 
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(getAllTasks(staff.id));
+    if (staff?.id) dispatch(getAllTasks(staff.id));
   }, [staff]);
 
   useEffect(() => {
-    Array.isArray(tasks) && setCurrentTasks(tasks);
+    if (Array.isArray(tasks)) setCurrentTasks(tasks);
   }, [tasks]);
 
   const toggleMenu = () => setMenuVisible((prev) => !prev);
@@ -58,13 +59,29 @@ export default function CurrentProjectsScreen({ navigation }) {
     setShowVendorSelection(true);
   };
 
+  const handleTabSelection = (tab) => {
+    setActiveTab(tab);
+
+    if (tab === "Unassigned") {
+      setCurrentTasks(tasks.filter((task) => !task.vendor_id));
+    } else if (tab === "Assigned") {
+      setCurrentTasks(tasks.filter((task) => task.vendor_id && task.image));
+    } else if (tab === "Pending") {
+      setCurrentTasks(tasks.filter((task) => task.status === "Pending"));
+    } else if (tab === "Done") {
+      setCurrentTasks(tasks.filter((task) => task.status === "Done"));
+    } else if (tab === "View All") {
+      setCurrentTasks(tasks);
+    }
+  };
+
   return (
     <ContainerComponent>
       <MyHeader
         title="Task"
-        hasIcon={true}
-        isBack={true}
-        rightComponent={true}
+        hasIcon
+        isBack
+        rightComponent
         onIconPress={toggleMenu}
         rightIcon={
           <View
@@ -81,8 +98,10 @@ export default function CurrentProjectsScreen({ navigation }) {
           <ClickableCard1
             key={item.id}
             index={item.id}
-            title={item.site?.site_name}
-            subtitle={`${item.site?.location}, ${item.site?.district}, ${item.site?.state}`}
+            title={item.site?.site_name || ""}
+            subtitle={`${item.site?.location || ""}, ${
+              item.site?.district || ""
+            }, ${item.site?.state || ""}`}
             onPress={() =>
               navigation.navigate("targetManagementScreen", { id: item.id })
             }
@@ -98,7 +117,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                   >
                     start date
                   </Span>
-                  <P style={[typography.font12]}>{item.start_date}</P>
+                  <P style={[typography.font12]}>{item.start_date || "N/A"}</P>
                 </View>
                 <View>
                   <Span
@@ -106,13 +125,19 @@ export default function CurrentProjectsScreen({ navigation }) {
                   >
                     end date
                   </Span>
-                  <P style={[typography.font12]}>{item.end_date}</P>
+                  <P style={[typography.font12]}>{item.end_date || "N/A"}</P>
                 </View>
               </View>
             </View>
           </ClickableCard1>
         )}
-        contentContainerStyle={[spacing.mh2, spacing.mt1, { flexGrow: 1 }]}
+        ListHeaderComponent={() => (
+          <TabBar
+            tabs={["Unassigned", "Assigned", "Pending", "Done", "View All"]}
+            activeTab={activeTab}
+            onTabSelected={handleTabSelection}
+          />
+        )}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
       />
 

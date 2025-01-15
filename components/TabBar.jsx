@@ -1,17 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { spacing, styles, typography } from "../styles";
+import { P } from "./text";
 
-export default function TabBar({ tabs, initialActiveTab, onTabPress, style }) {
-  const [activeTab, setActiveTab] = useState(initialActiveTab || tabs[0]);
-
-  const handleTabPress = (tab) => {
-    setActiveTab(tab);
-    if (onTabPress) {
-      onTabPress(tab);
-    }
-  };
-
+export default function TabBar({ tabs, activeTab, onTabSelected, style }) {
   return (
     <View style={[styles.row, spacing.p2, style]}>
       {tabs.map((tab) => (
@@ -19,17 +11,17 @@ export default function TabBar({ tabs, initialActiveTab, onTabPress, style }) {
           key={tab}
           style={[
             spacing.pv2,
-            spacing.ph3,
+            spacing.ph1,
             spacing.br3,
             {
               backgroundColor: activeTab === tab ? "#76885B" : "#F0FAF0",
             },
           ]}
-          onPress={() => handleTabPress(tab)}
+          onPress={() => onTabSelected(tab)}
         >
-          <Text
+          <P
             style={[
-              typography.font14,
+              typography.font12,
               {
                 color: activeTab === tab ? "#fff" : "#000",
                 fontWeight: activeTab === tab ? "bold" : "normal",
@@ -38,7 +30,7 @@ export default function TabBar({ tabs, initialActiveTab, onTabPress, style }) {
             ]}
           >
             {tab}
-          </Text>
+          </P>
         </TouchableOpacity>
       ))}
     </View>
