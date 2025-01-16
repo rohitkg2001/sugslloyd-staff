@@ -45,28 +45,47 @@ export default function TotalProjectsScreen({ navigation }) {
             key={index}
             item={item}
             title={item.project_name}
-            subtitle={item.work_order_number}
+            subtitle={`${item.project_capacity} KW`}
             onPress={() =>
               navigation.navigate("projectDetailScreen", { project: item })
             }
           >
             <View>
-              <View style={[spacing.mt1, styles.row]}>
+              <P
+                style={{
+                  fontSize: 14,
+                  color: "gray",
+                  textAlign: "right",
+                  bottom: 56,
+                }}
+              >
+                {item.work_order_number}
+              </P>
+            </View>
+
+            <View>
+              <View style={[styles.row, { bottom: 10 }]}>
                 <View>
                   <Span
-                    style={[typography.font16, { textTransform: "capitalize" }]}
+                    style={[
+                      typography.font12,
+                      { textTransform: "uppercase", color: "gray" },
+                    ]}
                   >
-                    start date
+                    Start date
                   </Span>
-                  <P style={[typography.font16]}>{item.start_date}</P>
+                  <P style={[typography.font14]}>{item.start_date}</P>
                 </View>
                 <View>
                   <Span
-                    style={[typography.font16, { textTransform: "capitalize" }]}
+                    style={[
+                      typography.font12,
+                      { textTransform: "uppercase", color: "gray" },
+                    ]}
                   >
-                    end date
+                    End date
                   </Span>
-                  <P style={[typography.font16]}>{item.start_date}</P>
+                  <P style={[typography.font14]}>{item.end_date}</P>
                 </View>
               </View>
             </View>

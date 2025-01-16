@@ -10,9 +10,9 @@ import {
   spacing,
   styles,
   typography,
-  ICON_LARGE,
+  ICON_SMALL,
 } from "../../styles";
-import { H5, P } from "../text";
+import { H5, H6 } from "../text";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -48,10 +48,10 @@ export default function VendorPerformance() {
       <View style={[styles.row, { alignItems: "center" }]}>
         <Icon
           name="tennisball-outline"
-          size={ICON_LARGE}
+          size={ICON_SMALL}
           color={PRIMARY_COLOR}
         />
-        <H5 style={[typography.textBold, { marginRight: 120 }]}>
+        <H5 style={[typography.font16, { marginRight: 130 }]}>
           {t("Vendor Performance")}
         </H5>
       </View>
@@ -59,21 +59,19 @@ export default function VendorPerformance() {
       <View style={[spacing.bbw05, spacing.mv1]} />
 
       <View style={{ flexDirection: "column" }}>
-        <View
-          style={[styles.row, typography.textBold, spacing.bbw05, spacing.pv2]}
-        >
-          <P style={[typography.textBold, { flex: 1, textAlign: "center" }]}>
+        <View style={[styles.row, spacing.bbw05, spacing.pv2]}>
+          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
             {t("Engineer")}
-          </P>
-          <P style={[typography.textBold, { flex: 1, textAlign: "center" }]}>
+          </H6>
+          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
             {t("Total")}
-          </P>
-          <P style={[typography.textBold, { flex: 1, textAlign: "center" }]}>
+          </H6>
+          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
             {t("Completed")}
-          </P>
-          <P style={[typography.textBold, { flex: 1, textAlign: "center" }]}>
+          </H6>
+          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
             {t("Pending")}
-          </P>
+          </H6>
         </View>
 
         {staffPerformance.map((data) => (
@@ -84,27 +82,19 @@ export default function VendorPerformance() {
               navigation.navigate("taskScreen", { vendor: data });
             }}
           >
-            <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
-              <P
-                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
-              >
+            <View style={[styles.row, spacing.bbw05, spacing.pv2]}>
+              <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
                 {data.name}
-              </P>
-              <P
-                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
-              >
+              </H6>
+              <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
                 {data.total_alloted}
-              </P>
-              <P
-                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
-              >
+              </H6>
+              <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
                 {data.completed || 0}
-              </P>
-              <P
-                style={[typography.textBold, { flex: 1, textAlign: "center" }]}
-              >
+              </H6>
+              <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
                 {data.pending || 0}
-              </P>
+              </H6>
             </View>
           </TouchableOpacity>
         ))}

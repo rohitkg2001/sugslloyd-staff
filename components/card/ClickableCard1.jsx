@@ -1,7 +1,7 @@
 import { Card } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
 import Button from "../buttons/Button";
-import { H5, H6, Span } from "../text";
+import { H6, Span } from "../text";
 import {
   spacing,
   typography,
@@ -9,9 +9,7 @@ import {
   LIGHT,
   PRIMARY_COLOR,
   PRIMARY_COLOR_TRANSPARENT,
-  DANGER_COLOR,
 } from "../../styles";
-import { useEffect, useState } from "react";
 
 export default function ClickableCard1({
   index,
@@ -28,7 +26,7 @@ export default function ClickableCard1({
   positiveAction,
   onPress,
   onLongPressAction,
-  selected = false
+  selected = false,
 }) {
   return (
     <TouchableOpacity
@@ -36,9 +34,14 @@ export default function ClickableCard1({
       onPress={onPress}
       onLongPress={() => onLongPressAction(index)}
     >
-      <Card style={{ backgroundColor: selected ? PRIMARY_COLOR_TRANSPARENT : LIGHT, borderRadius: 8 }}>
+      <Card
+        style={{
+          backgroundColor: selected ? PRIMARY_COLOR_TRANSPARENT : LIGHT,
+          borderRadius: 8,
+        }}
+      >
         <Card.Title
-          title={<H5>{title}</H5>}
+          title={<H6>{title}</H6>}
           subtitle={
             <Span style={[typography.font12, { textTransform: "capitalize" }]}>
               {subtitle}

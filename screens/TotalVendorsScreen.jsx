@@ -5,9 +5,9 @@ import MyHeader from "../components/header/MyHeader";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import ClickableCard1 from "../components/card/ClickableCard1";
-import { spacing,  typography } from "../styles";
+import { spacing, typography } from "../styles";
 import { useTranslation } from "react-i18next";
-import { H6 } from "../components/text";
+import { H5 } from "../components/text";
 
 export default function TotalVendorsScreen({ navigation, route }) {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export default function TotalVendorsScreen({ navigation, route }) {
             }
           >
             <View>
-              <H6 style={[typography.font16]}>{item.contactNo}</H6>
+              <H5 style={[typography.font12]}>{item.contactNo}</H5>
             </View>
           </ClickableCard1>
         )}

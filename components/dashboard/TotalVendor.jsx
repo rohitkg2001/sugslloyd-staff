@@ -8,7 +8,7 @@ import {
   spacing,
   styles,
   typography,
-  ICON_LARGE,
+  ICON_SMALL,
 } from "../../styles";
 import { useNavigation } from "@react-navigation/native";
 import { getAllTasks } from "../../redux/actions/taskActions";
@@ -16,7 +16,7 @@ import {
   getAllVendors,
   getVendorCounts,
 } from "../../redux/actions/vendorAction";
-import { H5, P } from "../../components/text";
+import { H5, H6 } from "../../components/text";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function TotalVendor() {
@@ -44,8 +44,8 @@ export default function TotalVendor() {
   return (
     <CardFullWidth backgroundColor={LIGHT}>
       <View style={[styles.row, { alignItems: "center" }]}>
-        <Icon name="person-circle" size={ICON_LARGE} color={PRIMARY_COLOR} />
-        <H5 style={[typography.textBold, { marginRight: 200 }]}>Vendors</H5>
+        <Icon name="person-circle" size={ICON_SMALL} color={PRIMARY_COLOR} />
+        <H5 style={[typography.font16, { marginRight: 220 }]}>Vendors</H5>
       </View>
       <View style={[spacing.bbw05, spacing.mv2]} />
       <View
@@ -58,22 +58,16 @@ export default function TotalVendor() {
           onPress={() => navigation.navigate("totalVendorsScreen")}
           style={{ alignItems: "center", textAlign: "center" }}
         >
-          <P style={typography.textBold}>Total Vendors</P>
-          <P style={[typography.font20, typography.textBold, spacing.m2]}>
-            {totalVendors}
-          </P>
+          <H6 style={typography.font14}>Total Vendors</H6>
+          <H6 style={[typography.font16, spacing.m2]}>{totalVendors}</H6>
         </TouchableOpacity>
         <View style={{ alignItems: "center" }}>
-          <P style={typography.textBold}>Active</P>
-          <P style={[typography.font20, typography.textBold, spacing.m2]}>
-            {activeVendors}
-          </P>
+          <H6 style={typography.font14}>Active</H6>
+          <H6 style={[typography.font16, spacing.m2]}>{activeVendors}</H6>
         </View>
         <View style={{ alignItems: "center" }}>
-          <P style={typography.textBold}>Inactive</P>
-          <P style={[typography.font20, typography.textBold, spacing.m2]}>
-            {inActiveVendors}
-          </P>
+          <H6 style={typography.font14}>Inactive</H6>
+          <H6 style={[typography.font16, spacing.m2]}>{inActiveVendors}</H6>
         </View>
       </View>
     </CardFullWidth>

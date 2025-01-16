@@ -9,7 +9,7 @@ import { getAllTasks } from "../redux/actions/taskActions";
 import NoRecord from "./NoRecord";
 import ClickableCard1 from "../components/card/ClickableCard1";
 import MyHeader from "../components/header/MyHeader";
-import { H5, P, Span } from "../components/text";
+import { H6, P, Span } from "../components/text";
 import VendorSelectionScreen from "./VendorSelectionScreen";
 import CustomMenu from "../components/TargetScreen/CustomMenu";
 import TabBar from "../components/TabBar";
@@ -109,23 +109,30 @@ export default function CurrentProjectsScreen({ navigation }) {
             selected={selectedTargets.find((target) => target.id === item.id)}
           >
             <View>
-              <H5 style={[typography.font20]}>{item.activity}</H5>
-              <View style={[spacing.mt1, styles.row]}>
+              <H6 style={[typography.font16]}>{item.activity}</H6>
+
+              <View style={[spacing.mt1, styles.row, spacing.mv2]}>
                 <View>
                   <Span
-                    style={[typography.font12, { textTransform: "capitalize" }]}
+                    style={[
+                      typography.font10,
+                      { textTransform: "uppercase", color: "gray" },
+                    ]}
                   >
-                    start date
+                    Start date
                   </Span>
-                  <P style={[typography.font12]}>{item.start_date || "N/A"}</P>
+                  <P style={[typography.font14]}>{item.start_date}</P>
                 </View>
                 <View>
                   <Span
-                    style={[typography.font12, { textTransform: "capitalize" }]}
+                    style={[
+                      typography.font10,
+                      { textTransform: "uppercase", color: "gray" },
+                    ]}
                   >
-                    end date
+                    End date
                   </Span>
-                  <P style={[typography.font12]}>{item.end_date || "N/A"}</P>
+                  <P style={[typography.font14]}>{item.end_date}</P>
                 </View>
               </View>
             </View>
