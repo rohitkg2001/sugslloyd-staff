@@ -27,7 +27,7 @@ export default function TeamPerformance() {
   const [staffPerformance, setStaffPerformance] = useState([]);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const navigation = useNavigation(); // Hook to access navigation
+  const navigation = useNavigation(); 
   const { id } = useSelector((state) => state.staff);
 
   useEffect(() => {

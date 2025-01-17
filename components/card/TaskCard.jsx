@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import ClickableCard1 from "./ClickableCard1";
-import { H5, Span, P } from "../text";
+import { H5, H4, Span, P } from "../text";
 import { spacing, typography, styles } from "../../styles";
 
 export default function TaskCard({
@@ -23,42 +23,30 @@ export default function TaskCard({
       selected={selectedTargets.find((target) => target.id === item.id)}
     >
       <View>
-        <H5 style={[typography.font20]}>{item.activity}</H5>
-        {/* <View style={[spacing.mt1, styles.row]}>
-                    <View>
-                        <Span
-                            style={[typography.font12, { textTransform: "capitalize" }]}
-                        >
-                            start date
-                        </Span>
-                        <P style={[typography.font12]}>{item.start_date}</P>
-                    </View>
-                    <View>
-                        <Span
-                            style={[typography.font12, { textTransform: "capitalize" }]}
-                        >
-                            end date
-                        </Span>
-                        <P style={[typography.font12]}>{item.start_date}</P>
-                    </View>
-                </View> */}
+        <H5 style={[typography.font16]}>{item.activity}</H5>
+
         <View style={[spacing.mt1, styles.row]}>
           <View>
             <Span
               style={[
-                typography.font12,
+                typography.font10,
                 { textTransform: "uppercase", color: "gray" },
               ]}
             >
               Start date
             </Span>
-            <P style={[typography.font16]}>{item.start_date}</P>
+            <P style={[typography.font14]}>{item.start_date}</P>
           </View>
           <View>
-            <Span style={[{ textTransform: "uppercase", color: "gray" }]}>
+            <Span
+              style={[
+                typography.font10,
+                { textTransform: "uppercase", color: "gray" }, 
+              ]}
+            >
               End date
             </Span>
-            <P style={[typography.font16]}>{item.end_date}</P>
+            <P style={[typography.font14]}>{item.end_date}</P>
           </View>
         </View>
       </View>

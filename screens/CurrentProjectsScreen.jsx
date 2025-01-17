@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
-import ContainerComponent from "../components/ContainerComponent";
-import { spacing, styles, typography } from "../styles";
-import MyFlatList from "../components/utility/MyFlatList";
+import Icon from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTasks } from "../redux/actions/taskActions";
+import ContainerComponent from "../components/ContainerComponent";
+import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import ClickableCard1 from "../components/card/ClickableCard1";
 import MyHeader from "../components/header/MyHeader";
@@ -13,6 +13,17 @@ import { H6, P, Span } from "../components/text";
 import VendorSelectionScreen from "./VendorSelectionScreen";
 import CustomMenu from "../components/TargetScreen/CustomMenu";
 import TabBar from "../components/TabBar";
+import SearchBar from "../components/input/SearchBar";
+import Button from "../components/buttons/Button";
+import Filter from "../components/Filter";
+import {
+  spacing,
+  styles,
+  typography,
+  SCREEN_WIDTH,
+  ICON_MEDIUM,
+  LIGHT,
+} from "../styles";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
@@ -26,6 +37,9 @@ export default function CurrentProjectsScreen({ navigation }) {
   const menuRef = useRef(null);
 
   const { t } = useTranslation();
+
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const applyFilterFromRedux = () => {};
 
   useEffect(() => {
     if (staff?.id) dispatch(getAllTasks(staff.id));
@@ -49,7 +63,11 @@ export default function CurrentProjectsScreen({ navigation }) {
         updatedTargets.splice(existingTargetIndex, 1);
         return updatedTargets;
       } else {
-        return [...prevTargets, { id: idx, select: true }];
+        const selectedTask = tasks.find((task) => task.id === idx);
+        return [
+          ...prevTargets,
+          { id: idx, select: true, hasVendor: !!selectedTask.vendor_id },
+        ];
       }
     });
   };
@@ -67,7 +85,9 @@ export default function CurrentProjectsScreen({ navigation }) {
     } else if (tab === "Assigned") {
       setCurrentTasks(tasks.filter((task) => task.vendor_id && task.image));
     } else if (tab === "Pending") {
-      setCurrentTasks(tasks.filter((task) => task.status === "Pending"));
+      setCurrentTasks(
+        tasks.filter((task) => task.status === "Pending" && task.vendor_id)
+      );
     } else if (tab === "Done") {
       setCurrentTasks(tasks.filter((task) => task.status === "Done"));
     } else if (tab === "View All") {
@@ -139,11 +159,37 @@ export default function CurrentProjectsScreen({ navigation }) {
           </ClickableCard1>
         )}
         ListHeaderComponent={() => (
-          <TabBar
-            tabs={["Unassigned", "Assigned", "Pending", "Done", "View All"]}
-            activeTab={activeTab}
-            onTabSelected={handleTabSelection}
-          />
+          <View>
+            <View
+              style={[
+                spacing.mv4,
+                styles.row,
+                spacing.mh1,
+                { alignItems: "center" },
+              ]}
+            >
+              <SearchBar
+                placeholder="Search"
+                style={{ width: SCREEN_WIDTH - 80 }}
+              />
+              <Button
+                style={[
+                  styles.btn,
+                  styles.bgPrimary,
+                  spacing.mh1,
+                  { width: 50 },
+                ]}
+                onPress={() => setShowBottomSheet(true)}
+              >
+                <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+              </Button>
+            </View>
+            <TabBar
+              tabs={["Unassigned", "Assigned", "Pending", "Done", "View All"]}
+              activeTab={activeTab}
+              onTabSelected={handleTabSelection}
+            />
+          </View>
         )}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
       />
@@ -152,7 +198,18 @@ export default function CurrentProjectsScreen({ navigation }) {
         menuVisible={menuVisible}
         toggleMenu={toggleMenu}
         assignTasks={assignMultipleTasksToVendor}
+        disableAssign={
+          selectedTargets.length > 0 &&
+          selectedTargets.some((target) => target.hasVendor)
+        }
       />
+
+      {showBottomSheet && (
+        <Filter
+          onClose={() => setShowBottomSheet(false)}
+          onApply={applyFilterFromRedux}
+        />
+      )}
 
       {showVendorSelection && (
         <VendorSelectionScreen

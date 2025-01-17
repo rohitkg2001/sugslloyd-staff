@@ -3,7 +3,12 @@ import { Menu, Divider } from "react-native-paper";
 import { View } from "react-native";
 import { SCREEN_WIDTH } from "../../styles";
 
-const CustomMenu = ({ menuVisible, toggleMenu, assignTasks }) => (
+const CustomMenu = ({
+  menuVisible,
+  toggleMenu,
+  assignTasks,
+  disableAssign,
+}) => (
   <Menu
     visible={menuVisible}
     onDismiss={toggleMenu}
@@ -15,7 +20,12 @@ const CustomMenu = ({ menuVisible, toggleMenu, assignTasks }) => (
       />
     }
   >
-    <Menu.Item onPress={assignTasks} title="Assign to vendor" />
+    {/* <Menu.Item onPress={assignTasks} title="Assign to vendor" /> */}
+    <Menu.Item
+      onPress={!disableAssign ? assignTasks : null}
+      title="Assign to vendor"
+      disabled={disableAssign}
+    />
     <Divider />
     <Menu.Item onPress={toggleMenu} title="Approve" />
     <Divider />
