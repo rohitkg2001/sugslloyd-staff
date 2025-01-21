@@ -1,44 +1,33 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { spacing, styles, typography } from "../styles";
+import { P } from "./text";
 
-export default function TabBar({ tabs, initialActiveTab, onTabPress, style }) {
-  const [activeTab, setActiveTab] = useState(initialActiveTab || tabs[0]);
-
-  const handleTabPress = (tab) => {
-    setActiveTab(tab);
-    if (onTabPress) {
-      onTabPress(tab);
-    }
-  };
-
+export default function TabBar({ tabs, activeTab, onTabSelected, style }) {
   return (
     <View style={[styles.row, spacing.p2, style]}>
       {tabs.map((tab) => (
         <TouchableOpacity
-          key={tab}
+          key={tab.name}
           style={[
             spacing.pv2,
-            spacing.ph3,
             spacing.br3,
-            {
-              backgroundColor: activeTab === tab ? "#76885B" : "#F0FAF0",
-            },
+            { backgroundColor: activeTab === tab.name ? "#76885B" : "#F0FAF0" },
           ]}
-          onPress={() => handleTabPress(tab)}
+          onPress={() => onTabSelected(tab.name)}
         >
-          <Text
+          <P
             style={[
-              typography.font14,
+              typography.font10,
+              spacing.mh1,
               {
-                color: activeTab === tab ? "#fff" : "#000",
-                fontWeight: activeTab === tab ? "bold" : "normal",
+                color: activeTab === tab.name ? "#fff" : "#000",
+                fontWeight: activeTab === tab.name ? "bold" : "normal",
                 textAlign: "center",
               },
             ]}
           >
-            {tab}
-          </Text>
+            {tab.name} ({tab.count})
+          </P>
         </TouchableOpacity>
       ))}
     </View>

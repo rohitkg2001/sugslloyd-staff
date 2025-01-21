@@ -13,7 +13,7 @@ export const getAllTasks = (my_id) => async (dispatch) => {
 
     const myTasks =
       Array.isArray(data) && data.filter((task) => task.engineer_id === my_id);
-
+    console.log(myTasks);
     dispatch({ type: INITIALIZE_TASKS, payload: myTasks });
   } catch (error) {
     console.error(error);
@@ -139,6 +139,7 @@ export const getTaskByEngineer = (id) => async (dispatch) => {
     const { data, status } = response;
     console.log(data);
     const filteredData = data.filter((task) => task.engineer_id === id);
+    console.log(filteredData);
     dispatch({ type: INITIALIZE_TASKS, payload: filteredData });
   } catch (error) {
     console.log(error);

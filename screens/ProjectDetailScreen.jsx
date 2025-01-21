@@ -356,19 +356,20 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
             <View style={[spacing.mt1, styles.row]}>
               <View>
                 <Span
-                  style={[typography.font12, { textTransform: "capitalize" }]}
+                  style={[
+                    typography.font12,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
                 >
-                  start date
+                  Start date
                 </Span>
-                <P style={[typography.font12]}>{item.start_date}</P>
+                <P style={[typography.font16]}>{item.start_date}</P>
               </View>
               <View>
-                <Span
-                  style={[typography.font12, { textTransform: "capitalize" }]}
-                >
-                  end date
+                <Span style={[{ textTransform: "uppercase", color: "gray" }]}>
+                  End date
                 </Span>
-                <P style={[typography.font12]}>{item.end_date}</P>
+                <P style={[typography.font16]}>{item.end_date}</P>
               </View>
             </View>
           </View>
@@ -414,13 +415,22 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
             <Span style={[typography.font14, spacing.pv1]}>Capacity</Span>
             <P style={[typography.font16]}>{Project.project_capacity} KW</P>
           </View>
-          <View style={[spacing.mt1, styles.row, spacing.pv2]}>
+          <View style={[spacing.mt1, styles.row]}>
             <View>
-              <Span style={[typography.font14]}>START DATE</Span>
+              <Span
+                style={[
+                  typography.font12,
+                  { textTransform: "uppercase", color: "gray" },
+                ]}
+              >
+                Start date
+              </Span>
               <P style={[typography.font16]}>{Project.start_date}</P>
             </View>
             <View>
-              <Span style={[typography.font14]}>END DATE</Span>
+              <Span style={[{ textTransform: "uppercase", color: "gray" }]}>
+                End date
+              </Span>
               <P style={[typography.font16]}>{Project.end_date}</P>
             </View>
           </View>

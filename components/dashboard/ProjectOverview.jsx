@@ -9,8 +9,10 @@ import {
   styles,
   typography,
   ICON_LARGE,
+  ICON_MEDIUM,
+  ICON_SMALL,
 } from "../../styles";
-import { H5, P } from "../../components/text";
+import { H4, H5, H6, P } from "../../components/text";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -28,8 +30,8 @@ export default function ProjectOverview() {
   return (
     <CardFullWidth backgroundColor={LIGHT}>
       <View style={[styles.row, { alignItems: "center" }]}>
-        <Icon name="calendar-clear" size={ICON_LARGE} color={PRIMARY_COLOR} />
-        <H5 style={[typography.textBold, { marginRight: 140 }]}>
+        <Icon name="calendar-clear" size={ICON_SMALL} color={PRIMARY_COLOR} />
+        <H5 style={[typography.font16, { marginRight: 150 }]}>
           {t("project_overview")}
         </H5>
       </View>
@@ -37,21 +39,19 @@ export default function ProjectOverview() {
       <View style={[spacing.bbw05, spacing.mv2]} />
 
       <View style={{ flexDirection: "column" }}>
-        <View
-          style={[styles.row, typography.textBold, spacing.bbw05, spacing.pv3]}
-        >
-          <P style={[typography.textBold, { flex: 1, textAlign: "center" }]}>
+        <View style={[styles.row, spacing.bbw05, spacing.pv2]}>
+          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
             {t("project")}
-          </P>
-          <P style={[typography.textBold, { flex: 1, textAlign: "center" }]}>
+          </H6>
+          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
             {t("total_sites")}
-          </P>
-          <P style={[typography.textBold, { flex: 1, textAlign: "center" }]}>
+          </H6>
+          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
             {t("Completed")}
-          </P>
-          <P style={[typography.textBold, { flex: 1, textAlign: "center" }]}>
+          </H6>
+          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
             {t("Pending")}
-          </P>
+          </H6>
         </View>
 
         {projectsArr.map((project) => (
@@ -62,18 +62,18 @@ export default function ProjectOverview() {
             }
             style={[spacing.bbw05, spacing.pv3, { flexDirection: "row" }]}
           >
-            <P style={[typography.font16, { flex: 1, textAlign: "center" }]}>
+            <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
               {project.project_name}
-            </P>
-            <P style={[typography.font16, { flex: 1, textAlign: "center" }]}>
+            </H6>
+            <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
               {project.total_sites || 0}
-            </P>
-            <P style={[typography.font16, { flex: 1, textAlign: "center" }]}>
+            </H6>
+            <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
               {project.completed_sites || 0}
-            </P>
-            <P style={[typography.font16, { flex: 1, textAlign: "center" }]}>
+            </H6>
+            <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
               {project.pending_sites || 0}
-            </P>
+            </H6>
           </TouchableOpacity>
         ))}
       </View>

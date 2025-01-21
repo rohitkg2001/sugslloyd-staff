@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from "react-native";
-import { H4, P, Span } from "../text";
+import { H4, H5, P, Span } from "../text";
 import {
   ICON_MEDIUM,
   DARK,
@@ -27,10 +27,12 @@ export default function DashboardHeader({
       ]}
     >
       <View>
-        <H4 style={typography.textBold}>
+        <H5 style={typography.font20}>
           {greeting},{firstName}
-        </H4>
-        <P style={spacing.ml1}>You have {dueTasks} due tasks Today</P>
+        </H5>
+        <P style={(spacing.ml1, typography.font12)}>
+          You have {dueTasks} due tasks Today
+        </P>
       </View>
       <TouchableOpacity
         style={[

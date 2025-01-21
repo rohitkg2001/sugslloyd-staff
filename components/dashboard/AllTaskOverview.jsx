@@ -8,14 +8,14 @@ import {
   spacing,
   styles,
   typography,
-  ICON_LARGE,
+  ICON_SMALL,
 } from "../../styles";
 import {
   getAllTasks,
   getTaskByCategory,
 } from "../../redux/actions/taskActions";
 
-import { H5, P } from "../../components/text";
+import { H5, H6 } from "../../components/text";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,8 +62,8 @@ export default function AllTaskOverview() {
   return (
     <CardFullWidth backgroundColor={LIGHT}>
       <View style={[styles.row, { alignItems: "center" }]}>
-        <Icon name="filter" size={ICON_LARGE} color={PRIMARY_COLOR} />
-        <H5 style={[typography.textBold, { marginRight: 130 }]}>
+        <Icon name="filter" size={ICON_SMALL} color={PRIMARY_COLOR} />
+        <H5 style={[typography.font16, { marginRight: 150 }]}>
           {t("all_task_overview")}
         </H5>
       </View>
@@ -71,34 +71,35 @@ export default function AllTaskOverview() {
       <View
         style={[
           styles.row,
-          { justifyContent: "space-between", paddingVertical: 10 },
+          spacing.pv1,
+          { justifyContent: "space-between",  },
         ]}
       >
         <TouchableOpacity
           style={{ alignItems: "center" }}
           onPress={() => viewTask("Installation")}
         >
-          <P style={typography.textBold}>{t("installation")}</P>
-          <H5 style={spacing.ml2}>
+          <H6 style={typography.font14}>{t("installation")}</H6>
+          <H6 style={spacing.ml2}>
             {doneInstallation}/
-            <H5 style={typography.textDanger}>{installation}</H5>
-          </H5>
+            <H6 style={typography.textDanger}>{installation}</H6>
+          </H6>
         </TouchableOpacity>
         <TouchableOpacity
-          style={{ alignItems: "center" }}
+          style={{ marginLeft: 20 }}
           onPress={() => viewTask("RMS")}
         >
-          <P style={typography.textBold}>{t("rms_status")}</P>
-          <H5 style={spacing.ml2}>
-            {donRMS}/<H5 style={typography.textDanger}>{rmsStatus}</H5>
-          </H5>
+          <H6 style={typography.font14}>{t("rms_status")}</H6>
+          <H6 style={spacing.ml1}>
+            {donRMS}/<H6 style={typography.textDanger}>{rmsStatus}</H6>
+          </H6>
         </TouchableOpacity>
         <View style={{ alignItems: "center" }}>
-          <P style={typography.textBold}>{t("final_inspection")}</P>
-          <H5 style={spacing.ml2}>
+          <H6 style={typography.font14}>{t("final_inspection")}</H6>
+          <H6 style={spacing.ml2}>
             {doneFinalInspection}/
-            <H5 style={typography.textDanger}>{finalInspection}</H5>
-          </H5>
+            <H6 style={typography.textDanger}>{finalInspection}</H6>
+          </H6>
         </View>
       </View>
     </CardFullWidth>
