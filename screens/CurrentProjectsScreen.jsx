@@ -35,6 +35,13 @@ export default function CurrentProjectsScreen({ navigation }) {
   const [showVendorSelection, setShowVendorSelection] = useState(false);
   const [activeTab, setActiveTab] = useState("Unassigned");
   const menuRef = useRef(null);
+  const [taskCounts, setTaskCounts] = useState({
+    unassigned: 0,
+    assigned: 0,
+    pending: 0,
+    done: 0,
+    all: 0,
+  });
 
   const { t } = useTranslation();
 
@@ -80,19 +87,31 @@ export default function CurrentProjectsScreen({ navigation }) {
   const handleTabSelection = (tab) => {
     setActiveTab(tab);
 
+    let filteredTasks = [];
     if (tab === "Unassigned") {
-      setCurrentTasks(tasks.filter((task) => !task.vendor_id));
+      filteredTasks = tasks.filter((task) => !task.vendor_id);
     } else if (tab === "Assigned") {
-      setCurrentTasks(tasks.filter((task) => task.vendor_id && task.image));
+      filteredTasks = tasks.filter((task) => task.vendor_id && task.image);
     } else if (tab === "Pending") {
-      setCurrentTasks(
-        tasks.filter((task) => task.status === "Pending" && task.vendor_id)
+      filteredTasks = tasks.filter(
+        (task) => task.status === "Pending" && task.vendor_id
       );
     } else if (tab === "Done") {
-      setCurrentTasks(tasks.filter((task) => task.status === "Done"));
+      filteredTasks = tasks.filter((task) => task.status === "Done");
     } else if (tab === "View All") {
-      setCurrentTasks(tasks);
+      filteredTasks = tasks;
     }
+
+    setCurrentTasks(filteredTasks);
+    setTaskCounts({
+      unassigned: tasks.filter((task) => !task.vendor_id).length,
+      assigned: tasks.filter((task) => task.vendor_id && task.image).length,
+      pending: tasks.filter(
+        (task) => task.status === "Pending" && task.vendor_id
+      ).length,
+      done: tasks.filter((task) => task.status === "Done").length,
+      all: tasks.length,
+    });
   };
 
   return (
@@ -184,8 +203,15 @@ export default function CurrentProjectsScreen({ navigation }) {
                 <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
               </Button>
             </View>
+
             <TabBar
-              tabs={["Unassigned", "Assigned", "Pending", "Done", "View All"]}
+              tabs={[
+                { name: "Unassigned", count: taskCounts.unassigned },
+                { name: "Assigned", count: taskCounts.assigned },
+                { name: "Pending", count: taskCounts.pending },
+                { name: "Done", count: taskCounts.done },
+                { name: "View All", count: taskCounts.all },
+              ]}
               activeTab={activeTab}
               onTabSelected={handleTabSelection}
             />

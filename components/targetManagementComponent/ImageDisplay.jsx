@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Image, Linking, TouchableOpacity } from "react-native";
 import Button from "../buttons/Button";
-import { H5, P } from "../text";
+import { P } from "../text";
 import ImageViewing from "react-native-image-viewing";
 import { Ionicons } from "@expo/vector-icons";
 import { spacing, styles, typography } from "../../styles";
+import TabBar from "../TabBar";
+import MyButton from "../buttons/MyButton";
 
 const ImageDisplay = ({ images }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState("Survey");
+  const [filteredImages, setFilteredImages] = useState(images);
+
+  useEffect(() => {
+    if (activeTab === "Survey") {
+      setFilteredImages([images[0]]);
+    } else if (activeTab === "Final Inspection") {
+      setFilteredImages(images);
+    }
+  }, [activeTab, images]);
+
+  const handleTabSelection = (tabName) => {
+    setActiveTab(tabName);
+  };
 
   const handleImagePress = (index) => {
     setSelectedImageIndex(index);
@@ -20,7 +36,7 @@ const ImageDisplay = ({ images }) => {
   };
 
   const handleNextImage = () => {
-    if (selectedImageIndex < images.length - 1) {
+    if (selectedImageIndex < filteredImages.length - 1) {
       setSelectedImageIndex((prevIndex) => prevIndex + 1);
     }
   };
@@ -31,13 +47,21 @@ const ImageDisplay = ({ images }) => {
     }
   };
 
-  const imageArray = Array.isArray(images)
-    ? images.map((uri) => ({ uri }))
+  const imageArray = Array.isArray(filteredImages)
+    ? filteredImages.map((uri) => ({ uri }))
     : [];
 
+  const tabs = [{ name: "Survey" }, { name: "Final Inspection" }];
+
   return (
-    <View style={{ padding: 10, backgroundColor: "white" }}>
-      <H5 style={[typography.font18, spacing.bbw05,spacing.mv1, { bottom: 4 }]}>Photos</H5>
+    <View style={{ padding: 12, backgroundColor: "white" }}>
+      <TabBar
+        tabs={tabs}
+        activeTab={activeTab}
+        onTabSelected={handleTabSelection}
+        style={{ marginBottom: 10 }}
+      />
+
       <View
         style={{
           flexDirection: "row",
@@ -45,8 +69,8 @@ const ImageDisplay = ({ images }) => {
           justifyContent: "space-between",
         }}
       >
-        {Array.isArray(images) &&
-          images.map((uri, index) => {
+        {Array.isArray(filteredImages) &&
+          filteredImages.map((uri, index) => {
             const extension = uri.split(".").pop();
 
             if (extension === "pdf") {
@@ -81,36 +105,35 @@ const ImageDisplay = ({ images }) => {
                 </View>
               );
             } else {
-              {
-                return (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => handleImagePress(index)}
-                    style={[
-                      spacing.mb3,
-                      {
-                        width: "22%",
-                      },
-                    ]}
-                  >
-                    <Image
-                      source={{ uri }}
-                      style={{
-                        width: "100%",
-                        height: 80,
-                        borderWidth: 1,
-                        borderRadius: 4,
-                        borderColor: "black",
-                      }}
-                    />
-                    <P>Lat:</P>
-                    <P>Long:</P>
-                  </TouchableOpacity>
-                );
-              }
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => handleImagePress(index)}
+                  style={[
+                    spacing.mb3,
+                    {
+                      width: "22%",
+                    },
+                  ]}
+                >
+                  <Image
+                    source={{ uri }}
+                    style={{
+                      width: "100%",
+                      height: 80,
+                      borderWidth: 1,
+                      borderRadius: 4,
+                      borderColor: "black",
+                    }}
+                  />
+                  <P>Lat:</P>
+                  <P>Long:</P>
+                </TouchableOpacity>
+              );
             }
           })}
       </View>
+
       <ImageViewing
         images={imageArray}
         imageIndex={selectedImageIndex}
@@ -169,6 +192,19 @@ const ImageDisplay = ({ images }) => {
           </View>
         )}
       />
+
+      {(activeTab === "Survey" || activeTab === "Final Inspection") && (
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginVertical: 16,
+          }}
+        >
+          <MyButton title={"Approve"} />
+          <MyButton title={"Reject"} color="#DC4C64" />
+        </View>
+      )}
     </View>
   );
 };

@@ -7,27 +7,26 @@ export default function TabBar({ tabs, activeTab, onTabSelected, style }) {
     <View style={[styles.row, spacing.p2, style]}>
       {tabs.map((tab) => (
         <TouchableOpacity
-          key={tab}
+          key={tab.name}
           style={[
             spacing.pv2,
             spacing.br3,
-
-            { backgroundColor: activeTab === tab ? "#76885B" : "#F0FAF0" },
+            { backgroundColor: activeTab === tab.name ? "#76885B" : "#F0FAF0" },
           ]}
-          onPress={() => onTabSelected(tab)}
+          onPress={() => onTabSelected(tab.name)}
         >
           <P
             style={[
-              typography.font12,
-              spacing.mh2,
+              typography.font10,
+              spacing.mh1,
               {
-                color: activeTab === tab ? "#fff" : "#000",
-                fontWeight: activeTab === tab ? "bold" : "normal",
+                color: activeTab === tab.name ? "#fff" : "#000",
+                fontWeight: activeTab === tab.name ? "bold" : "normal",
                 textAlign: "center",
               },
             ]}
           >
-            {tab}
+            {tab.name} ({tab.count})
           </P>
         </TouchableOpacity>
       ))}
