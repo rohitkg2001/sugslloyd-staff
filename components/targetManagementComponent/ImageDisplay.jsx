@@ -71,7 +71,7 @@ const ImageDisplay = ({ images }) => {
       >
         {Array.isArray(filteredImages) &&
           filteredImages.map((uri, index) => {
-            const extension = uri.split(".").pop();
+            const extension = uri?.split(".").pop();
 
             if (extension === "pdf") {
               return (

@@ -97,6 +97,46 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
         <H6>Status</H6>
         <H6>{target.status}</H6>
       </View>
+      <View
+        style={[
+          styles.row,
+          spacing.mv2,
+          { justifyContent: "space-between", flex: 1 },
+        ]}
+      >
+        <H6>Survey Latitude</H6>
+        <H6>{target.site?.survey_latitude}</H6>
+      </View>
+      <View
+        style={[
+          styles.row,
+          spacing.mv2,
+          { justifyContent: "space-between", flex: 1 },
+        ]}
+      >
+        <H6>Survey Longitude</H6>
+        <H6>{target.site?.survey_longitude}</H6>
+      </View>
+      <View
+        style={[
+          styles.row,
+          spacing.mv2,
+          { justifyContent: "space-between", flex: 1 },
+        ]}
+      >
+        <H6>Actual Latitude</H6>
+        <H6>{target.site?.actual_latitude}</H6>
+      </View>
+      <View
+        style={[
+          styles.row,
+          spacing.mv2,
+          { justifyContent: "space-between", flex: 1 },
+        ]}
+      >
+        <H6>Actual Longitude</H6>
+        <H6>{target.site?.actual_longitude}</H6>
+      </View>
     </View>
   );
 };

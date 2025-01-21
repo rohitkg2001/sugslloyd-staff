@@ -46,7 +46,7 @@ export default function CurrentProjectsScreen({ navigation }) {
   const { t } = useTranslation();
 
   const [showBottomSheet, setShowBottomSheet] = useState(false);
-  const applyFilterFromRedux = () => {};
+  const applyFilterFromRedux = () => { };
 
   useEffect(() => {
     if (staff?.id) dispatch(getAllTasks(staff.id));
@@ -91,10 +91,10 @@ export default function CurrentProjectsScreen({ navigation }) {
     if (tab === "Unassigned") {
       filteredTasks = tasks.filter((task) => !task.vendor_id);
     } else if (tab === "Assigned") {
-      filteredTasks = tasks.filter((task) => task.vendor_id && task.image);
+      filteredTasks = tasks.filter((task) => task.vendor_id && !task.image);
     } else if (tab === "Pending") {
       filteredTasks = tasks.filter(
-        (task) => task.status === "Pending" && task.vendor_id
+        (task) => task.image && task.vendor_id
       );
     } else if (tab === "Done") {
       filteredTasks = tasks.filter((task) => task.status === "Done");
@@ -105,9 +105,9 @@ export default function CurrentProjectsScreen({ navigation }) {
     setCurrentTasks(filteredTasks);
     setTaskCounts({
       unassigned: tasks.filter((task) => !task.vendor_id).length,
-      assigned: tasks.filter((task) => task.vendor_id && task.image).length,
+      assigned: tasks.filter((task) => task.vendor_id && !task.image).length,
       pending: tasks.filter(
-        (task) => task.status === "Pending" && task.vendor_id
+        (task) => task.image && task.vendor_id
       ).length,
       done: tasks.filter((task) => task.status === "Done").length,
       all: tasks.length,
@@ -138,9 +138,8 @@ export default function CurrentProjectsScreen({ navigation }) {
             key={item.id}
             index={item.id}
             title={item.site?.site_name || ""}
-            subtitle={`${item.site?.location || ""}, ${
-              item.site?.district || ""
-            }, ${item.site?.state || ""}`}
+            subtitle={`${item.site?.location || ""}, ${item.site?.district || ""
+              }, ${item.site?.state || ""}`}
             onPress={() =>
               navigation.navigate("targetManagementScreen", { id: item.id })
             }

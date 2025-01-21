@@ -43,7 +43,11 @@ const TargetManagementScreen = ({ route }) => {
               setShowVendorSelection={setShowVendorSelection}
             />
             <LocationDetails target={currentTarget} />
-            <ImageDisplay images={currentTarget.image} />
+            {
+              Array.isArray(currentTarget.image) && currentTarget.image.length > 0 && (
+                <ImageDisplay images={currentTarget.image} />
+              )
+            }
           </ScrollView>
         ) : (
           <NoRecord msg="No data found" />
