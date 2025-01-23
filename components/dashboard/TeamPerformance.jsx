@@ -33,7 +33,15 @@ export default function TeamPerformance() {
   useEffect(() => {
     const fetchCounts = async () => {
       const staffTargetPerformance = await getStaffPerformance();
-      setStaffPerformance(staffTargetPerformance);
+      const updatedPerformance = staffTargetPerformance.map((data) => {
+        const totalAlloted = data.total_alloted || 0;
+        const completed = data.completed || 0;
+        return {
+          ...data,
+          pending: totalAlloted - completed,
+        };
+      });
+      setStaffPerformance(updatedPerformance);
     };
 
     dispatch(getAllTasks(id));
@@ -84,7 +92,7 @@ export default function TeamPerformance() {
                 {data.name}
               </H6>
               <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
-                {data.total_alloted}
+                {data.total_alloted || 0}
               </H6>
               <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
                 {data.completed || 0}

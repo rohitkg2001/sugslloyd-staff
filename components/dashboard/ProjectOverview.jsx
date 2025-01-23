@@ -8,11 +8,9 @@ import {
   spacing,
   styles,
   typography,
-  ICON_LARGE,
-  ICON_MEDIUM,
   ICON_SMALL,
 } from "../../styles";
-import { H4, H5, H6, P } from "../../components/text";
+import { H5, H6 } from "../../components/text";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -21,11 +19,31 @@ export default function ProjectOverview() {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const projectsArray = useSelector((state) => state.project?.projects);
+  const tasks = useSelector((state) => state.tasks?.tasks);
+
   const [projectsArr, setProjectsArr] = useState([]);
 
   useEffect(() => {
-    setProjectsArr(projectsArray);
-  }, [projectsArray]);
+    if (projectsArray?.length && tasks?.length) {
+      setProjectsArr(
+        projectsArray.map((project) => {
+          const relatedTasks = tasks.filter(
+            (task) => task.project_id === project.id
+          );
+          return {
+            ...project,
+            total_sites: relatedTasks.length,
+            completed_sites: relatedTasks.filter(
+              (task) => task.status === "approve" || task.status === "done"
+            ).length,
+            pending_sites: relatedTasks.filter(
+              (task) => !(task.status === "approve" || task.status === "done")
+            ).length,
+          };
+        })
+      );
+    }
+  }, [projectsArray, tasks]);
 
   return (
     <CardFullWidth backgroundColor={LIGHT}>
