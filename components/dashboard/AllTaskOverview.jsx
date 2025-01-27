@@ -21,12 +21,13 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function AllTaskOverview() {
-  const [rmsStatus, setRmsStatus] = useState(0);
-  const [finalInspection, setFinalInspection] = useState(0);
   const [installation, setInstallation] = useState(0);
   const [doneInstallation, setDoneInstallation] = useState(0);
 
-  const [donRMS, setDoneRMS] = useState(0);
+  const [rmsStatus, setRmsStatus] = useState(0);
+  const [doneRMS, setDoneRMS] = useState(0);
+
+  const [finalInspection, setFinalInspection] = useState(0);
   const [doneFinalInspection, setDoneFinalInspection] = useState(0);
 
   const { id } = useSelector((state) => state.staff);
@@ -40,14 +41,35 @@ export default function AllTaskOverview() {
     const installationCount = tasks.filter(
       (task) => task.activity === "Installation"
     ).length;
+    const doneInstallationCount = tasks.filter(
+      (task) =>
+        task.activity === "Installation" &&
+        (task.vendor_id || task.image || task.pdf)
+    ).length;
+
     const rmsCount = tasks.filter((task) => task.activity === "RMS").length;
+    const doneRMSCount = tasks.filter(
+      (task) =>
+        task.activity === "RMS" && (task.vendor_id || task.image || task.pdf)
+    ).length;
+
     const finalCount = tasks.filter(
       (task) => task.activity === "Final Inspection"
     ).length;
+    const doneFinalInspectionCount = tasks.filter(
+      (task) =>
+        task.activity === "Final Inspection" &&
+        (task.vendor_id || task.image || task.pdf)
+    ).length;
 
     setInstallation(installationCount);
+    setDoneInstallation(doneInstallationCount);
+
     setRmsStatus(rmsCount);
+    setDoneRMS(doneRMSCount);
+
     setFinalInspection(finalCount);
+    setDoneFinalInspection(doneFinalInspectionCount);
   }, [tasks]);
 
   useEffect(() => {
@@ -69,11 +91,7 @@ export default function AllTaskOverview() {
       </View>
       <View style={[spacing.bbw05, spacing.mv1]} />
       <View
-        style={[
-          styles.row,
-          spacing.pv1,
-          { justifyContent: "space-between",  },
-        ]}
+        style={[styles.row, spacing.pv1, { justifyContent: "space-between" }]}
       >
         <TouchableOpacity
           style={{ alignItems: "center" }}
@@ -91,7 +109,7 @@ export default function AllTaskOverview() {
         >
           <H6 style={typography.font14}>{t("rms_status")}</H6>
           <H6 style={spacing.ml1}>
-            {donRMS}/<H6 style={typography.textDanger}>{rmsStatus}</H6>
+            {doneRMS}/<H6 style={typography.textDanger}>{rmsStatus}</H6>
           </H6>
         </TouchableOpacity>
         <View style={{ alignItems: "center" }}>
