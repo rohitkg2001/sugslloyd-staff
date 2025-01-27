@@ -33,14 +33,16 @@ export default function TeamPerformance() {
   useEffect(() => {
     const fetchCounts = async () => {
       const staffTargetPerformance = await getStaffPerformance();
-      const updatedPerformance = staffTargetPerformance.map((data) => {
-        const totalAlloted = data.total_alloted || 0;
-        const completed = data.completed || 0;
-        return {
-          ...data,
-          pending: totalAlloted - completed,
-        };
-      });
+      const updatedPerformance = staffTargetPerformance
+        .map((data) => {
+          const totalAlloted = data.total_alloted || 0;
+          const completed = data.completed || 0;
+          return {
+            ...data,
+            pending: totalAlloted - completed,
+          };
+        })
+        .filter((data) => data.total_alloted > 0);
       setStaffPerformance(updatedPerformance);
     };
 

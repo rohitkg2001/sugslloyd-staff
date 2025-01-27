@@ -4,9 +4,8 @@ import Button from "../buttons/Button";
 import { P } from "../text";
 import ImageViewing from "react-native-image-viewing";
 import { Ionicons } from "@expo/vector-icons";
-import { spacing, styles, typography } from "../../styles";
-import TabBar from "../TabBar";
 import MyButton from "../buttons/MyButton";
+import { spacing, styles, typography } from "../../styles";
 
 const ImageDisplay = ({ images }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -51,23 +50,82 @@ const ImageDisplay = ({ images }) => {
     ? filteredImages.map((uri) => ({ uri }))
     : [];
 
-  const tabs = [{ name: "Survey" }, { name: "Final Inspection" }];
-
   return (
-    <View style={{ padding: 12, backgroundColor: "white" }}>
-      <TabBar
-        tabs={tabs}
-        activeTab={activeTab}
-        onTabSelected={handleTabSelection}
-        style={{ marginBottom: 10 }}
-      />
+    <View style={[spacing.p3, { backgroundColor: "white" }]}>
+      {/* <View style={[styles.row, spacing.bbw05, spacing.pb3, spacing.mb3]}>
+        {["Survey", "Final Inspection"].map((tab) => (
+          <TouchableOpacity
+            key={tab}
+            onPress={() => handleTabSelection(tab)}
+            style={[
+              spacing.p1,
+              {
+                borderBottomWidth: activeTab === tab ? 2 : 0,
+                borderBottomColor:
+                  activeTab === tab ? "#76885B" : "transparent",
+              },
+            ]}
+          >
+            <P
+              style={[
+                typography.font16,
+                {
+                  color: activeTab === tab ? "#76885B" : "#333",
+                  fontWeight: activeTab === tab ? "bold" : "normal",
+                },
+              ]}
+            >
+              {tab}
+            </P>
+          </TouchableOpacity>
+        ))}
+      </View> */}
 
       <View
-        style={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-        }}
+        style={[
+          styles.row,
+          spacing.bbw05,
+          spacing.pb3,
+          spacing.mb3,
+          { justifyContent: "Flex-start", alignItems: "center" },
+        ]}
+      >
+        {["Survey", "Final Inspection"].map((tab, index) => (
+          <TouchableOpacity
+            key={tab}
+            onPress={() => handleTabSelection(tab)}
+            style={[
+              spacing.p1,
+              index !== 0 && { marginLeft: 16 },
+              {
+                borderBottomWidth: activeTab === tab ? 2 : 0,
+                borderBottomColor:
+                  activeTab === tab ? "#76885B" : "transparent",
+              },
+            ]}
+          >
+            <P
+              style={[
+                typography.font16,
+                {
+                  color: activeTab === tab ? "#76885B" : "#333",
+                  fontWeight: activeTab === tab ? "bold" : "normal",
+                },
+              ]}
+            >
+              {tab}
+            </P>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <View
+        style={[
+          styles.row,
+          {
+            flexWrap: "wrap",
+          },
+        ]}
       >
         {Array.isArray(filteredImages) &&
           filteredImages.map((uri, index) => {
@@ -109,25 +167,20 @@ const ImageDisplay = ({ images }) => {
                 <TouchableOpacity
                   key={index}
                   onPress={() => handleImagePress(index)}
-                  style={[
-                    spacing.mb3,
-                    {
-                      width: "22%",
-                    },
-                  ]}
+                  style={{
+                    marginBottom: 16,
+                    width: "22%",
+                  }}
                 >
                   <Image
                     source={{ uri }}
-                    style={{
-                      width: "100%",
-                      height: 80,
-                      borderWidth: 1,
-                      borderRadius: 4,
-                      borderColor: "black",
-                    }}
+                    style={[
+                      {
+                        width: "100%",
+                        height: 80,
+                      },
+                    ]}
                   />
-                  <P>Lat:</P>
-                  <P>Long:</P>
                 </TouchableOpacity>
               );
             }
@@ -146,18 +199,7 @@ const ImageDisplay = ({ images }) => {
                 <Ionicons name="arrow-back-outline" size={24} color="white" />
               </TouchableOpacity>
             </View>
-            <View
-              style={[
-                styles.row,
-                {
-                  position: "absolute",
-                  top: 340,
-                  left: 0,
-                  right: 0,
-                  justifyContent: "space-between",
-                },
-              ]}
-            >
+            <View style={[styles.row, { top: 340 }]}>
               <TouchableOpacity onPress={handlePreviousImage}>
                 <Ionicons name="chevron-back-outline" size={48} color="white" />
               </TouchableOpacity>
@@ -184,23 +226,22 @@ const ImageDisplay = ({ images }) => {
           >
             <TouchableOpacity
               onPress={() => handleDownload(imageArray[selectedImageIndex].uri)}
-              style={[styles.row, { alignItems: "center" }]}
+              style={[
+                styles.row,
+                {
+                  alignItems: "center",
+                },
+              ]}
             >
               <Ionicons name="download-outline" size={24} color="white" />
-              <P style={{ color: "white" }}>Download</P>
+              <P style={{ color: "white", marginLeft: 8 }}>Download</P>
             </TouchableOpacity>
           </View>
         )}
       />
 
       {(activeTab === "Survey" || activeTab === "Final Inspection") && (
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: 16,
-          }}
-        >
+        <View style={[styles.row, {}]}>
           <MyButton title={"Approve"} />
           <MyButton title={"Reject"} color="#DC4C64" />
         </View>

@@ -35,19 +35,21 @@ const TargetManagementScreen = ({ route }) => {
     <ContainerComponent>
       <MyHeader title={t("Task")} hasIcon={true} isBack={true} />
 
-      <View style={{ width: "100%" }}>
+      <View style={{ width: "100%", flex: 1 }}>
         {isDataAvailable ? (
-          <ScrollView>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+          >
             <TargetDetails
               target={currentTarget}
               setShowVendorSelection={setShowVendorSelection}
             />
             <LocationDetails target={currentTarget} />
-            {
-              Array.isArray(currentTarget.image) && currentTarget.image.length > 0 && (
+            {Array.isArray(currentTarget.image) &&
+              currentTarget.image.length > 0 && (
                 <ImageDisplay images={currentTarget.image} />
-              )
-            }
+              )}
           </ScrollView>
         ) : (
           <NoRecord msg="No data found" />
