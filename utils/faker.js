@@ -21,6 +21,10 @@ export function transformArray(inputArray) {
   }));
 }
 
+export const blocks = []
+export const panchayats = []
+export const wards = []
+
 export const SiteFields = [
   {
     title: "site_location",
