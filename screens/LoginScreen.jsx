@@ -31,7 +31,7 @@ export default function LoginScreen({ navigation }) {
     try {
       const result = await dispatch(login(username, password));
       if (result) {
-        navigation.navigate("homeScreen");
+        navigation.navigate("welcomeScreen");
       } else {
         setError("Please provide the correct credentials");
       }

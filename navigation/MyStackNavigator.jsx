@@ -31,6 +31,8 @@ import VendorSelectionScreen from "../screens/VendorSelectionScreen";
 import TaskInventoryScreen from "../screens/TaskInventoryScreen";
 import CardScreen from "../screens/CardScreen";
 import SiteLocationScreen from "../screens/SiteLocationScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
+import CurrentStreetLightScreen from "../screens/CurrentStreetLightScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
@@ -43,6 +45,11 @@ export default function MyStackNavigator() {
     >
       <Stack.Screen name="cardScreen" component={CardScreen} />
       <Stack.Screen name="loginScreen" component={LoginScreen} />
+      <Stack.Screen name="welcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen
+        name="currentStreetLightScreen"
+        component={CurrentStreetLightScreen}
+      />
       <Stack.Screen name="siteLocationScreen" component={SiteLocationScreen} />
       <Stack.Screen name="dashboardScreen" component={DashboardScreen} />
       <Stack.Screen name="homeScreen" component={MyMaterialBottomNavigator} />

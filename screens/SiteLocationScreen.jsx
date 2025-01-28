@@ -84,6 +84,6 @@ export default function SiteLocationScreen({ navigation }) {
       </View>
 
       <MyButton title="Next" onPress={getSiteInfo} />
-    </ContainerComponent >
+    </ContainerComponent>
   );
 };

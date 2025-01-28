@@ -5,9 +5,8 @@ import { spacing, typography, SCREEN_WIDTH } from "../styles";
 import { P } from "../components/text";
 
 export default function ({ navigation }) {
-
   return (
-    <ContainerComponent justifyContent='space-between' paddingVertical={20}>
+    <ContainerComponent justifyContent="space-between" paddingVertical={20}>
       <Image
         source={require("../assets/adaptive-icon.png")}
         style={{ height: 100, resizeMode: "contain" }}
@@ -42,7 +41,7 @@ export default function ({ navigation }) {
           </Card>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("sitelocationscreen")}>
+        <TouchableOpacity onPress={() => navigation.navigate("loginScreen")}>
           <Card
             style={[
               spacing.mt5,
@@ -73,10 +72,9 @@ export default function ({ navigation }) {
         </TouchableOpacity>
       </View>
 
-
       <P style={[typography.font16, { color: "black" }]}>
         Powered by Dashandots Technology
       </P>
     </ContainerComponent>
   );
-};
+}
