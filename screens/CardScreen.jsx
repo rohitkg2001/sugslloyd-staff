@@ -126,7 +126,6 @@ export default function ({ navigation }) {
           </Card>
         </TouchableOpacity>
 
-        {/* Streetlight Installation */}
         <TouchableOpacity onPress={() => handlePress("welcomeScreen")}>
           <Card
             style={[
