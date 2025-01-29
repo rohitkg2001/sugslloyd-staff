@@ -106,7 +106,7 @@
 import { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native"; // Import hook
+import { useNavigation } from "@react-navigation/native";
 
 import CardFullWidth from "../card/CardFullWidth";
 import {
@@ -154,33 +154,6 @@ export default function VendorPerformance() {
       console.error("Error fetching vendor performance:", error);
     }
   };
-
-  // const getCounts = async () =>
-  // {
-  //   try {
-  //     const tasksByEngineer = await getVendorPerformance(id);
-
-  //     const updatedPerformance = tasksByEngineer.map((data) => {
-  //       const totalAlloted = data.total_alloted || 0;
-  //       const completed = data.completed || 0;
-
-  //       const pendingTasks = data.tasks.filter(
-  //         (task) => task.image === null
-  //       ).length;
-
-  //       const pending = pendingTasks || totalAlloted - completed;
-
-  //       return {
-  //         ...data,
-  //         pending,
-  //       };
-  //     });
-
-  //     setStaffPerformance(updatedPerformance);
-  //   } catch (error) {
-  //     console.error("Error fetching vendor performance:", error);
-  //   }
-  // };
 
   useEffect(() => {
     dispatch(getAllTasks(id));
