@@ -4,6 +4,7 @@ import {
   FETCH_SITES,
   ADD_SITE,
   BASE_URL,
+  SET_SITE_INFO,
 } from "../constant";
 import statesandcities from "../../utils/statesandcities.json";
 
@@ -34,3 +35,8 @@ export const addSite = (addSite) => ({
   type: ADD_SITE,
   payload: addSite,
 });
+
+export const setSiteInfo = (val) => async (dispatch) => {
+  console.log(val);
+  dispatch({ type: SET_SITE_INFO, payload: val });
+};

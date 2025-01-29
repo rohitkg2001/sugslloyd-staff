@@ -1,4 +1,4 @@
-import { VIEW_SITE, ADD_SITE, FETCH_SITES } from "../constant";
+import { VIEW_SITE, ADD_SITE, FETCH_SITES, SET_SITE_INFO } from "../constant";
 
 const initialState = {
   sites: [],
@@ -20,6 +20,8 @@ export const siteReducer = (state = initialState, action) => {
         ...state,
         currentSite: action.payload,
       };
+    case SET_SITE_INFO:
+      return { ...state, siteInfo: action.payload };
     default:
       return state;
   }

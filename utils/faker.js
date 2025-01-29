@@ -15,15 +15,15 @@ export const fakeDelete = ({
 // Static method
 
 export function transformArray(inputArray) {
-  return inputArray.map(item => ({
+  return inputArray.map((item) => ({
     label: item.name, // Concatenate firstName and lastName
-    value: item.id                              // Use id as value
+    value: item.id, // Use id as value
   }));
 }
 
-export const blocks = []
-export const panchayats = []
-export const wards = []
+//export const blocks = [];
+//export const panchayats = [];
+//export const wards = [];
 
 export const SiteFields = [
   {
@@ -535,3 +535,57 @@ export const sitesData = [
     status: "Pending",
   },
 ];
+
+export { blocks, panchayats, wards };
+const blocks = {
+  Patna: [
+    { label: "Patna Sadar", value: "Patna Sadar" },
+    { label: "Danapur", value: "Danapur" },
+    { label: "Phulwari Sharif", value: "Phulwari Sharif" },
+    { label: "Paliganj", value: "Paliganj" },
+    { label: "Masaurhi", value: "Masaurhi" },
+  ],
+  district2: [
+    { label: "Gaya Sadar", value: "block1" },
+    { label: "Bodh Gaya", value: "block2" },
+    { label: "Belaganj", value: "block3" },
+    { label: "Khizersarai", value: "block4" },
+    { label: "Sherghati", value: "block5" },
+  ],
+};
+
+const panchayats = {
+  Patna: [
+    { label: "Fatehpur", value: "Fathehpur" },
+    { label: "Mahauli", value: "panchayat2" },
+    { label: "Marchi", value: "panchayat3" },
+    { label: "Punadih", value: "panchayat4" },
+  ],
+  district2: [
+    { label: "Gaya Sadar", value: "panchayat1" },
+    { label: "Bodh Gaya", value: "panchayat2" },
+    { label: "Sherghati", value: "panchayat3" },
+    { label: "Tekari", value: "panchayat4" },
+    { label: "Manpur", value: "panchayat5" },
+    { label: "Rafiganj", value: "panchayat6" },
+    { label: "Dumaria", value: "panchayat7" },
+    { label: "Belaganj", value: "panchayat8" },
+  ],
+};
+
+const wards = {
+  Patna: [
+    { label: "Ward 1", value: "Ward 1" },
+    { label: "Ward 2", value: "ward2" },
+    { label: "Ward 3", value: "ward3" },
+    { label: "Ward 4", value: "ward4" },
+    { label: "Ward 5", value: "ward5" },
+  ],
+  district2: [
+    { label: "Ward 1", value: "ward1" },
+    { label: "Ward 2", value: "ward2" },
+    { label: "Ward 3", value: "ward3" },
+    { label: "Ward 4", value: "ward4" },
+    { label: "Ward 5", value: "ward5" },
+  ],
+};

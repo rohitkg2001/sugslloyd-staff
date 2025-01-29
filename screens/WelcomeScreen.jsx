@@ -46,7 +46,7 @@ export default function WelcomeScreen({ navigation }) {
               width: SCREEN_WIDTH / 1.1,
               height: SCREEN_WIDTH / 2.5,
               alignItems: "center",
-              backgroundColor: "#FFD700",
+              backgroundColor: "#85c1e9",
             },
           ]}
         >
@@ -71,33 +71,29 @@ export default function WelcomeScreen({ navigation }) {
               },
             ]}
           >
-            Assign Installation
+            Assign Task
           </P>
         </TouchableOpacity>
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
+        <View style={[styles.row]}>
           <TouchableOpacity
             onPress={() => navigation.navigate("siteLocationScreen")}
             style={[
               spacing.p5,
               spacing.br2,
               spacing.m4,
-              styles.bgSuccess,
+
+              spacing.mh1,
               {
                 flex: 1,
-                height: SCREEN_WIDTH / 2.5,
+                height: SCREEN_WIDTH / 2.3,
                 alignItems: "center",
-                marginHorizontal: 4,
+                backgroundColor: "#f0b27a",
               },
             ]}
           >
-            <Icon name="location-sharp" size={80} />
-            <P style={[typography.font16, spacing.mt3]}>Change Site Info</P>
+            <Icon name="reader-sharp" size={75} />
+            <P style={[typography.font16, spacing.mt3]}>Pending reports</P>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -105,17 +101,18 @@ export default function WelcomeScreen({ navigation }) {
               spacing.p5,
               spacing.br2,
               spacing.m4,
-              styles.bgDanger,
+
+              spacing.mh1,
               {
                 flex: 1,
-                height: SCREEN_WIDTH / 2.5,
+                height: SCREEN_WIDTH / 2.3,
                 alignItems: "center",
-                marginHorizontal: 4,
+                backgroundColor: "#1abc9c",
               },
             ]}
           >
-            <Icon name="reader-sharp" size={80} />
-            <P style={[typography.font16, spacing.mt3]}>Pending Records</P>
+            <Icon name="receipt" size={75} />
+            <P style={[typography.font16, spacing.mt3]}>Generate JICR report</P>
           </TouchableOpacity>
         </View>
       </View>
