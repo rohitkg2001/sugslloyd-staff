@@ -589,3 +589,32 @@ const wards = {
     { label: "Ward 5", value: "ward5" },
   ],
 };
+
+// utils/fakerData.js
+
+export const fakerData = [
+  {
+    solarPanel:
+      "SP001, SP002, SP003, SP004, SP005, SP006, SP007, SP008, SP009, SP010",
+    battery: "B001, B002, B003, B004, B005, B006, B007, B008, B009, B010",
+    light: "L001, L002, L003, L004, L005, L006, L007, L008, L009, L010",
+    sim: "SIM001, SIM002, SIM003, SIM004, SIM005, SIM006, SIM007, SIM008, SIM009, SIM010",
+    pin: "123456, 223456, 323456, 423456, 523456, 623456, 723456, 823456, 923456, 1023456",
+    pole: "P001, P002, P003, P004, P005, P006, P007, P008, P009, P010",
+  },
+];
+export const executingAgencyData = [
+  {
+    agencyName: "SUGS LLOYD India Ltd.",
+    fullAddress: "123 Main Street, City, Country",
+    contactPerson: "Zaid",
+    mobileNo: "9823094532",
+    latitude: "98.4587",
+    longitude: "97.4576",
+    dateOfInstallation: "2025-23-01",
+    warranteeExpire: "2030-23-01",
+    serviceCentreInfo:
+      "Rambhajan Warehouse , Ranipur Paijaba, Ganga Pardushan Road , Near ramjivan Chauk ,",
+    details: " Javganj,  Patna City, Patna, Bihar, 800008",
+  },
+];

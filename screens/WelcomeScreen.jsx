@@ -129,8 +129,8 @@ export default function WelcomeScreen({ navigation }) {
   };
 
   useEffect(() => {
-   // dispatch(getAllTasks(id));
-   // getCounts();
+    // dispatch(getAllTasks(id));
+    // getCounts();
   }, [dispatch, id]);
 
   return (
@@ -196,6 +196,7 @@ export default function WelcomeScreen({ navigation }) {
               <P style={[typography.font16, spacing.mt3]}>Pending reports</P>
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={() => navigation.navigate("generateJICRScreen")}
               style={[
                 spacing.p5,
                 spacing.br2,
