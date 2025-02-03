@@ -35,6 +35,7 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import CurrentStreetLightScreen from "../screens/CurrentStreetLightScreen";
 import GenerateJICRScreen from "../screens/GenerateJICRScreen";
 import JICRReportDetailsScreen from "../screens/JICRReportDetailsScreen";
+import AttendancePunchScreen from "../screens/AttendancePunchScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator() {
@@ -52,9 +53,13 @@ export default function MyStackNavigator() {
         name="currentStreetLightScreen"
         component={CurrentStreetLightScreen}
       />
-      <Stack.Screen name="generateJICRScreen" component={ GenerateJICRScreen } />
-      <Stack.Screen name="jicrReportDetailsScreen" component={JICRReportDetailsScreen}/>
+      <Stack.Screen name="generateJICRScreen" component={GenerateJICRScreen} />
+      <Stack.Screen
+        name="jicrReportDetailsScreen"
+        component={JICRReportDetailsScreen}
+      />
       <Stack.Screen name="siteLocationScreen" component={SiteLocationScreen} />
+      <Stack.Screen name="attendancePunch" component={AttendancePunchScreen} />
       <Stack.Screen name="dashboardScreen" component={DashboardScreen} />
       <Stack.Screen name="homeScreen" component={MyMaterialBottomNavigator} />
       <Stack.Screen name="notificationScreen" component={NotificationScreen} />

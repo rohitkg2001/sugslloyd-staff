@@ -1,334 +1,361 @@
 import React from "react";
 import { View, ScrollView } from "react-native";
+import { Card } from "react-native-paper";
+import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { H3, P } from "../components/text";
-import { Card, Text } from "react-native-paper";
+import { H6, P } from "../components/text";
 import { fakerData, executingAgencyData } from "../utils/faker";
-import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
 
-import { ICON_LARGE, SCREEN_WIDTH, styles } from "../styles";
+import {
+  ICON_LARGE,
+  LIGHT,
+  PRIMARY_COLOR_TRANSPARENT,
+  spacing,
+  styles,
+  typography,
+} from "../styles";
 
 export default function JICRReportDetailsScreen({ route }) {
   const { reportData } = route.params;
 
   return (
     <ContainerComponent>
-      <MyHeader isBackr title="JICR Report Details" hasIcon />
-      <ScrollView>
+      <MyHeader isBack title="JICR Report Details" hasIcon />
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Card
-          style={{
-            padding: 12,
-            margin: 12,
-            width: SCREEN_WIDTH / 1.1,
-            height: SCREEN_WIDTH / 2.1,
-            backgroundColor: "#ffff",
-          }}
+          style={[
+            spacing.p3,
+            spacing.m3,
+            {
+              backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+            },
+          ]}
         >
-          <H3 style={{ textAlign: "center" }}>Report Summary</H3>
-
-          <View style={{ flexDirection: "row" }}>
-            <P>District:</P>
-            <P style={{ left: 24 }}>{reportData.district}</P>
+          <View style={[styles.row]}>
+            <H6 style={[typography.textBold]}>District:</H6>
+            <P>{reportData.district}</P>
           </View>
 
-          <View style={{ flexDirection: "row" }}>
-            <P>Block:</P>
-            <P style={{ left: 35 }}>{reportData.block}</P>
+          <View style={[styles.row]}>
+            <H6 style={[typography.textBold]}>Block:</H6>
+            <P>{reportData.block}</P>
           </View>
 
-          <View style={{ flexDirection: "row" }}>
-            <P>Panchayat:</P>
-            <P style={{ left: 12 }}>{reportData.panchayat}</P>
+          <View style={[styles.row]}>
+            <H6 style={[typography.textBold]}>Panchayat:</H6>
+            <P>{reportData.panchayat}</P>
           </View>
 
-          <View style={{ flexDirection: "row" }}>
-            <P>Ward:</P>
-            <P style={{ left: 49 }}>{reportData.ward}</P>
+          <View style={[styles.row]}>
+            <H6 style={[typography.textBold]}>Ward:</H6>
+            <P>{reportData.ward}</P>
           </View>
 
-          <View style={{ flexDirection: "row" }}>
-            <P>From Date:</P>
-            <P style={{ left: 20 }}>{reportData.fromDate}</P>
-          </View>
-
-          <View style={{ flexDirection: "row" }}>
-            <P>To Date:</P>
-            <P style={{ left: 20 }}>{reportData.toDate}</P>
-          </View>
+          {/* <View>
+            <View style={[styles.row, spacing.mt3]}>
+              <View>
+                <Span
+                  style={[
+                    typography.font12,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Start date
+                </Span>
+                <P style={[typography.font14]}>{reportData.fromDate}</P>
+              </View>
+              <View>
+                <Span
+                  style={[
+                    typography.font12,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  End date
+                </Span>
+                <P style={[typography.font14]}>{reportData.toDate}</P>
+              </View>
+            </View>
+          </View> */}
         </Card>
         <View
-          style={{
-            padding: 12,
-            margin: 12,
-            width: SCREEN_WIDTH / 1.1,
-            backgroundColor: "#f5f5f5",
-          }}
+          style={[
+            spacing.m3,
+            spacing.p2,
+            {
+              backgroundColor: LIGHT,
+            },
+          ]}
         >
           {executingAgencyData.map((agency, index) => (
-            <View key={index} style={{ marginBottom: 10 }}>
+            <View key={index}>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>
-                  Agency Name:
-                </Text>
-                <P style={{ flex: 1, textAlign: "right" }}>
-                  {agency.agencyName}
-                </P>
+                <H6 style={[typography.textBold]}>Agency Name:</H6>
+                <P>{agency.agencyName}</P>
               </View>
 
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>
-                  Full Address:
-                </Text>
-                <P style={{ flex: 1, textAlign: "right" }}>
-                  {agency.fullAddress}
-                </P>
+                <H6 style={[typography.textBold]}>Full Address:</H6>
+                <P>{agency.fullAddress}</P>
               </View>
 
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>
-                  Contact Person:
-                </Text>
-                <P style={{ flex: 1, textAlign: "right" }}>
-                  {agency.contactPerson}
-                </P>
+                <H6 style={[typography.textBold]}>Contact Person:</H6>
+                <P>{agency.contactPerson}</P>
               </View>
 
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>Mobile No:</Text>
-                <P style={{ flex: 1, textAlign: "right" }}>{agency.mobileNo}</P>
+                <H6 style={[typography.textBold]}>Mobile No:</H6>
+                <P>{agency.mobileNo}</P>
               </View>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>
-                  Name of System:
-                </Text>
-                <P style={{ flex: 1, textAlign: "right" }}>
-                  {agency.nameOfSystem}
-                </P>
+                <H6 style={[typography.textBold]}>Name of System:</H6>
+                <P>{agency.nameOfSystem}</P>
               </View>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>
-                  Agreement number & Date:
-                </Text>
-                <P style={{ flex: 1, textAlign: "right" }}>
-                  {agency.agreementNumberDate}
-                </P>
+                <H6 style={[typography.textBold]}>Agreement number & Date:</H6>
+                <P>{agency.agreementNumberDate}</P>
               </View>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>
-                  Capacity of System:
-                </Text>
-                <P style={{ flex: 1, textAlign: "right" }}>
-                  {agency.capacityOfSystem}
-                </P>
+                <H6 style={[typography.textBold]}>Capacity of System:</H6>
+                <P>{agency.capacityOfSystem}</P>
               </View>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>
-                  Latitude and longitude:
-                </Text>
-                <P style={{ flex: 1, textAlign: "right" }}>
+                <H6 style={[typography.textBold]}>Latitude and longitude:</H6>
+                <P>
                   {agency.latitude}, {agency.longitude}
                 </P>
               </View>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>
-                  Date of installation:
-                </Text>
-                <P style={{ flex: 1, textAlign: "right" }}>
-                  {agency.dateOfInstallation}
-                </P>
+                <H6 style={[typography.textBold]}>Date of installation:</H6>
+                <P>{agency.dateOfInstallation}</P>
               </View>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>
-                  Warrantee expire on:
-                </Text>
-                <P style={{ flex: 1, textAlign: "right" }}>
-                  {agency.warranteeExpire}
-                </P>
+                <H6 style={[typography.textBold]}>Warrantee expire on:</H6>
+                <P>{agency.warranteeExpire}</P>
               </View>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>Address:</Text>
+                <H6 style={[typography.textBold]}>Address:</H6>
                 <P style={{ flex: 1, textAlign: "right" }}>
                   {agency.serviceCentreInfo}
                 </P>
               </View>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 8,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "#ccc",
-                  paddingBottom: 5,
-                }}
+                style={[
+                  styles.row,
+                  spacing.mv2,
+                  spacing.pb1,
+                  spacing.bbw05,
+                  spacing.bbwc1,
+                ]}
               >
-                <Text style={{ fontWeight: "bold", flex: 1 }}>
+                <H6 style={[typography.textBold, { flex: 1 }]}>
                   Post, P.S, District, State, PIN Code:
-                </Text>
+                </H6>
                 <P style={{ flex: 1, textAlign: "right" }}>{agency.details}</P>
               </View>
             </View>
           ))}
         </View>
 
-        {fakerData.map((item, index) => (
+        {/* {fakerData.map((item, index) => (
           <View
             key={index}
-            style={{
-              backgroundColor: "#f5f5f5",
-              borderRadius: 8,
-              padding: 8,
-              marginVertical: 10,
-            }}
+            style={[
+              spacing.p2,
+              {
+                backgroundColor: LIGHT,
+              },
+            ]}
           >
-            <View
-              style={{
-                borderBottomWidth: 1,
-                borderBottomColor: "#ccc",
-                marginBottom: 8,
-              }}
-            />
-
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View style={[styles.row, { alignItems: "center" }]}>
                 {[
                   { label: "Solar Panel No:", data: item.solarPanel },
                   { label: "Battery No:", data: item.battery },
                   { label: "Light No:", data: item.light },
                   { label: "SIM No:", data: item.sim },
-                  { label: "PIN:", data: item.pin },
                   { label: "Pole No:", data: item.pole },
+                  { label: "PIN", data: item.pin },
+                  { label: "State", data: item.state },
                 ].map((field, fieldIndex) => (
                   <View
                     key={fieldIndex}
-                    style={{
-                      alignItems: "center",
-                      marginRight: 20,
-                      paddingVertical: 8,
-                    }}
+                    style={[
+                      spacing.mr4,
+                      spacing.pv2,
+                      {
+                        alignItems: "center",
+                      },
+                    ]}
                   >
-                    <P>{field.label}</P>
+                    <P style={[typography.textBold]}>{field.label}</P>
 
                     <View
-                      style={{
-                        borderBottomWidth: 1,
-                        borderBottomColor: "#ccc",
-                        width: "100%",
-                        marginVertical: 5,
-                      }}
+                      style={[
+                        spacing.bbw05,
+                        spacing.bbwc1,
+                        spacing.mv1,
+                        { width: "100%" },
+                      ]}
                     />
                     {field.data.split(", ").map((value, valueIndex) => (
                       <View key={valueIndex} style={{ marginVertical: 5 }}>
                         <P>{value}</P>
-                        {/* Horizontal line below each data item */}
-                        <View
-                          style={{
-                            borderBottomWidth: 1,
-                            borderBottomColor: "#ccc",
-                            width: "100%",
-                            marginTop: 5,
-                          }}
-                        />
+                      </View>
+                    ))}
+                  </View>
+                ))}
+              </View>
+            </ScrollView>
+          </View>
+        ))} */}
+        {fakerData.map((item, index) => (
+          <View
+            key={index}
+            style={[
+              spacing.p2,
+              {
+                backgroundColor: LIGHT,
+              },
+            ]}
+          >
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <View style={[styles.row, { alignItems: "center" }]}>
+                {[
+                  { label: "District:", data: item.district },
+                  { label: "Block:", data: item.block },
+                  { label: "Panchayat:", data: item.panchayat },
+                  { label: "Solar Panel No:", data: item.solarPanel },
+                  { label: "Battery No:", data: item.battery },
+                  { label: "Light No:", data: item.light },
+                  { label: "SIM No:", data: item.sim },
+                  { label: "Ward No:", data: item.wardNo },
+                  { label: "Pole No:", data: item.pole },
+                  { label: "PIN:", data: item.pin },
+                  { label: "Nearest House:", data: item.nearestHouse },
+                  { label: "Latitude:", data: item.latitude },
+                  { label: "Longitude:", data: item.longitude },
+
+                  { label: "State:", data: item.state },
+                  {
+                    label: "Date of Installation:",
+                    data: item.installationDate,
+                  },
+                ].map((field, fieldIndex) => (
+                  <View
+                    key={fieldIndex}
+                    style={[
+                      spacing.mr4,
+                      spacing.pv2,
+                      {
+                        alignItems: "center",
+                      },
+                    ]}
+                  >
+                    <P style={[typography.textBold]}>{field.label}</P>
+
+                    <View
+                      style={[
+                        spacing.bbw05,
+                        spacing.bbwc1,
+                        spacing.mv1,
+                        { width: "100%" },
+                      ]}
+                    />
+                    {field.data.split(", ").map((value, valueIndex) => (
+                      <View key={valueIndex} style={{ marginVertical: 5 }}>
+                        <P>{value}</P>
                       </View>
                     ))}
                   </View>

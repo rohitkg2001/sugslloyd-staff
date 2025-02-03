@@ -3,13 +3,14 @@ import { View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { H2, H4 } from "../components/text";
+import { H4 } from "../components/text";
 import MyPickerInput from "../components/input/MyPickerInput";
 import Button from "../components/buttons/Button";
 import { blocks, panchayats, wards } from "../utils/faker";
 import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
 import { useDispatch } from "react-redux";
 import { setSiteInfo } from "../redux/actions/siteActions";
+import MyButton from "../components/buttons/MyButton";
 
 export default function GenerateJICRScreen({ navigation }) {
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -46,16 +47,6 @@ export default function GenerateJICRScreen({ navigation }) {
     setToDate(new Date());
   };
 
-  //   const handleCreateJICRReport = () => {
-  //     console.log(
-  //       `${selectedDistrict},${selectedBlock},${selectedPanchayat},${selectedWard}, From: ${fromDate.toLocaleDateString()}, To: ${toDate.toLocaleDateString()}`
-  //     );
-  //     const siteInfo = "BIR/PAT/FAT/WAR";
-  //     dispatch(setSiteInfo(siteInfo));
-
-  //     // navigation.navigate("welcomeScreen");
-  //   };
-
   const handleCreateJICRReport = () => {
     const reportData = {
       district: selectedDistrict,
@@ -75,7 +66,7 @@ export default function GenerateJICRScreen({ navigation }) {
     <ContainerComponent>
       <MyHeader isBack title={"Generate JICR Report"} hasIcon />
       <View style={{ flex: 1, width: SCREEN_WIDTH - 16 }}>
-        <H4>From</H4>
+        {/* <H4>From</H4>
         {showFromDatePicker && (
           <DateTimePicker
             value={fromDate}
@@ -125,7 +116,7 @@ export default function GenerateJICRScreen({ navigation }) {
           <H4 style={[typography.font16, { color: "black" }]}>
             {toDate.toLocaleDateString()}
           </H4>
-        </Button>
+        </Button> */}
         <MyPickerInput
           title="District"
           value={selectedDistrict}
@@ -158,30 +149,17 @@ export default function GenerateJICRScreen({ navigation }) {
         />
       </View>
 
-      <Button
+      <View
         style={[
-          styles.btn,
-          styles.bgPrimary,
-          { justifyContent: "center", width: "90%" },
+          styles.row,
+          {
+            width: SCREEN_WIDTH / 1.1,
+          },
         ]}
-        onPress={handleCreateJICRReport}
       >
-        <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-          Create JICR Report
-        </H2>
-      </Button>
-      <Button
-        style={[
-          styles.btn,
-          styles.bgDanger,
-          { justifyContent: "center", width: "90%" },
-        ]}
-        onPress={handleReset}
-      >
-        <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-          Reset Data
-        </H2>
-      </Button>
+        <MyButton title={"RESET DATA"} onPress={handleReset} color="#DC4C64" />
+        <MyButton title={"CREATE JICR"} onPress={handleCreateJICRReport} />
+      </View>
     </ContainerComponent>
   );
 }

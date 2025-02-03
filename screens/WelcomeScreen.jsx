@@ -173,7 +173,7 @@ export default function WelcomeScreen({ navigation }) {
                 { textAlign: "center" },
               ]}
             >
-              Assign Task
+              Inventory
             </P>
           </TouchableOpacity>
           <View style={[styles.row]}>
@@ -193,7 +193,9 @@ export default function WelcomeScreen({ navigation }) {
               ]}
             >
               <Icon name="reader-sharp" size={75} />
-              <P style={[typography.font16, spacing.mt3]}>Pending reports</P>
+              <P style={[typography.font14, spacing.mt3]}>
+                Pending installation
+              </P>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate("generateJICRScreen")}
@@ -211,7 +213,7 @@ export default function WelcomeScreen({ navigation }) {
               ]}
             >
               <Icon name="receipt" size={75} />
-              <P style={[typography.font16, spacing.mt3]}>
+              <P style={[typography.font14, spacing.mt3]}>
                 Generate JICR report
               </P>
             </TouchableOpacity>
