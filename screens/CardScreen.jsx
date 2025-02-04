@@ -4,10 +4,27 @@ import ContainerComponent from "../components/ContainerComponent";
 import { spacing, typography, SCREEN_WIDTH } from "../styles";
 import { P } from "../components/text";
 
-export default function ({ navigation }) {
+export default function CardScreen({ navigation }) {
   const handlePress = (nextScreen) => {
     navigation.navigate("loginScreen", { nextScreen });
   };
+
+  // const handlePress = (initialScreen) => {
+  //   navigation.navigate("loginScreen");
+
+  //   setTimeout(() => {
+  //     navigation.navigate("attendancePunch");
+
+  //     setTimeout(() => {
+  //       if (initialScreen === "rooftop") {
+  //         navigation.navigate("homeScreen");
+  //       } else if (initialScreen === "streetlight") {
+  //         navigation.navigate("welcomeScreen");
+  //       }
+  //     }, 15000);
+  //   }, 15000);
+  // };
+
   return (
     <ContainerComponent justifyContent="space-between" paddingVertical={20}>
       <Image
@@ -15,7 +32,7 @@ export default function ({ navigation }) {
         style={{ height: 100, resizeMode: "contain" }}
       />
       <View>
-        <TouchableOpacity onPress={() => handlePress("homeScreen")}>
+        <TouchableOpacity onPress={() => handlePress("attendancePunch")}>
           <Card
             style={[
               spacing.mt5,

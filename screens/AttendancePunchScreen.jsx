@@ -1,26 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { View, Text, Alert, Image, ScrollView } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import ContainerComponent from "../components/ContainerComponent";
 import * as Location from "expo-location";
-//import MapView, { Marker } from "react-native-maps";
 import { styles, spacing, typography, SCREEN_WIDTH, layouts } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import Button from "../components/buttons/Button";
-import { useNavigation } from "@react-navigation/native";
-import { H2 } from "../components/text";
-//import { punchIn } from "../redux/actions";
-import moment from "moment";
 
-export default function AttendancePunchScreen() {
-  const navigation = useNavigation();
+import { H2 } from "../components/text";
+
+export default function AttendancePunchScreen({ navigation, route }) {
   const [permission, requestPermission] = useCameraPermissions();
   const [location, setLocation] = useState(null);
   const [markerLocation, setMarkerLocation] = useState(null);
   const [photoUri, setPhotoUri] = useState(null);
   const cameraRef = useRef(null);
 
-  // Request location permission and fetch location
   const requestLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
@@ -28,7 +23,6 @@ export default function AttendancePunchScreen() {
       return;
     }
 
-    // Get the current location
     const currentLocation = await Location.getCurrentPositionAsync({});
     setLocation({
       latitude: currentLocation.coords.latitude,
@@ -36,17 +30,15 @@ export default function AttendancePunchScreen() {
     });
   };
 
-  // Update marker location whenever the location changes
   useEffect(() => {
     if (location) {
       setMarkerLocation(location);
     }
   }, [location]);
 
-  // Request permissions on component mount
   useEffect(() => {
     requestLocationPermission();
-    requestPermission(); // Request camera permission
+    requestPermission();
   }, []);
 
   if (!permission) {
@@ -63,23 +55,25 @@ export default function AttendancePunchScreen() {
       </View>
     );
   }
+  const nextScreen = route.params?.nextScreen || "homeScreen";
 
   const takePictureAndNavigate = async () => {
-    // TODO: Record current selfie, location and time in global state
     if (cameraRef.current) {
-      navigation.navigate("homeScreen"); // Navigate to
+      // navigation.navigate("homeScreen"); // Navigate to
+      // navigation.navigate(nextScreen);
+
       const photo = await cameraRef.current.takePictureAsync();
 
       if (!location || !photo.uri) {
         return;
       }
-     // punchIn(photo.uri, location, moment().format("DD-MM-YYYY HH:mm:ss A"));
+      navigation.navigate(nextScreen);
     }
   };
 
   return (
     <ContainerComponent>
-      <MyHeader title="Record Your Face" />
+      <MyHeader title="Record Your Face" hasIcon={true} isBack={true} />
       <ScrollView
         style={{ flex: 1, width: SCREEN_WIDTH - 20 }}
         contentContainerStyle={{ flex: 1, justifyContent: "space-between" }}
@@ -114,22 +108,6 @@ export default function AttendancePunchScreen() {
           </View>
         </View>
 
-        {/* TODO:Add map in a border radius */}
-        {markerLocation ? (
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: markerLocation.latitude,
-              longitude: markerLocation.longitude,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
-            }}
-          >
-            <Marker coordinate={markerLocation} title="Your Location" />
-          </MapView>
-        ) : (
-          <Text>Fetching location...</Text>
-        )}
         <Button
           style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
           onPress={takePictureAndNavigate}
