@@ -31,7 +31,6 @@ export const fetchProjects = () => async (dispatch) => {
       throw new Error('Expected an array of projects but got something else');
     }
     const myProjects = data.filter((project, index) => project.project_type !== "1")
-    console.log(myProjects)
     dispatch({ type: FETCH_PROJECTS, payload: myProjects });
   } catch (error) {
     console.error(error);
