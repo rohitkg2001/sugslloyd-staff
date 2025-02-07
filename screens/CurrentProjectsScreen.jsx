@@ -35,13 +35,6 @@ export default function CurrentProjectsScreen({ navigation }) {
   const [showVendorSelection, setShowVendorSelection] = useState(false);
   const [activeTab, setActiveTab] = useState("Unassigned");
   const menuRef = useRef(null);
-  const [taskCounts, setTaskCounts] = useState({
-    unassigned: 0,
-    assigned: 0,
-    pending: 0,
-    done: 0,
-    all: 0,
-  });
 
   const { t } = useTranslation();
 
@@ -93,9 +86,7 @@ export default function CurrentProjectsScreen({ navigation }) {
     } else if (tab === "Assigned") {
       filteredTasks = tasks.filter((task) => task.vendor_id && !task.image);
     } else if (tab === "Pending") {
-      filteredTasks = tasks.filter(
-        (task) => task.image && task.vendor_id
-      );
+      filteredTasks = tasks.filter((task) => task.image && task.vendor_id);
     } else if (tab === "Done") {
       filteredTasks = tasks.filter((task) => task.status === "Completed");
     } else if (tab === "View All") {
@@ -205,12 +196,26 @@ export default function CurrentProjectsScreen({ navigation }) {
 
             <TabBar
               tabs={[
-                { name: "Unassigned", count: taskCounts.unassigned },
-                { name: "Assigned", count: taskCounts.assigned },
-                { name: "Pending", count: taskCounts.pending },
-                { name: "Done", count: taskCounts.done },
-                { name: "View All", count: taskCounts.all },
-              ]}
+                {
+                  name: "Unassigned",
+                  count: tasks.filter((t) => !t.vendor_id).length || "",
+                },
+                {
+                  name: "Assigned",
+                  count:
+                    tasks.filter((t) => t.vendor_id && !t.image).length || "",
+                },
+                {
+                  name: "Pending",
+                  count:
+                    tasks.filter((t) => t.image && t.vendor_id).length || "",
+                },
+                {
+                  name: "Done",
+                  count: tasks.filter((t) => t.status === "Done").length || "",
+                },
+                { name: "View All", count: tasks.length || "" },
+              ].map((tab) => (tab.count ? tab : { name: tab.name }))}
               activeTab={activeTab}
               onTabSelected={handleTabSelection}
             />

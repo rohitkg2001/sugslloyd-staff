@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Image, Linking, TouchableOpacity } from "react-native";
+import axios from "axios";
 import Button from "../buttons/Button";
 import { P } from "../text";
 import ImageViewing from "react-native-image-viewing";
@@ -7,7 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import MyButton from "../buttons/MyButton";
 import { spacing, styles, typography } from "../../styles";
 
-const ImageDisplay = ({ images }) => {
+const ImageDisplay = ({ images, id }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("Survey");
@@ -43,6 +44,20 @@ const ImageDisplay = ({ images }) => {
   const handlePreviousImage = () => {
     if (selectedImageIndex > 0) {
       setSelectedImageIndex((prevIndex) => prevIndex - 1);
+    }
+  };
+
+  const handleApprove = async () => {
+    try {
+      //const taskId = id;
+      console.log(id);
+      const response = await axios.post(
+        `https://slldm.com/api/tasks/${id}/approve`
+      );
+      //console.log("Approval successful:", response.data);
+      alert(response.data.message);
+    } catch (error) {
+      console.error("Error approving the task:", error);
     }
   };
 
@@ -242,7 +257,8 @@ const ImageDisplay = ({ images }) => {
 
       {(activeTab === "Survey" || activeTab === "Final Inspection") && (
         <View style={[styles.row, {}]}>
-          <MyButton title={"Approve"} />
+          {/* <MyButton title={"Approve"} /> */}
+          <MyButton title={"Approve"} onPress={handleApprove} />
           <MyButton title={"Reject"} color="#DC4C64" />
         </View>
       )}
