@@ -28,20 +28,6 @@ export default function LoginScreen({ navigation, route }) {
 
   const nextScreen = route.params?.nextScreen || "homeScreen";
 
-  // const onSubmit = async () => {
-  //   setError("");
-  //   try {
-  //     const result = await dispatch(login(username, password));
-  //     if (result) {
-  //       navigation.navigate("homeScreen");
-  //     } else {
-  //       setError("Please provide the correct credentials");
-  //     }
-  //   } catch (error) {
-  //     setError("An error occurred during login");
-  //   }
-  // };
-
   const onSubmit = async () => {
     setError("");
     try {

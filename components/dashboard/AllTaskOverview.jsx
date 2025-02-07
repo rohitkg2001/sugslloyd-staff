@@ -44,7 +44,7 @@ export default function AllTaskOverview() {
     const doneInstallationCount = tasks.filter(
       (task) =>
         task.activity === "Installation" &&
-        (task.vendor_id || task.image || task.pdf)
+        task.status === "Completed"
     ).length;
 
     const rmsCount = tasks.filter((task) => task.activity === "RMS").length;

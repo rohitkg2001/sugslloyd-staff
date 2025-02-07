@@ -21,11 +21,18 @@ export const getStateById = async (id) => {
 export const fetchProjects = () => async (dispatch) => {
   try {
     const response = await fetch(`${BASE_URL}/api/projects`);
+    // Check if the response is ok (status code 200-299)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
-    dispatch({
-      type: FETCH_PROJECTS,
-      payload: data,
-    });
+    // Ensure data is an array before filtering
+    if (!Array.isArray(data)) {
+      throw new Error('Expected an array of projects but got something else');
+    }
+    const myProjects = data.filter((project, index) => project.project_type !== "1")
+    console.log(myProjects)
+    dispatch({ type: FETCH_PROJECTS, payload: myProjects });
   } catch (error) {
     console.error(error);
   }
@@ -46,39 +53,35 @@ export const getProjectCounts = async () => {
   ];
 };
 
-export const searchPjerocts = (searchText) => ({
-  type: SEARCH_PROJECTS,
-  payload: searchText,
-});
 
-export const viewProject = (projectId) => async (dispatch) => {
-  try {
-    setTimeout(() => {
-      const getData = async () => {
-        const response = await fetch(`${BASE_URL}/api/projects/${projectId}`);
-        const data = await response.json();
-        dispatch({ type: VIEW_PROJECT, payload: data });
-      };
-      getData();
-    }, 1500);
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const viewProject = (projectId) => async (dispatch) => {
+//   try {
+//     setTimeout(() => {
+//       const getData = async () => {
+//         const response = await fetch(`${BASE_URL}/api/projects/${projectId}`);
+//         const data = await response.json();
+//         dispatch({ type: VIEW_PROJECT, payload: data });
+//       };
+//       getData();
+//     }, 1500);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
-export const updateProject = (project) => ({
-  type: UPDATE_PROJECT,
-  payload: project,
-});
+// export const updateProject = (project) => ({
+//   type: UPDATE_PROJECT,
+//   payload: project,
+// });
 
-export const countProjects = () => ({
-  type: COUNT_PROJECTS,
-});
+// export const countProjects = () => ({
+//   type: COUNT_PROJECTS,
+// });
 
-export const changeProjectStatus = (projectId, newStatus) => ({
-  type: CHANGE_PROJECT_STATUS,
-  payload: { projectId, newStatus },
-});
+// export const changeProjectStatus = (projectId, newStatus) => ({
+//   type: CHANGE_PROJECT_STATUS,
+//   payload: { projectId, newStatus },
+// });
 
 export const addProject = (project) => async (dispatch) => {
   try {

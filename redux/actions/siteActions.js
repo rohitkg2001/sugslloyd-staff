@@ -18,7 +18,7 @@ export const fetchSites = () => async (dispatch) => {
     const data = await response.json();
 
     dispatch({ type: FETCH_SITES, payload: data });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 export const viewSite = (site) => ({
@@ -37,6 +37,5 @@ export const addSite = (addSite) => ({
 });
 
 export const setSiteInfo = (val) => async (dispatch) => {
-  console.log(val);
   dispatch({ type: SET_SITE_INFO, payload: val });
 };

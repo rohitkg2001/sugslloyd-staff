@@ -97,7 +97,7 @@ export default function CurrentProjectsScreen({ navigation }) {
         (task) => task.image && task.vendor_id
       );
     } else if (tab === "Done") {
-      filteredTasks = tasks.filter((task) => task.status === "Done");
+      filteredTasks = tasks.filter((task) => task.status === "Completed");
     } else if (tab === "View All") {
       filteredTasks = tasks;
     }
@@ -109,7 +109,7 @@ export default function CurrentProjectsScreen({ navigation }) {
       pending: tasks.filter(
         (task) => task.image && task.vendor_id
       ).length,
-      done: tasks.filter((task) => task.status === "Done").length,
+      done: tasks.filter((task) => task.status === "Completed").length,
       all: tasks.length,
     });
   };

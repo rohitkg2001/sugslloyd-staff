@@ -1,4 +1,4 @@
-import { UPDATE_TASK, VIEW_TASK, INITIALIZE_TASKS } from "../constant";
+import { UPDATE_TASK, VIEW_TASK, INITIALIZE_TASKS, TOTAL_PENDING_STREETLIGHT, GET_PENDING_STREETLIGHTS, GET_SURVEYED_STREETLIGHTS, TOTAL_SURVEYED_STREETLIGHTS, GET_INSTALLED_STREETLIGHTS, TOTAL_INSTALLED_STREETLIGHTS } from "../constant";
 
 const initialState = {
   tasks: [],
@@ -28,6 +28,18 @@ export const taskReducer = (state = initialState, action) => {
         ...state,
         currentTask: action.payload,
       };
+    case TOTAL_PENDING_STREETLIGHT:
+      return { ...state, pendingStreetLightCounts: action.payload }
+    case GET_PENDING_STREETLIGHTS:
+      return { ...state, pendingStreetLights: action.payload }
+    case GET_SURVEYED_STREETLIGHTS:
+      return { ...state, surveyedStreetLights: action.payload }
+    case TOTAL_SURVEYED_STREETLIGHTS:
+      return { ...state, surveyedStreetLightCounts: action.payload }
+    case GET_INSTALLED_STREETLIGHTS:
+      return { ...state, installedStreetLights: action.payload }
+    case TOTAL_INSTALLED_STREETLIGHTS:
+      return { ...state, installedStreetLightCounts: action.payload }
     default:
       return state;
   }

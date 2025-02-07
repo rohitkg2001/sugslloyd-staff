@@ -32,22 +32,8 @@ export default function VendorPerformance() {
   const getCounts = async () => {
     try {
       const tasksByEngineer = await getVendorPerformance(id);
-
-      const updatedPerformance = tasksByEngineer.map((data) => {
-        const totalAlloted = data.total_alloted || 0;
-        const completed = data.tasks
-          ? data.tasks.filter((task) => task.status === "Completed").length
-          : 0;
-        const pending = totalAlloted - completed;
-
-        return {
-          ...data,
-          completed,
-          pending,
-        };
-      });
-
-      setStaffPerformance(updatedPerformance);
+      console.log(tasksByEngineer)
+      setStaffPerformance(tasksByEngineer);
     } catch (error) {
       console.error("Error fetching vendor performance:", error);
     }
@@ -105,10 +91,10 @@ export default function VendorPerformance() {
                 {data.total_alloted}
               </H6>
               <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
-                {data.completed || 0}
+                {data.total_completed || 0}
               </H6>
               <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
-                {data.pending || 0}
+                {data.total_pending || 0}
               </H6>
             </View>
           </TouchableOpacity>

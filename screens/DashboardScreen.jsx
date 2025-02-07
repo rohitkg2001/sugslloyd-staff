@@ -78,13 +78,13 @@ export default function DashboardScreen({ navigation }) {
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>
         </View>
+        <TeamPerformance />
         <ProjectOverview />
         <AllTaskOverview />
         <VendorPerformance />
-        <TeamPerformance />
         <TotalVendor />
       </ScrollView>
-      {showBottomSheet && <Filter onClose={closeFilter} onApply={() => {}} />}
+      {showBottomSheet && <Filter onClose={closeFilter} onApply={() => { }} />}
     </ContainerComponent>
   );
 }

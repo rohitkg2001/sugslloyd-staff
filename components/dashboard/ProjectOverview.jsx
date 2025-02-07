@@ -34,10 +34,10 @@ export default function ProjectOverview() {
             ...project,
             total_sites: relatedTasks.length,
             completed_sites: relatedTasks.filter(
-              (task) => task.status === "approve" || task.status === "done"
+              (task) => task.status === "Completed"
             ).length,
             pending_sites: relatedTasks.filter(
-              (task) => !(task.status === "approve" || task.status === "done")
+              (task) => !(task.status === "Completed")
             ).length,
           };
         })
