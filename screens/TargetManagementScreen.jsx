@@ -48,7 +48,10 @@ const TargetManagementScreen = ({ route }) => {
             <LocationDetails target={currentTarget} />
             {Array.isArray(currentTarget.image) &&
               currentTarget.image.length > 0 && (
-                <ImageDisplay images={currentTarget.image} />
+                <ImageDisplay
+                  images={currentTarget.image}
+                  id={currentTarget.id}
+                />
               )}
           </ScrollView>
         ) : (

@@ -11,17 +11,19 @@ import {
 
 export const getStateById = async (id) => {
   const response = await fetch(`${BASE_URL}/api/fetch-states`, {
-    method: "POST"
+    method: "POST",
   });
   const data = await response.json();
-  const state = await data?.states.find((item) => item.id === id)
+  const state = await data?.states.find((item) => item.id === id);
   return state.name;
-}
+};
 
 export const fetchProjects = () => async (dispatch) => {
   try {
     const response = await fetch(`${BASE_URL}/api/projects`);
+
     const data = await response.json();
+    console.log(data);
     dispatch({
       type: FETCH_PROJECTS,
       payload: data,
