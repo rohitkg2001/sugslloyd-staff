@@ -10,6 +10,7 @@ export default function TabBar({ tabs, activeTab, onTabSelected, style }) {
           key={tab.name}
           style={[
             spacing.pv2,
+            // spacing.ph1,
             spacing.br3,
             { backgroundColor: activeTab === tab.name ? "#76885B" : "#F0FAF0" },
           ]}
@@ -18,7 +19,7 @@ export default function TabBar({ tabs, activeTab, onTabSelected, style }) {
           <P
             style={[
               typography.font10,
-              spacing.mh1,
+              // spacing.mh1,
               {
                 color: activeTab === tab.name ? "#fff" : "#000",
                 fontWeight: activeTab === tab.name ? "bold" : "normal",

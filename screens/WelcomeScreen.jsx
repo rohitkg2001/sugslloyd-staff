@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import CardFullWidth from "../components/card/CardFullWidth";
-import { getAllTasks, getTaskByCategory } from "../redux/actions/taskActions";
+import { getAllTasks, getStreetLightTasks, getTaskByCategory } from "../redux/actions/taskActions";
 import {
   getVendorPerformance,
   getTaskByVendor,
@@ -29,109 +29,32 @@ import {
 } from "../redux/actions/taskActions";
 
 export default function WelcomeScreen({ navigation }) {
-  const { siteInfo } = useSelector((state) => state.site);
   const { id } = useSelector((state) => state.staff);
-  const { tasks } = useSelector((state) => state.tasks);
+  const { tasks,
+    pendingStreetLightCounts,
+    surveyedStreetLightCounts,
+    installedStreetLightCounts
+  } = useSelector((state) => state.tasks);
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const nav = useNavigation();
 
   const [totalTasks, setTotalTask] = useState(0);
-  const [doneTotalTasks, setDoneTotalTask] = useState(0);
-  const [survey, setSurvey] = useState(0);
   const [doneSurvey, setDoneSurvey] = useState(0);
-  const [installed, setInstalled] = useState(0);
   const [doneInstalled, setDoneInstalled] = useState(0);
 
   const [staffPerformance, setStaffPerformance] = useState([]);
 
   useEffect(() => {
-    dispatch(getAllTasks(id));
+    dispatch(getStreetLightTasks(id));
   }, [dispatch, id]);
 
   useEffect(() => {
-    // All task overview add in code api .
-    const taskCounts = tasks.reduce(
-      (acc, task) => {
-        if (task.activity === "TotalTask") {
-          acc.totalTask++;
-          if (task.vendor_id || task.image || task.pdf) acc.doneTotalTask++;
-        } else if (task.activity === "Survey") {
-          acc.survey++;
-          if (task.vendor_id || task.image || task.pdf) acc.doneSurvey++;
-        } else if (task.activity === "Installed") {
-          acc.installed++;
-          if (task.vendor_id || task.image || task.pdf) acc.doneInstalled++;
-        }
-        return acc;
-      },
-      {
-        totalTask: 0,
-        doneTotalTask: 0,
-        survey: 0,
-        doneSurvey: 0,
-        installed: 0,
-        doneInstalled: 0,
-      }
-    );
+    setTotalTask(pendingStreetLightCounts);
+    setDoneSurvey(surveyedStreetLightCounts)
+    setDoneInstalled(installedStreetLightCounts)
+  }, [tasks, pendingStreetLightCounts, surveyedStreetLightCounts, installedStreetLightCounts]);
 
-    setTotalTask(taskCounts.totalTask);
-    setDoneTotalTask(taskCounts.doneTotalTask);
-    setSurvey(taskCounts.survey);
-    setDoneSurvey(taskCounts.doneSurvey);
-    setInstalled(taskCounts.installed);
-    setDoneInstalled(taskCounts.doneInstalled);
-  }, [tasks]);
-
-  //TeamPerformance ka API add karna hai
-
-  useEffect(() => {
-    const fetchCounts = async () => {
-      const staffTargetPerformance = await getStaffPerformance();
-      const updatedPerformance = staffTargetPerformance
-        .map((data) => {
-          const totalAlloted = data.total_alloted || 0;
-          const completed = data.completed || 0;
-          return {
-            ...data,
-            pending: totalAlloted - completed,
-          };
-        })
-        .filter((data) => data.total_alloted > 0);
-      setStaffPerformance(updatedPerformance);
-    };
-
-    // dispatch(getAllTasks(id));
-    //fetchCounts();
-  }, [dispatch, id]);
-
-  // //VendorPerformance ka API Add karna hai
-  const getCounts = async () => {
-    try {
-      const tasksByEngineer = await getVendorPerformance(id);
-
-      const updatedPerformance = tasksByEngineer.map((data) => {
-        const totalAlloted = data.total_alloted || 0;
-        const completed = data.completed || 0;
-        const pending = totalAlloted - completed;
-
-        return {
-          ...data,
-          pending,
-        };
-      });
-
-      setStaffPerformance(updatedPerformance);
-    } catch (error) {
-      console.error("Error fetching vendor performance:", error);
-    }
-  };
-
-  useEffect(() => {
-    // dispatch(getAllTasks(id));
-    // getCounts();
-  }, [dispatch, id]);
 
   return (
     <ContainerComponent>
@@ -239,21 +162,21 @@ export default function WelcomeScreen({ navigation }) {
             <TouchableOpacity style={{ alignItems: "center" }}>
               <H6 style={typography.font14}>{"Total Tasks"}</H6>
               <H6 style={spacing.ml2}>
-                {doneTotalTasks}/
+                {doneInstalled}/
                 <H6 style={typography.textDanger}>{totalTasks}</H6>
               </H6>
             </TouchableOpacity>
             <TouchableOpacity style={{ marginLeft: 20 }}>
               <H6 style={typography.font14}>{t("Survey")}</H6>
               <H6 style={spacing.ml1}>
-                {doneSurvey}/<H6 style={typography.textDanger}>{survey}</H6>
+                {doneSurvey}/<H6 style={typography.textDanger}>{totalTasks}</H6>
               </H6>
             </TouchableOpacity>
             <View style={{ alignItems: "center" }}>
               <H6 style={typography.font14}>{t("Installed")}</H6>
               <H6 style={spacing.ml2}>
                 {doneInstalled}/
-                <H6 style={typography.textDanger}>{installed}</H6>
+                <H6 style={typography.textDanger}>{totalTasks}</H6>
               </H6>
             </View>
           </View>

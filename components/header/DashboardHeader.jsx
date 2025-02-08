@@ -56,7 +56,7 @@ export default function DashboardHeader({
             <Span
               style={[
                 typography.textLight,
-                typography.font16,
+                typography.font12,
                 { textAlign: "center" },
               ]}
             >

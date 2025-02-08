@@ -38,7 +38,6 @@ export default function SiteLocationScreen({ navigation }) {
   };
 
   const getSiteInfo = () => {
-    console.log(`${selectedDistrict},${selectedBlock}, ${selectedPanchayat}, ${selectedWard}`)
     const siteInfo = "BIR/PAT/FAT/WAR"
     dispatch(setSiteInfo(siteInfo))
     navigation.navigate('welcomeScreen')

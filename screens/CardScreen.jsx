@@ -9,22 +9,6 @@ export default function CardScreen({ navigation }) {
     navigation.navigate("loginScreen", { nextScreen });
   };
 
-  // const handlePress = (initialScreen) => {
-  //   navigation.navigate("loginScreen");
-
-  //   setTimeout(() => {
-  //     navigation.navigate("attendancePunch");
-
-  //     setTimeout(() => {
-  //       if (initialScreen === "rooftop") {
-  //         navigation.navigate("homeScreen");
-  //       } else if (initialScreen === "streetlight") {
-  //         navigation.navigate("welcomeScreen");
-  //       }
-  //     }, 15000);
-  //   }, 15000);
-  // };
-
   return (
     <ContainerComponent justifyContent="space-between" paddingVertical={20}>
       <Image

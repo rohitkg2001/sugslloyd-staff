@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -77,9 +77,34 @@ export default function CurrentProjectsScreen({ navigation }) {
     setShowVendorSelection(true);
   };
 
+  // const handleTabSelection = (tab) => {
+  //   setActiveTab(tab);
+
+  //   let filteredTasks = [];
+  //   if (tab === "Unassigned") {
+  //     filteredTasks = tasks.filter((task) => !task.vendor_id);
+  //   } else if (tab === "Assigned") {
+  //     filteredTasks = tasks.filter((task) => task.vendor_id && !task.image);
+  //   } else if (tab === "Pending") {
+  //     filteredTasks = tasks.filter((task) => task.image && task.vendor_id);
+  //   } else if (tab === "Done") {
+  //     filteredTasks = tasks.filter((task) => task.status === "Completed");
+  //   } else if (tab === "View All") {
+  //     filteredTasks = tasks;
+  //   }
+
+  //   setCurrentTasks(filteredTasks);
+  //   setTaskCounts({
+  //     unassigned: tasks.filter((task) => !task.vendor_id).length,
+  //     assigned: tasks.filter((task) => task.vendor_id && !task.image).length,
+  //     pending: tasks.filter((task) => task.image && task.vendor_id).length,
+  //     done: tasks.filter((task) => task.status === "Completed").length,
+  //     all: tasks.length,
+  //   });
+  // };
+
   const handleTabSelection = (tab) => {
     setActiveTab(tab);
-
     let filteredTasks = [];
     if (tab === "Unassigned") {
       filteredTasks = tasks.filter((task) => !task.vendor_id);
@@ -89,10 +114,11 @@ export default function CurrentProjectsScreen({ navigation }) {
       filteredTasks = tasks.filter((task) => task.image && task.vendor_id);
     } else if (tab === "Done") {
       filteredTasks = tasks.filter((task) => task.status === "Done");
-    } else if (tab === "View All") {
+    } else if (tab === "Rejected") {
+      filteredTasks = [];
+    } else {
       filteredTasks = tasks;
     }
-
     setCurrentTasks(filteredTasks);
   };
 
@@ -207,10 +233,23 @@ export default function CurrentProjectsScreen({ navigation }) {
                   count: tasks.filter((t) => t.status === "Done").length || "",
                 },
                 { name: "View All", count: tasks.length || "" },
+                { name: "Rejected" },
               ].map((tab) => (tab.count ? tab : { name: tab.name }))}
               activeTab={activeTab}
               onTabSelected={handleTabSelection}
             />
+            {activeTab === "Rejected" && (
+              <View
+                style={{
+                  alignItems: "center",
+                  top: 12,
+                }}
+              >
+                <P style={[typography.font18, typography.textBold]}>
+                  No Reject Found
+                </P>
+              </View>
+            )}
           </View>
         )}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}

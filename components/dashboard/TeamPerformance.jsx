@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
+const MEDAL_COLORS = ["#FFD700", "#C0C0C0", "#CD7F32"]; // Gold, Silver, Bronze
+
 import CardFullWidth from "../card/CardFullWidth";
 import {
   LIGHT,
@@ -10,6 +12,7 @@ import {
   typography,
   spacing,
   ICON_SMALL,
+  PRIMARY_COLOR_TRANSPARENT,
 } from "../../styles";
 import { H5, H6 } from "../text";
 
@@ -30,43 +33,11 @@ export default function TeamPerformance() {
   const navigation = useNavigation();
   const { id } = useSelector((state) => state.staff);
 
-  // useEffect(() => {
-  //   const fetchCounts = async () => {
-  //     const staffTargetPerformance = await getStaffPerformance();
-  //     const updatedPerformance = staffTargetPerformance
-  //       .map((data) => {
-  //         const totalAlloted = data.total_alloted || 0;
-  //         const completed = data.completed || 0;
-  //         return {
-  //           ...data,
-  //           pending: totalAlloted - completed,
-  //         };
-  //       })
-  //       .filter((data) => data.total_alloted > 0);
-  //     setStaffPerformance(updatedPerformance);
-  //   };
-
-  //   dispatch(getAllTasks(id));
-  //   fetchCounts();
-  // }, [dispatch, id]);
-
   useEffect(() => {
     const fetchCounts = async () => {
       const staffTargetPerformance = await getStaffPerformance();
-      const updatedPerformance = staffTargetPerformance
-        .map((data) => {
-          const totalAlloted = data.total_alloted || 0;
-          const completed = data.tasks
-            ? data.tasks.filter((task) => task.status === "Completed").length
-            : 0;
-          return {
-            ...data,
-            completed,
-            pending: totalAlloted - completed,
-          };
-        })
-        .filter((data) => data.total_alloted > 0);
-      setStaffPerformance(updatedPerformance);
+      setStaffPerformance(staffTargetPerformance)
+      // setStaffPerformance(updatedPerformance);
     };
 
     dispatch(getAllTasks(id));
@@ -104,7 +75,7 @@ export default function TeamPerformance() {
           </H6>
         </View>
 
-        {staffPerformance.map((data) => (
+        {staffPerformance.map((data, index) => (
           <TouchableOpacity
             key={data.id}
             onPress={() => {
@@ -112,18 +83,34 @@ export default function TeamPerformance() {
               navigation.navigate("taskScreen", { engineer: data });
             }}
           >
-            <View style={[styles.row, spacing.bbw05, spacing.pv4]}>
-              <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
-                {data.name}
-              </H6>
-              <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
+            <View style={[styles.row, spacing.bbw05, spacing.p4, { backgroundColor: index == 0 ? PRIMARY_COLOR_TRANSPARENT : LIGHT }]}>
+              <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                {/* Medal Icon for Top 3 Performers */}
+                {index < 3 && (
+                  <Icon
+                    name="medal-outline"
+                    size={16}
+                    color={MEDAL_COLORS[index]}
+                    style={{ marginRight: 5 }}
+                  />
+                )}
+                <H6
+                  style={[
+                    typography.font12,
+                    { textAlign: "center", fontWeight: index == 0 ? "bold" : "normal" },
+                  ]}
+                >
+                  {data.name}
+                </H6>
+              </View>
+              <H6 style={[typography.font12, { flex: 1, textAlign: "center", fontWeight: index == 0 ? 'bold' : "normal" }]}>
                 {data.total_alloted || 0}
               </H6>
-              <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
-                {data.completed || 0}
+              <H6 style={[typography.font12, { flex: 1, textAlign: "center", fontWeight: index == 0 ? 'bold' : "normal" }]}>
+                {data.total_completed || 0}
               </H6>
-              <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
-                {data.pending || 0}
+              <H6 style={[typography.font12, { flex: 1, textAlign: "center", fontWeight: index == 0 ? 'bold' : "normal" }]}>
+                {data.total_pending || 0}
               </H6>
             </View>
           </TouchableOpacity>
