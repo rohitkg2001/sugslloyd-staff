@@ -1,10 +1,16 @@
+// import All react native
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
+import { useTranslation } from "react-i18next";
+
+// import all components
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
+
+// import all styles
 import { H5 } from "../components/text";
 import { spacing, typography } from "../styles";
-import { useTranslation } from "react-i18next";
+
 
 const InventoryDetailsScreen = ({ route, navigation }) => {
   const { t } = useTranslation();

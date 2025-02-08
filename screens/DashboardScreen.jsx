@@ -1,12 +1,13 @@
+// import react native
 import { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useTranslation } from "react-i18next";
+
+// import All components
 import ContainerComponent from "../components/ContainerComponent";
-import { LIGHT, SCREEN_WIDTH, spacing, styles, ICON_MEDIUM } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
 import DashboardHeader from "../components/header/DashboardHeader";
 import Filter from "../components/Filter";
 import ProjectOverview from "../components/dashboard/ProjectOverview";
@@ -14,8 +15,14 @@ import AllTaskOverview from "../components/dashboard/AllTaskOverview";
 import TeamPerformance from "../components/dashboard/TeamPerformance";
 import VendorPerformance from "../components/dashboard/VendorPerformance";
 import TotalVendor from "../components/dashboard/TotalVendor";
+
+// import All Redux
+import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../redux/actions/projectAction";
 import { getAllVendors } from "../redux/actions/vendorAction";
+
+// import All Styles 
+import { LIGHT, SCREEN_WIDTH, spacing, styles, ICON_MEDIUM } from "../styles";
 
 export default function DashboardScreen({ navigation }) {
   const [dueTasks, setDueTasks] = useState(0);

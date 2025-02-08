@@ -1,21 +1,28 @@
+// import All React native
 import { useEffect, useRef, useState } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllTasks } from "../redux/actions/taskActions";
+
+// import all components
 import ContainerComponent from "../components/ContainerComponent";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import ClickableCard1 from "../components/card/ClickableCard1";
 import MyHeader from "../components/header/MyHeader";
-import { H6, P, Span } from "../components/text";
 import VendorSelectionScreen from "./VendorSelectionScreen";
 import CustomMenu from "../components/TargetScreen/CustomMenu";
 import TabBar from "../components/TabBar";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
 import Filter from "../components/Filter";
+
+// import all redux
+import { useDispatch, useSelector } from "react-redux";
+import { getAllTasks } from "../redux/actions/taskActions";
+
+// import all styles
+import { H6, P, Span } from "../components/text";
 import {
   spacing,
   styles,

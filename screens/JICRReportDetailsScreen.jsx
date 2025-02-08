@@ -1,13 +1,16 @@
-import React from "react";
+// import all react native
 import { View, ScrollView } from "react-native";
 import { Card } from "react-native-paper";
 import Icon from "react-native-vector-icons/Ionicons";
+
+// import all components
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { H6, P } from "../components/text";
-import { fakerData, executingAgencyData } from "../utils/faker";
 import Button from "../components/buttons/Button";
-
+// import faker 
+import { fakerData, executingAgencyData } from "../utils/faker";
+// import all styles
+import { H6, P } from "../components/text";
 import {
   ICON_LARGE,
   LIGHT,
@@ -52,33 +55,6 @@ export default function JICRReportDetailsScreen({ route }) {
             <H6 style={[typography.textBold]}>Ward:</H6>
             <P>{reportData.ward}</P>
           </View>
-
-          {/* <View>
-            <View style={[styles.row, spacing.mt3]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font12,
-                    { textTransform: "uppercase", color: "gray" },
-                  ]}
-                >
-                  Start date
-                </Span>
-                <P style={[typography.font14]}>{reportData.fromDate}</P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font12,
-                    { textTransform: "uppercase", color: "gray" },
-                  ]}
-                >
-                  End date
-                </Span>
-                <P style={[typography.font14]}>{reportData.toDate}</P>
-              </View>
-            </View>
-          </View> */}
         </Card>
         <View
           style={[
@@ -248,58 +224,6 @@ export default function JICRReportDetailsScreen({ route }) {
           ))}
         </View>
 
-        {/* {fakerData.map((item, index) => (
-          <View
-            key={index}
-            style={[
-              spacing.p2,
-              {
-                backgroundColor: LIGHT,
-              },
-            ]}
-          >
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View style={[styles.row, { alignItems: "center" }]}>
-                {[
-                  { label: "Solar Panel No:", data: item.solarPanel },
-                  { label: "Battery No:", data: item.battery },
-                  { label: "Light No:", data: item.light },
-                  { label: "SIM No:", data: item.sim },
-                  { label: "Pole No:", data: item.pole },
-                  { label: "PIN", data: item.pin },
-                  { label: "State", data: item.state },
-                ].map((field, fieldIndex) => (
-                  <View
-                    key={fieldIndex}
-                    style={[
-                      spacing.mr4,
-                      spacing.pv2,
-                      {
-                        alignItems: "center",
-                      },
-                    ]}
-                  >
-                    <P style={[typography.textBold]}>{field.label}</P>
-
-                    <View
-                      style={[
-                        spacing.bbw05,
-                        spacing.bbwc1,
-                        spacing.mv1,
-                        { width: "100%" },
-                      ]}
-                    />
-                    {field.data.split(", ").map((value, valueIndex) => (
-                      <View key={valueIndex} style={{ marginVertical: 5 }}>
-                        <P>{value}</P>
-                      </View>
-                    ))}
-                  </View>
-                ))}
-              </View>
-            </ScrollView>
-          </View>
-        ))} */}
         {fakerData.map((item, index) => (
           <View
             key={index}

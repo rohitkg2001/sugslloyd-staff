@@ -1,8 +1,11 @@
+//// import for all React Native 
 import { View, Image, TouchableOpacity } from "react-native";
 import { Card } from "react-native-paper";
+// import for All Components
 import ContainerComponent from "../components/ContainerComponent";
-import { spacing, typography, SCREEN_WIDTH } from "../styles";
 import { P } from "../components/text";
+// import all styles 
+import { spacing, typography, SCREEN_WIDTH } from "../styles";
 
 export default function CardScreen({ navigation }) {
   const handlePress = (nextScreen) => {

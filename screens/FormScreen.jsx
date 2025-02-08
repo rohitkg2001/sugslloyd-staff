@@ -1,17 +1,24 @@
+// import all react native
 import { useState, useEffect } from "react";
 import { View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useDispatch } from "react-redux";
+import moment from "moment";
+import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { addProject } from "../redux/actions/projectAction";
+
+// import All Components
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
-import moment from "moment";
-import { useTranslation } from "react-i18next";
 import MyPickerInput from "../components/input/MyPickerInput";
+
+// import for All Redux
+import { useDispatch } from "react-redux";
+import { addProject } from "../redux/actions/projectAction";
+
+// import All Styles
+import { SCREEN_WIDTH, spacing } from "../styles";
 
 const FormScreen = () => {
   const [project_name, setProjectName] = useState("");

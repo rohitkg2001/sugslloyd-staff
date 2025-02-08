@@ -1,16 +1,25 @@
+// import all react native
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+// import All components
+
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import MyFlatList from "../components/utility/MyFlatList";
-import { inventoryData, projects, totalsitesData } from "../utils/faker";
 import InventoryCard from "../components/card/InventoryCard";
 import NoRecord from "./NoRecord";
-import { useTranslation } from "react-i18next";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
-import { styles } from "../styles";
 import InventoryDetailsModal from "../components/InventoryDetailsModal";
+
+// import faker 
+import { inventoryData, projects, totalsitesData } from "../utils/faker";
+
+// import All redux
 import { useSelector } from "react-redux";
+// import all styles
+import { styles } from "../styles";
 
 export default function InventoryScreen({ navigation }) {
   const [isVisible, setVisible] = useState(false);

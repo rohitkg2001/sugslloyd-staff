@@ -1,13 +1,16 @@
+// import for all React Native 
 import { useState, useEffect, useRef } from "react";
 import { View, Text, Alert, Image, ScrollView } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import ContainerComponent from "../components/ContainerComponent";
 import * as Location from "expo-location";
-import { styles, spacing, typography, SCREEN_WIDTH, layouts } from "../styles";
+
+// import for All Components
+import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import Button from "../components/buttons/Button";
-
 import { H2 } from "../components/text";
+// import for All styles 
+import { styles, spacing, typography, SCREEN_WIDTH, layouts } from "../styles";
 
 export default function AttendancePunchScreen({ navigation, route }) {
   const [permission, requestPermission] = useCameraPermissions();

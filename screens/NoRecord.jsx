@@ -1,5 +1,7 @@
-import React from "react";
+// import react native
 import { View, Image } from "react-native";
+
+// import styles
 import { P } from "../components/text";
 import { SCREEN_WIDTH, spacing } from "../styles";
 

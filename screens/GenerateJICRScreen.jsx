@@ -1,16 +1,24 @@
+// import all react native
 import { useState } from "react";
 import { View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+
+// import all components
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { H4 } from "../components/text";
 import MyPickerInput from "../components/input/MyPickerInput";
+import MyButton from "../components/buttons/MyButton";
 import Button from "../components/buttons/Button";
+
+// import faker
 import { blocks, panchayats, wards } from "../utils/faker";
-import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
+// import all redux
 import { useDispatch } from "react-redux";
 import { setSiteInfo } from "../redux/actions/siteActions";
-import MyButton from "../components/buttons/MyButton";
+
+// import All styles
+import { SCREEN_WIDTH, spacing, typography, styles } from "../styles";
+import { H4 } from "../components/text";
 
 export default function GenerateJICRScreen({ navigation }) {
   const [selectedDistrict, setSelectedDistrict] = useState("");

@@ -1,15 +1,22 @@
+// import All react native
 import { useState } from "react";
 import { View, ScrollView, TouchableOpacity } from "react-native";
-import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing, styles } from "../styles";
+
+// import all components
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyPickerInput from "../components/input/MyPickerInput";
 import MyButton from "../components/buttons/MyButton";
+
+// import all redux
+import { useDispatch } from "react-redux";
 import { updateInventory } from "../redux/actions/inventoryAction";
-import { useTranslation } from "react-i18next";
+
+// import all styles
+import { SCREEN_WIDTH, spacing, styles } from "../styles";
 
 const InventoryFormScreen = ({ navigation, route }) => {
   const { t } = useTranslation();
