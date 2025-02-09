@@ -38,10 +38,10 @@ import JICRReportDetailsScreen from "../screens/JICRReportDetailsScreen";
 import AttendancePunchScreen from "../screens/AttendancePunchScreen";
 
 const Stack = createNativeStackNavigator();
-export default function MyStackNavigator() {
+export default function MyStackNavigator({ initialRouteName }) {
   return (
     <Stack.Navigator
-      initialRouteName="cardScreen"
+      initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
       }}

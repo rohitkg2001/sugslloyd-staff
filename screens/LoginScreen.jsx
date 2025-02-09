@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import MyImageBackground from "../components/MyImageBackground";
-import { H1, H5, Span, H2 } from "../components/text";
+import { H1, H5, Span, H2, P } from "../components/text";
 import MyTextInput from "../components/input/MyTextInput";
 import Button from "../components/buttons/Button";
 import { layouts, spacing, typography, styles, ICON_LARGE } from "../styles";
@@ -49,8 +49,8 @@ export default function LoginScreen({ navigation, route }) {
     <MyImageBackground imageSource={require("../assets/Login.png")}>
       <ScrollView style={{ flex: 1 }}>
         <View style={[layouts.center, spacing.mv5]}>
-          <H1 style={spacing.mv2}>{t("loginTitle")}</H1>
-          <H5 style={spacing.mb5}>{t("loginSubtitle")}</H5>
+          <H1 style={[typography.fontLato]}>{t("loginTitle")}</H1>
+          <P style={[typography.fontLato]}>{t("loginSubtitle")}</P>
         </View>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -74,8 +74,8 @@ export default function LoginScreen({ navigation, route }) {
             <TouchableOpacity
               style={{
                 position: "absolute",
-                right: spacing.mr2.marginRight,
-                top: 40,
+                right: 12,
+                top: 33,
               }}
               onPress={togglePasswordVisibility}
             >

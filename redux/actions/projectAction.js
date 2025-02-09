@@ -1,13 +1,4 @@
-import {
-  FETCH_PROJECTS,
-  SEARCH_PROJECTS,
-  VIEW_PROJECT,
-  UPDATE_PROJECT,
-  COUNT_PROJECTS,
-  CHANGE_PROJECT_STATUS,
-  ADD_PROJECT,
-  BASE_URL,
-} from "../constant";
+import { FETCH_PROJECTS, ADD_PROJECT, BASE_URL } from "../constant";
 
 export const getStateById = async (id) => {
   const response = await fetch(`${BASE_URL}/api/fetch-states`, {

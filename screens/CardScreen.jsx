@@ -54,7 +54,7 @@ export default function CardScreen({ navigation }) {
               ]}
             />
             <View style={[spacing.p3]}>
-              <P style={[typography.font16, { textAlign: "center" }]}>
+              <P style={[typography.font16, typography.fontLato, { textAlign: "center" }]}>
                 Rooftop Installation
               </P>
             </View>

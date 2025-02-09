@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  UPDATE_TASK,
   VIEW_TASK,
   INITIALIZE_TASKS,
   BASE_URL,
@@ -152,11 +151,6 @@ export const getTaskByEngineer = (id) => async (dispatch) => {
     console.error(error);
   }
 };
-
-export const updateTask = (task) => ({
-  type: UPDATE_TASK,
-  payload: task,
-});
 
 export const viewTask = (taskId) => ({
   type: VIEW_TASK,

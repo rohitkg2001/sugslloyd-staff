@@ -1,6 +1,5 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
 export const BASE_URL = "https://slldm.com";
-//export const BASE_URL = "http://192.168.1.5:8000";
 //export const BASE_URL = "https://solarcrm.dashandots.tech";
 
 export const initialState = {};
@@ -43,3 +42,5 @@ export const GET_SURVEYED_STREETLIGHTS = "GET_SURVEYED_STREETLIGHTS"
 export const TOTAL_SURVEYED_STREETLIGHTS = "TOTAL_SURVEYED_STREETLIGHTS"
 export const GET_INSTALLED_STREETLIGHTS = "GET_INSTALLED_STREETLIGHTS"
 export const TOTAL_INSTALLED_STREETLIGHTS = "TOTAL_INSTALLED_STREETLIGHTS"
+export const GET_ALL_REJECTED_STREETLIGHTS = "GET_ALL_REJECTED_STREETLIGHTS"
+

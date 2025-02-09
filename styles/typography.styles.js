@@ -13,6 +13,9 @@ import {
 import { StyleSheet } from "react-native";
 
 export const typography = StyleSheet.create({
+  fontLato: {
+    fontFamily: 'lato_regular'
+  },
   textPrimary: {
     color: PRIMARY_COLOR,
   },

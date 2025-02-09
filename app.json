@@ -55,7 +55,14 @@
           "sounds": []
         }
       ],
-      "expo-asset"
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/lato_regular.ttf"
+          ]
+        }
+      ]
     ],
     "extra": {
       "eas": {
