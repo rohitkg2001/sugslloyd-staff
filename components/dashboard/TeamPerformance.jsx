@@ -1,10 +1,21 @@
+// import All react native
 import { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
-const MEDAL_COLORS = ["#FFD700", "#C0C0C0", "#CD7F32"]; // Gold, Silver, Bronze
-
+// import Components
 import CardFullWidth from "../card/CardFullWidth";
+
+// import Redux
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllTasks,
+  getStaffPerformance,
+  getTaskByEngineer,
+} from "../../redux/actions/taskActions";
+// import All styles
 import {
   LIGHT,
   PRIMARY_COLOR,
@@ -14,17 +25,8 @@ import {
   ICON_SMALL,
   PRIMARY_COLOR_TRANSPARENT,
 } from "../../styles";
-import { H5, H6 } from "../text";
-
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
-
-import {
-  getAllTasks,
-  getStaffPerformance,
-  getTaskByEngineer,
-} from "../../redux/actions/taskActions";
+import { H5, H6, H4 } from "../text";
+const MEDAL_COLORS = ["#FFD700", "#C0C0C0", "#CD7F32"]; // Gold, Silver, Bronze
 
 export default function TeamPerformance() {
   const [staffPerformance, setStaffPerformance] = useState([]);
@@ -36,7 +38,7 @@ export default function TeamPerformance() {
   useEffect(() => {
     const fetchCounts = async () => {
       const staffTargetPerformance = await getStaffPerformance();
-      setStaffPerformance(staffTargetPerformance)
+      setStaffPerformance(staffTargetPerformance);
       // setStaffPerformance(updatedPerformance);
     };
 
@@ -52,25 +54,55 @@ export default function TeamPerformance() {
           size={ICON_SMALL}
           color={PRIMARY_COLOR}
         />
-        <H5 style={[typography.font16, { marginRight: 140 }]}>
+        <H6
+          style={[
+            typography.fontLato,
+            typography.textBold,
+            { marginRight: 160 },
+          ]}
+        >
           {t("Team Performance")}
-        </H5>
+        </H6>
       </View>
 
       <View style={[spacing.bbw05, spacing.mv1]} />
 
       <View style={{ flexDirection: "column" }}>
         <View style={[styles.row, spacing.bbw05, spacing.pv2]}>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("Engineer")}
           </H6>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("Total")}
           </H6>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("Completed")}
           </H6>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("Pending")}
           </H6>
         </View>
@@ -83,8 +115,25 @@ export default function TeamPerformance() {
               navigation.navigate("taskScreen", { engineer: data });
             }}
           >
-            <View style={[styles.row, spacing.bbw05, spacing.p4, { backgroundColor: index == 0 ? PRIMARY_COLOR_TRANSPARENT : LIGHT }]}>
-              <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+            <View
+              style={[
+                styles.row,
+                spacing.bbw05,
+                spacing.p4,
+                {
+                  backgroundColor:
+                    index == 0 ? PRIMARY_COLOR_TRANSPARENT : LIGHT,
+                },
+              ]}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 {/* Medal Icon for Top 3 Performers */}
                 {index < 3 && (
                   <Icon
@@ -96,20 +145,55 @@ export default function TeamPerformance() {
                 )}
                 <H6
                   style={[
-                    typography.font12,
-                    { textAlign: "center", fontWeight: index == 0 ? "bold" : "normal" },
+                    typography.font10,
+                    typography.fontLato,
+
+                    {
+                      textAlign: "center",
+                      fontWeight: index == 0 ? "bold" : "normal",
+                    },
                   ]}
                 >
                   {data.name}
                 </H6>
               </View>
-              <H6 style={[typography.font12, { flex: 1, textAlign: "center", fontWeight: index == 0 ? 'bold' : "normal" }]}>
+              <H6
+                style={[
+                  typography.font12,
+                  typography.fontLato,
+                  {
+                    flex: 1,
+                    textAlign: "center",
+                    fontWeight: index == 0 ? "bold" : "normal",
+                  },
+                ]}
+              >
                 {data.total_alloted || 0}
               </H6>
-              <H6 style={[typography.font12, { flex: 1, textAlign: "center", fontWeight: index == 0 ? 'bold' : "normal" }]}>
+              <H6
+                style={[
+                  typography.font12,
+                  typography.fontLato,
+                  {
+                    flex: 1,
+                    textAlign: "center",
+                    fontWeight: index == 0 ? "bold" : "normal",
+                  },
+                ]}
+              >
                 {data.total_completed || 0}
               </H6>
-              <H6 style={[typography.font12, { flex: 1, textAlign: "center", fontWeight: index == 0 ? 'bold' : "normal" }]}>
+              <H6
+                style={[
+                  typography.font12,
+                  typography.fontLato,
+                  {
+                    flex: 1,
+                    textAlign: "center",
+                    fontWeight: index == 0 ? "bold" : "normal",
+                  },
+                ]}
+              >
                 {data.total_pending || 0}
               </H6>
             </View>

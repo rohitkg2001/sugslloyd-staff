@@ -1,9 +1,21 @@
+// import react native
 import { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
+// import components
 import CardFullWidth from "../card/CardFullWidth";
+
+// import Redux
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getVendorPerformance,
+  getAllTasks,
+  getTaskByVendor,
+} from "../../redux/actions/taskActions";
+// import styles
 import {
   LIGHT,
   PRIMARY_COLOR,
@@ -12,15 +24,7 @@ import {
   typography,
   ICON_SMALL,
 } from "../../styles";
-import { H5, H6 } from "../text";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-
-import {
-  getVendorPerformance,
-  getAllTasks,
-  getTaskByVendor,
-} from "../../redux/actions/taskActions";
+import { H6 } from "../text";
 
 export default function VendorPerformance() {
   const [staffPerformance, setStaffPerformance] = useState([]);
@@ -32,7 +36,7 @@ export default function VendorPerformance() {
   const getCounts = async () => {
     try {
       const tasksByEngineer = await getVendorPerformance(id);
-      console.log(tasksByEngineer)
+      console.log(tasksByEngineer);
       setStaffPerformance(tasksByEngineer);
     } catch (error) {
       console.error("Error fetching vendor performance:", error);
@@ -52,25 +56,55 @@ export default function VendorPerformance() {
           size={ICON_SMALL}
           color={PRIMARY_COLOR}
         />
-        <H5 style={[typography.font16, { marginRight: 130 }]}>
+        <H6
+          style={[
+            typography.fontLato,
+            typography.textBold,
+            { marginRight: 150 },
+          ]}
+        >
           {t("Vendor Performance")}
-        </H5>
+        </H6>
       </View>
 
       <View style={[spacing.bbw05, spacing.mv1]} />
 
       <View style={{ flexDirection: "column" }}>
         <View style={[styles.row, spacing.bbw05, spacing.pv2]}>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("Engineer")}
           </H6>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("Total")}
           </H6>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("Completed")}
           </H6>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("Pending")}
           </H6>
         </View>

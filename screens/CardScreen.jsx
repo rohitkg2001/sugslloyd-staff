@@ -54,7 +54,13 @@ export default function CardScreen({ navigation }) {
               ]}
             />
             <View style={[spacing.p3]}>
-              <P style={[typography.font16, typography.fontLato, { textAlign: "center" }]}>
+              <P
+                style={[
+                  typography.font16,
+                  typography.fontLato,
+                  typography.textCenter,
+                ]}
+              >
                 Rooftop Installation
               </P>
             </View>
@@ -84,7 +90,13 @@ export default function CardScreen({ navigation }) {
               ]}
             />
             <View style={[spacing.p3]}>
-              <P style={[typography.font16, { textAlign: "center" }]}>
+              <P
+                style={[
+                  typography.font16,
+                  typography.fontLato,
+                  typography.textCenter,
+                ]}
+              >
                 Streetlight Installation
               </P>
             </View>
@@ -92,7 +104,9 @@ export default function CardScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      <P style={[typography.font16, { color: "black" }]}>
+      <P
+        style={[typography.font16, typography.fontLato, typography.textCenter]}
+      >
         Powered by Dashandots Technology
       </P>
     </ContainerComponent>

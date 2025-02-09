@@ -10,7 +10,7 @@ import {
   typography,
   ICON_SMALL,
 } from "../../styles";
-import { H5, H6 } from "../../components/text";
+import { H6 } from "../../components/text";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -49,25 +49,55 @@ export default function ProjectOverview() {
     <CardFullWidth backgroundColor={LIGHT}>
       <View style={[styles.row, { alignItems: "center" }]}>
         <Icon name="calendar-clear" size={ICON_SMALL} color={PRIMARY_COLOR} />
-        <H5 style={[typography.font16, { marginRight: 150 }]}>
+        <H6
+          style={[
+            typography.fontLato,
+            typography.textBold,
+            { marginRight: 170 },
+          ]}
+        >
           {t("project_overview")}
-        </H5>
+        </H6>
       </View>
 
       <View style={[spacing.bbw05, spacing.mv2]} />
 
       <View style={{ flexDirection: "column" }}>
         <View style={[styles.row, spacing.bbw05, spacing.pv2]}>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("project")}
           </H6>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("total_sites")}
           </H6>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("Completed")}
           </H6>
-          <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+          <H6
+            style={[
+              typography.font14,
+              typography.fontLato,
+              { flex: 1, textAlign: "center" },
+            ]}
+          >
             {t("Pending")}
           </H6>
         </View>
@@ -80,7 +110,13 @@ export default function ProjectOverview() {
             }
             style={[spacing.bbw05, spacing.pv3, { flexDirection: "row" }]}
           >
-            <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>
+            <H6
+              style={[
+                typography.font10,
+                typography.fontLato,
+                { flex: 1, textAlign: "center" },
+              ]}
+            >
               {project.project_name}
             </H6>
             <H6 style={[typography.font12, { flex: 1, textAlign: "center" }]}>

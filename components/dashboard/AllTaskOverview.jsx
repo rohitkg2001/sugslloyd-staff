@@ -1,7 +1,22 @@
+// import All react antive
 import { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+
+// import components
 import CardFullWidth from "../card/CardFullWidth";
+
+// import Redux
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllTasks,
+  getTaskByCategory,
+} from "../../redux/actions/taskActions";
+
+// import all styles
+import { H6 } from "../../components/text";
 import {
   LIGHT,
   PRIMARY_COLOR,
@@ -10,15 +25,7 @@ import {
   typography,
   ICON_SMALL,
 } from "../../styles";
-import {
-  getAllTasks,
-  getTaskByCategory,
-} from "../../redux/actions/taskActions";
 
-import { H5, H6 } from "../../components/text";
-import { useNavigation } from "@react-navigation/native";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
 
 export default function AllTaskOverview() {
   const [installation, setInstallation] = useState(0);
@@ -42,9 +49,7 @@ export default function AllTaskOverview() {
       (task) => task.activity === "Installation"
     ).length;
     const doneInstallationCount = tasks.filter(
-      (task) =>
-        task.activity === "Installation" &&
-        task.status === "Completed"
+      (task) => task.activity === "Installation" && task.status === "Completed"
     ).length;
 
     const rmsCount = tasks.filter((task) => task.activity === "RMS").length;
@@ -85,9 +90,15 @@ export default function AllTaskOverview() {
     <CardFullWidth backgroundColor={LIGHT}>
       <View style={[styles.row, { alignItems: "center" }]}>
         <Icon name="filter" size={ICON_SMALL} color={PRIMARY_COLOR} />
-        <H5 style={[typography.font16, { marginRight: 150 }]}>
+        <H6
+          style={[
+            typography.fontLato,
+            typography.textBold,
+            { marginRight: 170 },
+          ]}
+        >
           {t("all_task_overview")}
-        </H5>
+        </H6>
       </View>
       <View style={[spacing.bbw05, spacing.mv1]} />
       <View
@@ -97,26 +108,39 @@ export default function AllTaskOverview() {
           style={{ alignItems: "center" }}
           onPress={() => viewTask("Installation")}
         >
-          <H6 style={typography.font14}>{t("installation")}</H6>
-          <H6 style={spacing.ml2}>
+          <H6 style={[typography.font14, typography.fontLato]}>
+            {t("installation")}
+          </H6>
+          <H6 style={[spacing.ml2, typography.font12]}>
             {doneInstallation}/
-            <H6 style={typography.textDanger}>{installation}</H6>
+            <H6 style={[typography.textDanger, typography.font12]}>
+              {installation}
+            </H6>
           </H6>
         </TouchableOpacity>
         <TouchableOpacity
           style={{ marginLeft: 20 }}
           onPress={() => viewTask("RMS")}
         >
-          <H6 style={typography.font14}>{t("rms_status")}</H6>
-          <H6 style={spacing.ml1}>
-            {doneRMS}/<H6 style={typography.textDanger}>{rmsStatus}</H6>
+          <H6 style={[typography.font14, typography.fontLato]}>
+            {t("rms_status")}
+          </H6>
+          <H6 style={[spacing.ml2, typography.font12]}>
+            {doneRMS}/
+            <H6 style={[typography.textDanger, typography.font12]}>
+              {rmsStatus}
+            </H6>
           </H6>
         </TouchableOpacity>
         <View style={{ alignItems: "center" }}>
-          <H6 style={typography.font14}>{t("final_inspection")}</H6>
-          <H6 style={spacing.ml2}>
+          <H6 style={[typography.font14, typography.fontLato]}>
+            {t("final_inspection")}
+          </H6>
+          <H6 style={[spacing.ml2, typography.font12]}>
             {doneFinalInspection}/
-            <H6 style={typography.textDanger}>{finalInspection}</H6>
+            <H6 style={[typography.textDanger, typography.font12]}>
+              {finalInspection}
+            </H6>
           </H6>
         </View>
       </View>

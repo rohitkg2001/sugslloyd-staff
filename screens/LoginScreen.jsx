@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+// import  All React native
+import { useState } from "react";
 import {
   KeyboardAvoidingView,
   View,
@@ -7,16 +8,23 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
+import { useTranslation } from "react-i18next";
+
+// import All Components
 import MyImageBackground from "../components/MyImageBackground";
-import { H1, H5, Span, H2, P } from "../components/text";
 import MyTextInput from "../components/input/MyTextInput";
 import Button from "../components/buttons/Button";
-import { layouts, spacing, typography, styles, ICON_LARGE } from "../styles";
-import { useDispatch } from "react-redux";
-import Icon from "react-native-vector-icons/Ionicons";
+// import All Redux
 import { login } from "../redux/actions/staffActions";
+import { useDispatch } from "react-redux";
+
+// import faker
 import { fakeDelete } from "../utils/faker";
-import { useTranslation } from "react-i18next";
+
+// import All Styles
+import { layouts, spacing, typography, styles, ICON_LARGE } from "../styles";
+import { H1, Span, H2, P } from "../components/text";
 
 export default function LoginScreen({ navigation, route }) {
   const [username, setUsername] = useState("");

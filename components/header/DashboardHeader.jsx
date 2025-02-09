@@ -1,5 +1,9 @@
+// All import React native
 import { View, TouchableOpacity } from "react-native";
-import { H4, H3, H5, P, Span, H6 } from "../text";
+import Icon from "react-native-vector-icons/Ionicons";
+
+// import styles
+import { H4, P, Span } from "../text";
 import {
   ICON_MEDIUM,
   DARK,
@@ -9,7 +13,6 @@ import {
   layouts,
   typography,
 } from "../../styles";
-import Icon from "react-native-vector-icons/Ionicons";
 
 export default function DashboardHeader({
   dueTasks,

@@ -14,7 +14,7 @@ import { StyleSheet } from "react-native";
 
 export const typography = StyleSheet.create({
   fontLato: {
-    fontFamily: 'lato_regular'
+    fontFamily: "lato_regular",
   },
   textPrimary: {
     color: PRIMARY_COLOR,
@@ -43,10 +43,19 @@ export const typography = StyleSheet.create({
   textPrimaryTransparent: {
     color: PRIMARY_COLOR_TRANSPARENT,
   },
+  // Font weights
   textBold: {
     fontWeight: "bold",
   },
-
+  text600: {
+    fontWeight: "600",
+  },
+  text400: {
+    fontWeight: "400",
+  },
+  textNormal: {
+    fontWeight: "normal",
+  },
   font10: {
     fontSize: 10,
   },
@@ -73,5 +82,25 @@ export const typography = StyleSheet.create({
   // uppercase,lowercase,capitalize
   textCapitalize: {
     textTransform: "capitalize",
+  },
+  textLower: {
+    textTransform: "lowercase",
+  },
+  textUpper: {
+    textTransform: "uppercase",
+  },
+  // Alignment
+
+  textLeft: {
+    textAlign: "left",
+  },
+  textJustify: {
+    textAlign: "justify",
+  },
+  textCenter: {
+    textAlign: "center",
+  },
+  textRight: {
+    textAlign: "right",
   },
 });
