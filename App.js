@@ -10,50 +10,40 @@ import useLanguage from "./hooks/useLanguage";
 import useAuth from "./hooks/useAuth";
 import useNotifications from "./hooks/useNotifications";
 import usePermissions from "./hooks/usePermissions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [loading, setLoading] = useState(true); // NEW: Track overall loading state
-
-  const { language, isLanguageSelected, selectLanguage } = useLanguage();
+  const [loaded, setLoaded] = useState(true); // NEW: Track overall loading state
+  const { language, isLanguageSelected, selectLanguage, loading: languageLoading } = useLanguage();
   const { isLoggedIn } = useAuth();
   const { registerForPushNotifications } = useNotifications();
-  const { permissions, permissionsLoading } = usePermissions(); // NEW: Wait for permissions
+  const { permissions } = usePermissions(); // NEW: Wait for permissions
 
   // Load Fonts
   useEffect(() => {
-    async function loadAppFonts() {
+    async function loadAppAssets() {
+      // await AsyncStorage.clear()
       await useFonts();
-      setFontsLoaded(true);
-    }
-    loadAppFonts();
-  }, []);
-
-  // Register for Push Notifications
-  useEffect(() => {
-    async function setupNotifications() {
+      await permissions()
       await registerForPushNotifications();
+      setLoaded(true);
     }
-    setupNotifications();
+    loadAppAssets();
   }, []);
-
-  // Wait for Language, Fonts, and Permissions to Load
-  if (!fontsLoaded || permissionsLoading) {
-    return <ActivityIndicator size="large" />;
-  }
 
   if (!isLanguageSelected) {
     return <LanguageSelector onSelectLanguage={selectLanguage} />;
   }
-
-  if (!permissions.push || !permissions.camera || !permissions.location) {
+  // Wait for Language, Fonts, and Permissions to Load
+  if (!loaded || languageLoading) {
     return <ActivityIndicator size="large" />;
   }
+
 
   return (
     <Provider store={store}>
       <PaperProvider>
-        <MyNavigationContainer initialRoute={isLoggedIn ? "Home" : "Login"} />
+        <MyNavigationContainer initialRouteName={isLoggedIn ? "homeScreen" : "cardScreen"} />
       </PaperProvider>
     </Provider>
   );

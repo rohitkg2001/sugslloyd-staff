@@ -57,11 +57,6 @@ export default function ProfileScreen() {
       {/* Main Profile Card */}
       <CardFullWidth backgroundColor={PRIMARY_COLOR}>
         <View style={[styles.row, { alignItems: "center", marginTop: -10 }]}>
-          {/* <Avatar
-            avatar={staff.image}
-            name={`${staff.firstName} ${staff.lastName}`}
-            online={false}
-          /> */}
           <View
             style={{
               width: 100,

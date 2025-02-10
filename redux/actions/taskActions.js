@@ -1,4 +1,4 @@
-import axios from "axios";
+import api, { handleAxiosError } from '../../utils/api'
 import {
   VIEW_TASK,
   INITIALIZE_TASKS,
@@ -25,7 +25,7 @@ export const getAllTasks = (my_id) => async (dispatch) => {
 
 export const getVendorPerformance = async (my_id) => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/task`);
+    const response = await api.get(`${BASE_URL}/api/task`);
     const { data, status } = response;
     if (status === 200 && Array.isArray(data)) {
       const myTasks = data.filter((task) => task.engineer_id === my_id && task.vendor !== null);
@@ -61,16 +61,16 @@ export const getVendorPerformance = async (my_id) => {
       return result;
     }
   } catch (err) {
-    console.error(err);
+    handleAxiosError(err);
   }
 };
 // TODO:Change in backend later on
 
 export const getStaffPerformance = async (my_id) => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/task`);
+    const response = await api.get(`${BASE_URL}/api/task`);
     const { data, status } = response;
-    const userResponse = await axios.get(`${BASE_URL}/api/staff`);
+    const userResponse = await api.get(`${BASE_URL}/api/staff`);
     const siteEngineers = userResponse.data.vendors;
     // Filter tasks by
 
@@ -105,7 +105,7 @@ export const getStaffPerformance = async (my_id) => {
     return performanceByEngineer;
     // Write methods to filter tasks by engineer_id where engineer_id is the id of the engineer from siteEngineers
   } catch (err) {
-    console.error(err);
+    handleAxiosError(err);
   }
 };
 // TODO:Change in backend later on
@@ -116,6 +116,7 @@ export const getTaskById = async (task_id) => {
   return data;
   // dispatch({ type: VIEW_TASK, payload: data })
 };
+
 
 export const getTaskByCategory = (category) => async (dispatch) => {
   try {
