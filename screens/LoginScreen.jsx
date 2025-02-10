@@ -57,8 +57,8 @@ export default function LoginScreen({ navigation, route }) {
     <MyImageBackground imageSource={require("../assets/Login.png")}>
       <ScrollView style={{ flex: 1 }}>
         <View style={[layouts.center, spacing.mv5]}>
-          <H1 style={[typography.fontLato]}>{t("loginTitle")}</H1>
-          <P style={[typography.fontLato]}>{t("loginSubtitle")}</P>
+          <H2 style={[typography.fontLato, spacing.mt2]}>{t("loginTitle")}</H2>
+          <P style={[typography.fontLato, spacing.mb5]}>{t("loginSubtitle")}</P>
         </View>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -90,7 +90,6 @@ export default function LoginScreen({ navigation, route }) {
               <Icon
                 name={isPasswordVisible ? "eye-off" : "eye"}
                 size={ICON_LARGE}
-                color="gray"
               />
             </TouchableOpacity>
           </View>
@@ -109,7 +108,9 @@ export default function LoginScreen({ navigation, route }) {
               })
             }
           >
-            <Span style={styles.rightLink}>{t("forgotPasswordText")}</Span>
+            <Span style={[styles.rightLink, typography.fontLato]}>
+              {t("forgotPasswordText")}
+            </Span>
           </TouchableOpacity>
         </KeyboardAvoidingView>
         <Button

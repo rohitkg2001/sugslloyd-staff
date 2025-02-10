@@ -1,8 +1,26 @@
+// import all react native
 import { useEffect, useState } from "react";
 import { View, TouchableOpacity, Image, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useTranslation } from "react-i18next";
+
+// import Components
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
+import CardFullWidth from "../components/card/CardFullWidth";
+
+// import Redux
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getAllTasks,
+  getStreetLightTasks,
+  getTaskByCategory,
+  getTaskByEngineer,
+  getTaskByVendor,
+} from "../redux/actions/taskActions";
+
+// import styles
+import { P, H6 } from "../components/text";
 import {
   SCREEN_WIDTH,
   spacing,
@@ -12,25 +30,6 @@ import {
   PRIMARY_COLOR,
   ICON_SMALL,
 } from "../styles";
-import { P, H5, H6 } from "../components/text";
-import { useSelector, useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
-import CardFullWidth from "../components/card/CardFullWidth";
-import {
-  getAllTasks,
-  getStreetLightTasks,
-  getTaskByCategory,
-} from "../redux/actions/taskActions";
-import {
-  getVendorPerformance,
-  getTaskByVendor,
-} from "../redux/actions/taskActions";
-
-import {
-  getStaffPerformance,
-  getTaskByEngineer,
-} from "../redux/actions/taskActions";
 
 export default function WelcomeScreen({ navigation }) {
   const { id } = useSelector((state) => state.staff);

@@ -41,7 +41,6 @@ export default function Filter({ onClose, onApply }) {
   };
 
   const onClear = () => {
-  
     setFilterState(0);
     setSelectedState("");
     setSelectedProject("");
@@ -65,7 +64,11 @@ export default function Filter({ onClose, onApply }) {
           { height: "16%" },
         ]}
       >
-        <H1 style={[typography.font16, typography.textBold]}>Apply Filter</H1>
+        <H1
+          style={[typography.font16, typography.textBold, typography.fontLato]}
+        >
+          Apply Filter
+        </H1>
         <TouchableOpacity onPress={onClose}>
           <Icon name="close-outline" color={DANGER_COLOR} size={ICON_LARGE} />
         </TouchableOpacity>
@@ -94,7 +97,7 @@ export default function Filter({ onClose, onApply }) {
             ]}
             onPress={() => setFilterState(0)}
           >
-            <Span style={typography.font16}>State</Span>
+            <Span style={[typography.font16, typography.fontLato]}>State</Span>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -108,7 +111,9 @@ export default function Filter({ onClose, onApply }) {
             ]}
             onPress={() => setFilterState(1)}
           >
-            <Span style={typography.font16}>Project</Span>
+            <Span style={(typography.font16, typography.fontLato)}>
+              Project
+            </Span>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -122,7 +127,7 @@ export default function Filter({ onClose, onApply }) {
             ]}
             onPress={() => setFilterState(2)}
           >
-            <Span style={typography.font16}>Date</Span>
+            <Span style={[typography.font16, typography.fontLato]}>Date</Span>
           </TouchableOpacity>
         </View>
 
@@ -191,7 +196,13 @@ export default function Filter({ onClose, onApply }) {
                   },
                 ]}
               >
-                <H4 style={[typography.font16, { color: "black" }]}>
+                <H4
+                  style={[
+                    typography.font16,
+                    typography.fontLato,
+                    { color: "black" },
+                  ]}
+                >
                   {fromDate
                     ? `${fromDate.toLocaleDateString()}`
                     : "Select From Date"}
@@ -220,7 +231,13 @@ export default function Filter({ onClose, onApply }) {
                   },
                 ]}
               >
-                <H4 style={[typography.font16, { color: "black" }]}>
+                <H4
+                  style={[
+                    typography.font16,
+                    typography.fontLato,
+                    { color: "black" },
+                  ]}
+                >
                   {toDate ? `${toDate.toLocaleDateString()}` : "Select To Date"}
                 </H4>
               </Button>
@@ -245,7 +262,14 @@ export default function Filter({ onClose, onApply }) {
           ]}
           onPress={onClear}
         >
-          <H2 style={[styles.btnText, typography.textLight, styles.textLarge]}>
+          <H2
+            style={[
+              styles.btnText,
+              typography.textLight,
+              typography.fontLato,
+              styles.textLarge,
+            ]}
+          >
             Clear
           </H2>
         </Button>
@@ -257,7 +281,14 @@ export default function Filter({ onClose, onApply }) {
           ]}
           onPress={applyFilter}
         >
-          <H2 style={[styles.btnText, typography.textLight, styles.textLarge]}>
+          <H2
+            style={[
+              styles.btnText,
+              typography.textLight,
+              typography.fontLato,
+              styles.textLarge,
+            ]}
+          >
             Apply
           </H2>
         </Button>
