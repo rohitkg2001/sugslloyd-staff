@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import ContainerComponent from "../components/ContainerComponent";
 import { LIGHT, SCREEN_WIDTH, spacing, styles, ICON_MEDIUM } from "../styles";
 import SearchBar from "../components/input/SearchBar";
 import Button from "../components/buttons/Button";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
 import DashboardHeader from "../components/header/DashboardHeader";
 import Filter from "../components/Filter";
 import ProjectOverview from "../components/dashboard/ProjectOverview";
@@ -26,6 +26,7 @@ export default function DashboardScreen({ navigation }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log(tasks)
     const installationCount = tasks.filter(
       (task) => task.activity === "Installation"
     ).length;

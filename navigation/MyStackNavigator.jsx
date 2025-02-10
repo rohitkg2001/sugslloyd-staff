@@ -39,6 +39,7 @@ import AttendancePunchScreen from "../screens/AttendancePunchScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator({ initialRouteName }) {
+  console.log(`${initialRouteName} is the route name`)
   return (
     <Stack.Navigator
       initialRouteName={initialRouteName}
@@ -60,7 +61,7 @@ export default function MyStackNavigator({ initialRouteName }) {
       />
       <Stack.Screen name="siteLocationScreen" component={SiteLocationScreen} />
       <Stack.Screen name="attendancePunch" component={AttendancePunchScreen} />
-      <Stack.Screen name="dashboardScreen" component={DashboardScreen} />
+      {/* <Stack.Screen name="dashboardScreen" component={DashboardScreen} /> */}
       <Stack.Screen name="homeScreen" component={MyMaterialBottomNavigator} />
       <Stack.Screen name="notificationScreen" component={NotificationScreen} />
       <Stack.Screen name="privacyPolicy" component={PrivacyPolicy} />

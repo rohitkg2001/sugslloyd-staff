@@ -1,12 +1,12 @@
 import { BASE_URL, LOGIN_STAFF } from "../constant";
 import moment from "moment";
-import { staff } from "../../utils/faker";
-import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import api, { handleAxiosError } from "../../utils/api"; // Import axios utils
 
 export const greet = () => {
   // Write a logic to get morning, afternoon, evening and night as per time from moment
   const currentTime = moment().format("HH");
-  if (0 < currentTime && currentTime < 12) {
+  if (currentTime >= 0 && currentTime < 12) {
     return "Good Morning";
   } else if (12 < currentTime && currentTime < 16) {
     return "Good Afternoon";
@@ -19,19 +19,16 @@ export const greet = () => {
 
 export const login = (user, pass) => async (dispatch) => {
   try {
-    const response = await axios.post(`${BASE_URL}/api/login`,
-      { email: user, password: pass }
-    );
+    const response = await api.post(`${BASE_URL}/api/login`, { email: user, password: pass });
     const { data, status } = response
-    alert(status)
-    if (status === 200) {
+    if (data?.user?.id && status === 200) {
+      await AsyncStorage.setItem('userToken', String(data.user.id))
       dispatch({ type: LOGIN_STAFF, payload: data.user });
       return true;
     } else {
       return false;
     }
   } catch (err) {
-    console.log(err);
-    return false;
+    return handleAxiosError(err);
   }
 };

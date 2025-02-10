@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 export default function MyNavigationContainer({ initialRouteName }) {
   return (
     <NavigationContainer>
-      <MyStackNavigator initialRouteName />
+      <MyStackNavigator initialRouteName={initialRouteName} />
     </NavigationContainer>
   );
 }
