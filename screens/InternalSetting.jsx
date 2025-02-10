@@ -1,12 +1,17 @@
+// import React native
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View } from "react-native";
+import { useTranslation } from "react-i18next";
+// import components
 import MenuItem from "../components/MenuItem";
-import { internal } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { useTranslation } from "react-i18next";
 import Button from "../components/buttons/Button";
+
+// import Faker
+import { internal } from "../utils/faker";
+// import styles
 import {
   PRIMARY_COLOR,
   SCREEN_WIDTH,
@@ -45,7 +50,14 @@ export default function SettingsScreen({ navigation }) {
             { paddingBottom: 20 },
           ]}
         >
-          <Span style={[typography.font16, spacing.mt5, spacing.mh2]}>
+          <Span
+            style={[
+              typography.font14,
+              typography.fontLato,
+              spacing.mt5,
+              spacing.mh2,
+            ]}
+          >
             Selected Language
           </Span>
           {language === "en" ? (
@@ -61,7 +73,8 @@ export default function SettingsScreen({ navigation }) {
               <H2
                 style={[
                   styles.btnText,
-                  typography.font20,
+                  typography.font16,
+                  typography.fontLato,
                   typography.textLight,
                 ]}
               >
@@ -86,7 +99,8 @@ export default function SettingsScreen({ navigation }) {
               <H2
                 style={[
                   styles.btnText,
-                  typography.font20,
+                  typography.font16,
+                  typography.fontLato,
                   typography.textPrimary,
                 ]}
               >
@@ -103,7 +117,14 @@ export default function SettingsScreen({ navigation }) {
             { paddingBottom: 20 },
           ]}
         >
-          <Span style={[typography.font16, spacing.mt5, spacing.mh2]}>
+          <Span
+            style={[
+              typography.font14,
+              typography.fontLato,
+              spacing.mt5,
+              spacing.mh2,
+            ]}
+          >
             Select Preferred Language
           </Span>
 
@@ -118,7 +139,12 @@ export default function SettingsScreen({ navigation }) {
             onPress={() => selectLanguage("en")}
           >
             <H2
-              style={[styles.btnText, typography.font20, typography.textLight]}
+              style={[
+                styles.btnText,
+                typography.font16,
+                typography.fontLato,
+                typography.textLight,
+              ]}
             >
               English
             </H2>
@@ -142,7 +168,8 @@ export default function SettingsScreen({ navigation }) {
             <H2
               style={[
                 styles.btnText,
-                typography.font20,
+                typography.font16,
+                typography.fontLato,
                 typography.textPrimary,
               ]}
             >

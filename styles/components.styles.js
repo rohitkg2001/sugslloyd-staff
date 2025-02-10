@@ -142,10 +142,10 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
   },
-  rowBullet: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
+  // rowBullet: {
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  // },
 
   onlineDot: {
     position: "absolute",

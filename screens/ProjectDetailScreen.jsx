@@ -127,24 +127,31 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           }
         >
           <View>
-            <H5 style={[typography.font20]}>{item.activity}</H5>
+            <H5 style={[typography.font20, typography.fontLato]}>
+              {item.activity}
+            </H5>
             <View style={[spacing.mt1, styles.row]}>
               <View>
                 <Span
                   style={[
                     typography.font12,
+                    typography.fontLato,
                     { textTransform: "uppercase", color: "gray" },
                   ]}
                 >
                   Start date
                 </Span>
-                <P style={[typography.font16]}>{item.start_date}</P>
+                <P style={[typography.font16, typography.fontLato]}>
+                  {item.start_date}
+                </P>
               </View>
               <View>
                 <Span style={[{ textTransform: "uppercase", color: "gray" }]}>
                   End date
                 </Span>
-                <P style={[typography.font16]}>{item.end_date}</P>
+                <P style={[typography.font16, typography.fontLato]}>
+                  {item.end_date}
+                </P>
               </View>
             </View>
           </View>
@@ -187,8 +194,12 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
             {Project.work_order_number}
           </H6>
           <View>
-            <Span style={[typography.font14, spacing.pv1]}>Capacity</Span>
-            <P style={[typography.font16]}>{Project.project_capacity} KW</P>
+            <Span style={[typography.font14, typography.fontLato, spacing.pv1]}>
+              Capacity
+            </Span>
+            <P style={[typography.font16, typography.fontLato]}>
+              {Project.project_capacity} KW
+            </P>
           </View>
           <View style={[spacing.mt1, styles.row]}>
             <View>
@@ -200,17 +211,21 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
               >
                 Start date
               </Span>
-              <P style={[typography.font16]}>{Project.start_date}</P>
+              <P style={[typography.font16, typography.fontLato]}>
+                {Project.start_date}
+              </P>
             </View>
             <View>
               <Span style={[{ textTransform: "uppercase", color: "gray" }]}>
                 End date
               </Span>
-              <P style={[typography.font16]}>{Project.end_date}</P>
+              <P style={[typography.font16, typography.fontLato]}>
+                {Project.end_date}
+              </P>
             </View>
           </View>
           <TouchableOpacity onPress={toggleDescription}>
-            <P style={[typography.font16]}>
+            <P style={[typography.font16, typography.fontLato]}>
               {isDescriptionExpanded
                 ? Project.description
                 : getTruncatedDescription(Project.description)}

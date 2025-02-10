@@ -15,31 +15,41 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
       >
         {target.activity}
       </H5>
-      <H4 style={[spacing.mv2, typography.font18]}>{target.site?.site_name}</H4>
-      <H4 style={[spacing.mv2, typography.font16]}>{target.site?.location}</H4>
+      <H4 style={[spacing.mv2, typography.font16, typography.fontLato]}>
+        {target.site?.site_name}
+      </H4>
+      <H4 style={[spacing.mv2, typography.font14, typography.fontLato]}>
+        {target.site?.location}
+      </H4>
 
       <View style={[spacing.mt1, styles.row, spacing.mv2]}>
         <View>
           <Span
             style={[
               typography.font12,
+              typography.fontLato,
               { textTransform: "uppercase", color: "gray" },
             ]}
           >
             Start date
           </Span>
-          <P style={[typography.font16]}>{target.start_date}</P>
+          <P style={[typography.font16, typography.fontLato]}>
+            {target.start_date}
+          </P>
         </View>
         <View>
           <Span
             style={[
-              //typography.font16,
+              typography.font12,
+              typography.fontLato,
               { textTransform: "uppercase", color: "gray" },
             ]}
           >
             End date
           </Span>
-          <P style={[typography.font16]}>{target.end_date}</P>
+          <P style={[typography.font16, typography.fontLato]}>
+            {target.end_date}
+          </P>
         </View>
       </View>
 

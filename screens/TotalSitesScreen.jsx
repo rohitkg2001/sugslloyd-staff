@@ -8,7 +8,7 @@ import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ClickableCard1 from "../components/card/ClickableCard1";
-import { ICON_LARGE, spacing, styles } from "../styles";
+import { ICON_LARGE, spacing, styles, typography } from "../styles";
 import { fetchSites } from "../redux/actions/siteActions";
 
 import { useTranslation } from "react-i18next";
@@ -62,19 +62,31 @@ export default function TotalSitesScreen({ navigation, route }) {
               <View style={[spacing.mt1, styles.row]}>
                 <View>
                   <Span
-                    style={[typography.font16, { textTransform: "capitalize" }]}
+                    style={[
+                      typography.font16,
+                      typography.fontLato,
+                      { textTransform: "capitalize" },
+                    ]}
                   >
                     Site Engineer
                   </Span>
-                  <P style={[typography.font16]}>{item.siteEngineer}</P>
+                  <P style={[typography.font16, typography.fontLato]}>
+                    {item.siteEngineer}
+                  </P>
                 </View>
                 <View>
                   <Span
-                    style={[typography.font16, { textTransform: "capitalize" }]}
+                    style={[
+                      typography.font16,
+                      typography.fontLato,
+                      { textTransform: "capitalize" },
+                    ]}
                   >
                     Activity
                   </Span>
-                  <P style={[typography.font16]}>{item.status}</P>
+                  <P style={[typography.font16, typography.fontLato]}>
+                    {item.status}
+                  </P>
                 </View>
               </View>
             </View>

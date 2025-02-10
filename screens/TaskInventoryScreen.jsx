@@ -40,14 +40,23 @@ const TaskInventoryScreen = (onClose) => {
   return (
     <BottomSheet>
       <View style={[spacing.pv3, { width: SCREEN_WIDTH - 16, marginLeft: 8 }]}>
-        <H6 style={[typography.font20, spacing.p2, typography.textBold]}>
+        <H6
+          style={[
+            typography.font20,
+            spacing.p2,
+            typography.textBold,
+            typography.fontLato,
+          ]}
+        >
           Add Items
         </H6>
 
         {items.map((item) => (
           <View key={item.id}>
             <View style={[styles.row, spacing.pv4, spacing.mb2]}>
-              <P style={[typography.font20, spacing.p2]}>{item.name}</P>
+              <P style={[typography.font20, typography.fontLato, spacing.p2]}>
+                {item.name}
+              </P>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <TouchableOpacity
                   onPress={() => decrement(item.id)}
@@ -64,7 +73,11 @@ const TaskInventoryScreen = (onClose) => {
                 >
                   <P style={{ color: "#fff", fontSize: 20 }}>-</P>
                 </TouchableOpacity>
-                <H6 style={[typography.font20, spacing.p2]}>{item.count}</H6>
+                <H6
+                  style={[typography.font20, typography.fontLato, spacing.p2]}
+                >
+                  {item.count}
+                </H6>
                 <TouchableOpacity
                   onPress={() => increment(item.id)}
                   style={[
@@ -98,7 +111,13 @@ const TaskInventoryScreen = (onClose) => {
               >
                 <Icon name="trash-outline" size={28} color="#76885B" />
               </TouchableOpacity>
-              <P style={[typography.font16, { textAlign: "center", flex: 1 }]}>
+              <P
+                style={[
+                  typography.font16,
+                  typography.fontLato,
+                  { textAlign: "center", flex: 1 },
+                ]}
+              >
                 {item.name}
               </P>
             </View>

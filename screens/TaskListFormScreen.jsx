@@ -72,16 +72,6 @@ const TaskListFormScreen = ({ navigation }) => {
     }
   };
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || deadline;
-    setShowDatePicker(false);
-    setDeadline(currentDate);
-  };
-
-  const showPicker = () => {
-    setShowDatePicker(true);
-  };
-
   return (
     <ContainerComponent>
       <MyHeader title={t("create_task")} isBack={true} hasIcon={true} />

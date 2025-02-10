@@ -1,10 +1,16 @@
+// import react native
 import { ScrollView } from "react-native";
-import MyHeader from "../components/header/MyHeader";
-import { P } from "../components/text";
-import { styles } from "../styles/components.styles";
-import ContainerComponent from "../components/ContainerComponent";
-import { PRIVACY_POLICY } from "../utils/faker";
 import { useTranslation } from "react-i18next";
+
+// import Components
+import MyHeader from "../components/header/MyHeader";
+import ContainerComponent from "../components/ContainerComponent";
+// import Faker
+import { PRIVACY_POLICY } from "../utils/faker";
+
+// import Styles
+import { styles, spacing } from "../styles/components.styles";
+import { P } from "../components/text";
 
 export default function PrivacyPolicy() {
   const { t } = useTranslation();

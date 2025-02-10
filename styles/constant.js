@@ -13,6 +13,6 @@ export const SUCCESS_COLOR = "#14A44D";
 export const WARNING_COLOR = "#E4A11B";
 export const DANGER_COLOR = "#DC4C64";
 
-export const ICON_SMALL = 24;
+export const ICON_SMALL = 22;
 export const ICON_MEDIUM = 28;
 export const ICON_LARGE = 32;

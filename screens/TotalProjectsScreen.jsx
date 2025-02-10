@@ -1,16 +1,21 @@
+// import All react native
 import { useState, useEffect } from "react";
 import { View } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import MyHeader from "../components/header/MyHeader";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useTranslation } from "react-i18next";
+
+// import components
+import MyHeader from "../components/header/MyHeader";
 import MyFlatList from "../components/utility/MyFlatList";
 import NoRecord from "./NoRecord";
 import Button from "../components/buttons/Button";
 import ContainerComponent from "../components/ContainerComponent";
-import { spacing, styles, ICON_LARGE, typography } from "../styles";
-import { fetchProjects } from "../redux/actions/projectAction";
-import { useTranslation } from "react-i18next";
 import ClickableCard1 from "../components/card/ClickableCard1";
+// import redux
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProjects } from "../redux/actions/projectAction";
+// import Styles
+import { spacing, styles, ICON_LARGE, typography } from "../styles";
 import { P, Span } from "../components/text";
 
 export default function TotalProjectsScreen({ navigation }) {
@@ -53,7 +58,6 @@ export default function TotalProjectsScreen({ navigation }) {
             <View>
               <P
                 style={{
-                  fontSize: 14,
                   color: "gray",
                   textAlign: "right",
                   bottom: 56,
@@ -69,23 +73,29 @@ export default function TotalProjectsScreen({ navigation }) {
                   <Span
                     style={[
                       typography.font12,
+                      typography.fontLato,
                       { textTransform: "uppercase", color: "gray" },
                     ]}
                   >
                     Start date
                   </Span>
-                  <P style={[typography.font14]}>{item.start_date}</P>
+                  <P style={[typography.font14, typography.fontLato]}>
+                    {item.start_date}
+                  </P>
                 </View>
                 <View>
                   <Span
                     style={[
                       typography.font12,
+                      typography.fontLato,
                       { textTransform: "uppercase", color: "gray" },
                     ]}
                   >
                     End date
                   </Span>
-                  <P style={[typography.font14]}>{item.end_date}</P>
+                  <P style={[typography.font14, typography.fontLato]}>
+                    {item.end_date}
+                  </P>
                 </View>
               </View>
             </View>

@@ -1,6 +1,9 @@
+// import All react native
 import { Card } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
+// import components
 import Button from "../buttons/Button";
+// import All styles
 import { H6, Span } from "../text";
 import {
   spacing,

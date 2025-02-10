@@ -1,10 +1,12 @@
+// import All react Native
 import { View, TouchableOpacity } from "react-native";
-import { H4 } from "../text";
+import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Badge } from "react-native-paper";
-import { styles } from "../../styles/components.styles";
-import { useNavigation } from "@react-navigation/native";
-import { ICON_SMALL, ICON_LARGE } from "../../styles/constant";
+
+// import all styles
+import { H4 } from "../text";
+import { typography, styles, ICON_SMALL, ICON_LARGE } from "../../styles";
 
 export default function MyHeader({
   isBack,
@@ -21,14 +23,13 @@ export default function MyHeader({
   return (
     <View style={styles.headerStyle}>
       {isBack && (
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{ marginRight: 10 }}
-        >
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={ICON_SMALL} color="#000" />
         </TouchableOpacity>
       )}
-      <H4 style={styles.titleText}>{title}</H4>
+      <H4 style={[typography.font18, typography.fontLato, typography.textBold]}>
+        {title}
+      </H4>
       {hasIcon && (
         <TouchableOpacity
           onPress={onIconPress}

@@ -17,7 +17,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import CardFullWidth from "../components/card/CardFullWidth";
-import { getAllTasks, getStreetLightTasks, getTaskByCategory } from "../redux/actions/taskActions";
+import {
+  getAllTasks,
+  getStreetLightTasks,
+  getTaskByCategory,
+} from "../redux/actions/taskActions";
 import {
   getVendorPerformance,
   getTaskByVendor,
@@ -30,10 +34,11 @@ import {
 
 export default function WelcomeScreen({ navigation }) {
   const { id } = useSelector((state) => state.staff);
-  const { tasks,
+  const {
+    tasks,
     pendingStreetLightCounts,
     surveyedStreetLightCounts,
-    installedStreetLightCounts
+    installedStreetLightCounts,
   } = useSelector((state) => state.tasks);
 
   const { t } = useTranslation();
@@ -51,10 +56,14 @@ export default function WelcomeScreen({ navigation }) {
 
   useEffect(() => {
     setTotalTask(pendingStreetLightCounts);
-    setDoneSurvey(surveyedStreetLightCounts)
-    setDoneInstalled(installedStreetLightCounts)
-  }, [tasks, pendingStreetLightCounts, surveyedStreetLightCounts, installedStreetLightCounts]);
-
+    setDoneSurvey(surveyedStreetLightCounts);
+    setDoneInstalled(installedStreetLightCounts);
+  }, [
+    tasks,
+    pendingStreetLightCounts,
+    surveyedStreetLightCounts,
+    installedStreetLightCounts,
+  ]);
 
   return (
     <ContainerComponent>
@@ -93,6 +102,7 @@ export default function WelcomeScreen({ navigation }) {
                 typography.font16,
                 spacing.mt1,
                 typography.textBold,
+                typography.fontLato,
                 { textAlign: "center" },
               ]}
             >
@@ -116,7 +126,7 @@ export default function WelcomeScreen({ navigation }) {
               ]}
             >
               <Icon name="reader-sharp" size={75} />
-              <P style={[typography.font14, spacing.mt3]}>
+              <P style={[typography.font14, typography.fontLato, spacing.mt3]}>
                 Pending installation
               </P>
             </TouchableOpacity>
@@ -136,7 +146,7 @@ export default function WelcomeScreen({ navigation }) {
               ]}
             >
               <Icon name="receipt" size={75} />
-              <P style={[typography.font14, spacing.mt3]}>
+              <P style={[typography.font14, typography.fontLato, spacing.mt3]}>
                 Generate JICR report
               </P>
             </TouchableOpacity>
@@ -147,9 +157,15 @@ export default function WelcomeScreen({ navigation }) {
         <CardFullWidth backgroundColor={LIGHT}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Icon name="filter" size={ICON_SMALL} color={PRIMARY_COLOR} />
-            <H5 style={[typography.font16, { marginRight: 150 }]}>
+            <H6
+              style={[
+                typography.fontLato,
+                typography.textBold,
+                { marginRight: 170 },
+              ]}
+            >
               {t("all_task_overview")}
-            </H5>
+            </H6>
           </View>
           <View style={[spacing.bbw05, spacing.mv1]} />
           <View
@@ -160,20 +176,26 @@ export default function WelcomeScreen({ navigation }) {
             ]}
           >
             <TouchableOpacity style={{ alignItems: "center" }}>
-              <H6 style={typography.font14}>{"Total Tasks"}</H6>
+              <H6 style={[typography.font14, typography.fontLato]}>
+                {"Total Tasks"}
+              </H6>
               <H6 style={spacing.ml2}>
                 {doneInstalled}/
                 <H6 style={typography.textDanger}>{totalTasks}</H6>
               </H6>
             </TouchableOpacity>
             <TouchableOpacity style={{ marginLeft: 20 }}>
-              <H6 style={typography.font14}>{t("Survey")}</H6>
+              <H6 style={[typography.font14, typography.fontLato]}>
+                {t("Survey")}
+              </H6>
               <H6 style={spacing.ml1}>
                 {doneSurvey}/<H6 style={typography.textDanger}>{totalTasks}</H6>
               </H6>
             </TouchableOpacity>
             <View style={{ alignItems: "center" }}>
-              <H6 style={typography.font14}>{t("Installed")}</H6>
+              <H6 style={[typography.font14, typography.fontLato]}>
+                {t("Installed")}
+              </H6>
               <H6 style={spacing.ml2}>
                 {doneInstalled}/
                 <H6 style={typography.textDanger}>{totalTasks}</H6>
@@ -190,25 +212,55 @@ export default function WelcomeScreen({ navigation }) {
               size={ICON_SMALL}
               color={PRIMARY_COLOR}
             />
-            <H5 style={[typography.font16, { marginRight: 140 }]}>
+            <H6
+              style={[
+                typography.fontLato,
+                typography.textBold,
+                { marginRight: 160 },
+              ]}
+            >
               {t("Team Performance")}
-            </H5>
+            </H6>
           </View>
 
           <View style={[spacing.bbw05, spacing.mv1]} />
 
           <View style={{ flexDirection: "column" }}>
             <View style={[styles.row, spacing.bbw05, spacing.pv2]}>
-              <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+              <H6
+                style={[
+                  typography.font14,
+                  typography.fontLato,
+                  { flex: 1, textAlign: "center" },
+                ]}
+              >
                 {t("Engineer")}
               </H6>
-              <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+              <H6
+                style={[
+                  typography.font14,
+                  typography.fontLato,
+                  { flex: 1, textAlign: "center" },
+                ]}
+              >
                 {t("Total")}
               </H6>
-              <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+              <H6
+                style={[
+                  typography.font14,
+                  typography.fontLato,
+                  { flex: 1, textAlign: "center" },
+                ]}
+              >
                 {t("Completed")}
               </H6>
-              <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+              <H6
+                style={[
+                  typography.font14,
+                  typography.fontLato,
+                  { flex: 1, textAlign: "center" },
+                ]}
+              >
                 {t("Pending")}
               </H6>
             </View>
@@ -268,25 +320,55 @@ export default function WelcomeScreen({ navigation }) {
               size={ICON_SMALL}
               color={PRIMARY_COLOR}
             />
-            <H5 style={[typography.font16, { marginRight: 130 }]}>
+            <H6
+              style={[
+                typography.fontLato,
+                typography.textBold,
+                { marginRight: 150 },
+              ]}
+            >
               {t("Vendor Performance")}
-            </H5>
+            </H6>
           </View>
 
           <View style={[spacing.bbw05, spacing.mv1]} />
 
           <View style={{ flexDirection: "column" }}>
             <View style={[styles.row, spacing.bbw05, spacing.pv2]}>
-              <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+              <H6
+                style={[
+                  typography.font14,
+                  typography.fontLato,
+                  { flex: 1, textAlign: "center" },
+                ]}
+              >
                 {t("Engineer")}
               </H6>
-              <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+              <H6
+                style={[
+                  typography.font14,
+                  typography.fontLato,
+                  { flex: 1, textAlign: "center" },
+                ]}
+              >
                 {t("Total")}
               </H6>
-              <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+              <H6
+                style={[
+                  typography.font14,
+                  typography.fontLato,
+                  { flex: 1, textAlign: "center" },
+                ]}
+              >
                 {t("Completed")}
               </H6>
-              <H6 style={[typography.font14, { flex: 1, textAlign: "center" }]}>
+              <H6
+                style={[
+                  typography.font14,
+                  typography.fontLato,
+                  { flex: 1, textAlign: "center" },
+                ]}
+              >
                 {t("Pending")}
               </H6>
             </View>

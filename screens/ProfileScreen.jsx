@@ -1,7 +1,22 @@
+// import All react native
 import { View, Image } from "react-native";
+import { useTranslation } from "react-i18next";
+
+// import All Components
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
+import CardFullWidth from "../components/card/CardFullWidth";
+import Avatar from "../components/Avatar";
+import MyFlatList from "../components/utility/MyFlatList";
+
+// import Faker
 import { documentData } from "../utils/faker";
+
+// import Redux
+import { useSelector } from "react-redux";
+
+// import Styles
+import { H6 } from "../components/text";
 import {
   LIGHT,
   PRIMARY_COLOR,
@@ -10,13 +25,6 @@ import {
   typography,
   SCREEN_WIDTH,
 } from "../styles";
-import CardFullWidth from "../components/card/CardFullWidth";
-import Avatar from "../components/Avatar";
-import { H6 } from "../components/text";
-import MyFlatList from "../components/utility/MyFlatList";
-import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-
 const ProfileItem = ({ iconName, label }) => {
   return (
     <View
@@ -49,21 +57,49 @@ export default function ProfileScreen() {
       {/* Main Profile Card */}
       <CardFullWidth backgroundColor={PRIMARY_COLOR}>
         <View style={[styles.row, { alignItems: "center", marginTop: -10 }]}>
-          <Avatar
+          {/* <Avatar
             avatar={staff.image}
             name={`${staff.firstName} ${staff.lastName}`}
             online={false}
-          />
+          /> */}
+          <View
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: 50,
+              borderWidth: 1,
+              borderColor: "black",
+              alignItems: "center",
+              justifyContent: "center",
+              top: 8,
+            }}
+          >
+            <Avatar
+              avatar={staff.image}
+              name={`${staff.firstName} ${staff.lastName}`}
+              online={false}
+            />
+          </View>
 
           <View style={spacing.mh1}>
-            <H6 style={[typography.font12, { color: LIGHT }]}>
+            <H6
+              style={[typography.font14, typography.fontLato, { color: LIGHT }]}
+            >
               {staff.firstName} {staff.lastName}
             </H6>
-            <H6 style={[typography.font12, { color: LIGHT }]}>{staff.email}</H6>
-            <H6 style={[typography.font12, { color: LIGHT }]}>
+            <H6
+              style={[typography.font12, typography.fontLato, { color: LIGHT }]}
+            >
+              {staff.email}
+            </H6>
+            <H6
+              style={[typography.font12, typography.fontLato, { color: LIGHT }]}
+            >
               {staff.contactNo}
             </H6>
-            <H6 style={[typography.font12, { color: LIGHT }]}>
+            <H6
+              style={[typography.font12, typography.fontLato, { color: LIGHT }]}
+            >
               {staff.address}
             </H6>
           </View>

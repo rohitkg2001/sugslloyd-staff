@@ -1,25 +1,27 @@
+// import All react native
 import { useEffect } from "react";
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useTranslation } from "react-i18next";
+
+// import All Components
 import ProfileCard from "../components/ProfileCard";
 import MenuItem from "../components/MenuItem";
-import { menuItems } from "../utils/faker";
 import ContainerComponent from "../components/ContainerComponent";
-import { H5 } from "../components/text";
-import { DANGER_COLOR, ICON_MEDIUM } from "../styles/constant";
-import { useTranslation } from "react-i18next";
+
+// import Faker
+import { menuItems } from "../utils/faker";
+// import Redux
 import { useSelector, useDispatch } from "react-redux";
 import { getAllItems } from "../redux/actions/inventoryAction";
-import { spacing } from "../styles";
+// import All Styles
+import { spacing, DANGER_COLOR, typography, ICON_SMALL } from "../styles";
+import { H5 } from "../components/text";
 
 export default function SettingsScreen({ navigation }) {
   const { t } = useTranslation();
   const { staff, id } = useSelector((state) => state);
   const dispatch = useDispatch();
-
-  const handleLogoutPress = () => {
-    navigation.navigate("loginScreen");
-  };
 
   useEffect(() => {
     dispatch(getAllItems());
@@ -46,6 +48,7 @@ export default function SettingsScreen({ navigation }) {
       </View>
 
       <TouchableOpacity
+        onPress={() => navigation.navigate("loginScreen")}
         style={[
           spacing.mb2,
           {
@@ -53,10 +56,11 @@ export default function SettingsScreen({ navigation }) {
             alignItems: "center",
           },
         ]}
-        onPress={handleLogoutPress}
       >
-        <Icon name="power-outline" size={ICON_MEDIUM} color={DANGER_COLOR} />
-        <H5 style={{ color: DANGER_COLOR }}>{t("logout_button")}</H5>
+        <Icon name="power-outline" size={ICON_SMALL} color={DANGER_COLOR} />
+        <H5 style={[typography.fontLato, { color: DANGER_COLOR }]}>
+          {t("logout_button")}
+        </H5>
       </TouchableOpacity>
     </ContainerComponent>
   );

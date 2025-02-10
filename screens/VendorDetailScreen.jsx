@@ -41,111 +41,321 @@ const VendorDetailScreen = ({ route, navigation }) => {
       <ScrollView>
         <View style={[{ width: SCREEN_WIDTH - 16 }]}>
           <View style={[styles.row]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>Name</H5>
-            <P style={[typography.font16, spacing.pv1, { textAlign: "right" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
+              Name
+            </H5>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                spacing.pv1,
+                { textAlign: "right" },
+              ]}
+            >
               {site.name}
             </P>
           </View>
 
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>Mail ID</H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
+              Mail ID
+            </H5>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.email}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
               Account Name
             </H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.accountName}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
               Account Number
             </H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.accountNumber}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>Ifsc</H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
+              Ifsc
+            </H5>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.ifsc}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
               Bank Name
             </H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.bankName}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>Branch</H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
+              Branch
+            </H5>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.branch}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
               Gst Number
             </H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.gstNumber}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>Pan</H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
+              Pan
+            </H5>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.pan}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
               Aadhar Number
             </H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.aadharNumber}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
               First Name
             </H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.firstName}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
               Last Name
             </H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.lastName}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>Address</H5>
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
+              Address
+            </H5>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.address}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
               Contact Number
             </H5>
             ;
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.contactNo}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
-            <H5 style={[typography.font16, { textAlign: "left" }]}>Status</H5>
+            <H5
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
+              Status
+            </H5>
 
-            <P style={[typography.font16, { textAlign: "right" }]}>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
               {site.status}
             </P>
           </View>

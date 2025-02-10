@@ -67,35 +67,6 @@ const ImageDisplay = ({ images, id }) => {
 
   return (
     <View style={[spacing.p3, { backgroundColor: "white" }]}>
-      {/* <View style={[styles.row, spacing.bbw05, spacing.pb3, spacing.mb3]}>
-        {["Survey", "Final Inspection"].map((tab) => (
-          <TouchableOpacity
-            key={tab}
-            onPress={() => handleTabSelection(tab)}
-            style={[
-              spacing.p1,
-              {
-                borderBottomWidth: activeTab === tab ? 2 : 0,
-                borderBottomColor:
-                  activeTab === tab ? "#76885B" : "transparent",
-              },
-            ]}
-          >
-            <P
-              style={[
-                typography.font16,
-                {
-                  color: activeTab === tab ? "#76885B" : "#333",
-                  fontWeight: activeTab === tab ? "bold" : "normal",
-                },
-              ]}
-            >
-              {tab}
-            </P>
-          </TouchableOpacity>
-        ))}
-      </View> */}
-
       <View
         style={[
           styles.row,

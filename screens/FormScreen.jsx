@@ -1,17 +1,23 @@
+// import All react Native
 import { useState, useEffect } from "react";
 import { View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { addProject } from "../redux/actions/projectAction";
+import { useTranslation } from "react-i18next";
+import moment from "moment";
+
+// import Components
 import ContainerComponent from "../components/ContainerComponent";
-import { SCREEN_WIDTH, spacing } from "../styles";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyButton from "../components/buttons/MyButton";
-import moment from "moment";
-import { useTranslation } from "react-i18next";
 import MyPickerInput from "../components/input/MyPickerInput";
+// import Redux
+import { addProject } from "../redux/actions/projectAction";
+
+// import Styles
+import { SCREEN_WIDTH, spacing } from "../styles";
 
 const FormScreen = () => {
   const [project_name, setProjectName] = useState("");
@@ -25,7 +31,7 @@ const FormScreen = () => {
   const [selectedDateType, setSelectedDateType] = useState(null);
   const [description, setDescription] = useState("");
   const [total, setTotal] = useState(0);
-  const [project_in_state, setState] = useState(""); 
+  const [project_in_state, setState] = useState("");
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
