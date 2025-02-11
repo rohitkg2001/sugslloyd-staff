@@ -159,7 +159,10 @@ export default function CurrentProjectsScreen({ navigation }) {
             onPress={() =>
               navigation.navigate("targetManagementScreen", { id: item.id })
             }
-            onLongPressAction={(idx) => selectTargets(idx)}
+            // onLongPressAction={(idx) => selectTargets(idx)}
+            onLongPressAction={(idx) => {
+              if (!item.vendor_id) selectTargets(idx); // Prevent long-press on assigned tasks
+            }}
             selected={selectedTargets.find((target) => target.id === item.id)}
           >
             <View>
