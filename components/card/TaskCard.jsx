@@ -23,30 +23,51 @@ export default function TaskCard({
       selected={selectedTargets.find((target) => target.id === item.id)}
     >
       <View>
-        <H5 style={[typography.font16]}>{item.activity}</H5>
+        <Span
+          style={[
+            typography.font10,
+            typography.fontLato,
+            { textTransform: "uppercase", color: "gray" },
+          ]}
+        >
+          breda sl no
+        </Span>
+        <H5 style={[typography.font16, typography.fontLato]}>
+          {item.site?.breda_sl_no}
+        </H5>
+
+        <H5 style={[typography.font16, typography.fontLato]}>
+          {item.activity}
+        </H5>
 
         <View style={[spacing.mt1, styles.row]}>
           <View>
             <Span
               style={[
                 typography.font10,
+                typography.fontLato,
                 { textTransform: "uppercase", color: "gray" },
               ]}
             >
               Start date
             </Span>
-            <P style={[typography.font14]}>{item.start_date}</P>
+            <P style={[typography.font14, typography.fontLato]}>
+              {item.start_date}
+            </P>
           </View>
           <View>
             <Span
               style={[
                 typography.font10,
-                { textTransform: "uppercase", color: "gray" }, 
+                typography.fontLato,
+                { textTransform: "uppercase", color: "gray" },
               ]}
             >
               End date
             </Span>
-            <P style={[typography.font14]}>{item.end_date}</P>
+            <P style={[typography.font14, typography.fontLato]}>
+              {item.end_date}
+            </P>
           </View>
         </View>
       </View>

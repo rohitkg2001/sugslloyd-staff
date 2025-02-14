@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllTasks } from "../redux/actions/taskActions";
 
 // import all styles
-import { H6, P, Span } from "../components/text";
+import { H5, H6, P, Span } from "../components/text";
 import {
   spacing,
   styles,
@@ -166,6 +166,18 @@ export default function CurrentProjectsScreen({ navigation }) {
             selected={selectedTargets.find((target) => target.id === item.id)}
           >
             <View>
+              <Span
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  { textTransform: "uppercase", color: "gray" },
+                ]}
+              >
+                breda sl no
+              </Span>
+              <H5 style={[typography.font16, typography.fontLato]}>
+                {item.site?.breda_sl_no}
+              </H5>
               <H6 style={[typography.font14, typography.fontLato]}>
                 {item.activity}
               </H6>
