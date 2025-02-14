@@ -228,7 +228,6 @@ const ImageDisplay = ({ images, id }) => {
 
       {(activeTab === "Survey" || activeTab === "Final Inspection") && (
         <View style={[styles.row, {}]}>
-          {/* <MyButton title={"Approve"} /> */}
           <MyButton title={"Approve"} onPress={handleApprove} />
           <MyButton title={"Reject"} color="#DC4C64" />
         </View>
