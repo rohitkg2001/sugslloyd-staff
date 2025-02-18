@@ -108,11 +108,11 @@ export const menuItems = [
     icon: "tennisball-outline",
     page: "targetManagementScreen",
   },
-  {
-    label: "site_management_title",
-    icon: "map-outline",
-    page: "totalSitesScreen",
-  },
+  // {
+  //   label: "site_management_title",
+  //   icon: "map-outline",
+  //   page: "totalSitesScreen",
+  // },
   {
     label: "inventory_title",
     icon: "cart-outline",
