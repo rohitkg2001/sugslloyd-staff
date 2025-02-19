@@ -32,7 +32,7 @@ export default function MyPickerInput({
       >
         <Picker
           selectedValue={value}
-          style={[styles.textInputField, { height: 52 }]}
+          style={[styles.textInputField, { height: 60 }]}
           mode="dropdown"
           onValueChange={(val) => onChange(val)}
           prompt="Select an option"

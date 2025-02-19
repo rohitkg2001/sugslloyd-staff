@@ -119,8 +119,9 @@ export default function CurrentProjectsScreen({ navigation }) {
       filteredTasks = tasks.filter((task) => task.vendor_id && !task.image);
     } else if (tab === "Pending") {
       filteredTasks = tasks.filter((task) => task.image && task.vendor_id);
+      console.log(filteredTasks);
     } else if (tab === "Done") {
-      filteredTasks = tasks.filter((task) => task.status === "Done");
+      filteredTasks = tasks.filter((task) => task.status === "Completed");
     } else if (tab === "Rejected") {
       filteredTasks = [];
     } else {
@@ -260,7 +261,8 @@ export default function CurrentProjectsScreen({ navigation }) {
                 },
                 {
                   name: "Done",
-                  count: tasks.filter((t) => t.status === "Done").length || "",
+                  count:
+                    tasks.filter((t) => t.status === "Completed").length || "",
                 },
                 { name: "View All", count: tasks.length || "" },
                 { name: "Rejected" },

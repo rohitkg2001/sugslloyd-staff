@@ -114,6 +114,17 @@ export const menuItems = [
   //   page: "totalSitesScreen",
   // },
   {
+    label: "Travel Allowance Management",
+    icon: "map-outline",
+    page: "travelManagement",
+  },
+  {
+    label: "Daily Allowance Management",
+    icon: "map-outline",
+    page: "totalSitesScreen",
+  },
+
+  {
     label: "inventory_title",
     icon: "cart-outline",
     page: "inventoryScreen",
@@ -648,5 +659,16 @@ export const executingAgencyData = [
     serviceCentreInfo:
       "Rambhajan Warehouse , Ranipur Paijaba, Ganga Pardushan Road , Near ramjivan Chauk ,",
     details: " Javganj,  Patna City, Patna, Bihar, 800008",
+  },
+];
+
+const travel = [
+  {
+    title: "Delhi - Patna",
+    project_capacity: "feb 12 - feb 14 * 2 days",
+  },
+  {
+    title: "Patna - Agra",
+    project_capacity: "Feb 19 - feb 22 * 3 days",
   },
 ];

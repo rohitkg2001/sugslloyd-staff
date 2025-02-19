@@ -8,6 +8,7 @@ const CustomMenu = ({
   toggleMenu,
   assignTasks,
   disableAssign,
+  menuItems = [],
 }) => (
   <Menu
     visible={menuVisible}
@@ -20,7 +21,6 @@ const CustomMenu = ({
       />
     }
   >
-    {/* <Menu.Item onPress={assignTasks} title="Assign to vendor" /> */}
     <Menu.Item
       onPress={!disableAssign ? assignTasks : null}
       title="Assign to vendor"

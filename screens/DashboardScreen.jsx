@@ -26,7 +26,7 @@ export default function DashboardScreen({ navigation }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(tasks)
+    console.log(tasks);
     const installationCount = tasks.filter(
       (task) => task.activity === "Installation"
     ).length;
@@ -55,6 +55,7 @@ export default function DashboardScreen({ navigation }) {
         firstName={firstName}
         navigation={navigation}
         notificationCount={dueTasks}
+        message={`You have ${dueTasks} due tasks Today`}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -85,7 +86,7 @@ export default function DashboardScreen({ navigation }) {
         <VendorPerformance />
         <TotalVendor />
       </ScrollView>
-      {showBottomSheet && <Filter onClose={closeFilter} onApply={() => { }} />}
+      {showBottomSheet && <Filter onClose={closeFilter} onApply={() => {}} />}
     </ContainerComponent>
   );
 }

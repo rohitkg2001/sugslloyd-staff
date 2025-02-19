@@ -36,10 +36,13 @@ import CurrentStreetLightScreen from "../screens/CurrentStreetLightScreen";
 import GenerateJICRScreen from "../screens/GenerateJICRScreen";
 import JICRReportDetailsScreen from "../screens/JICRReportDetailsScreen";
 import AttendancePunchScreen from "../screens/AttendancePunchScreen";
+import TravelManagement from "../screens/TravelManagement";
+import AddBillForm from "../screens/AddBillForm";
+import TravelDetailScreen from "../screens/TravelDetailScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator({ initialRouteName }) {
-  console.log(`${initialRouteName} is the route name`)
+  console.log(`${initialRouteName} is the route name`);
   return (
     <Stack.Navigator
       initialRouteName={initialRouteName}
@@ -119,6 +122,9 @@ export default function MyStackNavigator({ initialRouteName }) {
         name="taskInventoryScreen"
         component={TaskInventoryScreen}
       />
+      <Stack.Screen name="travelManagement" component={TravelManagement} />
+      <Stack.Screen name="addBillForm" component={ AddBillForm } />
+      <Stack.Screen name="travelDetailScreen" component={TravelDetailScreen}/>
     </Stack.Navigator>
   );
 }
