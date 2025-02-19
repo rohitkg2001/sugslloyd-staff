@@ -1,3 +1,4 @@
+// import all react native
 import React, { useState, useEffect } from "react";
 import { View, ScrollView } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
