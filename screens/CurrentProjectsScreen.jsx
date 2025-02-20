@@ -118,8 +118,7 @@ export default function CurrentProjectsScreen({ navigation }) {
     } else if (tab === "Assigned") {
       filteredTasks = tasks.filter((task) => task.vendor_id && !task.image);
     } else if (tab === "Pending") {
-      filteredTasks = tasks.filter((task) => task.image && task.vendor_id);
-      console.log(filteredTasks);
+      filteredTasks = tasks.filter((task) => task.image && task.vendor_id && task.status!=="Completed");
     } else if (tab === "Done") {
       filteredTasks = tasks.filter((task) => task.status === "Completed");
     } else if (tab === "Rejected") {
