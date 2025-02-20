@@ -11,8 +11,9 @@ import {
   styles,
   typography,
 } from "../styles";
+import { P } from "../components/text";
 
-const ConveyanceBillForm = () => {
+const ConveyanceBillForm = ({ navigation }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentLocation, setCurrentLocation] = useState("");
   const [dropLocation, setDropLocation] = useState("");
@@ -128,7 +129,7 @@ const ConveyanceBillForm = () => {
           />
         </View>
       </View>
-      <View
+      <TouchableOpacity
         style={[
           styles.row,
           spacing.br2,
@@ -146,7 +147,81 @@ const ConveyanceBillForm = () => {
           color="red"
           style={{ marginRight: 8 }}
         />
-        <Text style={[typography.font16, typography.fontLato]}>Select Map</Text>
+        <P style={[typography.font16, typography.fontLato]}>Select Map</P>
+      </TouchableOpacity>
+      {/* Explore Section */}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginHorizontal: 16,
+          marginTop: 16,
+          width: SCREEN_WIDTH - 32,
+        }}
+      >
+        <Text style={[typography.font16, typography.textBold]}>
+          Mode Of Transport
+        </Text>
+      </View>
+
+      <View style={{ flexDirection: "row", marginRight: 24, top: 12 }}>
+        <TouchableOpacity
+          style={{ alignItems: "center", marginRight: 16 }}
+          onPress={() => navigation.navigate("rideSelection")}
+        >
+          <View
+            style={{
+              backgroundColor: "#e0e0e0",
+              padding: 10,
+              borderRadius: 10,
+            }}
+          >
+            <Ionicons name="car-sport-outline" size={40} color="#2a9d8f" />
+          </View>
+          <Text
+            style={[typography.font14, typography.textBold, { marginTop: 8 }]}
+          >
+            Public transport
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={{ alignItems: "center", marginRight: 16 }}>
+          <View
+            style={{
+              backgroundColor: "#e0e0e0",
+              padding: 10,
+              borderRadius: 10,
+            }}
+          >
+            <Ionicons name="car-outline" size={40} color="#e9c46a" />
+          </View>
+          <Text
+            style={[typography.font14, typography.textBold, { marginTop: 8 }]}
+          >
+            Car
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ alignItems: "center" }}
+          // onPress={() => navigation.navigate("rideSelection")}
+        >
+          <View
+            style={{
+              backgroundColor: "#e0e0e0",
+              padding: 10,
+              borderRadius: 10,
+            }}
+          >
+            <Ionicons name="bicycle-outline" size={40} color="#e76f51" />
+          </View>
+          <Text
+            style={[typography.font14, typography.textBold, { marginTop: 8 }]}
+          >
+            Bike
+          </Text>
+        </TouchableOpacity>
       </View>
     </ContainerComponent>
   );
