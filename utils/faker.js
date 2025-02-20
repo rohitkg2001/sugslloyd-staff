@@ -119,9 +119,9 @@ export const menuItems = [
     page: "travelManagement",
   },
   {
-    label: "Daily Allowance Management",
-    icon: "map-outline",
-    page: "totalSitesScreen",
+    label: "Conveyance Allowance Management",
+    icon: "calculator-outline",
+    page: "conveyanceManagement",
   },
 
   {
@@ -662,13 +662,40 @@ export const executingAgencyData = [
   },
 ];
 
-const travel = [
+export const travelPlans = [
   {
     title: "Delhi - Patna",
-    project_capacity: "feb 12 - feb 14 * 2 days",
+    trip_schedule: "Feb 12 - Feb 14 • 2 days",
   },
   {
     title: "Patna - Agra",
-    project_capacity: "Feb 19 - feb 22 * 3 days",
+    trip_schedule: "Feb 19 - Feb 22 • 3 days",
+  },
+  {
+    title: "Mumbai - Goa",
+    trip_schedule: "Mar 5 - Mar 8 • 3 days",
+  },
+  {
+    title: "Chennai - Hyderabad",
+    trip_schedule: "Mar 12 - Mar 15 • 3 days",
+  },
+];
+
+export const travel = [
+  {
+    title: "Mumbai - Pune",
+    trip_schedule: "Mar 10 - Mar 12 • 2 days",
+  },
+  {
+    title: "Chennai - Bangalore",
+    trip_schedule: "Mar 15 - Mar 18 • 3 days",
+  },
+  {
+    title: "Hyderabad - Goa",
+    trip_schedule: "Mar 20 - Mar 23 • 3 days",
+  },
+  {
+    title: "Kolkata - Darjeeling",
+    trip_schedule: "Mar 25 - Mar 28 • 3 days",
   },
 ];

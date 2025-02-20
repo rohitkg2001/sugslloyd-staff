@@ -39,6 +39,8 @@ import AttendancePunchScreen from "../screens/AttendancePunchScreen";
 import TravelManagement from "../screens/TravelManagement";
 import AddBillForm from "../screens/AddBillForm";
 import TravelDetailScreen from "../screens/TravelDetailScreen";
+import ConveyanceManagementScreen from "../screens/ConveyanceManagementScreen";
+import ConveyanceBillForm from "../screens/ConveyanceBillForm";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator({ initialRouteName }) {
@@ -124,7 +126,9 @@ export default function MyStackNavigator({ initialRouteName }) {
       />
       <Stack.Screen name="travelManagement" component={TravelManagement} />
       <Stack.Screen name="addBillForm" component={ AddBillForm } />
-      <Stack.Screen name="travelDetailScreen" component={TravelDetailScreen}/>
+      <Stack.Screen name="travelDetailScreen" component={ TravelDetailScreen } />
+      <Stack.Screen name="conveyanceManagement" component={ ConveyanceManagementScreen } />
+      <Stack.Screen name="conveyanceBillForm" component={ConveyanceBillForm}/>
     </Stack.Navigator>
   );
 }

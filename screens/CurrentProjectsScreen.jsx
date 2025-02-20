@@ -84,32 +84,6 @@ export default function CurrentProjectsScreen({ navigation }) {
     setShowVendorSelection(true);
   };
 
-  // const handleTabSelection = (tab) => {
-  //   setActiveTab(tab);
-
-  //   let filteredTasks = [];
-  //   if (tab === "Unassigned") {
-  //     filteredTasks = tasks.filter((task) => !task.vendor_id);
-  //   } else if (tab === "Assigned") {
-  //     filteredTasks = tasks.filter((task) => task.vendor_id && !task.image);
-  //   } else if (tab === "Pending") {
-  //     filteredTasks = tasks.filter((task) => task.image && task.vendor_id);
-  //   } else if (tab === "Done") {
-  //     filteredTasks = tasks.filter((task) => task.status === "Completed");
-  //   } else if (tab === "View All") {
-  //     filteredTasks = tasks;
-  //   }
-
-  //   setCurrentTasks(filteredTasks);
-  //   setTaskCounts({
-  //     unassigned: tasks.filter((task) => !task.vendor_id).length,
-  //     assigned: tasks.filter((task) => task.vendor_id && !task.image).length,
-  //     pending: tasks.filter((task) => task.image && task.vendor_id).length,
-  //     done: tasks.filter((task) => task.status === "Completed").length,
-  //     all: tasks.length,
-  //   });
-  // };
-
   const handleTabSelection = (tab) => {
     setActiveTab(tab);
     let filteredTasks = [];
@@ -118,7 +92,9 @@ export default function CurrentProjectsScreen({ navigation }) {
     } else if (tab === "Assigned") {
       filteredTasks = tasks.filter((task) => task.vendor_id && !task.image);
     } else if (tab === "Pending") {
-      filteredTasks = tasks.filter((task) => task.image && task.vendor_id && task.status!=="Completed");
+      filteredTasks = tasks.filter(
+        (task) => task.image && task.vendor_id && task.status !== "Completed"
+      );
     } else if (tab === "Done") {
       filteredTasks = tasks.filter((task) => task.status === "Completed");
     } else if (tab === "Rejected") {
@@ -256,7 +232,9 @@ export default function CurrentProjectsScreen({ navigation }) {
                 {
                   name: "Pending",
                   count:
-                    tasks.filter((t) => t.image && t.vendor_id && t.status!=="Completed").length || "",
+                    tasks.filter(
+                      (t) => t.image && t.vendor_id && t.status !== "Completed"
+                    ).length || "",
                 },
                 {
                   name: "Done",

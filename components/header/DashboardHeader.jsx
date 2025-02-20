@@ -16,6 +16,7 @@ import {
   styles,
   layouts,
   typography,
+  LIGHT,
 } from "../../styles";
 
 export default function DashboardHeader({
@@ -27,6 +28,7 @@ export default function DashboardHeader({
   message,
   style = {},
   useEllipsis = false,
+  textStyle,
 }) {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
@@ -52,13 +54,16 @@ export default function DashboardHeader({
       ]}
     >
       <View>
-        <H4 style={typography.fontLato}>
+        {/* <H4 style={typography.fontLato}>
           {greeting},{firstName}
+        </H4> */}
+        <H4 style={[typography.fontLato, textStyle]}>
+          {greeting}, {firstName}
         </H4>
-        {/* <P style={(spacing.ml1, typography.fontLato)}>
-          You have {dueTasks} due tasks Today
-        </P> */}
-        {message && <P style={[spacing.ml1, typography.fontLato]}>{message}</P>}
+
+        {message && (
+          <P style={[spacing.ml1, typography.fontLato, textStyle]}>{message}</P>
+        )}
       </View>
       <TouchableOpacity
         style={[
@@ -78,7 +83,7 @@ export default function DashboardHeader({
         <Icon
           name={useEllipsis ? "ellipsis-vertical" : "notifications-outline"}
           size={ICON_MEDIUM}
-          color={DARK}
+          color={useEllipsis ? LIGHT : DARK}
         />
         {notificationCount && (
           <View
@@ -102,35 +107,38 @@ export default function DashboardHeader({
       </TouchableOpacity>
 
       {useEllipsis && isMenuVisible && (
-        <Menu
-          visible={isMenuVisible}
-          onDismiss={toggleMenu}
-          anchor={
-            <View
-              style={{
-                position: "absolute",
-                top: 40,
-                right: 0,
-                backgroundColor: "white",
-                padding: 15,
-                borderRadius: 8,
-                shadowColor: "#000",
-                width: 200,
-              }}
-            >
-              {menuItems.map((item, index) => (
-                <React.Fragment key={index}>
-                  <Menu.Item
-                    onPress={item.onPress}
-                    title={item.title}
-                    disabled={item.disabled}
-                  />
-                  {index < menuItems.length - 1 && <Divider />}
-                </React.Fragment>
-              ))}
-            </View>
-          }
-        />
+        <View
+          style={[
+            spacing.p4,
+            {
+              position: "absolute",
+              top: 65,
+              right: 6,
+              backgroundColor: LIGHT,
+              width: 150,
+              height: 120,
+              borderRadius: 8,
+              zIndex: 1,
+            },
+          ]}
+        >
+          {menuItems.map((item, index) => (
+            <React.Fragment key={index}>
+              <TouchableOpacity
+                onPress={item.onPress}
+                disabled={item.disabled}
+                style={{ paddingVertical: 8 }}
+              >
+                <P
+                  style={{ color: item.disabled ? "gray" : "black", fontSize:16 }}
+                >
+                  {item.title}
+                </P>
+              </TouchableOpacity>
+              {index < menuItems.length - 1 && <Divider />}
+            </React.Fragment>
+          ))}
+        </View>
       )}
     </View>
   );

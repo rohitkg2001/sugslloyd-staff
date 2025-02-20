@@ -9,7 +9,6 @@ import * as DocumentPicker from "expo-document-picker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
-import MyButton from "../components/buttons/MyButton";
 import MyPickerInput from "../components/input/MyPickerInput";
 
 // import Styles
@@ -81,7 +80,7 @@ const AddBillForm = ({ navigation }) => {
   const handleUploadTicket = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: "application/pdf", // Sirf PDF files allow kar raha hu, yahan images bhi allow kar sakte ho
+        type: "application/pdf", // Allow img & PDF files
         copyToCacheDirectory: true,
       });
 
@@ -101,10 +100,10 @@ const AddBillForm = ({ navigation }) => {
     <ContainerComponent>
       <MyHeader title={t("Add Bill")} hasIcon={true} isBack={true} />
       <ScrollView
-        contentContainerStyle={{
-          paddingHorizontal: spacing.mh1,
-          width: SCREEN_WIDTH - 18,
-        }}
+      // contentContainerStyle={{
+      //   paddingHorizontal: spacing.mh1,
+      //   width: SCREEN_WIDTH - 18,
+      // }}
       >
         {/* Start Journey Date */}
         <TouchableOpacity
@@ -121,37 +120,6 @@ const AddBillForm = ({ navigation }) => {
           />
         </TouchableOpacity>
 
-        {/* {pnrNumbersStart.map((pnr, index) => (
-          <View key={index} style={{ marginBottom: spacing.mh1 }}>
-            <MyTextInput
-              title={`${t("PNR Number (Start)")} ${index + 1}`}
-              value={pnr}
-              onChange={(value) => handlePnrChangeStart(value, index)}
-              placeholder={t("Enter PNR Number")}
-            />
-           
-            {pnrNumbersStart.length > 1 && (
-              <TouchableOpacity onPress={() => removePnrFieldStart(index)}>
-                <Span
-                  style={[
-                    styles.rightLink,
-                    typography.fontLato,
-                    { color: "red" },
-                  ]}
-                >
-                  {t("Remove")}
-                </Span>
-              </TouchableOpacity>
-            )}
-          </View>
-        ))}
-
-        <TouchableOpacity onPress={addPnrFieldStart}>
-          <Span style={[styles.rightLink, typography.fontLato]}>
-            {t("Add More PNR (Start)")}
-          </Span>
-        </TouchableOpacity> */}
-
         {/* PNR and Ticket Upload Group */}
         <View
           style={[
@@ -167,7 +135,7 @@ const AddBillForm = ({ navigation }) => {
             {t("PNR Details & Ticket Upload")}
           </H6>
           {pnrNumbersStart.map((pnr, index) => (
-            <View key={index} style={{ marginBottom: spacing.mh1 }}>
+            <View key={index}>
               <MyTextInput
                 title={`${t("PNR Number")} ${index + 1}`}
                 value={pnr}
@@ -329,84 +297,6 @@ const AddBillForm = ({ navigation }) => {
           {t("Add More")}
         </Span>
 
-        {/* <View
-          style={{
-            marginTop: spacing.mh2,
-            padding: 15,
-            backgroundColor: "#e0f7fa",
-            borderRadius: 10,
-            alignItems: "center",
-            borderWidth: 1,
-            borderColor: "#000",
-            borderStyle: "dotted",
-          }}
-        >
-          <H6
-            style={{
-              fontSize: 16,
-              fontWeight: "bold",
-              alignSelf: "flex-start",
-              bottom: 35,
-            }}
-          >
-            {t("Upload Ticket")}
-          </H6>
-
-          <TouchableOpacity
-            onPress={handleUploadTicket}
-            style={styles.uploadBtn}
-          >
-            <H6
-              style={{
-                color: "#000",
-                fontWeight: "bold",
-                textAlign: "center",
-                alignSelf: "center",
-                borderWidth: 1,
-                borderColor: "#000",
-                borderStyle: "dotted",
-                borderRadius: 10,
-                padding: 5,
-                bottom: 12,
-              }}
-            >
-              {t("Select Ticket")}
-            </H6>
-          </TouchableOpacity>
-
-          {ticket && (
-            <View style={{ marginTop: 10, alignItems: "center" }}>
-              <H6 style={{ color: "green", fontSize: 14 }}>
-                {t("Uploaded File")}: {ticket.name}
-              </H6>
-              <TouchableOpacity onPress={handleRemoveTicket}>
-                <Span
-                  style={{
-                    color: "red",
-                    fontSize: 12,
-                    marginTop: 5,
-                    borderWidth: 1,
-                    borderColor: "#000",
-                    borderStyle: "dotted",
-                  }}
-                >
-                  {t("Remove")}
-                </Span>
-              </TouchableOpacity>
-            </View>
-          )}
-        </View> */}
-
-        {/* <View
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <MyButton
-            title={t("Calculate Bill")}
-            onPress={() => navigation.navigate("travelDetailScreen")}
-          />
-        </View> */}
         <Button
           style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
           onPress={() => navigation.navigate("travelDetailScreen")}

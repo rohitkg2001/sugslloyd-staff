@@ -1,10 +1,9 @@
-// import all react native
+// import All react native
 import { View } from "react-native";
 import { useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useSelector } from "react-redux";
-// import Components
+// import All components
 import ContainerComponent from "../components/ContainerComponent";
 import ClickableCard1 from "../components/card/ClickableCard1";
 import MyFlatList from "../components/utility/MyFlatList";
@@ -12,11 +11,11 @@ import Button from "../components/buttons/Button";
 import DashboardHeader from "../components/header/DashboardHeader";
 import TabBar from "../components/TabBar";
 import SearchBar from "../components/input/SearchBar";
-
 // import faker
-import { travelPlans } from "../utils/faker";
-
-// import all styles
+import { travel } from "../utils/faker";
+// import redux
+import { useSelector } from "react-redux";
+// import Styles
 import {
   ICON_LARGE,
   ICON_MEDIUM,
@@ -27,7 +26,7 @@ import {
   PRIMARY_COLOR,
 } from "../styles";
 
-export default function TravelManagement({ navigation }) {
+export default function ConveyanceManagementScreen({ navigation }) {
   const [activeTab, setActiveTab] = useState("This Week");
   const { firstName } = useSelector((state) => state.staff);
 
@@ -58,7 +57,7 @@ export default function TravelManagement({ navigation }) {
       />
 
       <MyFlatList
-        data={travelPlans}
+        data={travel}
         renderItem={({ item, index }) => (
           <ClickableCard1
             key={index}
@@ -95,7 +94,6 @@ export default function TravelManagement({ navigation }) {
                   spacing.mh1,
                   { width: 50 },
                 ]}
-                //  onPress={() => setShowBottomSheet(true)}
               >
                 <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
               </Button>
@@ -117,7 +115,7 @@ export default function TravelManagement({ navigation }) {
 
       <Button
         style={styles.addButton}
-        onPress={() => navigation.navigate("addBillForm")}
+        onPress={() => navigation.navigate("conveyanceBillForm")}
       >
         <Ionicons name="add" size={ICON_LARGE} color="white" />
       </Button>

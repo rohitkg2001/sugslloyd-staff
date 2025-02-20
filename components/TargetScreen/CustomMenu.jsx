@@ -8,7 +8,6 @@ const CustomMenu = ({
   toggleMenu,
   assignTasks,
   disableAssign,
-  menuItems = [],
 }) => (
   <Menu
     visible={menuVisible}
