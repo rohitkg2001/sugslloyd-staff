@@ -256,7 +256,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                 {
                   name: "Pending",
                   count:
-                    tasks.filter((t) => t.image && t.vendor_id).length || "",
+                    tasks.filter((t) => t.image && t.vendor_id && t.status!=="Completed").length || "",
                 },
                 {
                   name: "Done",
