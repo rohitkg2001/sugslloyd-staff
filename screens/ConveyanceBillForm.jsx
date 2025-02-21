@@ -5,13 +5,14 @@ import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { useTranslation } from "react-i18next";
 import {
+  LIGHT,
   PRIMARY_COLOR_TRANSPARENT,
   SCREEN_WIDTH,
   spacing,
   styles,
   typography,
 } from "../styles";
-import { H2, P } from "../components/text";
+import { H2, H5, P, H6 } from "../components/text";
 import Button from "../components/buttons/Button";
 
 const ConveyanceBillForm = ({ navigation }) => {
@@ -161,125 +162,175 @@ const ConveyanceBillForm = ({ navigation }) => {
           width: SCREEN_WIDTH - 32,
         }}
       >
-        <Text style={[typography.font16, typography.textBold]}>
+        <H5
+          style={[
+            typography.font14,
+            typography.textBold,
+            typography.fontLato,
+            spacing.p2,
+            spacing.br2,
+            {
+              backgroundColor: LIGHT,
+            },
+          ]}
+        >
           Mode Of Transport
-        </Text>
+        </H5>
       </View>
 
-      {/* <View style={{ flexDirection: "row", marginRight: 24, top: 12 }}>
+      <View style={{ flex: 1, padding: 16 }}>
         <TouchableOpacity
-          style={{ alignItems: "center", marginRight: 16 }}
-          onPress={() => navigation.navigate("rideSelection")}
-        >
-          <View
-            style={{
-              backgroundColor: "#e0e0e0",
-              padding: 10,
-              borderRadius: 10,
-            }}
-          >
-            <Ionicons name="car-sport-outline" size={40} color="#2a9d8f" />
-          </View>
-          <Text
-            style={[typography.font14, typography.textBold, { marginTop: 8 }]}
-          >
-            Public transport
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{ alignItems: "center", marginRight: 16 }}>
-          <View
-            style={{
-              backgroundColor: "#e0e0e0",
-              padding: 10,
-              borderRadius: 10,
-            }}
-          >
-            <Ionicons name="car-outline" size={40} color="#e9c46a" />
-          </View>
-          <Text
-            style={[typography.font14, typography.textBold, { marginTop: 8 }]}
-          >
-            Car
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={{ alignItems: "center" }}
-          // onPress={() => navigation.navigate("rideSelection")}
-        >
-          <View
-            style={{
-              backgroundColor: "#e0e0e0",
-              padding: 10,
-              borderRadius: 10,
-            }}
-          >
-            <Ionicons name="bicycle-outline" size={40} color="#e76f51" />
-          </View>
-          <Text
-            style={[typography.font14, typography.textBold, { marginTop: 8 }]}
-          >
-            Bike
-          </Text>
-        </TouchableOpacity>
-      </View> */}
-
-      <View style={{ flex: 1, backgroundColor: "#fff", padding: 16 }}>
-        <TouchableOpacity
-          style={{
-            borderWidth: 1,
-            borderColor: "#264653",
-            borderRadius: 10,
-            padding: 12,
-            marginBottom: 12,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
+          style={[
+            spacing.bw05,
+            spacing.br2,
+            {
+              padding: 12,
+              marginBottom: 12,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+              backgroundColor: LIGHT,
+              elevation: 2,
+            },
+          ]}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Ionicons name="car-sport-outline" size={40} color="#f4a261" />
             <View style={{ marginLeft: 10 }}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                  Public transport
-                </Text>
-                <Ionicons
-                  name="person-outline"
-                  size={16}
-                  style={{ marginLeft: 5 }}
-                />
-                <Text
-                  style={{
-                    backgroundColor: "#d8f3dc",
-                    color: "#2d6a4f",
-                    fontSize: 12,
-                    paddingHorizontal: 6,
-                    paddingVertical: 2,
-                    borderRadius: 4,
-                    marginLeft: 8,
-                  }}
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
                 >
-                  FASTEST
-                </Text>
+                  Public transport
+                </H5>
               </View>
-              <Text style={{ fontSize: 14, color: "#6c757d" }}>
-                Quick Bike rides
-              </Text>
-              <Text style={{ fontSize: 14, color: "#6c757d" }}>
+              <H6 style={[typography.font14, typography.fontLato]}>
+                Hanuman Mandir - patna zoo
+              </H6>
+              <P style={[typography.font14, typography.fontLato]}>
                 15Km (appx)
-              </Text>
+              </P>
             </View>
           </View>
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>₹220</Text>
+          <H5
+            style={[
+              typography.font16,
+              typography.textBold,
+              typography.fontLato,
+            ]}
+          >
+            ₹120
+          </H5>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("transportCamera")}
+          style={[
+            spacing.bw05,
+            spacing.br2,
+            {
+              padding: 12,
+              marginBottom: 12,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              backgroundColor: LIGHT,
+              elevation: 2,
+            },
+          ]}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons name="car-outline" size={40} color="#e9c46a" />
+            <View style={{ marginLeft: 10 }}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Car
+                </H5>
+              </View>
+              <H6 style={[typography.font14, typography.fontLato]}>
+                Hanuman Mandir - Patna Zoo
+              </H6>
+              <P style={[typography.font14, typography.fontLato]}>
+                15Km (appx)
+              </P>
+            </View>
+          </View>
+          <H6
+            style={[
+              typography.font16,
+              typography.textBold,
+              typography.fontLato,
+            ]}
+          >
+            ₹350
+          </H6>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("transportCamera")}
+          style={[
+            spacing.bw05,
+            spacing.br2,
+            {
+              padding: 12,
+              marginBottom: 12,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              backgroundColor: LIGHT,
+              elevation: 2,
+            },
+          ]}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons name="bicycle-outline" size={40} color="#f4a261" />
+            <View style={{ marginLeft: 10 }}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Bike
+                </H5>
+              </View>
+              <H6 style={[typography.font14, typography.fontLato]}>
+                Hanuman Mandir - patna zoo
+              </H6>
+              <P style={[typography.font14, typography.fontLato]}>
+                15Km (appx)
+              </P>
+            </View>
+          </View>
+          <H6
+            style={[
+              typography.font16,
+              typography.textBold,
+              typography.fontLato,
+            ]}
+          >
+            ₹220
+          </H6>
         </TouchableOpacity>
 
         <Button
           style={[
             styles.btn,
             styles.bgPrimary,
-            { justifyContent: "center", top: 280 },
+            { justifyContent: "center", top: 80 },
           ]}
           // onPress={onSubmit}
         >

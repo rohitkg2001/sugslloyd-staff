@@ -113,15 +113,16 @@ export const menuItems = [
   //   icon: "map-outline",
   //   page: "totalSitesScreen",
   // },
+
+  {
+    label: "Conveyance Management",
+    icon: "calculator-outline",
+    page: "conveyanceManagement",
+  },
   {
     label: "Travel Allowance Management",
     icon: "map-outline",
     page: "travelManagement",
-  },
-  {
-    label: "Conveyance Allowance Management",
-    icon: "calculator-outline",
-    page: "conveyanceManagement",
   },
 
   {
@@ -697,5 +698,18 @@ export const travel = [
   {
     title: "Kolkata - Darjeeling",
     trip_schedule: "Mar 25 - Mar 28 • 3 days",
+  },
+];
+
+// conveyanceData.js
+
+export const conveyanceData = [
+  {
+    id: 1,
+    pickupLocation: "Patna Golghar",
+    dropoffLocation: "Patna Airport",
+    date: "2025-02-21",
+    time: "14:30 Pm",
+    price: 150,
   },
 ];

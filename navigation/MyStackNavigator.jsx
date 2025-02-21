@@ -41,7 +41,9 @@ import AddBillForm from "../screens/AddBillForm";
 import TravelDetailScreen from "../screens/TravelDetailScreen";
 import ConveyanceManagementScreen from "../screens/ConveyanceManagementScreen";
 import ConveyanceBillForm from "../screens/ConveyanceBillForm";
-import RideSelectionScreen from "../screens/RideSelectionScreen";
+import TransportCamera from "../screens/TransportCamera";
+import MapScreen from "../screens/MapScreen";
+import ConveyanceCalculateScreen from "../screens/ConveyanceCalculateScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator({ initialRouteName }) {
@@ -133,7 +135,12 @@ export default function MyStackNavigator({ initialRouteName }) {
         component={ConveyanceManagementScreen}
       />
       <Stack.Screen name="conveyanceBillForm" component={ConveyanceBillForm} />
-      <Stack.Screen name="rideSelection" component={RideSelectionScreen} />
+      <Stack.Screen name="mapScreen" component={MapScreen} />
+      <Stack.Screen name="transportCamera" component={TransportCamera} />
+      <Stack.Screen
+        name="conveyanceCalculate"
+        component={ConveyanceCalculateScreen}
+      />
     </Stack.Navigator>
   );
 }
