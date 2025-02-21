@@ -173,7 +173,7 @@ const MapScreen = ({ navigation }) => {
             styles.bgPrimary,
             { justifyContent: "center", marginHorizontal: 2 },
           ]}
-          onPress={() => navigation.navigate("conveyanceCalculate")}
+          onPress={() => navigation.navigate("conveyanceManagement")}
         >
           <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
             {"End Trip"}

@@ -24,7 +24,9 @@ import {
   styles,
   SCREEN_WIDTH,
   PRIMARY_COLOR,
+  typography,
 } from "../styles";
+import { P, Span } from "../components/text";
 
 export default function ConveyanceManagementScreen({ navigation }) {
   const [activeTab, setActiveTab] = useState("This Week");
@@ -59,17 +61,59 @@ export default function ConveyanceManagementScreen({ navigation }) {
       <MyFlatList
         data={travel}
         renderItem={({ item, index }) => (
+          // <ClickableCard1
+          //   key={index}
+          //   item={item}
+          //   title={`${item.pickupLocation} - ${item.dropoffLocation}`}
+          //   subtitle={`${item.date} - ${item.time}`}
+          // onPress={() => {
+          //   navigation.navigate("travelDetailScreen", {
+          //     travelItem: item,
+          //   });
+          // } }
+
+          // />
           <ClickableCard1
             key={index}
             item={item}
-            title={item.title}
-            subtitle={item.trip_schedule}
+            title={`${item.pickupLocation} - ${item.dropoffLocation}`}
+            subtitle={`${item.date} - ${item.time}`}
             onPress={() => {
-              navigation.navigate("travelDetailScreen", {
+              navigation.navigate("conveyanceDetail", {
                 travelItem: item,
               });
             }}
-          />
+          >
+            <View>
+              <View
+                style={[
+                  spacing.mt1,
+                  styles.row,
+                  { justifyContent: "space-between", alignItems: "center" },
+                ]}
+              >
+                <Span
+                  style={[
+                    typography.font16,
+                    typography.fontLato,
+                    { textTransform: "capitalize" },
+                  ]}
+                >
+                  Price
+                </Span>
+
+                <P
+                  style={[
+                    typography.font20,
+                    typography.fontLato,
+                    typography.textBold,
+                  ]}
+                >
+                  ₹{item.price}
+                </P>
+              </View>
+            </View>
+          </ClickableCard1>
         )}
         keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={[spacing.mh1, spacing.mt1]}

@@ -684,20 +684,12 @@ export const travelPlans = [
 
 export const travel = [
   {
-    title: "Mumbai - Pune",
-    trip_schedule: "Mar 10 - Mar 12 • 2 days",
-  },
-  {
-    title: "Chennai - Bangalore",
-    trip_schedule: "Mar 15 - Mar 18 • 3 days",
-  },
-  {
-    title: "Hyderabad - Goa",
-    trip_schedule: "Mar 20 - Mar 23 • 3 days",
-  },
-  {
-    title: "Kolkata - Darjeeling",
-    trip_schedule: "Mar 25 - Mar 28 • 3 days",
+    id: 1,
+    pickupLocation: "Patna Golghar",
+    dropoffLocation: "Patna Airport",
+    date: "2025-02-21",
+    time: "14:30 Pm",
+    price: 150,
   },
 ];
 
