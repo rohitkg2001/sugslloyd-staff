@@ -22,7 +22,6 @@ const AddBillForm = ({ navigation }) => {
   const [pnrNumbersStart, setPnrNumbersStart] = useState([""]);
   const [pnrNumbersReturn, setPnrNumbersReturn] = useState([""]);
   const [type, setType] = useState("");
-  const [bill, setBill] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDateType, setSelectedDateType] = useState(null);
   const [ticket, setTicket] = useState(null);
@@ -142,7 +141,7 @@ const AddBillForm = ({ navigation }) => {
         {/* PNR and Ticket Upload Group */}
         <View
           style={[
-            spacing.bw1,
+            spacing.bw1, spacing.p1,
             spacing.br2,
             {
               borderStyle: "dotted",
