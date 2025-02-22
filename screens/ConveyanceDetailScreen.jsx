@@ -11,53 +11,47 @@ export default function ConveyanceDetailScreen() {
       <MyHeader title={"Booking Summary"} hasIcon={true} isBack={true} />
       <ScrollView>
         <View style={[{ width: SCREEN_WIDTH - 16 }]}>
-          <View style={[styles.row, spacing.pv2]}>
-            <H5
-              style={[
-                typography.font14,
-                typography.textBold,
-                typography.fontLato,
-                { textAlign: "left" },
-              ]}
-            >
-              From
-            </H5>
-            <P
-              style={[
-                typography.font14,
-                typography.fontLato,
-                { textAlign: "right" },
-              ]}
-            >
-              Hanuman Mandir
-            </P>
+          <View
+            style={[
+              styles.row,
+              spacing.bbw05,
+              spacing.p2,
+              {
+                alignItems: "center",
+              },
+            ]}
+          >
+            <View style={{ alignItems: "center" }}>
+              <P style={[typography.font10]}>From</P>
+              <H5
+                style={[
+                  typography.font14,
+                  typography.textBold,
+                  typography.fontLato,
+                ]}
+              >
+                Patna Golghar
+              </H5>
+            </View>
+            <H5 style={{ fontSize: 24 }}>⇄</H5>
+            <View style={{ alignItems: "center" }}>
+              <P style={[typography.font10]}>To</P>
+              <H5
+                style={[
+                  typography.font14,
+                  typography.textBold,
+                  typography.fontLato,
+                ]}
+              >
+                Patna Airport
+              </H5>
+            </View>
           </View>
           <View style={[styles.row, spacing.pv2]}>
             <H5
               style={[
                 typography.font14,
-                typography.textBold,
-                typography.fontLato,
-                { textAlign: "left" },
-              ]}
-            >
-              To
-            </H5>
-            <P
-              style={[
-                typography.font14,
-                typography.fontLato,
-                { textAlign: "right" },
-              ]}
-            >
-              - Patna Zoo
-            </P>
-          </View>
-          <View style={[styles.row, spacing.pv2]}>
-            <H5
-              style={[
-                typography.font14,
-                typography.textBold,
+                // typography.textBold,
                 typography.fontLato,
                 { textAlign: "left" },
               ]}
@@ -66,19 +60,20 @@ export default function ConveyanceDetailScreen() {
             </H5>
             <P
               style={[
+                typography.text600,
                 typography.font14,
                 typography.fontLato,
                 { textAlign: "right" },
               ]}
             >
-              12 Feb 2024 - 10:00
+              2025-02-21
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
             <H5
               style={[
                 typography.font14,
-                typography.textBold,
+                // typography.textBold,
                 typography.fontLato,
                 { textAlign: "left" },
               ]}
@@ -87,19 +82,20 @@ export default function ConveyanceDetailScreen() {
             </H5>
             <P
               style={[
+                typography.text600,
                 typography.font14,
                 typography.fontLato,
                 { textAlign: "right" },
               ]}
             >
-              4 Km
+              7 Km
             </P>
           </View>
           <View style={[styles.row, spacing.pv2, spacing.bbw05]}>
             <H5
               style={[
                 typography.font14,
-                typography.textBold,
+                // typography.textBold,
                 typography.fontLato,
 
                 { textAlign: "left" },
@@ -109,17 +105,18 @@ export default function ConveyanceDetailScreen() {
             </H5>
             <P
               style={[
+                typography.textBold,
                 typography.font14,
                 typography.fontLato,
                 { textAlign: "right" },
               ]}
             >
-              Bus
+              Car
             </P>
           </View>
           <H5
             style={[
-              typography.font20,
+              typography.font16,
               typography.textBold,
               typography.fontLato,
               spacing.pv5,
@@ -134,7 +131,7 @@ export default function ConveyanceDetailScreen() {
             <H5
               style={[
                 typography.font14,
-                typography.textBold,
+               // typography.textBold,
                 typography.fontLato,
                 { textAlign: "left" },
               ]}
@@ -148,13 +145,13 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right" },
               ]}
             >
-              ₹ 350.00
+              ₹ 150.00
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
             <H5
               style={[
-                typography.font20,
+                typography.font18,
                 typography.textBold,
                 typography.fontLato,
                 { textAlign: "left" },
@@ -170,7 +167,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right", color: "red" },
               ]}
             >
-              ₹ 350.00
+              ₹ 150.00
             </P>
           </View>
           import {Alert} from "react-native";
@@ -178,7 +175,7 @@ export default function ConveyanceDetailScreen() {
             style={[
               styles.btn,
               styles.bgPrimary,
-              { justifyContent: "center", top: 250 },
+              { justifyContent: "center", top: 280 },
             ]}
             onPress={() => {
               Alert.alert(

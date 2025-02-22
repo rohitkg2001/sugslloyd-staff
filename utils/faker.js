@@ -687,9 +687,21 @@ export const travel = [
     id: 1,
     pickupLocation: "Patna Golghar",
     dropoffLocation: "Patna Airport",
+    date: "2025-02-17",
+    time: "14:30 Pm",
+    price: 150,
+    distance: "7 km",
+    modeOfTransport: "Car",
+  },
+  {
+    id: 1,
+    pickupLocation: "Patna Golgharrr",
+    dropoffLocation: "Patna Airport",
     date: "2025-02-21",
     time: "14:30 Pm",
     price: 150,
+    distance: "7 km",
+    modeOfTransport: "Car",
   },
 ];
 

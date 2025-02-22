@@ -42,41 +42,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     }
   }, [isFocused, route.params]);
 
-  // const fetchAddress = async (latitude, longitude) => {
-  //   try {
-  //     let [address] = await Location.reverseGeocodeAsync({
-  //       latitude,
-  //       longitude,
-  //     });
-  //     const formattedAddress = ` ${address.city}`;
-  //     setCurrentLocation(formattedAddress);
-  //   } catch (error) {
-  //     console.error("Error fetching address:", error);
-  //     setCurrentLocation("Address not found");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   (async () => {
-  //     let { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== "granted") {
-  //       Alert.alert("Permission Denied", "Allow location access to proceed.");
-  //       return;
-  //     }
-
-  //     let location = await Location.getCurrentPositionAsync({});
-  //     const { latitude, longitude } = location.coords;
-  //     setRegion({
-  //       latitude,
-  //       longitude,
-  //       latitudeDelta: 0.05,
-  //       longitudeDelta: 0.05,
-  //     });
-  //     setPickupLocation({ latitude, longitude });
-  //     fetchAddress(latitude, longitude);
-  //   })();
-  // }, []);
-
   return (
     <ContainerComponent>
       <MyHeader title={t("Conveyance Bill")} hasIcon={true} isBack={true} />
@@ -151,7 +116,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             height: 1,
             borderStyle: "dotted",
             borderWidth: 0.5,
-            borderColor: "#999",
+            borderColor: "#ccc",
             marginLeft: 20,
             marginBottom: 8,
           }}
@@ -190,47 +155,40 @@ const ConveyanceBillForm = ({ navigation, route }) => {
         </View>
       </View>
       <TouchableOpacity
-        // onPress={() => setIsSelectingPickup(true)}
         onPress={() => navigation.navigate("locationSet")}
         style={[
           styles.row,
-          spacing.br2,
-          // spacing.bw1,
+          spacing.br1,
           spacing.p2,
           {
-            marginRight: 185,
+            marginRight: 190,
             alignItems: "center",
-            borderWidth: 0.4,
+            borderWidth: 0.2,
             borderColor: "gray",
+            backgroundColor: LIGHT,
+            elevation: 3,
           },
         ]}
       >
-        <Ionicons
-          name="location-outline"
-          size={20}
-          color="red"
-          style={{ marginRight: 8 }}
-        />
+        <Ionicons name="location-outline" size={20} color="red" />
         <P style={[typography.font14, typography.fontLato]}>Select on Map</P>
       </TouchableOpacity>
+
       {/* Explore Section */}
       <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginHorizontal: 16,
-          marginTop: 16,
-          width: SCREEN_WIDTH - 32,
-        }}
+        style={[
+          spacing.mt2,
+          {
+            width: SCREEN_WIDTH - 32,
+          },
+        ]}
       >
         <H5
           style={[
+            spacing.ml2,
             typography.font14,
             typography.textBold,
             typography.fontLato,
-            spacing.p2,
-            spacing.br2,
           ]}
         >
           Mode Of Transport
@@ -305,7 +263,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={() => navigation.navigate("transportCamera")}
           style={[
-            // spacing.bw05,
             spacing.br2,
             {
               padding: 12,
@@ -319,7 +276,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           ]}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            {/* <Ionicons name="car-outline" size={40} color="#e9c46a" /> */}
             <Image
               source={require("../assets/car1.jpeg")}
               style={[
@@ -380,7 +336,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           ]}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            {/* <Ionicons name="bicycle-outline" size={40} color="#f4a261" /> */}
             <Image
               source={require("../assets/bike.jpg")}
               style={[
@@ -428,12 +383,12 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           style={[
             styles.btn,
             styles.bgPrimary,
-            { justifyContent: "center", top: 80 },
+            { justifyContent: "center", top: 100 },
           ]}
           // onPress={onSubmit}
         >
           <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-            {"Book"}
+            {"Proceed"}
           </H2>
         </Button>
       </View>

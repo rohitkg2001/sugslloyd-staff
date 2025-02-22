@@ -118,18 +118,6 @@ const LocationSetScreen = ({ navigation }) => {
         </MapView>
       )}
 
-      {/* <Button
-        style={[
-          styles.btn,
-          styles.bgPrimary,
-          { justifyContent: "center", marginHorizontal: 2 },
-        ]}
-        onPress={() => navigation.goBack()}
-      >
-        <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-          {"Confirm Location"}
-        </H2>
-      </Button> */}
       <Button
         style={[
           styles.btn,

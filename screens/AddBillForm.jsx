@@ -12,7 +12,7 @@ import MyTextInput from "../components/input/MyTextInput";
 import MyPickerInput from "../components/input/MyPickerInput";
 
 // import Styles
-import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
+import { spacing, styles, typography } from "../styles";
 import { H2, H6, Span } from "../components/text";
 import Button from "../components/buttons/Button";
 
@@ -26,6 +26,7 @@ const AddBillForm = ({ navigation }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDateType, setSelectedDateType] = useState(null);
   const [ticket, setTicket] = useState(null);
+  const [hotelBill, setHotelBill] = useState(null);
 
   const { t } = useTranslation();
 
@@ -77,6 +78,7 @@ const AddBillForm = ({ navigation }) => {
     setPnrNumbersReturn(updatedPnrNumbers);
   };
   // Ticket Upload Handler
+
   const handleUploadTicket = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
@@ -85,26 +87,43 @@ const AddBillForm = ({ navigation }) => {
       });
 
       if (result.canceled === false) {
-        setTicket(result.assets[0]); // Uploaded file ko store kar rahe hain
+        setTicket(result.assets[0]); // Store ticket file
       }
     } catch (error) {
-      console.log("File upload error:", error);
+      console.log("Ticket upload error:", error);
     }
   };
 
+  // Remove Ticket
   const handleRemoveTicket = () => {
     setTicket(null);
+  };
+
+  // Hotel Bill Upload Handler (Third Code)
+  const handleUploadHotelBill = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "application/pdf", // Allow img & PDF files
+        copyToCacheDirectory: true,
+      });
+
+      if (result.canceled === false) {
+        setHotelBill(result.assets[0]); // Store hotel bill file
+      }
+    } catch (error) {
+      console.log("Hotel bill upload error:", error);
+    }
+  };
+
+  // Remove Hotel Bill
+  const handleRemoveHotelBill = () => {
+    setHotelBill(null);
   };
 
   return (
     <ContainerComponent>
       <MyHeader title={t("Add Bill")} hasIcon={true} isBack={true} />
-      <ScrollView
-      // contentContainerStyle={{
-      //   paddingHorizontal: spacing.mh1,
-      //   width: SCREEN_WIDTH - 18,
-      // }}
-      >
+      <ScrollView>
         {/* Start Journey Date */}
         <TouchableOpacity
           onPress={() => {
@@ -126,13 +145,12 @@ const AddBillForm = ({ navigation }) => {
             spacing.bw1,
             spacing.br2,
             {
-              // backgroundColor: "#f7f7f7",
               borderStyle: "dotted",
             },
           ]}
         >
-          <H6 style={[typography.font14, typography.fontLato]}>
-            {t("PNR Details & Ticket Upload")}
+          <H6 style={[typography.font14, typography.fontLato, spacing.p1]}>
+            {t("Journey Ticket")}
           </H6>
           {pnrNumbersStart.map((pnr, index) => (
             <View key={index}>
@@ -140,7 +158,7 @@ const AddBillForm = ({ navigation }) => {
                 title={`${t("PNR Number")} ${index + 1}`}
                 value={pnr}
                 onChange={(value) => handlePnrChangeStart(value, index)}
-                placeholder={t("Enter PNR Number")}
+                placeholder={t("Upload Ticket & Enter PNR")}
               />
               {pnrNumbersStart.length > 1 && (
                 <TouchableOpacity onPress={() => removePnrFieldStart(index)}>
@@ -171,19 +189,21 @@ const AddBillForm = ({ navigation }) => {
           >
             <H6
               style={[
+                typography.fontLato,
                 spacing.p1,
-                typography.textBold,
-                spacing.bw2,
-                spacing.br2,
+                spacing.bw1,
+                spacing.br1,
                 spacing.mb2,
+                typography.font16,
                 {
                   textAlign: "center",
                   borderColor: "green",
                   borderStyle: "dotted",
+                  backgroundColor: "#e8f5e9",
                 },
               ]}
             >
-              {t("Select Ticket")}
+              {t("Upload Ticket")}
             </H6>
           </TouchableOpacity>
 
@@ -286,16 +306,79 @@ const AddBillForm = ({ navigation }) => {
             { label: t("Flight"), value: "Flight" },
           ]}
         />
+        <View
+          style={[
+            spacing.bw1,
+            spacing.br2,
+            spacing.p2,
+            spacing.mt1,
+            {
+              borderColor: "#ccc",
+            },
+          ]}
+        >
+          {/* Hotel Bill Upload Section */}
+          <View
+            style={[
+              spacing.p3,
+              spacing.bw1,
+              spacing.br2,
+              {
+                marginTop: spacing.mh2,
+                alignItems: "center",
+                borderStyle: "dotted",
+                backgroundColor: "#e8f5e9",
+              },
+            ]}
+          >
+            <TouchableOpacity onPress={handleUploadHotelBill}>
+              <H6
+                style={[
+                  typography.textBold,
+                  {
+                    textAlign: "center",
+                  },
+                ]}
+              >
+                {t("Upload Hotel Bill")}
+              </H6>
+            </TouchableOpacity>
 
-        <MyTextInput
-          title={t("Hotel Bill")}
-          value={bill}
-          onChange={setBill}
-          placeholder={t("Upload your hotel bill")}
-        />
-        <Span style={[styles.rightLink, typography.fontLato]}>
-          {t("Add More")}
-        </Span>
+            {hotelBill && (
+              <View
+                style={[
+                  spacing.mt2,
+                  spacing.p1,
+                  spacing.br1,
+                  {
+                    alignItems: "center",
+                    backgroundColor: "#f1f8e9",
+                    borderWidth: 0.2,
+                  },
+                ]}
+              >
+                <H6 style={[typography.font14, typography.fontLato]}>
+                  {t("Uploaded File")}: {hotelBill.name}
+                </H6>
+                <TouchableOpacity onPress={handleRemoveHotelBill}>
+                  <Span
+                    style={[
+                      styles.rightLink,
+                      typography.fontLato,
+                      {
+                        color: "red",
+                        marginTop: 6,
+                        textDecorationLine: "underline",
+                      },
+                    ]}
+                  >
+                    {t("Remove")}
+                  </Span>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        </View>
 
         <Button
           style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
