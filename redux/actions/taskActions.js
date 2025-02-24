@@ -1,4 +1,4 @@
-import api, { handleAxiosError } from '../../utils/api'
+import api, { handleAxiosError } from "../../utils/api";
 import {
   VIEW_TASK,
   INITIALIZE_TASKS,
@@ -9,6 +9,7 @@ import {
   TOTAL_SURVEYED_STREETLIGHTS,
   GET_INSTALLED_STREETLIGHTS,
   TOTAL_INSTALLED_STREETLIGHTS,
+  SET_BILL_DATA,
 } from "../constant";
 
 export const getAllTasks = (my_id) => async (dispatch) => {
@@ -28,7 +29,9 @@ export const getVendorPerformance = async (my_id) => {
     const response = await api.get(`${BASE_URL}/api/task`);
     const { data, status } = response;
     if (status === 200 && Array.isArray(data)) {
-      const myTasks = data.filter((task) => task.engineer_id === my_id && task.vendor !== null);
+      const myTasks = data.filter(
+        (task) => task.engineer_id === my_id && task.vendor !== null
+      );
 
       const tasksByVendor = myTasks.reduce((acc, task) => {
         const { vendor, status: taskStatus } = task;
@@ -74,26 +77,32 @@ export const getStaffPerformance = async (my_id) => {
     const siteEngineers = userResponse.data.vendors;
     // Filter tasks by
 
-    const performanceByEngineer = siteEngineers.map((engineer) => {
-      const engineerTasks = data.filter(
-        (task) => task.engineer_id === engineer.id
-      );
+    const performanceByEngineer = siteEngineers
+      .map((engineer) => {
+        const engineerTasks = data.filter(
+          (task) => task.engineer_id === engineer.id
+        );
 
-      // Summarize tasks for the engineer
-      const total_alloted = engineerTasks.length;
-      const total_completed = engineerTasks.filter((task) => task.status === "Completed").length;
-      const total_pending = engineerTasks.filter((task) => task.status === "Pending").length;
+        // Summarize tasks for the engineer
+        const total_alloted = engineerTasks.length;
+        const total_completed = engineerTasks.filter(
+          (task) => task.status === "Completed"
+        ).length;
+        const total_pending = engineerTasks.filter(
+          (task) => task.status === "Pending"
+        ).length;
 
-      return total_alloted > 0
-        ? {
-          id: engineer.id,
-          name: `${engineer.firstName} ${engineer.lastName}`,
-          total_alloted,
-          total_completed,
-          is_logged_in_user: engineer.id === my_id, // Flag for logged-in user
-        }
-        : null; // Remove engineers without tasks
-    }).filter(Boolean); // Remove null values
+        return total_alloted > 0
+          ? {
+              id: engineer.id,
+              name: `${engineer.firstName} ${engineer.lastName}`,
+              total_alloted,
+              total_completed,
+              is_logged_in_user: engineer.id === my_id, // Flag for logged-in user
+            }
+          : null; // Remove engineers without tasks
+      })
+      .filter(Boolean); // Remove null values
 
     // Sort: Logged-in user at top, then by total_completed in descending order
     performanceByEngineer.sort((a, b) => {
@@ -116,7 +125,6 @@ export const getTaskById = async (task_id) => {
   return data;
   // dispatch({ type: VIEW_TASK, payload: data })
 };
-
 
 export const getTaskByCategory = (category) => async (dispatch) => {
   try {
@@ -159,24 +167,36 @@ export const viewTask = (taskId) => ({
 });
 
 export const getStreetLightTasks = (my_id) => async (dispatch) => {
-  const response = await axios.get(`${BASE_URL}/api/streetlight/tasks/engineers`, {
-    params: { id: my_id },
-    method: "GET",
-    headers: {
-      'Content-Type': 'application/json'
+  const response = await axios.get(
+    `${BASE_URL}/api/streetlight/tasks/engineers`,
+    {
+      params: { id: my_id },
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
-  })
-  const { data } = response
-  const pendingSites = data.filter((task) => task.status === "Pending")
-  const pendingSitesCount = pendingSites.length
-  const surveyedSites = data.filter((task) => task.site?.isSurveyDone)
-  const surveyedSitesCount = surveyedSites.length
-  const installedSites = data.filter((task) => task.site?.isInstallationDone)
-  const installedSitesCount = installedSites.length
-  dispatch({ type: TOTAL_PENDING_STREETLIGHT, payload: pendingSitesCount })
-  dispatch({ type: GET_PENDING_STREETLIGHTS, payload: pendingSites })
-  dispatch({ type: GET_SURVEYED_STREETLIGHTS, payload: surveyedSites })
-  dispatch({ type: TOTAL_SURVEYED_STREETLIGHTS, payload: surveyedSitesCount })
-  dispatch({ type: GET_INSTALLED_STREETLIGHTS, payload: installedSites })
-  dispatch({ type: TOTAL_INSTALLED_STREETLIGHTS, payload: installedSitesCount })
-}
+  );
+  const { data } = response;
+  const pendingSites = data.filter((task) => task.status === "Pending");
+  const pendingSitesCount = pendingSites.length;
+  const surveyedSites = data.filter((task) => task.site?.isSurveyDone);
+  const surveyedSitesCount = surveyedSites.length;
+  const installedSites = data.filter((task) => task.site?.isInstallationDone);
+  const installedSitesCount = installedSites.length;
+  dispatch({ type: TOTAL_PENDING_STREETLIGHT, payload: pendingSitesCount });
+  dispatch({ type: GET_PENDING_STREETLIGHTS, payload: pendingSites });
+  dispatch({ type: GET_SURVEYED_STREETLIGHTS, payload: surveyedSites });
+  dispatch({ type: TOTAL_SURVEYED_STREETLIGHTS, payload: surveyedSitesCount });
+  dispatch({ type: GET_INSTALLED_STREETLIGHTS, payload: installedSites });
+  dispatch({
+    type: TOTAL_INSTALLED_STREETLIGHTS,
+    payload: installedSitesCount,
+  });
+};
+
+
+export const setBillData = (data) => ({
+  type: SET_BILL_DATA,
+  payload: data,
+});

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { View, ScrollView, TouchableOpacity } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTranslation } from "react-i18next";
-import * as DocumentPicker from "expo-document-picker";
 
 // import Components
 import ContainerComponent from "../components/ContainerComponent";
@@ -11,114 +10,61 @@ import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyPickerInput from "../components/input/MyPickerInput";
 
+import { useDispatch } from "react-redux";
+import { setBillData } from "../redux/actions/taskActions";
+
 // import Styles
 import { spacing, styles, typography } from "../styles";
 import { H2, H6, Span } from "../components/text";
 import Button from "../components/buttons/Button";
+import useAddBillForm from "../hooks/useAddBillForm";
 
 const AddBillForm = ({ navigation }) => {
-  const [journeyDate, setJourneyDate] = useState(new Date());
-  const [start_date, setStartDate] = useState(new Date());
-  const [pnrNumbersStart, setPnrNumbersStart] = useState([""]);
-  const [pnrNumbersReturn, setPnrNumbersReturn] = useState([""]);
-  const [type, setType] = useState("");
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedDateType, setSelectedDateType] = useState(null);
-  const [ticket, setTicket] = useState(null);
-  const [hotelBill, setHotelBill] = useState(null);
-
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+  // Use all function in hooks useAddBillForm
+  const {
+    start_date,
+    journeyDate,
+    selectedDateType,
+    showDatePicker,
+    pnrNumbersStart,
+    pnrNumbersReturn,
+    ticket,
+    hotelBill,
+    onDateChange,
+    handlePnrChangeStart,
+    addPnrFieldStart,
+    removePnrFieldStart,
+    handlePnrChangeReturn,
+    addPnrFieldReturn,
+    removePnrFieldReturn,
+    handleUploadTicket,
+    handleRemoveTicket,
+    handleUploadHotelBill,
+    handleRemoveHotelBill,
+    setSelectedDateType,
+    setShowDatePicker,
+  } = useAddBillForm();
+  const [type, setType] = useState(null);
+  const [city, setCity] = useState(null);
 
-  const onDateChange = (event, selectedDate) => {
-    const currentDate =
-      selectedDate || (selectedDateType === "start" ? start_date : journeyDate);
-    setShowDatePicker(false);
+  const handleCalculateBill = () => {
+    const formData = {
+      start_date,
+      journeyDate,
+      pnrNumbersStart,
+      pnrNumbersReturn,
+      ticket,
+      hotelBill,
+      city,
+      type,
+    };
 
-    if (selectedDateType === "start") {
-      setStartDate(currentDate);
-    } else {
-      setJourneyDate(currentDate);
-    }
+    dispatch(setBillData(formData));
+    console.log("Form Data:", formData);
+    navigation.navigate("travelDetailScreen");
   };
-
-  // Function to handle PNR input change for Start Journey
-  const handlePnrChangeStart = (value, index) => {
-    const updatedPnrNumbers = [...pnrNumbersStart];
-    updatedPnrNumbers[index] = value;
-    setPnrNumbersStart(updatedPnrNumbers);
-  };
-
-  // Function to add a new PNR field for Start Journey
-  const addPnrFieldStart = () => {
-    setPnrNumbersStart([...pnrNumbersStart, ""]);
-  };
-
-  // Function to remove a PNR field for Start Journey
-  const removePnrFieldStart = (index) => {
-    const updatedPnrNumbers = pnrNumbersStart.filter((_, i) => i !== index);
-    setPnrNumbersStart(updatedPnrNumbers);
-  };
-
-  // Function to handle PNR input change for Return Journey
-  const handlePnrChangeReturn = (value, index) => {
-    const updatedPnrNumbers = [...pnrNumbersReturn];
-    updatedPnrNumbers[index] = value;
-    setPnrNumbersReturn(updatedPnrNumbers);
-  };
-
-  // Function to add a new PNR field for Return Journey
-  const addPnrFieldReturn = () => {
-    setPnrNumbersReturn([...pnrNumbersReturn, ""]);
-  };
-
-  // Function to remove a PNR field for Return Journey
-  const removePnrFieldReturn = (index) => {
-    const updatedPnrNumbers = pnrNumbersReturn.filter((_, i) => i !== index);
-    setPnrNumbersReturn(updatedPnrNumbers);
-  };
-  // Ticket Upload Handler
-
-  const handleUploadTicket = async () => {
-    try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: "application/pdf", // Allow img & PDF files
-        copyToCacheDirectory: true,
-      });
-
-      if (result.canceled === false) {
-        setTicket(result.assets[0]); // Store ticket file
-      }
-    } catch (error) {
-      console.log("Ticket upload error:", error);
-    }
-  };
-
-  // Remove Ticket
-  const handleRemoveTicket = () => {
-    setTicket(null);
-  };
-
-  // Hotel Bill Upload Handler (Third Code)
-  const handleUploadHotelBill = async () => {
-    try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: "application/pdf", // Allow img & PDF files
-        copyToCacheDirectory: true,
-      });
-
-      if (result.canceled === false) {
-        setHotelBill(result.assets[0]); // Store hotel bill file
-      }
-    } catch (error) {
-      console.log("Hotel bill upload error:", error);
-    }
-  };
-
-  // Remove Hotel Bill
-  const handleRemoveHotelBill = () => {
-    setHotelBill(null);
-  };
-
   return (
     <ContainerComponent>
       <MyHeader title={t("Add Bill")} hasIcon={true} isBack={true} />
@@ -141,7 +87,8 @@ const AddBillForm = ({ navigation }) => {
         {/* PNR and Ticket Upload Group */}
         <View
           style={[
-            spacing.bw1, spacing.p1,
+            spacing.bw1,
+            spacing.p1,
             spacing.br2,
             {
               borderStyle: "dotted",
@@ -233,8 +180,8 @@ const AddBillForm = ({ navigation }) => {
 
         <MyPickerInput
           title={t("City")}
-          value={type}
-          onChange={setType}
+          value={city}
+          onChange={setCity}
           options={[
             { label: t("Patna"), value: "Patna" },
             { label: t("Delhi"), value: "Delhi" },
@@ -381,7 +328,8 @@ const AddBillForm = ({ navigation }) => {
 
         <Button
           style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
-          onPress={() => navigation.navigate("travelDetailScreen")}
+          // onPress={() => navigation.navigate("travelDetailScreen")}
+          onPress={handleCalculateBill}
         >
           <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
             {"Calculate Bill"}

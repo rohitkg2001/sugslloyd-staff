@@ -40,7 +40,7 @@ import { P } from "./text";
 
 export default function TabBar({ tabs, activeTab, onTabSelected, style }) {
   return (
-    <View style={[styles.row, spacing.p2, style]}>
+    <View style={[styles.row, spacing.p1, style]}>
       {tabs.map((tab) => (
         <TouchableOpacity
           key={tab.name}
@@ -62,7 +62,8 @@ export default function TabBar({ tabs, activeTab, onTabSelected, style }) {
               },
             ]}
           >
-            {tab.name} {tab.count}
+            {/* {tab.name} {tab.count} */}
+            {tab.name} {tab.count ?? 0}
           </P>
         </TouchableOpacity>
       ))}
