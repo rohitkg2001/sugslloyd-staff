@@ -5,7 +5,6 @@ import { spacing, typography, SCREEN_WIDTH } from "../styles";
 import { P } from "../components/text";
 
 export default function CardScreen({ navigation }) {
-
   return (
     <ContainerComponent justifyContent="space-between" paddingVertical={20}>
       <Image

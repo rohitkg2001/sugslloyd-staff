@@ -137,9 +137,12 @@ export default function MyStackNavigator({ initialRouteName }) {
       />
       <Stack.Screen name="conveyanceBillForm" component={ConveyanceBillForm} />
       <Stack.Screen name="mapScreen" component={MapScreen} />
-      <Stack.Screen name="transportCamera" component={ TransportCamera } />
-      <Stack.Screen name="locationSet" component={ LoactionSetScreen } />
-      <Stack.Screen name="conveyanceDetail" component={ConveyanceDetailScreen}/>
+      <Stack.Screen name="transportCamera" component={TransportCamera} />
+      <Stack.Screen name="locationSet" component={LoactionSetScreen} />
+      <Stack.Screen
+        name="conveyanceDetail"
+        component={ConveyanceDetailScreen}
+      />
     </Stack.Navigator>
   );
 }
