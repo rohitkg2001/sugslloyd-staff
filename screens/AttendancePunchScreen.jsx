@@ -29,10 +29,20 @@ export default function AttendancePunchScreen({ navigation }) {
 
   const takePictureAndNavigate = async () => {
     if (cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync();
-      if (photo) {
-        await updatePicture(id, photo)
+      try {
+        const photo = await cameraRef.current.takePictureAsync({
+          quality: 0.7, // Optional: reduce size
+          base64: false, // No need for base64 when uploading
+        });
+
+        if (photo) {
+          await updatePicture(id, photo); // Upload the image
+        }
+      } catch (err) {
+        console.error("Camera Error:", err);
       }
+    } else {
+      console.error("Camera not initialized.");
     }
   };
 
