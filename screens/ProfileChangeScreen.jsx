@@ -20,18 +20,6 @@ const ProfileChangeScreen = ({ route, navigation }) => {
           source={{ uri: profileImage }}
           style={{ width: 120, height: 120, borderRadius: 60 }}
         />
-        {/* <TouchableOpacity
-          style={{
-            position: "absolute",
-            bottom: 0,
-            right: 110,
-            backgroundColor: "#76885B",
-            borderRadius: 20,
-            padding: 5,
-          }}
-        >
-          <Icon name="photo-camera" size={20} color="#fff" />
-        </TouchableOpacity> */}
         <TouchableOpacity
           onPress={() => navigation.navigate("attendancePunch")}
           style={{
