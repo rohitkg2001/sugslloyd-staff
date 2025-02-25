@@ -1,5 +1,5 @@
 // import All react native
-import { View, Image } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import { useTranslation } from "react-i18next";
 
 // import All Components
@@ -47,7 +47,7 @@ const ProfileItem = ({ iconName, label }) => {
   );
 };
 
-export default function ProfileScreen() {
+export default function ProfileScreen({ navigation }) {
   const { t } = useTranslation();
   const { staff } = useSelector((state) => state);
   return (
@@ -57,13 +57,28 @@ export default function ProfileScreen() {
       {/* Main Profile Card */}
       <CardFullWidth backgroundColor={PRIMARY_COLOR}>
         <View style={[styles.row, { alignItems: "center", marginTop: -10 }]}>
-          <View>
+          {/* <View>
             <Avatar
               avatar={staff.image}
               name={`${staff.firstName} ${staff.lastName}`}
               online={false}
             />
-          </View>
+          </View> */}
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("profileChange", {
+                profileImage: staff.image,
+                StaffName: `${staff.firstName} ${staff.lastName}`,
+                contactNo: staff.contactNo,
+              })
+            }
+          >
+            <Avatar
+              avatar={staff.image}
+              name={`${staff.firstName} ${staff.lastName}`}
+              online={false}
+            />
+          </TouchableOpacity>
 
           <View style={spacing.mh1}>
             <H6
@@ -90,7 +105,7 @@ export default function ProfileScreen() {
         </View>
       </CardFullWidth>
 
-      <MyFlatList
+      {/* <MyFlatList
         data={documentData}
         renderItem={({ item }, index) => (
           <ProfileItem
@@ -101,7 +116,7 @@ export default function ProfileScreen() {
         )}
         ListHeaderComponent={false}
         keyExtractor={(item, index) => index.toString()}
-      />
+      /> */}
     </ContainerComponent>
   );
 }

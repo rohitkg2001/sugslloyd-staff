@@ -45,6 +45,7 @@ import TransportCamera from "../screens/TransportCamera";
 import MapScreen from "../screens/MapScreen";
 import LoactionSetScreen from "../screens/LoactionSetScreen";
 import ConveyanceDetailScreen from "../screens/ConveyanceDetailScreen";
+import ProfileChangeScreen from "../screens/ProfileChangeScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator({ initialRouteName }) {
@@ -143,6 +144,7 @@ export default function MyStackNavigator({ initialRouteName }) {
         name="conveyanceDetail"
         component={ConveyanceDetailScreen}
       />
+      <Stack.Screen name="profileChange" component={ProfileChangeScreen} />
     </Stack.Navigator>
   );
 }
