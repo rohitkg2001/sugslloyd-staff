@@ -1,8 +1,9 @@
 import { BASE_URL, LOGIN_STAFF } from "../constant";
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Platform } from 'react-native'
+import { Platform } from "react-native";
 import api, { handleAxiosError } from "../../utils/api"; // Import axios utils
+import axios from "axios";
 
 export const greet = () => {
   // Write a logic to get morning, afternoon, evening and night as per time from moment
@@ -20,10 +21,13 @@ export const greet = () => {
 
 export const login = (user, pass) => async (dispatch) => {
   try {
-    const response = await api.post(`${BASE_URL}/api/login`, { email: user, password: pass });
-    const { data, status } = response
+    const response = await api.post(`${BASE_URL}/api/login`, {
+      email: user,
+      password: pass,
+    });
+    const { data, status } = response;
     if (data?.user?.id && status === 200) {
-      await AsyncStorage.setItem('userToken', String(data.user.id))
+      await AsyncStorage.setItem("userToken", String(data.user.id));
       // await AsyncStorage.setItem('')
       dispatch({ type: LOGIN_STAFF, payload: data.user });
       return true;
@@ -51,9 +55,9 @@ export const updatePicture = async (id, file) => {
       type: "image/jpeg",
       name: `avatar_${id}.jpg`,
     });
-
+    console.log(id);
     const response = await axios.post(
-      `${BASE_URL}/api/vendor/upload-avatar/${id}`,
+      `${BASE_URL}/api/staff/upload-avatar/${id}`,
       formData,
       {
         headers: {

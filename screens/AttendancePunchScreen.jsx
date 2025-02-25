@@ -14,7 +14,7 @@ export default function AttendancePunchScreen({ navigation }) {
   const [photoUri, setPhotoUri] = useState(null);
   const cameraRef = useRef(null);
   const { permissions, requestPermission } = usePermissions();
-  const { id } = useSelector((state) => state.user);
+  const { id } = useSelector((state) => state.staff);
 
   if (!permissions.camera || !permissions.location) {
     return (
@@ -36,7 +36,9 @@ export default function AttendancePunchScreen({ navigation }) {
         });
 
         if (photo) {
-          await updatePicture(id, photo); // Upload the image
+          const { message } = await updatePicture(id, photo); // Upload the image
+          alert(message);
+          navigation.goBack();
         }
       } catch (err) {
         console.error("Camera Error:", err);
@@ -45,7 +47,6 @@ export default function AttendancePunchScreen({ navigation }) {
       console.error("Camera not initialized.");
     }
   };
-
 
   return (
     <ContainerComponent>
@@ -66,7 +67,11 @@ export default function AttendancePunchScreen({ navigation }) {
             {photoUri ? (
               <Image source={{ uri: photoUri }} style={layouts.circle75} />
             ) : (
-              <CameraView style={[layouts.circle75]} ref={cameraRef} facing="front" />
+              <CameraView
+                style={[layouts.circle75]}
+                ref={cameraRef}
+                facing="front"
+              />
             )}
           </View>
         </View>
