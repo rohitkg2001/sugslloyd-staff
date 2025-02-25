@@ -6,7 +6,6 @@ import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
 import MyTextInput from "../components/input/MyTextInput";
 import { P } from "../components/text";
-import Ionicons from "react-native-vector-icons/Ionicons"; // Import Ionicons
 import { useSelector } from "react-redux";
 import QRScanner from "../components/input/QRScanner";
 import { Portal } from "react-native-paper";
@@ -115,7 +114,7 @@ export default function StartInstallation({ navigation }) {
             onScan={(val) => setPanelSerialNumber(val)}
           />
           <MyTextInput
-           // style={[spacing.br1, spacing.p3, spacing.mv1, spacing.bw1]}
+            // style={[spacing.br1, spacing.p3, spacing.mv1, spacing.bw1]}
             placeholder="Enter Panel Serial Number"
             value={panelSerialNumber}
             onChangeText={setPanelSerialNumber}
@@ -124,7 +123,7 @@ export default function StartInstallation({ navigation }) {
         </View>
 
         <MyTextInput
-         // style={[spacing.br1, spacing.p3, spacing.mv1, spacing.bw1]}
+          // style={[spacing.br1, spacing.p3, spacing.mv1, spacing.bw1]}
           placeholder="Enter Location Remarks"
           multiline={true}
           numberOfLines={4}

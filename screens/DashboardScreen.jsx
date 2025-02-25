@@ -1,3 +1,4 @@
+// import all react native
 import { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import { useTranslation } from "react-i18next";
@@ -19,12 +20,14 @@ import { getAllVendors } from "../redux/actions/vendorAction";
 
 export default function DashboardScreen({ navigation }) {
   const [dueTasks, setDueTasks] = useState(0);
+  const [pendingTasks, setPendingTasks] = useState(0);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [greeting, setGreeting] = useState("Good morning");
   const { firstName } = useSelector((state) => state.staff);
   const { tasks } = useSelector((state) => state.tasks);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
   useEffect(() => {
     console.log(tasks);
     const installationCount = tasks.filter(
@@ -34,7 +37,12 @@ export default function DashboardScreen({ navigation }) {
     const finalCount = tasks.filter(
       (task) => task.activity === "Final Inspection"
     ).length;
+    const pendingCount = tasks.filter(
+      (task) => task.status === "Pending"
+    ).length;
+
     setDueTasks(installationCount + rmsCount + finalCount);
+    setPendingTasks(pendingCount);
   }, [tasks]);
 
   useEffect(() => {
@@ -54,8 +62,8 @@ export default function DashboardScreen({ navigation }) {
         greeting={greeting}
         firstName={firstName}
         navigation={navigation}
-        notificationCount={dueTasks}
-        message={`You have ${dueTasks} due tasks Today`}
+        notificationCount={tasks.length} // Display all tasks count in notification
+        message={`You have ${pendingTasks} pending tasks Today`}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
