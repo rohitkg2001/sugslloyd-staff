@@ -7,11 +7,14 @@ import MyHeader from "../components/header/MyHeader";
 import Button from "../components/buttons/Button";
 import { H2 } from "../components/text";
 import usePermissions from "../hooks/usePermissions";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePicture } from "../redux/actions/staffActions";
 
 export default function AttendancePunchScreen({ navigation }) {
   const [photoUri, setPhotoUri] = useState(null);
   const cameraRef = useRef(null);
   const { permissions, requestPermission } = usePermissions();
+  const { id } = useSelector((state) => state.user);
 
   if (!permissions.camera || !permissions.location) {
     return (
@@ -27,11 +30,9 @@ export default function AttendancePunchScreen({ navigation }) {
   const takePictureAndNavigate = async () => {
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
-      if (!location || !photo.uri) {
-        return;
+      if (photo) {
+        await updatePicture(id, photo)
       }
-      setPhotoUri(photo.uri);
-      navigation.navigate("homeScreen");
     }
   };
 

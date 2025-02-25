@@ -23,6 +23,7 @@ export const login = (user, pass) => async (dispatch) => {
     const { data, status } = response
     if (data?.user?.id && status === 200) {
       await AsyncStorage.setItem('userToken', String(data.user.id))
+      // await AsyncStorage.setItem('')
       dispatch({ type: LOGIN_STAFF, payload: data.user });
       return true;
     } else {
@@ -32,3 +33,27 @@ export const login = (user, pass) => async (dispatch) => {
     return handleAxiosError(err);
   }
 };
+
+export const updatePicture = async (id, file) => {
+  try {
+    const formData = new FormData();
+    if (file) {
+      formData.append('image', {
+        uri: file.uri,
+        type: 'image/jpeg'
+      });
+    }
+    const response = await api.post(`${BASE_URL}/api/vendor/upload-avatar/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data", // Ensure proper headers
+        },
+      }
+    )
+    const { data, status } = response
+    console.log(data)
+  } catch (err) {
+    return handleAxiosError(err);
+  }
+}
