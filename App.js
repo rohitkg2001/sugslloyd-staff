@@ -14,7 +14,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [loaded, setLoaded] = useState(true); // NEW: Track overall loading state
-  const { language, isLanguageSelected, selectLanguage, loading: languageLoading } = useLanguage();
+  const {
+    language,
+    isLanguageSelected,
+    selectLanguage,
+    loading: languageLoading,
+  } = useLanguage();
   const { isLoggedIn } = useAuth();
   const { registerForPushNotifications } = useNotifications();
   const { permissions } = usePermissions(); // NEW: Wait for permissions
@@ -24,7 +29,7 @@ export default function App() {
     async function loadAppAssets() {
       // await AsyncStorage.clear()
       await useFonts();
-      await permissions()
+      await permissions();
       await registerForPushNotifications();
       setLoaded(true);
     }
@@ -39,11 +44,12 @@ export default function App() {
     return <ActivityIndicator size="large" />;
   }
 
-
   return (
     <Provider store={store}>
       <PaperProvider>
-        <MyNavigationContainer initialRouteName={isLoggedIn ? "homeScreen" : "cardScreen"} />
+        <MyNavigationContainer
+          initialRouteName={isLoggedIn ? "homeScreen" : "cardScreen"}
+        />
       </PaperProvider>
     </Provider>
   );
