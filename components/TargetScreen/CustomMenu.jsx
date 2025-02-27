@@ -7,7 +7,9 @@ const CustomMenu = ({
   menuVisible,
   toggleMenu,
   assignTasks,
+  approveTasks,
   disableAssign,
+  disableApprove,
 }) => (
   <Menu
     visible={menuVisible}
@@ -26,7 +28,13 @@ const CustomMenu = ({
       disabled={disableAssign}
     />
     <Divider />
-    <Menu.Item onPress={toggleMenu} title="Approve" />
+
+    <Menu.Item
+      onPress={!disableApprove ? approveTasks : null}
+      title="Approve"
+      disabled={disableApprove}
+    />
+
     <Divider />
     <Menu.Item onPress={toggleMenu} title="Reject" />
   </Menu>
