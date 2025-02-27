@@ -116,7 +116,6 @@ const ImageDisplay = ({ images, id }) => {
         {Array.isArray(filteredImages) &&
           filteredImages.map((uri, index) => {
             const extension = uri?.split(".").pop();
-
             if (extension === "pdf") {
               return (
                 <View

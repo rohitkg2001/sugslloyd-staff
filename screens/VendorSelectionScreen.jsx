@@ -73,6 +73,7 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
           },
           body: JSON.stringify({
             vendor_id: vendors,
+
           }),
         });
         await response.json();
