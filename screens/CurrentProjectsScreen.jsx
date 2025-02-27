@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 // import all components
 import ContainerComponent from "../components/ContainerComponent";
@@ -20,6 +21,7 @@ import Filter from "../components/Filter";
 // import all redux
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTasks } from "../redux/actions/taskActions";
+//import { approveTasks } from "../redux/actions/taskActions";
 
 // import all styles
 import { H5, H6, P, Span } from "../components/text";
@@ -84,6 +86,27 @@ export default function CurrentProjectsScreen({ navigation }) {
     setShowVendorSelection(true);
   };
 
+  const handleApprove = async (taskId) => {
+    try {
+      const response = await axios.post(
+        `https://slldm.com/api/tasks/${taskId}/approve`
+      );
+      alert(response.data.message);
+      dispatch(getAllTasks(staff.id));
+    } catch (error) {
+      console.error("Error approving the task:", error);
+    }
+  };
+
+  const approveMultipleTasks = () => {
+    if (!selectedTargets || selectedTargets.length === 0) return;
+
+    selectedTargets.forEach((task) => handleApprove(task.id));
+
+    closeMenu();
+    setSelectedTargets([]);
+  };
+
   const handleTabSelection = (tab) => {
     setActiveTab(tab);
     let filteredTasks = [];
@@ -135,10 +158,10 @@ export default function CurrentProjectsScreen({ navigation }) {
             onPress={() =>
               navigation.navigate("targetManagementScreen", { id: item.id })
             }
-            // onLongPressAction={(idx) => selectTargets(idx)}
-            onLongPressAction={(idx) => {
-              if (!item.vendor_id) selectTargets(idx); // Prevent long-press on assigned tasks
-            }}
+            onLongPressAction={(idx) => selectTargets(idx)}
+            // onLongPressAction={(idx) => {
+            //   if (!item.vendor_id) selectTargets(idx); // Prevent long-press on assigned tasks
+            // }}
             selected={selectedTargets.find((target) => target.id === item.id)}
           >
             <View>
@@ -264,7 +287,7 @@ export default function CurrentProjectsScreen({ navigation }) {
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
       />
 
-      <CustomMenu
+      {/* <CustomMenu
         menuVisible={menuVisible}
         toggleMenu={toggleMenu}
         assignTasks={assignMultipleTasksToVendor}
@@ -272,6 +295,18 @@ export default function CurrentProjectsScreen({ navigation }) {
           selectedTargets.length > 0 &&
           selectedTargets.some((target) => target.hasVendor)
         }
+      /> */}
+
+      <CustomMenu
+        menuVisible={menuVisible}
+        toggleMenu={toggleMenu}
+        assignTasks={assignMultipleTasksToVendor}
+        approveTasks={approveMultipleTasks}
+        disableAssign={
+          selectedTargets.length > 0 &&
+          selectedTargets.some((target) => target.hasVendor)
+        }
+        disableApprove={selectedTargets.length === 0 || activeTab !== "Pending"}
       />
 
       {showBottomSheet && (

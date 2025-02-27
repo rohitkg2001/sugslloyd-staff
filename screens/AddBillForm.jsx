@@ -243,8 +243,8 @@ const AddBillForm = ({ navigation }) => {
         </TouchableOpacity>
 
         <MyPickerInput
-          title={t("Mode of Type")}
-          value={type}
+          title={t("Mode Of Transport")}
+          value={type} 
           onChange={setType}
           options={[
             { label: t("Bus"), value: "Bus" },
