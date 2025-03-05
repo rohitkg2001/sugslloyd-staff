@@ -569,21 +569,24 @@ import Button from "../components/buttons/Button";
 
 const ConveyanceBillForm = ({ navigation }) => {
   return (
-    <View style={{ padding: 12, backgroundColor: "#fff" }}>
-      <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 15 }}>
+    <View style={[spacing.p2, { width: SCREEN_WIDTH }]}>
+      <P style={[typography.font16, typography.fontLato, spacing.mb3]}>
         Where would you want to Go?
-      </Text>
+      </P>
 
-      {/* Pickup & Drop Section with Border */}
       <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingBottom: 15,
-          borderBottomWidth: 0.5, // Thin Border Added
-          borderColor: "#ccc",
-          marginBottom: 15,
-        }}
+        style={[
+          styles.row,
+          {
+            // flexDirection: "row",
+            alignItems: "center",
+            paddingBottom: 15,
+            borderBottomWidth: 0.5,
+            borderColor: "#ccc",
+            marginBottom: 15,
+            backgroundColor: "#fff",
+          },
+        ]}
       >
         <View style={{ alignItems: "center", width: 20 }}>
           <View
@@ -597,11 +600,12 @@ const ConveyanceBillForm = ({ navigation }) => {
           <View
             style={{
               width: 2,
-              height: 30,
+              height: 40,
               backgroundColor: "#aaa",
               marginVertical: 2,
             }}
           />
+
           <View
             style={{
               width: 10,
@@ -612,9 +616,7 @@ const ConveyanceBillForm = ({ navigation }) => {
           />
         </View>
 
-        {/* Pickup & Drop Inputs */}
         <View style={{ flex: 1 }}>
-          {/* Pickup Input */}
           <View
             style={{
               flexDirection: "row",
@@ -636,7 +638,6 @@ const ConveyanceBillForm = ({ navigation }) => {
             <Ionicons name="location-outline" size={20} color="black" />
           </View>
 
-          {/* Drop Input */}
           <View
             style={{
               flexDirection: "row",
@@ -656,6 +657,7 @@ const ConveyanceBillForm = ({ navigation }) => {
             />
             <Ionicons name="location-outline" size={20} color="red" />
           </View>
+
           {/* Select on Map Button */}
           <TouchableOpacity
             onPress={() => navigation.navigate("locationSet")}
@@ -764,7 +766,6 @@ const ConveyanceBillForm = ({ navigation }) => {
               </P>
             </View>
           </View>
-
           <H5
             style={[
               typography.font14,
