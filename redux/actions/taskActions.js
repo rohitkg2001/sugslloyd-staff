@@ -128,6 +128,14 @@ export const getTaskById = async (task_id) => {
   // dispatch({ type: VIEW_TASK, payload: data })
 };
 
+export const getStreetlightById = async (streetlight_id) => {
+  const response = await fetch(
+    `${BASE_URL}api/streetlight/tasks/engineers/${streetlight_id}`
+  );
+  const data = await response.json();
+  console.log(data);
+};
+
 export const getTaskByCategory = (category) => async (dispatch) => {
   try {
     const response = await axios.get(`${BASE_URL}/api/task`);
@@ -201,4 +209,3 @@ export const setBillData = (data) => ({
   type: SET_BILL_DATA,
   payload: data,
 });
-

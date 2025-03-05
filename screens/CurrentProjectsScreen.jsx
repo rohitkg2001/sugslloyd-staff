@@ -22,6 +22,7 @@ import Filter from "../components/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTasks } from "../redux/actions/taskActions";
 //import { approveTasks } from "../redux/actions/taskActions";
+import { getStreetlightById } from "../redux/actions/taskActions";
 
 // import all styles
 import { H5, H6, P, Span } from "../components/text";
