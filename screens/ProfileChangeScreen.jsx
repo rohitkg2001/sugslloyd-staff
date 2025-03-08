@@ -1,3 +1,4 @@
+// import React native
 import React, { useState } from "react";
 import { View, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
