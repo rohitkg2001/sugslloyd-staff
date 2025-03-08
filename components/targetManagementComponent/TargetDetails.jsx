@@ -21,7 +21,6 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
       <H4 style={[spacing.mv2, typography.font14, typography.fontLato]}>
         {target.site?.location}
       </H4>
-
       <View style={[spacing.mt1, styles.row, spacing.mv2]}>
         <View>
           <Span
@@ -52,7 +51,6 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
           </P>
         </View>
       </View>
-
       <View
         style={[
           styles.row,
@@ -74,7 +72,6 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
           />
         </View>
       </View>
-
       <View
         style={[
           styles.row,
@@ -96,7 +93,6 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
           />
         </View>
       </View>
-
       <View
         style={[
           styles.row,
@@ -105,47 +101,75 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
         ]}
       >
         <H6>Status</H6>
-        <H6>{target.status}</H6>
+        <H6
+          style={{
+            color: target.status === "Complete" ? "yellow" : "green",
+            fontWeight: "bold",
+          }}
+        >
+          {target.status}
+        </H6>
       </View>
-      <View
-        style={[
-          styles.row,
-          spacing.mv2,
-          { justifyContent: "space-between", flex: 1 },
-        ]}
-      >
-        <H6>Survey Latitude</H6>
-        <H6>{target.site?.survey_latitude}</H6>
+      <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+        <View>
+          <Span
+            style={[
+              typography.font12,
+              typography.fontLato,
+              { textTransform: "uppercase", color: "gray" },
+            ]}
+          >
+            Survey Latitude
+          </Span>
+          <P style={[typography.font16, typography.fontLato]}>
+            {target.site?.survey_latitude}
+          </P>
+        </View>
+        <View>
+          <Span
+            style={[
+              typography.font12,
+              typography.fontLato,
+              { textTransform: "uppercase", color: "gray" },
+            ]}
+          >
+            Survey Longitude
+          </Span>
+          <P style={[typography.font16, typography.fontLato]}>
+            {target.site?.actual_latitude}
+          </P>
+        </View>
       </View>
-      <View
-        style={[
-          styles.row,
-          spacing.mv2,
-          { justifyContent: "space-between", flex: 1 },
-        ]}
-      >
-        <H6>Survey Longitude</H6>
-        <H6>{target.site?.survey_longitude}</H6>
-      </View>
-      <View
-        style={[
-          styles.row,
-          spacing.mv2,
-          { justifyContent: "space-between", flex: 1 },
-        ]}
-      >
-        <H6>Actual Latitude</H6>
-        <H6>{target.site?.actual_latitude}</H6>
-      </View>
-      <View
-        style={[
-          styles.row,
-          spacing.mv2,
-          { justifyContent: "space-between", flex: 1 },
-        ]}
-      >
-        <H6>Actual Longitude</H6>
-        <H6>{target.site?.actual_longitude}</H6>
+
+      <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+        <View>
+          <Span
+            style={[
+              typography.font12,
+              typography.fontLato,
+              { textTransform: "uppercase", color: "gray" },
+            ]}
+          >
+            Actual Latitude
+          </Span>
+          <P style={[typography.font16, typography.fontLato]}>
+            {target.site?.actual_latitude}
+          </P>
+        </View>
+        <View>
+          <Span
+            style={[
+              typography.font12,
+              typography.fontLato,
+              { textTransform: "uppercase", color: "gray" },
+            ]}
+          >
+            Actual Longitude
+          </Span>
+          <P style={[typography.font16, typography.fontLato]}>
+            {target.site?.actual_longitude}
+          </P>
+        </View>
       </View>
     </View>
   );

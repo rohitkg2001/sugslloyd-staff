@@ -248,58 +248,6 @@ export default function JICRReportDetailsScreen({ route }) {
           ))}
         </View>
 
-        {/* {fakerData.map((item, index) => (
-          <View
-            key={index}
-            style={[
-              spacing.p2,
-              {
-                backgroundColor: LIGHT,
-              },
-            ]}
-          >
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View style={[styles.row, { alignItems: "center" }]}>
-                {[
-                  { label: "Solar Panel No:", data: item.solarPanel },
-                  { label: "Battery No:", data: item.battery },
-                  { label: "Light No:", data: item.light },
-                  { label: "SIM No:", data: item.sim },
-                  { label: "Pole No:", data: item.pole },
-                  { label: "PIN", data: item.pin },
-                  { label: "State", data: item.state },
-                ].map((field, fieldIndex) => (
-                  <View
-                    key={fieldIndex}
-                    style={[
-                      spacing.mr4,
-                      spacing.pv2,
-                      {
-                        alignItems: "center",
-                      },
-                    ]}
-                  >
-                    <P style={[typography.textBold]}>{field.label}</P>
-
-                    <View
-                      style={[
-                        spacing.bbw05,
-                        spacing.bbwc1,
-                        spacing.mv1,
-                        { width: "100%" },
-                      ]}
-                    />
-                    {field.data.split(", ").map((value, valueIndex) => (
-                      <View key={valueIndex} style={{ marginVertical: 5 }}>
-                        <P>{value}</P>
-                      </View>
-                    ))}
-                  </View>
-                ))}
-              </View>
-            </ScrollView>
-          </View>
-        ))} */}
         {fakerData.map((item, index) => (
           <View
             key={index}

@@ -49,6 +49,7 @@ export default function LoginScreen({ navigation, route }) {
       setError("An error occurred during login");
     }
   };
+
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };

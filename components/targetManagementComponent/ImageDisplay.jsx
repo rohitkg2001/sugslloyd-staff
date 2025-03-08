@@ -67,42 +67,63 @@ const ImageDisplay = ({ images, id }) => {
 
   return (
     <View style={[spacing.p3, { backgroundColor: "white" }]}>
-      <View
-        style={[
-          styles.row,
-          spacing.bbw05,
-          spacing.pb3,
-          spacing.mb3,
-          { justifyContent: "Flex-start", alignItems: "center" },
-        ]}
-      >
-        {["Survey", "Final Inspection"].map((tab, index) => (
-          <TouchableOpacity
-            key={tab}
-            onPress={() => handleTabSelection(tab)}
-            style={[
-              spacing.p1,
-              index !== 0 && { marginLeft: 16 },
-              {
-                borderBottomWidth: activeTab === tab ? 2 : 0,
-                borderBottomColor:
-                  activeTab === tab ? "#76885B" : "transparent",
-              },
-            ]}
-          >
-            <P
+      <View>
+        <P
+          style={[
+            typography.font14,
+            typography.textBold,
+            typography.fontLato,
+            { textAlign: "center", marginBottom: 10, color: "#333" },
+          ]}
+        >
+          Proof of Work
+        </P>
+
+        <View
+          style={[
+            styles.row,
+            spacing.bbw05,
+            spacing.pb3,
+            spacing.mb3,
+            {
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#F4F4F4",
+              padding: 10,
+              borderRadius: 12,
+            },
+          ]}
+        >
+          {["Survey", "Final Inspection"].map((tab, index) => (
+            <TouchableOpacity
+              key={tab}
+              onPress={() => handleTabSelection(tab)}
               style={[
-                typography.font16,
+                spacing.p2,
+                spacing.ph4,
+                spacing.br3,
+                index !== 0 && { marginLeft: 16 },
                 {
-                  color: activeTab === tab ? "#76885B" : "#333",
-                  fontWeight: activeTab === tab ? "bold" : "normal",
+                  backgroundColor: activeTab === tab ? "#76885B" : "#E0E0E0",
+                  elevation: 1,
                 },
               ]}
             >
-              {tab}
-            </P>
-          </TouchableOpacity>
-        ))}
+              <P
+                style={[
+                  typography.font14,
+                  typography.textBold,
+                  {
+                    color: activeTab === tab ? "#fff" : "#555",
+                    textAlign: "center",
+                  },
+                ]}
+              >
+                {tab}
+              </P>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
       <View
@@ -120,31 +141,50 @@ const ImageDisplay = ({ images, id }) => {
               return (
                 <View
                   key={index}
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginBottom: 20,
-                    width: "30%",
-                  }}
+                  style={[
+                    styles.row,
+                    {
+                      alignItems: "center",
+                      marginBottom: 20,
+                      width: "32%",
+                      justifyContent: "center",
+                    },
+                  ]}
                 >
-                  <Button
-                    style={[
-                      styles.btn,
-                      styles.bgPrimary,
-                      { justifyContent: "center", width: "100%" },
-                    ]}
+                  <TouchableOpacity
                     onPress={() => Linking.openURL(uri)}
+                    style={[
+                      spacing.br2,
+                      {
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderColor: "#ff6347",
+                        width: 120,
+                        height: 120,
+                        borderWidth: 1,
+                      },
+                    ]}
                   >
+                    <Image
+                      source={{
+                        uri: "https://img.icons8.com/ios-filled/50/ff6347/pdf.png",
+                      }}
+                      style={{ width: 50, height: 50, marginBottom: 5 }}
+                    />
                     <P
                       style={[
-                        styles.btnText,
-                        typography.font16,
-                        typography.textLight,
+                        typography.font14,
+                        typography.fontLato,
+                        {
+                          textAlign: "center",
+                          color: "#ff6347",
+                          fontWeight: "bold",
+                        },
                       ]}
                     >
                       View PDF
                     </P>
-                  </Button>
+                  </TouchableOpacity>
                 </View>
               );
             } else {
@@ -154,17 +194,21 @@ const ImageDisplay = ({ images, id }) => {
                   onPress={() => handleImagePress(index)}
                   style={{
                     marginBottom: 16,
-                    width: "22%",
+                    width: "30%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 10,
+                    overflow: "hidden",
                   }}
                 >
                   <Image
                     source={{ uri }}
-                    style={[
-                      {
-                        width: "100%",
-                        height: 80,
-                      },
-                    ]}
+                    style={{
+                      width: "100%",
+                      height: 117,
+                      borderRadius: 10,
+                      resizeMode: "cover",
+                    }}
                   />
                 </TouchableOpacity>
               );
