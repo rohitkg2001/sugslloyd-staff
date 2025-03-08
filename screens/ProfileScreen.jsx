@@ -63,6 +63,8 @@ export default function ProfileScreen({ navigation }) {
                 profileImage: staff.image,
                 StaffName: `${staff.firstName} ${staff.lastName}`,
                 contactNo: staff.contactNo,
+                email: staff.email,
+                address: staff.address,
               })
             }
           >
