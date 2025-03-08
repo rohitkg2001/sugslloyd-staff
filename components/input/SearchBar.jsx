@@ -1,5 +1,5 @@
 import { View, TextInput } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "react-native-vector-icons/Ionicons";
 import { SCREEN_WIDTH, ICON_SMALL, styles } from "../../styles";
 import { useTranslation } from "react-i18next";
 
@@ -25,7 +25,7 @@ export default function SearchBar({ placeholder, value, onChangeText, style }) {
         style,
       ]}
     >
-      <Ionicons
+      <Icon
         name="search-outline"
         size={ICON_SMALL}
         color="#333"

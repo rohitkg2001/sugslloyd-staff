@@ -1,7 +1,7 @@
 // import All react native
 import { useState, useEffect } from "react";
 import { View } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
 
 // import components
@@ -114,7 +114,7 @@ export default function TotalProjectsScreen({ navigation }) {
         style={styles.addButton}
         onPress={() => navigation.navigate("formScreen")}
       >
-        <Ionicons name="add" size={ICON_LARGE} color="white" />
+        <Icon name="add" size={ICON_LARGE} color="white" />
       </Button>
     </ContainerComponent>
   );

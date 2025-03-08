@@ -1,7 +1,6 @@
 // import all react native
 import { View } from "react-native";
 import { useState } from "react";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useSelector } from "react-redux";
 // import Components
@@ -95,7 +94,7 @@ export default function TravelManagement({ navigation }) {
                   spacing.mh1,
                   { width: 50 },
                 ]}
-                //  onPress={() => setShowBottomSheet(true)}
+              //  onPress={() => setShowBottomSheet(true)}
               >
                 <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
               </Button>
@@ -119,7 +118,7 @@ export default function TravelManagement({ navigation }) {
         style={styles.addButton}
         onPress={() => navigation.navigate("addBillForm")}
       >
-        <Ionicons name="add" size={ICON_LARGE} color="white" />
+        <Icon name="add" size={ICON_LARGE} color="white" />
       </Button>
     </ContainerComponent>
   );

@@ -40,6 +40,7 @@ jobs:
         run: |
           cd ./android
           ./gradlew assembleRelease
+          ./gradlew bundleRelease
 
       - name: Upload APK to Artifacts
         uses: actions/upload-artifact@v4

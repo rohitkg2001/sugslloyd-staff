@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Staff App | Sugslloyds",
-    "slug": "smdnd",
+    "name": "LloydWFM",
+    "slug": "lloydwfm",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,8 +20,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.dashandots.employeemanagement",
-      "googleServicesFile": "./google-services.json",
+      "package": "com.dashandots.lloydwfm",
       "useNextNotificationsApi": true,
       "experienceId": "",
       "permissions": [
@@ -32,13 +31,10 @@
     },
     "plugins": [
       "@config-plugins/react-native-blob-util",
-      "@config-plugins/react-native-pdf",
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
-          "recordAudioAndroid": false
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
         }
       ],
       [
@@ -63,11 +59,6 @@
           ]
         }
       ]
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "5f39b7f5-d82d-4ffb-8916-4a633c7945d9"
-      }
-    }
+    ]
   }
 }

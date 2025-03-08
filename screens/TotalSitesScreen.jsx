@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/Ionicons";
 import { useSelector, useDispatch } from "react-redux";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
@@ -101,7 +101,7 @@ export default function TotalSitesScreen({ navigation, route }) {
         style={styles.addButton}
         onPress={() => navigation.navigate("sitesFormScreen")}
       >
-        <Ionicons name="add" size={ICON_LARGE} color="white" />
+        <Icon name="add" size={ICON_LARGE} color="white" />
       </Button>
     </ContainerComponent>
   );

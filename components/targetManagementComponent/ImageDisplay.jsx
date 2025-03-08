@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { View, Image, Linking, TouchableOpacity } from "react-native";
 import axios from "axios";
-import Button from "../buttons/Button";
 import { P } from "../text";
 import ImageViewing from "react-native-image-viewing";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "react-native-vector-icons/Ionicons";
 import MyButton from "../buttons/MyButton";
 import { spacing, styles, typography } from "../../styles";
 
@@ -225,16 +224,16 @@ const ImageDisplay = ({ images, id }) => {
           <View>
             <View style={{ position: "absolute", top: 20, left: 20 }}>
               <TouchableOpacity onPress={() => setIsVisible(false)}>
-                <Ionicons name="arrow-back-outline" size={24} color="white" />
+                <Icon name="arrow-back-outline" size={24} color="white" />
               </TouchableOpacity>
             </View>
             <View style={[styles.row, { top: 340 }]}>
               <TouchableOpacity onPress={handlePreviousImage}>
-                <Ionicons name="chevron-back-outline" size={48} color="white" />
+                <Icon name="chevron-back-outline" size={48} color="white" />
               </TouchableOpacity>
 
               <TouchableOpacity onPress={handleNextImage}>
-                <Ionicons
+                <Icon
                   name="chevron-forward-outline"
                   size={48}
                   color="white"
@@ -262,7 +261,7 @@ const ImageDisplay = ({ images, id }) => {
                 },
               ]}
             >
-              <Ionicons name="download-outline" size={24} color="white" />
+              <Icon name="download-outline" size={24} color="white" />
               <P style={{ color: "white", marginLeft: 8 }}>Download</P>
             </TouchableOpacity>
           </View>

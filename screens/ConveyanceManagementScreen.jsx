@@ -1,6 +1,5 @@
 import { View } from "react-native";
-import { useState, useEffect } from "react";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 // import All components
 import ContainerComponent from "../components/ContainerComponent";
@@ -159,7 +158,7 @@ export default function ConveyanceManagementScreen({ navigation }) {
         style={styles.addButton}
         onPress={() => navigation.navigate("conveyanceBillForm")}
       >
-        <Ionicons name="add" size={ICON_LARGE} color="white" />
+        <Icon name="add" size={ICON_LARGE} color="white" />
       </Button>
     </ContainerComponent>
   );

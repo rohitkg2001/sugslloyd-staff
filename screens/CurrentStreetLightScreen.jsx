@@ -6,7 +6,7 @@ import { inventoryData, projects, totalsitesData } from "../utils/faker";
 import InventoryCard from "../components/card/InventoryCard";
 import NoRecord from "./NoRecord";
 import { useTranslation } from "react-i18next";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../components/buttons/Button";
 import { styles } from "../styles";
 import InventoryDetailsModal from "../components/InventoryDetailsModal";
@@ -27,7 +27,7 @@ export default function InventoryScreen({ navigation }) {
     setSelectedItem(itemDetails);
   };
 
-  useEffect(() => {}, [inventory]);
+  useEffect(() => { }, [inventory]);
 
   return (
     <ContainerComponent>
@@ -55,7 +55,7 @@ export default function InventoryScreen({ navigation }) {
         style={styles.addButton}
         onPress={() => navigation.navigate("inventoryFormScreen")}
       >
-        <Ionicons name="add" size={28} color="white" />
+        <Icon name="add" size={28} color="white" />
       </Button>
     </ContainerComponent>
   );

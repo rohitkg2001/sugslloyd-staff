@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Dimensions, Alert, Text } from "react-native";
+import { View, Alert, Text } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "react-native-vector-icons/Ionicons";
 import { H2, H5 } from "../components/text";
 import { styles, typography } from "../styles";
 import Button from "../components/buttons/Button";
@@ -101,13 +101,13 @@ const MapScreen = ({ navigation }) => {
             marginBottom: 5,
           }}
         >
-          <Ionicons name="location-outline" size={20} color="red" />
+          <Icon name="location-outline" size={20} color="red" />
           <Text style={{ color: "white", fontSize: 16, marginLeft: 5 }}>
             Pickup: {pickupAddress || "Not selected"}
           </Text>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Ionicons name="flag-outline" size={20} color="white" />
+          <Icon name="flag-outline" size={20} color="white" />
           <Text style={{ color: "white", fontSize: 16, marginLeft: 5 }}>
             Drop: {dropoffAddress || "Not selected"}
           </Text>
