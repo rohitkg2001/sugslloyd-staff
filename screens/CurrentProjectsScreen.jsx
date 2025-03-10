@@ -112,7 +112,7 @@ export default function CurrentProjectsScreen({ navigation }) {
               // }}
             >
               <View>
-                <Span
+                {/* <Span
                   style={[
                     typography.font10,
                     typography.fontLato,
@@ -123,10 +123,30 @@ export default function CurrentProjectsScreen({ navigation }) {
                 </Span>
                 <H5 style={[typography.font16, typography.fontLato]}>
                   {item.site?.breda_sl_no}
-                </H5>
-                <H6 style={[typography.font14, typography.fontLato]}>
+                </H5> */}
+                <View style={{ alignItems: "flex-end" }}>
+                  <Span
+                    style={[
+                      typography.font10,
+                      typography.fontLato,
+                      { textTransform: "uppercase", color: "gray" },
+                    ]}
+                  >
+                    breda sl no
+                  </Span>
+                  <H5 style={[typography.font16, typography.fontLato]}>
+                    {item.site?.breda_sl_no}
+                  </H5>
+                </View>
+
+                {/* <H6 style={[typography.font14, typography.fontLato]}>
                   {item.activity}
-                </H6>
+                </H6> */}
+                <View style={{ position: "absolute", top: 0, left: 0 }}>
+                  <H6 style={[typography.font14, typography.fontLato]}>
+                    {item.activity}
+                  </H6>
+                </View>
 
                 <View style={[spacing.mt1, styles.row, spacing.mv2]}>
                   <View>
