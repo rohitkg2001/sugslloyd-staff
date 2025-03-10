@@ -138,12 +138,12 @@ export default function TotalProjectsScreen({ navigation }) {
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
       />
 
-      <Button
+      {/* <Button
         style={styles.addButton}
         onPress={() => navigation.navigate("formScreen")}
       >
         <Icon name="add" size={ICON_LARGE} color="white" />
-      </Button>
+      </Button> */}
     </ContainerComponent>
   );
 }

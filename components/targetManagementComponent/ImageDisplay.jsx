@@ -7,7 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MyButton from "../buttons/MyButton";
 import { spacing, styles, typography } from "../../styles";
 
-const ImageDisplay = ({ images, id }) => {
+const ImageDisplay = ({ images, id, status }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("Survey");
@@ -233,11 +233,7 @@ const ImageDisplay = ({ images, id }) => {
               </TouchableOpacity>
 
               <TouchableOpacity onPress={handleNextImage}>
-                <Icon
-                  name="chevron-forward-outline"
-                  size={48}
-                  color="white"
-                />
+                <Icon name="chevron-forward-outline" size={48} color="white" />
               </TouchableOpacity>
             </View>
           </View>
