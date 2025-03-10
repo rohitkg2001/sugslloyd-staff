@@ -25,8 +25,8 @@ export default function ProjectOverview() {
 
   useEffect(() => {
     if (projectsArray?.length && tasks?.length) {
-      setProjectsArr(
-        projectsArray.map((project) => {
+      const filteredProjects = projectsArray
+        .map((project) => {
           const relatedTasks = tasks.filter(
             (task) => task.project_id === project.id
           );
@@ -37,11 +37,13 @@ export default function ProjectOverview() {
               (task) => task.status === "Completed"
             ).length,
             pending_sites: relatedTasks.filter(
-              (task) => !(task.status === "Completed")
+              (task) => task.status !== "Completed"
             ).length,
           };
         })
-      );
+        .filter((project) => project.total_sites > 0);
+
+      setProjectsArr(filteredProjects);
     }
   }, [projectsArray, tasks]);
 
@@ -50,11 +52,11 @@ export default function ProjectOverview() {
       <View style={[styles.row, { alignItems: "center" }]}>
         <Icon name="calendar-clear" size={ICON_SMALL} color={PRIMARY_COLOR} />
         <H6
-          style={[
-            typography.fontLato,
-            typography.textBold,
-            { marginRight: 170 },
-          ]}
+          style={{
+            ...typography.fontLato,
+            ...typography.textBold,
+            marginRight: 170,
+          }}
         >
           {t("project_overview")}
         </H6>

@@ -24,16 +24,34 @@ export default function TotalProjectsScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
   const { projects } = useSelector((state) => state.project);
+  const { tasks } = useSelector((state) => state.tasks);
+
+  // useEffect(() => {
+  //   if (loading && Array.isArray(projects) && projects.length > 0) {
+  //     setFilteredProjects(projects);
+  //     setLoading(false);
+  //   }
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000);
+  // }, [loading, projects]);
+
+  // useEffect(() => {
+  //   dispatch(fetchProjects());
+  // }, [dispatch]);
 
   useEffect(() => {
     if (loading && Array.isArray(projects) && projects.length > 0) {
-      setFilteredProjects(projects);
+      const projectsWithSites = projects.filter((project) =>
+        tasks.some((task) => task.project_id === project.id)
+      );
+      setFilteredProjects(projectsWithSites);
       setLoading(false);
     }
     setTimeout(() => {
       setLoading(false);
     }, 2000);
-  }, [loading, projects]);
+  }, [loading, projects, tasks]);
 
   useEffect(() => {
     dispatch(fetchProjects());
