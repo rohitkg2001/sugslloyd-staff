@@ -103,7 +103,7 @@ export default function TeamPerformance() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {t("Pending")}
+            {"Backlogs"}
           </H6>
         </View>
 

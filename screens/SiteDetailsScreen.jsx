@@ -492,15 +492,16 @@ const SiteDetailsScreen = ({ route, navigation }) => {
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: "centre",
+              marginLeft: "100",
               marginVertical: 16,
             }}
           >
-            <MyButton
+            {/* <MyButton
               title={t("create_site")}
               onPress={() => navigation.navigate("sitesFormScreen")}
               color="#DC4C64"
-            />
+            /> */}
             <MyButton
               title={t("view_site")}
               onPress={() => navigation.navigate("totalSitesScreen")}

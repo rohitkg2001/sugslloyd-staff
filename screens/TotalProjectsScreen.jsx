@@ -81,6 +81,16 @@ export default function TotalProjectsScreen({ navigation }) {
                   bottom: 56,
                 }}
               >
+                Project Code
+              </P>
+              <P
+                style={{
+                  color: "black",
+                  textAlign: "right",
+                  marginRight: "15",
+                  bottom: 56,
+                }}
+              >
                 {item.work_order_number}
               </P>
             </View>
