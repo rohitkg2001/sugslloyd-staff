@@ -1,8 +1,8 @@
 // import React native
 import React, { useState } from "react";
-import { View, Image, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { P, H6, H4 } from "../components/text";
+import { View, Image, TouchableOpacity, ImageBackground } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { P, H6 } from "../components/text";
 import { typography, spacing, LIGHT } from "../styles";
 
 const ProfileChangeScreen = ({ route, navigation }) => {
@@ -13,18 +13,25 @@ const ProfileChangeScreen = ({ route, navigation }) => {
   );
   return (
     <View style={{ flex: 1 }}>
-      <View style={[spacing.p5, { backgroundColor: "#000", paddingTop: 50 }]}>
-        <H4
-          style={[
-            typography.font18,
-            typography.fontLato,
-            typography.textBold,
-            { color: LIGHT },
-          ]}
-        >
-          Profile
-        </H4>
-      </View>
+      <ImageBackground
+        source={require("../assets/renable.jpeg")}
+        style={{
+          width: "100%",
+          height: 170,
+          justifyContent: "center",
+          alignItems: "center",
+          position: "relative",
+        }}
+        resizeMode="cover"
+      >
+        <View
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+          }}
+        />
+      </ImageBackground>
       <View
         style={[
           spacing.p5,
@@ -33,7 +40,7 @@ const ProfileChangeScreen = ({ route, navigation }) => {
 
           {
             alignItems: "center",
-            backgroundColor: LIGHT,
+            backgroundColor: "#2C3E50",
             marginTop: -20,
             elevation: 3,
           },
@@ -55,11 +62,12 @@ const ProfileChangeScreen = ({ route, navigation }) => {
             typography.fontLato,
             typography.textBold,
             spacing.mt2,
+            { color: "#ECF0F1" },
           ]}
         >
           {StaffName}
         </H6>
-        <P style={[typography.font14, { color: "gray" }]}>{email}</P>
+        <P style={[typography.font14, { color: "#BDC3C7" }]}>{email}</P>
         <TouchableOpacity
           onPress={() => navigation.navigate("attendancePunch")}
           style={[
@@ -73,7 +81,7 @@ const ProfileChangeScreen = ({ route, navigation }) => {
             },
           ]}
         >
-          <Icon name="photo-camera" size={20} color="#fff" />
+          <Ionicons name="camera-outline" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
       ;
@@ -85,16 +93,14 @@ const ProfileChangeScreen = ({ route, navigation }) => {
           spacing.pv2,
           {
             backgroundColor: LIGHT,
-            elevation: 3,
+            elevation: 1,
           },
         ]}
       >
         {[
-          { name: "person", label: StaffName },
-          { name: "phone", label: contactNo },
-          { name: "home", label: address },
-          // { name: "star", label: "Review" },
-          { name: "info", label: "Info" },
+          { name: "person-outline", label: StaffName },
+          { name: "call-outline", label: contactNo },
+          { name: "home-outline", label: address },
         ].map((item, index) => (
           <TouchableOpacity
             key={index}
@@ -109,7 +115,7 @@ const ProfileChangeScreen = ({ route, navigation }) => {
               },
             ]}
           >
-            <Icon name={item.name} size={24} color="#555" />
+            <Ionicons name={item.name} size={24} color="#555" />
             <H6
               style={[typography.font16, spacing.ml3, typography.fontLato, {}]}
             >
