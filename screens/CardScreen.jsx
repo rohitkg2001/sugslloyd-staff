@@ -1,3 +1,4 @@
+// import react native
 import { View, Image, TouchableOpacity } from "react-native";
 import { Card } from "react-native-paper";
 import ContainerComponent from "../components/ContainerComponent";
