@@ -29,7 +29,7 @@ export default function ClickableCard1({
   onPress,
   onLongPressAction,
   selected = false,
-  borderColor = "green", // Added dynamic border color prop
+  borderColor = "transparent",
 }) {
   return (
     <TouchableOpacity

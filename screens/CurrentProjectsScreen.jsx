@@ -106,25 +106,17 @@ export default function CurrentProjectsScreen({ navigation }) {
               onLongPressAction={(idx) => selectTargets(idx)}
               selected={selectedTargets.find((target) => target.id === item.id)}
               borderColor={borderColor}
-              // style={{
-              //   borderWidth: 2, // Ensure border width is defined explicitly
-              //   borderColor: isPastDue ? "red" : "green", // Debug: is the color being set correctly?
-              // }}
             >
-              <View>
-                {/* <Span
-                  style={[
-                    typography.font10,
-                    typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
-                  ]}
+              <View style={{ position: "relative" }}>
+                <View
+                  style={{
+                    position: "absolute",
+
+                    right: 0,
+                    alignItems: "flex-end",
+                    bottom: 70,
+                  }}
                 >
-                  breda sl no
-                </Span>
-                <H5 style={[typography.font16, typography.fontLato]}>
-                  {item.site?.breda_sl_no}
-                </H5> */}
-                <View style={{ alignItems: "flex-end" }}>
                   <Span
                     style={[
                       typography.font10,
@@ -134,19 +126,22 @@ export default function CurrentProjectsScreen({ navigation }) {
                   >
                     breda sl no
                   </Span>
-                  <H5 style={[typography.font16, typography.fontLato]}>
+
+                  <H5
+                    style={[
+                      typography.font16,
+                      typography.fontLato,
+                      spacing.mr4,
+                      // { marginRight: 20 },
+                    ]}
+                  >
                     {item.site?.breda_sl_no}
                   </H5>
                 </View>
 
-                {/* <H6 style={[typography.font14, typography.fontLato]}>
+                <H6 style={[typography.font14, typography.fontLato]}>
                   {item.activity}
-                </H6> */}
-                <View style={{ position: "absolute", top: 0, left: 0 }}>
-                  <H6 style={[typography.font14, typography.fontLato]}>
-                    {item.activity}
-                  </H6>
-                </View>
+                </H6>
 
                 <View style={[spacing.mt1, styles.row, spacing.mv2]}>
                   <View>
@@ -221,7 +216,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                     tasks.filter((t) => t.vendor_id && !t.image).length || "",
                 },
                 {
-                  name: "Pending",
+                  name: "Inapproval",
                   count:
                     tasks.filter(
                       (t) => t.image && t.vendor_id && t.status !== "Completed"
