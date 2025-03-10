@@ -76,7 +76,7 @@ export function useTaskFunctions(staff) {
       filteredTasks = tasks.filter((task) => !task.vendor_id);
     } else if (tab === "Assigned") {
       filteredTasks = tasks.filter((task) => task.vendor_id && !task.image);
-    } else if (tab === "Pending") {
+    } else if (tab === "In Approval") {
       filteredTasks = tasks.filter(
         (task) => task.image && task.vendor_id && task.status !== "Completed"
       );

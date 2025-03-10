@@ -216,12 +216,13 @@ export default function CurrentProjectsScreen({ navigation }) {
                     tasks.filter((t) => t.vendor_id && !t.image).length || "",
                 },
                 {
-                  name: "Inapproval",
+                  name: "In Approval",
                   count:
                     tasks.filter(
                       (t) => t.image && t.vendor_id && t.status !== "Completed"
                     ).length || "",
                 },
+
                 {
                   name: "Done",
                   count:
