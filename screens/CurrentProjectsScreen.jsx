@@ -106,24 +106,33 @@ export default function CurrentProjectsScreen({ navigation }) {
               onLongPressAction={(idx) => selectTargets(idx)}
               selected={selectedTargets.find((target) => target.id === item.id)}
               borderColor={borderColor}
-              // style={{
-              //   borderWidth: 2, // Ensure border width is defined explicitly
-              //   borderColor: isPastDue ? "red" : "green", // Debug: is the color being set correctly?
-              // }}
             >
-              <View>
+              <View style={{ position: "relative" }}>
                 <Span
                   style={[
                     typography.font10,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    {
+                      textTransform: "uppercase",
+                      color: "gray",
+                      position: "absolute",
+                      top: -50,
+                      right: 0,
+                    },
                   ]}
                 >
                   breda sl no
+                  <P
+                    style={[
+                      typography.font16,
+                      typography.fontLato,
+                      { marginTop: 4 },
+                    ]}
+                  >
+                    {item.site?.breda_sl_no}
+                  </P>
                 </Span>
-                <H5 style={[typography.font16, typography.fontLato]}>
-                  {item.site?.breda_sl_no}
-                </H5>
+
                 <H6 style={[typography.font14, typography.fontLato]}>
                   {item.activity}
                 </H6>
@@ -201,7 +210,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                     tasks.filter((t) => t.vendor_id && !t.image).length || "",
                 },
                 {
-                  name: "Pending",
+                  name: "Inapproval",
                   count:
                     tasks.filter(
                       (t) => t.image && t.vendor_id && t.status !== "Completed"
