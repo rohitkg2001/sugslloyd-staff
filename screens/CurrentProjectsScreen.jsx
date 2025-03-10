@@ -77,11 +77,20 @@ export default function CurrentProjectsScreen({ navigation }) {
         data={Array.isArray(currentTasks) ? currentTasks : []}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
-          // Check if the task is past due
-          const isPastDue = moment(item.end_date).isBefore(moment(), "day");
+          const isCompleted = item.status === "Completed"; // Assuming "status" is the field that indicates completion
 
-          // Set border color based on whether the task is past due or not
-          const borderColor = isPastDue ? "red" : "green";
+          // Ensure end_date is parsed correctly and compare dates only (ignore the time part)
+          const endDate = moment(item.end_date).startOf("day"); // Ignore time part
+
+          // If the task is not completed, check if it's past due
+          const isPastDue =
+            !isCompleted && endDate.isBefore(moment().startOf("day"), "day");
+
+          // Set border color
+          let borderColor = "transparent"; // Default to transparent if completed
+          if (!isCompleted) {
+            borderColor = isPastDue ? "red" : "green"; // Red if past due, green if ongoing
+          }
 
           return (
             <ClickableCard1
