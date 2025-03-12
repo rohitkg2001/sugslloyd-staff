@@ -20,6 +20,7 @@ export default function MyFlatList({
   keyExtractor,
   loading,
   holidays,
+  showSearchBar = true,
   ...props
 }) {
   const [showBottomSheet, setShowBottomSheet] = useState(false);
@@ -37,38 +38,41 @@ export default function MyFlatList({
             keyExtractor={keyExtractor}
             initialNumToRender={50}
             showsVerticalScrollIndicator={false}
-            ListHeaderComponent={() => (
-              <View>
-                <View
-                  style={[
-                    spacing.mv4,
-                    styles.row,
-                    spacing.mh1,
-                    { alignItems: "center" },
-                  ]}
-                >
-                  <SearchBar
-                    placeholder="Search"
-                    style={{ width: SCREEN_WIDTH - 80 }}
-                  />
-                  <Button
+            ListHeaderComponent={() =>
+              showSearchBar ? (
+                <View>
+                  <View
                     style={[
-                      styles.btn,
-                      styles.bgPrimary,
+                      spacing.mv4,
+                      styles.row,
                       spacing.mh1,
-                      { width: 50 },
+                      { alignItems: "center" },
                     ]}
-                    onPress={() => setShowBottomSheet(true)}
                   >
-                    <Icon
-                      name="options-outline"
-                      size={ICON_MEDIUM}
-                      color={LIGHT}
+                    <SearchBar
+                      placeholder="Search"
+                      style={{ width: SCREEN_WIDTH - 80 }}
                     />
-                  </Button>
+
+                    <Button
+                      style={[
+                        styles.btn,
+                        styles.bgPrimary,
+                        spacing.mh1,
+                        { width: 50 },
+                      ]}
+                      onPress={() => setShowBottomSheet(true)}
+                    >
+                      <Icon
+                        name="options-outline"
+                        size={ICON_MEDIUM}
+                        color={LIGHT}
+                      />
+                    </Button>
+                  </View>
                 </View>
-              </View>
-            )}
+              ) : null
+            }
             {...props}
           />
         </>

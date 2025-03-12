@@ -1,8 +1,7 @@
 // import All React native
-
+import { useState } from "react";
 import { View } from "react-native";
 import moment from "moment";
-import Icon from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
 
 // import all components
@@ -15,24 +14,19 @@ import VendorSelectionScreen from "./VendorSelectionScreen";
 import CustomMenu from "../components/TargetScreen/CustomMenu";
 import TabBar from "../components/TabBar";
 import SearchBar from "../components/input/SearchBar";
-import Button from "../components/buttons/Button";
 import Filter from "../components/Filter";
+//import SearchBar from "../components/input/SearchBar";
 
 // import all redux
 import { useSelector } from "react-redux";
 
 // import all styles
 import { H5, H6, P, Span } from "../components/text";
-import {
-  spacing,
-  styles,
-  typography,
-  SCREEN_WIDTH,
-  ICON_MEDIUM,
-  LIGHT,
-} from "../styles";
+import { spacing, styles, typography } from "../styles";
 
 import { useTaskFunctions } from "../hooks/useTaskFunctions";
+import DashboardFilter from "../components/filters/DashboardFilter";
+import { useFilterTasks } from "../hooks/useFilterTasks";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
@@ -57,6 +51,46 @@ export default function CurrentProjectsScreen({ navigation }) {
     handleTabSelection,
   } = useTaskFunctions(staff);
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [dateFilter, setDateFilter] = useState("All");
+
+  const handleSearch = (text) => {
+    setSearchQuery(text);
+  };
+
+  // const filteredTasks = currentTasks.filter((task) => {
+  //   if (!task || !task.start_date) return false; // Ensure task has a start_date
+
+  //   const query = searchQuery.toLowerCase();
+  //   const taskStartDate = moment(task.start_date, "YYYY-MM-DD"); // Ensure correct format
+
+  //   const matchesSearch =
+  //     task.site?.breda_sl_no?.toLowerCase().includes(query) ||
+  //     task.site?.site_name?.toLowerCase().includes(query) ||
+  //     task.activity?.toLowerCase().includes(query);
+
+  //   if (dateFilter?.type === "Today") {
+  //     return matchesSearch && taskStartDate.isSame(moment(), "day");
+  //   } else if (dateFilter?.type === "This Month") {
+  //     return matchesSearch && taskStartDate.isSame(moment(), "month");
+  //   } else if (dateFilter?.type === "Custom") {
+  //     return (
+  //       matchesSearch &&
+  //       taskStartDate.isBetween(
+  //         moment(dateFilter.startDate),
+  //         moment(dateFilter.endDate),
+  //         "day",
+  //         "[]"
+  //       )
+  //     );
+  //   }
+
+  //   return matchesSearch;
+  // });
+
+  // import in code useFilterTasks in Hooks folders
+  const filteredTasks = useFilterTasks(currentTasks, searchQuery, dateFilter);
+
   return (
     <ContainerComponent>
       <MyHeader
@@ -72,9 +106,17 @@ export default function CurrentProjectsScreen({ navigation }) {
           />
         }
       />
-
+      <DashboardFilter updateDateFilter={setDateFilter} />
+      {/* Search Bar */}
+      <SearchBar
+        value={searchQuery}
+        onChangeText={handleSearch}
+        style={{ marginHorizontal: 10 }}
+      />
+      ;
       <MyFlatList
-        data={Array.isArray(currentTasks) ? currentTasks : []}
+        // data={Array.isArray(currentTasks) ? currentTasks : []}
+        data={filteredTasks} // Use filtered tasks
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
           const isCompleted = item.status === "Completed"; // Assuming "status" is the field that indicates completion
@@ -179,31 +221,6 @@ export default function CurrentProjectsScreen({ navigation }) {
         }}
         ListHeaderComponent={() => (
           <View>
-            <View
-              style={[
-                spacing.mv4,
-                styles.row,
-                spacing.mh1,
-                { alignItems: "center" },
-              ]}
-            >
-              <SearchBar
-                placeholder="Search"
-                style={{ width: SCREEN_WIDTH - 80 }}
-              />
-              <Button
-                style={[
-                  styles.btn,
-                  styles.bgPrimary,
-                  spacing.mh1,
-                  { width: 50 },
-                ]}
-                onPress={() => setShowBottomSheet(true)}
-              >
-                <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
-              </Button>
-            </View>
-
             <TabBar
               tabs={[
                 {
@@ -250,7 +267,6 @@ export default function CurrentProjectsScreen({ navigation }) {
         )}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
       />
-
       <CustomMenu
         menuVisible={menuVisible}
         toggleMenu={toggleMenu}
@@ -262,14 +278,12 @@ export default function CurrentProjectsScreen({ navigation }) {
         }
         disableApprove={selectedTargets.length === 0 || activeTab !== "Pending"}
       />
-
       {showBottomSheet && (
         <Filter
           onClose={() => setShowBottomSheet(false)}
           onApply={applyFilterFromRedux}
         />
       )}
-
       {showVendorSelection && (
         <VendorSelectionScreen
           onClose={() => setShowVendorSelection(false)}
