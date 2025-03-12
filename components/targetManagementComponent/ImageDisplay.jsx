@@ -270,6 +270,13 @@ const ImageDisplay = ({ images, id, status }) => {
           <MyButton title={"Reject"} color="#DC4C64" />
         </View>
       )}
+
+      {/* {status === "Pending" && (
+        <View style={[styles.row, {}]}>
+          <MyButton title={"Approve"} onPress={handleApprove} />
+          <MyButton title={"Reject"} color="#DC4C64" />
+        </View>
+      )} */}
     </View>
   );
 };
