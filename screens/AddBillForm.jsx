@@ -48,6 +48,7 @@ const AddBillForm = ({ navigation }) => {
   } = useAddBillForm();
   const [type, setType] = useState(null);
   const [city, setCity] = useState(null);
+  const [destinationCity, setDestinationCity] = useState(null);
 
   const handleCalculateBill = () => {
     const formData = {
@@ -58,12 +59,13 @@ const AddBillForm = ({ navigation }) => {
       ticket,
       hotelBill,
       city,
+      destinationCity,
       type,
     };
 
     dispatch(setBillData(formData));
     console.log("Form Data:", formData);
-    navigation.navigate("travelDetailScreen");
+    navigation.navigate("travelDetailScreen", { formData });
   };
   return (
     <ContainerComponent>
@@ -179,9 +181,27 @@ const AddBillForm = ({ navigation }) => {
         </View>
 
         <MyPickerInput
-          title={t("City")}
+          title={t("From")}
           value={city}
           onChange={setCity}
+          options={[
+            { label: t("Patna"), value: "Patna" },
+            { label: t("Delhi"), value: "Delhi" },
+            { label: t("Mumbai"), value: "Mumbai" },
+            { label: t("Kolkata"), value: "Kolkata" },
+            { label: t("Chennai"), value: "Chennai" },
+            { label: t("Bangalore"), value: "Bangalore" },
+            { label: t("Hyderabad"), value: "Hyderabad" },
+            { label: t("Ahmedabad"), value: "Ahmedabad" },
+            { label: t("Pune"), value: "Pune" },
+          ]}
+        />
+
+        {/* Destination City */}
+        <MyPickerInput
+          title={t("To")}
+          value={destinationCity}
+          onChange={setDestinationCity}
           options={[
             { label: t("Patna"), value: "Patna" },
             { label: t("Delhi"), value: "Delhi" },
@@ -244,7 +264,7 @@ const AddBillForm = ({ navigation }) => {
 
         <MyPickerInput
           title={t("Mode Of Transport")}
-          value={type} 
+          value={type}
           onChange={setType}
           options={[
             { label: t("Bus"), value: "Bus" },

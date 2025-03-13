@@ -205,7 +205,7 @@ export const getStreetLightTasks = (my_id) => async (dispatch) => {
   });
 };
 
-export const setBillData = (data) => ({
-  type: SET_BILL_DATA,
-  payload: data,
+export const setBillData = (billData) => ({
+  type: "SET_BILL_DATA",
+  payload: billData,
 });
