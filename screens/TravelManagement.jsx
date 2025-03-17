@@ -1,24 +1,19 @@
-// import all react native
-import { View } from "react-native";
-import { useState } from "react";
+// Import all react native
+import { View, Text } from "react-native";
+import { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useRoute } from "@react-navigation/native"; // Import useRoute
 import { useSelector } from "react-redux";
-// import Components
+// Import Components
 import ContainerComponent from "../components/ContainerComponent";
 import ClickableCard1 from "../components/card/ClickableCard1";
 import MyFlatList from "../components/utility/MyFlatList";
 import Button from "../components/buttons/Button";
 import DashboardHeader from "../components/header/DashboardHeader";
-import TabBar from "../components/TabBar";
-import SearchBar from "../components/input/SearchBar";
 
-// import faker
-import { travelPlans } from "../utils/faker";
-
-// import all styles
+// Import all styles
 import {
   ICON_LARGE,
-  ICON_MEDIUM,
   LIGHT,
   spacing,
   styles,
@@ -27,12 +22,51 @@ import {
 } from "../styles";
 
 export default function TravelManagement({ navigation }) {
-  const [activeTab, setActiveTab] = useState("This Week");
+  const route = useRoute();
+  const newTravelData = route.params?.travelData;
   const { firstName } = useSelector((state) => state.staff);
+  const [travelPlans, setTravelPlans] = useState([]);
 
-  const handleTabSelection = (selectedTab) => {
-    setActiveTab(selectedTab);
-  };
+  useEffect(() => {
+    if (newTravelData) {
+      const updatedPlans = [
+        {
+          title: (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                {newTravelData.city || "Unknown City"} ➝{" "}
+                {newTravelData.destinationCity || "Unknown Destination"}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  color: "#007bff",
+                  marginRight: 8,
+                }}
+              >
+                ({newTravelData.type || "Unknown Transport"})
+              </Text>
+            </View>
+          ),
+          trip_schedule: `${new Date(
+            newTravelData.start_date
+          ).toLocaleDateString()} - ${new Date(
+            newTravelData.journeyDate
+          ).toLocaleDateString()}`,
+          fullData: newTravelData,
+        },
+        ...travelPlans,
+      ];
+      setTravelPlans(updatedPlans);
+    }
+  }, [newTravelData]);
 
   return (
     <ContainerComponent>
@@ -40,20 +74,15 @@ export default function TravelManagement({ navigation }) {
         greeting="Good morning"
         firstName={firstName}
         message="You fall under M3 category"
-        style={[
-          spacing.p2,
-
-          {
-            width: SCREEN_WIDTH,
-            backgroundColor: PRIMARY_COLOR,
-            height: 70,
-            borderBottomLeftRadius: 12,
-            borderBottomRightRadius: 12,
-            margin: 0,
-          },
-        ]}
+        style={{
+          width: SCREEN_WIDTH,
+          backgroundColor: PRIMARY_COLOR,
+          height: 70,
+          borderBottomLeftRadius: 12,
+          borderBottomRightRadius: 12,
+          margin: 0,
+        }}
         textStyle={{ color: LIGHT }}
-        useEllipsis={true}
       />
 
       <MyFlatList
@@ -61,57 +90,32 @@ export default function TravelManagement({ navigation }) {
         renderItem={({ item, index }) => (
           <ClickableCard1
             key={index}
-            item={item}
             title={item.title}
             subtitle={item.trip_schedule}
             onPress={() => {
-              navigation.navigate("travelDetailScreen", {
-                travelItem: item,
-              });
+              const formData = {
+                start_date: item.fullData.start_date,
+                journeyDate: item.fullData.journeyDate,
+                pnrNumbersStart: item.fullData.pnrNumbersStart || "N/A",
+                pnrNumbersReturn: item.fullData.pnrNumbersReturn || "N/A",
+                ticket: item.fullData.ticket || "Not Available",
+                hotelBill: item.fullData.hotelBill || "Not Available",
+                city: item.fullData.city || "Unknown City",
+                destinationCity:
+                  item.fullData.destinationCity || "Unknown Destination",
+                type: item.fullData.type || "Unknown Transport",
+              };
+
+              console.log("Navigating with Form Data:", formData);
+              navigation.navigate("travelDetailScreen", { formData });
+            }}
+            cardStyle={{
+              backgroundColor: "#e8f8f5",
             }}
           />
         )}
         keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={[spacing.mh1, spacing.mt1]}
-        ListHeaderComponent={() => (
-          <View>
-            <View
-              style={[
-                spacing.mv4,
-                styles.row,
-                spacing.mh1,
-                { alignItems: "center" },
-              ]}
-            >
-              <SearchBar
-                placeholder="Search"
-                style={{ width: SCREEN_WIDTH - 80 }}
-              />
-              <Button
-                style={[
-                  styles.btn,
-                  styles.bgPrimary,
-                  spacing.mh1,
-                  { width: 50 },
-                ]}
-              //  onPress={() => setShowBottomSheet(true)}
-              >
-                <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
-              </Button>
-            </View>
-
-            <TabBar
-              tabs={[
-                { name: "This Week" },
-                { name: "This Month" },
-                { name: "Approve" },
-                { name: "Reject" },
-              ]}
-              activeTab={activeTab}
-              onTabSelected={handleTabSelection}
-            />
-          </View>
-        )}
       />
 
       <Button
