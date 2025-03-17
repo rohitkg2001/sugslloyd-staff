@@ -51,6 +51,26 @@ const AddBillForm = ({ navigation }) => {
   const [destinationCity, setDestinationCity] = useState(null);
   const [description, setDescription] = useState("");
 
+  const [transactions, setTransactions] = useState([]);
+
+  const addTransactionField = () => {
+    setTransactions([
+      ...transactions,
+      { amount: "", category: "", description: "", date: new Date() },
+    ]);
+  };
+
+  const handleTransactionChange = (value, index, field) => {
+    const updatedTransactions = [...transactions];
+    updatedTransactions[index][field] = value;
+    setTransactions(updatedTransactions);
+  };
+
+  const removeTransactionField = (index) => {
+    const updatedTransactions = transactions.filter((_, i) => i !== index);
+    setTransactions(updatedTransactions);
+  };
+
   const handleCalculateBill = () => {
     const formData = {
       start_date,
@@ -274,6 +294,105 @@ const AddBillForm = ({ navigation }) => {
             { label: t("Flight"), value: "Flight" },
           ]}
         />
+
+        <TouchableOpacity
+          onPress={addTransactionField}
+          style={{
+            alignSelf: "flex-end",
+          }}
+        >
+          <H6
+            style={[
+              styles.rightLink,
+              typography.font18,
+              typography.fontLato,
+              spacing.p1,
+            ]}
+          >
+            {t("Add Miscellaneous Bills")}
+          </H6>
+        </TouchableOpacity>
+
+        {transactions.map((transaction, index) => (
+          <View
+            key={index}
+            style={[
+              spacing.p2,
+              spacing.mt1,
+              { borderWidth: 1, borderColor: "#ccc" },
+            ]}
+          >
+            <MyTextInput
+              title={t("How Much")}
+              value={transaction.amount}
+              onChangeText={(value) =>
+                handleTransactionChange(value, index, "amount")
+              }
+              placeholder={t(" ₹ Enter Amount")}
+              keyboardType="numeric"
+            />
+            <MyPickerInput
+              title={t("Category")}
+              value={transaction.category}
+              onChange={(value) =>
+                handleTransactionChange(value, index, "category")
+              }
+              options={[
+                { label: t("Food"), value: "Food" },
+                { label: t("Transport"), value: "Transport" },
+              ]}
+            />
+            <MyTextInput
+              title={t("Description")}
+              value={transaction.description}
+              onChangeText={(value) =>
+                handleTransactionChange(value, index, "description")
+              }
+              placeholder={t("Enter Description")}
+              multiline={true}
+              inputStyle={[
+                spacing.p2,
+                typography.font14,
+                typography.fontLato,
+                {
+                  minHeight: 100,
+                  textAlignVertical: "top",
+                },
+              ]}
+            />
+
+            <View style={{ marginTop: 44 }}>
+              <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                <MyTextInput
+                  title={t("Pickup Date")}
+                  value={transaction.date.toLocaleDateString()}
+                  placeholder={t("Select Pickup Date")}
+                  editable={false}
+                />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={() => removeTransactionField(index)}>
+              <Span
+                style={[
+                  styles.rightLink,
+                  typography.fontLato,
+                  { color: "red" },
+                ]}
+              >
+                {t("Remove")}
+              </Span>
+            </TouchableOpacity>
+          </View>
+        ))}
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={new Date()}
+            mode="date"
+            display="default"
+            onChange={onDateChange}
+          />
+        )}
         <View
           style={[
             spacing.bw1,
@@ -347,26 +466,13 @@ const AddBillForm = ({ navigation }) => {
             )}
           </View>
         </View>
-        {/* Description Box */}
-        <MyTextInput
-          title={t("Description")}
-          value={description}
-          onChangeText={setDescription}
-          placeholder={t("Enter any additional details")}
-          multiline={true}
-          inputStyle={{
-            minHeight: 120,
-            padding: 10,
-            fontSize: 16,
-          }}
-        />
+
         <Button
           style={[
             styles.btn,
             styles.bgPrimary,
-            { justifyContent: "center", top: 70 },
+            { justifyContent: "center", top: 4 },
           ]}
-          // onPress={() => navigation.navigate("travelDetailScreen")}
           onPress={handleCalculateBill}
         >
           <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
