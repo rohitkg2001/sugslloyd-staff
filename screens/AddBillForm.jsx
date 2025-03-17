@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { setBillData } from "../redux/actions/taskActions";
 
 // import Styles
-import { spacing, styles, typography } from "../styles";
+import { spacing, styles, typography, SCREEN_WIDTH } from "../styles";
 import { H2, H6, Span } from "../components/text";
 import Button from "../components/buttons/Button";
 import useAddBillForm from "../hooks/useAddBillForm";
@@ -85,6 +85,13 @@ const AddBillForm = ({ navigation }) => {
             value={start_date.toLocaleDateString()}
             placeholder={t("Select Start Date")}
             editable={false}
+            style={[
+              {
+                height: 60,
+                marginLeft: 1,
+                width: SCREEN_WIDTH - 10,
+              },
+            ]}
           />
         </TouchableOpacity>
 
@@ -229,6 +236,13 @@ const AddBillForm = ({ navigation }) => {
             value={journeyDate.toLocaleDateString()}
             placeholder={t("Select Return Date")}
             editable={false}
+            style={[
+              {
+                height: 60,
+                marginLeft: 1,
+                width: SCREEN_WIDTH - 10,
+              },
+            ]}
           />
         </TouchableOpacity>
 
@@ -240,6 +254,13 @@ const AddBillForm = ({ navigation }) => {
               value={pnr}
               onChange={(value) => handlePnrChangeReturn(value, index)}
               placeholder={t("Enter PNR Number")}
+              style={[
+                {
+                  height: 60,
+                  marginLeft: 1,
+                  width: SCREEN_WIDTH - 10,
+                },
+              ]}
             />
 
             {pnrNumbersReturn.length > 1 && (
