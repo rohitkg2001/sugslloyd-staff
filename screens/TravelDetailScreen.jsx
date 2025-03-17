@@ -3,9 +3,9 @@ import { View, Text, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { SCREEN_WIDTH, styles, typography } from "../styles";
+import { SCREEN_WIDTH, styles, typography, spacing, LIGHT } from "../styles";
 import Button from "../components/buttons/Button";
-import { H2 } from "../components/text";
+import { H2, H5, P, Span } from "../components/text";
 
 const TravelDetailScreen = ({ navigation }) => {
   const route = useRoute();
@@ -41,75 +41,198 @@ const TravelDetailScreen = ({ navigation }) => {
   };
 
   return (
-    <ContainerComponent
-      style={{
-        width: SCREEN_WIDTH - 32,
-        alignSelf: "center",
-      }}
-    >
+    <ContainerComponent>
       <MyHeader title={"Travel Details"} hasIcon={true} isBack={true} />
       <ScrollView>
         <View
-          style={{
-            backgroundColor: "#FFF",
-            borderRadius: 12,
-            padding: 15,
-            marginBottom: 15,
-          }}
+          style={[
+            spacing.pv3,
+            {
+              backgroundColor: LIGHT,
+              width: SCREEN_WIDTH - 8,
+            },
+          ]}
         >
-          <DetailItem label="Journey Date" value={startDate} />
-          <DetailItem label="Return Date" value={returnDate} />
-          <DetailItem label="From" value={formData.city} />
-          <DetailItem label="To" value={formData.destinationCity} />
-          <DetailItem label="Transport Mode" value={formData.type} />
+          <View
+            style={[
+              styles.row,
+              {
+                alignItems: "center",
+              },
+            ]}
+          >
+            <View style={{ alignItems: "center" }}>
+              <P style={[typography.font12, typography.fontLato]}>From</P>
+              <Text style={[typography.font16, typography.fontLato]}>
+                {formData.city}
+              </Text>
+            </View>
 
-          <DetailItem
-            label="PNR Numbers (Start)"
-            value={formData.pnrNumbersStart?.join(", ") || "N/A"}
+            <P style={[typography.font20, typography.textBold]}>↔</P>
+
+            <View style={{ alignItems: "center" }}>
+              <P style={[typography.font12, typography.fontLato]}>To</P>
+              <P style={[typography.font16, typography.fontLato]}>
+                {formData.destinationCity}
+              </P>
+            </View>
+          </View>
+
+          <View
+            style={{
+              borderBottomColor: "#000",
+              borderBottomWidth: 1,
+              marginTop: 10,
+              width: "100%",
+            }}
           />
-          <DetailItem
-            label="PNR Numbers (Return)"
-            value={formData.pnrNumbersReturn?.join(", ") || "N/A"}
+
+          <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+            <View>
+              <Span
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  { textTransform: "uppercase", color: "gray" },
+                ]}
+              >
+                Start date
+              </Span>
+              <P style={[typography.font12, typography.fontLato]}>
+                {startDate}
+              </P>
+            </View>
+            <View>
+              <Span
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  { textTransform: "uppercase", color: "gray" },
+                ]}
+              >
+                End date
+              </Span>
+              <P style={[typography.font12, typography.fontLato]}>
+                {returnDate}
+              </P>
+            </View>
+          </View>
+
+          <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+            <View>
+              <Span
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  { textTransform: "uppercase", color: "gray" },
+                ]}
+              >
+                PNR Numbers (Start)
+              </Span>
+              <P style={[typography.font12, typography.fontLato]}>
+                {formData.pnrNumbersStart?.join(", ") || "N/A"}
+              </P>
+            </View>
+            <View>
+              <Span
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  { textTransform: "uppercase", color: "gray" },
+                ]}
+              >
+                PNR Numbers (Return)
+              </Span>
+              <P style={[typography.font12, typography.fontLato]}>
+                {formData.pnrNumbersReturn?.join(", ") || "N/A"}
+              </P>
+            </View>
+          </View>
+
+          <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+            <View>
+              <Span
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  { textTransform: "uppercase", color: "gray" },
+                ]}
+              >
+                Categories
+              </Span>
+              <P style={[typography.font12, typography.fontLato]}>
+                {formData.categories}
+              </P>
+            </View>
+            <View>
+              <Span
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  { textTransform: "uppercase", color: "gray" },
+                ]}
+              >
+                Descriptions
+              </Span>
+              <P style={[typography.font12, typography.fontLato]}>
+                {formData.descriptions}
+              </P>
+            </View>
+          </View>
+
+          <View style={[styles.row]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
+              Transport Mode
+            </H5>
+            <P
+              style={[
+                typography.font16,
+                typography.fontLato,
+                spacing.pv1,
+                { textAlign: "right" },
+              ]}
+            >
+              {formData.type}
+            </P>
+          </View>
+          <View
+            style={{
+              borderBottomColor: "#000",
+              borderBottomWidth: 1,
+              marginTop: 10,
+              width: "100%",
+            }}
           />
-          <DetailItem label="Categories" value={formData.categories} />
-          <DetailItem label="Descriptions" value={formData.descriptions} />
-          <DetailItem label="Amount" value={`₹ ${formData.totalAmount}`} />
+          <View style={[styles.row]}>
+            <H5
+              style={[
+                typography.font18,
+                typography.textBold,
+                typography.fontLato,
+                { textAlign: "left", color: "red" },
+              ]}
+            >
+              Amount
+            </H5>
+            <P
+              style={[
+                typography.font18,
+                typography.fontLato,
+                typography.textBold,
+                spacing.pv1,
+                { textAlign: "right" },
+              ]}
+            >
+              {`₹ ${formData.totalAmount}`}
+            </P>
+          </View>
         </View>
-
-        {formData.ticket?.name && (
-          <View
-            style={{
-              backgroundColor: "#FFF",
-              borderRadius: 12,
-              padding: 15,
-              marginBottom: 15,
-              width: "100%",
-            }}
-          >
-            <DetailItem label="Ticket Uploaded" value={formData.ticket.name} />
-          </View>
-        )}
-
-        {formData.hotelBill?.name && (
-          <View
-            style={{
-              backgroundColor: "#FFF",
-              borderRadius: 12,
-              padding: 15,
-              marginBottom: 15,
-              shadowColor: "#000",
-              shadowOpacity: 0.1,
-              shadowOffset: { width: 0, height: 3 },
-              elevation: 3,
-              width: "100%",
-            }}
-          >
-            <DetailItem
-              label="Hotel Bill Uploaded"
-              value={formData.hotelBill.name}
-            />
-          </View>
-        )}
       </ScrollView>
       <Button
         style={[
@@ -126,25 +249,5 @@ const TravelDetailScreen = ({ navigation }) => {
     </ContainerComponent>
   );
 };
-
-const DetailItem = ({ label, value }) => (
-  <View
-    style={{
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 8,
-      width: "100%",
-      paddingHorizontal: 0,
-    }}
-  >
-    <Text style={{ fontSize: 16, fontWeight: "bold", color: "#666", flex: 1 }}>
-      {label}:
-    </Text>
-    <Text style={{ fontSize: 16, color: "#333", flex: 1, textAlign: "right" }}>
-      {value || "N/A"}
-    </Text>
-  </View>
-);
 
 export default TravelDetailScreen;

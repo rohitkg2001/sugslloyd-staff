@@ -355,138 +355,6 @@ const AddBillForm = ({ navigation }) => {
           </H6>
         </TouchableOpacity>
 
-        {/* {transactions.map((transaction, index) => (
-          <View
-            key={index}
-            style={[
-              spacing.p2,
-              spacing.mt1,
-              { borderWidth: 1, borderColor: "#ccc" },
-            ]}
-          >
-            <MyTextInput
-              title={t("How Much")}
-              value={transaction.amount}
-              onChangeText={(value) =>
-                handleTransactionChange(value, index, "amount")
-              }
-              placeholder={t(" ₹ Enter Amount")}
-              keyboardType="numeric"
-            />
-
-            <View style={{ marginBottom: 10 }}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <View style={{ flex: 0.6, marginRight: 5 }}>
-                  <MyPickerInput
-                    title={t("Category")}
-                    value={transaction.category}
-                    onChange={(value) =>
-                      handleTransactionChange(value, index, "category")
-                    }
-                    options={[
-                      { label: t("Food"), value: "Food" },
-                      { label: t("Transport"), value: "Transport" },
-                    ]}
-                  />
-                </View>
-
-                <View style={{ flex: 0.4, marginLeft: 5 }}>
-                  <TouchableOpacity
-                    onPress={() => setIsEditing(true)}
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      paddingVertical: 12,
-                      paddingHorizontal: 15,
-                      borderWidth: 1,
-                      borderColor: "#ccc",
-                      borderRadius: 5,
-                      top: 10,
-                    }}
-                  >
-                    <Icon
-                      name="chatbox-ellipses"
-                      size={28}
-                      color="#76885B"
-                      pointerEvents="none"
-                    />
-
-                    <P
-                      style={[
-                        typography.font10,
-                        typography.fontLato,
-                        { marginLeft: 10 },
-                      ]}
-                    >
-                      {t("Description")}
-                    </P>
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              {isEditing && (
-                <TextInput
-                  value={description}
-                  onChangeText={(value) => {
-                    setDescription(value);
-                    handleTransactionChange(value, index, "description");
-                  }}
-                  placeholder={t("Enter Description")}
-                  multiline={true}
-                  style={{
-                    minHeight: 100,
-                    marginTop: 10,
-                    padding: 10,
-                    borderWidth: 1,
-                    borderColor: "#ccc",
-                    borderRadius: 5,
-                    textAlignVertical: "top",
-                  }}
-                  onBlur={() => setIsEditing(false)} // Close input when user taps away
-                  autoFocus={true} // Automatically focus input when opened
-                />
-              )}
-            </View>
-
-            <View style={{ marginTop: 44 }}>
-              <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-                <MyTextInput
-                  title={t("Pickup Date")}
-                  value={transaction.date.toLocaleDateString()}
-                  placeholder={t("Select Pickup Date")}
-                  editable={false}
-                />
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity onPress={() => removeTransactionField(index)}>
-              <Span
-                style={[
-                  styles.rightLink,
-                  typography.fontLato,
-                  { color: "red" },
-                ]}
-              >
-                {t("Remove")}
-              </Span>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={addTransactionField}>
-              <Span style={[styles.rightLink, typography.fontLato]}>
-                {t("Add More Miscellaneous Bills")}
-              </Span>
-            </TouchableOpacity>
-          </View>
-        ))}
-
-        {showDatePicker && (
-          <DateTimePicker
-            value={new Date()}
-            mode="date"
-            display="default"
-            onChange={onDateChange}
-          />
-        )} */}
-
         {transactions.map((transaction, index) => (
           <View
             key={index}
@@ -494,14 +362,8 @@ const AddBillForm = ({ navigation }) => {
               spacing.p2,
               spacing.mb2,
               {
-                backgroundColor: LIGHT, // Light background for card effect
-                // padding: 8,
-                // borderRadius: 10,
-                // marginBottom: 10,
-                // shadowColor: "#000",
-                // shadowOpacity: 0.1,
-                // shadowRadius: 4,
-                elevation: 1, // Android shadow effect
+                backgroundColor: LIGHT,
+                elevation: 1,
               },
             ]}
           >
@@ -519,7 +381,6 @@ const AddBillForm = ({ navigation }) => {
             <View style={[spacing.mb2]}>
               {/* Category & Description Row */}
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                {/* Category Picker */}
                 <View style={{ flex: 0.6, marginRight: 4 }}>
                   <MyPickerInput
                     title={t("Category")}
@@ -545,11 +406,8 @@ const AddBillForm = ({ navigation }) => {
                       {
                         flexDirection: "row",
                         alignItems: "center",
-                        //  paddingVertical: 12,
-                        // paddingHorizontal: 12,
                         borderWidth: 1,
                         borderColor: "#ccc",
-                        // borderRadius: 5,
                         backgroundColor: LIGHT,
                         top: 10,
                       },
@@ -561,36 +419,54 @@ const AddBillForm = ({ navigation }) => {
                 </View>
               </View>
 
-              {/* Description Input (Appears When Editing) */}
               {isEditing && (
-                <TextInput
-                  value={description}
-                  onChangeText={(value) => {
-                    setDescription(value);
-                    handleTransactionChange(value, index, "description");
-                  }}
-                  placeholder={t("Enter Description")}
-                  multiline={true}
-                  style={[
-                    spacing.mt2,
-                    spacing.p2,
-                    spacing.br2,
-                    {
-                      minHeight: 80,
-                      borderWidth: 1,
-                      borderColor: "#ccc",
-                      backgroundColor: LIGHT,
-                      textAlignVertical: "top",
-                    },
-                  ]}
-                  onBlur={() => setIsEditing(false)}
-                  autoFocus={true}
-                />
+                <View style={[spacing.mt3, { position: "relative" }]}>
+                  <MyTextInput
+                    title={t("Description")}
+                    value={description}
+                    onChangeText={(value) => {
+                      if (value.length <= 500) {
+                        setDescription(value);
+                        handleTransactionChange(value, index, "description");
+                      }
+                    }}
+                    placeholder={t("Enter Description")}
+                    multiline={true}
+                    style={[
+                      //spacing.mt2,
+                      //  spacing.p2,
+                      // spacing.br2,
+                      {
+                        minHeight: 80,
+                        //  borderWidth: 1,
+                        borderColor: "#ccc",
+                        // backgroundColor: LIGHT,
+                        textAlignVertical: "top",
+                      },
+                    ]}
+                    onBlur={() => setIsEditing(false)}
+                    autoFocus={true}
+                  />
+
+                  <P
+                    style={[
+                      typography.font10,
+                      typography.fontLato,
+                      {
+                        position: "absolute",
+                        bottom: -38,
+                        right: 5,
+                      },
+                    ]}
+                  >
+                    {description.length}/500
+                  </P>
+                </View>
               )}
             </View>
 
             {/* Pickup Date */}
-            <View style={{ marginTop: 10 }}>
+            <View style={[spacing.mt5]}>
               <TouchableOpacity onPress={() => setShowDatePicker(true)}>
                 <MyTextInput
                   title={t("Pickup Date")}
