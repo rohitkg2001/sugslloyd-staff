@@ -25,7 +25,7 @@ import {
   ICON_SMALL,
   PRIMARY_COLOR_TRANSPARENT,
 } from "../../styles";
-import { H5, H6, H4 } from "../text";
+import { H6 } from "../text";
 const MEDAL_COLORS = ["#FFD700", "#C0C0C0", "#CD7F32"]; // Gold, Silver, Bronze
 
 export default function TeamPerformance() {

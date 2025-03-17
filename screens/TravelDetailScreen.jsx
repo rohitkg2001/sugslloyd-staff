@@ -62,6 +62,8 @@ const TravelDetailScreen = ({ navigation }) => {
           <DetailItem label="From" value={formData.city} />
           <DetailItem label="To" value={formData.destinationCity} />
           <DetailItem label="Transport Mode" value={formData.type} />
+          <DetailItem label="Description" value={formData.description} />
+          <DetailItem label="PNR Numbers" value={pnrNumbersStart.join(", ")} />
         </View>
 
         {/* PNR Numbers (Start) */}

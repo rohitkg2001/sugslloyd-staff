@@ -49,6 +49,7 @@ const AddBillForm = ({ navigation }) => {
   const [type, setType] = useState(null);
   const [city, setCity] = useState(null);
   const [destinationCity, setDestinationCity] = useState(null);
+  const [description, setDescription] = useState("");
 
   const handleCalculateBill = () => {
     const formData = {
@@ -61,6 +62,7 @@ const AddBillForm = ({ navigation }) => {
       city,
       destinationCity,
       type,
+      description,
     };
 
     dispatch(setBillData(formData));
@@ -345,9 +347,25 @@ const AddBillForm = ({ navigation }) => {
             )}
           </View>
         </View>
-
+        {/* Description Box */}
+        <MyTextInput
+          title={t("Description")}
+          value={description}
+          onChangeText={setDescription}
+          placeholder={t("Enter any additional details")}
+          multiline={true}
+          inputStyle={{
+            minHeight: 120,
+            padding: 10,
+            fontSize: 16,
+          }}
+        />
         <Button
-          style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
+          style={[
+            styles.btn,
+            styles.bgPrimary,
+            { justifyContent: "center", top: 70 },
+          ]}
           // onPress={() => navigation.navigate("travelDetailScreen")}
           onPress={handleCalculateBill}
         >
