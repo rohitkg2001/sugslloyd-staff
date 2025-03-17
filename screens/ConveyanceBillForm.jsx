@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, TextInput, TouchableOpacity, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { styles, typography, spacing, LIGHT, SCREEN_WIDTH } from "../styles";
@@ -6,6 +6,39 @@ import { H2, P, H5, H6 } from "../components/text";
 import Button from "../components/buttons/Button";
 
 const ConveyanceBillForm = ({ navigation }) => {
+  // State for Pickup and Drop Locations
+  const [pickupLocation, setPickupLocation] = useState("");
+  const [dropLocation, setDropLocation] = useState("");
+  const [isDropLocationSelected, setIsDropLocationSelected] = useState(false); // Track if drop location is selected
+
+  // Function to handle location selection (pickup and drop)
+  const handleLocationSelection = (type) => {
+    if (type === "pickup") {
+      // Navigate to location selection screen for pickup
+      navigation.navigate("locationSet", { type: "pickup" });
+    } else if (type === "drop") {
+      // Navigate to location selection screen for drop
+      navigation.navigate("locationSet", { type: "drop" });
+    }
+  };
+
+  // Handle confirming the location selection from map screen
+  const handleLocationConfirm = (location, type) => {
+    if (type === "pickup") {
+      setPickupLocation(location);
+    } else if (type === "drop") {
+      setDropLocation(location);
+      setIsDropLocationSelected(true); // Mark drop location as selected
+    }
+    navigation.goBack(); // Navigate back to the form screen
+  };
+
+  // Handle changing the drop location if it's already selected
+  const handleChangeDropLocation = () => {
+    setDropLocation("");
+    setIsDropLocationSelected(false); // Allow the user to change the drop location
+  };
+
   return (
     <View style={[spacing.p2, { width: SCREEN_WIDTH }]}>
       <P style={[typography.font16, typography.fontLato, spacing.mb3]}>
@@ -46,14 +79,12 @@ const ConveyanceBillForm = ({ navigation }) => {
               },
             ]}
           />
-
           <View
             style={[
               spacing.br1,
               {
                 width: 10,
                 height: 10,
-
                 backgroundColor: "#000",
               },
             ]}
@@ -80,6 +111,8 @@ const ConveyanceBillForm = ({ navigation }) => {
               placeholder="Pickup Location"
               placeholderTextColor="#aaa"
               style={[typography.font16, typography.fontLato, { flex: 1 }]}
+              value={pickupLocation} // Bind value to pickupLocation state
+              onChangeText={(text) => setPickupLocation(text)} // Update pickup location
             />
             <Ionicons name="location-outline" size={20} color="black" />
           </View>
@@ -103,18 +136,19 @@ const ConveyanceBillForm = ({ navigation }) => {
               placeholder="Drop Location"
               placeholderTextColor="#aaa"
               style={[typography.font16, typography.fontLato, { flex: 1 }]}
+              value={dropLocation} // Bind value to dropLocation state
+              onChangeText={(text) => setDropLocation(text)} // Update drop location
             />
             <Ionicons name="location-outline" size={20} color="red" />
           </View>
 
-          {/* Select on Map Button */}
+          {/* Allow the user to select or change the drop location */}
           <TouchableOpacity
-            onPress={() => navigation.navigate("locationSet")}
+            onPress={() => handleLocationSelection("drop")}
             style={[
               styles.row,
               spacing.br4,
               spacing.p2,
-
               {
                 backgroundColor: LIGHT,
                 elevation: 3,
@@ -132,7 +166,9 @@ const ConveyanceBillForm = ({ navigation }) => {
                 typography.textBold,
               ]}
             >
-              Select on Map
+              {isDropLocationSelected
+                ? "Change Drop Location"
+                : "Select Drop Location"}
             </P>
           </TouchableOpacity>
         </View>
@@ -152,11 +188,11 @@ const ConveyanceBillForm = ({ navigation }) => {
         </P>
       </View>
 
+      {/* Transport Options */}
       <View>
         <TouchableOpacity
           style={[
             styles.row,
-
             spacing.br2,
             spacing.p3,
             spacing.mb3,
@@ -179,7 +215,6 @@ const ConveyanceBillForm = ({ navigation }) => {
                 },
               ]}
             />
-
             <View style={[spacing.ml2]}>
               <View style={[styles.row, { alignItems: "center" }]}>
                 <H5
@@ -215,7 +250,6 @@ const ConveyanceBillForm = ({ navigation }) => {
           onPress={() => navigation.navigate("transportCamera")}
           style={[
             styles.row,
-
             spacing.br2,
             spacing.p3,
             spacing.mb3,
@@ -274,7 +308,6 @@ const ConveyanceBillForm = ({ navigation }) => {
           onPress={() => navigation.navigate("transportCamera")}
           style={[
             styles.row,
-
             spacing.br2,
             spacing.p3,
             spacing.mb3,
@@ -311,7 +344,7 @@ const ConveyanceBillForm = ({ navigation }) => {
                 </H5>
               </View>
               <P style={[typography.font14, typography.fontLato]}>
-                Hanuman Mandir - patna zoo
+                Hanuman Mandir - Patna Zoo
               </P>
               <P style={[typography.font12, typography.fontLato]}>
                 15Km (appx)
