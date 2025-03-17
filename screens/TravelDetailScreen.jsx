@@ -62,81 +62,18 @@ const TravelDetailScreen = ({ navigation }) => {
           <DetailItem label="From" value={formData.city} />
           <DetailItem label="To" value={formData.destinationCity} />
           <DetailItem label="Transport Mode" value={formData.type} />
-          <DetailItem label="Description" value={formData.description} />
-          <DetailItem label="PNR Numbers" value={pnrNumbersStart.join(", ")} />
-        </View>
 
-        {/* PNR Numbers (Start) */}
-        <View
-          style={{
-            backgroundColor: "#FFF",
-            borderRadius: 12,
-            padding: 15,
-            marginBottom: 15,
-
-            width: "100%",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#444",
-              marginBottom: 5,
-            }}
-          >
-            PNR Numbers (Start)
-          </Text>
-          {pnrNumbersStart.length > 0 ? (
-            pnrNumbersStart.map((pnr, index) => (
-              <Text
-                key={index}
-                style={{ fontSize: 16, color: "#555", marginLeft: 10 }}
-              >
-                • {typeof pnr === "string" ? pnr.trim() : "Invalid PNR"}
-              </Text>
-            ))
-          ) : (
-            <Text style={{ fontSize: 16, color: "#888", fontStyle: "italic" }}>
-              No PNR Numbers
-            </Text>
-          )}
-        </View>
-
-        {/* PNR Numbers (Return) */}
-        <View
-          style={{
-            backgroundColor: "#FFF",
-            borderRadius: 12,
-            padding: 15,
-            marginBottom: 15,
-            width: "100%",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#444",
-              marginBottom: 5,
-            }}
-          >
-            PNR Numbers (Return)
-          </Text>
-          {pnrNumbersReturn.length > 0 ? (
-            pnrNumbersReturn.map((pnr, index) => (
-              <Text
-                key={index}
-                style={{ fontSize: 16, color: "#555", marginLeft: 10 }}
-              >
-                • {typeof pnr === "string" ? pnr.trim() : "Invalid PNR"}
-              </Text>
-            ))
-          ) : (
-            <Text style={{ fontSize: 16, color: "#888", fontStyle: "italic" }}>
-              No PNR Numbers
-            </Text>
-          )}
+          <DetailItem
+            label="PNR Numbers (Start)"
+            value={formData.pnrNumbersStart?.join(", ") || "N/A"}
+          />
+          <DetailItem
+            label="PNR Numbers (Return)"
+            value={formData.pnrNumbersReturn?.join(", ") || "N/A"}
+          />
+          <DetailItem label="Categories" value={formData.categories} />
+          <DetailItem label="Descriptions" value={formData.descriptions} />
+          <DetailItem label="Amount" value={`₹ ${formData.totalAmount}`} />
         </View>
 
         {formData.ticket?.name && (
