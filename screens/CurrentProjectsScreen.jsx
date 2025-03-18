@@ -184,8 +184,9 @@ export default function CurrentProjectsScreen({ navigation }) {
                   </Span>
                   <H5
                     style={[
-                      typography.font16,
+                      typography.font12,
                       typography.fontLato,
+                      typography.textBold,
                       spacing.mr4,
                     ]}
                   >
