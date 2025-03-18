@@ -154,7 +154,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                   style={[
                     typography.font12,
                     typography.fontLato,
-                    { marginTop: -20, bottom: 22 },
+                    { marginTop: -20, bottom: 30 },
                   ]}
                 >
                   {`${item.site?.location || ""}, ${
@@ -194,7 +194,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                   </H5>
                 </View>
 
-                <View style={[styles.row, { marginTop: -10 }]}>
+                <View style={[styles.row, { marginTop: -14 }]}>
                   <View>
                     <Span
                       style={[
