@@ -154,7 +154,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                   style={[
                     typography.font12,
                     typography.fontLato,
-                    { marginTop: -20, bottom: 22 },
+                    { marginTop: -20, bottom: 30 },
                   ]}
                 >
                   {`${item.site?.location || ""}, ${
