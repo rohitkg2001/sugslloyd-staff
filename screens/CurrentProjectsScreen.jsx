@@ -153,12 +153,19 @@ export default function CurrentProjectsScreen({ navigation }) {
                 <View
                   style={{
                     position: "absolute",
-
                     right: 0,
                     alignItems: "flex-end",
-                    bottom: 70,
+                    bottom: 64,
                   }}
                 >
+                  <H6
+                    style={[
+                      typography.font14,
+                      typography.fontLato,
+                    ]}
+                  >
+                    {item.activity}
+                  </H6>
                   <Span
                     style={[
                       typography.font10,
@@ -168,22 +175,17 @@ export default function CurrentProjectsScreen({ navigation }) {
                   >
                     breda sl no
                   </Span>
-
                   <H5
                     style={[
                       typography.font16,
                       typography.fontLato,
                       spacing.mr4,
-                      // { marginRight: 20 },
                     ]}
                   >
                     {item.site?.breda_sl_no}
                   </H5>
                 </View>
 
-                <H6 style={[typography.font14, typography.fontLato]}>
-                  {item.activity}
-                </H6>
 
                 <View style={[spacing.mt1, styles.row, spacing.mv2]}>
                   <View>
