@@ -21,7 +21,7 @@ import Filter from "../components/Filter";
 import { useSelector } from "react-redux";
 
 // import all styles
-import { H5, H6, P, Span } from "../components/text";
+import { H4, H5, H6, P, Span } from "../components/text";
 import { spacing, styles, typography } from "../styles";
 
 import { useTaskFunctions } from "../hooks/useTaskFunctions";
@@ -139,9 +139,9 @@ export default function CurrentProjectsScreen({ navigation }) {
               key={item.id}
               index={item.id}
               title={item.site?.site_name || ""}
-              subtitle={`${item.site?.location || ""}, ${
-                item.site?.district || ""
-              }, ${item.site?.state || ""}`}
+              // subtitle={`${item.site?.location || ""}, ${
+              //   item.site?.district || ""
+              // }, ${item.site?.state || ""}`}
               onPress={() =>
                 navigation.navigate("targetManagementScreen", { id: item.id })
               }
@@ -150,27 +150,34 @@ export default function CurrentProjectsScreen({ navigation }) {
               borderColor={borderColor}
             >
               <View style={{ position: "relative" }}>
+                <H4
+                  style={[
+                    typography.font12,
+                    typography.fontLato,
+                    { marginTop: -20, bottom: 22 },
+                  ]}
+                >
+                  {`${item.site?.location || ""}, ${
+                    item.site?.district || ""
+                  }, ${item.site?.state || ""}`}
+                </H4>
+
                 <View
                   style={{
                     position: "absolute",
                     right: 0,
                     alignItems: "flex-end",
-                    bottom: 64,
+                    bottom: 44,
                   }}
                 >
-                  <H6
-                    style={[
-                      typography.font14,
-                      typography.fontLato,
-                    ]}
-                  >
+                  <H6 style={[typography.font14, typography.fontLato]}>
                     {item.activity}
                   </H6>
                   <Span
                     style={[
                       typography.font10,
                       typography.fontLato,
-                      { textTransform: "uppercase", color: "gray" },
+                      { textTransform: "uppercase", color: "gray", top: 4 },
                     ]}
                   >
                     breda sl no
@@ -186,8 +193,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                   </H5>
                 </View>
 
-
-                <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+                <View style={[styles.row, { marginTop: -10 }]}>
                   <View>
                     <Span
                       style={[
