@@ -124,7 +124,7 @@ const AddBillForm = ({ navigation }) => {
     <ContainerComponent>
       <MyHeader title={t("Add Bill")} hasIcon={true} isBack={true} />
       <ScrollView>
-        <View style={[styles.row, spacing.p1]}>
+        {/* <View style={[styles.row, spacing.p1]}>
           <TouchableOpacity
             onPress={() => {
               setSelectedDateType("start");
@@ -182,6 +182,84 @@ const AddBillForm = ({ navigation }) => {
             </View>
             <Icon name="calendar-outline" size={20} color="#666" />
           </TouchableOpacity>
+        </View> */}
+
+        <View>
+          <View style={{ flexDirection: "row", padding: 10 }}>
+            {/* Start Journey Date */}
+            <TouchableOpacity
+              onPress={() => {
+                setSelectedDateType("start");
+                setShowDatePicker(true);
+              }}
+              style={{
+                flex: 1,
+                marginRight: 5,
+                backgroundColor: "#F0FAF0",
+                borderRadius: 8,
+                padding: 10,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderWidth: 1,
+                borderColor: "#ccc",
+              }}
+            >
+              <View>
+                <Text style={{ fontSize: 12, marginBottom: 5 }}>
+                  Start Journey Date
+                </Text>
+                <Text style={{ fontSize: 16 }}>
+                  {start_date.toLocaleDateString()}
+                </Text>
+              </View>
+              <Icon name="calendar-outline" size={20} color="#666" />
+            </TouchableOpacity>
+
+            {/* Return Journey Date */}
+            <TouchableOpacity
+              onPress={() => {
+                setSelectedDateType("return");
+                setShowDatePicker(true);
+              }}
+              style={{
+                flex: 1,
+                marginLeft: 5,
+                backgroundColor: "#F0FAF0",
+                borderRadius: 8,
+                padding: 10,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderWidth: 1,
+                borderColor: "#ccc",
+              }}
+            >
+              <View>
+                <P
+                  style={[typography.font12, typography.fontLato, spacing.mb1]}
+                >
+                  {t("Return Journey Date")}
+                </P>
+                <Text style={{ fontSize: 16 }}>
+                  {journeyDate.toLocaleDateString()}
+                </Text>
+              </View>
+              <Icon name="calendar-outline" size={20} color="#666" />
+            </TouchableOpacity>
+          </View>
+
+          {/* Show Date Picker only when triggered */}
+          {showDatePicker && (
+            <DateTimePicker
+              value={selectedDateType === "start" ? start_date : journeyDate}
+              mode="date"
+              display="default"
+              onChange={(event, selectedDate) => {
+                onDateChange(event, selectedDate);
+              }}
+            />
+          )}
         </View>
 
         {/* PNR and Ticket Upload Group */}

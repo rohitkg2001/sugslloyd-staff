@@ -15,38 +15,38 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
       >
         {target.activity}
       </H5>
-      <H4 style={[spacing.mv2, typography.font16, typography.fontLato]}>
+      <H4 style={[typography.font14, typography.fontLato]}>
         {target.site?.site_name}
       </H4>
-      <H4 style={[spacing.mv2, typography.font14, typography.fontLato]}>
+      <H4 style={[typography.font12, typography.fontLato, { marginTop: -5 }]}>
         {target.site?.location}
       </H4>
-      <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+      <View style={[styles.row]}>
         <View>
           <Span
             style={[
-              typography.font12,
+              typography.font10,
               typography.fontLato,
               { textTransform: "uppercase", color: "gray" },
             ]}
           >
             Start date
           </Span>
-          <P style={[typography.font16, typography.fontLato]}>
+          <P style={[typography.font12, typography.fontLato]}>
             {target.start_date}
           </P>
         </View>
         <View>
           <Span
             style={[
-              typography.font12,
+              typography.font10,
               typography.fontLato,
               { textTransform: "uppercase", color: "gray" },
             ]}
           >
             End date
           </Span>
-          <P style={[typography.font16, typography.fontLato]}>
+          <P style={[typography.font12, typography.fontLato]}>
             {target.end_date}
           </P>
         </View>
@@ -54,18 +54,18 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
       <View
         style={[
           styles.row,
-          spacing.mv2,
+          //  spacing.mv2,
           { justifyContent: "space-between", flex: 1 },
         ]}
       >
         {/* <P>Vendor Name</P> */}
-        <H5 style={[spacing.mv2, typography.font14]}>Vendor Name</H5>
+        <H5 style={[spacing.mv2, typography.font12]}>Vendor Name</H5>
         <View style={[styles.row, { alignItems: "center" }]}>
-          <H6>
+          <P style={[typography.font10, spacing.mv2]}>
             {!target.vendor
               ? "................................."
               : target.vendor?.name}
-          </H6>
+          </P>
           <IconButton
             onPress={() => setShowVendorSelection(true)}
             icon="pencil"
@@ -75,7 +75,7 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
       <View
         style={[
           styles.row,
-          spacing.mv2,
+         // spacing.mv2,
           { justifyContent: "space-between", flex: 1 },
         ]}
       >
