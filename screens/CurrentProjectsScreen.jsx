@@ -184,8 +184,9 @@ export default function CurrentProjectsScreen({ navigation }) {
                   </Span>
                   <H5
                     style={[
-                      typography.font16,
+                      typography.font12,
                       typography.fontLato,
+                      typography.textBold,
                       spacing.mr4,
                     ]}
                   >
@@ -193,7 +194,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                   </H5>
                 </View>
 
-                <View style={[styles.row, { marginTop: -10 }]}>
+                <View style={[styles.row, { marginTop: -14 }]}>
                   <View>
                     <Span
                       style={[
