@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, ScrollView, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import { useRoute } from "@react-navigation/native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { SCREEN_WIDTH, styles, typography, spacing, LIGHT } from "../styles";
 import Button from "../components/buttons/Button";
 import { H2, H5, P, Span } from "../components/text";
-import { MaterialIcons } from "@expo/vector-icons"; // Import icon library
 
 const TravelDetailScreen = ({ navigation }) => {
   const route = useRoute();
@@ -70,8 +70,8 @@ const TravelDetailScreen = ({ navigation }) => {
           </View>
 
           <TouchableOpacity onPress={() => setShowDetails(!showDetails)}>
-            <MaterialIcons
-              name={showDetails ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+            <Icon
+              name={showDetails ? "chevron-up-outline" : "chevron-down-outline"}
               size={32}
               color="black"
             />
@@ -205,6 +205,68 @@ const TravelDetailScreen = ({ navigation }) => {
               >
                 {formData.type}
               </P>
+            </View>
+
+            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Total KM
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.totalKm}
+                </P>
+              </View>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Km rate
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.kmRate}
+                </P>
+              </View>
+            </View>
+
+            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Rent
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.rent}
+                </P>
+              </View>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Vehicle No
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.vehicleNo}
+                </P>
+              </View>
             </View>
 
             <View

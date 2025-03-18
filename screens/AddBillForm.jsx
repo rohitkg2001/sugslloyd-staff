@@ -1,6 +1,12 @@
 // import All react Native
 import { useState } from "react";
-import { View, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  TextInput,
+  Text,
+} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTranslation } from "react-i18next";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -52,6 +58,10 @@ const AddBillForm = ({ navigation }) => {
   const [destinationCity, setDestinationCity] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState("");
+  const [totalKm, setTotalKm] = useState("");
+  const [kmRate, setKmRate] = useState("");
+  const [rent, setRent] = useState("");
+  const [vehicleNo, setVehicleNo] = useState("");
 
   const [transactions, setTransactions] = useState([]);
 
@@ -99,37 +109,80 @@ const AddBillForm = ({ navigation }) => {
       totalAmount,
       categories,
       descriptions,
+      totalKm,
+      kmRate,
+      rent,
+      vehicleNo,
     };
 
     dispatch(setBillData(formData));
     console.log("Form Data:", formData);
     navigation.navigate("travelDetailScreen", { formData });
   };
+
   return (
     <ContainerComponent>
       <MyHeader title={t("Add Bill")} hasIcon={true} isBack={true} />
       <ScrollView>
-        {/* Start Journey Date */}
-        <TouchableOpacity
-          onPress={() => {
-            setSelectedDateType("start");
-            setShowDatePicker(true);
-          }}
-        >
-          <MyTextInput
-            title={t("Journey Date")}
-            value={start_date.toLocaleDateString()}
-            placeholder={t("Select Start Date")}
-            editable={false}
-            style={[
-              {
-                height: 60,
-                marginLeft: 1,
-                width: SCREEN_WIDTH - 10,
-              },
-            ]}
-          />
-        </TouchableOpacity>
+        <View style={[styles.row, spacing.p1]}>
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedDateType("start");
+              setShowDatePicker(true);
+            }}
+            style={{
+              flex: 1,
+              marginRight: 5,
+              backgroundColor: "#F0FAF0",
+              borderRadius: 8,
+              padding: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              borderWidth: 1,
+              borderColor: "#ccc",
+            }}
+          >
+            <View>
+              <P style={[typography.font12, typography.fontLato, spacing.mb1]}>
+                {t("Start Journey Date")}
+              </P>
+              <P style={[typography.font16]}>
+                {start_date.toLocaleDateString()}
+              </P>
+            </View>
+            <Icon name="calendar-outline" size={20} color="#666" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedDateType("return");
+              setShowDatePicker(true);
+            }}
+            style={{
+              flex: 1,
+              marginLeft: 5,
+              backgroundColor: "#F0FAF0",
+              borderRadius: 8,
+              padding: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              borderWidth: 1,
+              borderColor: "#ccc",
+            }}
+          >
+            <View>
+              <P style={[typography.font12, typography.fontLato, spacing.mb1]}>
+                {t("Return Journey Date")}
+              </P>
+              <P style={[typography.font16]}>
+                {journeyDate.toLocaleDateString()}
+              </P>
+            </View>
+            <Icon name="calendar-outline" size={20} color="#666" />
+          </TouchableOpacity>
+        </View>
 
         {/* PNR and Ticket Upload Group */}
         <View
@@ -224,7 +277,6 @@ const AddBillForm = ({ navigation }) => {
             </View>
           )}
         </View>
-
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={{ flex: 1, marginRight: 5 }}>
             <MyPickerInput
@@ -264,29 +316,6 @@ const AddBillForm = ({ navigation }) => {
             />
           </View>
         </View>
-
-        {/* Return Journey Date */}
-        <TouchableOpacity
-          onPress={() => {
-            setSelectedDateType("return");
-            setShowDatePicker(true);
-          }}
-        >
-          <MyTextInput
-            title={t("Return Journey Date")}
-            value={journeyDate.toLocaleDateString()}
-            placeholder={t("Select Return Date")}
-            editable={false}
-            style={[
-              {
-                height: 60,
-                marginLeft: 1,
-                width: SCREEN_WIDTH - 10,
-              },
-            ]}
-          />
-        </TouchableOpacity>
-
         {/* Return Journey PNR Inputs */}
         {pnrNumbersReturn.map((pnr, index) => (
           <View key={index} style={{ marginBottom: spacing.mh1 }}>
@@ -319,13 +348,11 @@ const AddBillForm = ({ navigation }) => {
             )}
           </View>
         ))}
-
         <TouchableOpacity onPress={addPnrFieldReturn}>
           <Span style={[styles.rightLink, typography.fontLato]}>
             {t("Add More PNR (Return)")}
           </Span>
         </TouchableOpacity>
-
         <MyPickerInput
           title={t("Mode Of Transport")}
           value={type}
@@ -336,7 +363,6 @@ const AddBillForm = ({ navigation }) => {
             { label: t("Flight"), value: "Flight" },
           ]}
         />
-
         <TouchableOpacity
           onPress={addTransactionField}
           style={{
@@ -354,7 +380,6 @@ const AddBillForm = ({ navigation }) => {
             {t("Add Miscellaneous Bills")}
           </H6>
         </TouchableOpacity>
-
         {transactions.map((transaction, index) => (
           <View
             key={index}
@@ -367,7 +392,182 @@ const AddBillForm = ({ navigation }) => {
               },
             ]}
           >
-            {/* Amount Input */}
+            {/* <View style={[styles.row, spacing.p1]}>
+              <View
+                style={[
+                  spacing.br2,
+                  spacing.p2,
+                  {
+                    flex: 1,
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                  },
+                ]}
+              >
+                <P style={[typography.font12]}>Total Km</P>
+                <TextInput
+                  placeholder="Enter total km"
+                  keyboardType="numeric"
+                  value={totalKm}
+                  onChangeText={(text) => setTotalKm(text)}
+                  style={[typography.font14]}
+                />
+              </View>
+
+              <View
+                style={[
+                  spacing.br2,
+                  spacing.p2,
+                  spacing.ml1,
+                  {
+                    flex: 1,
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                  },
+                ]}
+              >
+                <P style={[typography.font12]}>Km Rate</P>
+                <TextInput
+                  placeholder="Enter rate per km"
+                  keyboardType="numeric"
+                  value={kmRate}
+                  onChangeText={(text) => setKmRate(text)}
+                  style={[typography.font14]}
+                />
+              </View>
+            </View> */}
+            <View style={[styles.row, spacing.p1]}>
+              {/* Total Km Input */}
+              <View
+                style={[
+                  spacing.br2,
+                  spacing.p2,
+                  {
+                    flex: 1,
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    position: "relative",
+                  },
+                ]}
+              >
+                <P style={[typography.font12]}>Total Km</P>
+                <TextInput
+                  placeholder="Enter total km"
+                  keyboardType="numeric"
+                  value={totalKm}
+                  onChangeText={(text) => setTotalKm(text)}
+                  maxLength={6}
+                  style={[typography.font14]}
+                />
+                {/* Character Counter */}
+                <P
+                  style={[
+                    typography.font12,
+                    {
+                      // fontSize: 12,
+                      // color: "#888",
+                      position: "absolute",
+                      //bottom: 5,
+                      top: 75,
+                      right: 10,
+                    },
+                  ]}
+                >
+                  {totalKm.length}/5
+                </P>
+              </View>
+
+              {/* Km Rate Input */}
+              <View
+                style={[
+                  spacing.br2,
+                  spacing.p2,
+                  spacing.ml1,
+                  {
+                    flex: 1,
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    position: "relative",
+                  },
+                ]}
+              >
+                <P style={[typography.font12]}>Km Rate</P>
+                <TextInput
+                  placeholder="Enter rate per km"
+                  keyboardType="numeric"
+                  value={kmRate}
+                  onChangeText={(text) => setKmRate(text)}
+                  maxLength={6}
+                  style={[typography.font14]}
+                />
+                {/* Character Counter */}
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: "#888",
+                    position: "absolute",
+                    // bottom: 5,
+                    top: 75,
+                    right: 10,
+                  }}
+                >
+                  {kmRate.length}/6
+                </Text>
+              </View>
+            </View>
+
+            <View style={[styles.row, spacing.p1, spacing.mt3]}>
+              {/* Rent */}
+              <View
+                style={[
+                  spacing.br2,
+                  spacing.p2,
+                  {
+                    flex: 1,
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                  },
+                ]}
+              >
+                <P style={[typography.font12]}>Rent</P>
+                <TextInput
+                  placeholder="Bus rent"
+                  keyboardType="numeric"
+                  value={rent}
+                  onChangeText={(text) => setRent(text)}
+                  style={[typography.font14]}
+                />
+              </View>
+
+              {/* Vehicle No */}
+              <View
+                style={[
+                  spacing.br2,
+                  spacing.p2,
+                  spacing.ml1,
+                  {
+                    flex: 1,
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                  },
+                ]}
+              >
+                <P style={[typography.font12]}>Vehicle No</P>
+                <TextInput
+                  placeholder="Vehicle No"
+                  keyboardType="numeric"
+                  value={vehicleNo}
+                  onChangeText={(text) => setVehicleNo(text)}
+                  style={[typography.font14]}
+                />
+              </View>
+            </View>
             <MyTextInput
               title={t("How Much")}
               value={transaction.amount}
@@ -498,7 +698,6 @@ const AddBillForm = ({ navigation }) => {
             </View>
           </View>
         ))}
-
         {/* Date Picker */}
         {showDatePicker && (
           <DateTimePicker
@@ -508,7 +707,6 @@ const AddBillForm = ({ navigation }) => {
             onChange={onDateChange}
           />
         )}
-
         <View
           style={[
             spacing.bw1,
@@ -582,7 +780,6 @@ const AddBillForm = ({ navigation }) => {
             )}
           </View>
         </View>
-
         <Button
           style={[
             styles.btn,
