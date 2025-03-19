@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
+  Alert,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTranslation } from "react-i18next";
@@ -64,6 +65,7 @@ const AddBillForm = ({ navigation }) => {
   const [vehicleNo, setVehicleNo] = useState("");
 
   const [transactions, setTransactions] = useState([]);
+  // const [transactions, setTransactions] = useState([{ amount: "" }]);
 
   const addTransactionField = () => {
     setTransactions([
@@ -72,10 +74,29 @@ const AddBillForm = ({ navigation }) => {
     ]);
   };
 
+  // const handleTransactionChange = (value, index, field) => {
+  //   const updatedTransactions = [...transactions];
+  //   updatedTransactions[index][field] = value;
+  //   setTransactions(updatedTransactions);
+  // };
+
   const handleTransactionChange = (value, index, field) => {
-    const updatedTransactions = [...transactions];
-    updatedTransactions[index][field] = value;
-    setTransactions(updatedTransactions);
+    // Convert value to number
+    const amount = Number(value);
+
+    if (amount >= 5000) {
+      Alert.alert("Invalid Amount", "Amount cannot be ₹5000 or more!");
+    } else {
+      // Update state only if amount is less than 5000
+      setTransactions((prevTransactions) => {
+        const updatedTransactions = [...prevTransactions];
+        updatedTransactions[index] = {
+          ...updatedTransactions[index],
+          [field]: value,
+        };
+        return updatedTransactions;
+      });
+    }
   };
 
   const removeTransactionField = (index) => {
@@ -124,66 +145,6 @@ const AddBillForm = ({ navigation }) => {
     <ContainerComponent>
       <MyHeader title={t("Add Bill")} hasIcon={true} isBack={true} />
       <ScrollView>
-        {/* <View style={[styles.row, spacing.p1]}>
-          <TouchableOpacity
-            onPress={() => {
-              setSelectedDateType("start");
-              setShowDatePicker(true);
-            }}
-            style={{
-              flex: 1,
-              marginRight: 5,
-              backgroundColor: "#F0FAF0",
-              borderRadius: 8,
-              padding: 10,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              borderWidth: 1,
-              borderColor: "#ccc",
-            }}
-          >
-            <View>
-              <P style={[typography.font12, typography.fontLato, spacing.mb1]}>
-                {t("Start Journey Date")}
-              </P>
-              <P style={[typography.font16]}>
-                {start_date.toLocaleDateString()}
-              </P>
-            </View>
-            <Icon name="calendar-outline" size={20} color="#666" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              setSelectedDateType("return");
-              setShowDatePicker(true);
-            }}
-            style={{
-              flex: 1,
-              marginLeft: 5,
-              backgroundColor: "#F0FAF0",
-              borderRadius: 8,
-              padding: 10,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              borderWidth: 1,
-              borderColor: "#ccc",
-            }}
-          >
-            <View>
-              <P style={[typography.font12, typography.fontLato, spacing.mb1]}>
-                {t("Return Journey Date")}
-              </P>
-              <P style={[typography.font16]}>
-                {journeyDate.toLocaleDateString()}
-              </P>
-            </View>
-            <Icon name="calendar-outline" size={20} color="#666" />
-          </TouchableOpacity>
-        </View> */}
-
         <View>
           <View style={{ flexDirection: "row", padding: 10 }}>
             {/* Start Journey Date */}
@@ -470,52 +431,6 @@ const AddBillForm = ({ navigation }) => {
               },
             ]}
           >
-            {/* <View style={[styles.row, spacing.p1]}>
-              <View
-                style={[
-                  spacing.br2,
-                  spacing.p2,
-                  {
-                    flex: 1,
-                    backgroundColor: "#F0FAF0",
-                    borderWidth: 1,
-                    borderColor: "#ccc",
-                  },
-                ]}
-              >
-                <P style={[typography.font12]}>Total Km</P>
-                <TextInput
-                  placeholder="Enter total km"
-                  keyboardType="numeric"
-                  value={totalKm}
-                  onChangeText={(text) => setTotalKm(text)}
-                  style={[typography.font14]}
-                />
-              </View>
-
-              <View
-                style={[
-                  spacing.br2,
-                  spacing.p2,
-                  spacing.ml1,
-                  {
-                    flex: 1,
-                    backgroundColor: "#F0FAF0",
-                    borderWidth: 1,
-                    borderColor: "#ccc",
-                  },
-                ]}
-              >
-                <P style={[typography.font12]}>Km Rate</P>
-                <TextInput
-                  placeholder="Enter rate per km"
-                  keyboardType="numeric"
-                  value={kmRate}
-                  onChangeText={(text) => setKmRate(text)}
-                  style={[typography.font14]}
-                />
-              </View>
-            </View> */}
             <View style={[styles.row, spacing.p1]}>
               {/* Total Km Input */}
               <View
@@ -545,10 +460,7 @@ const AddBillForm = ({ navigation }) => {
                   style={[
                     typography.font12,
                     {
-                      // fontSize: 12,
-                      // color: "#888",
                       position: "absolute",
-                      //bottom: 5,
                       top: 75,
                       right: 10,
                     },
@@ -711,14 +623,9 @@ const AddBillForm = ({ navigation }) => {
                     placeholder={t("Enter Description")}
                     multiline={true}
                     style={[
-                      //spacing.mt2,
-                      //  spacing.p2,
-                      // spacing.br2,
                       {
                         minHeight: 80,
-                        //  borderWidth: 1,
                         borderColor: "#ccc",
-                        // backgroundColor: LIGHT,
                         textAlignVertical: "top",
                       },
                     ]}
