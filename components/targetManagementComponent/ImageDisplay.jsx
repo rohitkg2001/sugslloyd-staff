@@ -271,7 +271,7 @@ const ImageDisplay = ({ images, id, status }) => {
         </View>
       )}
 
-      {/* {status === "Pending" && (
+      {/* {status !== "In Progress" && (
         <View style={[styles.row, {}]}>
           <MyButton title={"Approve"} onPress={handleApprove} />
           <MyButton title={"Reject"} color="#DC4C64" />

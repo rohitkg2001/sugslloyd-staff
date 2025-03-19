@@ -58,36 +58,6 @@ export default function CurrentProjectsScreen({ navigation }) {
     setSearchQuery(text);
   };
 
-  // const filteredTasks = currentTasks.filter((task) => {
-  //   if (!task || !task.start_date) return false; // Ensure task has a start_date
-
-  //   const query = searchQuery.toLowerCase();
-  //   const taskStartDate = moment(task.start_date, "YYYY-MM-DD"); // Ensure correct format
-
-  //   const matchesSearch =
-  //     task.site?.breda_sl_no?.toLowerCase().includes(query) ||
-  //     task.site?.site_name?.toLowerCase().includes(query) ||
-  //     task.activity?.toLowerCase().includes(query);
-
-  //   if (dateFilter?.type === "Today") {
-  //     return matchesSearch && taskStartDate.isSame(moment(), "day");
-  //   } else if (dateFilter?.type === "This Month") {
-  //     return matchesSearch && taskStartDate.isSame(moment(), "month");
-  //   } else if (dateFilter?.type === "Custom") {
-  //     return (
-  //       matchesSearch &&
-  //       taskStartDate.isBetween(
-  //         moment(dateFilter.startDate),
-  //         moment(dateFilter.endDate),
-  //         "day",
-  //         "[]"
-  //       )
-  //     );
-  //   }
-
-  //   return matchesSearch;
-  // });
-
   // import in code useFilterTasks in Hooks folders
   const filteredTasks = useFilterTasks(currentTasks, searchQuery, dateFilter);
 
@@ -167,7 +137,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                     position: "absolute",
                     right: 0,
                     alignItems: "flex-end",
-                    bottom: 44,
+                    bottom: 45,
                   }}
                 >
                   <H6 style={[typography.font14, typography.fontLato]}>
@@ -177,7 +147,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                     style={[
                       typography.font10,
                       typography.fontLato,
-                      { textTransform: "uppercase", color: "gray", top: 4 },
+                      { textTransform: "uppercase", color: "gray", top: 15 },
                     ]}
                   >
                     breda sl no
@@ -188,6 +158,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                       typography.fontLato,
                       typography.textBold,
                       spacing.mr4,
+                      { top: 10 },
                     ]}
                   >
                     {item.site?.breda_sl_no}
@@ -214,15 +185,43 @@ export default function CurrentProjectsScreen({ navigation }) {
                       style={[
                         typography.font10,
                         typography.fontLato,
-                        { textTransform: "uppercase", color: "gray" },
+                        {
+                          textTransform: "uppercase",
+                          color: "gray",
+                          right: 80,
+                        },
                       ]}
                     >
                       End date
                     </Span>
-                    <P style={[typography.font12, typography.fontLato]}>
+                    <P
+                      style={[
+                        typography.font12,
+                        typography.fontLato,
+                        { right: 80 },
+                      ]}
+                    >
                       {item.end_date}
                     </P>
                   </View>
+                </View>
+                <View
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    alignItems: "flex-end",
+                    top: 20,
+                  }}
+                >
+                  <H6
+                    style={[
+                      typography.font14,
+                      typography.fontLato,
+                      { color: item.status === "Complete" ? "red" : "green" },
+                    ]}
+                  >
+                    {item.status}
+                  </H6>
                 </View>
               </View>
             </ClickableCard1>
