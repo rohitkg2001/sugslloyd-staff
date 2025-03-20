@@ -12,7 +12,7 @@ const TravelDetailScreen = ({ navigation }) => {
   const route = useRoute();
   const formData = route.params?.formData || {};
 
-  const [showDetails, setShowDetails] = useState(false); // State to toggle details
+  const [showDetails, setShowDetails] = useState(false);
 
   const startDate =
     formData.start_date instanceof Date

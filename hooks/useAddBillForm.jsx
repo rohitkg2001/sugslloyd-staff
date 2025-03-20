@@ -3,10 +3,6 @@ import * as DocumentPicker from "expo-document-picker";
 import { useTranslation } from "react-i18next";
 
 export default function useAddBillForm() {
-  // const [start_date, setStartDate] = useState(new Date());
-  // const [journeyDate, setJourneyDate] = useState(new Date());
-  // const [selectedDateType, setSelectedDateType] = useState("start");
-  // const [showDatePicker, setShowDatePicker] = useState(false);
   const [start_date, setStartDate] = useState(new Date());
   const [journeyDate, setJourneyDate] = useState(new Date());
   const [selectedDateType, setSelectedDateType] = useState(null);
@@ -16,18 +12,6 @@ export default function useAddBillForm() {
   const [ticket, setTicket] = useState(null);
   const [hotelBill, setHotelBill] = useState(null);
   const { t } = useTranslation();
-
-  // const onDateChange = (event, selectedDate) => {
-  //   const currentDate =
-  //     selectedDate || (selectedDateType === "start" ? start_date : journeyDate);
-  //   setShowDatePicker(false);
-
-  //   if (selectedDateType === "start") {
-  //     setStartDate(currentDate);
-  //   } else {
-  //     setJourneyDate(currentDate);
-  //   }
-  // };
 
   const onDateChange = (event, selectedDate) => {
     if (event.type === "set" && selectedDate) {
