@@ -130,6 +130,12 @@ const AddBillForm = ({ navigation }) => {
       kmRate,
       rent,
       vehicleNo,
+      department,
+      employeeId,
+      visitApprovedBy,
+      objective,
+      meetings,
+      outcomes,
     };
 
     dispatch(setBillData(formData));
@@ -148,43 +154,46 @@ const AddBillForm = ({ navigation }) => {
             placeholder="Enter your first name"
           />
           <MyTextInput
-            title={t("Department Name")}
+            title="Department Name"
+            placeholder="Department Name"
             value={department}
-            onChange={setDepartment}
-            placeholder="Enter your department"
+            onChangeText={(text) => setDepartment(text)}
+            style={[typography.font14]}
           />
           <MyTextInput
             title="Employee ID"
             value={employeeId}
-            onChange={setEmployeeId}
+            onChangeText={(text) => setEmployeeId(text)}
             placeholder="Enter your employee ID"
           />
 
           <MyTextInput
             title="Visit Approved By"
             value={visitApprovedBy}
-            onChange={setVisitApprovedBy}
+            onChangeText={(text) => setVisitApprovedBy(text)}
             placeholder="Enter approver's name"
           />
 
           <MyTextInput
             title="Objective of the Tour"
             value={objective}
-            onChange={setObjective}
+            // onChange={setObjective}
+            onChangeText={(text) => setObjective(text)}
             placeholder="Enter objective of the tour"
           />
 
           <MyTextInput
             title="Key Meetings/Visits"
             value={meetings}
-            onChange={setMeetings}
+            onChangeText={(text) => setMeetings(text)}
             placeholder="Enter key meetings or visits"
           />
 
           <MyTextInput
             title="Key Outcomes and Achievements"
             value={outcomes}
-            onChange={setOutcomes}
+            // onChange={setOutcomes}
+            onChangeText={(text) => setOutcomes(text)}
             placeholder="Enter key outcomes and achievements"
           />
 

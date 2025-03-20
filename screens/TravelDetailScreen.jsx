@@ -13,8 +13,8 @@ const TravelDetailScreen = ({ navigation }) => {
   const route = useRoute();
   const formData = route.params?.formData || {};
 
-  const [ showDetails, setShowDetails ] = useState( false );
-  
+  const [showDetails, setShowDetails] = useState(false);
+
   const { firstName, lastName } = useSelector((state) => state.staff);
 
   const startDate =
@@ -139,6 +139,121 @@ const TravelDetailScreen = ({ navigation }) => {
                   {returnDate}
                 </P>
               </View>
+            </View>
+
+            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Meetings
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.meetings}
+                </P>
+              </View>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Department
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.department}
+                </P>
+              </View>
+            </View>
+
+            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Employee ID
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.employeeId}
+                </P>
+              </View>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Visit Approved By
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.visitApprovedBy}
+                </P>
+              </View>
+            </View>
+
+            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Objective of the Tour
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.objective}
+                </P>
+              </View>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Key Meetings/Visits
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.meetings}
+                </P>
+              </View>
+            </View>
+
+            <View style={[styles.row]}>
+              <H5
+                style={[
+                  typography.font14,
+                  typography.fontLato,
+                  { textAlign: "left" },
+                ]}
+              >
+                Achievements
+              </H5>
+              <P
+                style={[
+                  typography.font16,
+                  typography.fontLato,
+                  spacing.pv1,
+                  { textAlign: "right" },
+                ]}
+              >
+                {formData.outcomes}
+              </P>
             </View>
 
             {/* PNR Numbers */}
