@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
-  Alert,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTranslation } from "react-i18next";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useSelector } from "react-redux";
 
 // import Components
 import ContainerComponent from "../components/ContainerComponent";
@@ -65,7 +65,7 @@ const AddBillForm = ({ navigation }) => {
   const [vehicleNo, setVehicleNo] = useState("");
 
   const [transactions, setTransactions] = useState([]);
-  // const [transactions, setTransactions] = useState([{ amount: "" }]);
+  const { firstName } = useSelector((state) => state.staff);
 
   const addTransactionField = () => {
     setTransactions([
@@ -74,25 +74,19 @@ const AddBillForm = ({ navigation }) => {
     ]);
   };
 
- 
-
   const handleTransactionChange = (value, index, field) => {
     // Convert value to number
     const amount = Number(value);
 
-    if (amount >= 5000) {
-      Alert.alert("Invalid Amount", "Amount cannot be ₹5000 or more!");
-    } else {
-      // Update state only if amount is less than 5000
-      setTransactions((prevTransactions) => {
-        const updatedTransactions = [...prevTransactions];
-        updatedTransactions[index] = {
-          ...updatedTransactions[index],
-          [field]: value,
-        };
-        return updatedTransactions;
-      });
-    }
+    // Update state regardless of the amount
+    setTransactions((prevTransactions) => {
+      const updatedTransactions = [...prevTransactions];
+      updatedTransactions[index] = {
+        ...updatedTransactions[index],
+        [field]: value,
+      };
+      return updatedTransactions;
+    });
   };
 
   const removeTransactionField = (index) => {
@@ -142,6 +136,11 @@ const AddBillForm = ({ navigation }) => {
       <MyHeader title={t("Add Bill")} hasIcon={true} isBack={true} />
       <ScrollView>
         <View>
+          <MyTextInput
+            title={t("Name")}
+            value={firstName || ""}
+            placeholder="Enter your first name"
+          />
           <View style={{ flexDirection: "row", padding: 10 }}>
             {/* Start Journey Date */}
             <TouchableOpacity
@@ -554,15 +553,49 @@ const AddBillForm = ({ navigation }) => {
                 />
               </View>
             </View>
-            <MyTextInput
-              title={t("How Much")}
-              value={transaction.amount}
-              onChangeText={(value) =>
-                handleTransactionChange(value, index, "amount")
-              }
-              placeholder={t(" ₹ Enter Amount")}
-              keyboardType="numeric"
-            />
+
+            <View style={{ position: "relative" }}>
+              <MyTextInput
+                title={t("How Much")}
+                value={transaction.amount}
+                onChangeText={(value) =>
+                  handleTransactionChange(value, index, "amount")
+                }
+                placeholder={t(" ₹ Enter Amount")}
+                keyboardType="numeric"
+                style={{
+                  borderWidth: 1,
+                  borderColor:
+                    transaction.amount && parseInt(transaction.amount) >= 5000
+                      ? "red"
+                      : "gray",
+                  borderRadius: 5,
+                  paddingHorizontal: 10,
+                  paddingRight: 30,
+                }}
+              />
+
+              {transaction.amount && parseInt(transaction.amount) >= 5000 && (
+                <Text
+                  style={{
+                    position: "absolute",
+                    right: 10,
+                    top: "50%",
+                    transform: [{ translateY: -10 }],
+                    color: "red",
+                    fontSize: 18,
+                  }}
+                >
+                  ❗
+                </Text>
+              )}
+
+              {transaction.amount && parseInt(transaction.amount) >= 5000 && (
+                <Text style={{ color: "red", marginTop: 5, fontSize: 14 }}>
+                  Amount cannot be ₹5000 or more!
+                </Text>
+              )}
+            </View>
 
             <View style={[spacing.mb2]}>
               {/* Category & Description Row */}

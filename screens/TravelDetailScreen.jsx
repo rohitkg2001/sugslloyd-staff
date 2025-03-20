@@ -12,9 +12,6 @@ const TravelDetailScreen = ({ navigation }) => {
   const route = useRoute();
   const formData = route.params?.formData || {};
 
-  // Get the firstName from formData or route params
-  const firstName = formData.firstName || "N/A"; // default to "N/A" if not provided
-
   const [showDetails, setShowDetails] = useState(false);
 
   const startDate =
@@ -104,7 +101,7 @@ const TravelDetailScreen = ({ navigation }) => {
                   Name
                 </Span>
                 <P style={[typography.font12, typography.fontLato]}>
-                  {firstName}
+                  {firstName} {lastName}
                 </P>
               </View>
             </View>
