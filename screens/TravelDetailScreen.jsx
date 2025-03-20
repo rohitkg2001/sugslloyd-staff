@@ -12,7 +12,10 @@ const TravelDetailScreen = ({ navigation }) => {
   const route = useRoute();
   const formData = route.params?.formData || {};
 
-  const [showDetails, setShowDetails] = useState(false); // State to toggle details
+  // Get the firstName from formData or route params
+  const firstName = formData.firstName || "N/A"; // default to "N/A" if not provided
+
+  const [showDetails, setShowDetails] = useState(false);
 
   const startDate =
     formData.start_date instanceof Date
@@ -88,6 +91,24 @@ const TravelDetailScreen = ({ navigation }) => {
               },
             ]}
           >
+            {/* Add the First Name section */}
+            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Name
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {firstName}
+                </P>
+              </View>
+            </View>
+
             {/* Travel Dates */}
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>

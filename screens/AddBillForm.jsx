@@ -74,11 +74,7 @@ const AddBillForm = ({ navigation }) => {
     ]);
   };
 
-  // const handleTransactionChange = (value, index, field) => {
-  //   const updatedTransactions = [...transactions];
-  //   updatedTransactions[index][field] = value;
-  //   setTransactions(updatedTransactions);
-  // };
+ 
 
   const handleTransactionChange = (value, index, field) => {
     // Convert value to number
