@@ -24,6 +24,7 @@ export default function ProjectOverview() {
   const [projectsArr, setProjectsArr] = useState([]);
 
   useEffect(() => {
+    console.log(tasks);
     if (projectsArray?.length && tasks?.length) {
       const filteredProjects = projectsArray
         .map((project) => {

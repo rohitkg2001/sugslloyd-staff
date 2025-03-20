@@ -7,12 +7,15 @@ import MyHeader from "../components/header/MyHeader";
 import { SCREEN_WIDTH, styles, typography, spacing, LIGHT } from "../styles";
 import Button from "../components/buttons/Button";
 import { H2, H5, P, Span } from "../components/text";
+import { useSelector } from "react-redux";
 
 const TravelDetailScreen = ({ navigation }) => {
   const route = useRoute();
   const formData = route.params?.formData || {};
 
-  const [showDetails, setShowDetails] = useState(false);
+  const [ showDetails, setShowDetails ] = useState( false );
+  
+  const { firstName, lastName } = useSelector((state) => state.staff);
 
   const startDate =
     formData.start_date instanceof Date
@@ -88,6 +91,24 @@ const TravelDetailScreen = ({ navigation }) => {
               },
             ]}
           >
+            {/* Add the First Name section */}
+            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Name
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {firstName} {lastName}
+                </P>
+              </View>
+            </View>
+
             {/* Travel Dates */}
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
