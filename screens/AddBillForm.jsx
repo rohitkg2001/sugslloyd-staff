@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
-  Alert,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTranslation } from "react-i18next";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useSelector } from "react-redux";
 
 // import Components
 import ContainerComponent from "../components/ContainerComponent";
@@ -65,7 +65,7 @@ const AddBillForm = ({ navigation }) => {
   const [vehicleNo, setVehicleNo] = useState("");
 
   const [transactions, setTransactions] = useState([]);
-  // const [transactions, setTransactions] = useState([{ amount: "" }]);
+  const { firstName } = useSelector((state) => state.staff);
 
   const addTransactionField = () => {
     setTransactions([
@@ -136,6 +136,11 @@ const AddBillForm = ({ navigation }) => {
       <MyHeader title={t("Add Bill")} hasIcon={true} isBack={true} />
       <ScrollView>
         <View>
+          <MyTextInput
+            title={t("Name")}
+            value={firstName || ""}
+            placeholder="Enter your first name"
+          />
           <View style={{ flexDirection: "row", padding: 10 }}>
             {/* Start Journey Date */}
             <TouchableOpacity
