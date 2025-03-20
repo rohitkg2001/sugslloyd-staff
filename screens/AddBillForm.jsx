@@ -65,7 +65,7 @@ const AddBillForm = ({ navigation }) => {
   const [vehicleNo, setVehicleNo] = useState("");
 
   const [transactions, setTransactions] = useState([]);
-  const { firstName } = useSelector((state) => state.staff);
+  const { firstName, lastName } = useSelector((state) => state.staff);
 
   const addTransactionField = () => {
     setTransactions([
@@ -138,7 +138,7 @@ const AddBillForm = ({ navigation }) => {
         <View>
           <MyTextInput
             title={t("Name")}
-            value={firstName || ""}
+            value={`${firstName || ""} ${lastName || ""}`}
             placeholder="Enter your first name"
           />
           <View style={{ flexDirection: "row", padding: 10 }}>
