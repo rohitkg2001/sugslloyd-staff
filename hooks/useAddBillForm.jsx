@@ -11,6 +11,23 @@ export default function useAddBillForm() {
   const [pnrNumbersReturn, setPnrNumbersReturn] = useState([""]);
   const [ticket, setTicket] = useState(null);
   const [hotelBill, setHotelBill] = useState(null);
+  const [type, setType] = useState(null);
+  const [city, setCity] = useState(null);
+  const [destinationCity, setDestinationCity] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [description, setDescription] = useState("");
+  const [totalKm, setTotalKm] = useState("");
+  const [kmRate, setKmRate] = useState("");
+  const [rent, setRent] = useState("");
+  const [vehicleNo, setVehicleNo] = useState("");
+  const [department, setDepartment] = useState("");
+  const [employeeId, setEmployeeId] = useState("");
+  const [visitApprovedBy, setVisitApprovedBy] = useState("");
+  const [objective, setObjective] = useState("");
+  const [meetings, setMeetings] = useState("");
+  const [outcomes, setOutcomes] = useState("");
+
+  const [transactions, setTransactions] = useState([]);
   const { t } = useTranslation();
 
   const onDateChange = (event, selectedDate) => {
@@ -117,5 +134,37 @@ export default function useAddBillForm() {
     handleRemoveHotelBill,
     setSelectedDateType,
     setShowDatePicker,
+    type,
+    setType,
+    city,
+    setCity,
+    destinationCity,
+    setDestinationCity,
+    isEditing,
+    setIsEditing,
+    description,
+    setDescription,
+    totalKm,
+    setTotalKm,
+    kmRate,
+    setKmRate,
+    rent,
+    setRent,
+    vehicleNo,
+    setVehicleNo,
+    department,
+    setDepartment,
+    employeeId,
+    setEmployeeId,
+    visitApprovedBy,
+    setVisitApprovedBy,
+    objective,
+    setObjective,
+    meetings,
+    setMeetings,
+    outcomes,
+    setOutcomes,
+    transactions,
+    setTransactions,
   };
 }

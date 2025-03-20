@@ -53,24 +53,39 @@ const AddBillForm = ({ navigation }) => {
     handleRemoveHotelBill,
     setSelectedDateType,
     setShowDatePicker,
+    type,
+    setType,
+    city,
+    setCity,
+    destinationCity,
+    setDestinationCity,
+    isEditing,
+    setIsEditing,
+    description,
+    setDescription,
+    totalKm,
+    setTotalKm,
+    kmRate,
+    setKmRate,
+    rent,
+    setRent,
+    vehicleNo,
+    setVehicleNo,
+    department,
+    setDepartment,
+    employeeId,
+    setEmployeeId,
+    visitApprovedBy,
+    setVisitApprovedBy,
+    objective,
+    setObjective,
+    meetings,
+    setMeetings,
+    outcomes,
+    setOutcomes,
+    transactions,
+    setTransactions,
   } = useAddBillForm();
-  const [type, setType] = useState(null);
-  const [city, setCity] = useState(null);
-  const [destinationCity, setDestinationCity] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [description, setDescription] = useState("");
-  const [totalKm, setTotalKm] = useState("");
-  const [kmRate, setKmRate] = useState("");
-  const [rent, setRent] = useState("");
-  const [vehicleNo, setVehicleNo] = useState("");
-  const [department, setDepartment] = useState("");
-  const [employeeId, setEmployeeId] = useState("");
-  const [visitApprovedBy, setVisitApprovedBy] = useState("");
-  const [objective, setObjective] = useState("");
-  const [meetings, setMeetings] = useState("");
-  const [outcomes, setOutcomes] = useState("");
-
-  const [transactions, setTransactions] = useState([]);
   const { firstName, lastName } = useSelector((state) => state.staff);
 
   const addTransactionField = () => {
@@ -177,7 +192,6 @@ const AddBillForm = ({ navigation }) => {
           <MyTextInput
             title="Objective of the Tour"
             value={objective}
-            // onChange={setObjective}
             onChangeText={(text) => setObjective(text)}
             placeholder="Enter objective of the tour"
           />
@@ -293,7 +307,7 @@ const AddBillForm = ({ navigation }) => {
               <MyTextInput
                 title={`${t("PNR Number")} ${index + 1}`}
                 value={pnr}
-                onChange={(value) => handlePnrChangeStart(value, index)}
+                onChangeText={(value) => handlePnrChangeStart(value, index)}
                 placeholder={t("Upload Ticket & Enter PNR")}
               />
               {pnrNumbersStart.length > 1 && (
@@ -412,7 +426,7 @@ const AddBillForm = ({ navigation }) => {
             <MyTextInput
               title={`${t("PNR Number (Return)")} ${index + 1}`}
               value={pnr}
-              onChange={(value) => handlePnrChangeReturn(value, index)}
+              onChangeText={(value) => handlePnrChangeReturn(value, index)}
               placeholder={t("Enter PNR Number")}
               style={[
                 {
