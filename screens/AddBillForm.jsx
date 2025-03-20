@@ -63,6 +63,12 @@ const AddBillForm = ({ navigation }) => {
   const [kmRate, setKmRate] = useState("");
   const [rent, setRent] = useState("");
   const [vehicleNo, setVehicleNo] = useState("");
+  const [department, setDepartment] = useState("");
+  const [employeeId, setEmployeeId] = useState("");
+  const [visitApprovedBy, setVisitApprovedBy] = useState("");
+  const [objective, setObjective] = useState("");
+  const [meetings, setMeetings] = useState("");
+  const [outcomes, setOutcomes] = useState("");
 
   const [transactions, setTransactions] = useState([]);
   const { firstName, lastName } = useSelector((state) => state.staff);
@@ -141,6 +147,47 @@ const AddBillForm = ({ navigation }) => {
             value={`${firstName || ""} ${lastName || ""}`}
             placeholder="Enter your first name"
           />
+          <MyTextInput
+            title={t("Department Name")}
+            value={department}
+            onChange={setDepartment}
+            placeholder="Enter your department"
+          />
+          <MyTextInput
+            title="Employee ID"
+            value={employeeId}
+            onChange={setEmployeeId}
+            placeholder="Enter your employee ID"
+          />
+
+          <MyTextInput
+            title="Visit Approved By"
+            value={visitApprovedBy}
+            onChange={setVisitApprovedBy}
+            placeholder="Enter approver's name"
+          />
+
+          <MyTextInput
+            title="Objective of the Tour"
+            value={objective}
+            onChange={setObjective}
+            placeholder="Enter objective of the tour"
+          />
+
+          <MyTextInput
+            title="Key Meetings/Visits"
+            value={meetings}
+            onChange={setMeetings}
+            placeholder="Enter key meetings or visits"
+          />
+
+          <MyTextInput
+            title="Key Outcomes and Achievements"
+            value={outcomes}
+            onChange={setOutcomes}
+            placeholder="Enter key outcomes and achievements"
+          />
+
           <View style={{ flexDirection: "row", padding: 10 }}>
             {/* Start Journey Date */}
             <TouchableOpacity
