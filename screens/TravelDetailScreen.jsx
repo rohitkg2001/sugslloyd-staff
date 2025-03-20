@@ -7,12 +7,15 @@ import MyHeader from "../components/header/MyHeader";
 import { SCREEN_WIDTH, styles, typography, spacing, LIGHT } from "../styles";
 import Button from "../components/buttons/Button";
 import { H2, H5, P, Span } from "../components/text";
+import { useSelector } from "react-redux";
 
 const TravelDetailScreen = ({ navigation }) => {
   const route = useRoute();
   const formData = route.params?.formData || {};
 
-  const [showDetails, setShowDetails] = useState(false);
+  const [ showDetails, setShowDetails ] = useState( false );
+  
+  const { firstName, lastName } = useSelector((state) => state.staff);
 
   const startDate =
     formData.start_date instanceof Date
