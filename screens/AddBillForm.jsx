@@ -120,6 +120,15 @@ const AddBillForm = ({ navigation }) => {
   };
 
   const handleCalculateBill = () => {
+    // Check if any Train PNR is less than 10 digits
+    const hasInvalidTrainPnr = pnrNumbersStart.some(
+      (pnr) => type === "Train" && pnr.length !== 10
+    );
+
+    if (hasInvalidTrainPnr) {
+      alert("Train PNR must be exactly 10 digits."); // Show error message
+      return; // Stop submission
+    }
     const totalAmount = transactions.reduce(
       (sum, transaction) => sum + parseFloat(transaction.amount || 0),
       0
