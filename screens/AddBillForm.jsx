@@ -168,19 +168,48 @@ const AddBillForm = ({ navigation }) => {
             value={`${firstName || ""} ${lastName || ""}`}
             placeholder="Enter your first name"
           />
-          <MyTextInput
-            title="Department Name"
-            placeholder="Department Name"
-            value={department}
-            onChangeText={(text) => setDepartment(text)}
-            style={[typography.font14]}
-          />
-          <MyTextInput
-            title="Employee ID"
-            value={employeeId}
-            onChangeText={(text) => setEmployeeId(text)}
-            placeholder="Enter your employee ID"
-          />
+
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View style={{ width: "48%" }}>
+              <Text style={{ marginBottom: 5, fontWeight: "bold" }}>
+                Department Name
+              </Text>
+              <TextInput
+                placeholder="Department Name"
+                value={department}
+                onChangeText={(text) => setDepartment(text)}
+                style={[
+                  spacing.br1,
+                  {
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                  },
+                ]}
+              />
+            </View>
+
+            <View style={{ width: "45%", right: 12 }}>
+              <Text style={{ marginBottom: 5, fontWeight: "bold" }}>
+                Employee ID
+              </Text>
+              <TextInput
+                placeholder="Employee ID"
+                value={employeeId}
+                onChangeText={(text) => setEmployeeId(text)}
+                style={[
+                  spacing.br1,
+                  {
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                  },
+                ]}
+              />
+            </View>
+          </View>
 
           <MyTextInput
             title="Visit Approved By"
@@ -592,7 +621,6 @@ const AddBillForm = ({ navigation }) => {
                 <P style={[typography.font12]}>Rent</P>
                 <TextInput
                   placeholder="Bus rent"
-                  keyboardType="numeric"
                   value={rent}
                   onChangeText={(text) => setRent(text)}
                   style={[typography.font14]}
