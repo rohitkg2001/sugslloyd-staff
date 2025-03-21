@@ -87,11 +87,8 @@ const AddBillForm = ({ navigation }) => {
     setDesignation,
     transactions,
     setTransactions,
-    pnrErrorsStart,
-    setPnrErrorsStart,
-    pnrErrorsReturn,
-    setPnrErrorsReturn,
-    handlePnrBlur,
+    errors,
+    setErrors,
   } = useAddBillForm();
   const { firstName, lastName } = useSelector((state) => state.staff);
 
@@ -158,10 +155,6 @@ const AddBillForm = ({ navigation }) => {
       objective,
       meetings,
       outcomes,
-      pnrErrorsStart,
-      setPnrErrorsStart,
-      pnrErrorsReturn,
-      setPnrErrorsReturn,
     };
 
     dispatch(setBillData(formData));
@@ -333,57 +326,19 @@ const AddBillForm = ({ navigation }) => {
             />
           )}
         </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <View style={{ flex: 1, marginRight: 5 }}>
-            <MyPickerInput
-              title={t("From")}
-              value={city}
-              onChange={setCity}
-              options={[
-                { label: t("Patna"), value: "Patna" },
-                { label: t("Delhi"), value: "Delhi" },
-                { label: t("Mumbai"), value: "Mumbai" },
-                { label: t("Kolkata"), value: "Kolkata" },
-                { label: t("Chennai"), value: "Chennai" },
-                { label: t("Bangalore"), value: "Bangalore" },
-                { label: t("Hyderabad"), value: "Hyderabad" },
-                { label: t("Ahmedabad"), value: "Ahmedabad" },
-                { label: t("Pune"), value: "Pune" },
-              ]}
-            />
-          </View>
 
-          <View style={{ flex: 1, marginLeft: 5 }}>
-            <MyPickerInput
-              title={t("To")}
-              value={destinationCity}
-              onChange={setDestinationCity}
-              options={[
-                { label: t("Patna"), value: "Patna" },
-                { label: t("Delhi"), value: "Delhi" },
-                { label: t("Mumbai"), value: "Mumbai" },
-                { label: t("Kolkata"), value: "Kolkata" },
-                { label: t("Chennai"), value: "Chennai" },
-                { label: t("Bangalore"), value: "Bangalore" },
-                { label: t("Hyderabad"), value: "Hyderabad" },
-                { label: t("Ahmedabad"), value: "Ahmedabad" },
-                { label: t("Pune"), value: "Pune" },
-              ]}
-            />
-          </View>
-        </View>
         <MyPickerInput
           title={t("Mode Of Transport")}
           value={type}
-          //onChange={ setType }
-          onChange={(selectedType) => setType(selectedType)}
+          onChange={setType}
           options={[
             { label: t("Bus"), value: "Bus" },
             { label: t("Train"), value: "Train" },
             { label: t("Flight"), value: "Flight" },
           ]}
         />
-        {/* PNR Start */}
+
+        {/* PNR and Ticket Upload Group */}
         <View
           style={[
             spacing.bw1,
@@ -424,30 +379,17 @@ const AddBillForm = ({ navigation }) => {
           {pnrNumbersStart.map((pnr, index) => (
             <View key={index}>
               <MyTextInput
-                title={`${t("PNR Number")} ${index + 1}`}
+                title={`PNR Number ${index + 1}`}
                 value={pnr}
                 onChangeText={(value) => handlePnrChangeStart(value, index)}
-                placeholder={t("Upload Ticket & Enter PNR")}
+                placeholder="Upload Ticket & Enter PNR"
               />
-
-              {/* Show Error Message if PNR is Invalid */}
-              {pnrErrorsStart[index] ? (
-                <Text style={{ color: "red", fontSize: 12 }}>
-                  {pnrErrorsStart[index]}
-                </Text>
+              {errors.start[index] ? (
+                <Text style={{ color: "red" }}>{errors.start[index]}</Text>
               ) : null}
-
               {pnrNumbersStart.length > 1 && (
                 <TouchableOpacity onPress={() => removePnrFieldStart(index)}>
-                  <Span
-                    style={[
-                      styles.rightLink,
-                      typography.fontLato,
-                      { color: "red" },
-                    ]}
-                  >
-                    {t("Remove")}
-                  </Span>
+                  <Text style={{ color: "red" }}>Remove</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -508,7 +450,45 @@ const AddBillForm = ({ navigation }) => {
             </View>
           )}
         </View>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View style={{ flex: 1, marginRight: 5 }}>
+            <MyPickerInput
+              title={t("From")}
+              value={city}
+              onChange={setCity}
+              options={[
+                { label: t("Patna"), value: "Patna" },
+                { label: t("Delhi"), value: "Delhi" },
+                { label: t("Mumbai"), value: "Mumbai" },
+                { label: t("Kolkata"), value: "Kolkata" },
+                { label: t("Chennai"), value: "Chennai" },
+                { label: t("Bangalore"), value: "Bangalore" },
+                { label: t("Hyderabad"), value: "Hyderabad" },
+                { label: t("Ahmedabad"), value: "Ahmedabad" },
+                { label: t("Pune"), value: "Pune" },
+              ]}
+            />
+          </View>
 
+          <View style={{ flex: 1, marginLeft: 5 }}>
+            <MyPickerInput
+              title={t("To")}
+              value={destinationCity}
+              onChange={setDestinationCity}
+              options={[
+                { label: t("Patna"), value: "Patna" },
+                { label: t("Delhi"), value: "Delhi" },
+                { label: t("Mumbai"), value: "Mumbai" },
+                { label: t("Kolkata"), value: "Kolkata" },
+                { label: t("Chennai"), value: "Chennai" },
+                { label: t("Bangalore"), value: "Bangalore" },
+                { label: t("Hyderabad"), value: "Hyderabad" },
+                { label: t("Ahmedabad"), value: "Ahmedabad" },
+                { label: t("Pune"), value: "Pune" },
+              ]}
+            />
+          </View>
+        </View>
         {/* Return Journey PNR Inputs */}
         {/* {pnrNumbersReturn.map((pnr, index) => (
           <View key={index} style={{ marginBottom: spacing.mh1 }}>
@@ -542,32 +522,19 @@ const AddBillForm = ({ navigation }) => {
           </View>
         ))} */}
         {pnrNumbersReturn.map((pnr, index) => (
-          <View key={index}>
+          <View key={index} style={{ marginBottom: 10 }}>
             <MyTextInput
-              title={`${t("PNR Number (Return)")} ${index + 1}`}
+              title={`PNR Number (Return) ${index + 1}`}
               value={pnr}
               onChangeText={(value) => handlePnrChangeReturn(value, index)}
-              placeholder={t("Enter PNR Number")}
+              placeholder="Enter PNR Number"
             />
-
-            {/* Show Error Message if PNR is Invalid */}
-            {pnrErrorsReturn[index] ? (
-              <Text style={{ color: "red", fontSize: 12 }}>
-                {pnrErrorsReturn[index]}
-              </Text>
+            {errors.return[index] ? (
+              <Text style={{ color: "red" }}>{errors.return[index]}</Text>
             ) : null}
-
             {pnrNumbersReturn.length > 1 && (
               <TouchableOpacity onPress={() => removePnrFieldReturn(index)}>
-                <Span
-                  style={[
-                    styles.rightLink,
-                    typography.fontLato,
-                    { color: "red" },
-                  ]}
-                >
-                  {t("Remove")}
-                </Span>
+                <Text style={{ color: "red" }}>Remove</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -577,6 +544,16 @@ const AddBillForm = ({ navigation }) => {
             {t("Add More PNR (Return)")}
           </Span>
         </TouchableOpacity>
+        {/* <MyPickerInput
+          title={t("Mode Of Transport")}
+          value={type}
+          onChange={setType}
+          options={[
+            { label: t("Bus"), value: "Bus" },
+            { label: t("Train"), value: "Train" },
+            { label: t("Flight"), value: "Flight" },
+          ]}
+        /> */}
         <TouchableOpacity
           onPress={addTransactionField}
           style={{
