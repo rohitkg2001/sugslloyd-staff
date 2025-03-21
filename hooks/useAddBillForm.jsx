@@ -27,6 +27,7 @@ export default function useAddBillForm() {
   const [meetings, setMeetings] = useState("");
   const [outcomes, setOutcomes] = useState("");
   const [designation, setDesignation] = useState("");
+  const [errors, setErrors] = useState({ start: [], return: [] });
 
   const [transactions, setTransactions] = useState([]);
   const { t } = useTranslation();
@@ -42,36 +43,61 @@ export default function useAddBillForm() {
     setShowDatePicker(false); // Close the picker after selection
   };
 
-  // PNR Handlers for Start Journey
+  const validatePnr = (value, index, journeyType) => {
+    let errorMessage = "";
+    if (type === "Train" && !/^\d{10}$/.test(value)) {
+      errorMessage = "PNR must be exactly 10 digits.";
+    } else if (type === "Flight" && !/^[A-Za-z0-9]{6}$/.test(value)) {
+      errorMessage = "PNR must be exactly 6-10 characters (alphanumeric).";
+    }
+
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+      updatedErrors[journeyType][index] = errorMessage;
+      return { ...updatedErrors };
+    });
+  };
+
   const handlePnrChangeStart = (value, index) => {
     const updatedPnrNumbers = [...pnrNumbersStart];
     updatedPnrNumbers[index] = value;
     setPnrNumbersStart(updatedPnrNumbers);
+    validatePnr(value, index, "start");
+  };
+
+  const handlePnrChangeReturn = (value, index) => {
+    const updatedPnrNumbers = [...pnrNumbersReturn];
+    updatedPnrNumbers[index] = value;
+    setPnrNumbersReturn(updatedPnrNumbers);
+    validatePnr(value, index, "return");
   };
 
   const addPnrFieldStart = () => {
     setPnrNumbersStart([...pnrNumbersStart, ""]);
+    setErrors((prev) => ({ ...prev, start: [...prev.start, ""] }));
+  };
+
+  const addPnrFieldReturn = () => {
+    setPnrNumbersReturn([...pnrNumbersReturn, ""]);
+    setErrors((prev) => ({ ...prev, return: [...prev.return, ""] }));
   };
 
   const removePnrFieldStart = (index) => {
     const updatedPnrNumbers = pnrNumbersStart.filter((_, i) => i !== index);
     setPnrNumbersStart(updatedPnrNumbers);
-  };
-
-  // PNR Handlers for Return Journey
-  const handlePnrChangeReturn = (value, index) => {
-    const updatedPnrNumbers = [...pnrNumbersReturn];
-    updatedPnrNumbers[index] = value;
-    setPnrNumbersReturn(updatedPnrNumbers);
-  };
-
-  const addPnrFieldReturn = () => {
-    setPnrNumbersReturn([...pnrNumbersReturn, ""]);
+    setErrors((prev) => ({
+      ...prev,
+      start: prev.start.filter((_, i) => i !== index),
+    }));
   };
 
   const removePnrFieldReturn = (index) => {
     const updatedPnrNumbers = pnrNumbersReturn.filter((_, i) => i !== index);
     setPnrNumbersReturn(updatedPnrNumbers);
+    setErrors((prev) => ({
+      ...prev,
+      return: prev.return.filter((_, i) => i !== index),
+    }));
   };
 
   // Ticket Upload Handlers
@@ -169,5 +195,7 @@ export default function useAddBillForm() {
     setDesignation,
     transactions,
     setTransactions,
+    errors,
+    setErrors,
   };
 }
