@@ -96,7 +96,6 @@ export default function TravelManagement({ navigation }) {
               const formData = {
                 start_date: item.fullData.start_date,
                 journeyDate: item.fullData.journeyDate,
-                employeeID : item.formData.employeeId || "N/A",
                 pnrNumbersStart: item.fullData.pnrNumbersStart || "N/A",
                 pnrNumbersReturn: item.fullData.pnrNumbersReturn || "N/A",
                 ticket: item.fullData.ticket || "Not Available",
@@ -105,6 +104,19 @@ export default function TravelManagement({ navigation }) {
                 destinationCity:
                   item.fullData.destinationCity || "Unknown Destination",
                 type: item.fullData.type || "Unknown Transport",
+
+                employeeId: item.fullData.employeeId || "N/A",
+                department: item.fullData.department || "N/A",
+                meetings: item.fullData.meetings || "N/A",
+                visitApprovedBy: item.fullData.visitApprovedBy || "N/A",
+                objective: item.fullData.objective || "N/A",
+                outcomes: item.fullData.outcomes || "N/A",
+                categories: item.fullData.categories || "N/A",
+                descriptions: item.fullData.descriptions || "N/A",
+                totalKm: item.fullData.totalKm || "N/A",
+                kmRate: item.fullData.kmRate || "N/A",
+                rent: item.fullData.rent || "N/A",
+                vehicleNo: item.fullData.vehicleNo || "N/A"
               };
 
               console.log("Navigating with Form Data:", formData);

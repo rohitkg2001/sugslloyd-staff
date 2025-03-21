@@ -84,10 +84,15 @@ const TravelDetailScreen = ({ navigation }) => {
         {showDetails && (
           <View
             style={[
-              spacing.pv3,
+              // spacing.pv3,
+              spacing.p2,
+              spacing.br2,
               {
-                backgroundColor: LIGHT,
-                width: SCREEN_WIDTH - 8,
+                // backgroundColor: LIGHT,
+                // width: SCREEN_WIDTH - 8,
+                backgroundColor: "#e8f8f5",
+                elevation: 1,
+                top: 10,
               },
             ]}
           >
@@ -96,9 +101,10 @@ const TravelDetailScreen = ({ navigation }) => {
               <View>
                 <Span
                   style={[
-                    typography.font10,
+                    typography.font12,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Name
@@ -110,9 +116,10 @@ const TravelDetailScreen = ({ navigation }) => {
               <View>
                 <Span
                   style={[
-                    typography.font10,
+                    typography.font12,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Employee ID
@@ -128,8 +135,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Meetings
@@ -142,8 +150,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Department
@@ -160,8 +169,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Start date
@@ -174,8 +184,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   End date
@@ -192,8 +203,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   PNR Numbers (Start)
@@ -206,8 +218,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   PNR Numbers (Return)
@@ -223,8 +236,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Visit Approved By
@@ -238,8 +252,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <H5
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Transport Mode
@@ -255,8 +270,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Objective of the Tour
@@ -269,8 +285,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Key Meetings/Visits
@@ -285,19 +302,14 @@ const TravelDetailScreen = ({ navigation }) => {
               <H5
                 style={[
                   typography.font10,
+                  typography.textBold,
                   typography.fontLato,
                   { textAlign: "left" },
                 ]}
               >
                 ACHIEVEMENTS
               </H5>
-              <P
-                style={[
-                  typography.font12,
-                  typography.fontLato,
-                  spacing.pv1,
-                ]}
-              >
+              <P style={[typography.font12, typography.fontLato, spacing.pv1]}>
                 {formData.outcomes}
               </P>
             </View>
@@ -308,8 +320,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Categories
@@ -322,8 +335,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Descriptions
@@ -339,8 +353,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Total KM
@@ -353,8 +368,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Km rate
@@ -370,8 +386,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Rent
@@ -384,8 +401,9 @@ const TravelDetailScreen = ({ navigation }) => {
                 <Span
                   style={[
                     typography.font10,
+                    typography.textBold,
                     typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
+                    { textTransform: "uppercase" },
                   ]}
                 >
                   Vehicle No
