@@ -888,6 +888,7 @@ const AddBillForm = ({ navigation }) => {
                       typography.fontLato,
                       {
                         color: "red",
+                        //use red color
                         marginTop: 6,
                         textDecorationLine: "underline",
                       },
