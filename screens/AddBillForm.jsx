@@ -88,6 +88,7 @@ const AddBillForm = ({ navigation }) => {
     transactions,
     setTransactions,
   } = useAddBillForm();
+  
   const { firstName, lastName } = useSelector((state) => state.staff);
 
   const addTransactionField = () => {
@@ -128,6 +129,9 @@ const AddBillForm = ({ navigation }) => {
     const descriptions = transactions
       .map((transaction) => transaction.description)
       .join("; ");
+
+    
+    
     const formData = {
       start_date,
       journeyDate,
