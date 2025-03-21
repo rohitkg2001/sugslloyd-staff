@@ -83,6 +83,8 @@ const AddBillForm = ({ navigation }) => {
     setMeetings,
     outcomes,
     setOutcomes,
+    designation,
+    setDesignation,
     transactions,
     setTransactions,
   } = useAddBillForm();
@@ -238,6 +240,12 @@ const AddBillForm = ({ navigation }) => {
             // onChange={setOutcomes}
             onChangeText={(text) => setOutcomes(text)}
             placeholder="Enter key outcomes and achievements"
+          />
+          <MyTextInput
+            title="Designation"
+            value={designation}
+            onChangeText={(text) => setDesignation(text)}
+            placeholder="Designation"
           />
 
           <View style={{ flexDirection: "row", padding: 10 }}>

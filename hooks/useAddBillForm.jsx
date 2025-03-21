@@ -26,6 +26,7 @@ export default function useAddBillForm() {
   const [objective, setObjective] = useState("");
   const [meetings, setMeetings] = useState("");
   const [outcomes, setOutcomes] = useState("");
+  const [designation, setDesignation] = useState("");
 
   const [transactions, setTransactions] = useState([]);
   const { t } = useTranslation();
@@ -164,6 +165,8 @@ export default function useAddBillForm() {
     setMeetings,
     outcomes,
     setOutcomes,
+    designation,
+    setDesignation,
     transactions,
     setTransactions,
   };

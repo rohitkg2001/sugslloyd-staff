@@ -129,7 +129,6 @@ const TravelDetailScreen = ({ navigation }) => {
                 </P>
               </View>
             </View>
-
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
                 <Span
@@ -162,7 +161,6 @@ const TravelDetailScreen = ({ navigation }) => {
                 </P>
               </View>
             </View>
-
             {/* Travel Dates */}
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
@@ -196,7 +194,6 @@ const TravelDetailScreen = ({ navigation }) => {
                 </P>
               </View>
             </View>
-
             {/* PNR Numbers */}
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
@@ -230,7 +227,6 @@ const TravelDetailScreen = ({ navigation }) => {
                 </P>
               </View>
             </View>
-
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
                 <Span
@@ -264,7 +260,6 @@ const TravelDetailScreen = ({ navigation }) => {
                 </P>
               </View>
             </View>
-
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
                 <Span
@@ -290,7 +285,7 @@ const TravelDetailScreen = ({ navigation }) => {
                     { textTransform: "uppercase" },
                   ]}
                 >
-                  Key Meetings/Visits
+                  Meetings/Visits
                 </Span>
                 <P style={[typography.font12, typography.fontLato]}>
                   {formData.meetings}
@@ -298,7 +293,40 @@ const TravelDetailScreen = ({ navigation }) => {
               </View>
             </View>
 
-            <View style={[styles.row]}>
+            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.textBold,
+                    typography.fontLato,
+                    { textTransform: "uppercase" },
+                  ]}
+                >
+                  ACHIEVEMENTS
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.outcomes}
+                </P>
+              </View>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.textBold,
+                    typography.fontLato,
+                    { textTransform: "uppercase" },
+                  ]}
+                >
+                  Designation
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.designation}
+                </P>
+              </View>
+            </View>
+
+            {/* <View style={[styles.row]}>
               <H5
                 style={[
                   typography.font10,
@@ -312,8 +340,7 @@ const TravelDetailScreen = ({ navigation }) => {
               <P style={[typography.font12, typography.fontLato, spacing.pv1]}>
                 {formData.outcomes}
               </P>
-            </View>
-
+            </View> */}
             {/* Categories & Description */}
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
@@ -347,8 +374,7 @@ const TravelDetailScreen = ({ navigation }) => {
                 </P>
               </View>
             </View>
-
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+            {/* <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
                 <Span
                   style={[
@@ -412,8 +438,83 @@ const TravelDetailScreen = ({ navigation }) => {
                   {formData.vehicleNo}
                 </P>
               </View>
-            </View>
+            </View> */}
+            <View
+              style={[
+                spacing.mt1,
+                styles.row,
+                spacing.mv2,
+                {
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                },
+              ]}
+            >
+              <View style={{ width: "24%" }}>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.textBold,
+                    typography.fontLato,
+                    { textTransform: "uppercase" },
+                  ]}
+                >
+                  Total KM
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.totalKm}
+                </P>
+              </View>
 
+              <View style={{ width: "24%" }}>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.textBold,
+                    typography.fontLato,
+                    { textTransform: "uppercase" },
+                  ]}
+                >
+                  Km rate
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.kmRate}
+                </P>
+              </View>
+
+              <View style={{ width: "24%" }}>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.textBold,
+                    typography.fontLato,
+                    { textTransform: "uppercase" },
+                  ]}
+                >
+                  Rent
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.rent}
+                </P>
+              </View>
+
+              <View style={{ width: "24%" }}>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.textBold,
+                    typography.fontLato,
+                    { textTransform: "uppercase" },
+                  ]}
+                >
+                  Vehicle No
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.vehicleNo}
+                </P>
+              </View>
+            </View>
             <View
               style={{
                 borderBottomColor: "#000",
@@ -422,7 +523,6 @@ const TravelDetailScreen = ({ navigation }) => {
                 width: "100%",
               }}
             />
-
             {/* Amount */}
             <View style={[styles.row]}>
               <H5
