@@ -374,71 +374,7 @@ const TravelDetailScreen = ({ navigation }) => {
                 </P>
               </View>
             </View>
-            {/* <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Total KM
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {formData.totalKm}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Km rate
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {formData.kmRate}
-                </P>
-              </View>
-            </View>
-
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Rent
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {formData.rent}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Vehicle No
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {formData.vehicleNo}
-                </P>
-              </View>
-            </View> */}
+      
             <View
               style={[
                 spacing.mt1,

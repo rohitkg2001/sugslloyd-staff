@@ -116,7 +116,8 @@ export default function TravelManagement({ navigation }) {
                 totalKm: item.fullData.totalKm || "N/A",
                 kmRate: item.fullData.kmRate || "N/A",
                 rent: item.fullData.rent || "N/A",
-                vehicleNo: item.fullData.vehicleNo || "N/A"
+                vehicleNo: item.fullData.vehicleNo || "N/A",
+                designation: item.fullData.designation || "N/A",
               };
 
               console.log("Navigating with Form Data:", formData);
