@@ -145,6 +145,7 @@
     "confirm_password": "Confirm Password",
     "first_name": "First Name",
     "last_name": "Last Name",
-    "rate": "Rate(per kw including all taxes and duties in rupees)"
+    "rate": "Rate(per kw including all taxes and duties in rupees)",
+    "this_month" : "This Month"
   }
 }
