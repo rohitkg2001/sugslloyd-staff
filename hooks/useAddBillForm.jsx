@@ -29,6 +29,9 @@ export default function useAddBillForm() {
   const [designation, setDesignation] = useState("");
 
   const [transactions, setTransactions] = useState([]);
+
+  const [pnrErrorsStart, setPnrErrorsStart] = useState([]);
+  const [pnrErrorsReturn, setPnrErrorsReturn] = useState([]);
   const { t } = useTranslation();
 
   const onDateChange = (event, selectedDate) => {
@@ -42,11 +45,90 @@ export default function useAddBillForm() {
     setShowDatePicker(false); // Close the picker after selection
   };
 
+  // PNR Validation Function
+  // const validatePnr = (value, type) => {
+  //   if (type === "Train") {
+  //     if (!/^\d{10}$/.test(value)) {
+  //       return t("PNR for Train must be exactly 10 digits");
+  //     }
+  //   } else if (type === "Flight") {
+  //     if (!/^[a-zA-Z0-9]{6,10}$/.test(value)) {
+  //       return t(
+  //         "PNR for Flight must be between 6 to 10 alphanumeric characters"
+  //       );
+  //     }
+  //   }
+  //   return null; // No error for Bus or valid input
+  // };
+  const validatePnr = (value, type) => {
+    if (!type) return null; // Type select nahi hua toh error na do
+
+    if (type === "Train") {
+      if (value.length < 10) return null; // Jab tak 10 digit nahi hote, alert na de
+      if (!/^\d{10}$/.test(value)) {
+        return t("PNR for Train must be exactly 10 digits");
+      }
+    } else if (type === "Flight") {
+      if (value.length < 6) return null; // Jab tak 6 characters nahi hote, alert na de
+      if (!/^[a-zA-Z0-9]{6,10}$/.test(value)) {
+        return t(
+          "PNR for Flight must be between 6 to 10 alphanumeric characters"
+        );
+      }
+    }
+    return null; // No error for Bus or valid input
+  };
+
   // PNR Handlers for Start Journey
+  // const handlePnrChangeStart = (value, index) => {
+  //   const updatedPnrNumbers = [...pnrNumbersStart];
+  //   updatedPnrNumbers[index] = value;
+  //   setPnrNumbersStart(updatedPnrNumbers);
+  // };
+
+  // PNR Handlers for Start Journey
+  // const handlePnrChangeStart = (value, index) => {
+  //   if (!type) {
+  //     alert(t("Please select a mode of transport first"));
+  //     return;
+  //   }
+
+  //   const updatedPnrNumbers = [...pnrNumbersStart];
+  //   updatedPnrNumbers[index] = value;
+  //   setPnrNumbersStart(updatedPnrNumbers);
+  // };
+
   const handlePnrChangeStart = (value, index) => {
-    const updatedPnrNumbers = [...pnrNumbersStart];
+    if (!type) {
+      alert(t("Please select a mode of transport first"));
+      return;
+    }
+
+    // PNR list update kare bina validation ke
+    setPnrNumbersStart((prevPnrNumbers) => {
+      const updatedPnrNumbers = [...prevPnrNumbers];
+      updatedPnrNumbers[index] = value;
+      return updatedPnrNumbers;
+    });
+  };
+
+  const handlePnrBlur = (value) => {
+    const errorMessage = validatePnr(value, type);
+    if (errorMessage) {
+      alert(errorMessage);
+    }
+  };
+
+  // PNR Handlers for Return Journey
+  const handlePnrChangeReturn = (value, index) => {
+    const errorMessage = validatePnr(value, type);
+    if (errorMessage) {
+      alert(errorMessage);
+      return;
+    }
+    const updatedPnrNumbers = [...pnrNumbersReturn];
     updatedPnrNumbers[index] = value;
-    setPnrNumbersStart(updatedPnrNumbers);
+    setPnrNumbersReturn(updatedPnrNumbers);
   };
 
   const addPnrFieldStart = () => {
@@ -59,11 +141,11 @@ export default function useAddBillForm() {
   };
 
   // PNR Handlers for Return Journey
-  const handlePnrChangeReturn = (value, index) => {
-    const updatedPnrNumbers = [...pnrNumbersReturn];
-    updatedPnrNumbers[index] = value;
-    setPnrNumbersReturn(updatedPnrNumbers);
-  };
+  // const handlePnrChangeReturn = (value, index) => {
+  //   const updatedPnrNumbers = [...pnrNumbersReturn];
+  //   updatedPnrNumbers[index] = value;
+  //   setPnrNumbersReturn(updatedPnrNumbers);
+  // };
 
   const addPnrFieldReturn = () => {
     setPnrNumbersReturn([...pnrNumbersReturn, ""]);
@@ -169,5 +251,10 @@ export default function useAddBillForm() {
     setDesignation,
     transactions,
     setTransactions,
+    pnrErrorsStart,
+    setPnrErrorsStart,
+    pnrErrorsReturn,
+    setPnrErrorsReturn,
+    handlePnrBlur,
   };
 }

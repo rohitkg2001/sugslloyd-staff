@@ -326,21 +326,6 @@ const TravelDetailScreen = ({ navigation }) => {
               </View>
             </View>
 
-            {/* <View style={[styles.row]}>
-              <H5
-                style={[
-                  typography.font10,
-                  typography.textBold,
-                  typography.fontLato,
-                  { textAlign: "left" },
-                ]}
-              >
-                ACHIEVEMENTS
-              </H5>
-              <P style={[typography.font12, typography.fontLato, spacing.pv1]}>
-                {formData.outcomes}
-              </P>
-            </View> */}
             {/* Categories & Description */}
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
@@ -374,7 +359,7 @@ const TravelDetailScreen = ({ navigation }) => {
                 </P>
               </View>
             </View>
-      
+
             <View
               style={[
                 spacing.mt1,
