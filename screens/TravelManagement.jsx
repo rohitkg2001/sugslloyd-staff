@@ -96,6 +96,7 @@ export default function TravelManagement({ navigation }) {
               const formData = {
                 start_date: item.fullData.start_date,
                 journeyDate: item.fullData.journeyDate,
+                employeeID : item.formData.employeeId || "N/A",
                 pnrNumbersStart: item.fullData.pnrNumbersStart || "N/A",
                 pnrNumbersReturn: item.fullData.pnrNumbersReturn || "N/A",
                 ticket: item.fullData.ticket || "Not Available",
