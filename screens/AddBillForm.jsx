@@ -134,19 +134,17 @@ const AddBillForm = ({ navigation }) => {
       0
     );
 
-const hasInvalidFlightPnr = pnrNumbersStart.some((pnr) => {
-  if (type === "Flight") {
-    return !/^[A-Za-z0-9]{6,10}$/.test(pnr); // PNR should be alphanumeric and 6-10 characters long
-  }
-  return false; // Return false for other types (like Train, etc.)
-});
+    const hasInvalidFlightPnr = pnrNumbersStart.some((pnr) => {
+      if (type === "Flight") {
+        return !/^[A-Za-z0-9]{6,10}$/.test(pnr); // PNR should be alphanumeric and 6-10 characters long
+      }
+      return false; // Return false for other types (like Train, etc.)
+    });
 
-if (hasInvalidFlightPnr) {
-  alert("Flight PNR must be exactly 6-10 alphanumeric characters.");
-  return; // Stop the submission
-}
-
-
+    if (hasInvalidFlightPnr) {
+      alert("Flight PNR must be exactly 6-10 alphanumeric characters.");
+      return; // Stop the submission
+    }
 
     const categories = transactions
       .map((transaction) => transaction.category)
@@ -370,35 +368,13 @@ if (hasInvalidFlightPnr) {
             spacing.br2,
             {
               borderStyle: "dotted",
+              top: 4,
             },
           ]}
         >
           <H6 style={[typography.font14, typography.fontLato, spacing.p1]}>
             {t("Journey Ticket")}
           </H6>
-          {/* {pnrNumbersStart.map((pnr, index) => (
-            <View key={index}>
-              <MyTextInput
-                title={${t("PNR Number")} ${index + 1}}
-                value={pnr}
-                onChangeText={(value) => handlePnrChangeStart(value, index)}
-                placeholder={t("Upload Ticket & Enter PNR")}
-              />
-              {pnrNumbersStart.length > 1 && (
-                <TouchableOpacity onPress={() => removePnrFieldStart(index)}>
-                  <Span
-                    style={[
-                      styles.rightLink,
-                      typography.fontLato,
-                      { color: "red" },
-                    ]}
-                  >
-                    {t("Remove")}
-                  </Span>
-                </TouchableOpacity>
-              )}
-            </View>
-          ))} */}
 
           {pnrNumbersStart.map((pnr, index) => (
             <View key={index}>
@@ -513,38 +489,6 @@ if (hasInvalidFlightPnr) {
             />
           </View>
         </View>
-        {/* Return Journey PNR Inputs */}
-        {/* {pnrNumbersReturn.map((pnr, index) => (
-          <View key={index} style={{ marginBottom: spacing.mh1 }}>
-            <MyTextInput
-              title={${t("PNR Number (Return)")} ${index + 1}}
-              value={pnr}
-              onChangeText={(value) => handlePnrChangeReturn(value, index)}
-              placeholder={t("Enter PNR Number")}
-              style={[
-                {
-                  height: 60,
-                  marginLeft: 1,
-                  width: SCREEN_WIDTH - 10,
-                },
-              ]}
-            />
-
-            {pnrNumbersReturn.length > 1 && (
-              <TouchableOpacity onPress={() => removePnrFieldReturn(index)}>
-                <Span
-                  style={[
-                    styles.rightLink,
-                    typography.fontLato,
-                    { color: "red" },
-                  ]}
-                >
-                  {t("Remove")}
-                </Span>
-              </TouchableOpacity>
-            )}
-          </View>
-        ))} */}
         {pnrNumbersReturn.map((pnr, index) => (
           <View key={index} style={{ marginBottom: 10 }}>
             <MyTextInput
@@ -568,16 +512,6 @@ if (hasInvalidFlightPnr) {
             {t("Add More PNR (Return)")}
           </Span>
         </TouchableOpacity>
-        {/* <MyPickerInput
-          title={t("Mode Of Transport")}
-          value={type}
-          onChange={setType}
-          options={[
-            { label: t("Bus"), value: "Bus" },
-            { label: t("Train"), value: "Train" },
-            { label: t("Flight"), value: "Flight" },
-          ]}
-        /> */}
         <TouchableOpacity
           onPress={addTransactionField}
           style={{
