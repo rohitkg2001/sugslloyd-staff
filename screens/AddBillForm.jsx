@@ -369,11 +369,11 @@ if (hasInvalidFlightPnr) {
             spacing.p1,
             spacing.br2,
             {
-              borderStyle: "dotted",
+              borderStyle: "dotted", marginTop:10
             },
           ]}
         >
-          <H6 style={[typography.font14, typography.fontLato, spacing.p1]}>
+          <H6 style={[typography.font14, typography.fontLato, spacing.p2]}>
             {t("Journey Ticket")}
           </H6>
           {/* {pnrNumbersStart.map((pnr, index) => (
