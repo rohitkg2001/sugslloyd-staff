@@ -104,6 +104,8 @@ export default function TravelManagement({ navigation }) {
                 destinationCity:
                   item.fullData.destinationCity || "Unknown Destination",
                 type: item.fullData.type || "Unknown Transport",
+
+                employeeId: item.fullData.employeeId || "N/A",
               };
 
               console.log("Navigating with Form Data:", formData);
