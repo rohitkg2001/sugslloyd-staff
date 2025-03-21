@@ -126,7 +126,7 @@ const AddBillForm = ({ navigation }) => {
     );
 
     if (hasInvalidTrainPnr) {
-      alert("Train PNR must be exactly 10 digits."); // Show error message
+      alert("Train PNR must be exactly 10 digits."); // Show error message i
       return; // Stop submission
     }
     const totalAmount = transactions.reduce(
