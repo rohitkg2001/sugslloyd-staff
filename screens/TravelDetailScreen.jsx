@@ -107,10 +107,6 @@ const TravelDetailScreen = ({ navigation }) => {
                   {firstName} {lastName}
                 </P>
               </View>
-            </View>
-
-            {/* Travel Dates */}
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
                 <Span
                   style={[
@@ -119,24 +115,10 @@ const TravelDetailScreen = ({ navigation }) => {
                     { textTransform: "uppercase", color: "gray" },
                   ]}
                 >
-                  Start date
+                  Employee ID
                 </Span>
                 <P style={[typography.font12, typography.fontLato]}>
-                  {startDate}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
-                  ]}
-                >
-                  End date
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {returnDate}
+                  {formData.employeeId}
                 </P>
               </View>
             </View>
@@ -172,6 +154,7 @@ const TravelDetailScreen = ({ navigation }) => {
               </View>
             </View>
 
+            {/* Travel Dates */}
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
                 <Span
@@ -181,12 +164,61 @@ const TravelDetailScreen = ({ navigation }) => {
                     { textTransform: "uppercase", color: "gray" },
                   ]}
                 >
-                  Employee ID
+                  Start date
                 </Span>
                 <P style={[typography.font12, typography.fontLato]}>
-                  {formData.employeeId}
+                  {startDate}
                 </P>
               </View>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  End date
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {returnDate}
+                </P>
+              </View>
+            </View>
+
+            {/* PNR Numbers */}
+            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  PNR Numbers (Start)
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.pnrNumbersStart?.join(", ") || "N/A"}
+                </P>
+              </View>
+              <View>
+                <Span
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  PNR Numbers (Return)
+                </Span>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.pnrNumbersReturn?.join(", ") || "N/A"}
+                </P>
+              </View>
+            </View>
+
+            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
               <View>
                 <Span
                   style={[
@@ -199,6 +231,21 @@ const TravelDetailScreen = ({ navigation }) => {
                 </Span>
                 <P style={[typography.font12, typography.fontLato]}>
                   {formData.visitApprovedBy}
+                </P>
+              </View>
+              {/* Transport Mode */}
+              <View style={[styles.row, { flexDirection: "column" }]}>
+                <H5
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    { textTransform: "uppercase", color: "gray" },
+                  ]}
+                >
+                  Transport Mode
+                </H5>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {formData.type}
                 </P>
               </View>
             </View>
@@ -237,55 +284,22 @@ const TravelDetailScreen = ({ navigation }) => {
             <View style={[styles.row]}>
               <H5
                 style={[
-                  typography.font14,
+                  typography.font10,
                   typography.fontLato,
                   { textAlign: "left" },
                 ]}
               >
-                Achievements
+                ACHIEVEMENTS
               </H5>
               <P
                 style={[
-                  typography.font16,
+                  typography.font12,
                   typography.fontLato,
                   spacing.pv1,
-                  { textAlign: "right" },
                 ]}
               >
                 {formData.outcomes}
               </P>
-            </View>
-
-            {/* PNR Numbers */}
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
-                  ]}
-                >
-                  PNR Numbers (Start)
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {formData.pnrNumbersStart?.join(", ") || "N/A"}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.fontLato,
-                    { textTransform: "uppercase", color: "gray" },
-                  ]}
-                >
-                  PNR Numbers (Return)
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {formData.pnrNumbersReturn?.join(", ") || "N/A"}
-                </P>
-              </View>
             </View>
 
             {/* Categories & Description */}
@@ -318,29 +332,6 @@ const TravelDetailScreen = ({ navigation }) => {
                   {formData.descriptions}
                 </P>
               </View>
-            </View>
-
-            {/* Transport Mode */}
-            <View style={[styles.row]}>
-              <H5
-                style={[
-                  typography.font14,
-                  typography.fontLato,
-                  { textAlign: "left" },
-                ]}
-              >
-                Transport Mode
-              </H5>
-              <P
-                style={[
-                  typography.font16,
-                  typography.fontLato,
-                  spacing.pv1,
-                  { textAlign: "right" },
-                ]}
-              >
-                {formData.type}
-              </P>
             </View>
 
             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
