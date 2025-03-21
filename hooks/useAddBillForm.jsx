@@ -100,6 +100,38 @@ export default function useAddBillForm() {
     }));
   };
 
+  // PNR Handlers for Start Journey
+  // const handlePnrChangeStart = (value, index) => {
+  //   const updatedPnrNumbers = [...pnrNumbersStart];
+  //   updatedPnrNumbers[index] = value;
+  //   setPnrNumbersStart(updatedPnrNumbers);
+  // };
+
+  // const addPnrFieldStart = () => {
+  //   setPnrNumbersStart([...pnrNumbersStart, ""]);
+  // };
+
+  // const removePnrFieldStart = (index) => {
+  //   const updatedPnrNumbers = pnrNumbersStart.filter((_, i) => i !== index);
+  //   setPnrNumbersStart(updatedPnrNumbers);
+  // };
+
+  // // PNR Handlers for Return Journey
+  // const handlePnrChangeReturn = (value, index) => {
+  //   const updatedPnrNumbers = [...pnrNumbersReturn];
+  //   updatedPnrNumbers[index] = value;
+  //   setPnrNumbersReturn(updatedPnrNumbers);
+  // };
+
+  // const addPnrFieldReturn = () => {
+  //   setPnrNumbersReturn([...pnrNumbersReturn, ""]);
+  // };
+
+  // const removePnrFieldReturn = (index) => {
+  //   const updatedPnrNumbers = pnrNumbersReturn.filter((_, i) => i !== index);
+  //   setPnrNumbersReturn(updatedPnrNumbers);
+  // };
+
   // Ticket Upload Handlers
   const handleUploadTicket = async () => {
     try {

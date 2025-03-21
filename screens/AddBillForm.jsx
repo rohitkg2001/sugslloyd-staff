@@ -87,8 +87,9 @@ const AddBillForm = ({ navigation }) => {
     setDesignation,
     transactions,
     setTransactions,
+    errors,
+    setErrors,
   } = useAddBillForm();
-  
   const { firstName, lastName } = useSelector((state) => state.staff);
 
   const addTransactionField = () => {
@@ -125,22 +126,34 @@ const AddBillForm = ({ navigation }) => {
     );
 
     if (hasInvalidTrainPnr) {
-      alert("Train PNR must be exactly 10 digits."); // Show error message
+      alert("Train PNR must be exactly 10 digits."); // Show error message i
       return; // Stop submission
     }
     const totalAmount = transactions.reduce(
       (sum, transaction) => sum + parseFloat(transaction.amount || 0),
       0
     );
+
+const hasInvalidFlightPnr = pnrNumbersStart.some((pnr) => {
+  if (type === "Flight") {
+    return !/^[A-Za-z0-9]{6,10}$/.test(pnr); // PNR should be alphanumeric and 6-10 characters long
+  }
+  return false; // Return false for other types (like Train, etc.)
+});
+
+if (hasInvalidFlightPnr) {
+  alert("Flight PNR must be exactly 6-10 alphanumeric characters.");
+  return; // Stop the submission
+}
+
+
+
     const categories = transactions
       .map((transaction) => transaction.category)
       .join(", ");
     const descriptions = transactions
       .map((transaction) => transaction.description)
       .join("; ");
-
-    
-    
     const formData = {
       start_date,
       journeyDate,
@@ -338,6 +351,17 @@ const AddBillForm = ({ navigation }) => {
           )}
         </View>
 
+        <MyPickerInput
+          title={t("Mode Of Transport")}
+          value={type}
+          onChange={setType}
+          options={[
+            { label: t("Bus"), value: "Bus" },
+            { label: t("Train"), value: "Train" },
+            { label: t("Flight"), value: "Flight" },
+          ]}
+        />
+
         {/* PNR and Ticket Upload Group */}
         <View
           style={[
@@ -352,10 +376,10 @@ const AddBillForm = ({ navigation }) => {
           <H6 style={[typography.font14, typography.fontLato, spacing.p1]}>
             {t("Journey Ticket")}
           </H6>
-          {pnrNumbersStart.map((pnr, index) => (
+          {/* {pnrNumbersStart.map((pnr, index) => (
             <View key={index}>
               <MyTextInput
-                title={`${t("PNR Number")} ${index + 1}`}
+                title={${t("PNR Number")} ${index + 1}}
                 value={pnr}
                 onChangeText={(value) => handlePnrChangeStart(value, index)}
                 placeholder={t("Upload Ticket & Enter PNR")}
@@ -371,6 +395,25 @@ const AddBillForm = ({ navigation }) => {
                   >
                     {t("Remove")}
                   </Span>
+                </TouchableOpacity>
+              )}
+            </View>
+          ))} */}
+
+          {pnrNumbersStart.map((pnr, index) => (
+            <View key={index}>
+              <MyTextInput
+                title={`PNR Number ${index + 1}`}
+                value={pnr}
+                onChangeText={(value) => handlePnrChangeStart(value, index)}
+                placeholder="Upload Ticket & Enter PNR"
+              />
+              {errors.start[index] ? (
+                <Text style={{ color: "red" }}>{errors.start[index]}</Text>
+              ) : null}
+              {pnrNumbersStart.length > 1 && (
+                <TouchableOpacity onPress={() => removePnrFieldStart(index)}>
+                  <Text style={{ color: "red" }}>Remove</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -471,10 +514,10 @@ const AddBillForm = ({ navigation }) => {
           </View>
         </View>
         {/* Return Journey PNR Inputs */}
-        {pnrNumbersReturn.map((pnr, index) => (
+        {/* {pnrNumbersReturn.map((pnr, index) => (
           <View key={index} style={{ marginBottom: spacing.mh1 }}>
             <MyTextInput
-              title={`${t("PNR Number (Return)")} ${index + 1}`}
+              title={${t("PNR Number (Return)")} ${index + 1}}
               value={pnr}
               onChangeText={(value) => handlePnrChangeReturn(value, index)}
               placeholder={t("Enter PNR Number")}
@@ -501,13 +544,31 @@ const AddBillForm = ({ navigation }) => {
               </TouchableOpacity>
             )}
           </View>
+        ))} */}
+        {pnrNumbersReturn.map((pnr, index) => (
+          <View key={index} style={{ marginBottom: 10 }}>
+            <MyTextInput
+              title={`PNR Number (Return) ${index + 1}`}
+              value={pnr}
+              onChangeText={(value) => handlePnrChangeReturn(value, index)}
+              placeholder="Enter PNR Number"
+            />
+            {errors.return[index] ? (
+              <Text style={{ color: "red" }}>{errors.return[index]}</Text>
+            ) : null}
+            {pnrNumbersReturn.length > 1 && (
+              <TouchableOpacity onPress={() => removePnrFieldReturn(index)}>
+                <Text style={{ color: "red" }}>Remove</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         ))}
         <TouchableOpacity onPress={addPnrFieldReturn}>
           <Span style={[styles.rightLink, typography.fontLato]}>
             {t("Add More PNR (Return)")}
           </Span>
         </TouchableOpacity>
-        <MyPickerInput
+        {/* <MyPickerInput
           title={t("Mode Of Transport")}
           value={type}
           onChange={setType}
@@ -516,7 +577,7 @@ const AddBillForm = ({ navigation }) => {
             { label: t("Train"), value: "Train" },
             { label: t("Flight"), value: "Flight" },
           ]}
-        />
+        /> */}
         <TouchableOpacity
           onPress={addTransactionField}
           style={{
@@ -901,7 +962,6 @@ const AddBillForm = ({ navigation }) => {
                       typography.fontLato,
                       {
                         color: "red",
-                        //use red color
                         marginTop: 6,
                         textDecorationLine: "underline",
                       },
