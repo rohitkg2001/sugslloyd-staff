@@ -29,31 +29,6 @@ export default function TotalProjectsScreen({ navigation }) {
   const [searchText, setSearchText] = useState(""); // Search text state
   const [dateFilter, setDateFilter] = useState("All");
 
-  // useEffect(() => {
-  //   if (loading && Array.isArray(projects) && projects.length > 0) {
-  //     const projectsWithSites = projects.filter((project) =>
-  //       tasks.some((task) => task.project_id === project.id)
-  //     );
-
-  //     setFilteredProjects(projectsWithSites);
-  //     setLoading(false);
-  //   }
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000);
-  // }, [loading, projects, tasks]);
-
-  // useEffect(() => {
-  //   dispatch(fetchProjects());
-  // }, [dispatch]);
-
-  // //Filter projects based on search input
-  // const filteredData = filteredProjects.filter(
-  //   (project) =>
-  //     project.project_name.toLowerCase().includes(searchText.toLowerCase()) ||
-  //     project.work_order_number.toLowerCase().includes(searchText.toLowerCase())
-  // );
-
   useEffect(() => {
     if (loading && Array.isArray(projects) && projects.length > 0) {
       const projectsWithSites = projects.filter((project) =>
