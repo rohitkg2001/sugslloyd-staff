@@ -1,6 +1,5 @@
-// import All React native
 import { useState } from "react";
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
@@ -15,7 +14,6 @@ import CustomMenu from "../components/TargetScreen/CustomMenu";
 import TabBar from "../components/TabBar";
 import SearchBar from "../components/input/SearchBar";
 import Filter from "../components/Filter";
-//import SearchBar from "../components/input/SearchBar";
 
 // import all redux
 import { useSelector } from "react-redux";
@@ -49,6 +47,7 @@ export default function CurrentProjectsScreen({ navigation }) {
     assignMultipleTasksToVendor,
     approveMultipleTasks,
     handleTabSelection,
+    rejectMultipleTasks, // Assuming you have a reject function
   } = useTaskFunctions(staff);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -60,6 +59,16 @@ export default function CurrentProjectsScreen({ navigation }) {
 
   // import in code useFilterTasks in Hooks folders
   const filteredTasks = useFilterTasks(currentTasks, searchQuery, dateFilter);
+
+  const handleApprove = (taskId) => {
+    // Logic for approving a task
+    approveMultipleTasks([taskId]);
+  };
+
+  const handleReject = (taskId) => {
+    // Logic for rejecting a task
+    rejectMultipleTasks([taskId]);
+  };
 
   return (
     <ContainerComponent>
@@ -83,7 +92,6 @@ export default function CurrentProjectsScreen({ navigation }) {
         onChangeText={handleSearch}
         style={{ marginHorizontal: 10 }}
       />
-      ;
       <MyFlatList
         // data={Array.isArray(currentTasks) ? currentTasks : []}
         data={filteredTasks} // Use filtered tasks
@@ -118,59 +126,26 @@ export default function CurrentProjectsScreen({ navigation }) {
             >
               <View style={{ position: "relative" }}>
                 <H4
-                  style={[
-                    typography.font12,
-                    typography.fontLato,
-                    { marginTop: -20, bottom: 30 },
-                  ]}
+                  style={[typography.font12, typography.fontLato, { marginTop: -20, bottom: 30 }]}
                 >
-                  {`${item.site?.location || ""}, ${
-                    item.site?.district || ""
-                  }, ${item.site?.state || ""}`}
+                  {`${item.site?.location || ""}, ${item.site?.district || ""}, ${item.site?.state || ""}`}
                 </H4>
 
-                <View
-                  style={{
-                    position: "absolute",
-                    right: 0,
-                    alignItems: "flex-end",
-                    bottom: 45,
-                  }}
-                >
+                <View style={{ position: "absolute", right: 0, alignItems: "flex-end", bottom: 45 }}>
                   <H6 style={[typography.font14, typography.fontLato]}>
                     {item.activity}
                   </H6>
-                  <Span
-                    style={[
-                      typography.font10,
-                      typography.fontLato,
-                      { textTransform: "uppercase", color: "gray", top: 15 },
-                    ]}
-                  >
+                  <Span style={[typography.font10, typography.fontLato, { textTransform: "uppercase", color: "gray", top: 15 }]}>
                     breda sl no
                   </Span>
-                  <H5
-                    style={[
-                      typography.font12,
-                      typography.fontLato,
-                      typography.textBold,
-                      spacing.mr4,
-                      { top: 10 },
-                    ]}
-                  >
+                  <H5 style={[typography.font12, typography.fontLato, typography.textBold, spacing.mr4, { top: 10 }]}>
                     {item.site?.breda_sl_no}
                   </H5>
                 </View>
 
                 <View style={[styles.row, { marginTop: -14 }]}>
                   <View>
-                    <Span
-                      style={[
-                        typography.font10,
-                        typography.fontLato,
-                        { textTransform: "uppercase", color: "gray" },
-                      ]}
-                    >
+                    <Span style={[typography.font10, typography.fontLato, { textTransform: "uppercase", color: "gray" }]}>
                       Start date
                     </Span>
                     <P style={[typography.font12, typography.fontLato]}>
@@ -179,53 +154,39 @@ export default function CurrentProjectsScreen({ navigation }) {
                   </View>
 
                   <View>
-                    <Span
-                      style={[
-                        typography.font10,
-                        typography.fontLato,
-                        {
-                          textTransform: "uppercase",
-                          color: "gray",
-                          right: 100,
-                        },
-                      ]}
-                    >
+                    <Span style={[typography.font10, typography.fontLato, { textTransform: "uppercase", color: "gray", right: 100 }]}>
                       End date
                     </Span>
-                    <P
-                      style={[
-                        typography.font12,
-                        typography.fontLato,
-                        { right: 100 },
-                      ]}
-                    >
+                    <P style={[typography.font12, typography.fontLato, { right: 100 }]}>
                       {item.end_date}
                     </P>
                   </View>
-
-                  
-                  
                 </View>
 
-                <View
-                  style={{
-                    position: "absolute",
-                    right: 0,
-                    alignItems: "flex-end",
-                    top: 20,
-                  }}
-                >
-                  <H6
-                    style={[
-                      typography.font14,
-                      typography.fontLato,
-                      { color: item.status === "Complete" ? "red" : "green" },
-                    ]}
-                  >
+                <View style={{ position: "absolute", right: 0, alignItems: "flex-end", top: 20 }}>
+                  <H6 style={[typography.font14, typography.fontLato, { color: item.status === "Complete" ? "red" : "green" }]}>
                     {item.status}
                   </H6>
                 </View>
 
+                {/* Conditionally render Approve/Reject buttons for "In Approval" tab */}
+                {activeTab === "In Approval" && item.status !== "Completed" && (
+                  <View style={{ position: "absolute", bottom: 20, left: 10, flexDirection: "row" }}>
+                    <TouchableOpacity
+                      onPress={() => handleApprove(item.id)}
+                      style={{ marginRight: 10, backgroundColor: "green", padding: 10, borderRadius: 5 }}
+                    >
+                      <P style={{ color: "white" }}>Approve</P>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() => handleReject(item.id)}
+                      style={{ backgroundColor: "red", padding: 10, borderRadius: 5 }}
+                    >
+                      <P style={{ color: "white" }}>Reject</P>
+                    </TouchableOpacity>
+                  </View>
+                )}
               </View>
             </ClickableCard1>
           );
@@ -240,21 +201,17 @@ export default function CurrentProjectsScreen({ navigation }) {
                 },
                 {
                   name: "Assigned",
-                  count:
-                    tasks.filter((t) => t.vendor_id && !t.image).length || "",
+                  count: tasks.filter((t) => t.vendor_id && !t.image).length || "",
                 },
                 {
                   name: "In Approval",
-                  count:
-                    tasks.filter(
-                      (t) => t.image && t.vendor_id && t.status !== "Completed"
-                    ).length || "",
+                  count: tasks.filter(
+                    (t) => t.image && t.vendor_id && t.status !== "Completed"
+                  ).length || "",
                 },
-
                 {
                   name: "Done",
-                  count:
-                    tasks.filter((t) => t.status === "Completed").length || "",
+                  count: tasks.filter((t) => t.status === "Completed").length || "",
                 },
                 { name: "View All", count: tasks.length || "" },
                 { name: "Rejected" },
@@ -263,15 +220,8 @@ export default function CurrentProjectsScreen({ navigation }) {
               onTabSelected={handleTabSelection}
             />
             {activeTab === "Rejected" && (
-              <View
-                style={{
-                  alignItems: "center",
-                  top: 12,
-                }}
-              >
-                <P style={[typography.font18, typography.textBold]}>
-                  No Reject Found
-                </P>
+              <View style={{ alignItems: "center", top: 12 }}>
+                <P style={[typography.font18, typography.textBold]}>No Reject Found</P>
               </View>
             )}
           </View>
@@ -284,16 +234,12 @@ export default function CurrentProjectsScreen({ navigation }) {
         assignTasks={assignMultipleTasksToVendor}
         approveTasks={approveMultipleTasks}
         disableAssign={
-          selectedTargets.length > 0 &&
-          selectedTargets.some((target) => target.hasVendor)
+          selectedTargets.length > 0 && selectedTargets.some((target) => target.hasVendor)
         }
         disableApprove={selectedTargets.length === 0 || activeTab !== "Pending"}
       />
       {showBottomSheet && (
-        <Filter
-          onClose={() => setShowBottomSheet(false)}
-          onApply={applyFilterFromRedux}
-        />
+        <Filter onClose={() => setShowBottomSheet(false)} onApply={applyFilterFromRedux} />
       )}
       {showVendorSelection && (
         <VendorSelectionScreen
