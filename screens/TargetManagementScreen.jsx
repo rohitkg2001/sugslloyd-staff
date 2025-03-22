@@ -1,4 +1,3 @@
-// import all react native
 import React, { useState, useEffect } from "react";
 import { View, ScrollView } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
@@ -32,6 +31,9 @@ const TargetManagementScreen = ({ route }) => {
   const isDataAvailable =
     currentTarget && Object.keys(currentTarget).length > 0;
 
+  // Calculate isCompleted flag from the current target's status
+  const isCompleted = currentTarget.status === "Completed";
+
   return (
     <ContainerComponent>
       <MyHeader title={t("Task")} hasIcon={true} isBack={true} />
@@ -52,6 +54,8 @@ const TargetManagementScreen = ({ route }) => {
                 <ImageDisplay
                   images={currentTarget.image}
                   id={currentTarget.id}
+                  status={currentTarget.status} // Pass status prop directly
+                  isCompleted={isCompleted} // Pass the isCompleted prop
                 />
               )}
           </ScrollView>
