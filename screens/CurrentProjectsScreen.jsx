@@ -109,9 +109,6 @@ export default function CurrentProjectsScreen({ navigation }) {
               key={item.id}
               index={item.id}
               title={item.site?.site_name || ""}
-              // subtitle={`${item.site?.location || ""}, ${
-              //   item.site?.district || ""
-              // }, ${item.site?.state || ""}`}
               onPress={() =>
                 navigation.navigate("targetManagementScreen", { id: item.id })
               }
@@ -180,6 +177,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                       {item.start_date}
                     </P>
                   </View>
+
                   <View>
                     <Span
                       style={[
@@ -188,7 +186,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                         {
                           textTransform: "uppercase",
                           color: "gray",
-                          right: 80,
+                          right: 180,
                         },
                       ]}
                     >
@@ -198,13 +196,14 @@ export default function CurrentProjectsScreen({ navigation }) {
                       style={[
                         typography.font12,
                         typography.fontLato,
-                        { right: 80 },
+                        { right: 180 },
                       ]}
                     >
                       {item.end_date}
                     </P>
                   </View>
                 </View>
+
                 <View
                   style={{
                     position: "absolute",
