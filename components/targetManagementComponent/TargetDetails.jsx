@@ -61,26 +61,27 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
         {/* <P>Vendor Name</P> */}
         <H5 style={[spacing.mv2, typography.font12]}>Vendor Name</H5>
         <View style={[styles.row, { alignItems: "center" }]}>
-          <P style={[typography.font10, spacing.mv2]}>
+          <P style={[typography.font10, spacing.mv2 , {marginTop:3}]}>
             {!target.vendor
               ? "................................."
               : target.vendor?.name}
           </P>
           <IconButton
+            style={[{marginTop: -5}]}
             onPress={() => setShowVendorSelection(true)}
             icon="pencil"
           />
         </View>
       </View>
-      <View
+      {/* <View
         style={[
           styles.row,
          // spacing.mv2,
           { justifyContent: "space-between", flex: 1 },
         ]}
-      >
+      > */}
         {/* <H6>Remarks</H6> */}
-        <H5 style={[spacing.mv2, typography.font14]}>Remarks</H5>
+        {/* <H5 style={[spacing.mv2, typography.font14]}>Remarks</H5>
         <View style={[styles.row, { alignItems: "center" }]}>
           <H6>
             {!target.description
@@ -92,7 +93,8 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
             icon="pencil"
           />
         </View>
-      </View>
+      </View> */}
+      
       <View
         style={[
           styles.row,
@@ -114,28 +116,28 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
         <View>
           <Span
             style={[
-              typography.font12,
+              typography.font10,
               typography.fontLato,
               { textTransform: "uppercase", color: "gray" },
             ]}
           >
             Survey Latitude
           </Span>
-          <P style={[typography.font16, typography.fontLato]}>
+          <P style={[typography.font12, typography.fontLato]}>
             {target.site?.survey_latitude}
           </P>
         </View>
         <View>
           <Span
             style={[
-              typography.font12,
+              typography.font10,
               typography.fontLato,
               { textTransform: "uppercase", color: "gray" },
             ]}
           >
             Survey Longitude
           </Span>
-          <P style={[typography.font16, typography.fontLato]}>
+          <P style={[typography.font12, typography.fontLato]}>
             {target.site?.actual_latitude}
           </P>
         </View>
@@ -145,28 +147,28 @@ const TargetDetails = ({ target, setShowVendorSelection }) => {
         <View>
           <Span
             style={[
-              typography.font12,
+              typography.font10,
               typography.fontLato,
               { textTransform: "uppercase", color: "gray" },
             ]}
           >
             Actual Latitude
           </Span>
-          <P style={[typography.font16, typography.fontLato]}>
+          <P style={[typography.font12, typography.fontLato]}>
             {target.site?.actual_latitude}
           </P>
         </View>
         <View>
           <Span
             style={[
-              typography.font12,
+              typography.font10,
               typography.fontLato,
               { textTransform: "uppercase", color: "gray" },
             ]}
           >
             Actual Longitude
           </Span>
-          <P style={[typography.font16, typography.fontLato]}>
+          <P style={[typography.font12, typography.fontLato]}>
             {target.site?.actual_longitude}
           </P>
         </View>

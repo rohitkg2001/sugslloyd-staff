@@ -186,7 +186,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                         {
                           textTransform: "uppercase",
                           color: "gray",
-                          right: 180,
+                          right: 100,
                         },
                       ]}
                     >
@@ -196,7 +196,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                       style={[
                         typography.font12,
                         typography.fontLato,
-                        { right: 180 },
+                        { right: 100 },
                       ]}
                     >
                       {item.end_date}

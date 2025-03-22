@@ -18,6 +18,9 @@ const ImageDisplay = ({ images, id, status }) => {
       setFilteredImages([images[0]]);
     } else if (activeTab === "Final Inspection") {
       setFilteredImages(images);
+    } else if (activeTab === "In Approval") {
+      // You can add any logic here to filter images for "In Approval"
+      setFilteredImages(images);
     }
   }, [activeTab, images]);
 
@@ -48,12 +51,11 @@ const ImageDisplay = ({ images, id, status }) => {
 
   const handleApprove = async () => {
     try {
-      //const taskId = id;
+      // const taskId = id;
       console.log(id);
       const response = await axios.post(
         `https://slldm.com/api/tasks/${id}/approve`
       );
-      //console.log("Approval successful:", response.data);
       alert(response.data.message);
     } catch (error) {
       console.error("Error approving the task:", error);
@@ -93,7 +95,7 @@ const ImageDisplay = ({ images, id, status }) => {
             },
           ]}
         >
-          {["Survey", "Final Inspection"].map((tab, index) => (
+          {["Survey", "Final Inspection", "In Approval"].map((tab, index) => (
             <TouchableOpacity
               key={tab}
               onPress={() => handleTabSelection(tab)}
@@ -264,6 +266,13 @@ const ImageDisplay = ({ images, id, status }) => {
         )}
       />
 
+      {/* Show approve and reject buttons only if "In Approval" tab is selected */}
+      {/* {activeTab === "In Approval" && (
+        <View style={[styles.row, {}]}>
+          <MyButton title={"Approve"} onPress={handleApprove} />
+          <MyButton title={"Reject"} color="#DC4C64" />
+        </View>
+      )} */}
       {(activeTab === "Survey" || activeTab === "Final Inspection") && (
         <View style={[styles.row, {}]}>
           <MyButton title={"Approve"} onPress={handleApprove} />
