@@ -23,23 +23,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     }
   };
 
-  // Handle confirming the location selection from map screen
-  const handleLocationConfirm = (location, type) => {
-    if (type === "pickup") {
-      setPickupLocation(location);
-    } else if (type === "drop") {
-      setDropLocation(location);
-      setIsDropLocationSelected(true); // Mark drop location as selected
-    }
-    navigation.goBack(); // Navigate back to the form screen
-  };
-
-  // Handle changing the drop location if it's already selected
-  const handleChangeDropLocation = () => {
-    setDropLocation("");
-    setIsDropLocationSelected(false); // Allow the user to change the drop location
-  };
-
   useEffect(() => {
     if (route.params?.pickupLocation) {
       setPickupLocation(route.params.pickupLocation);
