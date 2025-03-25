@@ -279,7 +279,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           </H5>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate("transportCamera")}
           style={[
             styles.row,
@@ -393,9 +393,129 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           >
             ₹{prices.bike}
           </H6>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+
+        <View>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("transportCamera", {
+                transportType: "Car",
+                pickupLocation: pickupLocation,
+                dropLocation: dropLocation,
+                price: prices.car,
+              })
+            }
+            style={[
+              styles.row,
+              spacing.br2,
+              spacing.p3,
+              spacing.mb3,
+              { alignItems: "center", backgroundColor: LIGHT, elevation: 3 },
+            ]}
+          >
+            <View style={[styles.row, { alignItems: "center" }]}>
+              <Image
+                source={require("../assets/car1.jpeg")}
+                style={[
+                  spacing.mt2,
+                  {
+                    width: 40,
+                    height: 40,
+                    resizeMode: "contain",
+                    alignSelf: "center",
+                  },
+                ]}
+              />
+              <View style={[spacing.ml2]}>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Car
+                </H5>
+                <P style={[typography.font14, typography.fontLato]}>
+                  {pickupLocation} - {dropLocation}
+                </P>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {distance} km
+                </P>
+              </View>
+            </View>
+            <H6
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+              ]}
+            >
+              ₹{prices.car}
+            </H6>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("transportCamera", {
+                transportType: "Bike",
+                pickupLocation: pickupLocation,
+                dropLocation: dropLocation,
+                price: prices.bike,
+              })
+            }
+            style={[
+              styles.row,
+              spacing.br2,
+              spacing.p3,
+              spacing.mb3,
+              { alignItems: "center", backgroundColor: LIGHT, elevation: 3 },
+            ]}
+          >
+            <View style={[styles.row, { alignItems: "center" }]}>
+              <Image
+                source={require("../assets/bike.jpg")}
+                style={[
+                  spacing.mt2,
+                  {
+                    width: 50,
+                    height: 50,
+                    resizeMode: "contain",
+                    alignSelf: "center",
+                  },
+                ]}
+              />
+              <View style={[spacing.ml2]}>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Bike
+                </H5>
+                <P style={[typography.font14, typography.fontLato]}>
+                  {pickupLocation} - {dropLocation}
+                </P>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {distance} km
+                </P>
+              </View>
+            </View>
+            <H6
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+              ]}
+            >
+              ₹{prices.bike}
+            </H6>
+          </TouchableOpacity>
+        </View>
       </View>
-     
+
       {/* Proceed Button */}
       <Button
         style={[

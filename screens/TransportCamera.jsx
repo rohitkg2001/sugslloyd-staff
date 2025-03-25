@@ -19,6 +19,7 @@ export default function TransportCamera({
   setIsCameraOpen,
   isSurvey,
   handleSubmission,
+  route,
 }) {
   const [photos, setPhotos] = useState([]);
   const [location, setLocation] = useState(null);
@@ -30,6 +31,15 @@ export default function TransportCamera({
   const [dropoffLocation, setDropoffLocation] = useState(null);
   const [pickupAddress, setPickupAddress] = useState("");
   const [dropoffAddress, setDropoffAddress] = useState("");
+  const [transportType, setTransportType] = useState("");
+  // const { transportType, pickupLocation, dropLocation, price } =
+  //   route.params || {};
+
+  useEffect(() => {
+    if (route?.params?.transportType) {
+      setTransportType(route.params.transportType);
+    }
+  }, [route]);
 
   const getAddressFromCoords = async (latitude, longitude) => {
     try {
@@ -171,10 +181,9 @@ export default function TransportCamera({
               // onPress={() => navigation.navigate("mapScreen")}
               onPress={() =>
                 navigation.navigate("mapScreen", {
-                  //pickupLocation, // Pass pickup location
-                  //dropLocation, // Pass drop location
                   pickupAddress,
                   dropoffAddress,
+                  transportType,
                 })
               }
               style={styles.retakeButton}

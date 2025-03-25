@@ -83,7 +83,7 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
             key={index}
             item={item}
             title={`${item.pickupLocation} - ${item.dropoffLocation}`}
-            subtitle={`${item.date} - ${item.time}`}
+            //  subtitle={`${item.date} - ${item.time}`}
             onPress={() =>
               navigation.navigate("conveyanceDetail", { travelItem: item })
             }
@@ -97,7 +97,7 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
                 ]}
               >
                 <P style={[typography.font16, typography.fontLato]}>
-                  {item.modeOfTransport}
+                  {/* {item.transportType} */}
                 </P>
               </View>
               <View
@@ -123,7 +123,7 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
                     typography.textBold,
                   ]}
                 >
-                  ₹{item.price}
+                  ₹ {/* ₹{item.price} */}
                 </P>
               </View>
             </View>

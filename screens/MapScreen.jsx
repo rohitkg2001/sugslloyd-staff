@@ -268,7 +268,7 @@ import { styles, typography } from "../styles";
 import Button from "../components/buttons/Button";
 
 const MapScreen = ({ route, navigation }) => {
-  const { dropoffAddress, pickupAddress } = route.params || {};
+  const { dropoffAddress, pickupAddress, transportType } = route.params || {};
 
   return (
     <View
@@ -361,18 +361,49 @@ const MapScreen = ({ route, navigation }) => {
             {dropoffAddress || "Not provided"}
           </Text>
         </View>
+
+        <View
+          style={{
+            width: "90%",
+            backgroundColor: "#fff",
+            padding: 15,
+            borderRadius: 10,
+            elevation: 2,
+            marginBottom: 15,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              color: "#333",
+              marginBottom: 5,
+            }}
+          >
+            🚕 Transport
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#555",
+            }}
+          >
+            {transportType || "Not provided"}
+          </Text>
+        </View>
       </View>
 
       <Button
         style={[
           styles.btn,
           styles.bgPrimary,
-          { justifyContent: "center", marginHorizontal: 0, width: "95%" }, // Kam space
+          { justifyContent: "center", marginHorizontal: 0, width: "95%" },
         ]}
         onPress={() =>
           navigation.navigate("conveyanceManagement", {
             pickupAddress: pickupAddress,
             dropoffAddress: dropoffAddress,
+            transportType: transportType,
           })
         }
       >
