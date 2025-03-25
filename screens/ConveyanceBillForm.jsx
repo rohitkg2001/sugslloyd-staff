@@ -10,6 +10,11 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropLocation, setDropLocation] = useState("");
   const [distance, setDistance] = useState(null);
+  const [prices, setPrices] = useState({
+    car: 0,
+    bike: 0,
+    publicTransport: 0,
+  });
 
   const [isDropLocationSelected, setIsDropLocationSelected] = useState(false); // Track if drop location is selected
 
@@ -24,17 +29,36 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     }
   };
 
+  // useEffect(() => {
+  //   if (route.params?.pickupLocation) {
+  //     setPickupLocation(route.params.pickupLocation);
+  //   }
+  //   if (route.params?.dropoffLocation) {
+  //     setDropLocation(route.params.dropoffLocation);
+  //   }
+  //   if (route.params?.distance) {
+  //     setDistance(route.params.distance); // Store distance value
+  //   }
+  // }, [route.params]);
+
   useEffect(() => {
-    if (route.params?.pickupLocation) {
+    if (route.params?.pickupLocation)
       setPickupLocation(route.params.pickupLocation);
-    }
-    if (route.params?.dropoffLocation) {
+    if (route.params?.dropoffLocation)
       setDropLocation(route.params.dropoffLocation);
-    }
     if (route.params?.distance) {
-      setDistance(route.params.distance); // Store distance value
+      setDistance(route.params.distance);
+      calculatePrices(route.params.distance);
     }
   }, [route.params]);
+
+  const calculatePrices = (distance) => {
+    setPrices({
+      car: distance * 10,
+      bike: distance * 20,
+      publicTransport: distance * 5,
+    });
+  };
 
   return (
     <View style={[spacing.p2, { width: SCREEN_WIDTH }]}>
@@ -260,7 +284,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               </P>
             </View>
           </View>
-          <H5
+          {/* <H5
             style={[
               typography.font14,
               typography.textBold,
@@ -268,6 +292,15 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             ]}
           >
             ₹120
+          </H5> */}
+          <H5
+            style={[
+              typography.font14,
+              typography.textBold,
+              typography.fontLato,
+            ]}
+          >
+            ₹{prices.publicTransport}
           </H5>
         </TouchableOpacity>
 
@@ -325,7 +358,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               typography.fontLato,
             ]}
           >
-            ₹350
+            ₹{prices.car}
           </H6>
         </TouchableOpacity>
 
@@ -383,7 +416,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               typography.fontLato,
             ]}
           >
-            ₹220
+            ₹{prices.bike}
           </H6>
         </TouchableOpacity>
       </View>
