@@ -55,7 +55,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
       <P style={[typography.font16, typography.fontLato, spacing.mb3]}>
         Where would you want to Go?
       </P>
-
       <View
         style={[
           styles.row,
@@ -210,7 +209,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           </View>
         </View>
       </View>
-
       <View>
         <P
           style={[
@@ -224,73 +222,8 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           Mode of Transport
         </P>
       </View>
-
       {/* Transport Options */}
       <View>
-        {/* Public Transport Option */}
-        <View
-          style={[
-            styles.row,
-            spacing.br2,
-            spacing.p3,
-            spacing.mb3,
-            {
-              alignItems: "center",
-              backgroundColor: LIGHT,
-              elevation: 3,
-            },
-          ]}
-        >
-          <TextInput
-            placeholder="Enter custom price for Public Transport"
-            keyboardType="numeric"
-            value={customPublicTransport}
-            onChangeText={(text) => setCustomPublicTransport(text)} // Update custom price
-            style={[typography.font14, typography.fontLato, { flex: 1 }]}
-          />
-        </View>
-
-        <TouchableOpacity
-          style={[
-            styles.row,
-            spacing.br2,
-            spacing.p3,
-            spacing.mb3,
-            {
-              alignItems: "center",
-              backgroundColor: LIGHT,
-              elevation: 3,
-            },
-          ]}
-        >
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Image
-              source={require("../assets/image.png")}
-              style={[{ width: 50, height: 50, resizeMode: "contain", alignSelf: "center" }]}
-            />
-            <View style={[spacing.ml2]}>
-              <View style={[styles.row, { alignItems: "center" }]}>
-                <H5
-                  style={[typography.font14, typography.textBold, typography.fontLato]}
-                >
-                  Public transport
-                </H5>
-              </View>
-              <P style={[typography.font14, typography.fontLato]}>
-                {pickupLocation}-{dropLocation}
-              </P>
-              <P style={[typography.font12, typography.fontLato]}>
-                {distance} km
-              </P>
-            </View>
-          </View>
-          <H5
-            style={[typography.font14, typography.textBold, typography.fontLato]}
-          >
-            ₹{prices.publicTransport}
-          </H5>
-        </TouchableOpacity>
-
         {/* Car Option */}
         <TouchableOpacity
           onPress={() => navigation.navigate("transportCamera")}
@@ -322,7 +255,11 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             <View style={[spacing.ml2]}>
               <View style={[styles.row, { alignItems: "center" }]}>
                 <H5
-                  style={[typography.font14, typography.textBold, typography.fontLato]}
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
                 >
                   Car
                 </H5>
@@ -336,7 +273,11 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             </View>
           </View>
           <H6
-            style={[typography.font14, typography.textBold, typography.fontLato]}
+            style={[
+              typography.font14,
+              typography.textBold,
+              typography.fontLato,
+            ]}
           >
             ₹{prices.car}
           </H6>
@@ -373,7 +314,11 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             <View style={[spacing.ml2]}>
               <View style={[styles.row, { alignItems: "center" }]}>
                 <H5
-                  style={[typography.font14, typography.textBold, typography.fontLato]}
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
                 >
                   Bike
                 </H5>
@@ -387,16 +332,81 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             </View>
           </View>
           <H6
-            style={[typography.font14, typography.textBold, typography.fontLato]}
+            style={[
+              typography.font14,
+              typography.textBold,
+              typography.fontLato,
+            ]}
           >
             ₹{prices.bike}
           </H6>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.row,
+            spacing.br2,
+            spacing.p3,
+            spacing.mb3,
+            {
+              alignItems: "center",
+              backgroundColor: LIGHT,
+              elevation: 3,
+            },
+          ]}
+        >
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Image
+              source={require("../assets/image.png")}
+              style={[
+                {
+                  width: 50,
+                  height: 50,
+                  resizeMode: "contain",
+                  alignSelf: "center",
+                },
+              ]}
+            />
+            <View style={[spacing.ml2]}>
+              <View style={[styles.row, { alignItems: "center" }]}>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Public transport
+                </H5>
+              </View>
+              <P style={[typography.font14, typography.fontLato]}>
+                {pickupLocation}-{dropLocation}
+              </P>
+              <P style={[typography.font12, typography.fontLato]}>
+                {distance} km
+              </P>
+            </View>
+          </View>
+          <H5
+            style={[
+              typography.font14,
+              typography.textBold,
+              typography.fontLato,
+            ]}
+          >
+            ₹{prices.publicTransport}
+          </H5>
+        </TouchableOpacity>
+        
       </View>
 
       {/* Proceed Button */}
       <Button
-        style={[styles.btn, styles.bgPrimary, { justifyContent: "center", top: 100 }]}
+        style={[
+          styles.btn,
+          styles.bgPrimary,
+          { justifyContent: "center", top: 100 },
+        ]}
       >
         <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
           {"Proceed"}

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { CameraView, useCameraPermissions } from "expo-camera";
+import { CameraView } from "expo-camera";
 import {
   View,
   Text,
@@ -11,13 +11,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import * as Location from "expo-location";
-import {
-  ICON_LARGE,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-  spacing,
-  typography,
-} from "../styles";
+import { ICON_LARGE, SCREEN_HEIGHT, SCREEN_WIDTH, spacing } from "../styles";
 import { useNavigation } from "@react-navigation/native";
 
 export default function TransportCamera({
@@ -31,6 +25,53 @@ export default function TransportCamera({
   const [timestamp, setTimestamp] = useState("");
   const cameraRef = useRef(null);
   const navigation = useNavigation();
+
+  const [pickupLocation, setPickupLocation] = useState(null);
+  const [dropoffLocation, setDropoffLocation] = useState(null);
+  const [pickupAddress, setPickupAddress] = useState("");
+  const [dropoffAddress, setDropoffAddress] = useState("");
+
+  const getAddressFromCoords = async (latitude, longitude) => {
+    try {
+      let addressData = await Location.reverseGeocodeAsync({
+        latitude,
+        longitude,
+      });
+      if (addressData.length > 0) {
+        let { city } = addressData[0];
+        return city ? `${city}` : "Address not found";
+      }
+      return "Address not found";
+    } catch (error) {
+      console.error("Error fetching address:", error);
+      return "Address fetch error";
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission Denied", "Allow location access to proceed.");
+        return;
+      }
+
+      let loc = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = loc.coords;
+      setPickupLocation({ latitude, longitude });
+
+      // Pickup Address Set Karna
+      const pickupAddr = await getAddressFromCoords(latitude, longitude);
+      setPickupAddress(pickupAddr);
+
+      let dropLat = latitude + 0.01;
+      let dropLong = longitude + 0.01;
+      setDropoffLocation({ latitude: dropLat, longitude: dropLong });
+
+      const dropAddr = await getAddressFromCoords(dropLat, dropLong);
+      setDropoffAddress(dropAddr);
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -127,7 +168,15 @@ export default function TransportCamera({
           </TouchableOpacity>
           {!isSurvey && photos.length >= 1 ? (
             <TouchableOpacity
-              onPress={() => navigation.navigate("mapScreen")}
+              // onPress={() => navigation.navigate("mapScreen")}
+              onPress={() =>
+                navigation.navigate("mapScreen", {
+                  //pickupLocation, // Pass pickup location
+                  //dropLocation, // Pass drop location
+                  pickupAddress,
+                  dropoffAddress,
+                })
+              }
               style={styles.retakeButton}
             >
               <Icon name="arrow-forward" size={ICON_LARGE} color={"white"} />
