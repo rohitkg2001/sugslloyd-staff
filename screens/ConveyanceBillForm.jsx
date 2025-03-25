@@ -29,18 +29,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (route.params?.pickupLocation) {
-  //     setPickupLocation(route.params.pickupLocation);
-  //   }
-  //   if (route.params?.dropoffLocation) {
-  //     setDropLocation(route.params.dropoffLocation);
-  //   }
-  //   if (route.params?.distance) {
-  //     setDistance(route.params.distance); // Store distance value
-  //   }
-  // }, [route.params]);
-
   useEffect(() => {
     if (route.params?.pickupLocation)
       setPickupLocation(route.params.pickupLocation);
@@ -65,7 +53,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
       <P style={[typography.font16, typography.fontLato, spacing.mb3]}>
         Where would you want to Go?
       </P>
-
       <View
         style={[
           styles.row,
@@ -221,7 +208,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           </View>
         </View>
       </View>
-
       <View>
         <P
           style={[
@@ -235,7 +221,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           Mode of Transport
         </P>
       </View>
-
       {/* Transport Options */}
       <View>
         <TouchableOpacity
@@ -276,7 +261,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 </H5>
               </View>
               <P style={[typography.font14, typography.fontLato]}>
-                {/* Hanuman Mandir - Patna Zoo */}
                 {pickupLocation}-{dropLocation}
               </P>
               <P style={[typography.font12, typography.fontLato]}>
@@ -284,15 +268,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               </P>
             </View>
           </View>
-          {/* <H5
-            style={[
-              typography.font14,
-              typography.textBold,
-              typography.fontLato,
-            ]}
-          >
-            ₹120
-          </H5> */}
           <H5
             style={[
               typography.font14,
@@ -420,7 +395,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           </H6>
         </TouchableOpacity>
       </View>
-
+     
       {/* Proceed Button */}
       <Button
         style={[
