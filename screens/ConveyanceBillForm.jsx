@@ -24,15 +24,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (route.params?.pickupLocation) {
-  //     setPickupLocation(route.params.pickupLocation);
-  //   }
-  //   if (route.params?.dropoffLocation) {
-  //     setDropLocation(route.params.dropoffLocation);
-  //   }
-  // }, [route.params]);
-
   useEffect(() => {
     if (route.params?.pickupLocation) {
       setPickupLocation(route.params.pickupLocation);
@@ -149,34 +140,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           </View>
 
           {/* Allow the user to select or change the drop location */}
-          {/* <TouchableOpacity
-            onPress={() => handleLocationSelection("drop")}
-            style={[
-              styles.row,
-              spacing.br4,
-              spacing.p2,
-              {
-                backgroundColor: LIGHT,
-                elevation: 3,
-                top: 8,
-                marginRight: 180,
-              },
-            ]}
-          >
-            <Ionicons name="location-outline" size={20} color="red" />
-            <P
-              style={[
-                typography.font12,
-                typography.fontLato,
-                spacing.mr3,
-                typography.textBold,
-              ]}
-            >
-              {isDropLocationSelected
-                ? "Change Drop Location"
-                : "Select Drop Location"}
-            </P>
-          </TouchableOpacity> */}
 
           <View
             style={{
@@ -289,10 +252,11 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 </H5>
               </View>
               <P style={[typography.font14, typography.fontLato]}>
-                Hanuman Mandir - Patna Zoo
+                {/* Hanuman Mandir - Patna Zoo */}
+                {pickupLocation}-{dropLocation}
               </P>
               <P style={[typography.font12, typography.fontLato]}>
-                15Km (approx)
+                {distance} km
               </P>
             </View>
           </View>
@@ -347,10 +311,10 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 </H5>
               </View>
               <P style={[typography.font14, typography.fontLato]}>
-                Hanuman Mandir - Patna Zoo
+                {pickupLocation}-{dropLocation}
               </P>
               <P style={[typography.font12, typography.fontLato]}>
-                15Km (appx)
+                {distance} km
               </P>
             </View>
           </View>
@@ -405,10 +369,10 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 </H5>
               </View>
               <P style={[typography.font14, typography.fontLato]}>
-                Hanuman Mandir - Patna Zoo
+                {pickupLocation}-{dropLocation}
               </P>
               <P style={[typography.font12, typography.fontLato]}>
-                15Km (appx)
+                {distance} km
               </P>
             </View>
           </View>
