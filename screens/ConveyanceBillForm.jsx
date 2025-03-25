@@ -15,6 +15,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     bike: 0,
     publicTransport: 0,
   });
+  const [customPublicTransport, setCustomPublicTransport] = useState(""); // New state for custom public transport price
 
   const [isDropLocationSelected, setIsDropLocationSelected] = useState(false); // Track if drop location is selected
 
@@ -29,18 +30,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (route.params?.pickupLocation) {
-  //     setPickupLocation(route.params.pickupLocation);
-  //   }
-  //   if (route.params?.dropoffLocation) {
-  //     setDropLocation(route.params.dropoffLocation);
-  //   }
-  //   if (route.params?.distance) {
-  //     setDistance(route.params.distance); // Store distance value
-  //   }
-  // }, [route.params]);
-
   useEffect(() => {
     if (route.params?.pickupLocation)
       setPickupLocation(route.params.pickupLocation);
@@ -48,15 +37,16 @@ const ConveyanceBillForm = ({ navigation, route }) => {
       setDropLocation(route.params.dropoffLocation);
     if (route.params?.distance) {
       setDistance(route.params.distance);
-      calculatePrices(route.params.distance);
+      calculatePrices(route.params.distance, customPublicTransport);
     }
-  }, [route.params]);
+  }, [route.params, customPublicTransport]);
 
-  const calculatePrices = (distance) => {
+  // Update calculatePrices to accept a custom value for publicTransport
+  const calculatePrices = (distance, publicTransportPrice) => {
     setPrices({
-      car: distance * 10,
-      bike: distance * 20,
-      publicTransport: distance * 5,
+      car: distance * 4,
+      bike: distance * 3,
+      publicTransport: publicTransportPrice ? publicTransportPrice : distance * 5, // If custom value is provided, use it
     });
   };
 
@@ -164,7 +154,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           </View>
 
           {/* Allow the user to select or change the drop location */}
-
           <View
             style={{
               flexDirection: "row",
@@ -238,6 +227,29 @@ const ConveyanceBillForm = ({ navigation, route }) => {
 
       {/* Transport Options */}
       <View>
+        {/* Public Transport Option */}
+        <View
+          style={[
+            styles.row,
+            spacing.br2,
+            spacing.p3,
+            spacing.mb3,
+            {
+              alignItems: "center",
+              backgroundColor: LIGHT,
+              elevation: 3,
+            },
+          ]}
+        >
+          <TextInput
+            placeholder="Enter custom price for Public Transport"
+            keyboardType="numeric"
+            value={customPublicTransport}
+            onChangeText={(text) => setCustomPublicTransport(text)} // Update custom price
+            style={[typography.font14, typography.fontLato, { flex: 1 }]}
+          />
+        </View>
+
         <TouchableOpacity
           style={[
             styles.row,
@@ -254,29 +266,17 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           <View style={[styles.row, { alignItems: "center" }]}>
             <Image
               source={require("../assets/image.png")}
-              style={[
-                {
-                  width: 50,
-                  height: 50,
-                  resizeMode: "contain",
-                  alignSelf: "center",
-                },
-              ]}
+              style={[{ width: 50, height: 50, resizeMode: "contain", alignSelf: "center" }]}
             />
             <View style={[spacing.ml2]}>
               <View style={[styles.row, { alignItems: "center" }]}>
                 <H5
-                  style={[
-                    typography.font14,
-                    typography.textBold,
-                    typography.fontLato,
-                  ]}
+                  style={[typography.font14, typography.textBold, typography.fontLato]}
                 >
                   Public transport
                 </H5>
               </View>
               <P style={[typography.font14, typography.fontLato]}>
-                {/* Hanuman Mandir - Patna Zoo */}
                 {pickupLocation}-{dropLocation}
               </P>
               <P style={[typography.font12, typography.fontLato]}>
@@ -284,26 +284,14 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               </P>
             </View>
           </View>
-          {/* <H5
-            style={[
-              typography.font14,
-              typography.textBold,
-              typography.fontLato,
-            ]}
-          >
-            ₹120
-          </H5> */}
           <H5
-            style={[
-              typography.font14,
-              typography.textBold,
-              typography.fontLato,
-            ]}
+            style={[typography.font14, typography.textBold, typography.fontLato]}
           >
             ₹{prices.publicTransport}
           </H5>
         </TouchableOpacity>
 
+        {/* Car Option */}
         <TouchableOpacity
           onPress={() => navigation.navigate("transportCamera")}
           style={[
@@ -334,11 +322,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             <View style={[spacing.ml2]}>
               <View style={[styles.row, { alignItems: "center" }]}>
                 <H5
-                  style={[
-                    typography.font14,
-                    typography.textBold,
-                    typography.fontLato,
-                  ]}
+                  style={[typography.font14, typography.textBold, typography.fontLato]}
                 >
                   Car
                 </H5>
@@ -352,16 +336,13 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             </View>
           </View>
           <H6
-            style={[
-              typography.font14,
-              typography.textBold,
-              typography.fontLato,
-            ]}
+            style={[typography.font14, typography.textBold, typography.fontLato]}
           >
             ₹{prices.car}
           </H6>
         </TouchableOpacity>
 
+        {/* Bike Option */}
         <TouchableOpacity
           onPress={() => navigation.navigate("transportCamera")}
           style={[
@@ -392,11 +373,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             <View style={[spacing.ml2]}>
               <View style={[styles.row, { alignItems: "center" }]}>
                 <H5
-                  style={[
-                    typography.font14,
-                    typography.textBold,
-                    typography.fontLato,
-                  ]}
+                  style={[typography.font14, typography.textBold, typography.fontLato]}
                 >
                   Bike
                 </H5>
@@ -410,11 +387,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             </View>
           </View>
           <H6
-            style={[
-              typography.font14,
-              typography.textBold,
-              typography.fontLato,
-            ]}
+            style={[typography.font14, typography.textBold, typography.fontLato]}
           >
             ₹{prices.bike}
           </H6>
@@ -423,11 +396,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
 
       {/* Proceed Button */}
       <Button
-        style={[
-          styles.btn,
-          styles.bgPrimary,
-          { justifyContent: "center", top: 100 },
-        ]}
+        style={[styles.btn, styles.bgPrimary, { justifyContent: "center", top: 100 }]}
       >
         <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
           {"Proceed"}
