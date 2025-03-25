@@ -13,6 +13,60 @@ const LocationSetScreen = ({ navigation }) => {
   const [region, setRegion] = useState(null);
   const [pickupAddress, setPickupAddress] = useState("");
   const [dropoffAddress, setDropoffAddress] = useState("");
+  const [distance, setDistance] = useState(null);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== "granted") {
+  //       Alert.alert("Permission Denied", "Allow location access to proceed.");
+  //       return;
+  //     }
+
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     const { latitude, longitude } = location.coords;
+  //     setRegion({
+  //       latitude,
+  //       longitude,
+  //       latitudeDelta: 0.05,
+  //       longitudeDelta: 0.05,
+  //     });
+  //     setPickupLocation({ latitude, longitude });
+  //     const address = await getAddressFromCoords(latitude, longitude);
+  //     setPickupAddress(address);
+  //   })();
+  // }, []);
+
+  // const getAddressFromCoords = async (latitude, longitude) => {
+  //   try {
+  //     let [result] = await Location.reverseGeocodeAsync({
+  //       latitude,
+  //       longitude,
+  //     });
+  //     return `${result.city}`;
+  //   } catch (error) {
+  //     console.error(error);
+  //     return "Address not found";
+  //   }
+  // };
+
+  // const handleSelectLocation = async (event) => {
+  //   const { latitude, longitude } = event.nativeEvent.coordinate;
+
+  //   if (!pickupLocation) {
+  //     setPickupLocation({ latitude, longitude });
+  //     const address = await getAddressFromCoords(latitude, longitude);
+  //     setPickupAddress(address);
+  //     console.log("Pickup Location Set:", { latitude, longitude });
+  //     console.log("Pickup Address:", address);
+  //   } else {
+  //     setDropoffLocation({ latitude, longitude });
+  //     const address = await getAddressFromCoords(latitude, longitude);
+  //     setDropoffAddress(address);
+  //     console.log("Drop-off Location Set:", { latitude, longitude });
+  //     console.log("Drop-off Address:", address);
+  //   }
+  // };
 
   useEffect(() => {
     (async () => {
@@ -49,6 +103,24 @@ const LocationSetScreen = ({ navigation }) => {
     }
   };
 
+  const haversineDistance = (coords1, coords2) => {
+    const toRad = (angle) => (angle * Math.PI) / 180;
+    const R = 6371; // Radius of Earth in km
+
+    const dLat = toRad(coords2.latitude - coords1.latitude);
+    const dLon = toRad(coords2.longitude - coords1.longitude);
+
+    const lat1 = toRad(coords1.latitude);
+    const lat2 = toRad(coords2.latitude);
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return (R * c).toFixed(2); // Distance in km
+  };
+
   const handleSelectLocation = async (event) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
 
@@ -56,14 +128,15 @@ const LocationSetScreen = ({ navigation }) => {
       setPickupLocation({ latitude, longitude });
       const address = await getAddressFromCoords(latitude, longitude);
       setPickupAddress(address);
-      console.log("Pickup Location Set:", { latitude, longitude });
-      console.log("Pickup Address:", address);
     } else {
       setDropoffLocation({ latitude, longitude });
       const address = await getAddressFromCoords(latitude, longitude);
       setDropoffAddress(address);
-      console.log("Drop-off Location Set:", { latitude, longitude });
-      console.log("Drop-off Address:", address);
+      const calculatedDistance = haversineDistance(pickupLocation, {
+        latitude,
+        longitude,
+      });
+      setDistance(calculatedDistance);
     }
   };
 
@@ -88,6 +161,12 @@ const LocationSetScreen = ({ navigation }) => {
             Drop: {dropoffAddress || "Not selected"}
           </Text>
         </View>
+
+        {distance && (
+          <Text style={{ color: "white", fontSize: 16, marginTop: 5 }}>
+            Distance: {distance} km
+          </Text>
+        )}
       </View>
       {region && (
         <MapView
@@ -150,6 +229,7 @@ const LocationSetScreen = ({ navigation }) => {
           navigation.navigate("conveyanceBillForm", {
             pickupLocation: pickupAddress,
             dropoffLocation: dropoffAddress,
+            distance,
           });
         }}
       >

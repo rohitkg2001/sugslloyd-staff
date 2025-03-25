@@ -9,6 +9,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   // State for Pickup and Drop Locations
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropLocation, setDropLocation] = useState("");
+  const [distance, setDistance] = useState(null);
 
   const [isDropLocationSelected, setIsDropLocationSelected] = useState(false); // Track if drop location is selected
 
@@ -23,12 +24,24 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     }
   };
 
+  // useEffect(() => {
+  //   if (route.params?.pickupLocation) {
+  //     setPickupLocation(route.params.pickupLocation);
+  //   }
+  //   if (route.params?.dropoffLocation) {
+  //     setDropLocation(route.params.dropoffLocation);
+  //   }
+  // }, [route.params]);
+
   useEffect(() => {
     if (route.params?.pickupLocation) {
       setPickupLocation(route.params.pickupLocation);
     }
     if (route.params?.dropoffLocation) {
       setDropLocation(route.params.dropoffLocation);
+    }
+    if (route.params?.distance) {
+      setDistance(route.params.distance); // Store distance value
     }
   }, [route.params]);
 
@@ -136,7 +149,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           </View>
 
           {/* Allow the user to select or change the drop location */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => handleLocationSelection("drop")}
             style={[
               styles.row,
@@ -163,7 +176,62 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 ? "Change Drop Location"
                 : "Select Drop Location"}
             </P>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 5,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => handleLocationSelection("drop")}
+              style={[
+                styles.row,
+                spacing.br4,
+                spacing.p2,
+                {
+                  backgroundColor: LIGHT,
+                  elevation: 3,
+                  top: 8,
+                },
+              ]}
+            >
+              <Ionicons name="location-outline" size={20} color="red" />
+              <P
+                style={[
+                  typography.font12,
+                  typography.fontLato,
+                  spacing.mr3,
+                  typography.textBold,
+                ]}
+              >
+                {isDropLocationSelected
+                  ? "Change Drop Location"
+                  : "Select Drop Location"}
+              </P>
+            </TouchableOpacity>
+
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <P style={{ color: "black", fontSize: 16, fontWeight: "bold" }}>
+                Distance:
+              </P>
+              {distance && (
+                <P
+                  style={{
+                    color: "black",
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    marginLeft: 5,
+                  }}
+                >
+                  {distance} km
+                </P>
+              )}
+            </View>
+          </View>
         </View>
       </View>
 
