@@ -56,12 +56,14 @@ const LocationSetScreen = ({ navigation }) => {
       setPickupLocation({ latitude, longitude });
       const address = await getAddressFromCoords(latitude, longitude);
       setPickupAddress(address);
-    } else if (!dropoffLocation) {
+      console.log("Pickup Location Set:", { latitude, longitude });
+      console.log("Pickup Address:", address);
+    } else {
       setDropoffLocation({ latitude, longitude });
       const address = await getAddressFromCoords(latitude, longitude);
       setDropoffAddress(address);
-    } else {
-      Alert.alert("Locations Set", "Both Pickup and Drop-off are selected.");
+      console.log("Drop-off Location Set:", { latitude, longitude });
+      console.log("Drop-off Address:", address);
     }
   };
 
@@ -118,7 +120,7 @@ const LocationSetScreen = ({ navigation }) => {
         </MapView>
       )}
 
-      <Button
+      {/* <Button
         style={[
           styles.btn,
           styles.bgPrimary,
@@ -132,6 +134,24 @@ const LocationSetScreen = ({ navigation }) => {
             dropoffAddress,
           })
         }
+      >
+        <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
+          {"Confirm Location"}
+        </H2>
+      </Button> */}
+
+      <Button
+        style={[
+          styles.btn,
+          styles.bgPrimary,
+          { justifyContent: "center", marginHorizontal: 2 },
+        ]}
+        onPress={() => {
+          navigation.navigate("conveyanceBillForm", {
+            pickupLocation: pickupAddress,
+            dropoffLocation: dropoffAddress,
+          });
+        }}
       >
         <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
           {"Confirm Location"}

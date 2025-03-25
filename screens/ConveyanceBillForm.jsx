@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, TextInput, TouchableOpacity, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { styles, typography, spacing, LIGHT, SCREEN_WIDTH } from "../styles";
 import { H2, P, H5, H6 } from "../components/text";
 import Button from "../components/buttons/Button";
 
-const ConveyanceBillForm = ({ navigation }) => {
+const ConveyanceBillForm = ({ navigation, route }) => {
   // State for Pickup and Drop Locations
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropLocation, setDropLocation] = useState("");
+
   const [isDropLocationSelected, setIsDropLocationSelected] = useState(false); // Track if drop location is selected
 
   // Function to handle location selection (pickup and drop)
@@ -38,6 +39,15 @@ const ConveyanceBillForm = ({ navigation }) => {
     setDropLocation("");
     setIsDropLocationSelected(false); // Allow the user to change the drop location
   };
+
+  useEffect(() => {
+    if (route.params?.pickupLocation) {
+      setPickupLocation(route.params.pickupLocation);
+    }
+    if (route.params?.dropoffLocation) {
+      setDropLocation(route.params.dropoffLocation);
+    }
+  }, [route.params]);
 
   return (
     <View style={[spacing.p2, { width: SCREEN_WIDTH }]}>
@@ -160,7 +170,7 @@ const ConveyanceBillForm = ({ navigation }) => {
             <Ionicons name="location-outline" size={20} color="red" />
             <P
               style={[
-                typography.font14,
+                typography.font12,
                 typography.fontLato,
                 spacing.mr3,
                 typography.textBold,
