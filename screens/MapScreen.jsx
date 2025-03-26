@@ -268,7 +268,7 @@ import { styles, typography } from "../styles";
 import Button from "../components/buttons/Button";
 
 const MapScreen = ({ route, navigation }) => {
-  const { dropoffAddress, pickupAddress, transportType, price } =
+  const { dropoffAddress, pickupAddress, transportType, price, distance } =
     route.params || {};
 
   return (
@@ -410,6 +410,24 @@ const MapScreen = ({ route, navigation }) => {
           >
             {price || "Not provided"}
           </Text>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              color: "#333",
+              marginBottom: 5,
+            }}
+          >
+           Distance
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#555",
+            }}
+          >
+            {distance || "Not provided"}
+          </Text>
         </View>
       </View>
 
@@ -425,6 +443,7 @@ const MapScreen = ({ route, navigation }) => {
             dropoffAddress: dropoffAddress,
             transportType: transportType,
             price: price,
+            distance: distance,
           })
         }
       >

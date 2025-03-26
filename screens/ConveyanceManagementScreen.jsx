@@ -29,7 +29,7 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
   const [activeTab, setActiveTab] = useState("This Week");
   const [filteredData, setFilteredData] = useState([]);
   const { firstName } = useSelector((state) => state.staff);
-  const { pickupAddress, dropoffAddress, price, transportType } =
+  const { pickupAddress, dropoffAddress, price, transportType, distance } =
     route.params || {};
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -41,6 +41,7 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
           dropoffLocation: dropoffAddress,
           price,
           transportType,
+          distance,
         },
       ];
       setFilteredData(updatedData);

@@ -33,12 +33,7 @@ export default function TransportCamera({
   const [dropoffAddress, setDropoffAddress] = useState("");
   const [transportType, setTransportType] = useState("");
   const [price, setPrice] = useState(0);
-
-  // useEffect(() => {
-  //   if (route?.params?.transportType) {
-  //     setTransportType(route.params.transportType);
-  //   }
-  // }, [route]);
+  const [distance, setDistance] = useState(0);
 
   useEffect(() => {
     if (route?.params?.transportType) {
@@ -46,6 +41,9 @@ export default function TransportCamera({
     }
     if (route?.params?.price) {
       setPrice(route.params.price);
+    }
+    if (route?.params?.distance) {
+      setDistance(route.params.distance);
     }
   }, [route]);
 
@@ -193,6 +191,7 @@ export default function TransportCamera({
                   dropoffAddress,
                   transportType,
                   price,
+                  distance,
                 })
               }
               style={styles.retakeButton}

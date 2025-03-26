@@ -59,28 +59,6 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "left" },
               ]}
             >
-              Journey Date
-            </H5>
-            <P
-              style={[
-                typography.text600,
-                typography.font14,
-                typography.fontLato,
-                { textAlign: "right" },
-              ]}
-            >
-              2025-02-21
-            </P>
-          </View>
-          <View style={[styles.row, spacing.pv2]}>
-            <H5
-              style={[
-                typography.font14,
-                // typography.textBold,
-                typography.fontLato,
-                { textAlign: "left" },
-              ]}
-            >
               KM
             </H5>
             <P
