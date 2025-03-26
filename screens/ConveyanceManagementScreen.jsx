@@ -99,7 +99,16 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
                   { justifyContent: "space-between", alignItems: "center" },
                 ]}
               >
-                <P style={[typography.font16, typography.fontLato]}>
+                <Span
+                  style={[
+                    typography.font16,
+                    typography.fontLato,
+                    { textTransform: "capitalize" },
+                  ]}
+                >
+                  Mode
+                </Span>
+                <P style={[typography.text, typography.fontLato]}>
                   {item.transportType || "Not provided"}
                 </P>
               </View>
