@@ -81,107 +81,15 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
         useEllipsis={true}
       />
       <MyFlatList
-        // data={filterData()} // Only showing one item at a time
-        // renderItem={({ item, index }) => (
-        //   <ClickableCard1
-        //     key={index}
-        //     item={item}
-        //     title={`${item.pickupLocation} - ${item.dropoffLocation}`}
-        //     //  subtitle={`${item.date} - ${item.time}`}
-        //     onPress={() =>
-        //       navigation.navigate("conveyanceDetail", { travelItem: item })
-        //     }
-        //   >
-        //     <View>
-        //       <View
-        //         style={[
-        //           styles.row,
-        //           spacing.mb2,
-        //           { justifyContent: "space-between", alignItems: "center" },
-        //         ]}
-        //       >
-        //         <P style={[typography.font16, typography.fontLato]}>
-        //           {/* {item.transportType} */}
-        //         </P>
-        //       </View>
-        //       <View
-        //         style={[
-        //           spacing.mt1,
-        //           styles.row,
-        //           { justifyContent: "space-between", alignItems: "center" },
-        //         ]}
-        //       >
-        //         <Span
-        //           style={[
-        //             typography.font16,
-        //             typography.fontLato,
-        //             { textTransform: "capitalize" },
-        //           ]}
-        //         >
-        //           Price
-        //         </Span>
-        //         <P
-        //           style={[
-        //             typography.font20,
-        //             typography.fontLato,
-        //             typography.textBold,
-        //           ]}
-        //         >
-        //           ₹{item.price || "Not provided"}
-        //         </P>
-        //       </View>
-        //     </View>
-        //   </ClickableCard1>
-        // )}
-        // keyExtractor={(item, index) => index.toString()}
-        // contentContainerStyle={[spacing.mh1, spacing.mt1]}
-        // ListHeaderComponent={() => (
-        //   <View>
-        //     <View
-        //       style={[
-        //         spacing.mv4,
-        //         styles.row,
-        //         spacing.mh1,
-        //         { alignItems: "center" },
-        //       ]}
-        //     >
-        //       <SearchBar
-        //         placeholder="Search"
-        //         style={{ width: SCREEN_WIDTH - 80 }}
-        //       />
-        //       <Button
-        //         style={[
-        //           styles.btn,
-        //           styles.bgPrimary,
-        //           spacing.mh1,
-        //           { width: 50 },
-        //         ]}
-        //       >
-        //         <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
-        //       </Button>
-        //     </View>
-        //     <TabBar
-        //       tabs={[
-        //         { name: "This Week" },
-        //         { name: "This Month" },
-        //         { name: "Approved" },
-        //         { name: "Rejected" },
-        //       ]}
-        //       activeTab={activeTab}
-        //       onTabSelected={setActiveTab}
-        //     />
-        //   </View>
-        // )}
-
         data={filterData()}
         renderItem={({ item, index }) => (
           <ClickableCard1
             key={index}
             item={item}
             title={`${item.pickupLocation} - ${item.dropoffLocation}`}
-            onPress={() =>
-              navigation.navigate("conveyanceDetail", { travelItem: item })
-            }
+            // onPress={() =>
+            //   navigation.navigate("conveyanceDetail", { travelItem: item })
+            // }
           >
             <View>
               <View
