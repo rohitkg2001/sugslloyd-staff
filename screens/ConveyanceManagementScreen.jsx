@@ -10,7 +10,7 @@ import DashboardHeader from "../components/header/DashboardHeader";
 import TabBar from "../components/TabBar";
 import SearchBar from "../components/input/SearchBar";
 // Import faker data
-import { travel } from "../utils/faker";
+//import { travel } from "../utils/faker";
 // Import Redux
 import { useSelector } from "react-redux";
 // Import Styles
@@ -30,20 +30,24 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
   const [activeTab, setActiveTab] = useState("This Week");
   const [filteredData, setFilteredData] = useState([]);
   const { firstName } = useSelector((state) => state.staff);
-  const { pickupAddress, dropoffAddress } = route.params || {};
+  const { pickupAddress, dropoffAddress, price, transportType } =
+    route.params || {};
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    if (pickupAddress && dropoffAddress) {
-      const updatedData = travel.map((item) => ({
-        ...item,
-        pickupLocation: pickupAddress,
-        dropoffLocation: dropoffAddress,
-      }));
+    if (pickupAddress && dropoffAddress && price && transportType) {
+      const updatedData = [
+        {
+          pickupLocation: pickupAddress,
+          dropoffLocation: dropoffAddress,
+          price,
+          transportType,
+        },
+      ];
       setFilteredData(updatedData);
       setCurrentIndex(0); // Reset index when new data arrives
     }
-  }, [pickupAddress, dropoffAddress]);
+  }, [pickupAddress, dropoffAddress, price]);
 
   const showNextTransport = () => {
     if (currentIndex < filteredData.length - 1) {
@@ -77,13 +81,104 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
         useEllipsis={true}
       />
       <MyFlatList
-        data={filterData()} // Only showing one item at a time
+        // data={filterData()} // Only showing one item at a time
+        // renderItem={({ item, index }) => (
+        //   <ClickableCard1
+        //     key={index}
+        //     item={item}
+        //     title={`${item.pickupLocation} - ${item.dropoffLocation}`}
+        //     //  subtitle={`${item.date} - ${item.time}`}
+        //     onPress={() =>
+        //       navigation.navigate("conveyanceDetail", { travelItem: item })
+        //     }
+        //   >
+        //     <View>
+        //       <View
+        //         style={[
+        //           styles.row,
+        //           spacing.mb2,
+        //           { justifyContent: "space-between", alignItems: "center" },
+        //         ]}
+        //       >
+        //         <P style={[typography.font16, typography.fontLato]}>
+        //           {/* {item.transportType} */}
+        //         </P>
+        //       </View>
+        //       <View
+        //         style={[
+        //           spacing.mt1,
+        //           styles.row,
+        //           { justifyContent: "space-between", alignItems: "center" },
+        //         ]}
+        //       >
+        //         <Span
+        //           style={[
+        //             typography.font16,
+        //             typography.fontLato,
+        //             { textTransform: "capitalize" },
+        //           ]}
+        //         >
+        //           Price
+        //         </Span>
+        //         <P
+        //           style={[
+        //             typography.font20,
+        //             typography.fontLato,
+        //             typography.textBold,
+        //           ]}
+        //         >
+        //           ₹{item.price || "Not provided"}
+        //         </P>
+        //       </View>
+        //     </View>
+        //   </ClickableCard1>
+        // )}
+        // keyExtractor={(item, index) => index.toString()}
+        // contentContainerStyle={[spacing.mh1, spacing.mt1]}
+        // ListHeaderComponent={() => (
+        //   <View>
+        //     <View
+        //       style={[
+        //         spacing.mv4,
+        //         styles.row,
+        //         spacing.mh1,
+        //         { alignItems: "center" },
+        //       ]}
+        //     >
+        //       <SearchBar
+        //         placeholder="Search"
+        //         style={{ width: SCREEN_WIDTH - 80 }}
+        //       />
+        //       <Button
+        //         style={[
+        //           styles.btn,
+        //           styles.bgPrimary,
+        //           spacing.mh1,
+        //           { width: 50 },
+        //         ]}
+        //       >
+        //         <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
+        //       </Button>
+        //     </View>
+        //     <TabBar
+        //       tabs={[
+        //         { name: "This Week" },
+        //         { name: "This Month" },
+        //         { name: "Approved" },
+        //         { name: "Rejected" },
+        //       ]}
+        //       activeTab={activeTab}
+        //       onTabSelected={setActiveTab}
+        //     />
+        //   </View>
+        // )}
+
+        data={filterData()}
         renderItem={({ item, index }) => (
           <ClickableCard1
             key={index}
             item={item}
             title={`${item.pickupLocation} - ${item.dropoffLocation}`}
-            //  subtitle={`${item.date} - ${item.time}`}
             onPress={() =>
               navigation.navigate("conveyanceDetail", { travelItem: item })
             }
@@ -97,7 +192,7 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
                 ]}
               >
                 <P style={[typography.font16, typography.fontLato]}>
-                  {/* {item.transportType} */}
+                  {item.transportType || "Not provided"}
                 </P>
               </View>
               <View
@@ -123,7 +218,7 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
                     typography.textBold,
                   ]}
                 >
-                  ₹ {/* ₹{item.price} */}
+                  ₹{item.price || "Not provided"}
                 </P>
               </View>
             </View>
