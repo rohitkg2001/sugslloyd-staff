@@ -13,7 +13,9 @@ const LocationSetScreen = ({ navigation }) => {
   const [region, setRegion] = useState(null);
   const [pickupAddress, setPickupAddress] = useState("");
   const [dropoffAddress, setDropoffAddress] = useState("");
-  const [distance, setDistance] = useState(null);
+  const [ distance, setDistance ] = useState( null );
+  const currentDate = new Date().toLocaleDateString();
+   const currentTime = new Date().toLocaleTimeString();
 
   useEffect(() => {
     (async () => {
@@ -114,6 +116,41 @@ const LocationSetScreen = ({ navigation }) => {
             Distance: {distance} km
           </Text>
         )}
+        {/* New Date and Time Section */}
+        <View
+          style={{
+            position: "absolute",
+            top: 30,
+            right: 22,
+            padding: 10,
+            borderRadius: 5,
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontSize: 16,
+              marginLeft: 22,
+              marginTop: -20,
+            }}
+          >
+            Date: {currentDate}
+          </Text>
+        </View>
+
+        <View
+          style={{
+            position: "absolute",
+            top: 30,
+            right: 10,
+            padding: 10,
+            borderRadius: 5,
+          }}
+        >
+          <Text style={{ color: "white", fontSize: 16, marginLeft: 15 , marginTop: 4 }}>
+            Time: {currentTime}
+          </Text>
+        </View>
       </View>
       {region && (
         <MapView
