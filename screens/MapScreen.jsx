@@ -274,6 +274,8 @@ const MapScreen = ({ route, navigation }) => {
     price,
     distance,
     photos,
+    date,
+    time,
   } = route.params || {};
 
   return (
@@ -433,6 +435,43 @@ const MapScreen = ({ route, navigation }) => {
           >
             {distance || "Not provided"}
           </Text>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              color: "#333",
+              marginBottom: 5,
+            }}
+          >
+            Date
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#555",
+            }}
+          >
+            {date}
+          </Text>
+
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              color: "#333",
+              marginBottom: 5,
+            }}
+          >
+            Time
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#555",
+            }}
+          >
+            {time}
+          </Text>
         </View>
       </View>
 
@@ -449,6 +488,8 @@ const MapScreen = ({ route, navigation }) => {
             transportType: transportType,
             price: price,
             distance: distance,
+            date,
+            time,
             photos: photos.map((photo) =>
               typeof photo === "string" ? photo : photo.uri
             ),

@@ -10,6 +10,9 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropLocation, setDropLocation] = useState("");
   const [distance, setDistance] = useState(null);
+  const [currentDate, setCurrentDate] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
+
   const [prices, setPrices] = useState({
     car: 0,
     bike: 0,
@@ -30,6 +33,8 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   };
 
   useEffect(() => {
+    console.log("Route Params:", route.params); // Debugging Log
+
     if (route.params?.pickupLocation)
       setPickupLocation(route.params.pickupLocation);
     if (route.params?.dropoffLocation)
@@ -37,6 +42,21 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     if (route.params?.distance) {
       setDistance(route.params.distance);
       calculatePrices(route.params.distance);
+    }
+
+    // Check if date and time are being received
+    if (route.params?.date) {
+      console.log("Setting Date:", route.params.date);
+      setCurrentDate(route.params.date);
+    } else {
+      console.warn("No Date found in route.params");
+    }
+
+    if (route.params?.time) {
+      console.log("Setting Time:", route.params.time);
+      setCurrentTime(route.params.time);
+    } else {
+      console.warn("No Time found in route.params");
     }
   }, [route.params]);
 
@@ -232,6 +252,8 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 dropLocation: dropLocation,
                 price: prices.car,
                 distance: distance,
+                date: currentDate,
+                time: currentTime,
               })
             }
             style={[
@@ -292,6 +314,8 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 dropLocation: dropLocation,
                 price: prices.bike,
                 distance: distance,
+                date: currentDate,
+                time: currentTime,
               })
             }
             style={[

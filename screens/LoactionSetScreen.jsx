@@ -13,9 +13,24 @@ const LocationSetScreen = ({ navigation }) => {
   const [region, setRegion] = useState(null);
   const [pickupAddress, setPickupAddress] = useState("");
   const [dropoffAddress, setDropoffAddress] = useState("");
-  const [ distance, setDistance ] = useState( null );
-  const currentDate = new Date().toLocaleDateString();
-   const currentTime = new Date().toLocaleTimeString();
+  const [distance, setDistance] = useState(null);
+  // const currentDate = new Date().toLocaleDateString();
+  // const currentTime = new Date().toLocaleTimeString();
+
+  const [currentDate, setCurrentDate] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    const updateDateTime = () => {
+      setCurrentDate(new Date().toLocaleDateString());
+      setCurrentTime(new Date().toLocaleTimeString());
+    };
+
+    updateDateTime(); // Initial call
+    const interval = setInterval(updateDateTime, 1000); // Update every second
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -147,7 +162,14 @@ const LocationSetScreen = ({ navigation }) => {
             borderRadius: 5,
           }}
         >
-          <Text style={{ color: "white", fontSize: 16, marginLeft: 15 , marginTop: 4 }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 16,
+              marginLeft: 15,
+              marginTop: 4,
+            }}
+          >
             Time: {currentTime}
           </Text>
         </View>
@@ -194,6 +216,8 @@ const LocationSetScreen = ({ navigation }) => {
             pickupLocation: pickupAddress,
             dropoffLocation: dropoffAddress,
             distance,
+            date: currentDate,
+            time: currentTime,
           });
         }}
       >

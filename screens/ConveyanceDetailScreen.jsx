@@ -95,6 +95,52 @@ export default function ConveyanceDetailScreen() {
               {travelItem.transportType || "Not provided"}
             </P>
           </View>
+          <View style={[styles.row, spacing.pv2]}>
+            <H5
+              style={[
+                typography.font14,
+                // typography.textBold,
+                typography.fontLato,
+
+                { textAlign: "left" },
+              ]}
+            >
+              Date
+            </H5>
+            <P
+              style={[
+                typography.textBold,
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
+              {travelItem.date || "Not provided"}
+            </P>
+          </View>
+          <View style={[styles.row, spacing.pv2]}>
+            <H5
+              style={[
+                typography.font14,
+                // typography.textBold,
+                typography.fontLato,
+
+                { textAlign: "left" },
+              ]}
+            >
+             Time
+            </H5>
+            <P
+              style={[
+                typography.textBold,
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
+              {travelItem.time || "Not provided"}
+            </P>
+          </View>
           <H5
             style={[
               typography.font16,

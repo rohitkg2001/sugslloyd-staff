@@ -33,6 +33,8 @@ export default function TransportCamera({
   const [transportType, setTransportType] = useState("");
   const [price, setPrice] = useState(0);
   const [distance, setDistance] = useState(0);
+  const [currentDate, setCurrentDate] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
     if (route?.params?.transportType) {
@@ -44,6 +46,11 @@ export default function TransportCamera({
     if (route?.params?.distance) {
       setDistance(route.params.distance);
     }
+
+    // Setting Current Date and Time when component mounts
+    const date = new Date();
+    setCurrentDate(date.toLocaleDateString()); // Format: MM/DD/YYYY
+    setCurrentTime(date.toLocaleTimeString()); // Format: HH:MM:SS AM/PM
   }, [route]);
 
   const getAddressFromCoords = async (latitude, longitude) => {
@@ -190,6 +197,8 @@ export default function TransportCamera({
                   price,
                   distance,
                   photos,
+                  date: currentDate,
+                  time: currentTime,
                 })
               }
               style={styles.retakeButton}
