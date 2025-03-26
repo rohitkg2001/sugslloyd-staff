@@ -151,27 +151,6 @@ export default function ConveyanceDetailScreen() {
               ₹ {travelItem.price || "Not provided"}
             </P>
           </View>
-          import {Alert} from "react-native";
-          <Button
-            style={[
-              styles.btn,
-              styles.bgPrimary,
-              { justifyContent: "center", top: 280 },
-            ]}
-            onPress={() => {
-              Alert.alert(
-                "Submission Successful",
-                "Your form has been submitted successfully!",
-                [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-              );
-            }}
-          >
-            <H2
-              style={[styles.btnText, styles.textLarge, typography.textLight]}
-            >
-              {"Submit"}
-            </H2>
-          </Button>
         </View>
       </ScrollView>
     </ContainerComponent>

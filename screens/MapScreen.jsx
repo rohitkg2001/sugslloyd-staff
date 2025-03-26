@@ -270,6 +270,7 @@ import Button from "../components/buttons/Button";
 const MapScreen = ({ route, navigation }) => {
   const { dropoffAddress, pickupAddress, transportType, price, distance } =
     route.params || {};
+    
 
   return (
     <View
