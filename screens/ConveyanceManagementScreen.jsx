@@ -9,8 +9,7 @@ import Button from "../components/buttons/Button";
 import DashboardHeader from "../components/header/DashboardHeader";
 import TabBar from "../components/TabBar";
 import SearchBar from "../components/input/SearchBar";
-// Import faker data
-//import { travel } from "../utils/faker";
+
 // Import Redux
 import { useSelector } from "react-redux";
 // Import Styles
