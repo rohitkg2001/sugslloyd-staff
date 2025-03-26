@@ -261,15 +261,20 @@
 
 // export default MapScreen;
 
-import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import { H2, H5 } from "../components/text";
 import { styles, typography } from "../styles";
 import Button from "../components/buttons/Button";
 
 const MapScreen = ({ route, navigation }) => {
-  const { dropoffAddress, pickupAddress, transportType, price, distance } =
-    route.params || {};
+  const {
+    dropoffAddress,
+    pickupAddress,
+    transportType,
+    price,
+    distance,
+    photos,
+  } = route.params || {};
 
   return (
     <View
@@ -418,7 +423,7 @@ const MapScreen = ({ route, navigation }) => {
               marginBottom: 5,
             }}
           >
-           Distance
+            Distance
           </Text>
           <Text
             style={{
@@ -444,6 +449,9 @@ const MapScreen = ({ route, navigation }) => {
             transportType: transportType,
             price: price,
             distance: distance,
+            photos: photos.map((photo) =>
+              typeof photo === "string" ? photo : photo.uri
+            ),
           })
         }
       >

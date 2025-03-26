@@ -1,4 +1,4 @@
-import { View, ScrollView, Alert } from "react-native";
+import { View, ScrollView, Alert, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
@@ -151,7 +151,35 @@ export default function ConveyanceDetailScreen() {
               ₹ {travelItem.price || "Not provided"}
             </P>
           </View>
-          import {Alert} from "react-native";
+
+          {/* Photos Section */}
+
+          {travelItem.photos && travelItem.photos.length > 0 && (
+            <>
+              <P style={{ fontSize: 18, fontWeight: "bold", marginTop: 10 }}>
+                Travel Photos
+              </P>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={{ marginTop: 10 }}
+              >
+                {travelItem.photos.map((photo, index) => (
+                  <Image
+                    key={index}
+                    source={{ uri: photo }}
+                    style={{
+                      width: 200,
+                      height: 200,
+                      borderRadius: 10,
+                      marginHorizontal: 5,
+                    }}
+                  />
+                ))}
+              </ScrollView>
+            </>
+          )}
+
           <Button
             style={[
               styles.btn,

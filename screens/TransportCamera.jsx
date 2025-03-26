@@ -17,7 +17,6 @@ import { useNavigation } from "@react-navigation/native";
 export default function TransportCamera({
   isCameraOpen,
   setIsCameraOpen,
-  isSurvey,
   handleSubmission,
   route,
 }) {
@@ -76,7 +75,6 @@ export default function TransportCamera({
       const { latitude, longitude } = loc.coords;
       setPickupLocation({ latitude, longitude });
 
-      // Pickup Address Set Karna
       const pickupAddr = await getAddressFromCoords(latitude, longitude);
       setPickupAddress(pickupAddr);
 
@@ -171,7 +169,7 @@ export default function TransportCamera({
           <Icon name="close" size={35} color="white" />
         </TouchableOpacity>
 
-        {/* Controlsl */}
+        {/* Controls */}
         <View style={styles.controls}>
           <TouchableOpacity onPress={handleRetake} style={styles.retakeButton}>
             <Icon name="refresh" size={35} color="white" />
@@ -182,9 +180,8 @@ export default function TransportCamera({
           >
             <View style={styles.innerShutter} />
           </TouchableOpacity>
-          {!isSurvey && photos.length >= 1 ? (
+          {photos.length >= 1 ? (
             <TouchableOpacity
-              // onPress={() => navigation.navigate("mapScreen")}
               onPress={() =>
                 navigation.navigate("mapScreen", {
                   pickupAddress,
@@ -192,6 +189,7 @@ export default function TransportCamera({
                   transportType,
                   price,
                   distance,
+                  photos,
                 })
               }
               style={styles.retakeButton}
