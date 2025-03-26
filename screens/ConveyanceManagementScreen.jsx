@@ -9,8 +9,7 @@ import Button from "../components/buttons/Button";
 import DashboardHeader from "../components/header/DashboardHeader";
 import TabBar from "../components/TabBar";
 import SearchBar from "../components/input/SearchBar";
-// Import faker data
-//import { travel } from "../utils/faker";
+
 // Import Redux
 import { useSelector } from "react-redux";
 // Import Styles
@@ -87,9 +86,9 @@ export default function ConveyanceManagementScreen({ navigation, route }) {
             key={index}
             item={item}
             title={`${item.pickupLocation} - ${item.dropoffLocation}`}
-            // onPress={() =>
-            //   navigation.navigate("conveyanceDetail", { travelItem: item })
-            // }
+            onPress={() =>
+              navigation.navigate("conveyanceDetail", { travelItem: item })
+            }
           >
             <View>
               <View
