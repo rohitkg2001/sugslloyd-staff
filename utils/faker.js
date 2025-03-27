@@ -311,6 +311,7 @@ export const inventoryData = [
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_L6YoAFI4q74AoE5ijHorzYQF4ZgI7rvwhg&s",
   },
 ];
+//USING INVENTORY DATA NO NEED TO USE ITS PHOTO
 
 // INcoming from database
 
