@@ -22,6 +22,7 @@ export const UPDATE_SITE = "UPDATE_SITE";
 export const ADD_SITE = "ADD_SITE";
 export const SEARCH_SITE = "SEARCH_SITE";
 
+export const ADD_INVENTORY = "ADD_INVENTORY";
 export const GET_ALL_INVENTORY = "GET_ALL_INVENTORY";
 export const VIEW_INVENTORY = "VIEW_INVENTORY";
 export const UPDATE_INVENTORY = "UPDATE_INVENTORY";
