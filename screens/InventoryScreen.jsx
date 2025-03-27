@@ -27,14 +27,14 @@ export default function InventoryScreen({ navigation }) {
     setSelectedItem(itemDetails);
   };
 
-  useEffect(() => { }, [inventory]);
+  useEffect(() => {}, [inventory]);
 
   return (
     <ContainerComponent>
       <MyHeader title={t("inventory_title")} hasIcon={true} isBack={true} />
 
       <MyFlatList
-        data={inventory}
+        data={inventoryData}
         keyExtractor={(item) => item.id.toString()}
         ListEmptyComponent={() => <NoRecord msg={t("no_inventory")} />}
         renderItem={({ item }) => (
