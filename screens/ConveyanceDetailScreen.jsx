@@ -1,3 +1,4 @@
+// import react native
 import { View, ScrollView, Alert, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import MyHeader from "../components/header/MyHeader";
