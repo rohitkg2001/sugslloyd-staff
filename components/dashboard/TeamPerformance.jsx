@@ -33,13 +33,14 @@ export default function TeamPerformance() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { id } = useSelector((state) => state.staff);
+  const { id, projectType } = useSelector((state) => state.staff);
 
   useEffect(() => {
+    console.log(`Now I can filter on ${projectType} for user id ${id}`)
     const fetchCounts = async () => {
-      const staffTargetPerformance = await getStaffPerformance();
+      const staffTargetPerformance = await getStaffPerformance(id);
+      staffTargetPerformance.length = 5
       setStaffPerformance(staffTargetPerformance);
-      // setStaffPerformance(updatedPerformance);
     };
 
     dispatch(getAllTasks(id));
@@ -151,6 +152,7 @@ export default function TeamPerformance() {
                     {
                       textAlign: "center",
                       fontWeight: index == 0 ? "bold" : "normal",
+                      textTransform: 'capitalize'
                     },
                   ]}
                 >
@@ -194,7 +196,7 @@ export default function TeamPerformance() {
                   },
                 ]}
               >
-                {data.total_pending || 0}
+                {data.total_backlogs || 0}
               </H6>
             </View>
           </TouchableOpacity>

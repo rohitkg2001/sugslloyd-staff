@@ -1,4 +1,4 @@
-import { BASE_URL, LOGIN_STAFF } from "../constant";
+import { BASE_URL, LOGIN_STAFF, SET_PROJECT_TYPE } from "../constant";
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
@@ -30,6 +30,7 @@ export const login = (user, pass) => async (dispatch) => {
       await AsyncStorage.setItem("userToken", String(data.user.id));
       // await AsyncStorage.setItem('')
       dispatch({ type: LOGIN_STAFF, payload: data.user });
+      dispatch({ type: SET_PROJECT_TYPE, payload: data.projects[0]?.project_type })
       return true;
     } else {
       return false;
