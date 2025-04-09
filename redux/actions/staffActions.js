@@ -1,4 +1,4 @@
-import { BASE_URL, LOGIN_STAFF } from "../constant";
+import { BASE_URL, LOGIN_STAFF, SET_PROJECT_TYPE } from "../constant";
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
@@ -28,13 +28,17 @@ export const login = (user, pass) => async (dispatch) => {
       password: pass,
     });
 
-    console.log("API Response:", response); // Check what the API returns
+    console.log("API Response:", response.data); // Check what the API returns
 
     const { data, status } = response;
 
     if (data?.user?.id && status === 200) {
       await AsyncStorage.setItem("userToken", String(data.token.id)); // Save the token
       dispatch({ type: LOGIN_STAFF, payload: data.user });
+      dispatch({
+        type: SET_PROJECT_TYPE,
+        payload: data.projects[0].project_type,
+      });
       return { success: true }; // Return success
     } else {
       return { success: false, message: "Invalid credentials" }; // Return error

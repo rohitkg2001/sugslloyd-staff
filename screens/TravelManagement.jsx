@@ -120,7 +120,7 @@ export default function TravelManagement({ navigation }) {
                 designation: item.fullData.designation || "N/A",
               };
 
-              console.log("Navigating with Form Data:", formData);
+              // console.log("Navigating with Form Data:", formData);
               navigation.navigate("travelDetailScreen", { formData });
             }}
             cardStyle={{

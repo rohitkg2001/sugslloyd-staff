@@ -10,10 +10,10 @@ export default function useLanguage() {
 
     useEffect(() => {
         const fetchLanguage = async () => {
-            console.log("Checking for default language")
+          //  console.log("Checking for default language")
             const storedLanguage = await AsyncStorage.getItem("appLanguage");
             if (storedLanguage) {
-                console.log("No default language found")
+              //  console.log("No default language found")
                 i18n.changeLanguage(storedLanguage);
                 setLanguage(storedLanguage);
                 setIsLanguageSelected(true);
@@ -24,7 +24,7 @@ export default function useLanguage() {
     }, []);
 
     const selectLanguage = async (lang) => {
-        console.log("Set app language to ", lang)
+      //  console.log("Set app language to ", lang)
         await AsyncStorage.setItem("appLanguage", lang);
         i18n.changeLanguage(lang);
         setLanguage(lang);

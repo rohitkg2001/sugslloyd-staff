@@ -144,7 +144,7 @@ export default function useAddBillForm() {
         setTicket(result.assets[0]);
       }
     } catch (error) {
-      console.log("Ticket upload error:", error);
+     // console.log("Ticket upload error:", error);
     }
   };
 
@@ -163,7 +163,7 @@ export default function useAddBillForm() {
         setHotelBill(result.assets[0]);
       }
     } catch (error) {
-      console.log("Hotel bill upload error:", error);
+      //console.log("Hotel bill upload error:", error);
     }
   };
 

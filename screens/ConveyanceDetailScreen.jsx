@@ -38,7 +38,8 @@ export default function ConveyanceDetailScreen() {
               </H5>
             </View>
             <H5 style={{ fontSize: 24 }}>⇄</H5>
-            <View style={{ alignItems: "center" }}>
+            <View style={ { alignItems: "center" } }>
+              
               <P style={[typography.font10]}>To</P>
               <H5
                 style={[

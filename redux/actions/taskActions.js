@@ -133,7 +133,7 @@ export const getStreetlightById = async (streetlight_id) => {
     `${BASE_URL}api/streetlight/tasks/engineers/${streetlight_id}`
   );
   const data = await response.json();
-  console.log(data);
+ // console.log(data);
 };
 
 export const getTaskByCategory = (category) => async (dispatch) => {

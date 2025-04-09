@@ -180,7 +180,7 @@ const AddBillForm = ({ navigation }) => {
     };
 
     dispatch(setBillData(formData));
-    console.log("Form Data:", formData);
+   // console.log("Form Data:", formData);
     navigation.navigate("travelDetailScreen", { formData });
   };
 
