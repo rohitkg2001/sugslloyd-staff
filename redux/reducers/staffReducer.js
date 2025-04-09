@@ -5,7 +5,7 @@ export const staffReducer = (state = initialState, { type, payload }) => {
     case LOGIN_STAFF:
       return { ...state, ...payload };
     case SET_PROJECT_TYPE:
-      return { ...state, ...payload };
+      return { ...state, projectType: payload }
 
     default:
       return state;

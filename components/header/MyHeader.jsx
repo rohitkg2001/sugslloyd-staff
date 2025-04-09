@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Badge } from "react-native-paper";
+import { useSelector } from "react-redux";
 
 // import all styles
 import { H4 } from "../text";
@@ -18,12 +19,15 @@ export default function MyHeader({
   onIconPress,
   rightComponent,
   iconRef,
+  download,
 }) {
   const navigation = useNavigation();
+  const { id } = useSelector((state) => state.vendor);
+
   return (
     <View style={styles.headerStyle}>
       {isBack && (
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={download}>
           <Icon name="arrow-back" size={ICON_SMALL} color="#000" />
         </TouchableOpacity>
       )}

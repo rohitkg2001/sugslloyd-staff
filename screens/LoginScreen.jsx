@@ -36,22 +36,19 @@ export default function LoginScreen({ navigation, route }) {
 
   const nextScreen = route.params?.nextScreen || "homeScreen";
 
- const onSubmit = async () => {
-   setError(""); // Clear any existing error
+  const onSubmit = async () => {
+    setError(""); // Clear any existing error
 
-   const result = await dispatch(login(username, password));
+    const result = await dispatch(login(username, password));
 
-   if (result.success) {
-     // Successful login
-     navigation.navigate(nextScreen);
-   } else {
-     // Failed login, show error message
-      setError(
-        "Please ensure that your username and password are correct."
-      );
-   }
- };
-
+    if (result.success) {
+      // Successful login
+      navigation.navigate(nextScreen);
+    } else {
+      // Failed login, show error message
+      setError("Please ensure that your username and password are correct.");
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);

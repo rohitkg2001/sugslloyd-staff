@@ -14,7 +14,6 @@ export default function useNotifications() {
         try {
             const storedToken = await AsyncStorage.getItem("expoPushToken");
             if (storedToken) {
-              //  console.log("Using stored push token:", storedToken);
                 setExpoPushToken(storedToken);
             } else {
                 await registerForPushNotifications();

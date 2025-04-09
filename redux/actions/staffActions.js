@@ -37,9 +37,10 @@ export const login = (user, pass) => async (dispatch) => {
       dispatch({ type: LOGIN_STAFF, payload: data.user });
       dispatch({
         type: SET_PROJECT_TYPE,
-        payload: data.projects[0].project_type,
+        payload: data.projects[0]?.project_type,
       });
-      return { success: true }; // Return success
+      // return true;
+      return { success: true };
     } else {
       return { success: false, message: "Invalid credentials" }; // Return error
     }
