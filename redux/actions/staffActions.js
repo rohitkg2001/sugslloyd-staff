@@ -1,4 +1,4 @@
-import { BASE_URL, LOGIN_STAFF } from "../constant";
+import { BASE_URL, LOGIN_STAFF, SET_PROJECT_TYPE } from "../constant";
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
@@ -28,16 +28,26 @@ export const login = (user, pass) => async (dispatch) => {
       password: pass,
     });
 
-    console.log("API Response:", response); // Check what the API returns
+    console.log("Full API Response:", response); // Log the full API response
 
     const { data, status } = response;
 
     if (data?.user?.id && status === 200) {
-      await AsyncStorage.setItem("userToken", String(data.token.id)); // Save the token
+      // Ensure token is correctly stored
+      await AsyncStorage.setItem("userToken", String(data.token.id));
+      console.log("Token stored:", await AsyncStorage.getItem("userToken"));
+
+      // Dispatch actions to update Redux state
       dispatch({ type: LOGIN_STAFF, payload: data.user });
-      return { success: true }; // Return success
+      dispatch({
+        type: SET_PROJECT_TYPE,
+        payload: data.projects[0]?.project_type,
+      });
+
+      // Return a success result
+      return { success: true };
     } else {
-      return { success: false, message: "Invalid credentials" }; // Return error
+      return { success: false, message: "Invalid credentials" };
     }
   } catch (err) {
     console.error("Login Error:", err);
@@ -47,6 +57,7 @@ export const login = (user, pass) => async (dispatch) => {
     };
   }
 };
+
 
 export const updatePicture = async (id, file) => {
   try {

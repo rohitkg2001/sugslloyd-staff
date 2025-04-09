@@ -73,47 +73,11 @@ export const getVendorPerformance = async (my_id) => {
 
 export const getStaffPerformance = async (my_id) => {
   try {
-    const response = await api.get(`${BASE_URL}/api/task`);
+    console.log(my_id)
+    const response = await api.get(`${BASE_URL}/api/staff/get-performance/${my_id}`);
     const { data, status } = response;
-    const userResponse = await api.get(`${BASE_URL}/api/staff`);
-    const siteEngineers = userResponse.data.vendors;
-    // Filter tasks by
-
-    const performanceByEngineer = siteEngineers
-      .map((engineer) => {
-        const engineerTasks = data.filter(
-          (task) => task.engineer_id === engineer.id
-        );
-
-        // Summarize tasks for the engineer
-        const total_alloted = engineerTasks.length;
-        const total_completed = engineerTasks.filter(
-          (task) => task.status === "Completed"
-        ).length;
-        const total_pending = engineerTasks.filter(
-          (task) => task.status === "Pending"
-        ).length;
-
-        return total_alloted > 0
-          ? {
-              id: engineer.id,
-              name: `${engineer.firstName} ${engineer.lastName}`,
-              total_alloted,
-              total_completed,
-              is_logged_in_user: engineer.id === my_id, // Flag for logged-in user
-            }
-          : null; // Remove engineers without tasks
-      })
-      .filter(Boolean); // Remove null values
-
-    // Sort: Logged-in user at top, then by total_completed in descending order
-    performanceByEngineer.sort((a, b) => {
-      if (a.is_logged_in_user) return -1;
-      if (b.is_logged_in_user) return 1;
-      return b.total_completed - a.total_completed;
-    });
-
-    return performanceByEngineer;
+    console.log(data)
+    return data
     // Write methods to filter tasks by engineer_id where engineer_id is the id of the engineer from siteEngineers
   } catch (err) {
     handleAxiosError(err);

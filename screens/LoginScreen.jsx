@@ -1,4 +1,3 @@
-// import  All React native
 import { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -19,12 +18,9 @@ import Button from "../components/buttons/Button";
 import { login } from "../redux/actions/staffActions";
 import { useDispatch } from "react-redux";
 
-// import faker
-import { fakeDelete } from "../utils/faker";
-
 // import All Styles
 import { layouts, spacing, typography, styles, ICON_LARGE } from "../styles";
-import { H1, Span, H2, P } from "../components/text";
+import { Span, H2, P } from "../components/text";
 
 export default function LoginScreen({ navigation, route }) {
   const [username, setUsername] = useState("");
@@ -36,22 +32,24 @@ export default function LoginScreen({ navigation, route }) {
 
   const nextScreen = route.params?.nextScreen || "homeScreen";
 
- const onSubmit = async () => {
-   setError(""); // Clear any existing error
+  const onSubmit = async () => {
+    setError(""); // Clear any existing error
 
-   const result = await dispatch(login(username, password));
+    const result = await dispatch(login(username, password));
 
-   if (result.success) {
-     // Successful login
-     navigation.navigate(nextScreen);
-   } else {
-     // Failed login, show error message
+    console.log("Login Result:", result); // Log the result to check response structure
+
+    if (result.success) {
+      // Successful login, navigate to the next screen
+      navigation.navigate(nextScreen);
+    } else {
+      // Failed login, show error message (use only the message part of the result)
       setError(
-        "Please ensure that your username and password are correct."
+        result.message ||
+          "Please ensure that your username and password are correct."
       );
-   }
- };
-
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -117,6 +115,7 @@ export default function LoginScreen({ navigation, route }) {
             </Span>
           </TouchableOpacity>
         </KeyboardAvoidingView>
+
         <Button
           style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
           onPress={onSubmit}

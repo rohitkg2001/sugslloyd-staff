@@ -27,7 +27,7 @@ export default function App() {
   // Load Fonts
   useEffect(() => {
     async function loadAppAssets() {
-      // await AsyncStorage.clear()
+      await AsyncStorage.clear()
       await useFonts();
       await permissions();
       await registerForPushNotifications();

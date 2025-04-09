@@ -43,36 +43,6 @@ export const getProjectCounts = async () => {
   ];
 };
 
-
-// export const viewProject = (projectId) => async (dispatch) => {
-//   try {
-//     setTimeout(() => {
-//       const getData = async () => {
-//         const response = await fetch(`${BASE_URL}/api/projects/${projectId}`);
-//         const data = await response.json();
-//         dispatch({ type: VIEW_PROJECT, payload: data });
-//       };
-//       getData();
-//     }, 1500);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-
-// export const updateProject = (project) => ({
-//   type: UPDATE_PROJECT,
-//   payload: project,
-// });
-
-// export const countProjects = () => ({
-//   type: COUNT_PROJECTS,
-// });
-
-// export const changeProjectStatus = (projectId, newStatus) => ({
-//   type: CHANGE_PROJECT_STATUS,
-//   payload: { projectId, newStatus },
-// });
-
 export const addProject = (project) => async (dispatch) => {
   try {
     const response = await fetch(`${BASE_URL}/api/projects`, {
