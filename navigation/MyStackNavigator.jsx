@@ -29,7 +29,7 @@ import InventoryDetailsScreen from "../screens/InventoryDetailsScreen";
 import TaskMaterialScreen from "../screens/TaskMaterialScreen";
 import VendorSelectionScreen from "../screens/VendorSelectionScreen";
 import TaskInventoryScreen from "../screens/TaskInventoryScreen";
-import CardScreen from "../screens/CardScreen";
+//import CardScreen from "../screens/CardScreen";
 import SiteLocationScreen from "../screens/SiteLocationScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import CurrentStreetLightScreen from "../screens/CurrentStreetLightScreen";
@@ -57,7 +57,7 @@ export default function MyStackNavigator({ initialRouteName }) {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="cardScreen" component={CardScreen} />
+      {/* <Stack.Screen name="cardScreen" component={CardScreen} /> */}
       <Stack.Screen name="loginScreen" component={LoginScreen} />
       <Stack.Screen name="welcomeScreen" component={WelcomeScreen} />
       <Stack.Screen

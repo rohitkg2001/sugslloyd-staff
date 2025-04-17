@@ -23,14 +23,14 @@ export default function DashboardScreen({ navigation }) {
   const [pendingTasks, setPendingTasks] = useState(0);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [greeting, setGreeting] = useState("Good morning");
-  const { firstName, projectType } = useSelector((state) => state.staff);
+  const { firstName, id, projectType } = useSelector((state) => state.staff);
   const { tasks } = useSelector((state) => state.tasks);
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(projectType)
+    console.log(projectType);
     const installationCount = tasks.filter(
       (task) => task.activity === "Installation"
     ).length;
@@ -47,7 +47,7 @@ export default function DashboardScreen({ navigation }) {
 
   useEffect(() => {
     setGreeting("Good morning");
-    dispatch(fetchProjects());
+    dispatch(fetchProjects(id));
     dispatch(getAllVendors());
   }, []);
 
@@ -94,7 +94,7 @@ export default function DashboardScreen({ navigation }) {
         <VendorPerformance />
         <TotalVendor />
       </ScrollView>
-      {showBottomSheet && <Filter onClose={closeFilter} onApply={() => { }} />}
+      {showBottomSheet && <Filter onClose={closeFilter} onApply={() => {}} />}
     </ContainerComponent>
   );
 }

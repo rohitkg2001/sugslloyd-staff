@@ -36,10 +36,10 @@ export default function TeamPerformance() {
   const { id, projectType } = useSelector((state) => state.staff);
 
   useEffect(() => {
-    console.log(`Now I can filter on ${projectType} for user id ${id}`)
+    console.log(`Now I can filter on ${projectType} for user id ${id}`);
     const fetchCounts = async () => {
       const staffTargetPerformance = await getStaffPerformance(id);
-      staffTargetPerformance.length = 5
+      staffTargetPerformance.length = 5;
       setStaffPerformance(staffTargetPerformance);
     };
 
@@ -152,7 +152,7 @@ export default function TeamPerformance() {
                     {
                       textAlign: "center",
                       fontWeight: index == 0 ? "bold" : "normal",
-                      textTransform: 'capitalize'
+                      textTransform: "capitalize",
                     },
                   ]}
                 >
