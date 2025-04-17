@@ -30,7 +30,7 @@ import { useFilterTasks } from "../hooks/useFilterTasks";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
-  const { tasks } = useSelector((state) => state.tasks);
+  const { tasks, staffPerformance } = useSelector((state) => state.tasks);
 
   const { t } = useTranslation();
 
