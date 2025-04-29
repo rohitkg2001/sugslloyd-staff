@@ -503,11 +503,15 @@ const LocationSetScreen = ({ navigation }) => {
           return;
         }
 
-        const location = await Location.getCurrentPositionAsync({
+        // const location = await Location.getCurrentPositionAsync({
+        //   accuracy: Location.Accuracy.Highest,
+        //   maximumAge: 10000,
+        //   timeout: 5000,
+        // });
+        const location = await Location.getLastKnownPositionAsync({
           accuracy: Location.Accuracy.Highest,
-          maximumAge: 10000,
-          timeout: 5000,
         });
+
         const { latitude, longitude } = location.coords;
 
         setPickupLocation({ latitude, longitude });
