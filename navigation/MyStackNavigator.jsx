@@ -46,13 +46,15 @@ import MapScreen from "../screens/MapScreen";
 import LoactionSetScreen from "../screens/LoactionSetScreen";
 import ConveyanceDetailScreen from "../screens/ConveyanceDetailScreen";
 import ProfileChangeScreen from "../screens/ProfileChangeScreen";
+import SurveyScreen from "../screens/SurveyScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator({ initialRouteName }) {
- // console.log(`${initialRouteName} is the route name`);
+  // console.log(`${initialRouteName} is the route name`);
   return (
     <Stack.Navigator
       initialRouteName={initialRouteName}
+      //  initialRouteName="surveyScreen"
       screenOptions={{
         headerShown: false,
       }}
@@ -145,6 +147,7 @@ export default function MyStackNavigator({ initialRouteName }) {
         component={ConveyanceDetailScreen}
       />
       <Stack.Screen name="profileChange" component={ProfileChangeScreen} />
+      <Stack.Screen name="surveyScreen" component={SurveyScreen} />
     </Stack.Navigator>
   );
 }

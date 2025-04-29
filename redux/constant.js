@@ -1,9 +1,9 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
-//export const BASE_URL = "https://slldm.com";
-export const BASE_URL = "https://solarcrm.dashandots.tech";
+export const BASE_URL = "https://slldm.com";
+//export const BASE_URL = "https://solarcrm.dashandots.tech";
 
 export const initialState = {};
-
+  
 export const FETCH_PROJECTS = "FETCH_PROJECTS";
 export const SEARCH_PROJECTS = "SEARCH_PROJECTS";
 export const VIEW_PROJECT = "VIEW_PROJECT";
