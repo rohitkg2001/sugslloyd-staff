@@ -37,17 +37,12 @@ export default function LoginScreen({ navigation, route }) {
 
     const result = await dispatch(login(username, password));
 
-    console.log("Login Result:", result); // Log the result to check response structure
-
     if (result.success) {
-      // Successful login, navigate to the next screen
+      // Successful login
       navigation.navigate(nextScreen);
     } else {
-      // Failed login, show error message (use only the message part of the result)
-      setError(
-        result.message ||
-          "Please ensure that your username and password are correct."
-      );
+      // Failed login, show error message
+      setError("Please ensure that your username and password are correct.");
     }
   };
 

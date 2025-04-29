@@ -49,7 +49,7 @@ import ProfileChangeScreen from "../screens/ProfileChangeScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator({ initialRouteName }) {
-  console.log(`${initialRouteName} is the route name`);
+ // console.log(`${initialRouteName} is the route name`);
   return (
     <Stack.Navigator
       initialRouteName={initialRouteName}

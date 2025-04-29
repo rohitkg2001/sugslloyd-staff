@@ -36,7 +36,7 @@ export default function VendorPerformance() {
   const getCounts = async () => {
     try {
       const tasksByEngineer = await getVendorPerformance(id);
-      console.log(tasksByEngineer);
+     // console.log(tasksByEngineer);
       setStaffPerformance(tasksByEngineer);
     } catch (error) {
       console.error("Error fetching vendor performance:", error);

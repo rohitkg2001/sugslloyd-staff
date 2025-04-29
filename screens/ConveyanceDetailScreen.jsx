@@ -1,3 +1,4 @@
+// import react native
 import { View, ScrollView, Alert, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import MyHeader from "../components/header/MyHeader";
@@ -37,7 +38,8 @@ export default function ConveyanceDetailScreen() {
               </H5>
             </View>
             <H5 style={{ fontSize: 24 }}>⇄</H5>
-            <View style={{ alignItems: "center" }}>
+            <View style={ { alignItems: "center" } }>
+              
               <P style={[typography.font10]}>To</P>
               <H5
                 style={[

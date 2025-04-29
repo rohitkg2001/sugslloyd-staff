@@ -28,7 +28,7 @@ export const login = (user, pass) => async (dispatch) => {
       password: pass,
     });
 
-    console.log("Full API Response:", response); // Log the full API response
+    console.log("API Response:", response.data); // Check what the API returns
 
     const { data, status } = response;
 
@@ -43,8 +43,7 @@ export const login = (user, pass) => async (dispatch) => {
         type: SET_PROJECT_TYPE,
         payload: data.projects[0]?.project_type,
       });
-
-      // Return a success result
+      // return true;
       return { success: true };
     } else {
       return { success: false, message: "Invalid credentials" };

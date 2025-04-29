@@ -4,7 +4,7 @@ import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { useTranslation } from "react-i18next";
 import NoRecord from "./NoRecord";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTaskById } from "../redux/actions/taskActions";
 import { getAllVendors } from "../redux/actions/vendorAction";
 import TargetDetails from "../components/targetManagementComponent/TargetDetails";

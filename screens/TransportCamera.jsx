@@ -99,7 +99,7 @@ export default function TransportCamera({
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
         let loc = await Location.getCurrentPositionAsync({});
-        console.log(loc);
+      //  console.log(loc);
         setLocation(loc.coords);
       }
     })();

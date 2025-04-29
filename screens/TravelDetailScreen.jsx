@@ -28,7 +28,7 @@ const TravelDetailScreen = ({ navigation }) => {
       : new Date(formData.journeyDate).toLocaleDateString();
 
   const handleSubmit = () => {
-    console.log("Form Submitted", formData);
+  //  console.log("Form Submitted", formData);
     navigation.navigate("travelManagement", { travelData: formData });
   };
 
