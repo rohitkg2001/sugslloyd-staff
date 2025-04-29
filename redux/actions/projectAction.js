@@ -9,9 +9,10 @@ export const getStateById = async (id) => {
   return state.name;
 };
 
-export const fetchProjects = () => async (dispatch) => {
+export const fetchProjects = (my_id) => async (dispatch) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/projects`);
+    const response = await fetch(`
+  ${BASE_URL}/api/projects/${my_id}`);
     // Check if the response is ok (status code 200-299)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -19,9 +20,11 @@ export const fetchProjects = () => async (dispatch) => {
     const data = await response.json();
     // Ensure data is an array before filtering
     if (!Array.isArray(data)) {
-      throw new Error('Expected an array of projects but got something else');
+      throw new Error("Expected an array of projects but got something else");
     }
-    const myProjects = data.filter((project, index) => project.project_type !== "1")
+    const myProjects = data.filter(
+      (project, index) => project.project_type !== "1"
+    );
     dispatch({ type: FETCH_PROJECTS, payload: myProjects });
   } catch (error) {
     console.error(error);

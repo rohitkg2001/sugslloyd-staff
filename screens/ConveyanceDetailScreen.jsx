@@ -1,4 +1,6 @@
-import { View, ScrollView, Alert } from "react-native";
+// import react native
+import { View, ScrollView, Alert, Image } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
@@ -6,6 +8,8 @@ import { H2, H5, P } from "../components/text";
 import Button from "../components/buttons/Button";
 
 export default function ConveyanceDetailScreen() {
+  const route = useRoute();
+  const { travelItem } = route.params;
   return (
     <ContainerComponent>
       <MyHeader title={"Booking Summary"} hasIcon={true} isBack={true} />
@@ -30,11 +34,12 @@ export default function ConveyanceDetailScreen() {
                   typography.fontLato,
                 ]}
               >
-                Patna Golghar
+                {`${travelItem.pickupLocation}`}
               </H5>
             </View>
             <H5 style={{ fontSize: 24 }}>⇄</H5>
-            <View style={{ alignItems: "center" }}>
+            <View style={ { alignItems: "center" } }>
+              
               <P style={[typography.font10]}>To</P>
               <H5
                 style={[
@@ -43,31 +48,9 @@ export default function ConveyanceDetailScreen() {
                   typography.fontLato,
                 ]}
               >
-                Patna Airport
+                {travelItem.dropoffLocation}
               </H5>
             </View>
-          </View>
-          <View style={[styles.row, spacing.pv2]}>
-            <H5
-              style={[
-                typography.font14,
-                // typography.textBold,
-                typography.fontLato,
-                { textAlign: "left" },
-              ]}
-            >
-              Journey Date
-            </H5>
-            <P
-              style={[
-                typography.text600,
-                typography.font14,
-                typography.fontLato,
-                { textAlign: "right" },
-              ]}
-            >
-              2025-02-21
-            </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
             <H5
@@ -88,7 +71,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right" },
               ]}
             >
-              7 Km
+              {travelItem.distance || "Not provided"}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2, spacing.bbw05]}>
@@ -111,7 +94,53 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right" },
               ]}
             >
-              Car
+              {travelItem.transportType || "Not provided"}
+            </P>
+          </View>
+          <View style={[styles.row, spacing.pv2]}>
+            <H5
+              style={[
+                typography.font14,
+                // typography.textBold,
+                typography.fontLato,
+
+                { textAlign: "left" },
+              ]}
+            >
+              Date
+            </H5>
+            <P
+              style={[
+                typography.textBold,
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
+              {travelItem.date || "Not provided"}
+            </P>
+          </View>
+          <View style={[styles.row, spacing.pv2]}>
+            <H5
+              style={[
+                typography.font14,
+                // typography.textBold,
+                typography.fontLato,
+
+                { textAlign: "left" },
+              ]}
+            >
+             Time
+            </H5>
+            <P
+              style={[
+                typography.textBold,
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "right" },
+              ]}
+            >
+              {travelItem.time || "Not provided"}
             </P>
           </View>
           <H5
@@ -131,7 +160,7 @@ export default function ConveyanceDetailScreen() {
             <H5
               style={[
                 typography.font14,
-               // typography.textBold,
+                // typography.textBold,
                 typography.fontLato,
                 { textAlign: "left" },
               ]}
@@ -145,7 +174,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right" },
               ]}
             >
-              ₹ 150.00
+              ₹ {travelItem.price || "Not provided"}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
@@ -167,10 +196,38 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right", color: "red" },
               ]}
             >
-              ₹ 150.00
+              ₹ {travelItem.price || "Not provided"}
             </P>
           </View>
-          import {Alert} from "react-native";
+
+          {/* Photos Section */}
+
+          {travelItem.photos && travelItem.photos.length > 0 && (
+            <>
+              <P style={{ fontSize: 18, fontWeight: "bold", marginTop: 10 }}>
+                Travel Photos
+              </P>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={{ marginTop: 10 }}
+              >
+                {travelItem.photos.map((photo, index) => (
+                  <Image
+                    key={index}
+                    source={{ uri: photo }}
+                    style={{
+                      width: 200,
+                      height: 200,
+                      borderRadius: 10,
+                      marginHorizontal: 5,
+                    }}
+                  />
+                ))}
+              </ScrollView>
+            </>
+          )}
+
           <Button
             style={[
               styles.btn,

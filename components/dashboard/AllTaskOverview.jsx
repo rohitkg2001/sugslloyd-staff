@@ -26,7 +26,6 @@ import {
   ICON_SMALL,
 } from "../../styles";
 
-
 export default function AllTaskOverview() {
   const [installation, setInstallation] = useState(0);
   const [doneInstallation, setDoneInstallation] = useState(0);
@@ -37,12 +36,16 @@ export default function AllTaskOverview() {
   const [finalInspection, setFinalInspection] = useState(0);
   const [doneFinalInspection, setDoneFinalInspection] = useState(0);
 
-  const { id } = useSelector((state) => state.staff);
+  const { id, projectType } = useSelector((state) => state.staff);
   const { tasks } = useSelector((state) => state.tasks);
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  useEffect(() => {
+    dispatch(getAllTasks(id));
+  }, [dispatch, id]);
 
   useEffect(() => {
     const installationCount = tasks.filter(
@@ -76,10 +79,6 @@ export default function AllTaskOverview() {
     setFinalInspection(finalCount);
     setDoneFinalInspection(doneFinalInspectionCount);
   }, [tasks]);
-
-  useEffect(() => {
-    dispatch(getAllTasks(id));
-  }, [dispatch, id]);
 
   const viewTask = async (activity) => {
     await dispatch(getTaskByCategory(activity));

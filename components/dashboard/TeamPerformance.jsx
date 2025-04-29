@@ -25,7 +25,7 @@ import {
   ICON_SMALL,
   PRIMARY_COLOR_TRANSPARENT,
 } from "../../styles";
-import { H5, H6, H4 } from "../text";
+import { H6 } from "../text";
 const MEDAL_COLORS = ["#FFD700", "#C0C0C0", "#CD7F32"]; // Gold, Silver, Bronze
 
 export default function TeamPerformance() {
@@ -36,10 +36,10 @@ export default function TeamPerformance() {
   const { id, projectType } = useSelector((state) => state.staff);
 
   useEffect(() => {
-    console.log(`Now I can filter on ${projectType} for user id ${id}`)
+    console.log(`Now I can filter on ${projectType} for user id ${id}`);
     const fetchCounts = async () => {
       const staffTargetPerformance = await getStaffPerformance(id);
-      staffTargetPerformance.length = 5
+      staffTargetPerformance.length = 5;
       setStaffPerformance(staffTargetPerformance);
     };
 
@@ -152,7 +152,7 @@ export default function TeamPerformance() {
                     {
                       textAlign: "center",
                       fontWeight: index == 0 ? "bold" : "normal",
-                      textTransform: 'capitalize'
+                      textTransform: "capitalize",
                     },
                   ]}
                 >

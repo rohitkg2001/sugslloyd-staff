@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { CameraView, useCameraPermissions } from "expo-camera";
+import { CameraView } from "expo-camera";
 import {
   View,
   Text,
@@ -11,20 +11,14 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import * as Location from "expo-location";
-import {
-  ICON_LARGE,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-  spacing,
-  typography,
-} from "../styles";
+import { ICON_LARGE, SCREEN_HEIGHT, SCREEN_WIDTH, spacing } from "../styles";
 import { useNavigation } from "@react-navigation/native";
 
 export default function TransportCamera({
   isCameraOpen,
   setIsCameraOpen,
-  isSurvey,
   handleSubmission,
+  route,
 }) {
   const [photos, setPhotos] = useState([]);
   const [location, setLocation] = useState(null);
@@ -32,12 +26,80 @@ export default function TransportCamera({
   const cameraRef = useRef(null);
   const navigation = useNavigation();
 
+  const [pickupLocation, setPickupLocation] = useState(null);
+  const [dropoffLocation, setDropoffLocation] = useState(null);
+  const [pickupAddress, setPickupAddress] = useState("");
+  const [dropoffAddress, setDropoffAddress] = useState("");
+  const [transportType, setTransportType] = useState("");
+  const [price, setPrice] = useState(0);
+  const [distance, setDistance] = useState(0);
+  const [currentDate, setCurrentDate] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    if (route?.params?.transportType) {
+      setTransportType(route.params.transportType);
+    }
+    if (route?.params?.price) {
+      setPrice(route.params.price);
+    }
+    if (route?.params?.distance) {
+      setDistance(route.params.distance);
+    }
+
+    // Setting Current Date and Time when component mounts
+    const date = new Date();
+    setCurrentDate(date.toLocaleDateString()); // Format: MM/DD/YYYY
+    setCurrentTime(date.toLocaleTimeString()); // Format: HH:MM:SS AM/PM
+  }, [route]);
+
+  const getAddressFromCoords = async (latitude, longitude) => {
+    try {
+      let addressData = await Location.reverseGeocodeAsync({
+        latitude,
+        longitude,
+      });
+      if (addressData.length > 0) {
+        let { city } = addressData[0];
+        return city ? `${city}` : "Address not found";
+      }
+      return "Address not found";
+    } catch (error) {
+      console.error("Error fetching address:", error);
+      return "Address fetch error";
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission Denied", "Allow location access to proceed.");
+        return;
+      }
+
+      let loc = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = loc.coords;
+      setPickupLocation({ latitude, longitude });
+
+      const pickupAddr = await getAddressFromCoords(latitude, longitude);
+      setPickupAddress(pickupAddr);
+
+      let dropLat = latitude + 0.01;
+      let dropLong = longitude + 0.01;
+      setDropoffLocation({ latitude: dropLat, longitude: dropLong });
+
+      const dropAddr = await getAddressFromCoords(dropLat, dropLong);
+      setDropoffAddress(dropAddr);
+    })();
+  }, []);
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
         let loc = await Location.getCurrentPositionAsync({});
-        console.log(loc);
+      //  console.log(loc);
         setLocation(loc.coords);
       }
     })();
@@ -114,7 +176,7 @@ export default function TransportCamera({
           <Icon name="close" size={35} color="white" />
         </TouchableOpacity>
 
-        {/* Controlsl */}
+        {/* Controls */}
         <View style={styles.controls}>
           <TouchableOpacity onPress={handleRetake} style={styles.retakeButton}>
             <Icon name="refresh" size={35} color="white" />
@@ -125,9 +187,20 @@ export default function TransportCamera({
           >
             <View style={styles.innerShutter} />
           </TouchableOpacity>
-          {!isSurvey && photos.length >= 1 ? (
+          {photos.length >= 1 ? (
             <TouchableOpacity
-              onPress={() => navigation.navigate("mapScreen")}
+              onPress={() =>
+                navigation.navigate("mapScreen", {
+                  pickupAddress,
+                  dropoffAddress,
+                  transportType,
+                  price,
+                  distance,
+                  photos,
+                  date: currentDate,
+                  time: currentTime,
+                })
+              }
               style={styles.retakeButton}
             >
               <Icon name="arrow-forward" size={ICON_LARGE} color={"white"} />

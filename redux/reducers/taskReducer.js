@@ -14,6 +14,7 @@ import {
 const initialState = {
   tasks: [],
   currentTask: null,
+  billData: {},
 };
 
 export const taskReducer = (state = initialState, action) => {

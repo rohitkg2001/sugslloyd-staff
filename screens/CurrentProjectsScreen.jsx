@@ -1,8 +1,7 @@
 // import All React native
-
-import { View } from "react-native";
+import { useState } from "react";
+import { View, TouchableOpacity } from "react-native";
 import moment from "moment";
-import Icon from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
 
 // import all components
@@ -15,28 +14,23 @@ import VendorSelectionScreen from "./VendorSelectionScreen";
 import CustomMenu from "../components/TargetScreen/CustomMenu";
 import TabBar from "../components/TabBar";
 import SearchBar from "../components/input/SearchBar";
-import Button from "../components/buttons/Button";
 import Filter from "../components/Filter";
+//import SearchBar from "../components/input/SearchBar";
 
 // import all redux
 import { useSelector } from "react-redux";
 
 // import all styles
-import { H5, H6, P, Span } from "../components/text";
-import {
-  spacing,
-  styles,
-  typography,
-  SCREEN_WIDTH,
-  ICON_MEDIUM,
-  LIGHT,
-} from "../styles";
+import { H4, H5, H6, P, Span } from "../components/text";
+import { LIGHT, PRIMARY_COLOR, spacing, styles, typography } from "../styles";
 
 import { useTaskFunctions } from "../hooks/useTaskFunctions";
+import DashboardFilter from "../components/filters/DashboardFilter";
+import { useFilterTasks } from "../hooks/useFilterTasks";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
-  const { tasks } = useSelector((state) => state.tasks);
+  const { tasks, staffPerformance } = useSelector((state) => state.tasks);
 
   const { t } = useTranslation();
 
@@ -57,6 +51,16 @@ export default function CurrentProjectsScreen({ navigation }) {
     handleTabSelection,
   } = useTaskFunctions(staff);
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [dateFilter, setDateFilter] = useState("All");
+
+  const handleSearch = (text) => {
+    setSearchQuery(text);
+  };
+
+  // import in code useFilterTasks in Hooks folders
+  const filteredTasks = useFilterTasks(currentTasks, searchQuery, dateFilter);
+
   return (
     <ContainerComponent>
       <MyHeader
@@ -72,9 +76,17 @@ export default function CurrentProjectsScreen({ navigation }) {
           />
         }
       />
-
+      <DashboardFilter updateDateFilter={setDateFilter} />
+      {/* Search Bar */}
+      <SearchBar
+        value={searchQuery}
+        onChangeText={handleSearch}
+        style={{ marginHorizontal: 10 }}
+      />
+      ;
       <MyFlatList
-        data={Array.isArray(currentTasks) ? currentTasks : []}
+        // data={Array.isArray(currentTasks) ? currentTasks : []}
+        data={filteredTasks} // Use filtered tasks
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
           const isCompleted = item.status === "Completed"; // Assuming "status" is the field that indicates completion
@@ -97,9 +109,6 @@ export default function CurrentProjectsScreen({ navigation }) {
               key={item.id}
               index={item.id}
               title={item.site?.site_name || ""}
-              subtitle={`${item.site?.location || ""}, ${
-                item.site?.district || ""
-              }, ${item.site?.state || ""}`}
               onPress={() =>
                 navigation.navigate("targetManagementScreen", { id: item.id })
               }
@@ -108,42 +117,60 @@ export default function CurrentProjectsScreen({ navigation }) {
               borderColor={borderColor}
             >
               <View style={{ position: "relative" }}>
+                {/* Location */}
+                <H4
+                  style={[
+                    typography.font12,
+                    typography.fontLato,
+                    { marginTop: -20, bottom: 30 },
+                  ]}
+                >
+                  {`${item.site?.location || ""}, ${
+                    item.site?.district || ""
+                  }, ${item.site?.state || ""}`}
+                </H4>
+
+                {/* Activity and Breda SL */}
                 <View
                   style={{
                     position: "absolute",
-
                     right: 0,
                     alignItems: "flex-end",
-                    bottom: 70,
+                    bottom: 45,
                   }}
                 >
+                  <H6 style={[typography.font14, typography.fontLato]}>
+                    {item.activity}
+                  </H6>
                   <Span
                     style={[
                       typography.font10,
                       typography.fontLato,
-                      { textTransform: "uppercase", color: "gray" },
+                      {
+                        textTransform: "uppercase",
+                        color: "gray",
+                        top: 15,
+                        right: 90,
+                      },
                     ]}
                   >
                     breda sl no
                   </Span>
-
                   <H5
                     style={[
-                      typography.font16,
+                      typography.font12,
                       typography.fontLato,
+                      typography.textBold,
                       spacing.mr4,
-                      // { marginRight: 20 },
+                      { top: 10, right: 90 },
                     ]}
                   >
                     {item.site?.breda_sl_no}
                   </H5>
                 </View>
 
-                <H6 style={[typography.font14, typography.fontLato]}>
-                  {item.activity}
-                </H6>
-
-                <View style={[spacing.mt1, styles.row, spacing.mv2]}>
+                {/* Start and End Date */}
+                <View style={[styles.row, { marginTop: -14 }]}>
                   <View>
                     <Span
                       style={[
@@ -163,15 +190,78 @@ export default function CurrentProjectsScreen({ navigation }) {
                       style={[
                         typography.font10,
                         typography.fontLato,
-                        { textTransform: "uppercase", color: "gray" },
+                        {
+                          textTransform: "uppercase",
+                          color: "gray",
+                          right: 150,
+                        },
                       ]}
                     >
                       End date
                     </Span>
-                    <P style={[typography.font12, typography.fontLato]}>
+                    <P
+                      style={[
+                        typography.font12,
+                        typography.fontLato,
+                        { right: 150 },
+                      ]}
+                    >
                       {item.end_date}
                     </P>
                   </View>
+                </View>
+
+                {/* Status */}
+                <View
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    alignItems: "flex-end",
+                    top: 20,
+                  }}
+                >
+                  {/* Survey Button ABOVE status */}
+                  {activeTab === "Assigned" && (
+                    <TouchableOpacity
+                      style={[
+                        spacing.pv1,
+                        spacing.ph2,
+                        spacing.br1,
+                        {
+                          backgroundColor: PRIMARY_COLOR,
+                          bottom: 35,
+                        },
+                      ]}
+                      onPress={() =>
+                        navigation.navigate("surveyScreen", { item })
+                      }
+                    >
+                      <P
+                        style={[
+                          typography.font12,
+                          {
+                            color: LIGHT,
+                          },
+                        ]}
+                      >
+                        Survey
+                      </P>
+                    </TouchableOpacity>
+                  )}
+
+                  {/* Status */}
+                  <H6
+                    style={[
+                      typography.font14,
+                      typography.fontLato,
+                      {
+                        color: item.status === "Complete" ? "red" : "green",
+                        bottom: 30,
+                      },
+                    ]}
+                  >
+                    {item.status}
+                  </H6>
                 </View>
               </View>
             </ClickableCard1>
@@ -179,31 +269,6 @@ export default function CurrentProjectsScreen({ navigation }) {
         }}
         ListHeaderComponent={() => (
           <View>
-            <View
-              style={[
-                spacing.mv4,
-                styles.row,
-                spacing.mh1,
-                { alignItems: "center" },
-              ]}
-            >
-              <SearchBar
-                placeholder="Search"
-                style={{ width: SCREEN_WIDTH - 80 }}
-              />
-              <Button
-                style={[
-                  styles.btn,
-                  styles.bgPrimary,
-                  spacing.mh1,
-                  { width: 50 },
-                ]}
-                onPress={() => setShowBottomSheet(true)}
-              >
-                <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
-              </Button>
-            </View>
-
             <TabBar
               tabs={[
                 {
@@ -250,7 +315,6 @@ export default function CurrentProjectsScreen({ navigation }) {
         )}
         ListEmptyComponent={() => <NoRecord msg={t("no_project")} />}
       />
-
       <CustomMenu
         menuVisible={menuVisible}
         toggleMenu={toggleMenu}
@@ -262,14 +326,12 @@ export default function CurrentProjectsScreen({ navigation }) {
         }
         disableApprove={selectedTargets.length === 0 || activeTab !== "Pending"}
       />
-
       {showBottomSheet && (
         <Filter
           onClose={() => setShowBottomSheet(false)}
           onApply={applyFilterFromRedux}
         />
       )}
-
       {showVendorSelection && (
         <VendorSelectionScreen
           onClose={() => setShowVendorSelection(false)}

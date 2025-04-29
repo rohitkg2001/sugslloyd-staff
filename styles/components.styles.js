@@ -325,4 +325,26 @@ export const styles = StyleSheet.create({
     width: 24,
     borderRadius: 12,
   },
+
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    width: "80%",
+    alignItems: "center",
+  },
+
+  modalOption: {
+    fontSize: 18,
+    padding: 10,
+    textAlign: "center",
+    color: "black",
+  },
 });

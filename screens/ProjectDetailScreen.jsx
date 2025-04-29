@@ -241,13 +241,27 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           )}
         </View>
         <View>
-          <Tabs
+          {/* <Tabs
             tabs={[t("Sites"), t("Inventory"), t("Target")]}
             onTabPress={(index) => {
               const tabName = ["Sites", "Inventory", "Target"][index];
               setActiveTab(tabName);
             }}
-          />
+          /> */}
+
+          <View>
+            <Tabs
+              tabs={[
+                `${t("Sites")} (${sites.length})`,
+                t("Inventory"),
+                t("Target"),
+              ]}
+              onTabPress={(index) => {
+                const tabName = ["Sites", "Inventory", "Target"][index];
+                setActiveTab(tabName);
+              }}
+            />
+          </View>
         </View>
         {renderActiveTab()}
       </ScrollView>

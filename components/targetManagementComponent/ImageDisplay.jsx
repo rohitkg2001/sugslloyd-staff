@@ -7,7 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MyButton from "../buttons/MyButton";
 import { spacing, styles, typography } from "../../styles";
 
-const ImageDisplay = ({ images, id, status }) => {
+const ImageDisplay = ({ images, id, status, isCompleted }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("Survey");
@@ -48,12 +48,9 @@ const ImageDisplay = ({ images, id, status }) => {
 
   const handleApprove = async () => {
     try {
-      //const taskId = id;
-      console.log(id);
       const response = await axios.post(
         `https://slldm.com/api/tasks/${id}/approve`
       );
-      //console.log("Approval successful:", response.data);
       alert(response.data.message);
     } catch (error) {
       console.error("Error approving the task:", error);
@@ -264,19 +261,13 @@ const ImageDisplay = ({ images, id, status }) => {
         )}
       />
 
-      {(activeTab === "Survey" || activeTab === "Final Inspection") && (
-        <View style={[styles.row, {}]}>
+      {/* Conditional Rendering of Approve/Reject Buttons */}
+      {!isCompleted && ( // Hide buttons when isCompleted is true
+        <View style={[styles.row]}>
           <MyButton title={"Approve"} onPress={handleApprove} />
           <MyButton title={"Reject"} color="#DC4C64" />
         </View>
       )}
-
-      {/* {status === "Pending" && (
-        <View style={[styles.row, {}]}>
-          <MyButton title={"Approve"} onPress={handleApprove} />
-          <MyButton title={"Reject"} color="#DC4C64" />
-        </View>
-      )} */}
     </View>
   );
 };

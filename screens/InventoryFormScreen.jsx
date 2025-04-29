@@ -8,7 +8,10 @@ import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
 import MyPickerInput from "../components/input/MyPickerInput";
 import MyButton from "../components/buttons/MyButton";
-import { updateInventory } from "../redux/actions/inventoryAction";
+import {
+  updateInventory,
+  addInventory,
+} from "../redux/actions/inventoryAction";
 import { useTranslation } from "react-i18next";
 
 const InventoryFormScreen = ({ navigation, route }) => {
@@ -33,16 +36,37 @@ const InventoryFormScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
+  // const handleSaveProduct = () => {
+  //   const updatedProduct = {
+  //     id: editItem?.id || Date.now().toString(),
+  //     name: productName,
+  //     description: brand,
+  //     quantity: parseInt(quantity) || 0,
+  //     url: editItem?.url || "https://via.placeholder.com/60",
+  //     releaseDate,
+  //   };
+  //   dispatch(updateInventory(updatedProduct));
+  //   navigation.goBack();
+  // };
+
+  // Modify handleSaveProduct function
+
   const handleSaveProduct = () => {
     const updatedProduct = {
       id: editItem?.id || Date.now().toString(),
       name: productName,
       description: brand,
       quantity: parseInt(quantity) || 0,
-      url: editItem?.url || "https://via.placeholder.com/60",
+      unit,
       releaseDate,
     };
-    dispatch(updateInventory(updatedProduct));
+
+    if (editItem) {
+      dispatch(updateInventory(updatedProduct));
+    } else {
+      dispatch(addInventory(updatedProduct)); // Dispatch ADD_INVENTORY action
+    }
+
     navigation.goBack();
   };
   const handleDateChange = (event, selectedDate) => {

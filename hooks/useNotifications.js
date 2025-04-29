@@ -25,7 +25,7 @@ export default function useNotifications() {
 
     async function registerForPushNotifications() {
         try {
-            console.log("Fetching push token...");
+           // console.log("Fetching push token...");
 
             // Ensure permissions are granted before requesting a push token
             const { status } = await Notifications.getPermissionsAsync();
@@ -48,7 +48,7 @@ export default function useNotifications() {
             const pushTokenString = (await Notifications.getExpoPushTokenAsync({ projectId })).data;
 
             if (pushTokenString) {
-                console.log("Fetched push token successfully:", pushTokenString);
+                //console.log("Fetched push token successfully:", pushTokenString);
                 setExpoPushToken(pushTokenString);
                 await AsyncStorage.setItem("expoPushToken", pushTokenString);
             } else {

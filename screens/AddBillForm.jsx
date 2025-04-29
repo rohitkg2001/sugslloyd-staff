@@ -1,8 +1,16 @@
 // import All react Native
 import { useState } from "react";
-import { View, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  TextInput,
+  Text,
+} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTranslation } from "react-i18next";
+import Icon from "react-native-vector-icons/Ionicons";
+import { useSelector } from "react-redux";
 
 // import Components
 import ContainerComponent from "../components/ContainerComponent";
@@ -14,8 +22,8 @@ import { useDispatch } from "react-redux";
 import { setBillData } from "../redux/actions/taskActions";
 
 // import Styles
-import { spacing, styles, typography } from "../styles";
-import { H2, H6, Span } from "../components/text";
+import { spacing, styles, typography, LIGHT } from "../styles";
+import { H2, H6, P, Span } from "../components/text";
 import Button from "../components/buttons/Button";
 import useAddBillForm from "../hooks/useAddBillForm";
 
@@ -45,11 +53,105 @@ const AddBillForm = ({ navigation }) => {
     handleRemoveHotelBill,
     setSelectedDateType,
     setShowDatePicker,
+    type,
+    setType,
+    city,
+    setCity,
+    destinationCity,
+    setDestinationCity,
+    isEditing,
+    setIsEditing,
+    description,
+    setDescription,
+    totalKm,
+    setTotalKm,
+    kmRate,
+    setKmRate,
+    rent,
+    setRent,
+    vehicleNo,
+    setVehicleNo,
+    department,
+    setDepartment,
+    employeeId,
+    setEmployeeId,
+    visitApprovedBy,
+    setVisitApprovedBy,
+    objective,
+    setObjective,
+    meetings,
+    setMeetings,
+    outcomes,
+    setOutcomes,
+    designation,
+    setDesignation,
+    transactions,
+    setTransactions,
+    errors,
+    setErrors,
   } = useAddBillForm();
-  const [type, setType] = useState(null);
-  const [city, setCity] = useState(null);
+  const { firstName, lastName } = useSelector((state) => state.staff);
+
+  const addTransactionField = () => {
+    setTransactions([
+      ...transactions,
+      { amount: "", category: "", description: "", date: new Date() },
+    ]);
+  };
+
+  const handleTransactionChange = (value, index, field) => {
+    // Convert value to number
+    const amount = Number(value);
+
+    // Update state regardless of the amount
+    setTransactions((prevTransactions) => {
+      const updatedTransactions = [...prevTransactions];
+      updatedTransactions[index] = {
+        ...updatedTransactions[index],
+        [field]: value,
+      };
+      return updatedTransactions;
+    });
+  };
+
+  const removeTransactionField = (index) => {
+    const updatedTransactions = transactions.filter((_, i) => i !== index);
+    setTransactions(updatedTransactions);
+  };
 
   const handleCalculateBill = () => {
+    // Check if any Train PNR is less than 10 digits
+    const hasInvalidTrainPnr = pnrNumbersStart.some(
+      (pnr) => type === "Train" && pnr.length !== 10
+    );
+
+    if (hasInvalidTrainPnr) {
+      alert("Train PNR must be exactly 10 digits."); // Show error message i
+      return; // Stop submission
+    }
+    const totalAmount = transactions.reduce(
+      (sum, transaction) => sum + parseFloat(transaction.amount || 0),
+      0
+    );
+
+    const hasInvalidFlightPnr = pnrNumbersStart.some((pnr) => {
+      if (type === "Flight") {
+        return !/^[A-Za-z0-9]{6,10}$/.test(pnr); // PNR should be alphanumeric and 6-10 characters long
+      }
+      return false; // Return false for other types (like Train, etc.)
+    });
+
+    if (hasInvalidFlightPnr) {
+      alert("Flight PNR must be exactly 6-10 alphanumeric characters.");
+      return; // Stop the submission
+    }
+
+    const categories = transactions
+      .map((transaction) => transaction.category)
+      .join(", ");
+    const descriptions = transactions
+      .map((transaction) => transaction.description)
+      .join("; ");
     const formData = {
       start_date,
       journeyDate,
@@ -58,31 +160,205 @@ const AddBillForm = ({ navigation }) => {
       ticket,
       hotelBill,
       city,
+      destinationCity,
       type,
+      description,
+      transactions,
+      totalAmount,
+      categories,
+      descriptions,
+      totalKm,
+      kmRate,
+      rent,
+      vehicleNo,
+      department,
+      employeeId,
+      visitApprovedBy,
+      objective,
+      meetings,
+      outcomes,
     };
 
     dispatch(setBillData(formData));
-    console.log("Form Data:", formData);
-    navigation.navigate("travelDetailScreen");
+    // console.log("Form Data:", formData);
+    navigation.navigate("travelDetailScreen", { formData });
   };
+
   return (
     <ContainerComponent>
       <MyHeader title={t("Add Bill")} hasIcon={true} isBack={true} />
       <ScrollView>
-        {/* Start Journey Date */}
-        <TouchableOpacity
-          onPress={() => {
-            setSelectedDateType("start");
-            setShowDatePicker(true);
-          }}
-        >
+        <View>
           <MyTextInput
-            title={t("Journey Date")}
-            value={start_date.toLocaleDateString()}
-            placeholder={t("Select Start Date")}
-            editable={false}
+            title={t("Name")}
+            value={`${firstName || ""} ${lastName || ""}`}
+            placeholder="Enter your first name"
           />
-        </TouchableOpacity>
+
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View style={{ width: "48%" }}>
+              <Text style={{ marginBottom: 5, fontWeight: "bold" }}>
+                Department Name
+              </Text>
+              <TextInput
+                placeholder="Department Name"
+                value={department}
+                onChangeText={(text) => setDepartment(text)}
+                style={[
+                  spacing.br1,
+                  {
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                  },
+                ]}
+              />
+            </View>
+
+            <View style={{ width: "45%", right: 12 }}>
+              <Text style={{ marginBottom: 5, fontWeight: "bold" }}>
+                Employee ID
+              </Text>
+              <TextInput
+                placeholder="Employee ID"
+                value={employeeId}
+                onChangeText={(text) => setEmployeeId(text)}
+                style={[
+                  spacing.br1,
+                  {
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                  },
+                ]}
+              />
+            </View>
+          </View>
+
+          <MyTextInput
+            title="Visit Approved By"
+            value={visitApprovedBy}
+            onChangeText={(text) => setVisitApprovedBy(text)}
+            placeholder="Enter approver's name"
+          />
+
+          <MyTextInput
+            title="Objective of the Tour"
+            value={objective}
+            onChangeText={(text) => setObjective(text)}
+            placeholder="Enter objective of the tour"
+          />
+
+          <MyTextInput
+            title="Key Meetings/Visits"
+            value={meetings}
+            onChangeText={(text) => setMeetings(text)}
+            placeholder="Enter key meetings or visits"
+          />
+
+          <MyTextInput
+            title="Key Outcomes and Achievements"
+            value={outcomes}
+            // onChange={setOutcomes}
+            onChangeText={(text) => setOutcomes(text)}
+            placeholder="Enter key outcomes and achievements"
+          />
+          <MyTextInput
+            title="Designation"
+            value={designation}
+            onChangeText={(text) => setDesignation(text)}
+            placeholder="Designation"
+          />
+
+          <View style={{ flexDirection: "row", padding: 10 }}>
+            {/* Start Journey Date */}
+            <TouchableOpacity
+              onPress={() => {
+                setSelectedDateType("start");
+                setShowDatePicker(true);
+              }}
+              style={{
+                flex: 1,
+                marginRight: 5,
+                backgroundColor: "#F0FAF0",
+                borderRadius: 8,
+                padding: 10,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderWidth: 1,
+                borderColor: "#ccc",
+              }}
+            >
+              <View>
+                <Text style={{ fontSize: 12, marginBottom: 5 }}>
+                  Start Journey Date
+                </Text>
+                <Text style={{ fontSize: 16 }}>
+                  {start_date.toLocaleDateString()}
+                </Text>
+              </View>
+              <Icon name="calendar-outline" size={20} color="#666" />
+            </TouchableOpacity>
+
+            {/* Return Journey Date */}
+            <TouchableOpacity
+              onPress={() => {
+                setSelectedDateType("return");
+                setShowDatePicker(true);
+              }}
+              style={{
+                flex: 1,
+                marginLeft: 5,
+                backgroundColor: "#F0FAF0",
+                borderRadius: 8,
+                padding: 10,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderWidth: 1,
+                borderColor: "#ccc",
+              }}
+            >
+              <View>
+                <P
+                  style={[typography.font12, typography.fontLato, spacing.mb1]}
+                >
+                  {t("Return Journey Date")}
+                </P>
+                <Text style={{ fontSize: 16 }}>
+                  {journeyDate.toLocaleDateString()}
+                </Text>
+              </View>
+              <Icon name="calendar-outline" size={20} color="#666" />
+            </TouchableOpacity>
+          </View>
+
+          {/* Show Date Picker only when triggered */}
+          {showDatePicker && (
+            <DateTimePicker
+              value={selectedDateType === "start" ? start_date : journeyDate}
+              mode="date"
+              display="default"
+              onChange={(event, selectedDate) => {
+                onDateChange(event, selectedDate);
+              }}
+            />
+          )}
+        </View>
+
+        <MyPickerInput
+          title={t("Mode Of Transport")}
+          value={type}
+          onChange={setType}
+          options={[
+            { label: t("Bus"), value: "Bus" },
+            { label: t("Train"), value: "Train" },
+            { label: t("Flight"), value: "Flight" },
+          ]}
+        />
 
         {/* PNR and Ticket Upload Group */}
         <View
@@ -92,31 +368,28 @@ const AddBillForm = ({ navigation }) => {
             spacing.br2,
             {
               borderStyle: "dotted",
+              marginTop: 10,
             },
           ]}
         >
-          <H6 style={[typography.font14, typography.fontLato, spacing.p1]}>
+          <H6 style={[typography.font14, typography.fontLato, spacing.p2]}>
             {t("Journey Ticket")}
           </H6>
+
           {pnrNumbersStart.map((pnr, index) => (
             <View key={index}>
               <MyTextInput
-                title={`${t("PNR Number")} ${index + 1}`}
+                title={`PNR Number ${index + 1}`}
                 value={pnr}
-                onChange={(value) => handlePnrChangeStart(value, index)}
-                placeholder={t("Upload Ticket & Enter PNR")}
+                onChangeText={(value) => handlePnrChangeStart(value, index)}
+                placeholder="Upload Ticket & Enter PNR"
               />
+              {errors.start[index] ? (
+                <Text style={{ color: "red" }}>{errors.start[index]}</Text>
+              ) : null}
               {pnrNumbersStart.length > 1 && (
                 <TouchableOpacity onPress={() => removePnrFieldStart(index)}>
-                  <Span
-                    style={[
-                      styles.rightLink,
-                      typography.fontLato,
-                      { color: "red" },
-                    ]}
-                  >
-                    {t("Remove")}
-                  </Span>
+                  <Text style={{ color: "red" }}>Remove</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -177,81 +450,391 @@ const AddBillForm = ({ navigation }) => {
             </View>
           )}
         </View>
-
-        <MyPickerInput
-          title={t("City")}
-          value={city}
-          onChange={setCity}
-          options={[
-            { label: t("Patna"), value: "Patna" },
-            { label: t("Delhi"), value: "Delhi" },
-            { label: t("Mumbai"), value: "Mumbai" },
-            { label: t("Kolkata"), value: "Kolkata" },
-            { label: t("Chennai"), value: "Chennai" },
-            { label: t("Bangalore"), value: "Bangalore" },
-            { label: t("Hyderabad"), value: "Hyderabad" },
-            { label: t("Ahmedabad"), value: "Ahmedabad" },
-            { label: t("Pune"), value: "Pune" },
-          ]}
-        />
-
-        {/* Return Journey Date */}
-        <TouchableOpacity
-          onPress={() => {
-            setSelectedDateType("return");
-            setShowDatePicker(true);
-          }}
-        >
-          <MyTextInput
-            title={t("Return Journey Date")}
-            value={journeyDate.toLocaleDateString()}
-            placeholder={t("Select Return Date")}
-            editable={false}
-          />
-        </TouchableOpacity>
-
-        {/* Return Journey PNR Inputs */}
-        {pnrNumbersReturn.map((pnr, index) => (
-          <View key={index} style={{ marginBottom: spacing.mh1 }}>
-            <MyTextInput
-              title={`${t("PNR Number (Return)")} ${index + 1}`}
-              value={pnr}
-              onChange={(value) => handlePnrChangeReturn(value, index)}
-              placeholder={t("Enter PNR Number")}
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View style={{ flex: 1, marginRight: 5 }}>
+            <MyPickerInput
+              title={t("From")}
+              value={city}
+              onChange={setCity}
+              options={[
+                { label: t("Patna"), value: "Patna" },
+                { label: t("Delhi"), value: "Delhi" },
+                { label: t("Mumbai"), value: "Mumbai" },
+                { label: t("Kolkata"), value: "Kolkata" },
+                { label: t("Chennai"), value: "Chennai" },
+                { label: t("Bangalore"), value: "Bangalore" },
+                { label: t("Hyderabad"), value: "Hyderabad" },
+                { label: t("Ahmedabad"), value: "Ahmedabad" },
+                { label: t("Pune"), value: "Pune" },
+              ]}
             />
+          </View>
 
+          <View style={{ flex: 1, marginLeft: 5 }}>
+            <MyPickerInput
+              title={t("To")}
+              value={destinationCity}
+              onChange={setDestinationCity}
+              options={[
+                { label: t("Patna"), value: "Patna" },
+                { label: t("Delhi"), value: "Delhi" },
+                { label: t("Mumbai"), value: "Mumbai" },
+                { label: t("Kolkata"), value: "Kolkata" },
+                { label: t("Chennai"), value: "Chennai" },
+                { label: t("Bangalore"), value: "Bangalore" },
+                { label: t("Hyderabad"), value: "Hyderabad" },
+                { label: t("Ahmedabad"), value: "Ahmedabad" },
+                { label: t("Pune"), value: "Pune" },
+              ]}
+            />
+          </View>
+        </View>
+        {pnrNumbersReturn.map((pnr, index) => (
+          <View key={index} style={{ marginBottom: 10 }}>
+            <MyTextInput
+              title={`PNR Number (Return) ${index + 1}`}
+              value={pnr}
+              onChangeText={(value) => handlePnrChangeReturn(value, index)}
+              placeholder="Enter PNR Number"
+            />
+            {errors.return[index] ? (
+              <Text style={{ color: "red" }}>{errors.return[index]}</Text>
+            ) : null}
             {pnrNumbersReturn.length > 1 && (
               <TouchableOpacity onPress={() => removePnrFieldReturn(index)}>
-                <Span
-                  style={[
-                    styles.rightLink,
-                    typography.fontLato,
-                    { color: "red" },
-                  ]}
-                >
-                  {t("Remove")}
-                </Span>
+                <Text style={{ color: "red" }}>Remove</Text>
               </TouchableOpacity>
             )}
           </View>
         ))}
-
         <TouchableOpacity onPress={addPnrFieldReturn}>
           <Span style={[styles.rightLink, typography.fontLato]}>
             {t("Add More PNR (Return)")}
           </Span>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={addTransactionField}
+          style={{
+            alignSelf: "flex-end",
+          }}
+        >
+          <H6
+            style={[
+              styles.rightLink,
+              typography.font18,
+              typography.fontLato,
+              spacing.p1,
+            ]}
+          >
+            {t("Add Miscellaneous Bills")}
+          </H6>
+        </TouchableOpacity>
+        {transactions.map((transaction, index) => (
+          <View
+            key={index}
+            style={[
+              spacing.p2,
+              spacing.mb2,
+              {
+                backgroundColor: LIGHT,
+                elevation: 1,
+              },
+            ]}
+          >
+            <View style={[styles.row, spacing.p1]}>
+              {/* Total Km Input */}
+              <View
+                style={[
+                  spacing.br2,
+                  spacing.p2,
+                  {
+                    flex: 1,
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    position: "relative",
+                  },
+                ]}
+              >
+                <P style={[typography.font12]}>Total Km</P>
+                <TextInput
+                  placeholder="Enter total km"
+                  keyboardType="numeric"
+                  value={totalKm}
+                  onChangeText={(text) => setTotalKm(text)}
+                  maxLength={6}
+                  style={[typography.font14]}
+                />
+                {/* Character Counter */}
+                <P
+                  style={[
+                    typography.font12,
+                    {
+                      position: "absolute",
+                      top: 75,
+                      right: 10,
+                    },
+                  ]}
+                >
+                  {totalKm.length}/5
+                </P>
+              </View>
 
-        <MyPickerInput
-          title={t("Mode Of Transport")}
-          value={type} 
-          onChange={setType}
-          options={[
-            { label: t("Bus"), value: "Bus" },
-            { label: t("Train"), value: "Train" },
-            { label: t("Flight"), value: "Flight" },
-          ]}
-        />
+              {/* Km Rate Input */}
+              <View
+                style={[
+                  spacing.br2,
+                  spacing.p2,
+                  spacing.ml1,
+                  {
+                    flex: 1,
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    position: "relative",
+                  },
+                ]}
+              >
+                <P style={[typography.font12]}>Km Rate</P>
+                <TextInput
+                  placeholder="Enter rate per km"
+                  keyboardType="numeric"
+                  value={kmRate}
+                  onChangeText={(text) => setKmRate(text)}
+                  maxLength={6}
+                  style={[typography.font14]}
+                />
+                {/* Character Counter */}
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: "#888",
+                    position: "absolute",
+                    // bottom: 5,
+                    top: 75,
+                    right: 10,
+                  }}
+                >
+                  {kmRate.length}/6
+                </Text>
+              </View>
+            </View>
+
+            <View style={[styles.row, spacing.p1, spacing.mt3]}>
+              {/* Rent */}
+              <View
+                style={[
+                  spacing.br2,
+                  spacing.p2,
+                  {
+                    flex: 1,
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                  },
+                ]}
+              >
+                <P style={[typography.font12]}>Rent</P>
+                <TextInput
+                  placeholder="Bus rent"
+                  value={rent}
+                  onChangeText={(text) => setRent(text)}
+                  style={[typography.font14]}
+                />
+              </View>
+
+              {/* Vehicle No */}
+              <View
+                style={[
+                  spacing.br2,
+                  spacing.p2,
+                  spacing.ml1,
+                  {
+                    flex: 1,
+                    backgroundColor: "#F0FAF0",
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                  },
+                ]}
+              >
+                <P style={[typography.font12]}>Vehicle No</P>
+                <TextInput
+                  placeholder="Vehicle No"
+                  keyboardType="numeric"
+                  value={vehicleNo}
+                  onChangeText={(text) => setVehicleNo(text)}
+                  style={[typography.font14]}
+                />
+              </View>
+            </View>
+
+            <View style={{ position: "relative" }}>
+              <MyTextInput
+                title={t("How Much")}
+                value={transaction.amount}
+                onChangeText={(value) =>
+                  handleTransactionChange(value, index, "amount")
+                }
+                placeholder={t(" ₹ Enter Amount")}
+                keyboardType="numeric"
+                style={{
+                  borderWidth: 1,
+                  borderColor:
+                    transaction.amount && parseInt(transaction.amount) >= 5000
+                      ? "red"
+                      : "gray",
+                  borderRadius: 5,
+                  paddingHorizontal: 10,
+                  paddingRight: 30,
+                }}
+              />
+
+              {transaction.amount && parseInt(transaction.amount) >= 5000 && (
+                <Text
+                  style={{
+                    position: "absolute",
+                    right: 10,
+                    top: "50%",
+                    transform: [{ translateY: -10 }],
+                    color: "red",
+                    fontSize: 18,
+                  }}
+                >
+                  ❗
+                </Text>
+              )}
+
+              {transaction.amount && parseInt(transaction.amount) >= 5000 && (
+                <Text style={{ color: "red", marginTop: 5, fontSize: 14 }}>
+                  Amount cannot be ₹5000 or more!
+                </Text>
+              )}
+            </View>
+
+            <View style={[spacing.mb2]}>
+              {/* Category & Description Row */}
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={{ flex: 0.6, marginRight: 4 }}>
+                  <MyPickerInput
+                    title={t("Category")}
+                    value={transaction.category}
+                    onChange={(value) =>
+                      handleTransactionChange(value, index, "category")
+                    }
+                    options={[
+                      { label: t("Food"), value: "Food" },
+                      { label: t("Transport"), value: "Transport" },
+                    ]}
+                  />
+                </View>
+
+                {/* Description Button */}
+                <View style={{ flex: 0.4, marginLeft: 4 }}>
+                  <TouchableOpacity
+                    onPress={() => setIsEditing(true)}
+                    style={[
+                      spacing.pv3,
+                      spacing.ph3,
+                      spacing.br1,
+                      {
+                        flexDirection: "row",
+                        alignItems: "center",
+                        borderWidth: 1,
+                        borderColor: "#ccc",
+                        backgroundColor: LIGHT,
+                        top: 10,
+                      },
+                    ]}
+                  >
+                    <Icon name="chatbox-ellipses" size={24} color="#76885B" />
+                    <P style={[spacing.ml2, {}]}>{t("Description")}</P>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              {isEditing && (
+                <View style={[spacing.mt3, { position: "relative" }]}>
+                  <MyTextInput
+                    title={t("Description")}
+                    value={description}
+                    onChangeText={(value) => {
+                      if (value.length <= 500) {
+                        setDescription(value);
+                        handleTransactionChange(value, index, "description");
+                      }
+                    }}
+                    placeholder={t("Enter Description")}
+                    multiline={true}
+                    style={[
+                      {
+                        minHeight: 80,
+                        borderColor: "#ccc",
+                        textAlignVertical: "top",
+                      },
+                    ]}
+                    onBlur={() => setIsEditing(false)}
+                    autoFocus={true}
+                  />
+
+                  <P
+                    style={[
+                      typography.font10,
+                      typography.fontLato,
+                      {
+                        position: "absolute",
+                        bottom: -38,
+                        right: 5,
+                      },
+                    ]}
+                  >
+                    {description.length}/500
+                  </P>
+                </View>
+              )}
+            </View>
+
+            {/* Pickup Date */}
+            <View style={[spacing.mt5]}>
+              <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                <MyTextInput
+                  title={t("Pickup Date")}
+                  value={transaction.date.toLocaleDateString()}
+                  placeholder={t("Select Pickup Date")}
+                  editable={false}
+                />
+              </TouchableOpacity>
+            </View>
+
+            {/* Remove & Add More Buttons */}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity onPress={() => removeTransactionField(index)}>
+                <P style={{ color: "red", fontWeight: "bold" }}>
+                  {t("Remove")}
+                </P>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={addTransactionField}>
+                <P style={{ color: "#76885B", fontWeight: "bold" }}>
+                  {t("Add More Miscellaneous Bills")}
+                </P>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ))}
+        {/* Date Picker */}
+        {showDatePicker && (
+          <DateTimePicker
+            value={new Date()}
+            mode="date"
+            display="default"
+            onChange={onDateChange}
+          />
+        )}
         <View
           style={[
             spacing.bw1,
@@ -325,10 +908,12 @@ const AddBillForm = ({ navigation }) => {
             )}
           </View>
         </View>
-
         <Button
-          style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
-          // onPress={() => navigation.navigate("travelDetailScreen")}
+          style={[
+            styles.btn,
+            styles.bgPrimary,
+            { justifyContent: "center", top: 4 },
+          ]}
           onPress={handleCalculateBill}
         >
           <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>

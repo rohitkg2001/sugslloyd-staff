@@ -19,9 +19,9 @@ export default function usePermissions() {
     async function checkAndRequestPermissions() {
         setPermissionsLoading(true); // Start loading
         const storedPermissions = await AsyncStorage.getItem("permissions");
-        console.log("Checking Permissions")
+      //  console.log("Checking Permissions")
         if (storedPermissions) {
-            console.log("Permissions in the mind")
+          //  console.log("Permissions in the mind")
             setPermissions(JSON.parse(storedPermissions));
             setPermissionsLoading(false);
             return;
@@ -32,14 +32,14 @@ export default function usePermissions() {
         let push = await requestPushNotificationPermission();
 
         const newPermissions = { push, camera, location };
-        console.log(`New Permissions found ${push} ${camera} ${location}`)
+       // console.log(`New Permissions found ${push} ${camera} ${location}`)
         await AsyncStorage.setItem("permissions", JSON.stringify(newPermissions));
         setPermissions(newPermissions);
         setPermissionsLoading(false); // Done loading
     }
 
     async function requestPushNotificationPermission() {
-        console.log("Running permission checks for notification")
+      //  console.log("Running permission checks for notification")
         const { status } = await Notifications.getPermissionsAsync();
         if (status !== "granted") {
             const { status: newStatus } = await Notifications.requestPermissionsAsync()
@@ -50,7 +50,7 @@ export default function usePermissions() {
     }
 
     async function requestCameraPermission() {
-        console.log("Running permission checks for camera")
+       // console.log("Running permission checks for camera")
         const { status } = await Camera.requestCameraPermissionsAsync();
         if (status !== "granted") {
             return false;
@@ -59,7 +59,7 @@ export default function usePermissions() {
     }
 
     async function requestLocationPermission() {
-        console.log("Running Permission checks for location")
+      //  console.log("Running Permission checks for location")
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
             return false;

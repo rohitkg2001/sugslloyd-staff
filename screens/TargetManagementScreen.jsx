@@ -1,11 +1,10 @@
-// import all react native
 import React, { useState, useEffect } from "react";
 import { View, ScrollView } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { useTranslation } from "react-i18next";
 import NoRecord from "./NoRecord";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTaskById } from "../redux/actions/taskActions";
 import { getAllVendors } from "../redux/actions/vendorAction";
 import TargetDetails from "../components/targetManagementComponent/TargetDetails";
@@ -32,6 +31,9 @@ const TargetManagementScreen = ({ route }) => {
   const isDataAvailable =
     currentTarget && Object.keys(currentTarget).length > 0;
 
+  // Calculate isCompleted flag from the current target's status
+  const isCompleted = currentTarget.status === "Completed";
+
   return (
     <ContainerComponent>
       <MyHeader title={t("Task")} hasIcon={true} isBack={true} />
@@ -52,6 +54,8 @@ const TargetManagementScreen = ({ route }) => {
                 <ImageDisplay
                   images={currentTarget.image}
                   id={currentTarget.id}
+                  status={currentTarget.status} // Pass status prop directly
+                  isCompleted={isCompleted} // Pass the isCompleted prop
                 />
               )}
           </ScrollView>

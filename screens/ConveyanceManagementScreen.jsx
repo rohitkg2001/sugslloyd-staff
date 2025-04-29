@@ -1,7 +1,7 @@
 import { View } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-// import All components
+// Import All Components
 import ContainerComponent from "../components/ContainerComponent";
 import ClickableCard1 from "../components/card/ClickableCard1";
 import MyFlatList from "../components/utility/MyFlatList";
@@ -9,11 +9,10 @@ import Button from "../components/buttons/Button";
 import DashboardHeader from "../components/header/DashboardHeader";
 import TabBar from "../components/TabBar";
 import SearchBar from "../components/input/SearchBar";
-// import faker
-import { travel } from "../utils/faker";
-// import redux
+
+// Import Redux
 import { useSelector } from "react-redux";
-// import Styles
+// Import Styles
 import {
   ICON_LARGE,
   ICON_MEDIUM,
@@ -26,18 +25,50 @@ import {
 } from "../styles";
 import { P, Span } from "../components/text";
 
-export default function ConveyanceManagementScreen({ navigation }) {
+export default function ConveyanceManagementScreen({ navigation, route }) {
   const [activeTab, setActiveTab] = useState("This Week");
   const [filteredData, setFilteredData] = useState([]);
   const { firstName } = useSelector((state) => state.staff);
+  const {
+    pickupAddress,
+    dropoffAddress,
+    price,
+    transportType,
+    distance,
+    photos,
+    date,
+    time,
+  } = route.params || {};
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (pickupAddress && dropoffAddress && price && transportType) {
+      const updatedData = [
+        {
+          pickupLocation: pickupAddress,
+          dropoffLocation: dropoffAddress,
+          price,
+          transportType,
+          distance,
+          photos,
+          date,
+          time,
+        },
+      ];
+      setFilteredData(updatedData);
+      setCurrentIndex(0); // Reset index when new data arrives
+    }
+  }, [pickupAddress, dropoffAddress, price, date, time]);
+
+  const showNextTransport = () => {
+    if (currentIndex < filteredData.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
 
   const filterData = () => {
-    if (activeTab === "Approve") {
-      return travel.filter((item) => item.status === "approved");
-    } else if (activeTab === "Reject") {
-      return travel.filter((item) => item.status === "rejected");
-    }
-    return travel;
+    if (filteredData.length === 0) return [];
+    return [filteredData[currentIndex]]; // Return only the current item
   };
 
   return (
@@ -67,7 +98,6 @@ export default function ConveyanceManagementScreen({ navigation }) {
             key={index}
             item={item}
             title={`${item.pickupLocation} - ${item.dropoffLocation}`}
-            subtitle={`${item.date} - ${item.time}`}
             onPress={() =>
               navigation.navigate("conveyanceDetail", { travelItem: item })
             }
@@ -80,8 +110,17 @@ export default function ConveyanceManagementScreen({ navigation }) {
                   { justifyContent: "space-between", alignItems: "center" },
                 ]}
               >
-                <P style={[typography.font16, typography.fontLato]}>
-                  {item.modeOfTransport}
+                <Span
+                  style={[
+                    typography.font16,
+                    typography.fontLato,
+                    { textTransform: "capitalize" },
+                  ]}
+                >
+                  Mode
+                </Span>
+                <P style={[typography.text, typography.fontLato]}>
+                  {item.transportType || "Not provided"}
                 </P>
               </View>
               <View
@@ -107,7 +146,7 @@ export default function ConveyanceManagementScreen({ navigation }) {
                     typography.textBold,
                   ]}
                 >
-                  ₹{item.price}
+                  ₹{item.price || "Not provided"}
                 </P>
               </View>
             </View>
@@ -153,6 +192,13 @@ export default function ConveyanceManagementScreen({ navigation }) {
           </View>
         )}
       />
+
+      {/* Button to show next item */}
+      {filteredData.length > 1 && (
+        <Button style={styles.nextButton} onPress={showNextTransport}>
+          <P style={{ color: LIGHT }}>Next</P>
+        </Button>
+      )}
 
       <Button
         style={styles.addButton}
