@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04  
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Repository
@@ -22,7 +22,7 @@ jobs:
         with:
           java-version: "20"
           distribution: "adopt"
-          cache: "gradle"
+          cache: false
 
       - name: Change wrapper permissions
         run: chmod +x ./android/gradlew
