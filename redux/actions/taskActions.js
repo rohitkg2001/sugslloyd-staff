@@ -75,8 +75,7 @@ export const getStaffPerformance = async (my_id) => {
   try {
     console.log(my_id)
     const response = await api.get(`${BASE_URL}/api/staff/get-performance/${my_id}`);
-    const { data, status } = response;
-    console.log(data)
+    const { data } = response;
     return data
     // Write methods to filter tasks by engineer_id where engineer_id is the id of the engineer from siteEngineers
   } catch (err) {
