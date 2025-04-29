@@ -39,9 +39,17 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Run Yarn Install
+      - name: Run npm install
+        run: npm install
+
+      - name: Generate Android Bundle
         run: |
-          npm install
+          npx react-native bundle \
+            --platform android \
+            --dev false \
+            --entry-file index.js \
+            --bundle-output android/app/src/main/assets/index.android.bundle \
+            --assets-dest android/app/src/main/res
 
       - name: Build App
         run: |
