@@ -1,5 +1,5 @@
-name: "Build Android App"
-run-name: ${{ github.actor }} is learning build Android App using Github Actions
+name: Build Android App
+run-name: ${{ github.actor }} is building Android App using Github Actions
 
 on:
   push:
@@ -12,21 +12,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Java
-        uses: actions/setup-java@v2
+      - name: Setup Java
+        uses: actions/setup-java@v3
         with:
-          java-version: "20"
-          distribution: "adopt"
-
-      - name: Change wrapper permissions
-        run: chmod +x ./android/gradlew
-
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
+          distribution: "temurin"
+          java-version: "17"
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -34,22 +29,36 @@ jobs:
           node-version: "18"
 
       - name: Install Dependencies
-        run: npm install
-
-      - name: Create Android Assets and Bundle
         run: |
-          mkdir -p android/app/src/main/assets
-          mkdir -p android/app/src/main/res
-          npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+          npm install
+          npm install --save-dev @react-native-community/cli
 
-      - name: Build App
+      - name: Create Android Assets Directory
+        run: mkdir -p android/app/src/main/assets
+
+      - name: Bundle React Native JS Code
         run: |
-          cd ./android
+          npx react-native bundle \
+          --platform android \
+          --dev false \
+          --entry-file index.js \
+          --bundle-output android/app/src/main/assets/index.android.bundle \
+          --assets-dest android/app/src/main/res
+
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/actions/wrapper-validation@v3
+
+      - name: Build Android APK
+        run: |
+          cd android
           ./gradlew assembleRelease
 
-      - name: Upload APK to Artifacts
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app
-          path: ./android/app/build/outputs/apk/release/app-release.apk
-          retention-days: 3
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 7
