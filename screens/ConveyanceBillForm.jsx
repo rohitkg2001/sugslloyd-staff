@@ -69,9 +69,18 @@ const ConveyanceBillForm = ({ navigation, route }) => {
 
   return (
     <View style={[spacing.p2, { width: SCREEN_WIDTH }]}>
-      <P style={[typography.font16, typography.fontLato, spacing.mb3]}>
+      <P
+        style={[
+          typography.font16,
+          typography.fontLato,
+          spacing.mb3,
+          spacing.ml3,
+          typography.textBold,
+        ]}
+      >
         Where would you want to Go?
       </P>
+
       <View
         style={[
           styles.row,
