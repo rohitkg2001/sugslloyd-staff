@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, TouchableOpacity, Image, Alert } from "react-native";
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from "react-native";
 import { Snackbar } from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { styles, typography, spacing, LIGHT, SCREEN_WIDTH } from "../styles";
 import { H2, P, H5, H6 } from "../components/text";
 import Button from "../components/buttons/Button";
 import MyHeader from "../components/header/MyHeader";
+import ContainerComponent from "../components/ContainerComponent";
 
 const ConveyanceBillForm = ({ navigation, route }) => {
   const [pickupLocation, setPickupLocation] = useState("");
@@ -76,286 +83,375 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   };
 
   return (
-    <View style={[spacing.p2, { width: SCREEN_WIDTH }]}>
-     
-      <P
-        style={[
-          typography.font16,
-          typography.fontLato,
-          spacing.mb3,
-          spacing.ml3,
-          typography.textBold,
-        ]}
-      >
-        Where would you want to Go?
-      </P>
-
-      <View
-        style={[
-          styles.row,
-          spacing.pb4,
-          spacing.br2,
-          spacing.mb3,
-          {
-            alignItems: "center",
-            borderBottomWidth: 0.5,
-            borderColor: "#ccc",
-            backgroundColor: "#fff",
-          },
-        ]}
-      >
-        <View style={{ alignItems: "center", width: 20 }}>
-          <View
-            style={[
-              spacing.br1,
-              {
-                width: 10,
-                height: 10,
-                backgroundColor: "#FFA500",
-              },
-            ]}
-          />
-          <View
-            style={[
-              {
-                width: 2,
-                height: 40,
-                backgroundColor: "#aaa",
-              },
-            ]}
-          />
-          <View
-            style={[
-              spacing.br1,
-              {
-                width: 10,
-                height: 10,
-                backgroundColor: "#000",
-              },
-            ]}
-          />
-        </View>
-
-        <View style={{ flex: 1 }}>
-          <View
-            style={[
-              styles.row,
-              spacing.br5,
-              spacing.ph3,
-              spacing.pv2,
-              spacing.mb2,
-              {
-                alignItems: "center",
-                backgroundColor: "#F8F8F8",
-                borderWidth: 1,
-                borderColor: "#ccc",
-              },
-            ]}
-          >
-            <TextInput
-              placeholder="Pickup Location"
-              placeholderTextColor="#aaa"
-              style={[typography.font16, typography.fontLato, { flex: 1 }]}
-              value={pickupLocation} // Bind value to pickupLocation state
-              onChangeText={(text) => setPickupLocation(text)} // Update pickup location
-            />
-            <Ionicons name="location-outline" size={20} color="black" />
-          </View>
-
-          <View
-            style={[
-              styles.row,
-              spacing.br5,
-              spacing.ph3,
-              spacing.pv2,
-              spacing.mb2,
-              {
-                alignItems: "center",
-                backgroundColor: "#F8F8F8",
-                borderWidth: 1,
-                borderColor: "#ccc",
-              },
-            ]}
-          >
-            <TextInput
-              placeholder="Drop Location"
-              placeholderTextColor="#aaa"
-              style={[typography.font16, typography.fontLato, { flex: 1 }]}
-              value={dropLocation} // Bind value to dropLocation state
-              onChangeText={(text) => setDropLocation(text)} // Update drop location
-            />
-            <Ionicons name="location-outline" size={20} color="red" />
-          </View>
-
-          {/* Allow the user to select or change the drop location */}
-
-          <View
-            style={[
-              styles.row,
-              {
-                alignItems: "center",
-                // marginTop: 5,
-              },
-            ]}
-          >
-            <TouchableOpacity
-              onPress={() => handleLocationSelection("drop")}
-              style={[
-                styles.row,
-                spacing.br4,
-                spacing.p2,
-                {
-                  backgroundColor: LIGHT,
-                  elevation: 3,
-                  top: 8,
-                },
-              ]}
-            >
-              <Ionicons name="location-outline" size={20} color="red" />
-              <P
-                style={[
-                  typography.font12,
-                  typography.fontLato,
-                  spacing.mr3,
-                  typography.textBold,
-                ]}
-              >
-                {isDropLocationSelected
-                  ? "Change Drop Location"
-                  : "Select Drop Location"}
-              </P>
-            </TouchableOpacity>
-
-            <View style={[styles.row, { alignItems: "center", top: 12 }]}>
-              <P style={[typography.font14, typography.fontLato, spacing.mr1]}>
-                Distance:
-              </P>
-              {distance && (
-                <P style={[typography.font12, spacing.ml1, spacing.mr1]}>
-                  {distance} km
-                </P>
-              )}
-            </View>
-          </View>
-        </View>
-      </View>
-      <View>
+    <ContainerComponent>
+      <MyHeader title="Drop" hasIcon={true} isBack={true} />
+      <ScrollView style={[spacing.p2, { width: SCREEN_WIDTH }]}>
         <P
           style={[
-            typography.font16,
+            typography.font14,
             typography.fontLato,
-            spacing.p1,
-            spacing.ml2,
+            spacing.mb3,
+            spacing.ml3,
+            typography.textBold,
+          ]}
+        >
+          Where would you want to Go?
+        </P>
+
+        <View
+          style={[
+            styles.row,
+            spacing.pb4,
+            spacing.br2,
+            spacing.mb2,
             {
-              bottom: 4,
+              alignItems: "center",
+              borderBottomWidth: 0.5,
+              borderColor: "#ccc",
+              backgroundColor: "#fff",
+              marginTop: -4,
+              paddingTop: 8,
             },
           ]}
         >
-          Mode of Transport
-        </P>
-      </View>
-      {/* Transport Options */}
-      <View>
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              if (!pickupLocation || !dropLocation) {
-                showSnackbar(
-                  "Please select both Pickup and Drop locations before proceeding."
-                );
-                return;
-              }
-              navigation.navigate("transportCamera", {
-                transportType: "Car",
-                pickupLocation,
-                dropLocation,
-                price: prices.car,
-                distance,
-                date: currentDate,
-                time: currentTime,
-              });
-            }}
-            style={[
-              styles.row,
-              spacing.br2,
-              spacing.p3,
-              spacing.mb3,
-              { alignItems: "center", backgroundColor: LIGHT, elevation: 3 },
-            ]}
-          >
-            <View style={[styles.row, { alignItems: "center" }]}>
-              <Image
-                source={require("../assets/car1.jpeg")}
-                style={[
-                  spacing.mt2,
-                  {
-                    width: 40,
-                    height: 40,
-                    resizeMode: "contain",
-                    alignSelf: "center",
-                  },
-                ]}
-              />
-              <View style={[spacing.ml2]}>
-                <H5
-                  style={[
-                    typography.font14,
-                    typography.textBold,
-                    typography.fontLato,
-                  ]}
-                >
-                  Car
-                </H5>
-                <P style={[typography.font14, typography.fontLato]}>
-                  {pickupLocation} - {dropLocation}
-                </P>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {distance} km
-                </P>
-              </View>
-            </View>
-            <H6
+          <View style={{ alignItems: "center", width: 20, bottom: 25 }}>
+            <View
               style={[
-                typography.font14,
-                typography.textBold,
-                typography.fontLato,
+                spacing.br1,
+                {
+                  width: 10,
+                  height: 10,
+                  backgroundColor: "#FFA500",
+                },
+              ]}
+            />
+            <View
+              style={[
+                {
+                  width: 2,
+                  height: 60,
+                  backgroundColor: "#aaa",
+                },
+              ]}
+            />
+            <View
+              style={[
+                spacing.br1,
+                {
+                  width: 10,
+                  height: 10,
+                  backgroundColor: "red",
+                },
+              ]}
+            />
+          </View>
+
+          <View style={{ flex: 1 }}>
+            <View
+              style={[
+                styles.row,
+                spacing.br5,
+                spacing.ph3,
+                spacing.pv2,
+                spacing.mb2,
+                {
+                  alignItems: "center",
+                  backgroundColor: "#F8F8F8",
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                },
               ]}
             >
-              ₹{prices.car}
-            </H6>
-          </TouchableOpacity>
+              <TextInput
+                placeholder="Pickup Location"
+                placeholderTextColor="#aaa"
+                style={[typography.font16, typography.fontLato, { flex: 1 }]}
+                value={pickupLocation}
+                onChangeText={(text) => setPickupLocation(text)}
+              />
+              {pickupLocation !== "" && (
+                <TouchableOpacity
+                  onPress={() => {
+                    setPickupLocation("");
+                    setDistance(null);
+                    setPrices({
+                      car: 0,
+                      bike: 0,
+                      publicTransport: 0,
+                    });
+                  }}
+                >
+                  <Ionicons name="close-circle" size={20} color="#999" />
+                </TouchableOpacity>
+              )}
+              <Ionicons name="location-outline" size={20} color="black" />
+            </View>
+
+            <View
+              style={[
+                styles.row,
+                spacing.br5,
+                spacing.ph3,
+                spacing.pv2,
+                spacing.mb2,
+                {
+                  alignItems: "center",
+                  backgroundColor: "#F8F8F8",
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                },
+              ]}
+            >
+              <TextInput
+                placeholder="Drop Location"
+                placeholderTextColor="#aaa"
+                style={[typography.font16, typography.fontLato, { flex: 1 }]}
+                value={dropLocation}
+                onChangeText={(text) => setDropLocation(text)}
+              />
+              {dropLocation !== "" && (
+                <TouchableOpacity
+                  onPress={() => {
+                    setDropLocation("");
+                    setDistance(null);
+                    setPrices({
+                      car: 0,
+                      bike: 0,
+                      publicTransport: 0,
+                    });
+                  }}
+                >
+                  <Ionicons name="close-circle" size={20} color="#999" />
+                </TouchableOpacity>
+              )}
+              <Ionicons name="location-outline" size={20} color="red" />
+            </View>
+
+            {/* Allow the user to select or change the drop location */}
+
+            <View
+              style={[
+                styles.row,
+                {
+                  alignItems: "center",
+                },
+              ]}
+            >
+              <TouchableOpacity
+                onPress={() => handleLocationSelection("drop")}
+                style={[
+                  styles.row,
+                  spacing.br4,
+                  spacing.p2,
+                  {
+                    backgroundColor: LIGHT,
+                    elevation: 3,
+                    top: 8,
+                  },
+                ]}
+              >
+                <Ionicons name="location-outline" size={20} color="red" />
+                <P
+                  style={[
+                    typography.font12,
+                    typography.fontLato,
+                    spacing.mr3,
+                    typography.textBold,
+                  ]}
+                >
+                  {isDropLocationSelected
+                    ? "Change Drop Location"
+                    : "Select Drop Location"}
+                </P>
+              </TouchableOpacity>
+
+              <View style={[styles.row, { alignItems: "center", top: 12 }]}>
+                <P
+                  style={[typography.font14, typography.fontLato, spacing.mr1]}
+                >
+                  Distance:
+                </P>
+                {distance && (
+                  <P style={[typography.font12, spacing.ml1, spacing.mr1]}>
+                    {distance} km
+                  </P>
+                )}
+              </View>
+            </View>
+          </View>
+        </View>
+        <View>
+          <P
+            style={[
+              typography.font16,
+              typography.fontLato,
+              spacing.p1,
+              spacing.ml2,
+              {
+                bottom: 4,
+              },
+            ]}
+          >
+            Mode of Transport
+          </P>
+        </View>
+        {/* Transport Options */}
+        <View>
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                if (!pickupLocation || !dropLocation) {
+                  showSnackbar(
+                    "Please select both Pickup and Drop locations before proceeding."
+                  );
+                  return;
+                }
+                navigation.navigate("transportCamera", {
+                  transportType: "Car",
+                  pickupLocation,
+                  dropLocation,
+                  price: prices.car,
+                  distance,
+                  date: currentDate,
+                  time: currentTime,
+                });
+              }}
+              style={[
+                styles.row,
+                spacing.br2,
+                spacing.p3,
+                spacing.mb3,
+                { alignItems: "center", backgroundColor: LIGHT, elevation: 3 },
+              ]}
+            >
+              <View style={[styles.row, { alignItems: "center" }]}>
+                <Image
+                  source={require("../assets/car1.jpeg")}
+                  style={[
+                    spacing.mt2,
+                    {
+                      width: 40,
+                      height: 40,
+                      resizeMode: "contain",
+                      alignSelf: "center",
+                    },
+                  ]}
+                />
+                <View style={[spacing.ml2]}>
+                  <H5
+                    style={[
+                      typography.font14,
+                      typography.textBold,
+                      typography.fontLato,
+                    ]}
+                  >
+                    Car
+                  </H5>
+                  <P style={[typography.font12, typography.fontLato]}>
+                    {pickupLocation} - {dropLocation}
+                  </P>
+                  <P style={[typography.font12, typography.fontLato]}>
+                    {distance} km
+                  </P>
+                </View>
+              </View>
+              <H6
+                style={[
+                  typography.font14,
+                  typography.textBold,
+                  typography.fontLato,
+                ]}
+              >
+                ₹{prices.car}
+              </H6>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                if (!pickupLocation || !dropLocation) {
+                  showSnackbar(
+                    "Please select both Pickup and Drop locations before proceeding."
+                  );
+                  return;
+                }
+                navigation.navigate("transportCamera", {
+                  transportType: "Bike",
+                  pickupLocation,
+                  dropLocation,
+                  price: prices.bike,
+                  distance,
+                  date: currentDate,
+                  time: currentTime,
+                });
+              }}
+              style={[
+                styles.row,
+                spacing.br2,
+                spacing.p3,
+                spacing.mb3,
+                { alignItems: "center", backgroundColor: LIGHT, elevation: 3 },
+              ]}
+            >
+              <View style={[styles.row, { alignItems: "center" }]}>
+                <Image
+                  source={require("../assets/bike.jpg")}
+                  style={[
+                    spacing.mt2,
+                    {
+                      width: 50,
+                      height: 50,
+                      resizeMode: "contain",
+                      alignSelf: "center",
+                    },
+                  ]}
+                />
+                <View style={[spacing.ml2]}>
+                  <H5
+                    style={[
+                      typography.font14,
+                      typography.textBold,
+                      typography.fontLato,
+                    ]}
+                  >
+                    Bike
+                  </H5>
+                  <P style={[typography.font12, typography.fontLato]}>
+                    {pickupLocation} - {dropLocation}
+                  </P>
+                  <P style={[typography.font12, typography.fontLato]}>
+                    {distance} km
+                  </P>
+                </View>
+              </View>
+              <H6
+                style={[
+                  typography.font14,
+                  typography.textBold,
+                  typography.fontLato,
+                ]}
+              >
+                ₹{prices.bike}
+              </H6>
+            </TouchableOpacity>
+          </View>
 
           <TouchableOpacity
-            onPress={() => {
-              if (!pickupLocation || !dropLocation) {
-                showSnackbar(
-                  "Please select both Pickup and Drop locations before proceeding."
-                );
-                return;
-              }
-              navigation.navigate("transportCamera", {
-                transportType: "Bike",
-                pickupLocation,
-                dropLocation,
-                price: prices.bike,
-                distance,
-                date: currentDate,
-                time: currentTime,
-              });
-            }}
             style={[
               styles.row,
               spacing.br2,
               spacing.p3,
               spacing.mb3,
-              { alignItems: "center", backgroundColor: LIGHT, elevation: 3 },
+              {
+                alignItems: "center",
+                backgroundColor: LIGHT,
+                elevation: 3,
+              },
             ]}
           >
             <View style={[styles.row, { alignItems: "center" }]}>
               <Image
-                source={require("../assets/bike.jpg")}
+                source={require("../assets/image.png")}
                 style={[
-                  spacing.mt2,
                   {
                     width: 50,
                     height: 50,
@@ -365,112 +461,58 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 ]}
               />
               <View style={[spacing.ml2]}>
-                <H5
-                  style={[
-                    typography.font14,
-                    typography.textBold,
-                    typography.fontLato,
-                  ]}
-                >
-                  Bike
-                </H5>
-                <P style={[typography.font14, typography.fontLato]}>
-                  {pickupLocation} - {dropLocation}
+                <View style={[styles.row, { alignItems: "center" }]}>
+                  <H5
+                    style={[
+                      typography.font14,
+                      typography.textBold,
+                      typography.fontLato,
+                    ]}
+                  >
+                    Public transport
+                  </H5>
+                </View>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {pickupLocation}-{dropLocation}
                 </P>
                 <P style={[typography.font12, typography.fontLato]}>
                   {distance} km
                 </P>
               </View>
             </View>
-            <H6
+            <H5
               style={[
                 typography.font14,
                 typography.textBold,
                 typography.fontLato,
               ]}
             >
-              ₹{prices.bike}
-            </H6>
+              ₹{prices.publicTransport}
+            </H5>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
+        {/* Proceed Button */}
+        <Button
           style={[
-            styles.row,
-            spacing.br2,
-            spacing.p3,
-            spacing.mb3,
-            {
-              alignItems: "center",
-              backgroundColor: LIGHT,
-              elevation: 3,
-            },
+            styles.btn,
+            styles.bgPrimary,
+            { justifyContent: "center", top: 50 },
           ]}
         >
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Image
-              source={require("../assets/image.png")}
-              style={[
-                {
-                  width: 50,
-                  height: 50,
-                  resizeMode: "contain",
-                  alignSelf: "center",
-                },
-              ]}
-            />
-            <View style={[spacing.ml2]}>
-              <View style={[styles.row, { alignItems: "center" }]}>
-                <H5
-                  style={[
-                    typography.font14,
-                    typography.textBold,
-                    typography.fontLato,
-                  ]}
-                >
-                  Public transport
-                </H5>
-              </View>
-              <P style={[typography.font14, typography.fontLato]}>
-                {pickupLocation}-{dropLocation}
-              </P>
-              <P style={[typography.font12, typography.fontLato]}>
-                {distance} km
-              </P>
-            </View>
-          </View>
-          <H5
-            style={[
-              typography.font14,
-              typography.textBold,
-              typography.fontLato,
-            ]}
-          >
-            ₹{prices.publicTransport}
-          </H5>
-        </TouchableOpacity>
-      </View>
-
-      {/* Proceed Button */}
-      <Button
-        style={[
-          styles.btn,
-          styles.bgPrimary,
-          { justifyContent: "center", top: 100 },
-        ]}
-      >
-        <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-          {"Proceed"}
-        </H2>
-      </Button>
-      <Snackbar
-        visible={snackbarVisible}
-        onDismiss={() => setSnackbarVisible(false)}
-        duration={3000}
-      >
-        {snackbarMessage}
-      </Snackbar>
-    </View>
+          <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
+            {"Proceed"}
+          </H2>
+        </Button>
+        <Snackbar
+          visible={snackbarVisible}
+          onDismiss={() => setSnackbarVisible(false)}
+          duration={3000}
+        >
+          {snackbarMessage}
+        </Snackbar>
+      </ScrollView>
+    </ContainerComponent>
   );
 };
 
