@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, TouchableOpacity, Image } from "react-native";
+import { View, TextInput, TouchableOpacity, Image, Alert } from "react-native";
+import { Snackbar } from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { styles, typography, spacing, LIGHT, SCREEN_WIDTH } from "../styles";
 import { H2, P, H5, H6 } from "../components/text";
 import Button from "../components/buttons/Button";
+import MyHeader from "../components/header/MyHeader";
 
 const ConveyanceBillForm = ({ navigation, route }) => {
   const [pickupLocation, setPickupLocation] = useState("");
@@ -11,7 +13,8 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   const [distance, setDistance] = useState(null);
   const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
-
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const [prices, setPrices] = useState({
     car: 0,
     bike: 0,
@@ -61,14 +64,20 @@ const ConveyanceBillForm = ({ navigation, route }) => {
 
   const calculatePrices = (distance) => {
     setPrices({
-      car: distance * 4,
-      bike: distance * 3,
-      publicTransport: distance * 5,
+      car: parseFloat((distance * 4).toFixed(2)),
+      bike: parseFloat((distance * 3).toFixed(2)),
+      publicTransport: parseFloat((distance * 5).toFixed(2)),
     });
+  };
+
+  const showSnackbar = (message) => {
+    setSnackbarMessage(message);
+    setSnackbarVisible(true);
   };
 
   return (
     <View style={[spacing.p2, { width: SCREEN_WIDTH }]}>
+     
       <P
         style={[
           typography.font16,
@@ -181,12 +190,13 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           {/* Allow the user to select or change the drop location */}
 
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: 5,
-            }}
+            style={[
+              styles.row,
+              {
+                alignItems: "center",
+                // marginTop: 5,
+              },
+            ]}
           >
             <TouchableOpacity
               onPress={() => handleLocationSelection("drop")}
@@ -216,19 +226,12 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               </P>
             </TouchableOpacity>
 
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <P style={{ color: "black", fontSize: 16, fontWeight: "bold" }}>
+            <View style={[styles.row, { alignItems: "center", top: 12 }]}>
+              <P style={[typography.font14, typography.fontLato, spacing.mr1]}>
                 Distance:
               </P>
               {distance && (
-                <P
-                  style={{
-                    color: "black",
-                    fontSize: 16,
-                    fontWeight: "bold",
-                    marginLeft: 5,
-                  }}
-                >
+                <P style={[typography.font12, spacing.ml1, spacing.mr1]}>
                   {distance} km
                 </P>
               )}
@@ -241,6 +244,8 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           style={[
             typography.font16,
             typography.fontLato,
+            spacing.p1,
+            spacing.ml2,
             {
               bottom: 4,
             },
@@ -253,17 +258,23 @@ const ConveyanceBillForm = ({ navigation, route }) => {
       <View>
         <View>
           <TouchableOpacity
-            onPress={() =>
+            onPress={() => {
+              if (!pickupLocation || !dropLocation) {
+                showSnackbar(
+                  "Please select both Pickup and Drop locations before proceeding."
+                );
+                return;
+              }
               navigation.navigate("transportCamera", {
                 transportType: "Car",
-                pickupLocation: pickupLocation,
-                dropLocation: dropLocation,
+                pickupLocation,
+                dropLocation,
                 price: prices.car,
-                distance: distance,
+                distance,
                 date: currentDate,
                 time: currentTime,
-              })
-            }
+              });
+            }}
             style={[
               styles.row,
               spacing.br2,
@@ -315,17 +326,23 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() =>
+            onPress={() => {
+              if (!pickupLocation || !dropLocation) {
+                showSnackbar(
+                  "Please select both Pickup and Drop locations before proceeding."
+                );
+                return;
+              }
               navigation.navigate("transportCamera", {
                 transportType: "Bike",
-                pickupLocation: pickupLocation,
-                dropLocation: dropLocation,
+                pickupLocation,
+                dropLocation,
                 price: prices.bike,
-                distance: distance,
+                distance,
                 date: currentDate,
                 time: currentTime,
-              })
-            }
+              });
+            }}
             style={[
               styles.row,
               spacing.br2,
@@ -446,6 +463,13 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           {"Proceed"}
         </H2>
       </Button>
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(false)}
+        duration={3000}
+      >
+        {snackbarMessage}
+      </Snackbar>
     </View>
   );
 };
