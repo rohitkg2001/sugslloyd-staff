@@ -33,13 +33,25 @@ export default function VendorPerformance() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  // const getCounts = async () => {
+  //   try {
+  //     const tasksByEngineer = await getVendorPerformance(id);
+  //    // console.log(tasksByEngineer);
+  //     setStaffPerformance(tasksByEngineer);
+  //   } catch (error) {
+  //     console.error("Error fetching vendor performance:", error);
+  //   }
+  // };
+
   const getCounts = async () => {
     try {
       const tasksByEngineer = await getVendorPerformance(id);
-     // console.log(tasksByEngineer);
-      setStaffPerformance(tasksByEngineer);
+      setStaffPerformance(
+        Array.isArray(tasksByEngineer) ? tasksByEngineer : []
+      );
     } catch (error) {
       console.error("Error fetching vendor performance:", error);
+      setStaffPerformance([]);
     }
   };
 
