@@ -38,22 +38,37 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     }
   };
 
+  // useEffect(() => {
+  //   if (route.params?.from) setFrom(route.params.from);
+  //   if (route.params?.to) setTo(route.params.to);
+  //   if (route.params?.kilometer) {
+  //     setKilometer(route.params.kilometer);
+  //     calculatePrices(route.params.kilometer);
+  //   }
+  //   if (route.params?.date) {
+  //     setCurrentDate(route.params.date);
+  //   } else {
+  //     console.warn("No Date found in route.params");
+  //   }
+  //   if (route.params?.time) {
+  //     setTime(route.params.time);
+  //   } else {
+  //     console.warn("No Time found in route.params");
+  //   }
+  // }, [route.params]);
+
   useEffect(() => {
     if (route.params?.from) setFrom(route.params.from);
     if (route.params?.to) setTo(route.params.to);
-    if (route.params?.kilometer) {
-      setKilometer(route.params.kilometer);
-      calculatePrices(route.params.kilometer);
-    }
-    if (route.params?.date) {
-      setCurrentDate(route.params.date);
-    } else {
-      console.warn("No Date found in route.params");
-    }
-    if (route.params?.time) {
-      setTime(route.params.time);
-    } else {
-      console.warn("No Time found in route.params");
+    if (route.params?.date) setCurrentDate(route.params.date);
+    if (route.params?.time) setTime(route.params.time);
+
+    const km = route.params?.kilometer;
+    if (km) {
+      setKilometer(km);
+      calculatePrices(km);
+    } else if (route.params?.from && route.params?.to) {
+      getDistance(route.params.from, route.params.to);
     }
   }, [route.params]);
 
@@ -69,6 +84,41 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     setSnackbarMessage(message);
     setSnackbarVisible(true);
   };
+  const getDistance = async (origin, destination) => {
+    const apiKey = "AIzaSyDpTpJ1GNGLpVZKViexBvQtHIbSQRBX6to"; // API KEY
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${encodeURIComponent(
+      origin
+    )}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.status !== "OK") {
+        showSnackbar(`API Error: ${data.status}`);
+        return;
+      }
+
+      const element = data.rows[0].elements[0];
+      if (element.status !== "OK") {
+        showSnackbar(`Element Error: ${element.status}`);
+        return;
+      }
+
+      const km = element.distance.value / 1000;
+      setKilometer(km.toFixed(2));
+      calculatePrices(km);
+    } catch (error) {
+      console.error(error);
+      showSnackbar("Error fetching distance.");
+    }
+  };
+
+  useEffect(() => {
+    if (from && to) {
+      getDistance(from, to);
+    }
+  }, [from, to]);
 
   return (
     <ContainerComponent>
@@ -139,7 +189,13 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 placeholderTextColor="#aaa"
                 style={[typography.font16, typography.fontLato, { flex: 1 }]}
                 value={from}
-                onChangeText={(text) => setFrom(text)}
+                // onChangeText={(text) => setFrom(text)}
+                onChangeText={(text) => {
+                  setFrom(text);
+                  if (text && to) {
+                    getDistance(text, to);
+                  }
+                }}
               />
               {from !== "" && (
                 <TouchableOpacity
@@ -175,7 +231,13 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 placeholderTextColor="#aaa"
                 style={[typography.font16, typography.fontLato, { flex: 1 }]}
                 value={to}
-                onChangeText={(text) => setTo(text)}
+                // onChangeText={(text) => setTo(text)}
+                onChangeText={(text) => {
+                  setTo(text);
+                  if (from && text) {
+                    getDistance(from, text);
+                  }
+                }}
               />
               {to !== "" && (
                 <TouchableOpacity
@@ -231,6 +293,8 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                     {kilometer} km
                   </P>
                 )}
+
+               
               </View>
             </View>
           </View>

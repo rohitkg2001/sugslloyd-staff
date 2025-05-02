@@ -78,20 +78,23 @@ export const addConveyance = (conveyance) => async (dispatch) => {
       body: JSON.stringify(conveyance),
     });
 
-    const data = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: ADD_CONVEYANCE, payload: data.conveyance });
-      return true;
-    } else {
-      console.error(
-        "Conveyance submission failed:",
-        data.message || "Unknown error"
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `Conveyance submission failed: ${
+          errorData.message || `Status ${response.status}`
+        }`
       );
-      return false;
     }
+
+    const data = await response.json();
+    dispatch({ type: ADD_CONVEYANCE, payload: data.conveyance });
+    console.log("Conveyance submitted successfully.");
+    return true;
   } catch (error) {
-    console.error("Error submitting conveyance:", error);
+    console.error("Error submitting conveyance:", error.message || error);
     return false;
   }
 };
+
+
