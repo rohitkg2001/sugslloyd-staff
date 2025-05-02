@@ -8,8 +8,8 @@ import { styles, typography } from "../styles";
 import { H2 } from "../components/text";
 
 const LocationSetScreen = ({ navigation }) => {
-  const [pickupLocation, setPickupLocation] = useState(null);
-  const [dropoffLocation, setDropoffLocation] = useState(null);
+  const [from, setFrom] = useState(null);
+  const [to, setTo] = useState(null);
   const [region, setRegion] = useState({
     latitude: 28.6139,
     longitude: 77.209,
@@ -18,16 +18,16 @@ const LocationSetScreen = ({ navigation }) => {
   });
   const [pickupAddress, setPickupAddress] = useState("");
   const [dropoffAddress, setDropoffAddress] = useState("");
-  const [distance, setDistance] = useState(null);
-  const [currentDate, setCurrentDate] = useState("");
-  const [currentTime, setCurrentTime] = useState("");
+  const [kilometer, setKilometer] = useState(null);
+  const [date, setDate] = useState("");
+  const [timees, setTimees] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const updateDateTime = () => {
       const now = new Date();
-      setCurrentDate(now.toLocaleDateString());
-      setCurrentTime(now.toLocaleTimeString());
+      setDate(now.toLocaleDateString());
+      setTimees(now.toLocaleTimeString());
     };
     updateDateTime();
     const interval = setInterval(updateDateTime, 1000);
@@ -44,18 +44,13 @@ const LocationSetScreen = ({ navigation }) => {
           return;
         }
 
-        // const location = await Location.getCurrentPositionAsync({
-        //   accuracy: Location.Accuracy.Highest,
-        //   maximumAge: 10000,
-        //   timeout: 5000,
-        // });
         const location = await Location.getLastKnownPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
 
         const { latitude, longitude } = location.coords;
 
-        setPickupLocation({ latitude, longitude });
+        setFrom({ latitude, longitude });
         setRegion({
           latitude,
           longitude,
@@ -110,16 +105,16 @@ const LocationSetScreen = ({ navigation }) => {
   const handleSelectLocation = async (event) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
 
-    setDropoffLocation({ latitude, longitude });
+    setTo({ latitude, longitude });
     const address = await getAddressFromCoords(latitude, longitude);
     setDropoffAddress(address);
 
-    if (pickupLocation) {
-      const calculatedDistance = haversineDistance(pickupLocation, {
+    if (from) {
+      const calculatedDistance = haversineDistance(from, {
         latitude,
         longitude,
       });
-      setDistance(calculatedDistance);
+      setKilometer(calculatedDistance);
     }
   };
 
@@ -155,19 +150,15 @@ const LocationSetScreen = ({ navigation }) => {
           </Text>
         </View>
 
-        {distance && (
+        {kilometer && (
           <Text style={{ color: "white", fontSize: 16, marginTop: 5 }}>
-            Distance: {distance} km
+            Distance: {kilometer} km
           </Text>
         )}
 
         <View style={{ position: "absolute", top: 30, right: 22 }}>
-          <Text style={{ color: "white", fontSize: 16 }}>
-            Date: {currentDate}
-          </Text>
-          <Text style={{ color: "white", fontSize: 16 }}>
-            Time: {currentTime}
-          </Text>
+          <Text style={{ color: "white", fontSize: 16 }}>Date: {date}</Text>
+          <Text style={{ color: "white", fontSize: 16 }}>Time: {timees}</Text>
         </View>
       </View>
 
@@ -178,23 +169,23 @@ const LocationSetScreen = ({ navigation }) => {
         onPress={handleSelectLocation}
         showsUserLocation={true}
       >
-        {pickupLocation && (
+        {from && (
           <Marker
-            coordinate={pickupLocation}
+            coordinate={from}
             title="Pickup Location"
             pinColor="#00FF00"
           />
         )}
-        {dropoffLocation && (
+        {to && (
           <Marker
-            coordinate={dropoffLocation}
+            coordinate={to}
             title="Drop-off Location"
             pinColor="#FF0000"
           />
         )}
-        {pickupLocation && dropoffLocation && (
+        {from && to && (
           <Polyline
-            coordinates={[pickupLocation, dropoffLocation]}
+            coordinates={[from, to]}
             strokeColor="black"
             strokeWidth={2}
             lineDashPattern={[5, 5]}
@@ -210,11 +201,11 @@ const LocationSetScreen = ({ navigation }) => {
         ]}
         onPress={() => {
           navigation.navigate("conveyanceBillForm", {
-            pickupLocation: pickupAddress,
-            dropoffLocation: dropoffAddress,
-            distance,
-            date: currentDate,
-            time: currentTime,
+            from: pickupAddress,
+            to: dropoffAddress,
+            kilometer: kilometer,
+            date: date,
+            time: timees,
           });
         }}
       >

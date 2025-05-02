@@ -1,4 +1,9 @@
-import { FETCH_PROJECTS, ADD_PROJECT, BASE_URL } from "../constant";
+import {
+  FETCH_PROJECTS,
+  ADD_PROJECT,
+  BASE_URL,
+  ADD_CONVEYANCE,
+} from "../constant";
 
 export const getStateById = async (id) => {
   const response = await fetch(`${BASE_URL}/api/fetch-states`, {
@@ -59,6 +64,34 @@ export const addProject = (project) => async (dispatch) => {
     dispatch({ type: ADD_PROJECT, payload: data.project });
     return true;
   } catch (error) {
+    return false;
+  }
+};
+
+export const addConveyance = (conveyance) => async (dispatch) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/conveyances`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(conveyance),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: ADD_CONVEYANCE, payload: data.conveyance });
+      return true;
+    } else {
+      console.error(
+        "Conveyance submission failed:",
+        data.message || "Unknown error"
+      );
+      return false;
+    }
+  } catch (error) {
+    console.error("Error submitting conveyance:", error);
     return false;
   }
 };

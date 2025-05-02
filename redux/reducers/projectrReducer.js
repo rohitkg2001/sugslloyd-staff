@@ -4,6 +4,7 @@ import {
   UPDATE_PROJECT,
   COUNT_PROJECTS,
   ADD_PROJECT,
+  ADD_CONVEYANCE,
 } from "../constant";
 
 const initialState = {
@@ -31,6 +32,11 @@ export const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         projectCount: state.projects.length,
+      };
+    case ADD_CONVEYANCE:
+      return {
+        ...state,
+        conveyances: [...state.conveyances, action.payload],
       };
     default:
       return state;

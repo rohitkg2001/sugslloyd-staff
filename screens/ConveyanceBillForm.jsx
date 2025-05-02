@@ -15,11 +15,11 @@ import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 
 const ConveyanceBillForm = ({ navigation, route }) => {
-  const [pickupLocation, setPickupLocation] = useState("");
-  const [dropLocation, setDropLocation] = useState("");
-  const [distance, setDistance] = useState(null);
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [kilometer, setKilometer] = useState(null);
   const [currentDate, setCurrentDate] = useState("");
-  const [currentTime, setCurrentTime] = useState("");
+  const [time, setTime] = useState("");
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [prices, setPrices] = useState({
@@ -28,52 +28,40 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     publicTransport: 0,
   });
 
-  const [isDropLocationSelected, setIsDropLocationSelected] = useState(false); // Track if drop location is selected
+  const [isToSelected, setIsToSelected] = useState(false);
 
-  // Function to handle location selection (pickup and drop)
   const handleLocationSelection = (type) => {
     if (type === "pickup") {
-      // Navigate to location selection screen for pickup
       navigation.navigate("locationSet", { type: "pickup" });
     } else if (type === "drop") {
-      // Navigate to location selection screen for drop
       navigation.navigate("locationSet", { type: "drop" });
     }
   };
 
   useEffect(() => {
-    // console.log("Route Params:", route.params); // Debugging Log
-
-    if (route.params?.pickupLocation)
-      setPickupLocation(route.params.pickupLocation);
-    if (route.params?.dropoffLocation)
-      setDropLocation(route.params.dropoffLocation);
-    if (route.params?.distance) {
-      setDistance(route.params.distance);
-      calculatePrices(route.params.distance);
+    if (route.params?.from) setFrom(route.params.from);
+    if (route.params?.to) setTo(route.params.to);
+    if (route.params?.kilometer) {
+      setKilometer(route.params.kilometer);
+      calculatePrices(route.params.kilometer);
     }
-
-    // Check if date and time are being received
     if (route.params?.date) {
-      // console.log("Setting Date:", route.params.date);
       setCurrentDate(route.params.date);
     } else {
       console.warn("No Date found in route.params");
     }
-
     if (route.params?.time) {
-      // console.log("Setting Time:", route.params.time);
-      setCurrentTime(route.params.time);
+      setTime(route.params.time);
     } else {
       console.warn("No Time found in route.params");
     }
   }, [route.params]);
 
-  const calculatePrices = (distance) => {
+  const calculatePrices = (km) => {
     setPrices({
-      car: parseFloat((distance * 4).toFixed(2)),
-      bike: parseFloat((distance * 3).toFixed(2)),
-      publicTransport: parseFloat((distance * 5).toFixed(2)),
+      car: parseFloat((km * 4).toFixed(2)),
+      bike: parseFloat((km * 3).toFixed(2)),
+      publicTransport: parseFloat((km * 5).toFixed(2)),
     });
   };
 
@@ -118,30 +106,14 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             <View
               style={[
                 spacing.br1,
-                {
-                  width: 10,
-                  height: 10,
-                  backgroundColor: "#FFA500",
-                },
+                { width: 10, height: 10, backgroundColor: "#FFA500" },
               ]}
             />
-            <View
-              style={[
-                {
-                  width: 2,
-                  height: 60,
-                  backgroundColor: "#aaa",
-                },
-              ]}
-            />
+            <View style={{ width: 2, height: 60, backgroundColor: "#aaa" }} />
             <View
               style={[
                 spacing.br1,
-                {
-                  width: 10,
-                  height: 10,
-                  backgroundColor: "red",
-                },
+                { width: 10, height: 10, backgroundColor: "red" },
               ]}
             />
           </View>
@@ -163,22 +135,18 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               ]}
             >
               <TextInput
-                placeholder="Pickup Location"
+                placeholder="From"
                 placeholderTextColor="#aaa"
                 style={[typography.font16, typography.fontLato, { flex: 1 }]}
-                value={pickupLocation}
-                onChangeText={(text) => setPickupLocation(text)}
+                value={from}
+                onChangeText={(text) => setFrom(text)}
               />
-              {pickupLocation !== "" && (
+              {from !== "" && (
                 <TouchableOpacity
                   onPress={() => {
-                    setPickupLocation("");
-                    setDistance(null);
-                    setPrices({
-                      car: 0,
-                      bike: 0,
-                      publicTransport: 0,
-                    });
+                    setFrom("");
+                    setKilometer(null);
+                    setPrices({ car: 0, bike: 0, publicTransport: 0 });
                   }}
                 >
                   <Ionicons name="close-circle" size={20} color="#999" />
@@ -203,22 +171,18 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               ]}
             >
               <TextInput
-                placeholder="Drop Location"
+                placeholder="To"
                 placeholderTextColor="#aaa"
                 style={[typography.font16, typography.fontLato, { flex: 1 }]}
-                value={dropLocation}
-                onChangeText={(text) => setDropLocation(text)}
+                value={to}
+                onChangeText={(text) => setTo(text)}
               />
-              {dropLocation !== "" && (
+              {to !== "" && (
                 <TouchableOpacity
                   onPress={() => {
-                    setDropLocation("");
-                    setDistance(null);
-                    setPrices({
-                      car: 0,
-                      bike: 0,
-                      publicTransport: 0,
-                    });
+                    setTo("");
+                    setKilometer(null);
+                    setPrices({ car: 0, bike: 0, publicTransport: 0 });
                   }}
                 >
                   <Ionicons name="close-circle" size={20} color="#999" />
@@ -227,16 +191,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               <Ionicons name="location-outline" size={20} color="red" />
             </View>
 
-            {/* Allow the user to select or change the drop location */}
-
-            <View
-              style={[
-                styles.row,
-                {
-                  alignItems: "center",
-                },
-              ]}
-            >
+            <View style={[styles.row, { alignItems: "center" }]}>
               <TouchableOpacity
                 onPress={() => handleLocationSelection("drop")}
                 style={[
@@ -259,7 +214,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                     typography.textBold,
                   ]}
                 >
-                  {isDropLocationSelected
+                  {isToSelected
                     ? "Change Drop Location"
                     : "Select Drop Location"}
                 </P>
@@ -271,15 +226,16 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 >
                   Distance:
                 </P>
-                {distance && (
+                {kilometer && (
                   <P style={[typography.font12, spacing.ml1, spacing.mr1]}>
-                    {distance} km
+                    {kilometer} km
                   </P>
                 )}
               </View>
             </View>
           </View>
         </View>
+
         <View>
           <P
             style={[
@@ -287,155 +243,32 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               typography.fontLato,
               spacing.p1,
               spacing.ml2,
-              {
-                bottom: 4,
-              },
+              { bottom: 4 },
             ]}
           >
             Mode of Transport
           </P>
         </View>
-        {/* Transport Options */}
+
         <View>
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                if (!pickupLocation || !dropLocation) {
-                  showSnackbar(
-                    "Please select both Pickup and Drop locations before proceeding."
-                  );
-                  return;
-                }
-                navigation.navigate("transportCamera", {
-                  transportType: "Car",
-                  pickupLocation,
-                  dropLocation,
-                  price: prices.car,
-                  distance,
-                  date: currentDate,
-                  time: currentTime,
-                });
-              }}
-              style={[
-                styles.row,
-                spacing.br2,
-                spacing.p3,
-                spacing.mb3,
-                { alignItems: "center", backgroundColor: LIGHT, elevation: 3 },
-              ]}
-            >
-              <View style={[styles.row, { alignItems: "center" }]}>
-                <Image
-                  source={require("../assets/car1.jpeg")}
-                  style={[
-                    spacing.mt2,
-                    {
-                      width: 40,
-                      height: 40,
-                      resizeMode: "contain",
-                      alignSelf: "center",
-                    },
-                  ]}
-                />
-                <View style={[spacing.ml2]}>
-                  <H5
-                    style={[
-                      typography.font14,
-                      typography.textBold,
-                      typography.fontLato,
-                    ]}
-                  >
-                    Car
-                  </H5>
-                  <P style={[typography.font12, typography.fontLato]}>
-                    {pickupLocation} - {dropLocation}
-                  </P>
-                  <P style={[typography.font12, typography.fontLato]}>
-                    {distance} km
-                  </P>
-                </View>
-              </View>
-              <H6
-                style={[
-                  typography.font14,
-                  typography.textBold,
-                  typography.fontLato,
-                ]}
-              >
-                ₹{prices.car}
-              </H6>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                if (!pickupLocation || !dropLocation) {
-                  showSnackbar(
-                    "Please select both Pickup and Drop locations before proceeding."
-                  );
-                  return;
-                }
-                navigation.navigate("transportCamera", {
-                  transportType: "Bike",
-                  pickupLocation,
-                  dropLocation,
-                  price: prices.bike,
-                  distance,
-                  date: currentDate,
-                  time: currentTime,
-                });
-              }}
-              style={[
-                styles.row,
-                spacing.br2,
-                spacing.p3,
-                spacing.mb3,
-                { alignItems: "center", backgroundColor: LIGHT, elevation: 3 },
-              ]}
-            >
-              <View style={[styles.row, { alignItems: "center" }]}>
-                <Image
-                  source={require("../assets/bike.jpg")}
-                  style={[
-                    spacing.mt2,
-                    {
-                      width: 50,
-                      height: 50,
-                      resizeMode: "contain",
-                      alignSelf: "center",
-                    },
-                  ]}
-                />
-                <View style={[spacing.ml2]}>
-                  <H5
-                    style={[
-                      typography.font14,
-                      typography.textBold,
-                      typography.fontLato,
-                    ]}
-                  >
-                    Bike
-                  </H5>
-                  <P style={[typography.font12, typography.fontLato]}>
-                    {pickupLocation} - {dropLocation}
-                  </P>
-                  <P style={[typography.font12, typography.fontLato]}>
-                    {distance} km
-                  </P>
-                </View>
-              </View>
-              <H6
-                style={[
-                  typography.font14,
-                  typography.textBold,
-                  typography.fontLato,
-                ]}
-              >
-                ₹{prices.bike}
-              </H6>
-            </TouchableOpacity>
-          </View>
-
           <TouchableOpacity
+            onPress={() => {
+              if (!from || !to) {
+                showSnackbar(
+                  "Please select both From and To locations before proceeding."
+                );
+                return;
+              }
+              navigation.navigate("transportCamera", {
+                vehicle_category: "Car",
+                from,
+                to,
+                price: prices.car,
+                kilometer,
+                date: currentDate,
+                time,
+              });
+            }}
             style={[
               styles.row,
               spacing.br2,
@@ -450,8 +283,77 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           >
             <View style={[styles.row, { alignItems: "center" }]}>
               <Image
-                source={require("../assets/image.png")}
+                source={require("../assets/car1.jpeg")}
                 style={[
+                  spacing.mt2,
+                  {
+                    width: 40,
+                    height: 40,
+                    resizeMode: "contain",
+                    alignSelf: "center",
+                  },
+                ]}
+              />
+              <View style={[spacing.ml2]}>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Car
+                </H5>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {from} - {to}
+                </P>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {kilometer} km
+                </P>
+              </View>
+            </View>
+            <H6
+              style={[
+                typography.font14,
+                typography.textBold,
+                typography.fontLato,
+              ]}
+            >
+              ₹{prices.car}
+            </H6>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              if (!from || !to) {
+                showSnackbar(
+                  "Please select both Pickup and Drop locations before proceeding."
+                );
+                return;
+              }
+              navigation.navigate("transportCamera", {
+                vehicle_category: "Bike",
+                from,
+                to,
+                price: prices.car,
+                kilometer,
+                date: currentDate,
+                time,
+              });
+            }}
+            style={[
+              styles.row,
+              spacing.br2,
+              spacing.p3,
+              spacing.mb3,
+              { alignItems: "center", backgroundColor: LIGHT, elevation: 3 },
+            ]}
+          >
+            <View style={[styles.row, { alignItems: "center" }]}>
+              <Image
+                source={require("../assets/bike.jpg")}
+                style={[
+                  spacing.mt2,
                   {
                     width: 50,
                     height: 50,
@@ -461,56 +363,92 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 ]}
               />
               <View style={[spacing.ml2]}>
-                <View style={[styles.row, { alignItems: "center" }]}>
-                  <H5
-                    style={[
-                      typography.font14,
-                      typography.textBold,
-                      typography.fontLato,
-                    ]}
-                  >
-                    Public transport
-                  </H5>
-                </View>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Bike
+                </H5>
                 <P style={[typography.font12, typography.fontLato]}>
-                  {pickupLocation}-{dropLocation}
+                  {from} - {to}
                 </P>
                 <P style={[typography.font12, typography.fontLato]}>
-                  {distance} km
+                  {kilometer} km
                 </P>
               </View>
             </View>
-            <H5
+            <H6
               style={[
                 typography.font14,
                 typography.textBold,
                 typography.fontLato,
               ]}
             >
-              ₹{prices.publicTransport}
-            </H5>
+              ₹{prices.bike}
+            </H6>
           </TouchableOpacity>
         </View>
 
-        {/* Proceed Button */}
-        <Button
+        {/* public transport  */}
+
+        <TouchableOpacity
           style={[
-            styles.btn,
-            styles.bgPrimary,
-            { justifyContent: "center", top: 50 },
+            styles.row,
+            spacing.br2,
+            spacing.p3,
+            spacing.mb3,
+            {
+              alignItems: "center",
+              backgroundColor: LIGHT,
+              elevation: 3,
+            },
           ]}
         >
-          <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-            {"Proceed"}
-          </H2>
-        </Button>
-        <Snackbar
-          visible={snackbarVisible}
-          onDismiss={() => setSnackbarVisible(false)}
-          duration={3000}
-        >
-          {snackbarMessage}
-        </Snackbar>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Image
+              source={require("../assets/image.png")}
+              style={[
+                {
+                  width: 50,
+                  height: 50,
+                  resizeMode: "contain",
+                  alignSelf: "center",
+                },
+              ]}
+            />
+            <View style={[spacing.ml2]}>
+              <View style={[styles.row, { alignItems: "center" }]}>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Public transport
+                </H5>
+              </View>
+              <P style={[typography.font12, typography.fontLato]}>
+                {from} - {to}
+              </P>
+              <P style={[typography.font12, typography.fontLato]}>
+                {kilometer} km
+              </P>
+            </View>
+          </View>
+          <H5
+            style={[
+              typography.font14,
+              typography.textBold,
+              typography.fontLato,
+            ]}
+          >
+            ₹{prices.publicTransport}
+          </H5>
+        </TouchableOpacity>
       </ScrollView>
     </ContainerComponent>
   );

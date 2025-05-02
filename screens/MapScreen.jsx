@@ -9,22 +9,29 @@ import { styles, typography, spacing } from "../styles";
 import Button from "../components/buttons/Button";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
 
+import { useDispatch } from "react-redux";
+import { addConveyance } from "../redux/actions/projectAction";
+
 const { height } = Dimensions.get("window");
 
 const MapScreen = ({ route, navigation }) => {
   const {
-    dropoffAddress,
-    pickupAddress,
-    transportType,
+    from,
+    to,
+    vehicle_category,
     price,
-    distance,
+    kilometer,
     photos,
-    date,
+    date: currentDate,
     time,
   } = route.params || {};
 
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  const [pickupAddress, setPickupAddress] = useState("");
+  const [dropoffAddress, setDropoffAddress] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -36,17 +43,75 @@ const MapScreen = ({ route, navigation }) => {
       let loc = await Location.getCurrentPositionAsync({});
       setLocation(loc.coords);
       setLoading(false);
+
+      // Reverse geocode pickup location
+      if (from?.latitude && from?.longitude) {
+        const pickupInfo = await Location.reverseGeocodeAsync({
+          latitude: from.latitude,
+          longitude: from.longitude,
+        });
+        const pickup = pickupInfo[0];
+        setPickupAddress(`${pickup.city}`);
+      }
+
+      // Reverse geocode dropoff location
+      if (to?.latitude && to?.longitude) {
+        const dropoffInfo = await Location.reverseGeocodeAsync({
+          latitude: to.latitude,
+          longitude: to.longitude,
+        });
+        const drop = dropoffInfo[0];
+        setDropoffAddress(`${drop.city}`);
+      }
     })();
   }, []);
 
   const pickupCoord = {
-    latitude: pickupAddress?.latitude || location?.latitude,
-    longitude: pickupAddress?.longitude || location?.longitude,
+    latitude: from?.latitude || location?.latitude,
+    longitude: from?.longitude || location?.longitude,
   };
 
   const dropoffCoord = {
-    latitude: dropoffAddress?.latitude || location?.latitude + 0.01,
-    longitude: dropoffAddress?.longitude || location?.longitude + 0.01,
+    latitude: to?.latitude || location?.latitude + 0.01,
+    longitude: to?.longitude || location?.longitude + 0.01,
+  };
+
+  const handleEndTrip = () => {
+    const conveyanceData = {
+      from: pickupAddress,
+      to: dropoffAddress,
+      vehicle_category,
+      price,
+      kilometer,
+      photos,
+      date: currentDate,
+      time,
+    };
+
+    // Log each key and its value
+    Object.entries(conveyanceData).forEach(([key, value]) => {
+      console.log(`${key}: ${value}`);
+    });
+
+    dispatch(addConveyance(conveyanceData))
+      .then(() => {
+        console.log("Trip Ended Successfully");
+        navigation.navigate("conveyanceManagement", {
+          from: pickupAddress,
+          to: dropoffAddress,
+          vehicle_category,
+          price,
+          kilometer,
+          photos: photos?.map((photo) =>
+            typeof photo === "string" ? photo : photo.uri
+          ),
+          date: currentDate,
+          time,
+        });
+      })
+      .catch((err) => {
+        console.error("Trip Ended with Errors", err);
+      });
   };
 
   return (
@@ -78,11 +143,6 @@ const MapScreen = ({ route, navigation }) => {
           {/* Marker for Dropoff Location */}
           <Marker coordinate={dropoffCoord} title="Dropoff" pinColor="red">
             <Ionicons name="location-sharp" size={26} color="red" />
-          </Marker>
-
-          {/* Optional: Current Location Marker */}
-          <Marker coordinate={location} title="You" pinColor="blue">
-            <Ionicons name="location-sharp" size={26} color="blue" />
           </Marker>
 
           {/* Polyline from pickup to dropoff */}
@@ -125,7 +185,6 @@ const MapScreen = ({ route, navigation }) => {
             ]}
           >
             <View style={[styles.row]}>
-              {/* Pickup */}
               <View style={[spacing.mr2, { flex: 1 }]}>
                 <P
                   style={[
@@ -138,12 +197,12 @@ const MapScreen = ({ route, navigation }) => {
                   <Ionicons name="pin-sharp" size={16} color="#2E8B57" />
                   Pickup
                 </P>
+
                 <P style={[typography.font12, spacing.mt1]}>
                   {pickupAddress || "Not provided"}
                 </P>
               </View>
 
-              {/* Dropoff */}
               <View style={{ flex: 1 }}>
                 <P
                   style={[
@@ -156,6 +215,7 @@ const MapScreen = ({ route, navigation }) => {
                   <Ionicons name="location-sharp" size={16} color="red" />
                   Dropoff
                 </P>
+
                 <P style={[typography.font12, spacing.mt1]}>
                   {dropoffAddress || "Not provided"}
                 </P>
@@ -175,7 +235,7 @@ const MapScreen = ({ route, navigation }) => {
             ]}
           >
             <P style={[typography.font14, typography.fontLato]}>
-              {transportType || "Not provided"}
+              {vehicle_category || "Not provided"}
             </P>
             <P
               style={[
@@ -211,7 +271,7 @@ const MapScreen = ({ route, navigation }) => {
                 Distance
               </P>
               <P style={[typography.font14, spacing.mt1]}>
-                {distance || "Not provided"}
+                {kilometer || "Not provided"}
               </P>
             </View>
 
@@ -227,7 +287,7 @@ const MapScreen = ({ route, navigation }) => {
                 Date
               </P>
               <P style={[typography.font14, spacing.mt1]}>
-                {date || "Not provided"}
+                {currentDate || "Not provided"}
               </P>
             </View>
           </View>
@@ -270,26 +330,50 @@ const MapScreen = ({ route, navigation }) => {
             ]}
           />
 
+          {/* <Button
+            style={[
+              styles.btn,
+              styles.bgPrimary,
+              { justifyContent: "center", width: "100%", top: 50 },
+            ]}
+            // onPress={() =>
+            //   navigation.navigate("conveyanceManagement", {
+            //     // pickupAddress,
+            //     // dropoffAddress,
+            //     // transportType,
+            //     // price,
+            //     // distance,
+            //     // date,
+            //     // time,
+            //     from,
+            //     to,
+            //     vehicle_category,
+            //     price,
+            //     kilometer,
+            //     photos,
+            //     date: currentDate,
+            //     time,
+            //     photos: photos?.map((photo) =>
+            //       typeof photo === "string" ? photo : photo.uri
+            //     ),
+            //   })
+            // }
+            
+          >
+            <H2
+              style={[styles.btnText, styles.textLarge, typography.textLight]}
+            >
+              End Trip
+            </H2>
+          </Button> */}
+
           <Button
             style={[
               styles.btn,
               styles.bgPrimary,
               { justifyContent: "center", width: "100%", top: 50 },
             ]}
-            onPress={() =>
-              navigation.navigate("conveyanceManagement", {
-                pickupAddress,
-                dropoffAddress,
-                transportType,
-                price,
-                distance,
-                date,
-                time,
-                photos: photos?.map((photo) =>
-                  typeof photo === "string" ? photo : photo.uri
-                ),
-              })
-            }
+            onPress={handleEndTrip}
           >
             <H2
               style={[styles.btnText, styles.textLarge, typography.textLight]}
