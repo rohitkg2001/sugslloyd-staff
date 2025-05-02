@@ -1,505 +1,388 @@
-// import React, { useState, useEffect } from "react";
-// import { View, Alert, Text } from "react-native";
-// import MapView, { Marker, Polyline } from "react-native-maps";
-// import * as Location from "expo-location";
-// import Icon from "react-native-vector-icons/Ionicons";
-// import { H2, H5 } from "../components/text";
-// import { styles, typography } from "../styles";
-// import Button from "../components/buttons/Button";
+import React, { useEffect, useState } from "react";
+import { View, Dimensions, ActivityIndicator } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import MapView, { Marker, Polyline } from "react-native-maps";
+import * as Location from "expo-location";
 
-// const MapScreen = ({ navigation }) => {
-//   const [pickupLocation, setPickupLocation] = useState(null);
-//   const [dropoffLocation, setDropoffLocation] = useState(null);
-//   const [region, setRegion] = useState(null);
-//   const [pickupAddress, setPickupAddress] = useState("");
-//   const [dropoffAddress, setDropoffAddress] = useState("");
-//   useEffect(() => {
-//     (async () => {
-//       let { status } = await Location.requestForegroundPermissionsAsync();
-//       if (status !== "granted") {
-//         Alert.alert("Permission Denied", "Allow location access to proceed.");
-//         return;
-//       }
-
-//       let location = await Location.getCurrentPositionAsync({});
-//       const { latitude, longitude } = location.coords;
-//       setRegion({
-//         latitude,
-//         longitude,
-//         latitudeDelta: 0.05,
-//         longitudeDelta: 0.05,
-//       });
-//       setPickupLocation({ latitude, longitude });
-//       fetchAddress(latitude, longitude);
-//     })();
-//   }, []);
-
-//   useEffect(() => {
-//     (async () => {
-//       let { status } = await Location.requestForegroundPermissionsAsync();
-//       if (status !== "granted") {
-//         Alert.alert("Permission Denied", "Allow location access to proceed.");
-//         return;
-//       }
-
-//       let location = await Location.getCurrentPositionAsync({});
-//       const { latitude, longitude } = location.coords;
-//       setRegion({
-//         latitude,
-//         longitude,
-//         latitudeDelta: 0.05,
-//         longitudeDelta: 0.05,
-//       });
-//       setPickupLocation({ latitude, longitude });
-//       const address = await getAddressFromCoords(latitude, longitude);
-//       setPickupAddress(address);
-//     })();
-//   }, []);
-
-//   const getAddressFromCoords = async (latitude, longitude) => {
-//     try {
-//       let [result] = await Location.reverseGeocodeAsync({
-//         latitude,
-//         longitude,
-//       });
-//       return `${result.city}`;
-//     } catch (error) {
-//       console.error(error);
-//       return "Address not found";
-//     }
-//   };
-
-//   const handleSelectLocation = async (event) => {
-//     const { latitude, longitude } = event.nativeEvent.coordinate;
-
-//     if (!pickupLocation) {
-//       // Select pickup location first
-//       setPickupLocation({ latitude, longitude });
-//       const address = await getAddressFromCoords(latitude, longitude);
-//       setPickupAddress(address);
-//     } else if (!dropoffLocation) {
-//       // Select drop-off location next
-//       setDropoffLocation({ latitude, longitude });
-//       const address = await getAddressFromCoords(latitude, longitude);
-//       setDropoffAddress(address);
-//     } else {
-//       // If both are selected, allow changing drop-off on next tap
-//       setDropoffLocation({ latitude, longitude });
-//       const address = await getAddressFromCoords(latitude, longitude);
-//       setDropoffAddress(address);
-//       // Alert.alert("Drop-off Updated", "Drop-off location has been updated.");
-//     }
-//   };
-
-//   return (
-//     <View style={{ flex: 1 }}>
-//       <View style={{ backgroundColor: "green", padding: 10 }}>
-//         <View
-//           style={{
-//             flexDirection: "row",
-//             alignItems: "center",
-//             marginBottom: 5,
-//           }}
-//         >
-//           <Icon name="location-outline" size={20} color="red" />
-//           <Text style={{ color: "white", fontSize: 16, marginLeft: 5 }}>
-//             Pickup: {pickupAddress || "Not selected"}
-//           </Text>
-//         </View>
-//         <View style={{ flexDirection: "row", alignItems: "center" }}>
-//           <Icon name="flag-outline" size={20} color="white" />
-//           <Text style={{ color: "white", fontSize: 16, marginLeft: 5 }}>
-//             Drop: {dropoffAddress || "Not selected"}
-//           </Text>
-//         </View>
-//       </View>
-//       {/* {region && (
-//         <MapView
-//           style={{ flex: 1 }}
-//           region={region}
-//           onPress={handleSelectLocation}
-//         >
-//           {pickupLocation && (
-//             <Marker
-//               coordinate={pickupLocation}
-//               title="Pickup Location"
-//               pinColor="#00FF00"
-//             />
-//           )}
-//           {dropoffLocation && (
-//             <Marker
-//               coordinate={dropoffLocation}
-//               title="Drop-off Location"
-//               pinColor="#FF0000"
-//             />
-//           )}
-//           {pickupLocation && dropoffLocation && (
-//             <Polyline
-//               coordinates={[pickupLocation, dropoffLocation]}
-//               strokeColor="black"
-//               strokeWidth={2}
-//               lineDashPattern={[5, 5]}
-//             />
-//           )}
-//         </MapView>
-
-//       <View
-//         style={{
-//           position: "absolute",
-//           bottom: 20,
-//           left: 20,
-//           backgroundColor: "white",
-//           borderRadius: 50,
-//           width: 50,
-//           height: 50,
-//           justifyContent: "center",
-//           alignItems: "center",
-//           elevation: 2,
-//         }}
-//       >
-//         <H5
-//           style={[typography.fontLato, typography.font12, typography.textBold]}
-//         >
-//           0 Km/h
-//         </H5>
-//       </View>
-//       )} */}
-//       {region && (
-//         <MapView
-//           style={{ flex: 1 }}
-//           region={region}
-//           onPress={handleSelectLocation}
-//         >
-//           {pickupLocation && (
-//             <Marker
-//               coordinate={pickupLocation}
-//               title="Pickup Location"
-//               pinColor="#00FF00"
-//             />
-//           )}
-//           {dropoffLocation && (
-//             <Marker
-//               coordinate={dropoffLocation}
-//               title="Drop-off Location"
-//               pinColor="#FF0000"
-//             />
-//           )}
-//           {pickupLocation && dropoffLocation && (
-//             <Polyline
-//               coordinates={[pickupLocation, dropoffLocation]}
-//               strokeColor="black"
-//               strokeWidth={2}
-//               lineDashPattern={[5, 5]}
-//             />
-//           )}
-//         </MapView>
-//       )}
-
-// <View
-//   style={{
-//     position: "absolute",
-//     // bottom: 10,
-//     top: 520,
-//     left: 20,
-//     backgroundColor: "white",
-//     borderRadius: 50,
-//     width: 50,
-//     height: 50,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     elevation: 2,
-//   }}
-// >
-//   <H5
-//     style={[typography.fontLato, typography.font12, typography.textBold]}
-//   >
-//     0 Km/h
-//   </H5>
-// </View>
-
-//       <View style={{ padding: 10 }}>
-//         <H5
-//           style={[
-//             typography.fontLato,
-//             typography.font16,
-//             typography.textBold,
-//             {
-//               textAlign: "center",
-//             },
-//           ]}
-//         >
-//           8 Min
-//         </H5>
-//         <H5
-//           style={[
-//             typography.fontLato,
-//             typography.font16,
-//             typography.textBold,
-//             {
-//               textAlign: "center",
-//             },
-//           ]}
-//         >
-//           800m - 5:37 PM
-//         </H5>
-// <Button
-//   style={[
-//     styles.btn,
-//     styles.bgPrimary,
-//     { justifyContent: "center", marginHorizontal: 2 },
-//   ]}
-//   onPress={() => navigation.navigate("conveyanceManagement")}
-// >
-//   <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-//     {"End Trip"}
-//   </H2>
-// </Button>
-//       </View>
-//     </View>
-//   );
-// };
-
-// export default MapScreen;
-
-import { View, Text, Image, ScrollView } from "react-native";
-import { H2, H5 } from "../components/text";
-import { styles, typography } from "../styles";
+import { H2, P } from "../components/text";
+import { styles, typography, spacing } from "../styles";
 import Button from "../components/buttons/Button";
+import BottomSheet from "../components/bottomsheet/BottomSheet";
+
+import { useDispatch } from "react-redux";
+import { addConveyance } from "../redux/actions/projectAction";
+
+const { height } = Dimensions.get("window");
 
 const MapScreen = ({ route, navigation }) => {
   const {
-    dropoffAddress,
-    pickupAddress,
-    transportType,
+    from,
+    to,
+    vehicle_category,
     price,
-    distance,
+    kilometer,
     photos,
-    date,
+    date: currentDate,
     time,
   } = route.params || {};
 
+  const [location, setLocation] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  const [pickupAddress, setPickupAddress] = useState("");
+  const [dropoffAddress, setDropoffAddress] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission denied");
+        return;
+      }
+      let loc = await Location.getCurrentPositionAsync({});
+      setLocation(loc.coords);
+      setLoading(false);
+
+      // Reverse geocode pickup location
+      if (from?.latitude && from?.longitude) {
+        const pickupInfo = await Location.reverseGeocodeAsync({
+          latitude: from.latitude,
+          longitude: from.longitude,
+        });
+        const pickup = pickupInfo[0];
+        setPickupAddress(`${pickup.city}`);
+      }
+
+      // Reverse geocode dropoff location
+      if (to?.latitude && to?.longitude) {
+        const dropoffInfo = await Location.reverseGeocodeAsync({
+          latitude: to.latitude,
+          longitude: to.longitude,
+        });
+        const drop = dropoffInfo[0];
+        setDropoffAddress(`${drop.city}`);
+      }
+    })();
+  }, []);
+
+  const pickupCoord = {
+    latitude: from?.latitude || location?.latitude,
+    longitude: from?.longitude || location?.longitude,
+  };
+
+  const dropoffCoord = {
+    latitude: to?.latitude || location?.latitude + 0.01,
+    longitude: to?.longitude || location?.longitude + 0.01,
+  };
+
+  const handleEndTrip = () => {
+    const conveyanceData = {
+      from: pickupAddress,
+      to: dropoffAddress,
+      vehicle_category,
+      price,
+      kilometer,
+      photos,
+      date: currentDate,
+      time,
+    };
+
+    // Log each key and its value
+    Object.entries(conveyanceData).forEach(([key, value]) => {
+      console.log(`${key}: ${value}`);
+    });
+
+    dispatch(addConveyance(conveyanceData))
+      .then(() => {
+        console.log("Trip Ended Successfully");
+        navigation.navigate("conveyanceManagement", {
+          from: pickupAddress,
+          to: dropoffAddress,
+          vehicle_category,
+          price,
+          kilometer,
+          photos: photos?.map((photo) =>
+            typeof photo === "string" ? photo : photo.uri
+          ),
+          date: currentDate,
+          time,
+        });
+      })
+      .catch((err) => {
+        console.error("Trip Ended with Errors", err);
+      });
+  };
+
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#f8f9fa",
-        padding: 20,
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <View
-        style={{
-          position: "absolute",
-          top: 520,
-          left: 20,
-          backgroundColor: "yellow",
-          borderRadius: 50,
-          width: 50,
-          height: 50,
-          justifyContent: "center",
-          alignItems: "center",
-          elevation: 2,
-        }}
-      >
-        <H5
-          style={[typography.fontLato, typography.font12, typography.textBold]}
-        >
-          0 Km/h
-        </H5>
-      </View>
-
-      <View style={{ width: "100%", alignItems: "center", marginTop: 40 }}>
-        <View
-          style={{
-            width: "90%",
-            backgroundColor: "#fff",
-            padding: 15,
-            borderRadius: 10,
-            elevation: 2,
-            marginBottom: 15,
+    <View style={{ flex: 1 }}>
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#007bff"
+          style={{ marginTop: 100 }}
+        />
+      ) : (
+        <MapView
+          style={{ width: "100%", height: height * 0.5 }}
+          initialRegion={{
+            latitude: (pickupCoord.latitude + dropoffCoord.latitude) / 2,
+            longitude: (pickupCoord.longitude + dropoffCoord.longitude) / 2,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
           }}
+          showsUserLocation={true}
+          mapType="standard"
+          onMapReady={() => setLoading(false)}
         >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-              marginBottom: 5,
-            }}
+          {/* Marker for Pickup Location */}
+          <Marker coordinate={pickupCoord} title="Pickup" pinColor="green">
+            <Ionicons name="location-sharp" size={26} color="green" />
+          </Marker>
+
+          {/* Marker for Dropoff Location */}
+          <Marker coordinate={dropoffCoord} title="Dropoff" pinColor="red">
+            <Ionicons name="location-sharp" size={26} color="red" />
+          </Marker>
+
+          {/* Polyline from pickup to dropoff */}
+          <Polyline
+            coordinates={[pickupCoord, dropoffCoord]}
+            strokeColor="black"
+            strokeWidth={3}
+            lineDashPattern={[5, 5]}
+          />
+        </MapView>
+      )}
+
+      {/* BottomSheet with all ride details */}
+      <BottomSheet>
+        <View style={[spacing.p2]}>
+          <P
+            style={[
+              typography.font16,
+              typography.fontLato,
+              typography.textBold,
+              spacing.mb3,
+              spacing.pl4,
+              {
+                textAlign: "left",
+              },
+            ]}
           >
-            🚕 Pickup Location
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#555",
-            }}
+            Ride Details
+          </P>
+
+          {/* Pickup & Dropoff Location */}
+          <View
+            style={[
+              spacing.mb2,
+              spacing.br2,
+              spacing.p2,
+              {
+                backgroundColor: "#f9f9f9",
+              },
+            ]}
           >
-            {pickupAddress || "Not provided"}
-          </Text>
+            <View style={[styles.row]}>
+              <View style={[spacing.mr2, { flex: 1 }]}>
+                <P
+                  style={[
+                    typography.font12,
+                    typography.fontLato,
+                    typography.textBold,
+                    { color: "#2E8B57" },
+                  ]}
+                >
+                  <Ionicons name="pin-sharp" size={16} color="#2E8B57" />
+                  Pickup
+                </P>
+
+                <P style={[typography.font12, spacing.mt1]}>
+                  {pickupAddress || "Not provided"}
+                </P>
+              </View>
+
+              <View style={{ flex: 1 }}>
+                <P
+                  style={[
+                    typography.font12,
+                    typography.fontLato,
+                    typography.textBold,
+                    { color: "#B22222" },
+                  ]}
+                >
+                  <Ionicons name="location-sharp" size={16} color="red" />
+                  Dropoff
+                </P>
+
+                <P style={[typography.font12, spacing.mt1]}>
+                  {dropoffAddress || "Not provided"}
+                </P>
+              </View>
+            </View>
+          </View>
+
+          {/* Transport Type & Price */}
+          <View
+            style={[
+              styles.row,
+              spacing.p2,
+              spacing.br1,
+              {
+                backgroundColor: "#f0f0f0",
+              },
+            ]}
+          >
+            <P style={[typography.font14, typography.fontLato]}>
+              {vehicle_category || "Not provided"}
+            </P>
+            <P
+              style={[
+                typography.font14,
+                typography.fontLato,
+                typography.textBold,
+              ]}
+            >
+              ₹ {price || "Not provided"}
+            </P>
+          </View>
+
+          <View
+            style={[
+              styles.row,
+              spacing.p2,
+              spacing.br2,
+              spacing.mt2,
+              {
+                backgroundColor: "#f0f0f0",
+              },
+            ]}
+          >
+            {/* Distance */}
+            <View style={[spacing.mr2, { flex: 1 }]}>
+              <P
+                style={[
+                  typography.font12,
+                  typography.fontLato,
+                  // typography.textBold,
+                ]}
+              >
+                Distance
+              </P>
+              <P style={[typography.font14, spacing.mt1]}>
+                {kilometer || "Not provided"}
+              </P>
+            </View>
+
+            {/* Date */}
+            <View style={{ flex: 1 }}>
+              <P
+                style={[
+                  typography.font12,
+                  typography.fontLato,
+                  // typography.textBold,
+                ]}
+              >
+                Date
+              </P>
+              <P style={[typography.font14, spacing.mt1]}>
+                {currentDate || "Not provided"}
+              </P>
+            </View>
+          </View>
+
+          {/* Time */}
+
+          <View
+            style={[
+              spacing.p3,
+              {
+                backgroundColor: "#f9f9f9",
+                alignItems: "center",
+                justifyContent: "center",
+              },
+            ]}
+          >
+            <P
+              style={[
+                typography.font12,
+                typography.fontLato,
+                typography.textBold,
+              ]}
+            >
+              <Ionicons name="time-sharp" size={16} color="black" /> Time
+            </P>
+            <P style={[typography.font12, typography.fontLato]}>
+              {time || "Not provided"}
+            </P>
+          </View>
+          {/* Dotted line */}
+          <View
+            style={[
+              {
+                borderBottomWidth: 1,
+                borderBottomColor: "#333",
+                borderStyle: "dotted",
+                width: "100%",
+                // marginTop: 10,
+              },
+            ]}
+          />
+
+          {/* <Button
+            style={[
+              styles.btn,
+              styles.bgPrimary,
+              { justifyContent: "center", width: "100%", top: 50 },
+            ]}
+            // onPress={() =>
+            //   navigation.navigate("conveyanceManagement", {
+            //     // pickupAddress,
+            //     // dropoffAddress,
+            //     // transportType,
+            //     // price,
+            //     // distance,
+            //     // date,
+            //     // time,
+            //     from,
+            //     to,
+            //     vehicle_category,
+            //     price,
+            //     kilometer,
+            //     photos,
+            //     date: currentDate,
+            //     time,
+            //     photos: photos?.map((photo) =>
+            //       typeof photo === "string" ? photo : photo.uri
+            //     ),
+            //   })
+            // }
+            
+          >
+            <H2
+              style={[styles.btnText, styles.textLarge, typography.textLight]}
+            >
+              End Trip
+            </H2>
+          </Button> */}
+
+          <Button
+            style={[
+              styles.btn,
+              styles.bgPrimary,
+              { justifyContent: "center", width: "100%", top: 50 },
+            ]}
+            onPress={handleEndTrip}
+          >
+            <H2
+              style={[styles.btnText, styles.textLarge, typography.textLight]}
+            >
+              End Trip
+            </H2>
+          </Button>
         </View>
-
-        <View
-          style={{
-            width: "90%",
-            backgroundColor: "#fff",
-            padding: 15,
-            borderRadius: 10,
-            elevation: 2,
-            marginBottom: 15,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-              marginBottom: 5,
-            }}
-          >
-            📍 Drop Location
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#555",
-            }}
-          >
-            {dropoffAddress || "Not provided"}
-          </Text>
-        </View>
-
-        <View
-          style={{
-            width: "90%",
-            backgroundColor: "#fff",
-            padding: 15,
-            borderRadius: 10,
-            elevation: 2,
-            marginBottom: 15,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-              marginBottom: 5,
-            }}
-          >
-            🚕 Transport
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#555",
-            }}
-          >
-            {transportType || "Not provided"}
-          </Text>
-
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-              marginBottom: 5,
-            }}
-          >
-            Price
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#555",
-            }}
-          >
-            {price || "Not provided"}
-          </Text>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-              marginBottom: 5,
-            }}
-          >
-            Distance
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#555",
-            }}
-          >
-            {distance || "Not provided"}
-          </Text>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-              marginBottom: 5,
-            }}
-          >
-            Date
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#555",
-            }}
-          >
-            {date}
-          </Text>
-
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-              marginBottom: 5,
-            }}
-          >
-            Time
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#555",
-            }}
-          >
-            {time}
-          </Text>
-        </View>
-      </View>
-
-      <Button
-        style={[
-          styles.btn,
-          styles.bgPrimary,
-          { justifyContent: "center", marginHorizontal: 0, width: "95%" },
-        ]}
-        onPress={() =>
-          navigation.navigate("conveyanceManagement", {
-            pickupAddress: pickupAddress,
-            dropoffAddress: dropoffAddress,
-            transportType: transportType,
-            price: price,
-            distance: distance,
-            date,
-            time,
-            photos: photos.map((photo) =>
-              typeof photo === "string" ? photo : photo.uri
-            ),
-          })
-        }
-      >
-        <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-          {"End Trip"}
-        </H2>
-      </Button>
+      </BottomSheet>
     </View>
   );
 };
