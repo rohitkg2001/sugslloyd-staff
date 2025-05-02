@@ -22,7 +22,7 @@ import { useDispatch } from "react-redux";
 import { setBillData } from "../redux/actions/taskActions";
 
 // import Styles
-import { spacing, styles, typography, SCREEN_WIDTH, LIGHT } from "../styles";
+import { spacing, styles, typography, LIGHT } from "../styles";
 import { H2, H6, P, Span } from "../components/text";
 import Button from "../components/buttons/Button";
 import useAddBillForm from "../hooks/useAddBillForm";
@@ -180,7 +180,7 @@ const AddBillForm = ({ navigation }) => {
     };
 
     dispatch(setBillData(formData));
-   // console.log("Form Data:", formData);
+    // console.log("Form Data:", formData);
     navigation.navigate("travelDetailScreen", { formData });
   };
 
@@ -367,7 +367,8 @@ const AddBillForm = ({ navigation }) => {
             spacing.p1,
             spacing.br2,
             {
-              borderStyle: "dotted", marginTop:10
+              borderStyle: "dotted",
+              marginTop: 10,
             },
           ]}
         >

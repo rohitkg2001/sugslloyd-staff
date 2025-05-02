@@ -60,7 +60,7 @@ export default function ClickableCard1({
           title={
             <H6
               style={[
-                typography.font14,
+                typography.font12,
                 typography.fontLato,
                 typography.textBold,
               ]}

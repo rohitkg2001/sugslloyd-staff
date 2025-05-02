@@ -6,7 +6,6 @@ import { H2, P, H5, H6 } from "../components/text";
 import Button from "../components/buttons/Button";
 
 const ConveyanceBillForm = ({ navigation, route }) => {
-  // State for Pickup and Drop Locations
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropLocation, setDropLocation] = useState("");
   const [distance, setDistance] = useState(null);
@@ -33,7 +32,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-   // console.log("Route Params:", route.params); // Debugging Log
+    // console.log("Route Params:", route.params); // Debugging Log
 
     if (route.params?.pickupLocation)
       setPickupLocation(route.params.pickupLocation);
@@ -46,14 +45,14 @@ const ConveyanceBillForm = ({ navigation, route }) => {
 
     // Check if date and time are being received
     if (route.params?.date) {
-     // console.log("Setting Date:", route.params.date);
+      // console.log("Setting Date:", route.params.date);
       setCurrentDate(route.params.date);
     } else {
       console.warn("No Date found in route.params");
     }
 
     if (route.params?.time) {
-     // console.log("Setting Time:", route.params.time);
+      // console.log("Setting Time:", route.params.time);
       setCurrentTime(route.params.time);
     } else {
       console.warn("No Time found in route.params");

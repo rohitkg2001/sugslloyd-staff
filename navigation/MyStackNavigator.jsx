@@ -29,7 +29,7 @@ import InventoryDetailsScreen from "../screens/InventoryDetailsScreen";
 import TaskMaterialScreen from "../screens/TaskMaterialScreen";
 import VendorSelectionScreen from "../screens/VendorSelectionScreen";
 import TaskInventoryScreen from "../screens/TaskInventoryScreen";
-import CardScreen from "../screens/CardScreen";
+//import CardScreen from "../screens/CardScreen";
 import SiteLocationScreen from "../screens/SiteLocationScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import CurrentStreetLightScreen from "../screens/CurrentStreetLightScreen";
@@ -46,18 +46,20 @@ import MapScreen from "../screens/MapScreen";
 import LoactionSetScreen from "../screens/LoactionSetScreen";
 import ConveyanceDetailScreen from "../screens/ConveyanceDetailScreen";
 import ProfileChangeScreen from "../screens/ProfileChangeScreen";
+import SurveyScreen from "../screens/SurveyScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator({ initialRouteName }) {
- // console.log(`${initialRouteName} is the route name`);
+  // console.log(`${initialRouteName} is the route name`);
   return (
     <Stack.Navigator
       initialRouteName={initialRouteName}
+      //  initialRouteName="surveyScreen"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="cardScreen" component={CardScreen} />
+      {/* <Stack.Screen name="cardScreen" component={CardScreen} /> */}
       <Stack.Screen name="loginScreen" component={LoginScreen} />
       <Stack.Screen name="welcomeScreen" component={WelcomeScreen} />
       <Stack.Screen
@@ -145,6 +147,7 @@ export default function MyStackNavigator({ initialRouteName }) {
         component={ConveyanceDetailScreen}
       />
       <Stack.Screen name="profileChange" component={ProfileChangeScreen} />
+      <Stack.Screen name="surveyScreen" component={SurveyScreen} />
     </Stack.Navigator>
   );
 }

@@ -73,11 +73,13 @@ export const getVendorPerformance = async (my_id) => {
 
 export const getStaffPerformance = async (my_id) => {
   try {
-    console.log(my_id)
-    const response = await api.get(`${BASE_URL}/api/staff/get-performance/${my_id}`);
+    console.log(my_id);
+    const response = await api.get(
+      `${BASE_URL}/api/staff/get-performance/${my_id}`
+    );
     const { data, status } = response;
-    console.log(data)
-    return data
+    console.log(data);
+    return data;
     // Write methods to filter tasks by engineer_id where engineer_id is the id of the engineer from siteEngineers
   } catch (err) {
     handleAxiosError(err);
@@ -97,15 +99,21 @@ export const getStreetlightById = async (streetlight_id) => {
     `${BASE_URL}api/streetlight/tasks/engineers/${streetlight_id}`
   );
   const data = await response.json();
+<<<<<<< HEAD
   console.log(data);
+=======
+  // console.log(data);
+>>>>>>> f967f8637308b385058037e1c978d82e5837c832
 };
 
-export const getTaskByCategory = (category) => async (dispatch) => {
+export const getTaskByCategory = (category, my_id) => async (dispatch) => {
   try {
     const response = await axios.get(`${BASE_URL}/api/task`);
     const { data, status } = response;
     const filteredData = data.filter(
-      (task) => task.activity.toLowerCase() === category.toLowerCase()
+      (task) =>
+        task.activity.toLowerCase() === category.toLowerCase() &&
+        task.engineer_id === my_id
     );
     dispatch({ type: INITIALIZE_TASKS, payload: filteredData });
   } catch (error) {

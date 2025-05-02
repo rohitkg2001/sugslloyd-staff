@@ -1,6 +1,6 @@
 // import All React native
 import { useState } from "react";
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
@@ -22,7 +22,7 @@ import { useSelector } from "react-redux";
 
 // import all styles
 import { H4, H5, H6, P, Span } from "../components/text";
-import { spacing, styles, typography } from "../styles";
+import { LIGHT, PRIMARY_COLOR, spacing, styles, typography } from "../styles";
 
 import { useTaskFunctions } from "../hooks/useTaskFunctions";
 import DashboardFilter from "../components/filters/DashboardFilter";
@@ -30,7 +30,7 @@ import { useFilterTasks } from "../hooks/useFilterTasks";
 
 export default function CurrentProjectsScreen({ navigation }) {
   const { staff } = useSelector((state) => state);
-  const { tasks } = useSelector((state) => state.tasks);
+  const { tasks, staffPerformance } = useSelector((state) => state.tasks);
 
   const { t } = useTranslation();
 
@@ -109,9 +109,6 @@ export default function CurrentProjectsScreen({ navigation }) {
               key={item.id}
               index={item.id}
               title={item.site?.site_name || ""}
-              // subtitle={`${item.site?.location || ""}, ${
-              //   item.site?.district || ""
-              // }, ${item.site?.state || ""}`}
               onPress={() =>
                 navigation.navigate("targetManagementScreen", { id: item.id })
               }
@@ -120,6 +117,7 @@ export default function CurrentProjectsScreen({ navigation }) {
               borderColor={borderColor}
             >
               <View style={{ position: "relative" }}>
+                {/* Location */}
                 <H4
                   style={[
                     typography.font12,
@@ -132,6 +130,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                   }, ${item.site?.state || ""}`}
                 </H4>
 
+                {/* Activity and Breda SL */}
                 <View
                   style={{
                     position: "absolute",
@@ -147,7 +146,12 @@ export default function CurrentProjectsScreen({ navigation }) {
                     style={[
                       typography.font10,
                       typography.fontLato,
-                      { textTransform: "uppercase", color: "gray", top: 15 },
+                      {
+                        textTransform: "uppercase",
+                        color: "gray",
+                        top: 15,
+                        right: 90,
+                      },
                     ]}
                   >
                     breda sl no
@@ -158,13 +162,14 @@ export default function CurrentProjectsScreen({ navigation }) {
                       typography.fontLato,
                       typography.textBold,
                       spacing.mr4,
-                      { top: 10 },
+                      { top: 10, right: 90 },
                     ]}
                   >
                     {item.site?.breda_sl_no}
                   </H5>
                 </View>
 
+                {/* Start and End Date */}
                 <View style={[styles.row, { marginTop: -14 }]}>
                   <View>
                     <Span
@@ -188,7 +193,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                         {
                           textTransform: "uppercase",
                           color: "gray",
-                          right: 80,
+                          right: 150,
                         },
                       ]}
                     >
@@ -198,13 +203,15 @@ export default function CurrentProjectsScreen({ navigation }) {
                       style={[
                         typography.font12,
                         typography.fontLato,
-                        { right: 80 },
+                        { right: 150 },
                       ]}
                     >
                       {item.end_date}
                     </P>
                   </View>
                 </View>
+
+                {/* Status */}
                 <View
                   style={{
                     position: "absolute",
@@ -213,11 +220,44 @@ export default function CurrentProjectsScreen({ navigation }) {
                     top: 20,
                   }}
                 >
+                  {/* Survey Button ABOVE status */}
+                  {activeTab === "Assigned" && (
+                    <TouchableOpacity
+                      style={[
+                        spacing.pv1,
+                        spacing.ph2,
+                        spacing.br1,
+                        {
+                          backgroundColor: PRIMARY_COLOR,
+                          bottom: 35,
+                        },
+                      ]}
+                      onPress={() =>
+                        navigation.navigate("surveyScreen", { item })
+                      }
+                    >
+                      <P
+                        style={[
+                          typography.font12,
+                          {
+                            color: LIGHT,
+                          },
+                        ]}
+                      >
+                        Survey
+                      </P>
+                    </TouchableOpacity>
+                  )}
+
+                  {/* Status */}
                   <H6
                     style={[
                       typography.font14,
                       typography.fontLato,
-                      { color: item.status === "Complete" ? "red" : "green" },
+                      {
+                        color: item.status === "Complete" ? "red" : "green",
+                        bottom: 30,
+                      },
                     ]}
                   >
                     {item.status}
