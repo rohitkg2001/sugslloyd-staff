@@ -24,11 +24,24 @@ const LocationSetScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // const updateDateTime = () => {
+    //   const now = new Date();
+    //   setDate(now.toLocaleDateString());
+    //   setTimees(now.toLocaleTimeString());
+    // };
+
     const updateDateTime = () => {
       const now = new Date();
       setDate(now.toLocaleDateString());
-      setTimees(now.toLocaleTimeString());
+      setTimees(
+        now.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
+      );
     };
+
     updateDateTime();
     const interval = setInterval(updateDateTime, 1000);
     return () => clearInterval(interval);
