@@ -99,11 +99,7 @@ export const getStreetlightById = async (streetlight_id) => {
     `${BASE_URL}api/streetlight/tasks/engineers/${streetlight_id}`
   );
   const data = await response.json();
-<<<<<<< HEAD
-  console.log(data);
-=======
   // console.log(data);
->>>>>>> f967f8637308b385058037e1c978d82e5837c832
 };
 
 export const getTaskByCategory = (category, my_id) => async (dispatch) => {
