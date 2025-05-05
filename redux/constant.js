@@ -50,3 +50,6 @@ export const SET_BILL_DATA = "SET_BILL_DATA";
 
 
 export const ADD_CONVEYANCE = "ADD_CONVEYANCE";
+export const ADD_BILL = "ADD_BILL";
+export const GET_ALL_BILLS = "GET_ALL_BILLS";
+

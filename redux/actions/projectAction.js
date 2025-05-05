@@ -4,6 +4,8 @@ import {
   ADD_PROJECT,
   BASE_URL,
   ADD_CONVEYANCE,
+  ADD_BILL,
+  GET_ALL_BILLS,
 } from "../constant";
 
 export const getStateById = async (id) => {
@@ -92,5 +94,49 @@ export const addConveyance = (conveyance) => async (dispatch) => {
       error.response?.data?.message || error.message
     );
     return false;
+  }
+};
+
+export const addBill = (billData) => async (dispatch) => {
+  try {
+    console.log("Posting bill data to API:", billData);
+
+    const response = await axios.post(`${BASE_URL}/api/tadas`, billData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    dispatch({
+      type: ADD_BILL,
+      payload: response.data,
+    });
+
+    console.log("Bill posted successfully.");
+    return true;
+  } catch (error) {
+    console.error(
+      "Failed to post bill:",
+      error.response?.data?.message || error.message
+    );
+    return false;
+  }
+};
+
+export const getAllBills = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/tadas`);
+
+    dispatch({
+      type: GET_ALL_BILLS,
+      payload: response.data,
+    });
+
+    console.log("Fetched all bills successfully.");
+  } catch (error) {
+    console.error(
+      "Failed to fetch bills:",
+      error.response?.data?.message || error.message
+    );
   }
 };
