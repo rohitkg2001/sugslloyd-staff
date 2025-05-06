@@ -6,6 +6,7 @@ import {
   ADD_CONVEYANCE,
   ADD_BILL,
   GET_ALL_BILLS,
+  GET_ALL_CONVEYANCE,
 } from "../constant";
 
 export const getStateById = async (id) => {
@@ -103,6 +104,27 @@ export const addConveyance = (conveyance) => async (dispatch) => {
       error?.response?.data?.message || error?.message || "Unknown error";
     console.error("Error submitting conveyance:", message);
     return false;
+  }
+};
+
+export const getAllConveyance = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/conveyances`);
+    console.log("API Response:", response.data);
+    const result = await response.json();
+
+    console.log("API Response:", result);
+
+    if (result.status) {
+      dispatch({
+        type: GET_ALL_CONVEYANCE,
+        payload: result.data,
+      });
+    } else {
+      console.warn("Failed to fetch conveyances:", result.message);
+    }
+  } catch (error) {
+    console.error("Failed to fetch conveyances:", error);
   }
 };
 

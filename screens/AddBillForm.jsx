@@ -416,16 +416,16 @@
 //           )}
 //         </View>
 
-//         <MyPickerInput
-//           title={t("Mode Of Transport")}
-//           value={type}
-//           onChange={setType}
-//           options={[
-//             { label: t("Bus"), value: "Bus" },
-//             { label: t("Train"), value: "Train" },
-//             { label: t("Flight"), value: "Flight" },
-//           ]}
-//         />
+// <MyPickerInput
+//   title={t("Mode Of Transport")}
+//   value={type}
+//   onChange={setType}
+//   options={[
+//     { label: t("Bus"), value: "Bus" },
+//     { label: t("Train"), value: "Train" },
+//     { label: t("Flight"), value: "Flight" },
+//   ]}
+// />
 
 //         {/* PNR and Ticket Upload Group */}
 //         <View
@@ -517,45 +517,45 @@
 //             </View>
 //           )} */}
 //         </View>
-//         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-//           <View style={{ flex: 1, marginRight: 5 }}>
-//             <MyPickerInput
-//               title={t("From")}
-//               value={from_city}
-//               onChange={setFromCity}
-//               options={[
-//                 { label: t("Patna"), value: "Patna" },
-//                 { label: t("Delhi"), value: "Delhi" },
-//                 { label: t("Mumbai"), value: "Mumbai" },
-//                 { label: t("Kolkata"), value: "Kolkata" },
-//                 { label: t("Chennai"), value: "Chennai" },
-//                 { label: t("Bangalore"), value: "Bangalore" },
-//                 { label: t("Hyderabad"), value: "Hyderabad" },
-//                 { label: t("Ahmedabad"), value: "Ahmedabad" },
-//                 { label: t("Pune"), value: "Pune" },
-//               ]}
-//             />
-//           </View>
+// <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+//   <View style={{ flex: 1, marginRight: 5 }}>
+//     <MyPickerInput
+//       title={t("From")}
+//       value={from_city}
+//       onChange={setFromCity}
+//       options={[
+//         { label: t("Patna"), value: "Patna" },
+//         { label: t("Delhi"), value: "Delhi" },
+//         { label: t("Mumbai"), value: "Mumbai" },
+//         { label: t("Kolkata"), value: "Kolkata" },
+//         { label: t("Chennai"), value: "Chennai" },
+//         { label: t("Bangalore"), value: "Bangalore" },
+//         { label: t("Hyderabad"), value: "Hyderabad" },
+//         { label: t("Ahmedabad"), value: "Ahmedabad" },
+//         { label: t("Pune"), value: "Pune" },
+//       ]}
+//     />
+//   </View>
 
-//           <View style={{ flex: 1, marginLeft: 5 }}>
-//             <MyPickerInput
-//               title={t("To")}
-//               value={to_city}
-//               onChange={setToCity}
-//               options={[
-//                 { label: t("Patna"), value: "Patna" },
-//                 { label: t("Delhi"), value: "Delhi" },
-//                 { label: t("Mumbai"), value: "Mumbai" },
-//                 { label: t("Kolkata"), value: "Kolkata" },
-//                 { label: t("Chennai"), value: "Chennai" },
-//                 { label: t("Bangalore"), value: "Bangalore" },
-//                 { label: t("Hyderabad"), value: "Hyderabad" },
-//                 { label: t("Ahmedabad"), value: "Ahmedabad" },
-//                 { label: t("Pune"), value: "Pune" },
-//               ]}
-//             />
-//           </View>
-//         </View>
+//   <View style={{ flex: 1, marginLeft: 5 }}>
+//     <MyPickerInput
+//       title={t("To")}
+//       value={to_city}
+//       onChange={setToCity}
+//       options={[
+//         { label: t("Patna"), value: "Patna" },
+//         { label: t("Delhi"), value: "Delhi" },
+//         { label: t("Mumbai"), value: "Mumbai" },
+//         { label: t("Kolkata"), value: "Kolkata" },
+//         { label: t("Chennai"), value: "Chennai" },
+//         { label: t("Bangalore"), value: "Bangalore" },
+//         { label: t("Hyderabad"), value: "Hyderabad" },
+//         { label: t("Ahmedabad"), value: "Ahmedabad" },
+//         { label: t("Pune"), value: "Pune" },
+//       ]}
+//     />
+//   </View>
+// </View>
 //         {/* {pnrNumbersReturn.map((pnr, index) => (
 //           <View key={index} style={{ marginBottom: 10 }}>
 //             <MyTextInput
@@ -975,18 +975,18 @@
 //             )} */}
 //           </View>
 //         </View>
-//         <Button
-//           style={[
-//             styles.btn,
-//             styles.bgPrimary,
-//             { justifyContent: "center", top: 4 },
-//           ]}
-//           onPress={handleCalculateBill}
-//         >
-//           <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-//             {"Calculate Bill"}
-//           </H2>
-//         </Button>
+// <Button
+//   style={[
+//     styles.btn,
+//     styles.bgPrimary,
+//     { justifyContent: "center", top: 4 },
+//   ]}
+//   onPress={handleCalculateBill}
+// >
+//   <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
+//     {"Calculate Bill"}
+//   </H2>
+// </Button>
 //       </ScrollView>
 
 //       {showDatePicker && (
@@ -1011,12 +1011,21 @@ import {
   ScrollView,
   Alert,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import ContainerComponent from "../components/ContainerComponent";
+import MyHeader from "../components/header/MyHeader";
 import { addBill } from "../redux/actions/projectAction";
-
-const BillForm = ({ navigation }) => {
+import MyTextInput from "../components/input/MyTextInput";
+import MyPickerInput from "../components/input/MyPickerInput";
+import Icon from "react-native-vector-icons/FontAwesome";
+import Button from "../components/buttons/Button";
+import { styles, typography } from "../styles";
+import { H2 } from "../components/text";
+const AddBillForm = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
@@ -1043,6 +1052,29 @@ const BillForm = ({ navigation }) => {
 
   const handleChange = (field, value) => {
     setForm({ ...form, [field]: value });
+  };
+
+  const [datePicker, setDatePicker] = useState({
+    show: false,
+    mode: "date",
+    field: "",
+  });
+
+  // const handleChange = (field, value) => {
+  //   setForm({ ...form, [field]: value });
+  // };
+
+  const showDatePicker = (field) => {
+    setDatePicker({ show: true, mode: "date", field });
+  };
+
+  const onDateChange = (event, selectedDate) => {
+    setDatePicker({ ...datePicker, show: false });
+
+    if (selectedDate) {
+      const formatted = selectedDate.toISOString().split("T")[0]; // YYYY-MM-DD
+      handleChange(datePicker.field, formatted);
+    }
   };
 
   // Helper to validate YYYY-MM-DD
@@ -1092,81 +1124,358 @@ const BillForm = ({ navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 20 }}>
-      {[
-        ["user_id", "User ID"],
-        ["visit_approve", "Visit Approved (Yes/No)"],
-        ["objective_tour", "Objective of Tour"],
-        ["meeting_visit", "Meeting/Visit Location"],
-        ["outcome_achieve", "Outcome Achieved"],
-        ["start_journey", "Start Journey Date (YYYY-MM-DD)"],
-        ["end_journey", "End Journey Date (YYYY-MM-DD)"],
-        ["start_journey_pnr", "Start Journey PNR"],
-        ["end_journey_pnr", "End Journey PNR"],
-        ["from_city", "From City"],
-        ["to_city", "To City"],
-        ["total_km", "Total KM"],
-        ["rate_per_km", "Rate per KM"],
-        ["Rent", "Rent"],
-        ["vehicle_no", "Vehicle No"],
-        ["description_category", "Category Description"],
-        ["pickup_date", "Pickup Date (YYYY-MM-DD)"],
-      ].map(([key, label]) => (
-        <View key={key} style={{ marginBottom: 10 }}>
-          <Text>{label}</Text>
+    <ContainerComponent>
+      <MyHeader title={"Add Bill"} hasIcon={true} isBack={true} />
+      <ScrollView>
+        <View>
+          <MyTextInput
+            title="User Id"
+            value={form.user_id}
+            onChangeText={(text) => handleChange("user_id", text)}
+            placeholder="User ID"
+          />
+        </View>
+
+        <MyTextInput
+          title="Visit Approved"
+          value={form.visit_approve}
+          onChangeText={(text) => handleChange("visit_approve", text)}
+          placeholder="Visit Approved (Yes/No)"
+        />
+
+        <MyTextInput
+          title="Objective of Tour"
+          value={form.objective_tour}
+          onChangeText={(text) => handleChange("objective_tour", text)}
+          placeholder="Objective of Tour"
+        />
+
+        <MyTextInput
+          title="Meeting/Visit Location"
+          value={form.meeting_visit}
+          onChangeText={(text) => handleChange("meeting_visit", text)}
+          placeholder="Meeting/Visit Location"
+        />
+
+        <MyTextInput
+          title="Outcome Achieved"
+          value={form.outcome_achieve}
+          onChangeText={(text) => handleChange("outcome_achieve", text)}
+          placeholder="Outcome Achieved"
+        />
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: 10,
+          }}
+        >
+          {/* 📅 Pickup Date */}
+          {/* <View style={{ flex: 1, marginLeft: 5 }}>
+            <Text>Pickup Date</Text>
+            <Pressable
+              onPress={() => showDatePicker("pickup_date")}
+              style={{
+                borderWidth: 1,
+                borderColor: "#ccc",
+                padding: 8,
+                borderRadius: 5,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                backgroundColor: "#F0FAF0",
+              }}
+            >
+              <Text>{form.pickup_date || "Select Pickup Date"}</Text>
+              <Icon name="calendar" size={18} color="#555" />
+            </Pressable>
+          </View> */}
+          {/* 📅 Start Journey Date */}
+          <View style={{ marginBottom: 10 }}>
+            <Text>Start Journey Date</Text>
+            <Pressable
+              onPress={() => showDatePicker("start_journey")}
+              style={{
+                borderWidth: 1,
+                borderColor: "#ccc",
+                padding: 8,
+                borderRadius: 5,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text>{form.start_journey || "Start Journey Date"}</Text>
+              <Icon name="calendar" size={18} color="#555" />
+            </Pressable>
+          </View>
+
+          {/* 📅 End Journey Date */}
+          <View style={{ flex: 1, marginRight: 5 }}>
+            <Text>End Journey Date</Text>
+            <Pressable
+              onPress={() => showDatePicker("end_journey")}
+              style={{
+                borderWidth: 1,
+                borderColor: "#ccc",
+                padding: 8,
+                borderRadius: 5,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                backgroundColor: "#F0FAF0",
+              }}
+            >
+              <Text>{form.end_journey || "End Journey Date"}</Text>
+              <Icon name="calendar" size={18} color="#555" />
+            </Pressable>
+          </View>
+        </View>
+
+        {datePicker.show && (
+          <DateTimePicker
+            value={new Date()}
+            mode="date"
+            display="default"
+            onChange={onDateChange}
+          />
+        )}
+
+        <View style={{ marginBottom: 10 }}>
+          <Text>Start Journey PNR</Text>
           <TextInput
+            value={form.start_journey_pnr}
+            onChangeText={(text) => handleChange("start_journey_pnr", text)}
+            placeholder="Start Journey PNR"
             style={{
               borderWidth: 1,
               borderColor: "#ccc",
               padding: 8,
               borderRadius: 5,
             }}
-            value={form[key]}
-            onChangeText={(text) => handleChange(key, text)}
-            placeholder={label}
           />
         </View>
-      ))}
 
-      {/* Dropdown for transport and category */}
-      <View style={{ marginBottom: 15 }}>
-        <Text>Transport</Text>
-        <Picker
-          selectedValue={form.transport}
-          onValueChange={(val) => handleChange("transport", val)}
+        <View style={{ marginBottom: 10 }}>
+          <Text>End Journey PNR</Text>
+          <TextInput
+            value={form.end_journey_pnr}
+            onChangeText={(text) => handleChange("end_journey_pnr", text)}
+            placeholder="End Journey PNR"
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              padding: 8,
+              borderRadius: 5,
+            }}
+          />
+        </View>
+
+        {/* <MyTextInput
+          title="From City"
+          value={form.from_city}
+          onChangeText={(text) => handleChange("from_city", text)}
+          placeholder="From City"
+        />
+
+        <MyTextInput
+          title="To city"
+          value={form.to_city}
+          onChangeText={(text) => handleChange("to_city", text)}
+          placeholder="To City"
+        /> */}
+
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View style={{ flex: 1, marginRight: 5 }}>
+            <MyPickerInput
+              title={"From"}
+              value={form.from_city}
+              // onChange={setFromCity}
+              onChange={(text) => handleChange("from_city", text)}
+              options={[
+                { label: "Patna", value: "Patna" },
+                { label: "Delhi", value: "Delhi" },
+                { label: "Mumbai", value: "Mumbai" },
+                { label: "Kolkata", value: "Kolkata" },
+                { label: "Chennai", value: "Chennai" },
+                { label: "Bangalore", value: "Bangalore" },
+                { label: "Hyderabad", value: "Hyderabad" },
+                { label: "Ahmedabad", value: "Ahmedabad" },
+                { label: "Pune", value: "Pune" },
+              ]}
+            />
+          </View>
+
+          <View style={{ flex: 1, marginLeft: 5 }}>
+            <MyPickerInput
+              title={"To"}
+              // value={to_city}
+              // onChange={setToCity}
+              value={form.to_city}
+              onChange={(text) => handleChange("to_city", text)}
+              options={[
+                { label: "Patna", value: "Patna" },
+                { label: "Delhi", value: "Delhi" },
+                { label: "Mumbai", value: "Mumbai" },
+                { label: "Kolkata", value: "Kolkata" },
+                { label: "Chennai", value: "Chennai" },
+                { label: "Bangalore", value: "Bangalore" },
+                { label: "Hyderabad", value: "Hyderabad" },
+                { label: "Ahmedabad", value: "Ahmedabad" },
+                { label: "Pune", value: "Pune" },
+              ]}
+            />
+          </View>
+        </View>
+
+        <View style={{ marginBottom: 10 }}>
+          <Text>Total KM</Text>
+          <TextInput
+            value={form.total_km}
+            onChangeText={(text) => handleChange("total_km", text)}
+            placeholder="Total KM"
+            keyboardType="numeric"
+            maxLength={6}
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              padding: 8,
+              borderRadius: 5,
+            }}
+          />
+        </View>
+
+        <View style={{ marginBottom: 10 }}>
+          <Text>Rate per KM</Text>
+          <TextInput
+            value={form.rate_per_km}
+            onChangeText={(text) => handleChange("rate_per_km", text)}
+            placeholder="Rate per KM"
+            keyboardType="numeric"
+            maxLength={6}
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              padding: 8,
+              borderRadius: 5,
+            }}
+          />
+        </View>
+
+        <View style={{ marginBottom: 10 }}>
+          <Text>Rent</Text>
+          <TextInput
+            value={form.Rent}
+            onChangeText={(text) => handleChange("Rent", text)}
+            placeholder="Rent"
+            keyboardType="numeric"
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              padding: 8,
+              borderRadius: 5,
+            }}
+          />
+        </View>
+
+        <View style={{ marginBottom: 10 }}>
+          <Text>Vehicle No</Text>
+          <TextInput
+            value={form.vehicle_no}
+            onChangeText={(text) => handleChange("vehicle_no", text)}
+            placeholder="Vehicle No"
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              padding: 8,
+              borderRadius: 5,
+            }}
+          />
+        </View>
+
+        <View style={{ marginBottom: 10 }}>
+          <Text>Category Description</Text>
+          <TextInput
+            value={form.description_category}
+            onChangeText={(text) => handleChange("description_category", text)}
+            placeholder="Category Description"
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              padding: 8,
+              borderRadius: 5,
+            }}
+          />
+        </View>
+
+        <View style={{ marginBottom: 10 }}>
+          <Text>Pickup Date (YYYY-MM-DD)</Text>
+          <TextInput
+            placeholder="YYYY-MM-DD"
+            value={form.pickup_date}
+            onChangeText={(text) => handleChange("pickup_date", text)}
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              padding: 8,
+              borderRadius: 5,
+            }}
+          />
+        </View>
+
+        {/* Dropdown for Transport */}
+        {/* <View style={{ marginBottom: 15 }}>
+          <Text>Transport</Text>
+          <MyPickerInput
+            selectedValue={form.transport}
+            onValueChange={(val) => handleChange("transport", val)}
+          >
+            <Picker.Item label="Train" value="Train" />
+            <Picker.Item label="Flight" value="Flight" />
+            <Picker.Item label="Bus" value="Bus" />
+            <Picker.Item label="Car" value="Car" />
+          </MyPickerInput>
+        </View> */}
+
+        <MyPickerInput
+          title={"Mode Of Transport"}
+          value={form.transport}
+          onChange={(val) => handleChange("transport", val)}
+          options={[
+            { label: "Bus", value: "Bus" },
+            { label: "Train", value: "Train" },
+            { label: "Flight", value: "Flight" },
+          ]}
+        />
+
+        {/* Submit Button */}
+        {/* <TouchableOpacity
+          onPress={handleSubmit}
+          style={{
+            backgroundColor: "#007bff",
+            padding: 12,
+            borderRadius: 5,
+            alignItems: "center",
+          }}
         >
-          <Picker.Item label="Train" value="Train" />
-          <Picker.Item label="Flight" value="Flight" />
-          <Picker.Item label="Bus" value="Bus" />
-          <Picker.Item label="Car" value="Car" />
-        </Picker>
-      </View>
-
-      <View style={{ marginBottom: 15 }}>
-        <Text>Category</Text>
-        <Picker
-          selectedValue={form.category}
-          onValueChange={(val) => handleChange("category", val)}
+          <Text style={{ color: "#fff", fontSize: 16 }}>Submit Bill</Text>
+        </TouchableOpacity> */}
+        <Button
+          style={[
+            styles.btn,
+            styles.bgPrimary,
+            { justifyContent: "center", top: 4 },
+          ]}
+          onPress={handleSubmit}
         >
-          <Picker.Item label="Train" value="Train" />
-          <Picker.Item label="Flight" value="Flight" />
-          <Picker.Item label="Taxi" value="Taxi" />
-        </Picker>
-      </View>
-
-      <TouchableOpacity
-        onPress={handleSubmit}
-        style={{
-          backgroundColor: "#007bff",
-          padding: 12,
-          borderRadius: 5,
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ color: "#fff", fontSize: 16 }}>Submit Bill</Text>
-      </TouchableOpacity>
-    </ScrollView>
+          <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
+            {"Calculate Bill"}
+          </H2>
+        </Button>
+      </ScrollView>
+    </ContainerComponent>
   );
 };
 
-export default BillForm;
+export default AddBillForm;

@@ -16,6 +16,8 @@ const { height } = Dimensions.get("window");
 
 const MapScreen = ({ route, navigation }) => {
   const {
+    from,
+    to,
     vehicle_category,
     price,
     kilometer,
@@ -91,6 +93,7 @@ const MapScreen = ({ route, navigation }) => {
     const conveyanceData = {
       from: pickupAddress,
       to: dropoffAddress,
+
       vehicle_category,
       price,
       kilometer: Math.round(parseFloat(kilometer)),
