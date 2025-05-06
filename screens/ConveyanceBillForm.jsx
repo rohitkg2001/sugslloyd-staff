@@ -385,11 +385,21 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 );
                 return;
               }
+              // navigation.navigate("transportCamera", {
+              //   vehicle_category: "Bike",
+              //   from,
+              //   to,
+              //   price: prices.car,
+              //   kilometer,
+              //   date: currentDate,
+              //   time,
+              // });
+              setVehicleCategoryId(vehicleCategoryMap.bike);
               navigation.navigate("transportCamera", {
-                vehicle_category: "Bike",
+                vehicle_category: vehicleCategoryMap.bike,
                 from,
                 to,
-                price: prices.car,
+                price: prices.bike,
                 kilometer,
                 date: currentDate,
                 time,

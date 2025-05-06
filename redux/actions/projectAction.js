@@ -85,14 +85,23 @@ export const addConveyance = (conveyance) => async (dispatch) => {
       }
     );
 
-    dispatch({ type: ADD_CONVEYANCE, payload: response.data.conveyance });
+    console.log("Full response from API:", response.data);
+
+    // Adjust this according to actual response structure
+    const submittedData = response?.data?.data || response?.data;
+
+    if (!submittedData) {
+      console.error("No conveyance data returned from server.");
+      return false;
+    }
+
+    dispatch({ type: ADD_CONVEYANCE, payload: submittedData });
     console.log("Conveyance submitted successfully.");
     return true;
   } catch (error) {
-    console.error(
-      "Error submitting conveyance:",
-      error.response?.data?.message || error.message
-    );
+    const message =
+      error?.response?.data?.message || error?.message || "Unknown error";
+    console.error("Error submitting conveyance:", message);
     return false;
   }
 };

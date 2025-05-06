@@ -1014,7 +1014,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
-import { addBill, getAllBills } from "../redux/actions/projectAction";
+import { addBill } from "../redux/actions/projectAction";
 
 const BillForm = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -1080,7 +1080,6 @@ const BillForm = ({ navigation }) => {
     try {
       const result = await dispatch(addBill(payload));
       if (result === true) {
-       // await dispatch(getAllBills());
         console.log("Submitted bill data:", payload);
         navigation.navigate("travelManagement", { formData: payload });
       } else {

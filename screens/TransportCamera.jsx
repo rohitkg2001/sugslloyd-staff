@@ -272,8 +272,6 @@ export default function TransportCamera({
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("mapScreen", {
-                  // fromAddress,
-                  // toAddress,
                   from,
                   to,
                   vehicle_category,

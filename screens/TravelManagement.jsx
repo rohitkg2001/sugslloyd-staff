@@ -3,13 +3,15 @@ import { View, Text } from "react-native";
 import { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useRoute } from "@react-navigation/native"; // Import useRoute
-import { useSelector } from "react-redux";
+
 // Import Components
 import ContainerComponent from "../components/ContainerComponent";
 import ClickableCard1 from "../components/card/ClickableCard1";
 import MyFlatList from "../components/utility/MyFlatList";
 import Button from "../components/buttons/Button";
 import DashboardHeader from "../components/header/DashboardHeader";
+
+import { useDispatch, useSelector } from "react-redux";
 
 // Import all styles
 import {
@@ -23,6 +25,7 @@ import {
 
 export default function TravelManagement({ navigation }) {
   const route = useRoute();
+  const dispatch = useDispatch();
   const newTravelData = route.params?.travelData;
   const { firstName } = useSelector((state) => state.staff);
   const [travelPlans, setTravelPlans] = useState([]);
