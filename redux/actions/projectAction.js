@@ -111,14 +111,13 @@ export const getAllConveyance = () => async (dispatch) => {
   try {
     const response = await axios.get(`${BASE_URL}/api/conveyances`);
     console.log("API Response:", response.data);
-    const result = await response.json();
 
-    console.log("API Response:", result);
+    const result = response.data;
 
     if (result.status) {
       dispatch({
         type: GET_ALL_CONVEYANCE,
-        payload: result.data,
+        payload: response.data.data,
       });
     } else {
       console.warn("Failed to fetch conveyances:", result.message);

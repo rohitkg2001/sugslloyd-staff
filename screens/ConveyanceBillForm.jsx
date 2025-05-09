@@ -6,11 +6,10 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { Snackbar } from "react-native-paper";
+
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { styles, typography, spacing, LIGHT, SCREEN_WIDTH } from "../styles";
-import { H2, P, H5, H6 } from "../components/text";
-import Button from "../components/buttons/Button";
+import { P, H5, H6 } from "../components/text";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 
