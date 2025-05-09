@@ -30,28 +30,17 @@ import { P, Span } from "../components/text";
 
 export default function ConveyanceManagementScreen({ navigation }) {
   const [activeTab, setActiveTab] = useState("This Week");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const my_id = 11;
 
   const dispatch = useDispatch();
 
-  const { firstName } = useSelector((state) => state.staff);
+  const { firstName, id: userId } = useSelector((state) => state.staff);
   const conveyances = useSelector((state) => state.project.conveyances || []);
 
   useEffect(() => {
-    dispatch(getConveyanceById(my_id));
-  }, [dispatch]);
-
-  const showNextTransport = () => {
-    if (currentIndex < conveyances.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+    if (userId) {
+      dispatch(getConveyanceById(userId));
     }
-  };
-
-  const filterData = () => {
-    if (conveyances.length === 0) return [];
-    return [conveyances[currentIndex]];
-  };
+  }, [dispatch, userId]);
 
   return (
     <ContainerComponent>
@@ -75,7 +64,7 @@ export default function ConveyanceManagementScreen({ navigation }) {
       />
 
       <MyFlatList
-        data={filterData()}
+        data={conveyances}
         renderItem={({ item, index }) => (
           <ClickableCard1
             key={index}
@@ -148,7 +137,9 @@ export default function ConveyanceManagementScreen({ navigation }) {
                     typography.textBold,
                   ]}
                 >
-                  ₹{item.amount ?? "Not provided"}
+                  {item.amount != null
+                    ? `₹${parseFloat(item.amount).toFixed(2)}`
+                    : "Not provided"}
                 </P>
               </View>
             </View>
@@ -194,12 +185,6 @@ export default function ConveyanceManagementScreen({ navigation }) {
           </View>
         )}
       />
-
-      {conveyances.length > 1 && (
-        <Button style={styles.nextButton} onPress={showNextTransport}>
-          <P style={{ color: LIGHT }}>Next</P>
-        </Button>
-      )}
 
       <Button
         style={styles.addButton}

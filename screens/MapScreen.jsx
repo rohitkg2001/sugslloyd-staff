@@ -9,7 +9,7 @@ import { styles, typography, spacing } from "../styles";
 import Button from "../components/buttons/Button";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addConveyance } from "../redux/actions/projectAction";
 
 const { height } = Dimensions.get("window");
@@ -19,7 +19,7 @@ const MapScreen = ({ route, navigation }) => {
     from,
     to,
     vehicle_category,
-    price,
+    amount,
     kilometer,
     photos,
     date: currentDate,
@@ -34,6 +34,7 @@ const MapScreen = ({ route, navigation }) => {
   const [dropoffCoord, setDropoffCoord] = useState(null);
   const [pickupAddress, setPickupAddress] = useState("");
   const [dropoffAddress, setDropoffAddress] = useState("");
+  const { id: userId } = useSelector((state) => state.staff);
 
   const getAddressFromCoords = async (latitude, longitude) => {
     try {
@@ -90,16 +91,21 @@ const MapScreen = ({ route, navigation }) => {
   }, []);
 
   const handleEndTrip = () => {
+    if (!userId) {
+      Alert.alert("Error", "User ID not found. Please log in again.");
+      return;
+    }
+
     const conveyanceData = {
       from: pickupAddress,
       to: dropoffAddress,
-
       vehicle_category,
-      price,
+      // amount,
+      amount: parseFloat(amount.toFixed(2)),
       kilometer: Math.round(parseFloat(kilometer)),
       created_at: currentDate,
       time,
-      user_id: 11,
+      user_id: userId,
     };
 
     console.log("Submitting conveyance data:", conveyanceData);
@@ -232,7 +238,7 @@ const MapScreen = ({ route, navigation }) => {
                 typography.textBold,
               ]}
             >
-              ₹ {price || "Not provided"}
+              ₹ {amount || "Not provided"}
             </P>
           </View>
 

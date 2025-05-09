@@ -23,7 +23,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [vehicleCategoryId, setVehicleCategoryId] = useState(null);
 
-  const [prices, setPrices] = useState({
+  const [amount, setAmount] = useState({
     car: 0,
     bike: 0,
     publicTransport: 0,
@@ -54,17 +54,25 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     const km = route.params?.kilometer;
     if (km) {
       setKilometer(km);
-      calculatePrices(km);
+      calculateAmount(km);
     } else if (route.params?.from && route.params?.to) {
       getDistance(route.params.from, route.params.to);
     }
   }, [route.params]);
 
-  const calculatePrices = (km) => {
-    setPrices({
-      car: parseFloat((km * 4).toFixed(2)),
-      bike: parseFloat((km * 3).toFixed(2)),
-      publicTransport: parseFloat((km * 5).toFixed(2)),
+  // const calculateAmount = (km) => {
+  //   setAmount({
+  //     car: parseFloat((km * 4).toFixed(2)),
+  //     bike: parseFloat((km * 3).toFixed(2)),
+  //     publicTransport: parseFloat((km * 5).toFixed(2)),
+  //   });
+  // };
+
+  const calculateAmount = (km) => {
+    setAmount({
+      car: parseFloat((km * 4).toFixed(2)), // vehicle_category 1
+      bike: parseFloat((km * 3).toFixed(2)), // vehicle_category 2
+      publicTransport: parseFloat((km * 5).toFixed(2)), // vehicle_category 3
     });
   };
 
@@ -97,7 +105,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
 
       const km = element.distance.value / 1000;
       setKilometer(km.toFixed(2));
-      calculatePrices(km);
+      calculateAmount(km);
     } catch (error) {
       console.error("Distance fetch error:", error);
       showSnackbar("Error fetching distance.");
@@ -192,7 +200,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                   onPress={() => {
                     setFrom("");
                     setKilometer(null);
-                    setPrices({ car: 0, bike: 0, publicTransport: 0 });
+                    setAmount({ car: 0, bike: 0, publicTransport: 0 });
                   }}
                 >
                   <Ionicons name="close-circle" size={20} color="#999" />
@@ -234,7 +242,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                   onPress={() => {
                     setTo("");
                     setKilometer(null);
-                    setPrices({ car: 0, bike: 0, publicTransport: 0 });
+                    setAmount({ car: 0, bike: 0, publicTransport: 0 });
                   }}
                 >
                   <Ionicons name="close-circle" size={20} color="#999" />
@@ -316,7 +324,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 vehicle_category: vehicleCategoryMap.car,
                 from,
                 to,
-                price: prices.car,
+                amount: amount.car,
                 kilometer,
                 date: currentDate,
                 time,
@@ -372,7 +380,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 typography.fontLato,
               ]}
             >
-              ₹{prices.car}
+              ₹{amount.car}
             </H6>
           </TouchableOpacity>
 
@@ -384,21 +392,13 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 );
                 return;
               }
-              // navigation.navigate("transportCamera", {
-              //   vehicle_category: "Bike",
-              //   from,
-              //   to,
-              //   price: prices.car,
-              //   kilometer,
-              //   date: currentDate,
-              //   time,
-              // });
+
               setVehicleCategoryId(vehicleCategoryMap.bike);
               navigation.navigate("transportCamera", {
                 vehicle_category: vehicleCategoryMap.bike,
                 from,
                 to,
-                price: prices.bike,
+                amount: amount.bike,
                 kilometer,
                 date: currentDate,
                 time,
@@ -450,7 +450,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 typography.fontLato,
               ]}
             >
-              ₹{prices.bike}
+              ₹{amount.bike}
             </H6>
           </TouchableOpacity>
         </View>
@@ -509,7 +509,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               typography.fontLato,
             ]}
           >
-            ₹{prices.publicTransport}
+            ₹{amount.publicTransport}
           </H5>
         </TouchableOpacity>
       </ScrollView>
