@@ -8,6 +8,7 @@ import {
   ADD_BILL,
   GET_ALL_BILLS,
   GET_ALL_CONVEYANCE,
+  GET_CONVEYANCE_BY_ID,
 } from "../constant";
 
 const initialState = {
@@ -56,6 +57,12 @@ export const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         conveyanceList: action.payload,
+      };
+
+    case GET_CONVEYANCE_BY_ID:
+      return {
+        ...state,
+        conveyances: action.payload,
       };
 
     default:

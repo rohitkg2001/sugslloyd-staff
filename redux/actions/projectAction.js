@@ -7,6 +7,7 @@ import {
   ADD_BILL,
   GET_ALL_BILLS,
   GET_ALL_CONVEYANCE,
+  GET_CONVEYANCE_BY_ID,
 } from "../constant";
 
 export const getStateById = async (id) => {
@@ -104,6 +105,18 @@ export const addConveyance = (conveyance) => async (dispatch) => {
       error?.response?.data?.message || error?.message || "Unknown error";
     console.error("Error submitting conveyance:", message);
     return false;
+  }
+};
+
+export const getConveyanceById = (my_id) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${BASE_URL}/api/conveyances/${my_id}`);
+    dispatch({ type: GET_CONVEYANCE_BY_ID, payload: data.data });
+  } catch (error) {
+    console.error(
+      "Error fetching conveyance:",
+      error?.response?.data?.message || error.message
+    );
   }
 };
 

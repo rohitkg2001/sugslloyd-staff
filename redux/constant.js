@@ -54,3 +54,4 @@ export const ADD_CONVEYANCE = "ADD_CONVEYANCE";
 export const ADD_BILL = "ADD_BILL";
 export const GET_ALL_BILLS = "GET_ALL_BILLS";
 export const GET_ALL_CONVEYANCE = "GET_ALL_CONVEYANCE";
+export const GET_CONVEYANCE_BY_ID = "GET_CONVEYANCE_BY_ID";
