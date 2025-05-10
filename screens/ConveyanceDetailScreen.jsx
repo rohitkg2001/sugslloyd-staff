@@ -34,12 +34,11 @@ export default function ConveyanceDetailScreen() {
                   typography.fontLato,
                 ]}
               >
-                {`${travelItem.pickupLocation}`}
+                {`${travelItem.from}`}
               </H5>
             </View>
             <H5 style={{ fontSize: 24 }}>⇄</H5>
-            <View style={ { alignItems: "center" } }>
-              
+            <View style={{ alignItems: "center" }}>
               <P style={[typography.font10]}>To</P>
               <H5
                 style={[
@@ -130,7 +129,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "left" },
               ]}
             >
-             Time
+              Time
             </H5>
             <P
               style={[
