@@ -24,12 +24,6 @@ const LocationSetScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // const updateDateTime = () => {
-    //   const now = new Date();
-    //   setDate(now.toLocaleDateString());
-    //   setTimees(now.toLocaleTimeString());
-    // };
-
     const updateDateTime = () => {
       const now = new Date();
       setDate(now.toLocaleDateString());

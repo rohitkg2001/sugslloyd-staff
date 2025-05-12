@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -8,6 +8,8 @@ import {
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+
 import { styles, typography, spacing, LIGHT, SCREEN_WIDTH } from "../styles";
 import { P, H5, H6 } from "../components/text";
 import MyHeader from "../components/header/MyHeader";
@@ -60,14 +62,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     }
   }, [route.params]);
 
-  // const calculateAmount = (km) => {
-  //   setAmount({
-  //     car: parseFloat((km * 4).toFixed(2)),
-  //     bike: parseFloat((km * 3).toFixed(2)),
-  //     publicTransport: parseFloat((km * 5).toFixed(2)),
-  //   });
-  // };
-
   const calculateAmount = (km) => {
     setAmount({
       car: parseFloat((km * 4).toFixed(2)), // vehicle_category 1
@@ -80,8 +74,9 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     setSnackbarMessage(message);
     setSnackbarVisible(true);
   };
+
   const getDistance = async (origin, destination) => {
-    const apiKey = "AIzaSyDpTpJ1GNGLpVZKViexBvQtHIbSQRBX6to"; // Make sure it's valid
+    const apiKey = "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko"; // ✅ new key
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${encodeURIComponent(
       origin
     )}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
@@ -89,8 +84,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     try {
       const response = await fetch(url);
       const data = await response.json();
-
-      console.log("Distance API Response:", JSON.stringify(data, null, 2)); // <-- Add this
+      console.log("Distance API Response:", JSON.stringify(data, null, 2));
 
       if (data.status !== "OK") {
         showSnackbar(`API Error: ${data.status}`);
@@ -154,7 +148,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             <View
               style={[
                 spacing.br1,
-                { width: 10, height: 10, backgroundColor: "#FFA500" },
+                { width: 10, height: 10, backgroundColor: "green" },
               ]}
             />
             <View style={{ width: 2, height: 60, backgroundColor: "#aaa" }} />
@@ -168,31 +162,39 @@ const ConveyanceBillForm = ({ navigation, route }) => {
 
           <View style={{ flex: 1 }}>
             <View
-              style={[
-                styles.row,
-                spacing.br5,
-                spacing.ph3,
-                spacing.pv2,
-                spacing.mb2,
-                {
-                  alignItems: "center",
-                  backgroundColor: "#F8F8F8",
-                  borderWidth: 1,
-                  borderColor: "#ccc",
-                },
-              ]}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                backgroundColor: "#F8F8F8",
+                borderWidth: 1,
+                borderColor: "#ccc",
+                borderRadius: 5,
+                paddingVertical: 10,
+                paddingHorizontal: 12,
+                marginBottom: 10,
+              }}
             >
-              <TextInput
+              <GooglePlacesAutocomplete
                 placeholder="From"
-                placeholderTextColor="#aaa"
-                style={[typography.font16, typography.fontLato, { flex: 1 }]}
-                value={from}
-                // onChangeText={(text) => setFrom(text)}
-                onChangeText={(text) => {
-                  setFrom(text);
-                  if (text && to) {
-                    getDistance(text, to);
-                  }
+                fetchDetails
+                onPress={(data, details = null) => {
+                  const address = details.formatted_address;
+                  setFrom(address);
+                  if (to) getDistance(address, to);
+                }}
+                query={{
+                  key: "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko",
+                  language: "en",
+                }}
+                styles={{
+                  textInput: {
+                    backgroundColor: "transparent",
+                    fontSize: 16,
+                    flex: 1,
+                    height: 40,
+                  },
+                  listView: { backgroundColor: "white" },
+                  container: { flex: 1 },
                 }}
               />
               {from !== "" && (
@@ -206,35 +208,43 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                   <Ionicons name="close-circle" size={20} color="#999" />
                 </TouchableOpacity>
               )}
-              <Ionicons name="location-outline" size={20} color="black" />
+              <Ionicons name="location-outline" size={20} color="green" />
             </View>
 
             <View
-              style={[
-                styles.row,
-                spacing.br5,
-                spacing.ph3,
-                spacing.pv2,
-                spacing.mb2,
-                {
-                  alignItems: "center",
-                  backgroundColor: "#F8F8F8",
-                  borderWidth: 1,
-                  borderColor: "#ccc",
-                },
-              ]}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                backgroundColor: "#F8F8F8",
+                borderWidth: 1,
+                borderColor: "#ccc",
+                borderRadius: 5,
+                paddingVertical: 10,
+                paddingHorizontal: 12,
+                marginBottom: 10,
+              }}
             >
-              <TextInput
+              <GooglePlacesAutocomplete
                 placeholder="To"
-                placeholderTextColor="#aaa"
-                style={[typography.font16, typography.fontLato, { flex: 1 }]}
-                value={to}
-                // onChangeText={(text) => setTo(text)}
-                onChangeText={(text) => {
-                  setTo(text);
-                  if (from && text) {
-                    getDistance(from, text);
-                  }
+                fetchDetails
+                onPress={(data, details = null) => {
+                  const address = details.formatted_address;
+                  setTo(address);
+                  if (from) getDistance(from, address);
+                }}
+                query={{
+                  key: "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko",
+                  language: "en",
+                }}
+                styles={{
+                  textInput: {
+                    backgroundColor: "transparent",
+                    fontSize: 16,
+                    flex: 1,
+                    height: 40,
+                  },
+                  listView: { backgroundColor: "white" },
+                  container: { flex: 1 },
                 }}
               />
               {to !== "" && (
@@ -274,9 +284,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                     typography.textBold,
                   ]}
                 >
-                  {isToSelected
-                    ? "Change Drop Location"
-                    : "Select Drop Location"}
+                  {isToSelected ? "Change Drop Location" : " Select Location"}
                 </P>
               </TouchableOpacity>
 
@@ -310,7 +318,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           </P>
         </View>
 
-        <View>
+        {/* <View>
           <TouchableOpacity
             onPress={() => {
               if (!from || !to) {
@@ -339,6 +347,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 alignItems: "center",
                 backgroundColor: LIGHT,
                 elevation: 3,
+                
               },
             ]}
           >
@@ -453,11 +462,11 @@ const ConveyanceBillForm = ({ navigation, route }) => {
               ₹{amount.bike}
             </H6>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         {/* public transport  */}
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={[
             styles.row,
             spacing.br2,
@@ -511,7 +520,261 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           >
             ₹{amount.publicTransport}
           </H5>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+
+        <View>
+          {/* Car Option */}
+          <TouchableOpacity
+            onPress={() => {
+              if (!from || !to) {
+                showSnackbar(
+                  "Please select both From and To locations before proceeding."
+                );
+                return;
+              }
+              setVehicleCategoryId(vehicleCategoryMap.car);
+              navigation.navigate("transportCamera", {
+                vehicle_category: vehicleCategoryMap.car,
+                from,
+                to,
+                amount: amount.car,
+                kilometer,
+                date: currentDate,
+                time,
+              });
+            }}
+            style={[
+              styles.row,
+              spacing.br2,
+              spacing.p3,
+              spacing.mb3,
+              {
+                alignItems: "center",
+                backgroundColor: LIGHT,
+                elevation: 3,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+              },
+            ]}
+          >
+            <View
+              style={[
+                styles.row,
+                { flex: 1, alignItems: "center", flexWrap: "wrap" },
+              ]}
+            >
+              <Image
+                source={require("../assets/car1.jpeg")}
+                style={{
+                  width: 40,
+                  height: 40,
+                  resizeMode: "contain",
+                  marginRight: 10,
+                }}
+              />
+              <View style={{ flex: 1 }}>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Car
+                </H5>
+                <P
+                  style={[typography.font10, typography.fontLato]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {from} - {to}
+                </P>
+                <P
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    typography.textBold,
+                  ]}
+                >
+                  {kilometer} km
+                </P>
+              </View>
+            </View>
+            <H6
+              style={[
+                typography.font12,
+                typography.textBold,
+                typography.fontLato,
+                { marginLeft: 10 },
+              ]}
+            >
+              ₹{amount.car}
+            </H6>
+          </TouchableOpacity>
+
+          {/* Bike Option */}
+          <TouchableOpacity
+            onPress={() => {
+              if (!from || !to) {
+                showSnackbar(
+                  "Please select both Pickup and Drop locations before proceeding."
+                );
+                return;
+              }
+              setVehicleCategoryId(vehicleCategoryMap.bike);
+              navigation.navigate("transportCamera", {
+                vehicle_category: vehicleCategoryMap.bike,
+                from,
+                to,
+                amount: amount.bike,
+                kilometer,
+                date: currentDate,
+                time,
+              });
+            }}
+            style={[
+              styles.row,
+              spacing.br2,
+              spacing.p3,
+              spacing.mb3,
+              {
+                alignItems: "center",
+                backgroundColor: LIGHT,
+                elevation: 3,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+              },
+            ]}
+          >
+            <View
+              style={[
+                styles.row,
+                { flex: 1, alignItems: "center", flexWrap: "wrap" },
+              ]}
+            >
+              <Image
+                source={require("../assets/bike.jpg")}
+                style={{
+                  width: 50,
+                  height: 50,
+                  resizeMode: "contain",
+                  marginRight: 10,
+                }}
+              />
+              <View style={{ flex: 1 }}>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Bike
+                </H5>
+                <P
+                  style={[typography.font10, typography.fontLato]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {from} - {to}
+                </P>
+                <P
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    typography.textBold,
+                  ]}
+                >
+                  {kilometer} km
+                </P>
+              </View>
+            </View>
+            <H6
+              style={[
+                typography.font12,
+                typography.textBold,
+                typography.fontLato,
+                { marginLeft: 10 },
+              ]}
+            >
+              ₹{amount.bike}
+            </H6>
+          </TouchableOpacity>
+
+          {/* Public Transport Option */}
+          <TouchableOpacity
+            style={[
+              styles.row,
+              spacing.br2,
+              spacing.p3,
+              spacing.mb3,
+              {
+                alignItems: "center",
+                backgroundColor: LIGHT,
+                elevation: 3,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+              },
+            ]}
+          >
+            <View
+              style={[
+                styles.row,
+                { flex: 1, alignItems: "center", flexWrap: "wrap" },
+              ]}
+            >
+              <Image
+                source={require("../assets/image.png")}
+                style={{
+                  width: 50,
+                  height: 50,
+                  resizeMode: "contain",
+                  marginRight: 10,
+                }}
+              />
+              <View style={{ flex: 1 }}>
+                <H5
+                  style={[
+                    typography.font14,
+                    typography.textBold,
+                    typography.fontLato,
+                  ]}
+                >
+                  Public transport
+                </H5>
+                <P
+                  style={[typography.font10, typography.fontLato]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {from} - {to}
+                </P>
+                <P
+                  style={[
+                    typography.font10,
+                    typography.fontLato,
+                    typography.textBold,
+                  ]}
+                >
+                  {kilometer} km
+                </P>
+              </View>
+            </View>
+            <H5
+              style={[
+                typography.font12,
+                typography.textBold,
+                typography.fontLato,
+                { marginLeft: 10 },
+              ]}
+            >
+              ₹{amount.publicTransport}
+            </H5>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </ContainerComponent>
   );
