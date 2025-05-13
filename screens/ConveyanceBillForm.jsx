@@ -22,11 +22,19 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   const [time, setTime] = useState("");
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [vehicleCategoryId, setVehicleCategoryId] = useState(null);
+
   const [prices, setPrices] = useState({
     car: 0,
     bike: 0,
     publicTransport: 0,
   });
+
+  const vehicleCategoryMap = {
+    car: 1,
+    bike: 2,
+    publicTransport: 3,
+  };
 
   const [isToSelected, setIsToSelected] = useState(false);
 
@@ -37,25 +45,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
       navigation.navigate("locationSet", { type: "drop" });
     }
   };
-
-  // useEffect(() => {
-  //   if (route.params?.from) setFrom(route.params.from);
-  //   if (route.params?.to) setTo(route.params.to);
-  //   if (route.params?.kilometer) {
-  //     setKilometer(route.params.kilometer);
-  //     calculatePrices(route.params.kilometer);
-  //   }
-  //   if (route.params?.date) {
-  //     setCurrentDate(route.params.date);
-  //   } else {
-  //     console.warn("No Date found in route.params");
-  //   }
-  //   if (route.params?.time) {
-  //     setTime(route.params.time);
-  //   } else {
-  //     console.warn("No Time found in route.params");
-  //   }
-  // }, [route.params]);
 
   useEffect(() => {
     if (route.params?.from) setFrom(route.params.from);
@@ -85,7 +74,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     setSnackbarVisible(true);
   };
   const getDistance = async (origin, destination) => {
-    const apiKey = "AIzaSyDpTpJ1GNGLpVZKViexBvQtHIbSQRBX6to"; // API KEY
+    const apiKey = "AIzaSyDpTpJ1GNGLpVZKViexBvQtHIbSQRBX6to"; // Make sure it's valid
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${encodeURIComponent(
       origin
     )}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
@@ -93,6 +82,8 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     try {
       const response = await fetch(url);
       const data = await response.json();
+
+      console.log("Distance API Response:", JSON.stringify(data, null, 2)); // <-- Add this
 
       if (data.status !== "OK") {
         showSnackbar(`API Error: ${data.status}`);
@@ -109,7 +100,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
       setKilometer(km.toFixed(2));
       calculatePrices(km);
     } catch (error) {
-      console.error(error);
+      console.error("Distance fetch error:", error);
       showSnackbar("Error fetching distance.");
     }
   };
@@ -293,8 +284,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                     {kilometer} km
                   </P>
                 )}
-
-               
               </View>
             </View>
           </View>
@@ -323,8 +312,9 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 );
                 return;
               }
+              setVehicleCategoryId(vehicleCategoryMap.car);
               navigation.navigate("transportCamera", {
-                vehicle_category: "Car",
+                vehicle_category: vehicleCategoryMap.car,
                 from,
                 to,
                 price: prices.car,

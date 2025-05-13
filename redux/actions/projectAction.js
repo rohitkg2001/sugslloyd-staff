@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   FETCH_PROJECTS,
   ADD_PROJECT,
@@ -70,31 +71,26 @@ export const addProject = (project) => async (dispatch) => {
 
 export const addConveyance = (conveyance) => async (dispatch) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/conveyances`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(conveyance),
-    });
+    console.log("Submitting conveyance:", conveyance);
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        `Conveyance submission failed: ${
-          errorData.message || `Status ${response.status}`
-        }`
-      );
-    }
+    const response = await axios.post(
+      `${BASE_URL}/api/conveyances`,
+      conveyance,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    const data = await response.json();
-    dispatch({ type: ADD_CONVEYANCE, payload: data.conveyance });
+    dispatch({ type: ADD_CONVEYANCE, payload: response.data.conveyance });
     console.log("Conveyance submitted successfully.");
     return true;
   } catch (error) {
-    console.error("Error submitting conveyance:", error.message || error);
+    console.error(
+      "Error submitting conveyance:",
+      error.response?.data?.message || error.message
+    );
     return false;
   }
 };
-
-

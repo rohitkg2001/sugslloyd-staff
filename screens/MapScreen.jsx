@@ -81,36 +81,27 @@ const MapScreen = ({ route, navigation }) => {
       from: pickupAddress,
       to: dropoffAddress,
       vehicle_category,
-      price,
+      // price,
       kilometer,
-      photos,
-      date: currentDate,
+      // photos: photos?.map((photo) =>
+      //   typeof photo === "string" ? photo : photo?.uri
+      // ),
+      created_at: currentDate,
       time,
+      user_id: 11,
     };
-
-    // Log each key and its value
-    Object.entries(conveyanceData).forEach(([key, value]) => {
-      console.log(`${key}: ${value}`);
-    });
+    console.log("Submitting conveyance data:", conveyanceData);
+    // Object.entries(conveyanceData).forEach(([key, value]) => {
+    //   console.log(`${key}: ${value}`);
+    // });
 
     dispatch(addConveyance(conveyanceData))
       .then(() => {
         console.log("Trip Ended Successfully");
-        navigation.navigate("conveyanceManagement", {
-          from: pickupAddress,
-          to: dropoffAddress,
-          vehicle_category,
-          price,
-          kilometer,
-          photos: photos?.map((photo) =>
-            typeof photo === "string" ? photo : photo.uri
-          ),
-          date: currentDate,
-          time,
-        });
+        navigation.navigate("conveyanceManagement", conveyanceData);
       })
       .catch((err) => {
-        console.error("Trip Ended with Errors", err);
+        console.error("Error submitting conveyance:", err);
       });
   };
 
@@ -317,6 +308,7 @@ const MapScreen = ({ route, navigation }) => {
               {time || "Not provided"}
             </P>
           </View>
+
           {/* Dotted line */}
           <View
             style={[
