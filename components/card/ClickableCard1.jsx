@@ -12,6 +12,7 @@ import {
   PRIMARY_COLOR,
   PRIMARY_COLOR_TRANSPARENT,
 } from "../../styles";
+import { useEffect } from "react";
 
 export default function ClickableCard1({
   index,
@@ -32,6 +33,10 @@ export default function ClickableCard1({
   borderColor = "transparent",
   cardStyle = {},
 }) {
+  useEffect(() => {
+    console.log(title);
+  }, []);
+
   return (
     <TouchableOpacity
       style={[spacing.mv1, { width: SCREEN_WIDTH - 16 }]}

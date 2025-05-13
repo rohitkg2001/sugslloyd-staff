@@ -25,6 +25,13 @@ export default function ConveyanceDetailScreen() {
     return `${year}-${month}-${day}`;
   };
 
+  const imageList =
+    typeof travelItem.image === "string"
+      ? travelItem.image.split(",")
+      : Array.isArray(travelItem.image)
+      ? travelItem.image
+      : [];
+
   return (
     <ContainerComponent>
       <MyHeader title={"Booking Summary"} hasIcon={true} isBack={true} />
@@ -218,7 +225,7 @@ export default function ConveyanceDetailScreen() {
 
           {/* Photos Section */}
 
-          {travelItem.photos && travelItem.photos.length > 0 && (
+          {/* {travelItem.photos && travelItem.photos.length > 0 && (
             <>
               <P style={{ fontSize: 18, fontWeight: "bold", marginTop: 10 }}>
                 Travel Photos
@@ -242,13 +249,41 @@ export default function ConveyanceDetailScreen() {
                 ))}
               </ScrollView>
             </>
+          )} */}
+
+          {imageList && imageList.filter(Boolean).length > 0 && (
+            <>
+              <P style={{ fontSize: 18, fontWeight: "bold", marginTop: 10 }}>
+                Travel Photos
+              </P>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={{ marginTop: 10 }}
+              >
+                {imageList.filter(Boolean).map((img, index) => (
+                  <Image
+                    key={index}
+                    source={{ uri: img.trim() }}
+                    style={{
+                      width: 200,
+                      height: 200,
+                      borderRadius: 10,
+                      marginHorizontal: 5,
+                      backgroundColor: "#e0e0e0",
+                    }}
+                    onError={() => console.log("Failed to load:", img)}
+                  />
+                ))}
+              </ScrollView>
+            </>
           )}
 
-          <Button
+          {/* <Button
             style={[
               styles.btn,
               styles.bgPrimary,
-              { justifyContent: "center", top: 220 },
+              { justifyContent: "center", top: 240 },
             ]}
             onPress={() => {
               Alert.alert(
@@ -263,7 +298,7 @@ export default function ConveyanceDetailScreen() {
             >
               {"Submit"}
             </H2>
-          </Button>
+          </Button> */}
         </View>
       </ScrollView>
     </ContainerComponent>

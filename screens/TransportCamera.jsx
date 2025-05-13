@@ -21,7 +21,7 @@ export default function TransportCamera({
   handleSubmission,
   route,
 }) {
-  const [photos, setPhotos] = useState([]);
+  const [image, setImage] = useState([]);
   const [location, setLocation] = useState(null);
   const [timestamp, setTimestamp] = useState("");
   const cameraRef = useRef(null);
@@ -116,10 +116,10 @@ export default function TransportCamera({
   }, []);
 
   useEffect(() => {
-    if (photos.length === 5) {
-      handleSubmission(photos);
+    if (image.length === 5) {
+      handleSubmission(image);
     }
-  }, [photos]);
+  }, [image]);
 
   const handleCapture = async () => {
     if (cameraRef.current && location) {
@@ -132,12 +132,12 @@ export default function TransportCamera({
         timestamp: new Date().toLocaleTimeString(),
       };
 
-      setPhotos((prev) => [photoData, ...prev].slice(0, 5));
+      setImage((prev) => [photoData, ...prev].slice(0, 5));
     }
   };
 
   const handleRetake = () => {
-    setPhotos([]);
+    setImage([]);
   };
 
   return (
@@ -268,7 +268,7 @@ export default function TransportCamera({
           >
             <View style={styles.innerShutter} />
           </TouchableOpacity>
-          {photos.length >= 1 ? (
+          {image.length >= 1 ? (
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("mapScreen", {
@@ -278,7 +278,7 @@ export default function TransportCamera({
                   // amount,
                   amount: parseFloat(amount),
                   kilometer,
-                  photos,
+                  image,
                   date: currentDate,
                   time,
                 })
@@ -293,7 +293,7 @@ export default function TransportCamera({
         </View>
 
         <FlatList
-          data={photos}
+          data={image}
           keyExtractor={(item, index) => index.toString()}
           horizontal
           style={styles.photoList}

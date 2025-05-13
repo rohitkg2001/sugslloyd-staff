@@ -76,7 +76,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   };
 
   const getDistance = async (origin, destination) => {
-    const apiKey = "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko"; // ✅ new key
+    const apiKey = "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko"; // Distance  key
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${encodeURIComponent(
       origin
     )}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
@@ -118,7 +118,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
       <ScrollView style={[spacing.p2, { width: SCREEN_WIDTH }]}>
         <P
           style={[
-            typography.font14,
+            typography.font14, 
             typography.fontLato,
             spacing.mb3,
             spacing.ml3,
