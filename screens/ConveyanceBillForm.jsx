@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -115,10 +117,13 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   return (
     <ContainerComponent>
       <MyHeader title="Drop" hasIcon={true} isBack={true} />
-      <ScrollView style={[spacing.p2, { width: SCREEN_WIDTH }]}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={[spacing.p2, { width: SCREEN_WIDTH }]}
+      >
         <P
           style={[
-            typography.font14, 
+            typography.font14,
             typography.fontLato,
             spacing.mb3,
             spacing.ml3,
@@ -775,7 +780,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             </H5>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </KeyboardAvoidingView>
     </ContainerComponent>
   );
 };

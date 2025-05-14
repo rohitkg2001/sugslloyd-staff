@@ -12,7 +12,7 @@ import {
 
 import Icon from "react-native-vector-icons/Ionicons";
 import * as Location from "expo-location";
-import { ICON_LARGE, SCREEN_HEIGHT, SCREEN_WIDTH, spacing } from "../styles";
+import { ICON_LARGE, SCREEN_HEIGHT, SCREEN_WIDTH } from "../styles";
 import { useNavigation } from "@react-navigation/native";
 
 export default function TransportCamera({
@@ -393,3 +393,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
+
+
