@@ -21,7 +21,7 @@ const MapScreen = ({ route, navigation }) => {
     vehicle_category,
     amount,
     kilometer,
-    photos,
+    image,
     date: currentDate,
     time,
   } = route.params || {};
@@ -95,16 +95,17 @@ const MapScreen = ({ route, navigation }) => {
       Alert.alert("Error", "User ID not found. Please log in again.");
       return;
     }
-
+    console.log(pickupAddress);
     const conveyanceData = {
       from: pickupAddress,
       to: dropoffAddress,
       vehicle_category,
       amount: parseFloat(amount.toFixed(2)),
       kilometer: Math.round(parseFloat(kilometer)),
-      created_at: currentDate,
+      // created_at: ,
       time,
       user_id: userId,
+      // image,
     };
 
     console.log("Submitting conveyance data:", conveyanceData);

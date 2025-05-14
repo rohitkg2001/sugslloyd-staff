@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -76,7 +78,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   };
 
   const getDistance = async (origin, destination) => {
-    const apiKey = "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko"; // ✅ new key
+    const apiKey = "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko"; // Distance  key
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${encodeURIComponent(
       origin
     )}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
@@ -115,7 +117,10 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   return (
     <ContainerComponent>
       <MyHeader title="Drop" hasIcon={true} isBack={true} />
-      <ScrollView style={[spacing.p2, { width: SCREEN_WIDTH }]}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={[spacing.p2, { width: SCREEN_WIDTH }]}
+      >
         <P
           style={[
             typography.font14,
@@ -775,7 +780,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             </H5>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </KeyboardAvoidingView>
     </ContainerComponent>
   );
 };

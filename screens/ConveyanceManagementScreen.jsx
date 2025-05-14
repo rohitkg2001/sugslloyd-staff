@@ -56,7 +56,6 @@ export default function ConveyanceManagementScreen({ navigation }) {
           key={index}
           item={item}
           title={`${item.from} - ${item.to}`}
-          // showSearchBar={false} // Don't show search bar here
           onPress={() =>
             navigation.navigate("conveyanceDetail", { travelItem: item })
           }
@@ -85,21 +84,6 @@ export default function ConveyanceManagementScreen({ navigation }) {
               <P style={[typography.font12]}>{item.time ?? "N/A"}</P>
             </View>
           </View>
-
-          {/* <View style={[styles.row, { bottom: 20 }]}>
-            <Span style={[typography.font14, typography.fontLato]}>Price</Span>
-            <P
-              style={[
-                typography.font14,
-                typography.fontLato,
-                typography.textBold,
-              ]}
-            >
-              {item.amount != null
-                ? `₹${parseFloat(item.amount).toFixed(2)}`
-                : "Not provided"}
-            </P>
-          </View> */}
 
           <View
             style={[
@@ -165,7 +149,6 @@ export default function ConveyanceManagementScreen({ navigation }) {
         textStyle={{ color: LIGHT }}
         useEllipsis
       />
-
       <View
         style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}
       >
@@ -176,7 +159,6 @@ export default function ConveyanceManagementScreen({ navigation }) {
           <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
         </Button>
       </View>
-
       <View style={{ flex: 1 }}>
         <SwipeTab
           tabs={routes}
@@ -184,6 +166,10 @@ export default function ConveyanceManagementScreen({ navigation }) {
           onIndexChange={setIndex}
           renderScene={renderScene}
           swipeEnabled={true}
+          style={{ backgroundColor: "#76885B" }} // TabBar background
+          tabLabelStyle={{ fontSize: 16, color: "#020409" }}
+          tabIndicatorStyle={{ backgroundColor: "#020409" }}
+          // tabStyle={{ paddingHorizontal: 10 }}
         />
       </View>
 
