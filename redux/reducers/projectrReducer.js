@@ -5,6 +5,10 @@ import {
   COUNT_PROJECTS,
   ADD_PROJECT,
   ADD_CONVEYANCE,
+  ADD_BILL,
+  GET_ALL_BILLS,
+  GET_ALL_CONVEYANCE,
+  GET_CONVEYANCE_BY_ID,
 } from "../constant";
 
 const initialState = {
@@ -12,6 +16,7 @@ const initialState = {
   filteredProjects: [],
   currentProject: null,
   projectCount: 0,
+  conveyanceList: [],
 };
 
 export const projectReducer = (state = initialState, action) => {
@@ -38,6 +43,28 @@ export const projectReducer = (state = initialState, action) => {
         ...state,
         conveyances: [...state.conveyances, action.payload],
       };
+    case GET_ALL_BILLS:
+      return {
+        ...state,
+        bills: action.payload,
+      };
+    case ADD_BILL:
+      return {
+        ...state,
+        billData: [...state.billData, action.payload],
+      };
+    case GET_ALL_CONVEYANCE:
+      return {
+        ...state,
+        conveyanceList: action.payload,
+      };
+
+    case GET_CONVEYANCE_BY_ID:
+      return {
+        ...state,
+        conveyances: action.payload,
+      };
+
     default:
       return state;
   }

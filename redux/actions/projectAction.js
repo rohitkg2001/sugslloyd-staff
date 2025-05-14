@@ -4,6 +4,10 @@ import {
   ADD_PROJECT,
   BASE_URL,
   ADD_CONVEYANCE,
+  ADD_BILL,
+  GET_ALL_BILLS,
+  GET_ALL_CONVEYANCE,
+  GET_CONVEYANCE_BY_ID,
 } from "../constant";
 
 export const getStateById = async (id) => {
@@ -83,14 +87,99 @@ export const addConveyance = (conveyance) => async (dispatch) => {
       }
     );
 
-    dispatch({ type: ADD_CONVEYANCE, payload: response.data.conveyance });
+    console.log("Full response from API:", response.data);
+
+    // Adjust this according to actual response structure
+    const submittedData = response?.data?.data || response?.data;
+
+    if (!submittedData) {
+      console.error("No conveyance data returned from server.");
+      return false;
+    }
+
+    dispatch({ type: ADD_CONVEYANCE, payload: submittedData });
     console.log("Conveyance submitted successfully.");
     return true;
   } catch (error) {
+    const message =
+      error?.response?.data?.message || error?.message || "Unknown error";
+    console.error("Error submitting conveyance:", message);
+    return false;
+  }
+};
+
+export const getConveyanceById = (my_id) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${BASE_URL}/api/conveyances/${my_id}`);
+    dispatch({ type: GET_CONVEYANCE_BY_ID, payload: data.data });
+  } catch (error) {
     console.error(
-      "Error submitting conveyance:",
+      "Error fetching conveyance:",
+      error?.response?.data?.message || error.message
+    );
+  }
+};
+
+export const getAllConveyance = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/conveyances`);
+    console.log("API Response:", response.data);
+
+    const result = response.data;
+
+    if (result.status) {
+      dispatch({
+        type: GET_ALL_CONVEYANCE,
+        payload: response.data.data,
+      });
+    } else {
+      console.warn("Failed to fetch conveyances:", result.message);
+    }
+  } catch (error) {
+    console.error("Failed to fetch conveyances:", error);
+  }
+};
+
+export const addBill = (billData) => async (dispatch) => {
+  try {
+    console.log("Posting bill data to API:", billData);
+
+    const response = await axios.post(`${BASE_URL}/api/tadas`, billData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    dispatch({
+      type: ADD_BILL,
+      payload: response.data,
+    });
+
+    console.log("Bill posted successfully.");
+    return true;
+  } catch (error) {
+    console.error(
+      "Failed to post bill:",
       error.response?.data?.message || error.message
     );
     return false;
+  }
+};
+
+export const getAllBills = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/tadas`);
+
+    dispatch({
+      type: GET_ALL_BILLS,
+      payload: response.data,
+    });
+
+    console.log("Fetched all bills successfully.");
+  } catch (error) {
+    console.error(
+      "Failed to fetch bills:",
+      error.response?.data?.message || error.message
+    );
   }
 };

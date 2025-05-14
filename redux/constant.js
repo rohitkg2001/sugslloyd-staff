@@ -1,9 +1,11 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
-export const BASE_URL = "https://slldm.com";
+//export const BASE_URL = "https://slldm.com";
 //export const BASE_URL = "https://solarcrm.dashandots.tech";
+//export const BASE_URL = "http://127.0.0.1:8000";
+export const BASE_URL = "http://192.168.101.107:8000";
 
 export const initialState = {};
-  
+
 export const FETCH_PROJECTS = "FETCH_PROJECTS";
 export const SEARCH_PROJECTS = "SEARCH_PROJECTS";
 export const VIEW_PROJECT = "VIEW_PROJECT";
@@ -48,5 +50,8 @@ export const GET_ALL_REJECTED_STREETLIGHTS = "GET_ALL_REJECTED_STREETLIGHTS";
 
 export const SET_BILL_DATA = "SET_BILL_DATA";
 
-
 export const ADD_CONVEYANCE = "ADD_CONVEYANCE";
+export const ADD_BILL = "ADD_BILL";
+export const GET_ALL_BILLS = "GET_ALL_BILLS";
+export const GET_ALL_CONVEYANCE = "GET_ALL_CONVEYANCE";
+export const GET_CONVEYANCE_BY_ID = "GET_CONVEYANCE_BY_ID";

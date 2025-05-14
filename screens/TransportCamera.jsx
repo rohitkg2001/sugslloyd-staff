@@ -32,7 +32,7 @@ export default function TransportCamera({
   const [fromAddress, setFromAddress] = useState("");
   const [toAddress, setToAddress] = useState("");
   const [vehicle_category, setVehicleCategory] = useState("");
-  const [price, setPrice] = useState(0);
+  const [amount, setAmount] = useState(0);
   const [kilometer, setKilometer] = useState(0);
   const [currentDate, setCurrentDate] = useState("");
   const [time, setTime] = useState("");
@@ -44,8 +44,8 @@ export default function TransportCamera({
     if (route?.params?.vehicle_category) {
       setVehicleCategory(route.params.vehicle_category);
     }
-    if (route?.params?.price) {
-      setPrice(route.params.price);
+    if (route?.params?.amount) {
+      setAmount(route.params.amount);
     }
     if (route?.params?.kilometer) {
       setKilometer(route.params.kilometer);
@@ -272,12 +272,11 @@ export default function TransportCamera({
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("mapScreen", {
-                  // fromAddress,
-                  // toAddress,
                   from,
                   to,
                   vehicle_category,
-                  price,
+                  // amount,
+                  amount: parseFloat(amount),
                   kilometer,
                   photos,
                   date: currentDate,

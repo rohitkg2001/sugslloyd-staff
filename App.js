@@ -11,6 +11,8 @@ import useAuth from "./hooks/useAuth";
 import useNotifications from "./hooks/useNotifications";
 import usePermissions from "./hooks/usePermissions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import "react-native-get-random-values";
+
 
 export default function App() {
   const [loaded, setLoaded] = useState(true); // NEW: Track overall loading state

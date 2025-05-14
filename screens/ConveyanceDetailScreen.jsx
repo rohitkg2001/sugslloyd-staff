@@ -10,6 +10,21 @@ import Button from "../components/buttons/Button";
 export default function ConveyanceDetailScreen() {
   const route = useRoute();
   const { travelItem } = route.params;
+
+  const formatDate = (dateString) => {
+    // Check if the provided dateString is valid
+    const date = new Date(dateString);
+    if (isNaN(date)) {
+      return "Invalid Date";
+    }
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <ContainerComponent>
       <MyHeader title={"Booking Summary"} hasIcon={true} isBack={true} />
@@ -34,12 +49,11 @@ export default function ConveyanceDetailScreen() {
                   typography.fontLato,
                 ]}
               >
-                {`${travelItem.pickupLocation}`}
+                {`${travelItem.from}`}
               </H5>
             </View>
             <H5 style={{ fontSize: 24 }}>⇄</H5>
-            <View style={ { alignItems: "center" } }>
-              
+            <View style={{ alignItems: "center" }}>
               <P style={[typography.font10]}>To</P>
               <H5
                 style={[
@@ -48,7 +62,7 @@ export default function ConveyanceDetailScreen() {
                   typography.fontLato,
                 ]}
               >
-                {travelItem.dropoffLocation}
+                {travelItem.to}
               </H5>
             </View>
           </View>
@@ -61,7 +75,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "left" },
               ]}
             >
-              KM
+              Distance
             </H5>
             <P
               style={[
@@ -71,7 +85,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right" },
               ]}
             >
-              {travelItem.distance || "Not provided"}
+              {travelItem.kilometer || "Not provided"} Km
             </P>
           </View>
           <View style={[styles.row, spacing.pv2, spacing.bbw05]}>
@@ -94,7 +108,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right" },
               ]}
             >
-              {travelItem.transportType || "Not provided"}
+              {travelItem.vehicle_category || "Not provided"}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
@@ -117,7 +131,9 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right" },
               ]}
             >
-              {travelItem.date || "Not provided"}
+              {travelItem.created_at
+                ? formatDate(travelItem.created_at)
+                : "Not provided"}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
@@ -130,7 +146,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "left" },
               ]}
             >
-             Time
+              Time
             </H5>
             <P
               style={[
@@ -165,7 +181,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "left" },
               ]}
             >
-              Trip Price
+              Fare
             </H5>
             <P
               style={[
@@ -174,7 +190,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right" },
               ]}
             >
-              ₹ {travelItem.price || "Not provided"}
+              ₹ {travelItem.amount || "Not provided"}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>
@@ -196,7 +212,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right", color: "red" },
               ]}
             >
-              ₹ {travelItem.price || "Not provided"}
+              ₹ {travelItem.amount || "Not provided"}
             </P>
           </View>
 
@@ -232,7 +248,7 @@ export default function ConveyanceDetailScreen() {
             style={[
               styles.btn,
               styles.bgPrimary,
-              { justifyContent: "center", top: 280 },
+              { justifyContent: "center", top: 220 },
             ]}
             onPress={() => {
               Alert.alert(

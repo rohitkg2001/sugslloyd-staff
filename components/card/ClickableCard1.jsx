@@ -36,16 +36,12 @@ export default function ClickableCard1({
     <TouchableOpacity
       style={[spacing.mv1, { width: SCREEN_WIDTH - 16 }]}
       onPress={onPress}
-      onLongPress={() => onLongPressAction(index)}
+      //onLongPress={() => onLongPressAction(index)}
+      onLongPress={
+        onLongPressAction ? () => onLongPressAction(index) : undefined
+      }
     >
       <Card
-        // style={{
-        //   backgroundColor: selected ? PRIMARY_COLOR_TRANSPARENT : LIGHT,
-        //   borderRadius: 8,
-        //   borderWidth: 1, // Ensure the border width is applied
-        //   borderColor: borderColor, // Use the passed border color prop
-        // }}
-
         style={[
           {
             backgroundColor: selected ? PRIMARY_COLOR_TRANSPARENT : LIGHT,
@@ -53,7 +49,7 @@ export default function ClickableCard1({
             borderWidth: 1,
             borderColor: borderColor,
           },
-          cardStyle, // ✅ Apply custom styles from props
+          cardStyle,
         ]}
       >
         <Card.Title
