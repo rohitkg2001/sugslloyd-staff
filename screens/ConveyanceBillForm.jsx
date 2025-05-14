@@ -11,13 +11,17 @@ import {
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import * as Location from "expo-location";
 
 import { styles, typography, spacing, LIGHT, SCREEN_WIDTH } from "../styles";
 import { P, H5, H6 } from "../components/text";
 import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 
-const ConveyanceBillForm = ({ navigation, route }) => {
+const ConveyanceBillForm = ( { navigation, route } ) =>
+{
+  const [pickupAddress, setPickupAddress] = useState("");
+  const [dropoffAddress, setDropoffAddress] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [kilometer, setKilometer] = useState(null);
@@ -112,7 +116,38 @@ const ConveyanceBillForm = ({ navigation, route }) => {
     if (from && to) {
       getDistance(from, to);
     }
-  }, [from, to]);
+  }, [ from, to ] );
+  const handleSubmit = async () => {
+    if (!pickupAddress || !dropoffAddress) {
+      Alert.alert("Error", "Please enter both pickup and dropoff addresses.");
+      return;
+    }
+
+    try {
+      // Geocode pickup address
+      const pickupResult = await Location.geocodeAsync(pickupAddress);
+      const dropoffResult = await Location.geocodeAsync(dropoffAddress);
+
+      if (!pickupResult.length || !dropoffResult.length) {
+        Alert.alert("Error", "Could not get coordinates from address.");
+        return;
+      }
+
+      const pickupCoord = pickupResult[0];
+      const dropoffCoord = dropoffResult[0];
+
+      // Navigate to MapScreen with addresses and coordinates
+      navigation.navigate("MapScreen", {
+        from: pickupAddress,
+        to: dropoffAddress,
+        fromCoord: pickupCoord,
+        toCoord: dropoffCoord,
+      });
+    } catch (error) {
+      console.error("Error geocoding address:", error);
+      Alert.alert("Error", "Failed to load coordinates for the addresses.");
+    }
+  };
 
   return (
     <ContainerComponent>

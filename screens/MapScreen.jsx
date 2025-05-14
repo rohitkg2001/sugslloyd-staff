@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, Dimensions, ActivityIndicator, Alert } from "react-native";
+import {
+  View,
+  Dimensions,
+  ActivityIndicator,
+  Alert,
+  Image,
+} from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
+import * as ImagePicker from "expo-image-picker"; // For Camera functionality
 
 import { H2, P } from "../components/text";
 import { styles, typography, spacing } from "../styles";
@@ -21,102 +28,106 @@ const MapScreen = ({ route, navigation }) => {
     vehicle_category,
     amount,
     kilometer,
-    image,
     date: currentDate,
     time,
-  } = route.params || {};
+    fromCoord,
+    toCoord,
+  } = route.params || {}; // Receive from and to data, including coordinates if passed
 
   const dispatch = useDispatch();
-
-  const [location, setLocation] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [pickupCoord, setPickupCoord] = useState(null);
-  const [dropoffCoord, setDropoffCoord] = useState(null);
-  const [pickupAddress, setPickupAddress] = useState("");
-  const [dropoffAddress, setDropoffAddress] = useState("");
   const { id: userId } = useSelector((state) => state.staff);
 
-  const getAddressFromCoords = async (latitude, longitude) => {
-    try {
-      const addressData = await Location.reverseGeocodeAsync({
-        latitude,
-        longitude,
-      });
-      if (addressData.length > 0) {
-        const { city } = addressData[0];
-        return city ? `${city}` : "Address not found";
-      }
-      return "Address not found";
-    } catch (error) {
-      console.error("Error fetching address:", error);
-      return "Address fetch error";
+  const [pickupCoord, setPickupCoord] = useState(fromCoord || null); // If fromCoord is passed, use it
+  const [dropoffCoord, setDropoffCoord] = useState(toCoord || null); // If toCoord is passed, use it
+  const [pickupAddress, setPickupAddress] = useState(from || ""); // Pickup address from ConveyanceBillForm
+  const [dropoffAddress, setDropoffAddress] = useState(to || ""); // Dropoff address from ConveyanceBillForm
+  const [loading, setLoading] = useState(true);
+  const [capturedImage, setCapturedImage] = useState(null); // Store captured image
+
+  // UseEffect for geolocation (only if the coordinates aren't already passed)
+  useEffect(() => {
+    if (fromCoord && toCoord) {
+      // If coordinates are passed directly from ConveyanceBillForm, no need to fetch again
+      setLoading(false);
+    } else if (from && to) {
+      // Only perform geocoding if coordinates are not passed, using addresses
+      (async () => {
+        try {
+          let { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== "granted") {
+            Alert.alert("Permission Denied", "Allow location access to proceed.");
+            return;
+          }
+
+          // Convert from/to addresses into coordinates if coordinates aren't passed
+          const pickupResults = await Location.geocodeAsync(from);
+          const dropoffResults = await Location.geocodeAsync(to);
+
+          if (!pickupResults.length || !dropoffResults.length) {
+            Alert.alert("Error", "Could not get coordinates from address.");
+            return;
+          }
+
+          const fromCoord = pickupResults[0];
+          const toCoord = dropoffResults[0];
+
+          setPickupCoord(fromCoord);
+          setDropoffCoord(toCoord);
+          setPickupAddress(from);
+          setDropoffAddress(to);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching geocodes:", error);
+          Alert.alert("Error", "Failed to load map data.");
+        }
+      })();
+    }
+  }, [from, to, fromCoord, toCoord]);
+
+  // Function to handle photo taking
+  const requestCameraPermission = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert("Permission Denied", "Camera access is required to take photos.");
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert("Permission Denied", "Allow location access to proceed.");
-        return;
-      }
+  const takePhoto = async () => {
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.5,
+    });
 
-      let loc = await Location.getCurrentPositionAsync({});
-      setLocation(loc.coords);
+    if (!result.cancelled) {
+      setCapturedImage(result.uri); // Save the captured image URI
+    }
+  };
 
-      const { latitude, longitude } = loc.coords;
-
-      // Set pickup coordinates
-      const fromCoord = { latitude, longitude };
-      setPickupCoord(fromCoord);
-
-      // Set dropoff coordinates a small offset away
-      const toCoord = {
-        latitude: latitude + 0.01,
-        longitude: longitude + 0.01,
-      };
-      setDropoffCoord(toCoord);
-
-      // Get addresses
-      const fromAddr = await getAddressFromCoords(latitude, longitude);
-      const toAddr = await getAddressFromCoords(
-        toCoord.latitude,
-        toCoord.longitude
-      );
-      setPickupAddress(fromAddr);
-      setDropoffAddress(toAddr);
-
-      setLoading(false);
-    })();
-  }, []);
-
+  // Handle the end of the trip and submit the data
   const handleEndTrip = () => {
     if (!userId) {
       Alert.alert("Error", "User ID not found. Please log in again.");
       return;
     }
-    console.log(pickupAddress);
+
     const conveyanceData = {
       from: pickupAddress,
       to: dropoffAddress,
       vehicle_category,
       amount: parseFloat(amount.toFixed(2)),
       kilometer: Math.round(parseFloat(kilometer)),
-      // created_at: ,
       time,
       user_id: userId,
-      // image,
+      image: capturedImage, // Include the image
     };
-
-    console.log("Submitting conveyance data:", conveyanceData);
 
     dispatch(addConveyance(conveyanceData))
       .then((success) => {
         if (success) {
-          console.log("Trip Ended Successfully");
           navigation.navigate("conveyanceManagement", conveyanceData);
         } else {
-          console.error("Trip submission failed.");
+          Alert.alert("Submission Failed", "Trip submission failed.");
         }
       })
       .catch((err) => {
@@ -176,6 +187,7 @@ const MapScreen = ({ route, navigation }) => {
             Ride Details
           </P>
 
+          {/* Ride details and other information */}
           <View
             style={[
               spacing.mb2,
@@ -210,8 +222,7 @@ const MapScreen = ({ route, navigation }) => {
                     { color: "#B22222" },
                   ]}
                 >
-                  <Ionicons name="location-sharp" size={16} color="red" />{" "}
-                  Dropoff
+                  <Ionicons name="location-sharp" size={16} color="red" /> Dropoff
                 </P>
                 <P style={[typography.font12, spacing.mt1]}>
                   {dropoffAddress || "Not provided"}
@@ -220,6 +231,7 @@ const MapScreen = ({ route, navigation }) => {
             </View>
           </View>
 
+          {/* Distance and Date */}
           <View
             style={[
               styles.row,
@@ -254,7 +266,7 @@ const MapScreen = ({ route, navigation }) => {
             <View style={[spacing.mr2, { flex: 1 }]}>
               <P style={[typography.font12, typography.fontLato]}>Distance</P>
               <P style={[typography.font14, spacing.mt1]}>
-                {kilometer || "Not provided"}
+                {kilometer || "Not provided"} km
               </P>
             </View>
 
@@ -269,19 +281,11 @@ const MapScreen = ({ route, navigation }) => {
           <View
             style={[
               spacing.p3,
-              {
-                backgroundColor: "#f9f9f9",
-                alignItems: "center",
-                justifyContent: "center",
-              },
+              { backgroundColor: "#f9f9f9", alignItems: "center" },
             ]}
           >
             <P
-              style={[
-                typography.font12,
-                typography.fontLato,
-                typography.textBold,
-              ]}
+              style={[typography.font12, typography.fontLato, typography.textBold]}
             >
               <Ionicons name="time-sharp" size={16} color="black" /> Time
             </P>
@@ -290,17 +294,21 @@ const MapScreen = ({ route, navigation }) => {
             </P>
           </View>
 
-          <View
+          {/* Camera Button */}
+          <Button
             style={[
-              {
-                borderBottomWidth: 1,
-                borderBottomColor: "#333",
-                borderStyle: "dotted",
-                width: "100%",
-              },
+              styles.btn,
+              styles.bgSecondary,
+              { justifyContent: "center", width: "100%" },
             ]}
-          />
+            onPress={takePhoto} // Handle taking a photo
+          >
+            <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
+              Take Photo
+            </H2>
+          </Button>
 
+          {/* Submit Button */}
           <Button
             style={[
               styles.btn,
