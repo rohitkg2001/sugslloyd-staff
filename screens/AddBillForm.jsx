@@ -13,13 +13,13 @@ import { useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { addBill } from "../redux/actions/projectAction";
 import MyTextInput from "../components/input/MyTextInput";
 import MyPickerInput from "../components/input/MyPickerInput";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Button from "../components/buttons/Button";
 import { styles, typography, spacing } from "../styles";
 import { H2, Span, H6 } from "../components/text";
+import { addBill } from "../redux/actions/projectAction";
 const AddBillForm = ({ navigation }) => {
   const dispatch = useDispatch();
 
@@ -42,13 +42,13 @@ const AddBillForm = ({ navigation }) => {
     vehicle_no: "",
     category: "Train",
     description_category: "",
-    pickup_date: "", // This is for the main form
   });
 
-  const [pnrNumbersStart, setPnrNumbersStart] = useState([""]);
   const [ticket, setTicket] = useState(null);
-  const [errors, setErrors] = useState({ start: [] });
   const [hotelBill, setHotelBill] = useState(null);
+  const [start_journey_pnr, setStartJourneyPnr] = useState([""]);
+  const [end_journey_pnr, setEndJourneyPnr] = useState([""]);
+  const [errors, setErrors] = useState({ start: [""], end: [""] });
 
   const [datePicker, setDatePicker] = useState({
     show: false,
@@ -56,15 +56,20 @@ const AddBillForm = ({ navigation }) => {
     field: "",
     index: null,
   });
-
   const [formFields, setFormFields] = useState([
     {
-      total_km: "",
-      rate_per_km: "",
-      Rent: "",
-      vehicle_no: "",
-      description_category: "",
-      pickup_date: "",
+      from: "",
+      to: "",
+      departure_date: "",
+      departure_time: "",
+      arrival_date: "",
+      arrival_time: "",
+      modeoftravel: "",
+      add_total_km: "",
+      add_rate_per_km: "",
+      add_rent: "",
+      add_vehicle_no: "",
+      amount: "",
     },
   ]);
 
@@ -72,20 +77,26 @@ const AddBillForm = ({ navigation }) => {
     setFormFields([
       ...formFields,
       {
-        total_km: "",
-        rate_per_km: "",
-        Rent: "",
-        vehicle_no: "",
-        description_category: "",
-        pickup_date: "",
+        from: "",
+        to: "",
+        departure_date: "",
+        departure_time: "",
+        arrival_date: "",
+        arrival_time: "",
+        modeoftravel: "",
+        add_total_km: "",
+        add_rate_per_km: "",
+        add_rent: "",
+        add_vehicle_no: "",
+        amount: "",
       },
     ]);
   };
 
   const removeTransactionField = (index) => {
-    const updatedFields = [...formFields];
-    updatedFields.splice(index, 1);
-    setFormFields(updatedFields);
+    const newFields = [...formFields];
+    newFields.splice(index, 1);
+    setFormFields(newFields);
   };
 
   const handleChange = (field, value, index = null) => {
@@ -124,23 +135,62 @@ const AddBillForm = ({ navigation }) => {
     return /^\d{4}-\d{2}-\d{2}$/.test(dateString);
   };
 
+  // Start Journey Functions
+  const handlePnrChangeStart = (value, index) => {
+    const updated = [...start_journey_pnr];
+    updated[index] = value;
+    setStartJourneyPnr(updated);
+
+    const updatedErrors = { ...errors };
+    updatedErrors.start[index] = value.trim() === "" ? "PNR is required" : "";
+    setErrors(updatedErrors);
+  };
+
   const addPnrFieldStart = () => {
-    setPnrNumbersStart([...pnrNumbersStart, ""]);
+    setStartJourneyPnr([...start_journey_pnr, ""]);
+    setErrors((prev) => ({
+      ...prev,
+      start: [...prev.start, ""],
+    }));
   };
 
   const removePnrFieldStart = (index) => {
-    const newPnrs = [...pnrNumbersStart];
-    newPnrs.splice(index, 1);
-    setPnrNumbersStart(newPnrs);
-    const newErrors = [...errors.start];
-    newErrors.splice(index, 1);
-    setErrors({ ...errors, start: newErrors });
+    const updated = [...start_journey_pnr];
+    updated.splice(index, 1);
+    setStartJourneyPnr(updated);
+
+    const updatedErrors = { ...errors };
+    updatedErrors.start.splice(index, 1);
+    setErrors(updatedErrors);
   };
 
-  const handlePnrChangeStart = (value, index) => {
-    const newPnrs = [...pnrNumbersStart];
-    newPnrs[index] = value;
-    setPnrNumbersStart(newPnrs);
+  // End Journey Functions
+  const handlePnrChangeEnd = (value, index) => {
+    const updated = [...end_journey_pnr];
+    updated[index] = value;
+    setEndJourneyPnr(updated);
+
+    const updatedErrors = { ...errors };
+    updatedErrors.end[index] = value.trim() === "" ? "PNR is required" : "";
+    setErrors(updatedErrors);
+  };
+
+  const addPnrFieldEnd = () => {
+    setEndJourneyPnr([...end_journey_pnr, ""]);
+    setErrors((prev) => ({
+      ...prev,
+      end: [...prev.end, ""],
+    }));
+  };
+
+  const removePnrFieldEnd = (index) => {
+    const updated = [...end_journey_pnr];
+    updated.splice(index, 1);
+    setEndJourneyPnr(updated);
+
+    const updatedErrors = { ...errors };
+    updatedErrors.end.splice(index, 1);
+    setErrors(updatedErrors);
   };
 
   const handleUploadTicket = async () => {
@@ -180,9 +230,9 @@ const AddBillForm = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
-    const requiredDates = ["start_journey", "end_journey", "pickup_date"];
+    const requiredDates = ["start_journey", "end_journey"];
 
-    // Validate top-level dates
+    // Validate date format
     for (let key of requiredDates) {
       if (form[key] && !isValidDate(form[key])) {
         Alert.alert(
@@ -193,30 +243,23 @@ const AddBillForm = ({ navigation }) => {
       }
     }
 
-    //   Validate pickup_date in transport entries
-    for (let i = 0; i < formFields.length; i++) {
-      const entry = formFields[i];
-      if (!entry.pickup_date || !isValidDate(entry.pickup_date)) {
-        Alert.alert(
-          "Invalid Date",
-          `Pickup date in transport entry ${
-            i + 1
-          } must be in YYYY-MM-DD format.`
-        );
-        return;
-      }
-    }
-
     const payload = {
       ...form,
-      user_id: Number(form.user_id),
-      total_km: Number(form.total_km),
-      rate_per_km: Number(form.rate_per_km),
-      Rent: Number(form.Rent),
-      start_journey_pnr: [form.start_journey_pnr],
-      end_journey_pnr: [form.end_journey_pnr],
-      transport_entries: formFields,
-      pickup_date: form.pickup_date,
+      user_id: Number(form.user_id) || 0,
+      total_km: Number(form.total_km) || 0,
+      rate_per_km: Number(form.rate_per_km) || 0,
+      Rent: Number(form.Rent) || 0,
+      start_journey_pnr: form.start_journey_pnr
+        ? [form.start_journey_pnr]
+        : [""],
+      end_journey_pnr: form.end_journey_pnr ? [form.end_journey_pnr] : [""],
+      travel_details: formFields.map((f) => ({
+        ...f,
+        add_total_km: Number(f.add_total_km) || 0,
+        add_rate_per_km: Number(f.add_rate_per_km) || 0,
+        add_rent: Number(f.add_rent) || 0,
+        amount: Number(f.amount) || 0,
+      })),
     };
 
     try {
@@ -333,36 +376,6 @@ const AddBillForm = ({ navigation }) => {
           />
         )}
 
-        {/* <View style={{ marginBottom: 10 }}>
-          <Text>Start Journey PNR</Text>
-          <TextInput
-            value={form.start_journey_pnr}
-            onChangeText={(text) => handleChange("start_journey_pnr", text)}
-            placeholder="Start Journey PNR"
-            style={{
-              borderWidth: 1,
-              borderColor: "#ccc",
-              padding: 8,
-              borderRadius: 5,
-            }}
-          />
-        </View>
-
-        <View style={{ marginBottom: 10 }}>
-          <Text>End Journey PNR</Text>
-          <TextInput
-            value={form.end_journey_pnr}
-            onChangeText={(text) => handleChange("end_journey_pnr", text)}
-            placeholder="End Journey PNR"
-            style={{
-              borderWidth: 1,
-              borderColor: "#ccc",
-              padding: 8,
-              borderRadius: 5,
-            }}
-          />
-        </View> */}
-
         <View
           style={[
             spacing.bw1,
@@ -375,18 +388,19 @@ const AddBillForm = ({ navigation }) => {
             Journey Ticket
           </H6>
 
-          {pnrNumbersStart.map((pnr, index) => (
+          {/* Start Journey PNR Fields */}
+          {start_journey_pnr.map((pnr, index) => (
             <View key={index}>
               <MyTextInput
-                title={`PNR Number ${index + 1}`}
+                title={`Start Journey PNR ${index + 1}`}
                 value={pnr}
                 onChangeText={(value) => handlePnrChangeStart(value, index)}
-                placeholder="Upload Ticket & Enter PNR"
+                placeholder="Start Journey Enter PNR"
               />
               {errors.start[index] ? (
                 <Text style={{ color: "red" }}>{errors.start[index]}</Text>
               ) : null}
-              {pnrNumbersStart.length > 1 && (
+              {start_journey_pnr.length > 1 && (
                 <TouchableOpacity onPress={() => removePnrFieldStart(index)}>
                   <Text style={{ color: "red" }}>Remove</Text>
                 </TouchableOpacity>
@@ -444,6 +458,45 @@ const AddBillForm = ({ navigation }) => {
           )}
         </View>
 
+        {/* End Journey Section */}
+        <View
+          style={[
+            spacing.bw1,
+            spacing.p1,
+            spacing.br2,
+            { borderStyle: "dotted", marginTop: 10 },
+          ]}
+        >
+          <H6 style={[typography.font14, typography.fontLato, spacing.p2]}>
+            Journey Return Ticket
+          </H6>
+
+          {end_journey_pnr.map((pnr, index) => (
+            <View key={index}>
+              <MyTextInput
+                title={`Return PNR Number ${index + 1}`}
+                value={pnr}
+                onChangeText={(value) => handlePnrChangeEnd(value, index)}
+                placeholder="Upload Return Ticket & Enter PNR"
+              />
+              {errors.end[index] ? (
+                <Text style={{ color: "red" }}>{errors.end[index]}</Text>
+              ) : null}
+              {end_journey_pnr.length > 1 && (
+                <TouchableOpacity onPress={() => removePnrFieldEnd(index)}>
+                  <Text style={{ color: "red" }}>Remove</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          ))}
+
+          <TouchableOpacity onPress={addPnrFieldEnd}>
+            <Span style={[styles.rightLink, typography.fontLato]}>
+              Add More Return PNR
+            </Span>
+          </TouchableOpacity>
+        </View>
+
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={{ flex: 1, marginRight: 5 }}>
             <MyPickerInput
@@ -496,7 +549,100 @@ const AddBillForm = ({ navigation }) => {
           ]}
         />
 
-        {/* Remove & Add More Buttons */}
+        <MyPickerInput
+          Value={form.description_category}
+          title="Category"
+          onChange={(itemValue) =>
+            handleChange("description_category", itemValue)
+          }
+          options={[
+            { label: "Transport", value: "Transport" },
+            { label: "Fuel", value: "Fuel" },
+            { label: "Maintenance", value: "Maintenance" },
+            { label: "Miscellaneous", value: "Miscellaneous" },
+          ]}
+        />
+        <View style={{ flexDirection: "row", marginBottom: 10 }}>
+          <View style={{ flex: 1, marginRight: 5 }}>
+            <Text style={{ marginBottom: 4, fontWeight: "bold" }}>Rent</Text>
+            <TextInput
+              title="Rent"
+              value={form.Rent?.toString()}
+              onChangeText={(text) => handleChange("Rent", text)}
+              placeholder="Rent"
+              keyboardType="numeric"
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 10,
+                borderWidth: 1,
+                borderColor: "#ccc",
+                backgroundColor: "#F0FAF0",
+                borderRadius: 5,
+              }}
+            />
+          </View>
+          <View style={{ flex: 1, marginLeft: 5 }}>
+            <Text style={{ marginBottom: 4, fontWeight: "bold" }}>Amount</Text>
+            <TextInput
+              title="Amount"
+              value={form.amount?.toString()}
+              onChangeText={(text) => handleChange("amount", text)}
+              placeholder="Amount"
+              keyboardType="numeric"
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 10,
+                borderWidth: 1,
+                borderColor: "#ccc",
+                backgroundColor: "#F0FAF0",
+                borderRadius: 5,
+              }}
+            />
+          </View>
+        </View>
+
+        <View style={{ flexDirection: "row", top: 4 }}>
+          <View style={{ flex: 1, marginRight: 5 }}>
+            <Text style={{ marginBottom: 4, fontWeight: "bold" }}>
+              Rate per KM
+            </Text>
+            <TextInput
+              title="Rate per KM"
+              value={form.rate_per_km?.toString()}
+              onChangeText={(text) => handleChange("rate_per_km", text)}
+              placeholder="Rate per KM"
+              keyboardType="numeric"
+              maxLength={6}
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 10,
+                borderWidth: 1,
+                borderColor: "#ccc",
+                backgroundColor: "#F0FAF0",
+                borderRadius: 5,
+              }}
+            />
+          </View>
+          <View style={{ flex: 1, marginLeft: 5 }}>
+            <Text style={{ marginBottom: 4, fontWeight: "bold" }}>
+              Vehicle No
+            </Text>
+            <TextInput
+              value={form.vehicle_no}
+              onChangeText={(text) => handleChange("vehicle_no", text)}
+              placeholder="Vehicle No"
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 10,
+                borderWidth: 1,
+                borderColor: "#ccc",
+                backgroundColor: "#F0FAF0",
+                borderRadius: 5,
+              }}
+            />
+          </View>
+        </View>
+
         <View
           style={{
             flexDirection: "row",
@@ -513,144 +659,104 @@ const AddBillForm = ({ navigation }) => {
 
         {formFields.map((form, index) => (
           <View key={index} style={{ marginBottom: 20 }}>
-            {/* Total KM */}
+            <MyTextInput
+              title="From"
+              value={form.from}
+              onChangeText={(text) => handleChange("from", text, index)}
+              placeholder="From"
+            />
+
+            <MyTextInput
+              title="To"
+              value={form.to}
+              onChangeText={(text) => handleChange("to", text, index)}
+              placeholder="To"
+            />
+
+            <MyTextInput
+              title="Departure Date"
+              value={form.departure_date}
+              onChangeText={(text) =>
+                handleChange("departure_date", text, index)
+              }
+              placeholder="YYYY-MM-DD"
+            />
+
+            <MyTextInput
+              title="Departure Time"
+              value={form.departure_time}
+              onChangeText={(text) =>
+                handleChange("departure_time", text, index)
+              }
+              placeholder="HH:MM:SS"
+            />
+
+            <MyTextInput
+              title="Arrival Date"
+              value={form.arrival_date}
+              onChangeText={(text) => handleChange("arrival_date", text, index)}
+              placeholder="YYYY-MM-DD"
+            />
+
+            <MyTextInput
+              title="Arrival Time"
+              value={form.arrival_time}
+              onChangeText={(text) => handleChange("arrival_time", text, index)}
+              placeholder="HH:MM:SS"
+            />
+
+            <MyTextInput
+              title="Mode of Travel"
+              value={form.modeoftravel}
+              onChangeText={(text) => handleChange("modeoftravel", text, index)}
+              placeholder="e.g., Bus, Train"
+            />
 
             <MyTextInput
               title="Total KM"
-              value={form.total_km}
-              onChangeText={(text) => handleChange("total_km", text, index)}
+              value={form.add_total_km?.toString()}
+              onChangeText={(text) => handleChange("add_total_km", text, index)}
               placeholder="Total KM"
               keyboardType="numeric"
               maxLength={6}
             />
 
-            {/* Rate per KM */}
-
             <MyTextInput
               title="Rate per KM"
-              value={form.rate_per_km}
-              onChangeText={(text) => handleChange("rate_per_km", text, index)}
+              value={form.add_rate_per_km?.toString()}
+              onChangeText={(text) =>
+                handleChange("add_rate_per_km", text, index)
+              }
               placeholder="Rate per KM"
               keyboardType="numeric"
               maxLength={6}
             />
 
-            {/* Rent */}
             <MyTextInput
               title="Rent"
-              value={form.Rent}
-              onChangeText={(text) => handleChange("Rent", text, index)}
+              value={form.add_rent?.toString()}
+              onChangeText={(text) => handleChange("add_rent", text, index)}
               placeholder="Rent"
               keyboardType="numeric"
             />
 
-            {/* Vehicle No */}
-
             <MyTextInput
               title="Vehicle No"
-              value={form.vehicle_no}
-              onChangeText={(text) => handleChange("vehicle_no", text, index)}
+              value={form.add_vehicle_no}
+              onChangeText={(text) =>
+                handleChange("add_vehicle_no", text, index)
+              }
               placeholder="Vehicle No"
             />
 
-            {/* Category Description */}
-            <Text>Category Description</Text>
-            <MyPickerInput
-              Value={form.description_category}
-              onChange={(itemValue) =>
-                handleChange("description_category", itemValue, index)
-              }
-              options={[
-                { label: "Transport", value: "Transport" },
-                { label: "Fuel", value: "Fuel" },
-                { label: "Maintenance", value: "Maintenance" },
-                { label: "Miscellaneous", value: "Miscellaneous" },
-              ]}
-            />
-
-            <View
-              style={[
-                spacing.bw1,
-                spacing.br2,
-                spacing.p2,
-                spacing.mt1,
-                {
-                  borderColor: "#ccc",
-                },
-              ]}
-            >
-              {/* Hotel Bill Upload Section */}
-              <View
-                style={[
-                  spacing.p3,
-                  spacing.bw1,
-                  spacing.br2,
-                  {
-                    marginTop: spacing.mh2,
-                    alignItems: "center",
-                    borderStyle: "dotted",
-                    backgroundColor: "#e8f5e9",
-                  },
-                ]}
-              >
-                <TouchableOpacity onPress={handleUploadHotelBill}>
-                  <H6
-                    style={[
-                      typography.textBold,
-                      {
-                        textAlign: "center",
-                      },
-                    ]}
-                  >
-                    {"Upload Hotel Bill"}
-                  </H6>
-                </TouchableOpacity>
-
-                {hotelBill && (
-                  <View
-                    style={[
-                      spacing.mt2,
-                      spacing.p1,
-                      spacing.br1,
-                      {
-                        alignItems: "center",
-                        backgroundColor: "#f1f8e9",
-                        borderWidth: 0.2,
-                      },
-                    ]}
-                  >
-                    <H6 style={[typography.font14, typography.fontLato]}>
-                      {"Uploaded File"}: {hotelBill.name}
-                    </H6>
-                    <TouchableOpacity onPress={handleRemoveHotelBill}>
-                      <Span
-                        style={[
-                          styles.rightLink,
-                          typography.fontLato,
-                          {
-                            color: "red",
-                            marginTop: 6,
-                            textDecorationLine: "underline",
-                          },
-                        ]}
-                      >
-                        {"Remove"}
-                      </Span>
-                    </TouchableOpacity>
-                  </View>
-                )}
-              </View>
-            </View>
-
-            {/* Pickup Date */}
             <MyTextInput
-              title="Pickup Date"
-              placeholder="YYYY-MM-DD"
-              value={form.pickup_date}
-              onChangeText={(text) => handleChange("pickup_date", text, index)}
+              title="Amount"
+              value={form.amount?.toString()}
+              onChangeText={(text) => handleChange("amount", text, index)}
+              placeholder="Amount"
+              keyboardType="numeric"
             />
 
-            {/* Remove & Add More Buttons */}
             <View
               style={{
                 flexDirection: "row",
@@ -669,6 +775,79 @@ const AddBillForm = ({ navigation }) => {
             </View>
           </View>
         ))}
+
+        <View
+          style={[
+            spacing.bw1,
+            spacing.br2,
+            spacing.p2,
+            spacing.mt1,
+            {
+              borderColor: "#ccc",
+            },
+          ]}
+        >
+          <View
+            style={[
+              spacing.p3,
+              spacing.bw1,
+              spacing.br2,
+              {
+                marginTop: spacing.mh2,
+                alignItems: "center",
+                borderStyle: "dotted",
+                backgroundColor: "#e8f5e9",
+              },
+            ]}
+          >
+            <TouchableOpacity onPress={handleUploadHotelBill}>
+              <H6
+                style={[
+                  typography.textBold,
+                  {
+                    textAlign: "center",
+                  },
+                ]}
+              >
+                {"Upload Hotel Bill"}
+              </H6>
+            </TouchableOpacity>
+
+            {hotelBill && (
+              <View
+                style={[
+                  spacing.mt2,
+                  spacing.p1,
+                  spacing.br1,
+                  {
+                    alignItems: "center",
+                    backgroundColor: "#f1f8e9",
+                    borderWidth: 0.2,
+                  },
+                ]}
+              >
+                <H6 style={[typography.font14, typography.fontLato]}>
+                  {"Uploaded File"}: {hotelBill.name}
+                </H6>
+                <TouchableOpacity onPress={handleRemoveHotelBill}>
+                  <Span
+                    style={[
+                      styles.rightLink,
+                      typography.fontLato,
+                      {
+                        color: "red",
+                        marginTop: 6,
+                        textDecorationLine: "underline",
+                      },
+                    ]}
+                  >
+                    {"Remove"}
+                  </Span>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        </View>
 
         <Button
           style={[
