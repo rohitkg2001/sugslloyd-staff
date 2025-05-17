@@ -31,7 +31,7 @@ export default function MyHeader({
           <Icon name="arrow-back" size={ICON_SMALL} color="#000" />
         </TouchableOpacity>
       )}
-      <H4 style={[typography.font18, typography.fontLato, typography.textBold]}>
+      <H4 style={[typography.font14, typography.fontLato, typography.textBold]}>
         {title}
       </H4>
       {hasIcon && (

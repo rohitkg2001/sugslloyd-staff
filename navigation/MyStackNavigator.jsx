@@ -47,6 +47,7 @@ import LoactionSetScreen from "../screens/LoactionSetScreen";
 import ConveyanceDetailScreen from "../screens/ConveyanceDetailScreen";
 import ProfileChangeScreen from "../screens/ProfileChangeScreen";
 import SurveyScreen from "../screens/SurveyScreen";
+import InstalledScreen from "../screens/InstalledScreen";
 
 const Stack = createNativeStackNavigator();
 export default function MyStackNavigator({ initialRouteName }) {
@@ -148,6 +149,7 @@ export default function MyStackNavigator({ initialRouteName }) {
       />
       <Stack.Screen name="profileChange" component={ProfileChangeScreen} />
       <Stack.Screen name="surveyScreen" component={SurveyScreen} />
+      <Stack.Screen name="installedScreen" component={InstalledScreen} />
     </Stack.Navigator>
   );
 }

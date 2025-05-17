@@ -10,13 +10,11 @@ export default function TabBar({ tabs, activeTab, onTabSelected, style }) {
           key={tab.name}
           style={[
             spacing.pv2,
-           // spacing.br3,
+            // spacing.br3,
             {
-             // backgroundColor: "#F0FAF0",
+              // backgroundColor: "#F0FAF0",
               alignItems: "center",
               justifyContent: "center",
-              //marginHorizontal: 5,
-             // paddingHorizontal: 10,
               position: "relative",
             },
           ]}

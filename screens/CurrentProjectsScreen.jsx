@@ -249,6 +249,54 @@ export default function CurrentProjectsScreen({ navigation }) {
                     </TouchableOpacity>
                   )}
 
+                  {/* View & Installed Buttons for "In Approval" tab */}
+                  {activeTab === "In Approval" && (
+                    <View style={[styles.row, { justifyContent: "flex-end" }]}>
+                      <TouchableOpacity
+                        style={[
+                          spacing.br1,
+                          spacing.mr2,
+                          spacing.pv1,
+                          spacing.ph2,
+                          {
+                            backgroundColor: PRIMARY_COLOR,
+                            bottom: 28,
+                          },
+                        ]}
+                        onPress={() =>
+                          navigation.navigate("taskViewScreen", { id: item.id })
+                        }
+                      >
+                        <P style={{ color: "#fff", fontWeight: "bold" }}>
+                          View
+                        </P>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={[
+                          spacing.br1,
+                          spacing.ph3,
+                          spacing.pv1,
+
+                          {
+                            backgroundColor: PRIMARY_COLOR,
+                            bottom: 28,
+                          },
+                        ]}
+                        onPress={() =>
+                          navigation.navigate("installedScreen", {
+                            id: item.id,
+                            siteName: item.site?.site_name,
+                          })
+                        }
+                      >
+                        <P style={{ color: "#fff", fontWeight: "bold" }}>
+                          Installed
+                        </P>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+
                   {/* Status */}
                   <H6
                     style={[
@@ -256,7 +304,7 @@ export default function CurrentProjectsScreen({ navigation }) {
                       typography.fontLato,
                       {
                         color: item.status === "Complete" ? "red" : "green",
-                        bottom: 30,
+                        bottom: 24,
                       },
                     ]}
                   >
