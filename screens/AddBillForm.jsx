@@ -42,6 +42,11 @@ const AddBillForm = ({ navigation }) => {
     vehicle_no: "",
     category: "Train",
     description_category: "",
+    otherexpense: {
+      meal: 0,
+      parking: 0,
+    },
+    dailyfare: [],
   });
 
   const [ticket, setTicket] = useState(null);
@@ -245,21 +250,18 @@ const AddBillForm = ({ navigation }) => {
 
     const payload = {
       ...form,
-      user_id: Number(form.user_id) || 0,
-      total_km: Number(form.total_km) || 0,
-      rate_per_km: Number(form.rate_per_km) || 0,
-      Rent: Number(form.Rent) || 0,
-      start_journey_pnr: form.start_journey_pnr
-        ? [form.start_journey_pnr]
-        : [""],
-      end_journey_pnr: form.end_journey_pnr ? [form.end_journey_pnr] : [""],
-      travel_details: formFields.map((f) => ({
-        ...f,
-        add_total_km: Number(f.add_total_km) || 0,
-        add_rate_per_km: Number(f.add_rate_per_km) || 0,
-        add_rent: Number(f.add_rent) || 0,
-        amount: Number(f.amount) || 0,
+      start_journey_pnr: start_journey_pnr.join(","),
+      end_journey_pnr: end_journey_pnr.join(","),
+      travelfare: formFields.map((entry) => ({
+        ...entry,
+        add_total_km: Number(entry.add_total_km || 0),
+        add_rate_per_km: Number(entry.add_rate_per_km || 0),
+        add_rent: Number(entry.add_rent || 0),
+        amount: Number(entry.amount || 0),
       })),
+
+      dailyfare: form.dailyfare || [], // Add this line if not already in `form`
+      otherexpense: form.otherexpense || { meal: 0, parking: 0 },
     };
 
     try {
