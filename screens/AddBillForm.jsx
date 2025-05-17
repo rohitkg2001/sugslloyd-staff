@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
+import * as DocumentPicker from "expo-document-picker";
 import { useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
@@ -17,8 +18,8 @@ import MyTextInput from "../components/input/MyTextInput";
 import MyPickerInput from "../components/input/MyPickerInput";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Button from "../components/buttons/Button";
-import { styles, typography } from "../styles";
-import { H2 } from "../components/text";
+import { styles, typography, spacing } from "../styles";
+import { H2, Span, H6 } from "../components/text";
 const AddBillForm = ({ navigation }) => {
   const dispatch = useDispatch();
 
@@ -43,6 +44,11 @@ const AddBillForm = ({ navigation }) => {
     description_category: "",
     pickup_date: "", // This is for the main form
   });
+
+  const [pnrNumbersStart, setPnrNumbersStart] = useState([""]);
+  const [ticket, setTicket] = useState(null);
+  const [errors, setErrors] = useState({ start: [] });
+  const [hotelBill, setHotelBill] = useState(null);
 
   const [datePicker, setDatePicker] = useState({
     show: false,
@@ -118,6 +124,61 @@ const AddBillForm = ({ navigation }) => {
     return /^\d{4}-\d{2}-\d{2}$/.test(dateString);
   };
 
+  const addPnrFieldStart = () => {
+    setPnrNumbersStart([...pnrNumbersStart, ""]);
+  };
+
+  const removePnrFieldStart = (index) => {
+    const newPnrs = [...pnrNumbersStart];
+    newPnrs.splice(index, 1);
+    setPnrNumbersStart(newPnrs);
+    const newErrors = [...errors.start];
+    newErrors.splice(index, 1);
+    setErrors({ ...errors, start: newErrors });
+  };
+
+  const handlePnrChangeStart = (value, index) => {
+    const newPnrs = [...pnrNumbersStart];
+    newPnrs[index] = value;
+    setPnrNumbersStart(newPnrs);
+  };
+
+  const handleUploadTicket = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "application/pdf",
+      });
+
+      if (result.type === "success") {
+        setTicket({ name: result.name, uri: result.uri });
+      }
+    } catch (err) {
+      console.log("Error picking document:", err);
+    }
+  };
+
+  const handleRemoveTicket = () => {
+    setTicket(null);
+  };
+  // hotel bill
+  const handleUploadHotelBill = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "application/pdf",
+      });
+
+      if (result.type === "success") {
+        setHotelBill({ name: result.name, uri: result.uri });
+      }
+    } catch (err) {
+      console.log("Document pick error:", err);
+    }
+  };
+
+  const handleRemoveHotelBill = () => {
+    setHotelBill(null);
+  };
+
   const handleSubmit = async () => {
     const requiredDates = ["start_journey", "end_journey", "pickup_date"];
 
@@ -132,7 +193,7 @@ const AddBillForm = ({ navigation }) => {
       }
     }
 
-    //  Validate pickup_date in transport entries
+    //   Validate pickup_date in transport entries
     for (let i = 0; i < formFields.length; i++) {
       const entry = formFields[i];
       if (!entry.pickup_date || !isValidDate(entry.pickup_date)) {
@@ -155,6 +216,7 @@ const AddBillForm = ({ navigation }) => {
       start_journey_pnr: [form.start_journey_pnr],
       end_journey_pnr: [form.end_journey_pnr],
       transport_entries: formFields,
+      pickup_date: form.pickup_date,
     };
 
     try {
@@ -271,7 +333,7 @@ const AddBillForm = ({ navigation }) => {
           />
         )}
 
-        <View style={{ marginBottom: 10 }}>
+        {/* <View style={{ marginBottom: 10 }}>
           <Text>Start Journey PNR</Text>
           <TextInput
             value={form.start_journey_pnr}
@@ -299,6 +361,87 @@ const AddBillForm = ({ navigation }) => {
               borderRadius: 5,
             }}
           />
+        </View> */}
+
+        <View
+          style={[
+            spacing.bw1,
+            spacing.p1,
+            spacing.br2,
+            { borderStyle: "dotted", marginTop: 10 },
+          ]}
+        >
+          <H6 style={[typography.font14, typography.fontLato, spacing.p2]}>
+            Journey Ticket
+          </H6>
+
+          {pnrNumbersStart.map((pnr, index) => (
+            <View key={index}>
+              <MyTextInput
+                title={`PNR Number ${index + 1}`}
+                value={pnr}
+                onChangeText={(value) => handlePnrChangeStart(value, index)}
+                placeholder="Upload Ticket & Enter PNR"
+              />
+              {errors.start[index] ? (
+                <Text style={{ color: "red" }}>{errors.start[index]}</Text>
+              ) : null}
+              {pnrNumbersStart.length > 1 && (
+                <TouchableOpacity onPress={() => removePnrFieldStart(index)}>
+                  <Text style={{ color: "red" }}>Remove</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          ))}
+
+          <TouchableOpacity onPress={addPnrFieldStart}>
+            <Span style={[styles.rightLink, typography.fontLato]}>
+              Add More PNR
+            </Span>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={handleUploadTicket}
+            style={{ marginTop: spacing.mh2, alignItems: "center" }}
+          >
+            <H6
+              style={[
+                typography.fontLato,
+                spacing.p1,
+                spacing.bw1,
+                spacing.br1,
+                spacing.mb2,
+                typography.font16,
+                {
+                  textAlign: "center",
+                  borderColor: "green",
+                  borderStyle: "dotted",
+                  backgroundColor: "#e8f5e9",
+                },
+              ]}
+            >
+              Upload Ticket
+            </H6>
+          </TouchableOpacity>
+
+          {ticket && (
+            <View style={{ marginTop: 10, alignItems: "center" }}>
+              <H6 style={{ color: "green", fontSize: 14 }}>
+                Uploaded File: {ticket.name}
+              </H6>
+              <TouchableOpacity onPress={handleRemoveTicket}>
+                <Span
+                  style={{
+                    color: "red",
+                    borderColor: "green",
+                    borderStyle: "dotted",
+                  }}
+                >
+                  Remove
+                </Span>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
 
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -424,6 +567,80 @@ const AddBillForm = ({ navigation }) => {
                 { label: "Miscellaneous", value: "Miscellaneous" },
               ]}
             />
+
+            <View
+              style={[
+                spacing.bw1,
+                spacing.br2,
+                spacing.p2,
+                spacing.mt1,
+                {
+                  borderColor: "#ccc",
+                },
+              ]}
+            >
+              {/* Hotel Bill Upload Section */}
+              <View
+                style={[
+                  spacing.p3,
+                  spacing.bw1,
+                  spacing.br2,
+                  {
+                    marginTop: spacing.mh2,
+                    alignItems: "center",
+                    borderStyle: "dotted",
+                    backgroundColor: "#e8f5e9",
+                  },
+                ]}
+              >
+                <TouchableOpacity onPress={handleUploadHotelBill}>
+                  <H6
+                    style={[
+                      typography.textBold,
+                      {
+                        textAlign: "center",
+                      },
+                    ]}
+                  >
+                    {"Upload Hotel Bill"}
+                  </H6>
+                </TouchableOpacity>
+
+                {hotelBill && (
+                  <View
+                    style={[
+                      spacing.mt2,
+                      spacing.p1,
+                      spacing.br1,
+                      {
+                        alignItems: "center",
+                        backgroundColor: "#f1f8e9",
+                        borderWidth: 0.2,
+                      },
+                    ]}
+                  >
+                    <H6 style={[typography.font14, typography.fontLato]}>
+                      {"Uploaded File"}: {hotelBill.name}
+                    </H6>
+                    <TouchableOpacity onPress={handleRemoveHotelBill}>
+                      <Span
+                        style={[
+                          styles.rightLink,
+                          typography.fontLato,
+                          {
+                            color: "red",
+                            marginTop: 6,
+                            textDecorationLine: "underline",
+                          },
+                        ]}
+                      >
+                        {"Remove"}
+                      </Span>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+            </View>
 
             {/* Pickup Date */}
             <MyTextInput
