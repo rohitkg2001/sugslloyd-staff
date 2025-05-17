@@ -54,7 +54,7 @@ export default function MyStackNavigator({ initialRouteName }) {
   return (
     <Stack.Navigator
       initialRouteName={initialRouteName}
-      //  initialRouteName="surveyScreen"
+      // initialRouteName="surveyScreen"
       screenOptions={{
         headerShown: false,
       }}

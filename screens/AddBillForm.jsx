@@ -426,12 +426,12 @@ const AddBillForm = ({ navigation }) => {
             />
 
             {/* Pickup Date */}
-            <MyTextInput
+            {/* <MyTextInput
               title="Pickup Date"
               placeholder="YYYY-MM-DD"
               value={form.pickup_date}
               onChangeText={(text) => handleChange("pickup_date", text, index)}
-            />
+            /> */}
 
             {/* Remove & Add More Buttons */}
             <View
