@@ -234,47 +234,82 @@ const AddBillForm = ({ navigation }) => {
     setHotelBill(null);
   };
 
+  // Filter out empty transport fields
+
   const handleSubmit = async () => {
-    const requiredDates = ["start_journey", "end_journey"];
-
-    // Validate date format
-    for (let key of requiredDates) {
-      if (form[key] && !isValidDate(form[key])) {
-        Alert.alert(
-          "Invalid Date",
-          `${key.replace("_", " ")} must be in YYYY-MM-DD format.`
-        );
-        return;
-      }
-    }
-
-    const payload = {
-      ...form,
-      start_journey_pnr: start_journey_pnr.join(","),
-      end_journey_pnr: end_journey_pnr.join(","),
-      travelfare: formFields.map((entry) => ({
-        ...entry,
-        add_total_km: Number(entry.add_total_km || 0),
-        add_rate_per_km: Number(entry.add_rate_per_km || 0),
-        add_rent: Number(entry.add_rent || 0),
-        amount: Number(entry.amount || 0),
-      })),
-
-      dailyfare: form.dailyfare || [], // Add this line if not already in `form`
-      otherexpense: form.otherexpense || { meal: 0, parking: 0 },
-    };
-
     try {
-      const result = await dispatch(addBill(payload));
-      if (result === true) {
-        console.log("Submitted bill data:", payload);
-        navigation.navigate("travelManagement", { formData: payload });
-      } else {
-        Alert.alert("Error", "Failed to submit the bill. Please try again.");
+      const requiredFields = [
+        "start_journey",
+        "end_journey",
+        "Rent",
+        "rate_per_km",
+      ];
+
+      for (let field of requiredFields) {
+        if (!form[field] || form[field] === "") {
+          Alert.alert("Error", `${field.replace("_", " ")} is required.`);
+          return;
+        }
       }
+
+      const payload = {
+        user_id: Number(form.user_id),
+        visit_approve: form.visit_approve ?? "",
+        objective_tour: form.objective_tour ?? "",
+        meeting_visit: form.meeting_visit ?? "",
+        outcome_achieve: form.outcome_achieve ?? "",
+        start_journey: form.start_journey ?? "",
+        end_journey: form.end_journey ?? "",
+        transport: form.transport ?? "",
+        start_journey_pnr: Array.isArray(start_journey_pnr)
+          ? start_journey_pnr
+          : [],
+        end_journey_pnr: Array.isArray(end_journey_pnr) ? end_journey_pnr : [],
+        from_city: form.from_city ?? "",
+        to_city: form.to_city ?? "",
+        total_km: Number(form.total_km ?? 0),
+        rate_per_km: Number(form.rate_per_km ?? 0),
+        Rent: Number(form.Rent ?? 0),
+        vehicle_no: form.vehicle_no ?? "",
+        category: form.category ?? "",
+        description_category: form.description_category ?? "",
+        otherexpense: {
+          meal: Number(form?.otherexpense?.meal ?? 0),
+          parking: Number(form?.otherexpense?.parking ?? 0),
+        },
+        travelfare: Array.isArray(formFields)
+          ? formFields.map((field) => ({
+              from: field?.from ?? "",
+              to: field?.to ?? "",
+              departure_date: field?.departure_date ?? "",
+              departure_time: field?.departure_time ?? "",
+              arrival_date: field?.arrival_date ?? "",
+              arrival_time: field?.arrival_time ?? "",
+              modeoftravel: field?.modeoftravel ?? "",
+              add_total_km: Number(field?.add_total_km ?? 0),
+              add_rate_per_km: Number(field?.add_rate_per_km ?? 0),
+              add_rent: Number(field?.add_rent ?? 0),
+              add_vehicle_no: field?.add_vehicle_no ?? "",
+              amount: Number(field?.amount ?? 0),
+            }))
+          : [],
+        dailyfare: Array.isArray(form.dailyfare)
+          ? form.dailyfare.map((bill) => ({
+              place: bill?.place ?? "",
+              HotelBillNo: bill?.HotelBillNo ?? "",
+              amount: Number(bill?.amount ?? 0),
+            }))
+          : [],
+      };
+
+      console.log("Posting bill data to API:", JSON.stringify(payload));
+
+      dispatch(addBill(payload, navigation));
+
+      Alert.alert("Success", "Bill submitted successfully");
     } catch (error) {
-      console.error("Submission error:", error);
-      Alert.alert("Error", "Unexpected error occurred.");
+      console.log("Failed to post bill:", error);
+      Alert.alert("Error", "Failed to submit the bill. Please check the form.");
     }
   };
 
