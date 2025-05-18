@@ -298,6 +298,7 @@ const AddBillForm = ({ navigation }) => {
       Alert.alert("Error", "An unexpected error occurred.");
     }
   };
+  
 
   return (
     <ContainerComponent>
@@ -411,27 +412,7 @@ const AddBillForm = ({ navigation }) => {
             Journey Ticket
           </H6>
 
-          {/* Start Journey PNR Fields */}
-          {/* {start_journey_pnr.map((pnr, index) => (
-            <View key={index}>
-              <MyTextInput
-                title={`Start Journey PNR ${index + 1}`}
-                value={start_journey_pnr}
-                //  onChangeText={(value) => handlePnrChangeStart(value, index)}
-                onChangeText={setStartJourneyPnr}
-                placeholder="Start Journey Enter PNR"
-              />
-              {errors.start[index] ? (
-                <Text style={{ color: "red" }}>{errors.start[index]}</Text>
-              ) : null}
-              {start_journey_pnr.length > 1 && (
-                <TouchableOpacity onPress={() => removePnrFieldStart(index)}>
-                  <Text style={{ color: "red" }}>Remove</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          ))} */}
-          {/* Updated the PNR inputs to use single strings */}
+   
           <MyTextInput
             title="Start Journey PNR"
             value={start_journey_pnr} // Bind directly to the string value
