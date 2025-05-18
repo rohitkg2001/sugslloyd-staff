@@ -158,10 +158,12 @@ export const addBill = (billData) => async (dispatch) => {
     console.log("Bill posted successfully.");
     return true;
   } catch (error) {
-    console.error(
-      "Failed to post bill:",
-      error.response?.data?.message || error.message
-    );
+    const errorMessage =
+      error?.response?.data?.message ||
+      error?.message ||
+      "Unknown error occurred";
+
+    console.error("Failed to post bill:", errorMessage);
     return false;
   }
 };
