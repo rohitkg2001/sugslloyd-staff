@@ -140,9 +140,44 @@ export const getAllConveyance = () => async (dispatch) => {
   }
 };
 
+// export const addBill = (billData) => async (dispatch) => {
+//   try {
+//     console.log("Posting bill data to API:", billData);
+
+//     const response = await axios.post(`${BASE_URL}/api/tadas`, billData, {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+
+//     dispatch({
+//       type: ADD_BILL,
+//       payload: response.data,
+//     });
+
+//     console.log("Bill posted successfully.");
+//     return true;
+//   } catch (error) {
+//     const errorMessage =
+//       error?.response?.data?.message ||
+//       error?.message ||
+//       "Unknown error occurred";
+
+//     console.error("Failed to post bill:", errorMessage);
+//     return false;
+//   }
+// };
 export const addBill = (billData) => async (dispatch) => {
   try {
-    console.log("Posting bill data to API:", billData);
+    // Log the data in a safe way
+    try {
+      console.log(
+        "Posting bill data to API:",
+        JSON.stringify(billData, null, 2)
+      );
+    } catch (logErr) {
+      console.warn("Could not stringify billData:", logErr);
+    }
 
     const response = await axios.post(`${BASE_URL}/api/tadas`, billData, {
       headers: {
@@ -158,10 +193,19 @@ export const addBill = (billData) => async (dispatch) => {
     console.log("Bill posted successfully.");
     return true;
   } catch (error) {
-    const errorMessage =
-      error?.response?.data?.message ||
-      error?.message ||
-      "Unknown error occurred";
+    // ✔ Safe error handling: handle all possible shapes of `error.response.data`
+    let errorMessage = "Unknown error occurred";
+
+    if (error?.response) {
+      if (typeof error.response.data === "object") {
+        errorMessage =
+          error.response.data.message || JSON.stringify(error.response.data);
+      } else {
+        errorMessage = error.response.data;
+      }
+    } else if (error?.message) {
+      errorMessage = error.message;
+    }
 
     console.error("Failed to post bill:", errorMessage);
     return false;

@@ -30,7 +30,9 @@ const AddBillForm = ({ navigation }) => {
     meeting_visit: "",
     outcome_achieve: "",
     start_journey: "",
+    start_journey_time: "",
     end_journey: "",
+    end_journey_time: "",
     transport: "Train",
     start_journey_pnr: "",
     end_journey_pnr: "",
@@ -40,20 +42,21 @@ const AddBillForm = ({ navigation }) => {
     rate_per_km: "",
     Rent: "",
     vehicle_no: "",
-    category: "Train",
+    category: "Training",
     description_category: "",
     otherexpense: {
       meal: 0,
       parking: 0,
     },
+    travelfare: [],
     dailyfare: [],
   });
 
   const [ticket, setTicket] = useState(null);
   const [hotelBill, setHotelBill] = useState(null);
-  const [start_journey_pnr, setStartJourneyPnr] = useState([""]);
-  const [end_journey_pnr, setEndJourneyPnr] = useState([""]);
   const [errors, setErrors] = useState({ start: [""], end: [""] });
+  const [start_journey_pnr, setStartJourneyPnr] = useState("");
+  const [end_journey_pnr, setEndJourneyPnr] = useState("");
 
   const [datePicker, setDatePicker] = useState({
     show: false,
@@ -74,6 +77,15 @@ const AddBillForm = ({ navigation }) => {
       add_rate_per_km: "",
       add_rent: "",
       add_vehicle_no: "",
+      amount: "",
+    },
+  ]);
+
+  const [dailyFareFields, setDailyFareFields] = useState([
+    {
+      place: "",
+      HotelBillNo: "",
+      date_of_stay: "",
       amount: "",
     },
   ]);
@@ -140,17 +152,12 @@ const AddBillForm = ({ navigation }) => {
     return /^\d{4}-\d{2}-\d{2}$/.test(dateString);
   };
 
-  // Start Journey Functions
-  const handlePnrChangeStart = (value, index) => {
-    const updated = [...start_journey_pnr];
-    updated[index] = value;
-    setStartJourneyPnr(updated);
-
+  const handlePnrChangeStart = (value) => {
+    setStartJourneyPnr(value); // Directly set the string value
     const updatedErrors = { ...errors };
-    updatedErrors.start[index] = value.trim() === "" ? "PNR is required" : "";
+    updatedErrors.start = value.trim() === "" ? "PNR is required" : "";
     setErrors(updatedErrors);
   };
-
   const addPnrFieldStart = () => {
     setStartJourneyPnr([...start_journey_pnr, ""]);
     setErrors((prev) => ({
@@ -169,17 +176,12 @@ const AddBillForm = ({ navigation }) => {
     setErrors(updatedErrors);
   };
 
-  // End Journey Functions
-  const handlePnrChangeEnd = (value, index) => {
-    const updated = [...end_journey_pnr];
-    updated[index] = value;
-    setEndJourneyPnr(updated);
-
+  const handlePnrChangeEnd = (value) => {
+    setEndJourneyPnr(value); // Directly set the string value
     const updatedErrors = { ...errors };
-    updatedErrors.end[index] = value.trim() === "" ? "PNR is required" : "";
+    updatedErrors.end = value.trim() === "" ? "PNR is required" : "";
     setErrors(updatedErrors);
   };
-
   const addPnrFieldEnd = () => {
     setEndJourneyPnr([...end_journey_pnr, ""]);
     setErrors((prev) => ({
@@ -234,91 +236,66 @@ const AddBillForm = ({ navigation }) => {
     setHotelBill(null);
   };
 
-  // Filter out empty transport fields
-
   const handleSubmit = async () => {
     try {
-      // Basic validation for required fields like dates
-      const requiredFields = [
-        "start_journey",
-        "end_journey",
-        "Rent",
-        "rate_per_km",
-      ];
-
-      // Ensure required fields are not empty or invalid
-      for (let field of requiredFields) {
-        if (!form[field] || form[field] === "") {
-          Alert.alert("Error", `${field.replace("_", " ")} is required.`);
-          return;
-        }
-      }
-
-      // Ensure start_journey_pnr and end_journey_pnr are arrays before calling join
-      const startJourneyPnrValid = Array.isArray(start_journey_pnr)
-        ? start_journey_pnr.join(",")
-        : "";
-      const endJourneyPnrValid = Array.isArray(end_journey_pnr)
-        ? end_journey_pnr.join(",")
-        : "";
-
       const payload = {
-        user_id: Number(form.user_id),
-        visit_approve: form.visit_approve ?? "",
-        objective_tour: form.objective_tour ?? "",
-        meeting_visit: form.meeting_visit ?? "",
-        outcome_achieve: form.outcome_achieve ?? "",
-        start_journey: form.start_journey ?? "",
-        end_journey: form.end_journey ?? "",
-        transport: form.transport ?? "",
-        start_journey_pnr: startJourneyPnrValid,
-        end_journey_pnr: endJourneyPnrValid,
-        from_city: form.from_city ?? "",
-        to_city: form.to_city ?? "",
-        total_km: Number(form.total_km ?? 0),
-        rate_per_km: Number(form.rate_per_km ?? 0),
-        Rent: Number(form.Rent ?? 0),
-        vehicle_no: form.vehicle_no ?? "",
-        category: form.category ?? "",
-        description_category: form.description_category ?? "",
+        user_id: Number(form.user_id) || 0,
+        visit_approve: form.visit_approve || "",
+        objective_tour: form.objective_tour || "",
+        meeting_visit: form.meeting_visit || "",
+        outcome_achieve: form.outcome_achieve || "",
+        start_journey: form.start_journey || "",
+        start_journey_time: form.start_journey_time || "",
+        end_journey: form.end_journey || "",
+        end_journey_time: form.end_journey_time || "",
+        transport: form.transport || "",
+        start_journey_pnr: start_journey_pnr,
+        end_journey_pnr: end_journey_pnr,
+        from_city: form.from_city || "",
+        to_city: form.to_city || "",
+        total_km: Number(form.total_km) || 0,
+        rate_per_km: Number(form.rate_per_km) || 0,
+        Rent: Number(form.Rent) || 0,
+        vehicle_no: form.vehicle_no || "",
+        category: form.category || "",
+        description_category: form.description_category || "",
         otherexpense: {
-          meal: Number(form?.otherexpense?.meal ?? 0),
-          parking: Number(form?.otherexpense?.parking ?? 0),
+          meal: Number(form.otherexpense?.meal) || 0,
+          parking: Number(form.otherexpense?.parking) || 0,
         },
-        travelfare: Array.isArray(formFields)
-          ? formFields.map((field) => ({
-              from: field?.from ?? "",
-              to: field?.to ?? "",
-              departure_date: field?.departure_date ?? "",
-              departure_time: field?.departure_time ?? "",
-              arrival_date: field?.arrival_date ?? "",
-              arrival_time: field?.arrival_time ?? "",
-              modeoftravel: field?.modeoftravel ?? "",
-              add_total_km: Number(field?.add_total_km ?? 0),
-              add_rate_per_km: Number(field?.add_rate_per_km ?? 0),
-              add_rent: Number(field?.add_rent ?? 0),
-              add_vehicle_no: field?.add_vehicle_no ?? "",
-              amount: Number(field?.amount ?? 0),
-            }))
-          : [],
-        dailyfare: Array.isArray(form.dailyfare)
-          ? form.dailyfare.map((bill) => ({
-              place: bill?.place ?? "",
-              HotelBillNo: bill?.HotelBillNo ?? "",
-              amount: Number(bill?.amount ?? 0),
-            }))
-          : [],
+        travelfare: formFields.map((item) => ({
+          from: item?.from || "",
+          to: item?.to || "",
+          departure_date: item?.departure_date || "",
+          departure_time: item?.departure_time || "",
+          arrival_date: item?.arrival_date || "",
+          arrival_time: item?.arrival_time || "",
+          modeoftravel: item?.modeoftravel || "",
+          add_total_km: Number(item?.add_total_km) || 0,
+          add_rate_per_km: Number(item?.add_rate_per_km) || 0,
+          add_rent: Number(item?.add_rent) || 0,
+          add_vehicle_no: item?.add_vehicle_no || "",
+          amount: Number(item?.amount) || 0,
+        })),
+        dailyfare: dailyFareFields.map((item) => ({
+          place: item?.place || "",
+          HotelBillNo: item?.HotelBillNo || "",
+          date_of_stay: item?.date_of_stay || "",
+          amount: Number(item?.amount) || 0,
+        })),
       };
 
-      console.log("Posting bill data to API:", JSON.stringify(payload));
+      console.log("Payload to submit:", payload);
 
-      // Dispatch action or API call
-      dispatch(addBill(payload, navigation));
-
-      Alert.alert("Success", "Bill submitted successfully");
+      const success = await dispatch(addBill(payload));
+      if (success) {
+        Alert.alert("Success", "Bill submitted successfully!");
+      } else {
+        Alert.alert("Error", "Failed to submit the bill. Please try again.");
+      }
     } catch (error) {
-      console.log("Failed to post bill:", error);
-      Alert.alert("Error", "Failed to submit the bill. Please check the form.");
+      console.error("Submit Error:", error);
+      Alert.alert("Error", "An unexpected error occurred.");
     }
   };
 
@@ -435,12 +412,13 @@ const AddBillForm = ({ navigation }) => {
           </H6>
 
           {/* Start Journey PNR Fields */}
-          {start_journey_pnr.map((pnr, index) => (
+          {/* {start_journey_pnr.map((pnr, index) => (
             <View key={index}>
               <MyTextInput
                 title={`Start Journey PNR ${index + 1}`}
-                value={pnr}
-                onChangeText={(value) => handlePnrChangeStart(value, index)}
+                value={start_journey_pnr}
+                //  onChangeText={(value) => handlePnrChangeStart(value, index)}
+                onChangeText={setStartJourneyPnr}
                 placeholder="Start Journey Enter PNR"
               />
               {errors.start[index] ? (
@@ -452,7 +430,14 @@ const AddBillForm = ({ navigation }) => {
                 </TouchableOpacity>
               )}
             </View>
-          ))}
+          ))} */}
+          {/* Updated the PNR inputs to use single strings */}
+          <MyTextInput
+            title="Start Journey PNR"
+            value={start_journey_pnr} // Bind directly to the string value
+            onChangeText={handlePnrChangeStart} // Use the updated handler
+            placeholder="Start Journey Enter PNR"
+          />
 
           <TouchableOpacity onPress={addPnrFieldStart}>
             <Span style={[styles.rightLink, typography.fontLato]}>
@@ -517,12 +502,14 @@ const AddBillForm = ({ navigation }) => {
             Journey Return Ticket
           </H6>
 
-          {end_journey_pnr.map((pnr, index) => (
+          {/* {end_journey_pnr.map((pnr, index) => (
             <View key={index}>
               <MyTextInput
                 title={`Return PNR Number ${index + 1}`}
-                value={pnr}
-                onChangeText={(value) => handlePnrChangeEnd(value, index)}
+                // value={pnr}
+                // onChangeText={(value) => handlePnrChangeEnd(value, index)}
+                value={end_journey_pnr}
+                onChangeText={setEndJourneyPnr}
                 placeholder="Upload Return Ticket & Enter PNR"
               />
               {errors.end[index] ? (
@@ -534,7 +521,13 @@ const AddBillForm = ({ navigation }) => {
                 </TouchableOpacity>
               )}
             </View>
-          ))}
+          ))} */}
+          <MyTextInput
+            title="End Journey PNR"
+            value={end_journey_pnr} // Bind directly to the string value
+            onChangeText={handlePnrChangeEnd} // Use the updated handler
+            placeholder="End Journey Enter PNR"
+          />
 
           <TouchableOpacity onPress={addPnrFieldEnd}>
             <Span style={[styles.rightLink, typography.fontLato]}>
