@@ -7,12 +7,12 @@ import { vendorReducer } from "./vendorReducer";
 import { combineReducers } from "redux";
 
 const reducer = combineReducers({
-    tasks: taskReducer,
-    staff: staffReducer,
-    site: siteReducer,
-    project: projectReducer,
-    vendor: vendorReducer,
-    inventory: inventoryReducer,
+  tasks: taskReducer,
+  staff: staffReducer,
+  site: siteReducer,
+  project: projectReducer,
+  vendor: vendorReducer,
+  inventory: inventoryReducer,
 });
 
 export default reducer;

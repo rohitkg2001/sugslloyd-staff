@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
+import axios from "axios";
+//import { Alert } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import { useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -158,12 +160,18 @@ const AddBillForm = ({ navigation }) => {
     updatedErrors.start = value.trim() === "" ? "PNR is required" : "";
     setErrors(updatedErrors);
   };
+  // const addPnrFieldStart = () => {
+  //   setStartJourneyPnr([...start_journey_pnr, ""]);
+  //   setErrors((prev) => ({
+  //     ...prev,
+  //     start: [...prev.start, ""],
+  //   }));
+  // };
+
   const addPnrFieldStart = () => {
-    setStartJourneyPnr([...start_journey_pnr, ""]);
-    setErrors((prev) => ({
-      ...prev,
-      start: [...prev.start, ""],
-    }));
+    // Since start_journey_pnr is a string, we can't treat it as an array
+    // Instead, we should append to the existing string or handle it differently
+    setStartJourneyPnr(start_journey_pnr + ", ");
   };
 
   const removePnrFieldStart = (index) => {
@@ -182,14 +190,18 @@ const AddBillForm = ({ navigation }) => {
     updatedErrors.end = value.trim() === "" ? "PNR is required" : "";
     setErrors(updatedErrors);
   };
+  // const addPnrFieldEnd = () => {
+  //   setEndJourneyPnr([...end_journey_pnr, ""]);
+  //   setErrors((prev) => ({
+  //     ...prev,
+  //     end: [...prev.end, ""],
+  //   }));
+  // };
   const addPnrFieldEnd = () => {
-    setEndJourneyPnr([...end_journey_pnr, ""]);
-    setErrors((prev) => ({
-      ...prev,
-      end: [...prev.end, ""],
-    }));
+    // Since end_journey_pnr is a string, we can't treat it as an array
+    // Instead, we should append to the existing string or handle it differently
+    setEndJourneyPnr(end_journey_pnr + ", ");
   };
-
   const removePnrFieldEnd = (index) => {
     const updated = [...end_journey_pnr];
     updated.splice(index, 1);
@@ -238,67 +250,83 @@ const AddBillForm = ({ navigation }) => {
 
   const handleSubmit = async () => {
     try {
+      // Validate required fields
+      if (!form.user_id) {
+        Alert.alert("Error", "User ID is required");
+        return;
+      }
+
+      // Ensure numeric fields are properly converted to numbers
       const payload = {
-        user_id: Number(form.user_id) || 0,
+        user_id: Number(form.user_id),
         visit_approve: form.visit_approve || "",
         objective_tour: form.objective_tour || "",
         meeting_visit: form.meeting_visit || "",
         outcome_achieve: form.outcome_achieve || "",
-        start_journey: form.start_journey || "",
-        start_journey_time: form.start_journey_time || "",
-        end_journey: form.end_journey || "",
-        end_journey_time: form.end_journey_time || "",
+        start_journey: form.start_journey || null,
+        start_journey_time: form.start_journey_time || null,
+        end_journey: form.end_journey || null,
+        end_journey_time: form.end_journey_time || null,
         transport: form.transport || "",
-        start_journey_pnr: start_journey_pnr,
-        end_journey_pnr: end_journey_pnr,
+        start_journey_pnr: start_journey_pnr || "",
+        end_journey_pnr: end_journey_pnr || "",
         from_city: form.from_city || "",
         to_city: form.to_city || "",
-        total_km: Number(form.total_km) || 0,
-        rate_per_km: Number(form.rate_per_km) || 0,
-        Rent: Number(form.Rent) || 0,
+        total_km: form.total_km ? Number(form.total_km) : 0,
+        rate_per_km: form.rate_per_km ? Number(form.rate_per_km) : 0,
+        Rent: form.Rent ? Number(form.Rent) : 0,
         vehicle_no: form.vehicle_no || "",
         category: form.category || "",
         description_category: form.description_category || "",
         otherexpense: {
-          meal: Number(form.otherexpense?.meal) || 0,
-          parking: Number(form.otherexpense?.parking) || 0,
+          meal: form.otherexpense?.meal ? Number(form.otherexpense.meal) : 0,
+          parking: form.otherexpense?.parking
+            ? Number(form.otherexpense.parking)
+            : 0,
         },
-        travelfare: formFields.map((item) => ({
-          from: item?.from || "",
-          to: item?.to || "",
-          departure_date: item?.departure_date || "",
-          departure_time: item?.departure_time || "",
-          arrival_date: item?.arrival_date || "",
-          arrival_time: item?.arrival_time || "",
-          modeoftravel: item?.modeoftravel || "",
-          add_total_km: Number(item?.add_total_km) || 0,
-          add_rate_per_km: Number(item?.add_rate_per_km) || 0,
-          add_rent: Number(item?.add_rent) || 0,
-          add_vehicle_no: item?.add_vehicle_no || "",
-          amount: Number(item?.amount) || 0,
+        travelfare: formFields.map((field) => ({
+          from: field.from || "",
+          to: field.to || "",
+          departure_date: field.departure_date || null,
+          departure_time: field.departure_time || null,
+          arrival_date: field.arrival_date || null,
+          arrival_time: field.arrival_time || null,
+          modeoftravel: field.modeoftravel || "",
+          add_total_km: field.add_total_km ? Number(field.add_total_km) : 0,
+          add_rate_per_km: field.add_rate_per_km
+            ? Number(field.add_rate_per_km)
+            : 0,
+          add_rent: field.add_rent ? Number(field.add_rent) : 0,
+          add_vehicle_no: field.add_vehicle_no || "",
+          amount: field.amount ? Number(field.amount) : 0,
         })),
-        dailyfare: dailyFareFields.map((item) => ({
-          place: item?.place || "",
-          HotelBillNo: item?.HotelBillNo || "",
-          date_of_stay: item?.date_of_stay || "",
-          amount: Number(item?.amount) || 0,
+        dailyfare: dailyFareFields.map((field) => ({
+          place: field.place || "",
+          HotelBillNo: field.HotelBillNo || "",
+          date_of_stay: field.date_of_stay || null,
+          amount: field.amount ? Number(field.amount) : 0,
         })),
       };
 
-      console.log("Payload to submit:", payload);
+      console.log("Payload to submit:", JSON.stringify(payload));
 
+      // Dispatch the action and wait for the result
       const success = await dispatch(addBill(payload));
+
       if (success) {
         Alert.alert("Success", "Bill submitted successfully!");
+        navigation.navigate("travelManagement");
       } else {
         Alert.alert("Error", "Failed to submit the bill. Please try again.");
       }
     } catch (error) {
       console.error("Submit Error:", error);
-      Alert.alert("Error", "An unexpected error occurred.");
+      Alert.alert(
+        "Error",
+        "An unexpected error occurred: " + (error.message || "Unknown error")
+      );
     }
   };
-
   return (
     <ContainerComponent>
       <MyHeader title={"Add Bill"} hasIcon={true} isBack={true} />

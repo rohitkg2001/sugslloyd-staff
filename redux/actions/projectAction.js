@@ -8,6 +8,7 @@ import {
   GET_ALL_BILLS,
   GET_ALL_CONVEYANCE,
   GET_CONVEYANCE_BY_ID,
+  GET_BILL_BY_ID,
 } from "../constant";
 
 export const getStateById = async (id) => {
@@ -140,92 +141,49 @@ export const getAllConveyance = () => async (dispatch) => {
   }
 };
 
-// export const addBill = (billData) => async (dispatch) => {
-//   try {
-//     console.log("Posting bill data to API:", billData);
-
-//     const response = await axios.post(`${BASE_URL}/api/tadas`, billData, {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-
-//     dispatch({
-//       type: ADD_BILL,
-//       payload: response.data,
-//     });
-
-//     console.log("Bill posted successfully.");
-//     return true;
-//   } catch (error) {
-//     const errorMessage =
-//       error?.response?.data?.message ||
-//       error?.message ||
-//       "Unknown error occurred";
-
-//     console.error("Failed to post bill:", errorMessage);
-//     return false;
-//   }
-// };
 export const addBill = (billData) => async (dispatch) => {
   try {
-    // Log the data in a safe way
-    try {
-      console.log(
-        "Posting bill data to API:",
-        JSON.stringify(billData, null, 2)
-      );
-    } catch (logErr) {
-      console.warn("Could not stringify billData:", logErr);
-    }
+    console.log("Sending bill data:", JSON.stringify(billData));
 
-    const response = await axios.post(`${BASE_URL}/api/tadas`, billData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.post(`${BASE_URL}/api/tadas`, billData);
 
-    dispatch({
-      type: ADD_BILL,
-      payload: response.data,
-    });
+    console.log("Response:", response.status, response.data);
 
-    console.log("Bill posted successfully.");
+    dispatch({ type: ADD_BILL, payload: response.data });
     return true;
   } catch (error) {
-    // ✔ Safe error handling: handle all possible shapes of `error.response.data`
-    let errorMessage = "Unknown error occurred";
+    console.error("Add Bill Error:", error);
 
-    if (error?.response) {
-      if (typeof error.response.data === "object") {
-        errorMessage =
-          error.response.data.message || JSON.stringify(error.response.data);
-      } else {
-        errorMessage = error.response.data;
-      }
-    } else if (error?.message) {
-      errorMessage = error.message;
+    if (error.response) {
+      // The server responded with an error status
+      console.error(
+        "Server responded with:",
+        error.response.status,
+        error.response.data
+      );
+    } else if (error.request) {
+      // The request was made but no response received
+      console.error("No response received:", error.request);
+    } else {
+      // Something else caused the error
+      console.error("Error setting up request:", error.message);
     }
 
-    console.error("Failed to post bill:", errorMessage);
     return false;
   }
 };
 
-export const getAllBills = () => async (dispatch) => {
+export const getBillById = (userId) => async (dispatch) => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/tadas`);
+    const { data } = await axios.get(`${BASE_URL}/api/tadas/${userId}`);
 
-    dispatch({
-      type: GET_ALL_BILLS,
-      payload: response.data,
-    });
-
-    console.log("Fetched all bills successfully.");
+    if (data?.status && Array.isArray(data.data)) {
+      dispatch({ type: GET_BILL_BY_ID, payload: data.data });
+    } else {
+      dispatch({ type: GET_BILL_BY_ID, payload: [] });
+    }
   } catch (error) {
-    console.error(
-      "Failed to fetch bills:",
-      error.response?.data?.message || error.message
-    );
+    console.error("Failed to fetch TADA bills:", error);
+    dispatch({ type: GET_BILL_BY_ID, payload: [] });
   }
 };
