@@ -7,9 +7,9 @@ import {
   Alert,
   TouchableOpacity,
   Pressable,
+  Platform,
 } from "react-native";
-import axios from "axios";
-//import { Alert } from "react-native";
+
 import * as DocumentPicker from "expo-document-picker";
 import { useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -53,7 +53,8 @@ const AddBillForm = ({ navigation }) => {
     travelfare: [],
     dailyfare: [],
   });
-
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showDepartureTimePicker, setShowDepartureTimePicker] = useState(false);
   const [ticket, setTicket] = useState(null);
   const [hotelBill, setHotelBill] = useState(null);
   const [errors, setErrors] = useState({ start: [""], end: [""] });
@@ -150,10 +151,6 @@ const AddBillForm = ({ navigation }) => {
     }
   };
 
-  const isValidDate = (dateString) => {
-    return /^\d{4}-\d{2}-\d{2}$/.test(dateString);
-  };
-
   const handlePnrChangeStart = (value) => {
     setStartJourneyPnr(value); // Directly set the string value
     const updatedErrors = { ...errors };
@@ -169,8 +166,6 @@ const AddBillForm = ({ navigation }) => {
   // };
 
   const addPnrFieldStart = () => {
-    // Since start_journey_pnr is a string, we can't treat it as an array
-    // Instead, we should append to the existing string or handle it differently
     setStartJourneyPnr(start_journey_pnr + ", ");
   };
 
@@ -190,16 +185,7 @@ const AddBillForm = ({ navigation }) => {
     updatedErrors.end = value.trim() === "" ? "PNR is required" : "";
     setErrors(updatedErrors);
   };
-  // const addPnrFieldEnd = () => {
-  //   setEndJourneyPnr([...end_journey_pnr, ""]);
-  //   setErrors((prev) => ({
-  //     ...prev,
-  //     end: [...prev.end, ""],
-  //   }));
-  // };
   const addPnrFieldEnd = () => {
-    // Since end_journey_pnr is a string, we can't treat it as an array
-    // Instead, we should append to the existing string or handle it differently
     setEndJourneyPnr(end_journey_pnr + ", ");
   };
   const removePnrFieldEnd = (index) => {
@@ -327,6 +313,7 @@ const AddBillForm = ({ navigation }) => {
       );
     }
   };
+
   return (
     <ContainerComponent>
       <MyHeader title={"Add Bill"} hasIcon={true} isBack={true} />
@@ -355,10 +342,10 @@ const AddBillForm = ({ navigation }) => {
         />
 
         <MyTextInput
-          title="Meeting/Visit Location"
+          title="Meeting/Purpose"
           value={form.meeting_visit}
           onChangeText={(text) => handleChange("meeting_visit", text)}
-          placeholder="Meeting/Visit Location"
+          placeholder="Meeting/Purpose"
         />
 
         <MyTextInput
@@ -569,7 +556,6 @@ const AddBillForm = ({ navigation }) => {
             <MyPickerInput
               title={"From"}
               value={form.from_city}
-              // onChange={setFromCity}
               onChange={(text) => handleChange("from_city", text)}
               options={[
                 { label: "Patna", value: "Patna" },
@@ -743,34 +729,72 @@ const AddBillForm = ({ navigation }) => {
             <MyTextInput
               title="Departure Date"
               value={form.departure_date}
-              onChangeText={(text) =>
-                handleChange("departure_date", text, index)
-              }
+              onPress={() => showDatePicker("departure_date", index)}
               placeholder="YYYY-MM-DD"
             />
 
             <MyTextInput
               title="Departure Time"
               value={form.departure_time}
-              onChangeText={(text) =>
-                handleChange("departure_time", text, index)
-              }
+              onPressIn={() => setShowDepartureTimePicker(true)} // open picker
               placeholder="HH:MM:SS"
             />
+
+            {/* Time Picker for Departure Time */}
+            {showDepartureTimePicker && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                is24Hour={true}
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={(event, selectedDate) => {
+                  setShowDepartureTimePicker(false); // hide picker
+                  if (selectedDate) {
+                    const time = selectedDate.toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    });
+                    handleChange("departure_time", time, index);
+                  }
+                }}
+              />
+            )}
 
             <MyTextInput
               title="Arrival Date"
               value={form.arrival_date}
-              onChangeText={(text) => handleChange("arrival_date", text, index)}
+              onPress={() => showDatePicker("arrival_date", index)}
               placeholder="YYYY-MM-DD"
             />
 
             <MyTextInput
               title="Arrival Time"
               value={form.arrival_time}
-              onChangeText={(text) => handleChange("arrival_time", text, index)}
+              onPressIn={() => setShowTimePicker(true)}
               placeholder="HH:MM:SS"
             />
+
+            {/* Time Picker */}
+            {showTimePicker && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                is24Hour={true}
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={(event, selectedDate) => {
+                  setShowTimePicker(false); // close picker
+                  if (selectedDate) {
+                    const time = selectedDate.toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    });
+                    handleChange("arrival_time", time, index);
+                  }
+                }}
+              />
+            )}
 
             <MyTextInput
               title="Mode of Travel"

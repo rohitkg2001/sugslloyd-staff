@@ -2,7 +2,6 @@
 import { View, Text } from "react-native";
 import { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useRoute } from "@react-navigation/native"; // Import useRoute
 
 // Import Components
 import ContainerComponent from "../components/ContainerComponent";
@@ -25,15 +24,14 @@ import {
 } from "../styles";
 
 export default function TravelManagement({ navigation }) {
-  const route = useRoute();
   const dispatch = useDispatch();
-  const newTravelData = route.params?.travelData;
-  const { firstName } = useSelector((state) => state.staff);
+
+  const { firstName, id: my_id } = useSelector((state) => state.staff);
   const [travelPlans, setTravelPlans] = useState([]);
 
   useEffect(() => {
-    dispatch(getBillById(68)); // or dynamic userId if available
-  }, [dispatch]);
+    dispatch(getBillById(my_id));
+  }, [dispatch, my_id]);
 
   const { bills } = useSelector((state) => state.project); // from your reducer
 

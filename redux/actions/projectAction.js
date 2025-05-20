@@ -173,9 +173,9 @@ export const addBill = (billData) => async (dispatch) => {
   }
 };
 
-export const getBillById = (userId) => async (dispatch) => {
+export const getBillById = (my_id) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`${BASE_URL}/api/tadas/${userId}`);
+    const { data } = await axios.get(`${BASE_URL}/api/tadas/${my_id}`);
 
     if (data?.status && Array.isArray(data.data)) {
       dispatch({ type: GET_BILL_BY_ID, payload: data.data });
