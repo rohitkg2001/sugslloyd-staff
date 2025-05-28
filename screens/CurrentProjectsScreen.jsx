@@ -39,6 +39,7 @@ export default function CurrentProjectsScreen({ navigation }) {
     menuVisible,
     selectedTargets,
     showVendorSelection,
+    setShowVendorSelection,
     activeTab,
     menuRef,
     showBottomSheet,

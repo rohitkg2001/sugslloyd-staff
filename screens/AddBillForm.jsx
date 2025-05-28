@@ -696,7 +696,7 @@ const AddBillForm = ({ navigation }) => {
           </View>
         </View>
 
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "flex-end",
@@ -740,7 +740,7 @@ const AddBillForm = ({ navigation }) => {
               placeholder="HH:MM:SS"
             />
 
-            {/* Time Picker for Departure Time */}
+           
             {showDepartureTimePicker && (
               <DateTimePicker
                 value={new Date()}
@@ -775,7 +775,7 @@ const AddBillForm = ({ navigation }) => {
               placeholder="HH:MM:SS"
             />
 
-            {/* Time Picker */}
+          
             {showTimePicker && (
               <DateTimePicker
                 value={new Date()}
@@ -848,6 +848,166 @@ const AddBillForm = ({ navigation }) => {
               keyboardType="numeric"
             />
 
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity onPress={() => removeTransactionField(index)}>
+                <Text style={{ color: "red", fontWeight: "bold" }}>Remove</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={addTransactionField}>
+                <Text style={{ color: "#76885B", fontWeight: "bold" }}>
+                  Add More Miscellaneous Bills
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ))} */}
+
+        {/* Show this only when there are no fields yet */}
+        {formFields.length === 0 && (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              marginTop: 10,
+            }}
+          >
+            <TouchableOpacity onPress={addTransactionField}>
+              <Text style={{ color: "#76885B", fontWeight: "bold" }}>
+                Add More Miscellaneous Bills
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {formFields.map((form, index) => (
+          <View key={index} style={{ marginBottom: 20 }}>
+            {/* Form fields start */}
+            <MyTextInput
+              title="From"
+              value={form.from}
+              onChangeText={(text) => handleChange("from", text, index)}
+              placeholder="From"
+            />
+            <MyTextInput
+              title="To"
+              value={form.to}
+              onChangeText={(text) => handleChange("to", text, index)}
+              placeholder="To"
+            />
+            <MyTextInput
+              title="Departure Date"
+              value={form.departure_date}
+              onPress={() => showDatePicker("departure_date", index)}
+              placeholder="YYYY-MM-DD"
+            />
+            <MyTextInput
+              title="Departure Time"
+              value={form.departure_time}
+              onPressIn={() => setShowDepartureTimePicker(true)}
+              placeholder="HH:MM:SS"
+            />
+            {showDepartureTimePicker && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                is24Hour={true}
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={(event, selectedDate) => {
+                  setShowDepartureTimePicker(false);
+                  if (selectedDate) {
+                    const time = selectedDate.toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    });
+                    handleChange("departure_time", time, index);
+                  }
+                }}
+              />
+            )}
+            <MyTextInput
+              title="Arrival Date"
+              value={form.arrival_date}
+              onPress={() => showDatePicker("arrival_date", index)}
+              placeholder="YYYY-MM-DD"
+            />
+            <MyTextInput
+              title="Arrival Time"
+              value={form.arrival_time}
+              onPressIn={() => setShowTimePicker(true)}
+              placeholder="HH:MM:SS"
+            />
+            {showTimePicker && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                is24Hour={true}
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={(event, selectedDate) => {
+                  setShowTimePicker(false);
+                  if (selectedDate) {
+                    const time = selectedDate.toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    });
+                    handleChange("arrival_time", time, index);
+                  }
+                }}
+              />
+            )}
+            <MyTextInput
+              title="Mode of Travel"
+              value={form.modeoftravel}
+              onChangeText={(text) => handleChange("modeoftravel", text, index)}
+              placeholder="e.g., Bus, Train"
+            />
+            <MyTextInput
+              title="Total KM"
+              value={form.add_total_km?.toString()}
+              onChangeText={(text) => handleChange("add_total_km", text, index)}
+              placeholder="Total KM"
+              keyboardType="numeric"
+              maxLength={6}
+            />
+            <MyTextInput
+              title="Rate per KM"
+              value={form.add_rate_per_km?.toString()}
+              onChangeText={(text) =>
+                handleChange("add_rate_per_km", text, index)
+              }
+              placeholder="Rate per KM"
+              keyboardType="numeric"
+              maxLength={6}
+            />
+            <MyTextInput
+              title="Rent"
+              value={form.add_rent?.toString()}
+              onChangeText={(text) => handleChange("add_rent", text, index)}
+              placeholder="Rent"
+              keyboardType="numeric"
+            />
+            <MyTextInput
+              title="Vehicle No"
+              value={form.add_vehicle_no}
+              onChangeText={(text) =>
+                handleChange("add_vehicle_no", text, index)
+              }
+              placeholder="Vehicle No"
+            />
+            <MyTextInput
+              title="Amount"
+              value={form.amount?.toString()}
+              onChangeText={(text) => handleChange("amount", text, index)}
+              placeholder="Amount"
+              keyboardType="numeric"
+            />
+            {/* Buttons for each block */}
             <View
               style={{
                 flexDirection: "row",
