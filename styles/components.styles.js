@@ -15,10 +15,10 @@ import {
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    flex: 1,
     backgroundColor: LIGHT,
     alignItems: "center",
-   // marginTop: StatusBar.currentHeight,
+    marginTop: StatusBar.currentHeight,
   },
 
   imageContainerImg: {

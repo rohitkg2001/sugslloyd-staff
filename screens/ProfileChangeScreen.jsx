@@ -1,16 +1,25 @@
-// import React native
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Image, TouchableOpacity, ImageBackground } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { P, H6 } from "../components/text";
 import { typography, spacing, LIGHT } from "../styles";
+import { useSelector } from "react-redux";
 
 const ProfileChangeScreen = ({ route, navigation }) => {
   const { profileImage, StaffName, contactNo, email, address } = route.params;
 
+  const updatedProfileImage = useSelector((state) => state.staff.profileImage);
   const [StaffImage, setProfileImage] = useState(
     profileImage || "https://via.placeholder.com/150"
   );
+
+  // Update profile image when it changes in Redux or global state
+  useEffect(() => {
+    if (updatedProfileImage) {
+      setProfileImage(updatedProfileImage);
+    }
+  }, [updatedProfileImage]);
+
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
@@ -37,7 +46,6 @@ const ProfileChangeScreen = ({ route, navigation }) => {
           spacing.p5,
           spacing.br4,
           spacing.mh3,
-
           {
             alignItems: "center",
             backgroundColor: "#2C3E50",
@@ -47,7 +55,7 @@ const ProfileChangeScreen = ({ route, navigation }) => {
         ]}
       >
         <Image
-          source={{ uri: profileImage }}
+          source={{ uri: StaffImage }}
           style={{
             width: 100,
             height: 100,
@@ -84,7 +92,6 @@ const ProfileChangeScreen = ({ route, navigation }) => {
           <Ionicons name="camera-outline" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
-      ;
       <View
         style={[
           spacing.mt4,

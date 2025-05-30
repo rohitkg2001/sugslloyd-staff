@@ -26,11 +26,19 @@ export default function MyHeader({
 
   return (
     <View style={styles.headerStyle}>
-      {isBack && (
+      {/* {isBack && (
         <TouchableOpacity onPress={download}>
           <Icon name="arrow-back" size={ICON_SMALL} color="#000" />
         </TouchableOpacity>
+      )} */}
+      {isBack && (
+        <TouchableOpacity
+          onPress={download ? download : () => navigation.goBack()}
+        >
+          <Icon name="arrow-back" size={ICON_SMALL} color="#000" />
+        </TouchableOpacity>
       )}
+
       <H4 style={[typography.font14, typography.fontLato, typography.textBold]}>
         {title}
       </H4>

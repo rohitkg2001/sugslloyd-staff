@@ -83,7 +83,7 @@ export default function DashboardScreen({ navigation }) {
           />
           <Button
             style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
-            onPress={() => setShowBottomSheet(!showBottomSheet)}
+           // onPress={() => setShowBottomSheet(!showBottomSheet)}
           >
             <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
           </Button>

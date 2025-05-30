@@ -265,7 +265,9 @@ export default function CurrentProjectsScreen({ navigation }) {
                           },
                         ]}
                         onPress={() =>
-                          navigation.navigate("taskViewScreen", { id: item.id })
+                          navigation.navigate("targetManagementScreen", {
+                            id: item.id,
+                          })
                         }
                       >
                         <P style={{ color: "#fff", fontWeight: "bold" }}>
