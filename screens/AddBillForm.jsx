@@ -179,7 +179,7 @@ const AddBillForm = ({ navigation }) => {
   const handlePnrChangeEnd = (value) => {
     setEndJourneyPnr(value); // Directly set the string value
     const updatedErrors = { ...errors };
-    updatedErrors.end = value.trim() === "" ? "PNR is required" : "";
+    // updatedErrors.end = value.trim() === "" ? "PNR is required" : "";
     setErrors(updatedErrors);
   };
   const addPnrFieldEnd = () => {
@@ -249,8 +249,18 @@ const AddBillForm = ({ navigation }) => {
         end_journey: form.end_journey || "",
         end_journey_time: form.end_journey_time || "",
         transport: form.transport || "",
-        start_journey_pnr: start_journey_pnr,
-        end_journey_pnr: end_journey_pnr,
+        start_journey_pnr: Array.isArray(start_journey_pnr)
+          ? start_journey_pnr
+          : start_journey_pnr
+          ? [start_journey_pnr]
+          : [],
+
+        end_journey_pnr: Array.isArray(end_journey_pnr)
+          ? end_journey_pnr
+          : end_journey_pnr
+          ? [end_journey_pnr]
+          : [],
+
         from_city: form.from_city || "",
         to_city: form.to_city || "",
         total_km: Number(form.total_km) || 0,
@@ -298,7 +308,6 @@ const AddBillForm = ({ navigation }) => {
       Alert.alert("Error", "An unexpected error occurred.");
     }
   };
-  
 
   return (
     <ContainerComponent>
@@ -412,7 +421,6 @@ const AddBillForm = ({ navigation }) => {
             Journey Ticket
           </H6>
 
-   
           <MyTextInput
             title="Start Journey PNR"
             value={start_journey_pnr} // Bind directly to the string value
@@ -483,26 +491,6 @@ const AddBillForm = ({ navigation }) => {
             Journey Return Ticket
           </H6>
 
-          {/* {end_journey_pnr.map((pnr, index) => (
-            <View key={index}>
-              <MyTextInput
-                title={`Return PNR Number ${index + 1}`}
-                // value={pnr}
-                // onChangeText={(value) => handlePnrChangeEnd(value, index)}
-                value={end_journey_pnr}
-                onChangeText={setEndJourneyPnr}
-                placeholder="Upload Return Ticket & Enter PNR"
-              />
-              {errors.end[index] ? (
-                <Text style={{ color: "red" }}>{errors.end[index]}</Text>
-              ) : null}
-              {end_journey_pnr.length > 1 && (
-                <TouchableOpacity onPress={() => removePnrFieldEnd(index)}>
-                  <Text style={{ color: "red" }}>Remove</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          ))} */}
           <MyTextInput
             title="End Journey PNR"
             value={end_journey_pnr} // Bind directly to the string value
