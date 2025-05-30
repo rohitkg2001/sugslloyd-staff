@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { View, ScrollView, TouchableOpacity } from "react-native";
 import {
   SCREEN_WIDTH,
@@ -12,7 +12,6 @@ import { H5, H6, Span, P, H3 } from "../components/text";
 import { useTranslation } from "react-i18next";
 import { inventoryData } from "../utils/faker";
 import MyFlatList from "../components/utility/MyFlatList";
-import Tabs from "../components/Tabs";
 import NoRecord from "./NoRecord";
 import { getStateById } from "../redux/actions/projectAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -240,30 +239,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
             </Span>
           )}
         </View>
-        <View>
-          {/* <Tabs
-            tabs={[t("Sites"), t("Inventory"), t("Target")]}
-            onTabPress={(index) => {
-              const tabName = ["Sites", "Inventory", "Target"][index];
-              setActiveTab(tabName);
-            }}
-          /> */}
-
-          <View>
-            <Tabs
-              tabs={[
-                `${t("Sites")} (${sites.length})`,
-                t("Inventory"),
-                t("Target"),
-              ]}
-              onTabPress={(index) => {
-                const tabName = ["Sites", "Inventory", "Target"][index];
-                setActiveTab(tabName);
-              }}
-            />
-          </View>
-        </View>
-        {renderActiveTab()}
       </ScrollView>
     </View>
   );

@@ -1,94 +1,45 @@
-// import React from "react";
-// import { useWindowDimensions } from "react-native";
-// import { TabView } from "react-native-tab-view";
+import React from "react";
+import { View, TouchableOpacity } from "react-native";
+import { P } from "../text";
+import { spacing, styles, PRIMARY_COLOR } from "../../styles";
 
-// export default function SwipeTab({
-//   tabs,
-//   renderScene,
-//   index,
-//   onIndexChange,
-//   style,
-// }) {
-//   const layout = useWindowDimensions();
-
-//   return (
-//     <TabView
-//       navigationState={{ index, routes: tabs }}
-//       renderScene={renderScene}
-//       onIndexChange={onIndexChange}
-//       initialLayout={{ width: layout.width }}
-//       swipeEnabled={true}
-//       style={style}
-//     />
-//   );
-// }
-
-import { useWindowDimensions, Text, StyleSheet } from "react-native";
-import { TabView, TabBar } from "react-native-tab-view";
-
-export default function SwipeTab({
-  tabs,
-  renderScene,
-  index,
-  onIndexChange,
-  style,
-  tabLabelStyle,
-  tabIndicatorStyle,
-  tabStyle,
-}) {
-  const layout = useWindowDimensions();
-
-  const renderTabBar = (props) => (
-    <TabBar
-      {...props}
-      scrollEnabled
-      style={[styles.tabBar, style]}
-      indicatorStyle={[styles.indicator, tabIndicatorStyle]}
-      tabStyle={[styles.tabStyle, tabStyle]}
-      renderLabel={({ route, focused }) => (
-        <Text
-          style={[styles.label, focused && styles.labelFocused, tabLabelStyle]}
-        >
-          {route.title}
-        </Text>
-      )}
-    />
-  );
-
+const SwipeTab = ({ tabs, selectedTab, setSelectedTab }) => {
   return (
-    <TabView
-      navigationState={{ index, routes: tabs }}
-      renderScene={renderScene}
-      onIndexChange={onIndexChange}
-      initialLayout={{ width: layout.width }}
-      swipeEnabled={true}
-      renderTabBar={renderTabBar}
-    />
+    <View
+      style={[
+        styles.row,
+        spacing.ph1,
+        spacing.pv2,
+        {
+          justifyContent: "space-around",
+         // backgroundColor: "#f5f5f5",
+        },
+      ]}
+    >
+      {tabs.map((tab) => (
+        <TouchableOpacity
+          key={tab.key}
+          onPress={() => setSelectedTab(tab.key)}
+          style={{
+            paddingVertical: 8,
+            paddingHorizontal: 12,
+            borderBottomWidth: selectedTab === tab.key ? 2 : 0,
+            borderBottomColor:
+              selectedTab === tab.key ? PRIMARY_COLOR : "transparent",
+          }}
+        >
+          <P
+            style={{
+              color: selectedTab === tab.key ? PRIMARY_COLOR : "#555",
+              fontWeight: selectedTab === tab.key ? "bold" : "normal",
+            }}
+          >
+            {tab.title}
+          </P>
+        </TouchableOpacity>
+      ))}
+    </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  tabBar: {
-    backgroundColor: "#F0FAF0",
-    elevation: 4,
-  },
-  indicator: {
-    backgroundColor: "#1E88E5",
-    height: 3,
-    borderRadius: 2,
-  },
-  label: {
-    fontSize: 14,
-    color: "#666",
-    fontWeight: "500",
-    textTransform: "capitalize",
-  },
-  labelFocused: {
-    color: "#1E88E5",
-    fontWeight: "bold",
-  },
-  tabStyle: {
-    paddingHorizontal: 12,
-    // width: "auto",
-  },
-});
+export default SwipeTab;
