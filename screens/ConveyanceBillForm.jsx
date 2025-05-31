@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TouchableOpacity,
   Image,
   KeyboardAvoidingView,
   Platform,
+  Text,
+  TextInput,
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -40,43 +42,64 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   const [isToSelected, setIsToSelected] = useState(false);
 
   const handleLocationSelection = (type) => {
-    if (type === "pickup") {
-      navigation.navigate("locationSet", { type: "pickup" });
-    } else if (type === "drop") {
-      navigation.navigate("locationSet", { type: "drop" });
+    try {
+      if (type === "pickup") {
+        navigation.navigate("locationSet", { type: "pickup" });
+      } else if (type === "drop") {
+        navigation.navigate("locationSet", { type: "drop" });
+      }
+    } catch (error) {
+      console.error("Navigation error:", error);
+      showSnackbar("Navigation error occurred");
     }
   };
 
   useEffect(() => {
-    if (route.params?.from) setFrom(route.params.from);
-    if (route.params?.to) setTo(route.params.to);
-    if (route.params?.date) setCurrentDate(route.params.date);
-    if (route.params?.time) setTime(route.params.time);
+    // Add null checks for route and route.params
+    if (route && route.params) {
+      const params = route.params;
 
-    const km = route.params?.kilometer;
-    if (km) {
-      setKilometer(km);
-      calculateAmount(km);
-    } else if (route.params?.from && route.params?.to) {
-      getDistance(route.params.from, route.params.to);
+      if (params.from) setFrom(params.from);
+      if (params.to) setTo(params.to);
+      if (params.date) setCurrentDate(params.date);
+      if (params.time) setTime(params.time);
+
+      const km = params.kilometer;
+      if (km) {
+        setKilometer(km);
+        calculateAmount(km);
+      } else if (params.from && params.to) {
+        getDistance(params.from, params.to);
+      }
     }
-  }, [route.params]);
+  }, [route]); // Updated dependency array to use route directly
 
   const calculateAmount = (km) => {
-    setAmount({
-      car: parseFloat((km * 4).toFixed(2)), // vehicle_category 1
-      bike: parseFloat((km * 3).toFixed(2)), // vehicle_category 2
-      publicTransport: parseFloat((km * 5).toFixed(2)), // vehicle_category 3
-    });
+    if (km && !isNaN(km)) {
+      setAmount({
+        car: parseFloat((km * 4).toFixed(2)), // vehicle_category 1
+        bike: parseFloat((km * 3).toFixed(2)), // vehicle_category 2
+        publicTransport: parseFloat((km * 5).toFixed(2)), // vehicle_category 3
+      });
+    }
   };
 
   const showSnackbar = (message) => {
     setSnackbarMessage(message);
     setSnackbarVisible(true);
+    // Auto hide snackbar after 3 seconds
+    setTimeout(() => {
+      setSnackbarVisible(false);
+    }, 3000);
   };
 
   const getDistance = async (origin, destination) => {
-    const apiKey = "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko"; // Distance  key
+    if (!origin || !destination) {
+      showSnackbar("Please provide both origin and destination");
+      return;
+    }
+
+    const apiKey = "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko"; // Distance key
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${encodeURIComponent(
       origin
     )}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
@@ -91,9 +114,25 @@ const ConveyanceBillForm = ({ navigation, route }) => {
         return;
       }
 
+      // Add null checks for data structure
+      if (
+        !data.rows ||
+        !data.rows[0] ||
+        !data.rows[0].elements ||
+        !data.rows[0].elements[0]
+      ) {
+        showSnackbar("Invalid response from distance API");
+        return;
+      }
+
       const element = data.rows[0].elements[0];
       if (element.status !== "OK") {
         showSnackbar(`Element Error: ${element.status}`);
+        return;
+      }
+
+      if (!element.distance || !element.distance.value) {
+        showSnackbar("Distance data not available");
         return;
       }
 
@@ -107,10 +146,54 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    if (from && to) {
+    if (from && to && from.trim() !== "" && to.trim() !== "") {
       getDistance(from, to);
     }
   }, [from, to]);
+
+  const handleTransportNavigation = (vehicleType) => {
+    if (!from || !to || from.trim() === "" || to.trim() === "") {
+      showSnackbar(
+        "Please select both From and To locations before proceeding."
+      );
+      return;
+    }
+
+    if (!kilometer || !amount[vehicleType]) {
+      showSnackbar("Please wait for distance calculation to complete.");
+      return;
+    }
+
+    try {
+      setVehicleCategoryId(vehicleCategoryMap[vehicleType]);
+      navigation.navigate("transportCamera", {
+        vehicle_category: vehicleCategoryMap[vehicleType],
+        from,
+        to,
+        amount: amount[vehicleType],
+        kilometer,
+        date: currentDate,
+        time,
+      });
+    } catch (error) {
+      console.error("Navigation error:", error);
+      showSnackbar("Navigation error occurred");
+    }
+  };
+
+  const clearLocation = (type) => {
+    if (type === "from") {
+      setFrom("");
+    } else if (type === "to") {
+      setTo("");
+    }
+    setKilometer(null);
+    setAmount({ car: 0, bike: 0, publicTransport: 0 });
+  };
+
+  // Create refs for GooglePlacesAutocomplete to avoid filter errors
+  const fromRef = React.createRef();
+  const toRef = React.createRef();
 
   return (
     <ContainerComponent>
@@ -164,6 +247,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
           </View>
 
           <View style={{ flex: 1 }}>
+            {/* From Location */}
             <View
               style={{
                 flexDirection: "row",
@@ -177,43 +261,68 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 marginBottom: 10,
               }}
             >
-              <GooglePlacesAutocomplete
-                placeholder="From"
-                fetchDetails
-                onPress={(data, details = null) => {
-                  const address = details.formatted_address;
-                  setFrom(address);
-                  if (to) getDistance(address, to);
-                }}
-                query={{
-                  key: "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko",
-                  language: "en",
-                }}
-                styles={{
-                  textInput: {
-                    backgroundColor: "transparent",
-                    fontSize: 16,
+              {/* Using standard TextInput instead of GooglePlacesAutocomplete to avoid filter errors */}
+              <View
+                style={{ flex: 1, flexDirection: "row", alignItems: "center" }}
+              >
+                <Ionicons
+                  name="location-outline"
+                  size={20}
+                  color="green"
+                  style={{ marginRight: 5 }}
+                />
+                <TextInput
+                  placeholder="From"
+                  value={from}
+                  onChangeText={(text) => setFrom(text)}
+                  style={{
                     flex: 1,
-                    height: 40,
-                  },
-                  listView: { backgroundColor: "white" },
-                  container: { flex: 1 },
-                }}
-              />
-              {from !== "" && (
-                <TouchableOpacity
-                  onPress={() => {
-                    setFrom("");
-                    setKilometer(null);
-                    setAmount({ car: 0, bike: 0, publicTransport: 0 });
+                    fontSize: 14,
+                    fontFamily: "Lato-Regular",
+                    color: "#000",
                   }}
-                >
+                  placeholderTextColor="#999"
+                />
+
+                {/* <GooglePlacesAutocomplete
+                  placeholder="From"
+                  minLength={2}
+                  fetchDetails={true}
+                  onPress={(data, details = null) => {
+                    if (data && data.description) {
+                      setFrom(data.description);
+                    }
+                  }}
+                  query={{
+                    key: "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko",
+                    language: "en",
+                  }}
+                  styles={{
+                    textInput: {
+                      backgroundColor: "#F8F8F8",
+                      borderWidth: 1,
+                      borderColor: "#ccc",
+                      borderRadius: 5,
+                      paddingVertical: 10,
+                      paddingHorizontal: 12,
+                      fontSize: 14,
+                      color: "#000",
+                    },
+                    listView: { zIndex: 999 },
+                  }}
+                  debounce={200}
+                  enablePoweredByContainer={false}
+                /> */}
+              </View>
+
+              {from !== "" && (
+                <TouchableOpacity onPress={() => clearLocation("from")}>
                   <Ionicons name="close-circle" size={20} color="#999" />
                 </TouchableOpacity>
               )}
-              <Ionicons name="location-outline" size={20} color="green" />
             </View>
 
+            {/* To Location */}
             <View
               style={{
                 flexDirection: "row",
@@ -227,41 +336,36 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 marginBottom: 10,
               }}
             >
-              <GooglePlacesAutocomplete
-                placeholder="To"
-                fetchDetails
-                onPress={(data, details = null) => {
-                  const address = details.formatted_address;
-                  setTo(address);
-                  if (from) getDistance(from, address);
-                }}
-                query={{
-                  key: "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko",
-                  language: "en",
-                }}
-                styles={{
-                  textInput: {
-                    backgroundColor: "transparent",
-                    fontSize: 16,
+              {/* Using standard TextInput instead of GooglePlacesAutocomplete to avoid filter errors */}
+              <View
+                style={{ flex: 1, flexDirection: "row", alignItems: "center" }}
+              >
+                <Ionicons
+                  name="location-outline"
+                  size={20}
+                  color="red"
+                  style={{ marginRight: 5 }}
+                />
+
+                <TextInput
+                  placeholder="To"
+                  value={to}
+                  onChangeText={(text) => setTo(text)}
+                  style={{
                     flex: 1,
-                    height: 40,
-                  },
-                  listView: { backgroundColor: "white" },
-                  container: { flex: 1 },
-                }}
-              />
-              {to !== "" && (
-                <TouchableOpacity
-                  onPress={() => {
-                    setTo("");
-                    setKilometer(null);
-                    setAmount({ car: 0, bike: 0, publicTransport: 0 });
+                    fontSize: 14,
+                    fontFamily: "Lato-Regular",
+                    color: "#000",
                   }}
-                >
+                  placeholderTextColor="#999"
+                />
+              </View>
+
+              {to !== "" && (
+                <TouchableOpacity onPress={() => clearLocation("to")}>
                   <Ionicons name="close-circle" size={20} color="#999" />
                 </TouchableOpacity>
               )}
-              <Ionicons name="location-outline" size={20} color="red" />
             </View>
 
             <View style={[styles.row, { alignItems: "center" }]}>
@@ -324,24 +428,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
         <View>
           {/* Car Option */}
           <TouchableOpacity
-            onPress={() => {
-              if (!from || !to) {
-                showSnackbar(
-                  "Please select both From and To locations before proceeding."
-                );
-                return;
-              }
-              setVehicleCategoryId(vehicleCategoryMap.car);
-              navigation.navigate("transportCamera", {
-                vehicle_category: vehicleCategoryMap.car,
-                from,
-                to,
-                amount: amount.car,
-                kilometer,
-                date: currentDate,
-                time,
-              });
-            }}
+            onPress={() => handleTransportNavigation("car")}
             style={[
               styles.row,
               spacing.br2,
@@ -387,7 +474,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                   numberOfLines={1}
                   ellipsizeMode="tail"
                 >
-                  {from} - {to}
+                  {from && to ? `${from} - ${to}` : "Select locations"}
                 </P>
                 <P
                   style={[
@@ -396,7 +483,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                     typography.textBold,
                   ]}
                 >
-                  {kilometer} km
+                  {kilometer ? `${kilometer} km` : "0 km"}
                 </P>
               </View>
             </View>
@@ -414,24 +501,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
 
           {/* Bike Option */}
           <TouchableOpacity
-            onPress={() => {
-              if (!from || !to) {
-                showSnackbar(
-                  "Please select both Pickup and Drop locations before proceeding."
-                );
-                return;
-              }
-              setVehicleCategoryId(vehicleCategoryMap.bike);
-              navigation.navigate("transportCamera", {
-                vehicle_category: vehicleCategoryMap.bike,
-                from,
-                to,
-                amount: amount.bike,
-                kilometer,
-                date: currentDate,
-                time,
-              });
-            }}
+            onPress={() => handleTransportNavigation("bike")}
             style={[
               styles.row,
               spacing.br2,
@@ -477,7 +547,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                   numberOfLines={1}
                   ellipsizeMode="tail"
                 >
-                  {from} - {to}
+                  {from && to ? `${from} - ${to}` : "Select locations"}
                 </P>
                 <P
                   style={[
@@ -486,7 +556,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                     typography.textBold,
                   ]}
                 >
-                  {kilometer} km
+                  {kilometer ? `${kilometer} km` : "0 km"}
                 </P>
               </View>
             </View>
@@ -504,6 +574,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
 
           {/* Public Transport Option */}
           <TouchableOpacity
+            onPress={() => handleTransportNavigation("publicTransport")}
             style={[
               styles.row,
               spacing.br2,
@@ -549,7 +620,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                   numberOfLines={1}
                   ellipsizeMode="tail"
                 >
-                  {from} - {to}
+                  {from && to ? `${from} - ${to}` : "Select locations"}
                 </P>
                 <P
                   style={[
@@ -558,7 +629,7 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                     typography.textBold,
                   ]}
                 >
-                  {kilometer} km
+                  {kilometer ? `${kilometer} km` : "0 km"}
                 </P>
               </View>
             </View>
@@ -574,6 +645,26 @@ const ConveyanceBillForm = ({ navigation, route }) => {
             </H5>
           </TouchableOpacity>
         </View>
+
+        {/* Snackbar */}
+        {snackbarVisible && (
+          <View
+            style={{
+              position: "absolute",
+              bottom: 50,
+              left: 20,
+              right: 20,
+              backgroundColor: "#333",
+              padding: 15,
+              borderRadius: 5,
+              zIndex: 1000,
+            }}
+          >
+            <P style={{ color: "white", textAlign: "center" }}>
+              {snackbarMessage}
+            </P>
+          </View>
+        )}
       </KeyboardAvoidingView>
     </ContainerComponent>
   );

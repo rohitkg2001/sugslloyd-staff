@@ -1,4 +1,4 @@
-import { View, useWindowDimensions, TouchableOpacity } from "react-native";
+import { View, useWindowDimensions } from "react-native";
 import { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,21 +48,6 @@ export default function ConveyanceManagementScreen({ navigation }) {
     }
   }, [dispatch, userId]);
 
-  const filterConveyancesByTab = () => {
-    switch (selectedTab) {
-      case "thisWeek":
-        return conveyances.filter((c) => c.range === "week");
-      case "thisMonth":
-        return conveyances.filter((c) => c.range === "month");
-      case "approved":
-        return conveyances.filter((c) => c.status === "approved");
-      case "rejected":
-        return conveyances.filter((c) => c.status === "rejected");
-      default:
-        return conveyances;
-    }
-  };
-
   const renderConveyances = (data) => (
     <MyFlatList
       data={data}
@@ -84,19 +69,19 @@ export default function ConveyanceManagementScreen({ navigation }) {
               <P style={[typography.font12, typography.fontLato]}>
                 Vehicle Type
               </P>
-              <P style={[typography.font12]}>
+              <P style={typography.font12}>
                 {String(item.vehicle_category || "Not provided")}
               </P>
             </View>
 
             <View style={{ flex: 1, marginHorizontal: 6 }}>
               <P style={[typography.font12, typography.fontLato]}>Kilometer</P>
-              <P style={[typography.font12]}>{item.kilometer ?? "N/A"}</P>
+              <P style={typography.font12}>{item.kilometer ?? "N/A"}</P>
             </View>
 
             <View style={{ flex: 1, marginLeft: 6 }}>
               <P style={[typography.font12, typography.fontLato]}>Time</P>
-              <P style={[typography.font12]}>{item.time ?? "N/A"}</P>
+              <P style={typography.font12}>{item.time ?? "N/A"}</P>
             </View>
           </View>
 
@@ -147,7 +132,7 @@ export default function ConveyanceManagementScreen({ navigation }) {
       <DashboardHeader
         greeting="Good morning"
         firstName={firstName}
-        message="You fall under M3 category" 
+        message="You fall under M3 category"
         style={[
           spacing.p2,
           {
@@ -175,17 +160,15 @@ export default function ConveyanceManagementScreen({ navigation }) {
         </Button>
       </View>
 
-      {/* Custom Tabs */}
+      {/* Tabs - No Filtering, UI Only */}
       <SwipeTab
         tabs={tabs}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
 
-      {/* List */}
-      <View style={{ flex: 1 }}>
-        {renderConveyances(filterConveyancesByTab())}
-      </View>
+      {/* List - All Data */}
+      <View style={{ flex: 1 }}>{renderConveyances(conveyances)}</View>
 
       {/* Add Button */}
       <Button
