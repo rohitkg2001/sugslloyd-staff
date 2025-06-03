@@ -285,16 +285,19 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                 />
 
                 {/* <GooglePlacesAutocomplete
+                  ref={fromRef}
                   placeholder="From"
                   minLength={2}
                   fetchDetails={true}
                   onPress={(data, details = null) => {
-                    if (data && data.description) {
-                      setFrom(data.description);
+                    if (details && details.formatted_address) {
+                      setFromLocation(details.formatted_address);
+                    } else if (data && data.description) {
+                      setFromLocation(data.description);
                     }
                   }}
                   query={{
-                    key: "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko",
+                    key: "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko", // Your Places API Key
                     language: "en",
                   }}
                   styles={{
@@ -308,7 +311,10 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                       fontSize: 14,
                       color: "#000",
                     },
-                    listView: { zIndex: 999 },
+                    listView: {
+                      backgroundColor: "#fff",
+                      zIndex: 999,
+                    },
                   }}
                   debounce={200}
                   enablePoweredByContainer={false}
