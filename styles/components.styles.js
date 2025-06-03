@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 import {
   DANGER_COLOR,
   DARK,
@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: LIGHT,
     alignItems: "center",
+    marginTop: StatusBar.currentHeight,
   },
 
   imageContainerImg: {

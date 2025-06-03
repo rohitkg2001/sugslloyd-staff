@@ -95,6 +95,7 @@ export function useTaskFunctions(staff) {
     menuVisible,
     selectedTargets,
     showVendorSelection,
+    setShowVendorSelection,
     activeTab,
     menuRef,
     showBottomSheet,

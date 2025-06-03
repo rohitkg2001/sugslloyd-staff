@@ -7,7 +7,9 @@ import {
   Alert,
   TouchableOpacity,
   Pressable,
+  Platform,
 } from "react-native";
+
 import * as DocumentPicker from "expo-document-picker";
 import { useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -51,7 +53,8 @@ const AddBillForm = ({ navigation }) => {
     travelfare: [],
     dailyfare: [],
   });
-
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showDepartureTimePicker, setShowDepartureTimePicker] = useState(false);
   const [ticket, setTicket] = useState(null);
   const [hotelBill, setHotelBill] = useState(null);
   const [errors, setErrors] = useState({ start: [""], end: [""] });
@@ -148,22 +151,22 @@ const AddBillForm = ({ navigation }) => {
     }
   };
 
-  const isValidDate = (dateString) => {
-    return /^\d{4}-\d{2}-\d{2}$/.test(dateString);
-  };
-
   const handlePnrChangeStart = (value) => {
     setStartJourneyPnr(value); // Directly set the string value
     const updatedErrors = { ...errors };
     updatedErrors.start = value.trim() === "" ? "PNR is required" : "";
     setErrors(updatedErrors);
   };
+  // const addPnrFieldStart = () => {
+  //   setStartJourneyPnr([...start_journey_pnr, ""]);
+  //   setErrors((prev) => ({
+  //     ...prev,
+  //     start: [...prev.start, ""],
+  //   }));
+  // };
+
   const addPnrFieldStart = () => {
-    setStartJourneyPnr([...start_journey_pnr, ""]);
-    setErrors((prev) => ({
-      ...prev,
-      start: [...prev.start, ""],
-    }));
+    setStartJourneyPnr(start_journey_pnr + ", ");
   };
 
   const removePnrFieldStart = (index) => {
@@ -183,13 +186,8 @@ const AddBillForm = ({ navigation }) => {
     setErrors(updatedErrors);
   };
   const addPnrFieldEnd = () => {
-    setEndJourneyPnr([...end_journey_pnr, ""]);
-    setErrors((prev) => ({
-      ...prev,
-      end: [...prev.end, ""],
-    }));
+    setEndJourneyPnr(end_journey_pnr + ", ");
   };
-
   const removePnrFieldEnd = (index) => {
     const updated = [...end_journey_pnr];
     updated.splice(index, 1);
@@ -238,74 +236,81 @@ const AddBillForm = ({ navigation }) => {
 
   const handleSubmit = async () => {
     try {
+      // Validate required fields
+      if (!form.user_id) {
+        Alert.alert("Error", "User ID is required");
+        return;
+      }
+
+      // Ensure numeric fields are properly converted to numbers
       const payload = {
-        user_id: Number(form.user_id) || 0,
+        user_id: Number(form.user_id),
         visit_approve: form.visit_approve || "",
         objective_tour: form.objective_tour || "",
         meeting_visit: form.meeting_visit || "",
         outcome_achieve: form.outcome_achieve || "",
-        start_journey: form.start_journey || "",
-        start_journey_time: form.start_journey_time || "",
-        end_journey: form.end_journey || "",
-        end_journey_time: form.end_journey_time || "",
+        start_journey: form.start_journey || null,
+        start_journey_time: form.start_journey_time || null,
+        end_journey: form.end_journey || null,
+        end_journey_time: form.end_journey_time || null,
         transport: form.transport || "",
-        start_journey_pnr: Array.isArray(start_journey_pnr)
-          ? start_journey_pnr
-          : start_journey_pnr
-          ? [start_journey_pnr]
-          : [],
-
-        end_journey_pnr: Array.isArray(end_journey_pnr)
-          ? end_journey_pnr
-          : end_journey_pnr
-          ? [end_journey_pnr]
-          : [],
-
+        start_journey_pnr: start_journey_pnr || "",
+        end_journey_pnr: end_journey_pnr || "",
         from_city: form.from_city || "",
         to_city: form.to_city || "",
-        total_km: Number(form.total_km) || 0,
-        rate_per_km: Number(form.rate_per_km) || 0,
-        Rent: Number(form.Rent) || 0,
+        total_km: form.total_km ? Number(form.total_km) : 0,
+        rate_per_km: form.rate_per_km ? Number(form.rate_per_km) : 0,
+        Rent: form.Rent ? Number(form.Rent) : 0,
         vehicle_no: form.vehicle_no || "",
         category: form.category || "",
         description_category: form.description_category || "",
         otherexpense: {
-          meal: Number(form.otherexpense?.meal) || 0,
-          parking: Number(form.otherexpense?.parking) || 0,
+          meal: form.otherexpense?.meal ? Number(form.otherexpense.meal) : 0,
+          parking: form.otherexpense?.parking
+            ? Number(form.otherexpense.parking)
+            : 0,
         },
-        travelfare: formFields.map((item) => ({
-          from: item?.from || "",
-          to: item?.to || "",
-          departure_date: item?.departure_date || "",
-          departure_time: item?.departure_time || "",
-          arrival_date: item?.arrival_date || "",
-          arrival_time: item?.arrival_time || "",
-          modeoftravel: item?.modeoftravel || "",
-          add_total_km: Number(item?.add_total_km) || 0,
-          add_rate_per_km: Number(item?.add_rate_per_km) || 0,
-          add_rent: Number(item?.add_rent) || 0,
-          add_vehicle_no: item?.add_vehicle_no || "",
-          amount: Number(item?.amount) || 0,
+        travelfare: formFields.map((field) => ({
+          from: field.from || "",
+          to: field.to || "",
+          departure_date: field.departure_date || null,
+          departure_time: field.departure_time || null,
+          arrival_date: field.arrival_date || null,
+          arrival_time: field.arrival_time || null,
+          modeoftravel: field.modeoftravel || "",
+          add_total_km: field.add_total_km ? Number(field.add_total_km) : 0,
+          add_rate_per_km: field.add_rate_per_km
+            ? Number(field.add_rate_per_km)
+            : 0,
+          add_rent: field.add_rent ? Number(field.add_rent) : 0,
+          add_vehicle_no: field.add_vehicle_no || "",
+          amount: field.amount ? Number(field.amount) : 0,
         })),
-        dailyfare: dailyFareFields.map((item) => ({
-          place: item?.place || "",
-          HotelBillNo: item?.HotelBillNo || "",
-          date_of_stay: item?.date_of_stay || "",
-          amount: Number(item?.amount) || 0,
+        dailyfare: dailyFareFields.map((field) => ({
+          place: field.place || "",
+          HotelBillNo: field.HotelBillNo || "",
+          date_of_stay: field.date_of_stay || null,
+          amount: field.amount ? Number(field.amount) : 0,
         })),
       };
 
-      console.log("Payload to submit:", payload);
+      console.log("Payload to submit:", JSON.stringify(payload));
 
+      // Dispatch the action and wait for the result
       const success = await dispatch(addBill(payload));
+
       if (success) {
         Alert.alert("Success", "Bill submitted successfully!");
+        navigation.navigate("travelManagement");
       } else {
         Alert.alert("Error", "Failed to submit the bill. Please try again.");
       }
     } catch (error) {
       console.error("Submit Error:", error);
-      Alert.alert("Error", "An unexpected error occurred.");
+      Alert.alert(
+        "Error",
+        "An unexpected error occurred: " + (error.message || "Unknown error")
+      );
     }
   };
 
@@ -337,10 +342,10 @@ const AddBillForm = ({ navigation }) => {
         />
 
         <MyTextInput
-          title="Meeting/Visit Location"
+          title="Meeting/Purpose"
           value={form.meeting_visit}
           onChangeText={(text) => handleChange("meeting_visit", text)}
-          placeholder="Meeting/Visit Location"
+          placeholder="Meeting/Purpose"
         />
 
         <MyTextInput
@@ -510,7 +515,6 @@ const AddBillForm = ({ navigation }) => {
             <MyPickerInput
               title={"From"}
               value={form.from_city}
-              // onChange={setFromCity}
               onChange={(text) => handleChange("from_city", text)}
               options={[
                 { label: "Patna", value: "Patna" },
@@ -651,7 +655,7 @@ const AddBillForm = ({ navigation }) => {
           </View>
         </View>
 
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "flex-end",
@@ -684,34 +688,72 @@ const AddBillForm = ({ navigation }) => {
             <MyTextInput
               title="Departure Date"
               value={form.departure_date}
-              onChangeText={(text) =>
-                handleChange("departure_date", text, index)
-              }
+              onPress={() => showDatePicker("departure_date", index)}
               placeholder="YYYY-MM-DD"
             />
 
             <MyTextInput
               title="Departure Time"
               value={form.departure_time}
-              onChangeText={(text) =>
-                handleChange("departure_time", text, index)
-              }
+              onPressIn={() => setShowDepartureTimePicker(true)} // open picker
               placeholder="HH:MM:SS"
             />
+
+           
+            {showDepartureTimePicker && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                is24Hour={true}
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={(event, selectedDate) => {
+                  setShowDepartureTimePicker(false); // hide picker
+                  if (selectedDate) {
+                    const time = selectedDate.toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    });
+                    handleChange("departure_time", time, index);
+                  }
+                }}
+              />
+            )}
 
             <MyTextInput
               title="Arrival Date"
               value={form.arrival_date}
-              onChangeText={(text) => handleChange("arrival_date", text, index)}
+              onPress={() => showDatePicker("arrival_date", index)}
               placeholder="YYYY-MM-DD"
             />
 
             <MyTextInput
               title="Arrival Time"
               value={form.arrival_time}
-              onChangeText={(text) => handleChange("arrival_time", text, index)}
+              onPressIn={() => setShowTimePicker(true)}
               placeholder="HH:MM:SS"
             />
+
+          
+            {showTimePicker && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                is24Hour={true}
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={(event, selectedDate) => {
+                  setShowTimePicker(false); // close picker
+                  if (selectedDate) {
+                    const time = selectedDate.toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    });
+                    handleChange("arrival_time", time, index);
+                  }
+                }}
+              />
+            )}
 
             <MyTextInput
               title="Mode of Travel"
@@ -765,6 +807,166 @@ const AddBillForm = ({ navigation }) => {
               keyboardType="numeric"
             />
 
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity onPress={() => removeTransactionField(index)}>
+                <Text style={{ color: "red", fontWeight: "bold" }}>Remove</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={addTransactionField}>
+                <Text style={{ color: "#76885B", fontWeight: "bold" }}>
+                  Add More Miscellaneous Bills
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ))} */}
+
+        {/* Show this only when there are no fields yet */}
+        {formFields.length === 0 && (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              marginTop: 10,
+            }}
+          >
+            <TouchableOpacity onPress={addTransactionField}>
+              <Text style={{ color: "#76885B", fontWeight: "bold" }}>
+                Add More Miscellaneous Bills
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {formFields.map((form, index) => (
+          <View key={index} style={{ marginBottom: 20 }}>
+            {/* Form fields start */}
+            <MyTextInput
+              title="From"
+              value={form.from}
+              onChangeText={(text) => handleChange("from", text, index)}
+              placeholder="From"
+            />
+            <MyTextInput
+              title="To"
+              value={form.to}
+              onChangeText={(text) => handleChange("to", text, index)}
+              placeholder="To"
+            />
+            <MyTextInput
+              title="Departure Date"
+              value={form.departure_date}
+              onPress={() => showDatePicker("departure_date", index)}
+              placeholder="YYYY-MM-DD"
+            />
+            <MyTextInput
+              title="Departure Time"
+              value={form.departure_time}
+              onPressIn={() => setShowDepartureTimePicker(true)}
+              placeholder="HH:MM:SS"
+            />
+            {showDepartureTimePicker && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                is24Hour={true}
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={(event, selectedDate) => {
+                  setShowDepartureTimePicker(false);
+                  if (selectedDate) {
+                    const time = selectedDate.toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    });
+                    handleChange("departure_time", time, index);
+                  }
+                }}
+              />
+            )}
+            <MyTextInput
+              title="Arrival Date"
+              value={form.arrival_date}
+              onPress={() => showDatePicker("arrival_date", index)}
+              placeholder="YYYY-MM-DD"
+            />
+            <MyTextInput
+              title="Arrival Time"
+              value={form.arrival_time}
+              onPressIn={() => setShowTimePicker(true)}
+              placeholder="HH:MM:SS"
+            />
+            {showTimePicker && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                is24Hour={true}
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={(event, selectedDate) => {
+                  setShowTimePicker(false);
+                  if (selectedDate) {
+                    const time = selectedDate.toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    });
+                    handleChange("arrival_time", time, index);
+                  }
+                }}
+              />
+            )}
+            <MyTextInput
+              title="Mode of Travel"
+              value={form.modeoftravel}
+              onChangeText={(text) => handleChange("modeoftravel", text, index)}
+              placeholder="e.g., Bus, Train"
+            />
+            <MyTextInput
+              title="Total KM"
+              value={form.add_total_km?.toString()}
+              onChangeText={(text) => handleChange("add_total_km", text, index)}
+              placeholder="Total KM"
+              keyboardType="numeric"
+              maxLength={6}
+            />
+            <MyTextInput
+              title="Rate per KM"
+              value={form.add_rate_per_km?.toString()}
+              onChangeText={(text) =>
+                handleChange("add_rate_per_km", text, index)
+              }
+              placeholder="Rate per KM"
+              keyboardType="numeric"
+              maxLength={6}
+            />
+            <MyTextInput
+              title="Rent"
+              value={form.add_rent?.toString()}
+              onChangeText={(text) => handleChange("add_rent", text, index)}
+              placeholder="Rent"
+              keyboardType="numeric"
+            />
+            <MyTextInput
+              title="Vehicle No"
+              value={form.add_vehicle_no}
+              onChangeText={(text) =>
+                handleChange("add_vehicle_no", text, index)
+              }
+              placeholder="Vehicle No"
+            />
+            <MyTextInput
+              title="Amount"
+              value={form.amount?.toString()}
+              onChangeText={(text) => handleChange("amount", text, index)}
+              placeholder="Amount"
+              keyboardType="numeric"
+            />
+            {/* Buttons for each block */}
             <View
               style={{
                 flexDirection: "row",

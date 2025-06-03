@@ -1,555 +1,22 @@
-// import React, { useState } from "react";
-// import { View, ScrollView, TouchableOpacity } from "react-native";
-// import Icon from "react-native-vector-icons/Ionicons";
-// import { useRoute } from "@react-navigation/native";
-// import ContainerComponent from "../components/ContainerComponent";
-// import MyHeader from "../components/header/MyHeader";
-// import { SCREEN_WIDTH, styles, typography, spacing, LIGHT } from "../styles";
-// import Button from "../components/buttons/Button";
-// import { H2, H5, P, Span } from "../components/text";
-// import { useSelector } from "react-redux";
-
-// const TravelDetailScreen = ({ navigation }) => {
-//   const route = useRoute();
-//   const formData = route.params?.formData || {};
-
-//   const [showDetails, setShowDetails] = useState(false);
-
-//   const { firstName, lastName } = useSelector((state) => state.staff);
-
-//   const startDate =
-//     formData.start_date instanceof Date
-//       ? formData.start_date.toLocaleDateString()
-//       : new Date(formData.start_date).toLocaleDateString();
-
-//   const returnDate =
-//     formData.journeyDate instanceof Date
-//       ? formData.journeyDate.toLocaleDateString()
-//       : new Date(formData.journeyDate).toLocaleDateString();
-
-//   const handleSubmit = () => {
-//   //  console.log("Form Submitted", formData);
-//     navigation.navigate("travelManagement", { travelData: formData });
-//   };
-
-//   return (
-//     <ContainerComponent>
-//       <MyHeader title={"Travel Details"} hasIcon={true} isBack={true} />
-//       <ScrollView>
-//         <View
-//           style={[
-//             spacing.br1,
-//             spacing.pv5,
-//             styles.row,
-//             {
-//               backgroundColor: "#ced3d2",
-//               width: SCREEN_WIDTH - 8,
-//               alignItems: "center",
-//             },
-//           ]}
-//         >
-//           <View>
-//             <View style={{ alignItems: "center" }}>
-//               <H5
-//                 style={[
-//                   typography.font14,
-//                   typography.fontLato,
-//                   typography.textBold,
-//                 ]}
-//               >
-//                 {formData.city} - {formData.destinationCity}
-//               </H5>
-
-//               <P
-//                 style={[
-//                   typography.font14,
-//                   typography.fontLato,
-//                   typography.textBold,
-//                 ]}
-//               >
-//                 {startDate} - {returnDate}
-//               </P>
-//             </View>
-//           </View>
-
-//           <TouchableOpacity onPress={() => setShowDetails(!showDetails)}>
-//             <Icon
-//               name={showDetails ? "chevron-up-outline" : "chevron-down-outline"}
-//               size={32}
-//               color="black"
-//             />
-//           </TouchableOpacity>
-//         </View>
-
-//         {showDetails && (
-//           <View
-//             style={[
-//               // spacing.pv3,
-//               spacing.p2,
-//               spacing.br2,
-//               {
-//                 // backgroundColor: LIGHT,
-//                 // width: SCREEN_WIDTH - 8,
-//                 backgroundColor: "#e8f8f5",
-//                 elevation: 1,
-//                 top: 10,
-//               },
-//             ]}
-//           >
-//             {/* Add the First Name section */}
-//             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font12,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Name
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {firstName} {lastName}
-//                 </P>
-//               </View>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font12,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Employee ID
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.employeeId}
-//                 </P>
-//               </View>
-//             </View>
-//             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Meetings
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.meetings}
-//                 </P>
-//               </View>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Department
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.department}
-//                 </P>
-//               </View>
-//             </View>
-//             {/* Travel Dates */}
-//             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Start date
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {startDate}
-//                 </P>
-//               </View>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   End date
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {returnDate}
-//                 </P>
-//               </View>
-//             </View>
-//             {/* PNR Numbers */}
-//             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   PNR Numbers (Start)
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.pnrNumbersStart?.join(", ") || "N/A"}
-//                 </P>
-//               </View>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   PNR Numbers (Return)
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.pnrNumbersReturn?.join(", ") || "N/A"}
-//                 </P>
-//               </View>
-//             </View>
-//             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Visit Approved By
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.visitApprovedBy}
-//                 </P>
-//               </View>
-//               {/* Transport Mode */}
-//               <View style={[styles.row, { flexDirection: "column" }]}>
-//                 <H5
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Transport Mode
-//                 </H5>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.type}
-//                 </P>
-//               </View>
-//             </View>
-//             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Objective of the Tour
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.objective}
-//                 </P>
-//               </View>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Meetings/Visits
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.meetings}
-//                 </P>
-//               </View>
-//             </View>
-
-//             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   ACHIEVEMENTS
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.outcomes}
-//                 </P>
-//               </View>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Designation
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.designation}
-//                 </P>
-//               </View>
-//             </View>
-
-//             {/* Categories & Description */}
-//             <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Categories
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.categories}
-//                 </P>
-//               </View>
-//               <View>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Descriptions
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.descriptions}
-//                 </P>
-//               </View>
-//             </View>
-
-//             <View
-//               style={[
-//                 spacing.mt1,
-//                 styles.row,
-//                 spacing.mv2,
-//                 {
-//                   flexDirection: "row",
-//                   justifyContent: "space-between",
-//                   flexWrap: "wrap",
-//                 },
-//               ]}
-//             >
-//               <View style={{ width: "24%" }}>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Total KM
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.totalKm}
-//                 </P>
-//               </View>
-
-//               <View style={{ width: "24%" }}>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Km rate
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.kmRate}
-//                 </P>
-//               </View>
-
-//               <View style={{ width: "24%" }}>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Rent
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.rent}
-//                 </P>
-//               </View>
-
-//               <View style={{ width: "24%" }}>
-//                 <Span
-//                   style={[
-//                     typography.font10,
-//                     typography.textBold,
-//                     typography.fontLato,
-//                     { textTransform: "uppercase" },
-//                   ]}
-//                 >
-//                   Vehicle No
-//                 </Span>
-//                 <P style={[typography.font12, typography.fontLato]}>
-//                   {formData.vehicleNo}
-//                 </P>
-//               </View>
-//             </View>
-//             <View
-//               style={{
-//                 borderBottomColor: "#000",
-//                 borderBottomWidth: 1,
-//                 marginTop: 10,
-//                 width: "100%",
-//               }}
-//             />
-//             {/* Amount */}
-//             <View style={[styles.row]}>
-//               <H5
-//                 style={[
-//                   typography.font18,
-//                   typography.textBold,
-//                   typography.fontLato,
-//                   { textAlign: "left", color: "red" },
-//                 ]}
-//               >
-//                 Amount
-//               </H5>
-//               <P
-//                 style={[
-//                   typography.font18,
-//                   typography.fontLato,
-//                   typography.textBold,
-//                   spacing.pv1,
-//                   { textAlign: "right" },
-//                 ]}
-//               >
-//                 {`₹ ${formData.totalAmount}`}
-//               </P>
-//             </View>
-//           </View>
-//         )}
-//       </ScrollView>
-
-//       {/* Submit Button */}
-//       {showDetails && (
-//         <Button
-//           style={[
-//             styles.btn,
-//             styles.bgPrimary,
-//             { justifyContent: "center", width: "90%", marginHorizontal: 0 },
-//           ]}
-//           onPress={handleSubmit}
-//         >
-//           <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>
-//             {"Submit"}
-//           </H2>
-//         </Button>
-//       )}
-//     </ContainerComponent>
-//   );
-// };
-
-// export default TravelDetailScreen;
-
-import React, { useState } from "react";
-import { View, ScrollView, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { View, ScrollView, Text } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { SCREEN_WIDTH, styles, typography, spacing, LIGHT } from "../styles";
 import Button from "../components/buttons/Button";
-import { H2, H5, P, Span } from "../components/text";
 import { useSelector } from "react-redux";
+import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
+import { P, H5 } from "../components/text";
 
 const TravelDetailScreen = ({ navigation }) => {
   const route = useRoute();
-  const {
-    pickup_date,
-    end_journey,
-
-    start_journey_pnr,
-    end_journey_pnr,
-
-    category,
-
-    from_city,
-
-    to_city,
-
-    description_category,
-
-    department,
-
-    user_id,
-
-    visit_approve,
-
-    objective_tour,
-
-    meeting_visit,
-
-    outcome_achieve,
-
-    designation,
-
-    type,
-  } = route.params?.billPayload || {};
-
-  const [showDetails, setShowDetails] = useState(false);
+  const { billPayload } = route.params;
+  const { travelfare = [], dailyfare = [], ...tada } = billPayload || {};
   const { firstName, lastName } = useSelector((state) => state.staff);
 
-  const startDate =
-    pickup_date instanceof Date
-      ? pickup_date.toLocaleDateString()
-      : new Date(pickup_date).toLocaleDateString();
-
-  const returnDate =
-    end_journey instanceof Date
-      ? end_journey.toLocaleDateString()
-      : new Date(end_journey).toLocaleDateString();
+  const formatDate = (date) => {
+    if (!date) return "N/A";
+    return new Date(date).toLocaleDateString();
+  };
 
   const handleSubmit = () => {
     navigation.navigate("travelManagement", {
@@ -557,338 +24,653 @@ const TravelDetailScreen = ({ navigation }) => {
     });
   };
 
+  const fare = travelfare[0] || {};
+  const dailyFare = dailyfare[0] || {};
+
   return (
     <ContainerComponent>
-      <MyHeader title={"Travel Details"} hasIcon={true} isBack={true} />
-      <ScrollView>
+      <MyHeader title="TRAVELLING BILL" hasIcon={true} isBack={true} />
+      <ScrollView style={[{ width: SCREEN_WIDTH - 16 }]}>
+        {/* Main TADA Info */}
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingVertical: 8,
+            paddingHorizontal: 12,
+            backgroundColor: "#fff",
+          }}
+        >
+          <Text style={{ fontSize: 16, color: "black" }}>
+            {firstName} {lastName}
+          </Text>
+
+          <View
+            style={{
+              backgroundColor: "#f0f0f0",
+              paddingVertical: 6,
+              paddingHorizontal: 10,
+              borderRadius: 8,
+            }}
+          >
+            <P style={[typography.font14, typography.fontLato]}>
+              {formatDate(tada.start_journey)}
+            </P>
+          </View>
+        </View>
+
+        <View
+          style={{
+            height: 1,
+            backgroundColor: "#ccc",
+          }}
+        />
+
         <View
           style={[
-            spacing.br1,
-            spacing.pv5,
             styles.row,
             {
-              backgroundColor: "#ced3d2",
-              width: SCREEN_WIDTH - 8,
-              alignItems: "center",
+              // paddingVertical: 6,
+              paddingHorizontal: 12,
+              backgroundColor: "#fff",
             },
           ]}
         >
-          <View>
-            <View style={{ alignItems: "center" }}>
-              <H5
-                style={[
-                  typography.font14,
-                  typography.fontLato,
-                  typography.textBold,
-                ]}
-              >
-                {from_city} - {to_city}
-              </H5>
-              <P
-                style={[
-                  typography.font14,
-                  typography.fontLato,
-                  typography.textBold,
-                ]}
-              >
-                {startDate} - {returnDate}
-              </P>
-            </View>
-          </View>
-          <TouchableOpacity onPress={() => setShowDetails(!showDetails)}>
-            <Icon
-              name={showDetails ? "chevron-up-outline" : "chevron-down-outline"}
-              size={32}
-              color="black"
-            />
-          </TouchableOpacity>
-        </View>
-
-        {showDetails && (
-          <View
+          <P
             style={[
-              spacing.p2,
-              spacing.br2,
+              typography.font12,
+              typography.fontLato,
+              typography.textBold,
+            ]}
+          >
+            Journey To:
+          </P>
+          <P
+            style={[
+              typography.font14,
+              typography.fontLato,
               {
-                backgroundColor: "#e8f8f5",
-                elevation: 1,
-                top: 10,
+                right: 40,
               },
             ]}
           >
-            {/* Name and Employee ID */}
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font12,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Name
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {firstName} {lastName}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font12,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Employee ID
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {user_id}
-                </P>
-              </View>
+            {tada.from_city} to {tada.to_city}
+          </P>
+        </View>
+
+        <View
+          style={[
+            styles.row,
+            {
+              paddingVertical: 4,
+              paddingHorizontal: 12,
+              backgroundColor: "#fff",
+            },
+          ]}
+        >
+          <P
+            style={[
+              typography.font12,
+              typography.fontLato,
+              typography.textBold,
+            ]}
+          >
+            Visit Purpose:
+          </P>
+          <P
+            style={[
+              typography.font14,
+              typography.fontLato,
+              {
+                right: 140,
+              },
+            ]}
+          >
+            {tada.meeting_visit}
+          </P>
+        </View>
+
+        <View
+          style={[
+            styles.row,
+            {
+              paddingHorizontal: 12,
+              backgroundColor: "#fff",
+              paddingVertical: 6,
+            },
+          ]}
+        >
+          <View style={{ flex: 1, paddingRight: 8 }}>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "gray",
+                textTransform: "uppercase",
+              }}
+            >
+              Start Date
+            </Text>
+            <Text style={{ fontSize: 14 }}>
+              {formatDate(tada.start_journey)}
+            </Text>
+          </View>
+
+          <View style={{ flex: 1, paddingRight: 8 }}>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "gray",
+                textTransform: "uppercase",
+              }}
+            >
+              End Date
+            </Text>
+            <Text style={{ fontSize: 14 }}>{formatDate(tada.end_journey)}</Text>
+          </View>
+
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 12, color: "gray" }}>Transport</Text>
+            <Text style={{ fontSize: 14 }}>{tada.transport}</Text>
+          </View>
+        </View>
+
+        <View
+          style={[
+            styles.row,
+            {
+              paddingHorizontal: 12,
+              backgroundColor: "#fff",
+              paddingVertical: 6,
+            },
+          ]}
+        >
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "gray",
+                textTransform: "uppercase",
+              }}
+            >
+              Start Pnr
+            </Text>
+            <Text style={{ fontSize: 14 }}>{tada.start_journey_pnr}</Text>
+          </View>
+
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "gray",
+                textTransform: "uppercase",
+              }}
+            >
+              End Pnr
+            </Text>
+            <Text style={{ fontSize: 14 }}>{tada.end_journey_pnr}</Text>
+          </View>
+        </View>
+
+        <View
+          style={[
+            styles.row,
+            {
+              paddingHorizontal: 12,
+              backgroundColor: "#fff",
+              paddingVertical: 6,
+            },
+          ]}
+        >
+          <View style={{ flex: 1, paddingRight: 8 }}>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "gray",
+                textTransform: "uppercase",
+              }}
+            >
+              Vehicle No
+            </Text>
+            <Text style={{ fontSize: 14 }}>{tada.vehicle_no}</Text>
+          </View>
+
+          <View style={{ flex: 1, paddingRight: 8 }}>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "gray",
+                textTransform: "uppercase",
+              }}
+            >
+              Rate per KM
+            </Text>
+            <Text style={{ fontSize: 14 }}>{tada.rate_per_km}</Text>
+          </View>
+
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 12, color: "gray" }}>Total KM</Text>
+            <Text style={{ fontSize: 14 }}>{tada.total_km}</Text>
+          </View>
+        </View>
+
+        <View
+          style={[
+            styles.row,
+            {
+              paddingVertical: 6,
+              paddingHorizontal: 12,
+              backgroundColor: "#fff",
+            },
+          ]}
+        >
+          <P
+            style={[
+              typography.font12,
+              typography.fontLato,
+              typography.textBold,
+            ]}
+          >
+            Objective of Tour:
+          </P>
+          <P style={[typography.font14, typography.fontLato]}>
+            {tada.objective_tour}
+          </P>
+        </View>
+        <View
+          style={[
+            styles.row,
+            {
+              paddingVertical: 6,
+              paddingHorizontal: 12,
+              backgroundColor: "#fff",
+            },
+          ]}
+        >
+          <P
+            style={[
+              typography.font12,
+              typography.fontLato,
+              typography.textBold,
+            ]}
+          >
+            Outcome Achieved:
+          </P>
+          <P style={[typography.font14, typography.fontLato]}>
+            {tada.outcome_achieve}
+          </P>
+        </View>
+        <View
+          style={[
+            styles.row,
+            {
+              paddingVertical: 6,
+              paddingHorizontal: 12,
+              backgroundColor: "#fff",
+            },
+          ]}
+        >
+          <P
+            style={[
+              typography.font12,
+              typography.fontLato,
+              typography.textBold,
+            ]}
+          >
+            Description Category:
+          </P>
+          <P style={[typography.font14, typography.fontLato]}>
+            {tada.description_category}
+          </P>
+        </View>
+
+        <View>
+          <View
+            style={[
+              styles.row,
+              {
+                paddingVertical: 6,
+                paddingHorizontal: 12,
+                backgroundColor: "#fff",
+              },
+            ]}
+          >
+            <P
+              style={[
+                typography.font12,
+                typography.fontLato,
+                typography.textBold,
+              ]}
+            >
+              Other Expense:
+            </P>
+            <P style={[typography.font14, typography.fontLato]}>
+              {tada.otherexpense ? JSON.stringify(tada.otherexpense) : "N/A"}
+            </P>
+          </View>
+
+          <View
+            style={{
+              height: 2,
+              backgroundColor: "#ccc",
+            }}
+          />
+        </View>
+
+        {/* Travel Fare Section */}
+
+        <View style={[spacing.mt2]}>
+          <View style={[spacing.ph2, { alignSelf: "flex-start" }]}>
+            <H5 style={[typography.font14, typography.textBold]}>
+              Travel Fare Details *
+            </H5>
+
+            <View
+              style={{
+                height: 1,
+                backgroundColor: "#ccc",
+              }}
+            />
+          </View>
+        </View>
+
+        <View style={{ marginBottom: 10, backgroundColor: "white" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingVertical: 4,
+              paddingHorizontal: 8,
+            }}
+          >
+            {/* From */}
+            <View style={{ flex: 1 }}>
+              <P style={[typography.font12]}>From</P>
+              <P>{fare.from}</P>
             </View>
 
-            {/* Meeting and Department */}
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Meetings
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {meeting_visit}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Department
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {department}
-                </P>
-              </View>
-            </View>
-
-            {/* Travel Dates */}
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Start date
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {startDate}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  End date
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {returnDate}
-                </P>
-              </View>
-            </View>
-
-            {/* PNR Numbers */}
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  PNR Numbers (Start)
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {start_journey_pnr?.join(", ") || "N/A"}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  PNR Numbers (Return)
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {end_journey_pnr?.join(", ") || "N/A"}
-                </P>
-              </View>
-            </View>
-
-            {/* Visit Approved By and Transport Type */}
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Visit Approved By
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {visit_approve}
-                </P>
-              </View>
-              <View style={[styles.row, { flexDirection: "column" }]}>
-                <H5
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Transport Mode
-                </H5>
-                <P style={[typography.font12, typography.fontLato]}>{type}</P>
-              </View>
-            </View>
-
-            {/* Objective and Meetings */}
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Objective of the Tour
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {objective_tour}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Meetings/Visits
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {meeting_visit}
-                </P>
-              </View>
-            </View>
-
-            {/* Achievements and Designation */}
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  ACHIEVEMENTS
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {outcome_achieve}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Designation
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {designation}
-                </P>
-              </View>
-            </View>
-
-            {/* Category and Description */}
-            <View style={[spacing.mt1, styles.row, spacing.mv2]}>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Categories
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {category}
-                </P>
-              </View>
-              <View>
-                <Span
-                  style={[
-                    typography.font10,
-                    typography.textBold,
-                    typography.fontLato,
-                    { textTransform: "uppercase" },
-                  ]}
-                >
-                  Description
-                </Span>
-                <P style={[typography.font12, typography.fontLato]}>
-                  {description_category}
-                </P>
-              </View>
+            {/* To */}
+            <View style={{ flex: 1 }}>
+              <P style={[typography.font12]}>To</P>
+              <P>{fare.to}</P>
             </View>
           </View>
-        )}
+          <View
+            style={{
+              height: 1,
+              backgroundColor: "#ccc",
+            }}
+          />
 
-        <Button title="Submit" onPress={handleSubmit} />
+          <View
+            style={[
+              styles.row,
+              {
+                paddingVertical: 4,
+                paddingHorizontal: 8,
+              },
+            ]}
+          >
+            {/* Departure */}
+            <View style={{ flex: 1 }}>
+              <P
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  typography.textBold,
+                  spacing.mb1,
+                ]}
+              >
+                Departure
+              </P>
+              <P style={{ fontSize: 12, color: "#555" }}>
+                <Text style={{ fontWeight: "600" }}>Date: </Text>
+                {formatDate(fare.departure_date) || "N/A"}
+              </P>
+              <Text style={{ fontSize: 12, color: "#555" }}>
+                <Text style={{ fontWeight: "600" }}>Time: </Text>
+                {fare.departure_time || "N/A"}
+              </Text>
+            </View>
+
+            {/* Arrival */}
+            <View style={{ flex: 1 }}>
+              <P
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  typography.textBold,
+                  spacing.mb1,
+                ]}
+              >
+                Arrival
+              </P>
+              <Text style={{ fontSize: 12, color: "#555" }}>
+                <Text style={{ fontWeight: "600" }}>Date: </Text>
+                {formatDate(fare.arrival_date) || "N/A"}
+              </Text>
+              <Text style={{ fontSize: 12, color: "#555" }}>
+                <Text style={{ fontWeight: "600" }}>Time: </Text>
+                {fare.arrival_time || "N/A"}
+              </Text>
+            </View>
+
+            {/* Mode of Travel */}
+            <View style={{ flex: 1 }}>
+              <P
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  typography.textBold,
+                  spacing.mb1,
+                ]}
+              >
+                Mode
+              </P>
+              <Text style={{ fontSize: 12, color: "#555" }}>
+                {fare.modeoftravel || "N/A"}
+              </Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              height: 1,
+              backgroundColor: "#ccc",
+            }}
+          />
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingVertical: 4,
+              paddingHorizontal: 8,
+            }}
+          >
+            {/* Vehicle No */}
+            <View style={{ flex: 1 }}>
+              <P
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  typography.textBold,
+                ]}
+              >
+                Vehicle No
+              </P>
+              <P>{fare.add_vehicle_no || "N/A"}</P>
+            </View>
+
+            {/* Total KM */}
+            <View style={{ flex: 1 }}>
+              <P
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  typography.textBold,
+                ]}
+              >
+                Total KM
+              </P>
+              <P>{fare.add_total_km || "N/A"}</P>
+            </View>
+
+            {/* Rate per KM */}
+            <View style={{ flex: 1 }}>
+              <P
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  typography.textBold,
+                ]}
+              >
+                Rate per KM
+              </P>
+              <P>{fare.add_rate_per_km || "N/A"}</P>
+            </View>
+
+            {/* Rent */}
+            <View style={{ flex: 1, left: 12 }}>
+              <P
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  typography.textBold,
+                ]}
+              >
+                Rent
+              </P>
+              <P>{fare.add_rent || "N/A"}</P>
+            </View>
+          </View>
+          <View
+            style={{
+              height: 1,
+              backgroundColor: "#ccc",
+            }}
+          />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingVertical: 4,
+              paddingHorizontal: 8,
+            }}
+          >
+            <Text style={{ fontWeight: "600" }}>Amount</Text>
+            <Text>{fare.amount}</Text>
+          </View>
+          <View
+            style={{
+              height: 2,
+              backgroundColor: "#ccc",
+            }}
+          />
+        </View>
+
+        {/* Daily Fare Section */}
+
+        <View style={[spacing.ph2, { alignSelf: "flex-start" }]}>
+          <H5 style={[typography.font14, typography.textBold]}>
+            Daily Fare Details *
+          </H5>
+
+          <View
+            style={{
+              height: 1,
+              backgroundColor: "#ccc",
+            }}
+          />
+        </View>
+
+        <View
+          style={{
+            marginBottom: 10,
+            paddingHorizontal: 8,
+            backgroundColor: "white",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingVertical: 4,
+              paddingHorizontal: 8,
+            }}
+          >
+            {/* Place */}
+            <View style={{ flex: 1 }}>
+              <P
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  typography.textBold,
+                  spacing.mb1,
+                ]}
+              >
+                Place
+              </P>
+              <Text>{dailyFare.place || "N/A"}</Text>
+            </View>
+
+            {/* Hotel Bill No */}
+            <View style={{ flex: 1 }}>
+              <P
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  typography.textBold,
+                  spacing.mb1,
+                ]}
+              >
+                Hotel Bill No
+              </P>
+              <P>{dailyFare.HotelBillNo || "N/A"}</P>
+            </View>
+
+            {/* Date Of Stay */}
+            <View style={{ flex: 1 }}>
+              <P
+                style={[
+                  typography.font10,
+                  typography.fontLato,
+                  typography.textBold,
+                  spacing.mb1,
+                ]}
+              >
+                Date Of Stay
+              </P>
+              <P>{formatDate(dailyFare.date_of_stay) || "N/A"}</P>
+            </View>
+          </View>
+          <View
+            style={{
+              height: 1,
+              backgroundColor: "#ccc",
+            }}
+          />
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingVertical: 4,
+            }}
+          >
+            <Text style={{ fontWeight: "600" }}>Amount</Text>
+            <Text>
+              {dailyFare.amount !== undefined
+                ? dailyFare.amount.toString()
+                : "N/A"}
+            </Text>
+          </View>
+        </View>
+
+        <View style={{ marginTop: 30, paddingHorizontal: 8, marginBottom: 20 }}>
+          <Button title="Submit" onPress={handleSubmit} />
+        </View>
       </ScrollView>
     </ContainerComponent>
   );

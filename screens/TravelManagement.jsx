@@ -2,7 +2,6 @@
 import { View, Text } from "react-native";
 import { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useRoute } from "@react-navigation/native"; // Import useRoute
 
 // Import Components
 import ContainerComponent from "../components/ContainerComponent";
@@ -10,6 +9,7 @@ import ClickableCard1 from "../components/card/ClickableCard1";
 import MyFlatList from "../components/utility/MyFlatList";
 import Button from "../components/buttons/Button";
 import DashboardHeader from "../components/header/DashboardHeader";
+import { getBillById } from "../redux/actions/projectAction";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,52 +24,34 @@ import {
 } from "../styles";
 
 export default function TravelManagement({ navigation }) {
-  const route = useRoute();
   const dispatch = useDispatch();
-  const newTravelData = route.params?.travelData;
-  const { firstName } = useSelector((state) => state.staff);
+
+  const { firstName, id: my_id } = useSelector((state) => state.staff);
   const [travelPlans, setTravelPlans] = useState([]);
 
   useEffect(() => {
-    if (newTravelData) {
-      const updatedPlans = [
-        {
-          title: (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                {newTravelData.city || "Unknown City"} ➝{" "}
-                {newTravelData.destinationCity || "Unknown Destination"}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: "bold",
-                  color: "#007bff",
-                  marginRight: 8,
-                }}
-              >
-                ({newTravelData.type || "Unknown Transport"})
-              </Text>
-            </View>
-          ),
-          trip_schedule: `${new Date(
-            newTravelData.start_date
-          ).toLocaleDateString()} - ${new Date(
-            newTravelData.journeyDate
-          ).toLocaleDateString()}`,
-          fullData: newTravelData,
-        },
-        ...travelPlans,
-      ];
-      setTravelPlans(updatedPlans);
+    dispatch(getBillById(my_id));
+  }, [dispatch, my_id]);
+
+  const { bills } = useSelector((state) => state.project); // from your reducer
+
+  useEffect(() => {
+    if (bills?.length > 0) {
+      const transformed = bills.map((item) => ({
+        ...item?.tada,
+        travelfare:
+          item?.travelfare?.map((travel) => ({
+            ...travel,
+          })) || [],
+        dailyfare:
+          item?.dailyfare?.map((daily) => ({
+            ...daily,
+          })) || [],
+      }));
+
+      setTravelPlans(transformed);
     }
-  }, [newTravelData]);
+  }, [bills]);
 
   return (
     <ContainerComponent>
@@ -93,43 +75,50 @@ export default function TravelManagement({ navigation }) {
         renderItem={({ item, index }) => (
           <ClickableCard1
             key={index}
-            title={item.title}
-            subtitle={item.trip_schedule}
-            onPress={() => {
-              const formData = {
-                start_date: item.fullData.start_date,
-                journeyDate: item.fullData.journeyDate,
-                pnrNumbersStart: item.fullData.pnrNumbersStart || "N/A",
-                pnrNumbersReturn: item.fullData.pnrNumbersReturn || "N/A",
-                ticket: item.fullData.ticket || "Not Available",
-                hotelBill: item.fullData.hotelBill || "Not Available",
-                city: item.fullData.city || "Unknown City",
-                destinationCity:
-                  item.fullData.destinationCity || "Unknown Destination",
-                type: item.fullData.type || "Unknown Transport",
+            title={`${item.from_city} ➜ ${item.to_city}`}
+            subtitle={`Transport: ${item.transport}`}
+            onPress={() =>
+              navigation.navigate("travelDetailScreen", {
+                billPayload: {
+                  ...item,
+                  travelfare: item.travelfare || [],
+                  dailyfare: item.dailyfare || [],
+                },
+              })
+            }
+          >
+            <View style={[styles.row, { marginTop: 10 }]}>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: "gray",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Start Date
+                </Text>
+                <Text style={{ fontSize: 14 }}>
+                  {new Date(item.start_journey).toLocaleDateString()}
+                </Text>
+              </View>
 
-                employeeId: item.fullData.employeeId || "N/A",
-                department: item.fullData.department || "N/A",
-                meetings: item.fullData.meetings || "N/A",
-                visitApprovedBy: item.fullData.visitApprovedBy || "N/A",
-                objective: item.fullData.objective || "N/A",
-                outcomes: item.fullData.outcomes || "N/A",
-                categories: item.fullData.categories || "N/A",
-                descriptions: item.fullData.descriptions || "N/A",
-                totalKm: item.fullData.totalKm || "N/A",
-                kmRate: item.fullData.kmRate || "N/A",
-                rent: item.fullData.rent || "N/A",
-                vehicleNo: item.fullData.vehicleNo || "N/A",
-                designation: item.fullData.designation || "N/A",
-              };
-
-              // console.log("Navigating with Form Data:", formData);
-              navigation.navigate("travelDetailScreen", { formData });
-            }}
-            cardStyle={{
-              backgroundColor: "#e8f8f5",
-            }}
-          />
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: "gray",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  End Date
+                </Text>
+                <Text style={{ fontSize: 14 }}>
+                  {new Date(item.end_journey).toLocaleDateString()}
+                </Text>
+              </View>
+            </View>
+          </ClickableCard1>
         )}
         keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={[spacing.mh1, spacing.mt1]}

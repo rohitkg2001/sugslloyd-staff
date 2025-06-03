@@ -73,7 +73,6 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
           },
           body: JSON.stringify({
             vendor_id: vendors,
-
           }),
         });
         await response.json();
@@ -136,7 +135,7 @@ const VendorSelectionScreen = ({ onClose, setVendor, task_id }) => {
             {
               justifyContent: "center",
               marginTop: 260,
-              width: SCREEN_WIDTH - 16,
+              width: SCREEN_WIDTH - 32,
             },
           ]}
           onPress={handleAssignVendor}

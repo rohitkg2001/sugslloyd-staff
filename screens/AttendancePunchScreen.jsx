@@ -15,6 +15,7 @@ export default function AttendancePunchScreen({ navigation }) {
   const cameraRef = useRef(null);
   const { permissions, requestPermission } = usePermissions();
   const { id } = useSelector((state) => state.staff);
+  const dispatch = useDispatch();
 
   if (!permissions.camera || !permissions.location) {
     return (
@@ -32,13 +33,22 @@ export default function AttendancePunchScreen({ navigation }) {
       try {
         const photo = await cameraRef.current.takePictureAsync({
           quality: 0.7, // Optional: reduce size
-          base64: false, // No need for base64 when uploading
+          base64: false,
         });
 
         if (photo) {
-          const { message } = await updatePicture(id, photo); // Upload the image
-          alert(message);
-          navigation.goBack();
+          const { message, updatedImageUri } = await updatePicture(id, photo);
+          if (message === "success") {
+            setPhotoUri(updatedImageUri);
+            dispatch({
+              type: "UPDATE_PROFILE_PICTURE",
+              payload: updatedImageUri,
+            });
+            alert("Profile image updated successfully");
+            navigation.goBack();
+          } else {
+            alert("Profile image updated successfully");
+          }
         }
       } catch (err) {
         console.error("Camera Error:", err);
@@ -77,7 +87,11 @@ export default function AttendancePunchScreen({ navigation }) {
         </View>
 
         <Button
-          style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
+          style={[
+            styles.btn,
+            styles.bgPrimary,
+            { justifyContent: "center", bottom: 12 },
+          ]}
           onPress={takePictureAndNavigate}
         >
           <H2 style={[styles.btnText, styles.textLarge, typography.textLight]}>

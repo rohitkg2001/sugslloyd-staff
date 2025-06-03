@@ -1,19 +1,13 @@
 import { useState } from "react";
-import { View, Modal, TouchableOpacity } from "react-native";
-import { H4, H5, P } from "../text";
-import {
-  ICON_SMALL,
-  LIGHT,
-  SCREEN_WIDTH,
-  spacing,
-  styles,
-  typography,
-} from "../../styles";
-import Button from "../buttons/Button";
+import { View, TouchableOpacity, Dimensions } from "react-native";
+import { H4, H5 } from "../text";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
+import ModalPopup from "../ModalPopup";
+
+const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export default function DashboardFilter({ updateDateFilter }) {
   const { t } = useTranslation();
@@ -64,77 +58,80 @@ export default function DashboardFilter({ updateDateFilter }) {
   };
 
   return (
-    <View>
+    <View style={{ paddingHorizontal: 12, marginTop: 8 }}>
       <View
-        style={[
-          styles.row,
-          spacing.mh1,
-          { alignItems: "center", width: SCREEN_WIDTH - 16 },
-        ]}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          borderWidth: 1,
+          borderColor: "#f3702a",
+          borderRadius: 10,
+          paddingHorizontal: 12,
+          paddingVertical: 8,
+          justifyContent: "space-between",
+          backgroundColor: "#fff",
+          bottom:4,
+        }}
       >
-        {/* <H4>{t(selectedFilter)}</H4> */}
+        {/* Left Text: Selected Filter */}
+        <H4 style={{ color: "#f3702a", fontWeight: "bold", fontSize: 14 }}>
+          {selectedFilter === "Custom" && customStartDate && customEndDate
+            ? `${moment(customStartDate).format("DD MMM")} - ${moment(
+                customEndDate
+              ).format("DD MMM YYYY")}`
+            : `${moment().format("DD MMM")}, ${t(selectedFilter)}`}
+        </H4>
 
-        <View>
-          <H4 
-            style={{
-              color: "#f3702a",
-              fontWeight: "bold",
-              fontSize: 14,
-            }}
-          >
-            {selectedFilter === "Custom" && customStartDate && customEndDate
-              ? `${moment(customStartDate).format("DD MMM YYYY")} - ${moment(
-                  customEndDate
-                ).format("DD MMM YYYY")}`
-              : t(selectedFilter)}
-          </H4>
-        </View>
-
-        <Button
-          style={[styles.btn, styles.bgPrimary, spacing.ph3]}
-          onPress={() => setShowModal(true)}
+        {/* Right Side: Calendar icon and 'Date' */}
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingVertical: 4,
+            paddingHorizontal: 8,
+            borderRadius: 6,
+          }}
+          onPress={() => setShowModal(true)} // Show modal when clicked
         >
-          <Icon name="calendar-outline" size={ICON_SMALL} color={LIGHT} />
-          <H5 style={[spacing.ml1, typography.fontLato, { color: LIGHT }]}>
-            {moment().format("DD MMM YYYY")}
-          </H5>
-        </Button>
+          <Icon name="calendar-outline" size={20} color="#f3702a" />
+          <H5 style={{ marginLeft: 6, color: "#f3702a" }}>Date</H5>
+        </TouchableOpacity>
       </View>
 
-      {/* Filter Selection Modal */}
-      <Modal
-        transparent={true}
+      {/* Filter Modal (Using ModalPopup) */}
+      <ModalPopup
         visible={showModal}
-        animationType="slide"
-        onRequestClose={() => setShowModal(false)}
+        close={() => setShowModal(false)}
+        negativeButton={t("Cancel")}
+        positiveButton={t("Apply")}
+        action={() => handleFilterSelect(selectedFilter)} // Apply selected filter
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity onPress={() => handleFilterSelect("Today")}>
-              <View style={styles.optionButton}>
-                <H5>{t("today")}</H5>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleFilterSelect("This Month")}>
-              <View style={styles.optionButton}>
-                <H5>{t("this_month")}</H5>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleFilterSelect("Custom")}>
-              <View style={styles.optionButton}>
-                <H5>{t("custom")}</H5>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        {["Today", "This Month", "Custom"].map((filter) => (
+          <TouchableOpacity
+            key={filter}
+            style={{
+              paddingVertical: 12,
+              borderBottomColor: "#ddd",
+              borderBottomWidth: 1,
+              backgroundColor:
+                selectedFilter === filter ? "#f3f3f3" : "transparent",
+              borderRadius: selectedFilter === filter ? 8 : 0,
+            }}
+            onPress={() => setSelectedFilter(filter)}
+          >
+            <H5 style={{ fontSize: 16, color: "#333" }}>
+              {t(filter)} {/* Translation for filter names */}
+            </H5>
+          </TouchableOpacity>
+        ))}
+      </ModalPopup>
 
       {/* Date Pickers */}
       {showStartDatePicker && (
         <DateTimePicker
           value={customStartDate || new Date()}
           mode="date"
-          display="default"
+          display="calendar"
           onChange={(event, date) => handleDateChange(event, date, "start")}
         />
       )}
@@ -142,7 +139,7 @@ export default function DashboardFilter({ updateDateFilter }) {
         <DateTimePicker
           value={customEndDate || new Date()}
           mode="date"
-          display="default"
+          display="calendar"
           onChange={(event, date) => handleDateChange(event, date, "end")}
         />
       )}

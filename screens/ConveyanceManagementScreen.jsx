@@ -30,9 +30,9 @@ import { P, Span } from "../components/text";
 export default function ConveyanceManagementScreen({ navigation }) {
   const layout = useWindowDimensions();
   const dispatch = useDispatch();
-  const [index, setIndex] = useState(0);
+  const [selectedTab, setSelectedTab] = useState("thisWeek");
 
-  const routes = [
+  const tabs = [
     { key: "thisWeek", title: "This Week" },
     { key: "thisMonth", title: "This Month" },
     { key: "approved", title: "Approved" },
@@ -69,19 +69,19 @@ export default function ConveyanceManagementScreen({ navigation }) {
               <P style={[typography.font12, typography.fontLato]}>
                 Vehicle Type
               </P>
-              <P style={[typography.font12]}>
+              <P style={typography.font12}>
                 {String(item.vehicle_category || "Not provided")}
               </P>
             </View>
 
             <View style={{ flex: 1, marginHorizontal: 6 }}>
               <P style={[typography.font12, typography.fontLato]}>Kilometer</P>
-              <P style={[typography.font12]}>{item.kilometer ?? "N/A"}</P>
+              <P style={typography.font12}>{item.kilometer ?? "N/A"}</P>
             </View>
 
             <View style={{ flex: 1, marginLeft: 6 }}>
               <P style={[typography.font12, typography.fontLato]}>Time</P>
-              <P style={[typography.font12]}>{item.time ?? "N/A"}</P>
+              <P style={typography.font12}>{item.time ?? "N/A"}</P>
             </View>
           </View>
 
@@ -111,7 +111,7 @@ export default function ConveyanceManagementScreen({ navigation }) {
                 typography.font14,
                 typography.fontLato,
                 typography.textBold,
-                { color: "#1B5E20" }, // darker green for value
+                { color: "#1B5E20" },
               ]}
             >
               {item.amount != null
@@ -126,8 +126,6 @@ export default function ConveyanceManagementScreen({ navigation }) {
       showSearchBar={false}
     />
   );
-
-  const renderScene = () => renderConveyances(conveyances);
 
   return (
     <ContainerComponent style={{ flex: 1 }}>
@@ -149,6 +147,8 @@ export default function ConveyanceManagementScreen({ navigation }) {
         textStyle={{ color: LIGHT }}
         useEllipsis
       />
+
+      {/* Search & Filter */}
       <View
         style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}
       >
@@ -159,19 +159,16 @@ export default function ConveyanceManagementScreen({ navigation }) {
           <Icon name="options-outline" size={ICON_MEDIUM} color={LIGHT} />
         </Button>
       </View>
-      <View style={{ flex: 1 }}>
-        <SwipeTab
-          tabs={routes}
-          index={index}
-          onIndexChange={setIndex}
-          renderScene={renderScene}
-          swipeEnabled={true}
-          style={{ backgroundColor: "#76885B" }} // TabBar background
-          tabLabelStyle={{ fontSize: 16, color: "#020409" }}
-          tabIndicatorStyle={{ backgroundColor: "#020409" }}
-          // tabStyle={{ paddingHorizontal: 10 }}
-        />
-      </View>
+
+      {/* Tabs - No Filtering, UI Only */}
+      <SwipeTab
+        tabs={tabs}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+      />
+
+      {/* List - All Data */}
+      <View style={{ flex: 1 }}>{renderConveyances(conveyances)}</View>
 
       {/* Add Button */}
       <Button
