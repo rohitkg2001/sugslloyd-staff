@@ -10,6 +10,7 @@ import {
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useDispatch, useSelector } from "react-redux";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 import { styles, typography, spacing, LIGHT, SCREEN_WIDTH } from "../styles";
@@ -18,6 +19,7 @@ import MyHeader from "../components/header/MyHeader";
 import ContainerComponent from "../components/ContainerComponent";
 
 const ConveyanceBillForm = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [kilometer, setKilometer] = useState(null);
@@ -283,42 +285,6 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                   }}
                   placeholderTextColor="#999"
                 />
-
-                {/* <GooglePlacesAutocomplete
-                  ref={fromRef}
-                  placeholder="From"
-                  minLength={2}
-                  fetchDetails={true}
-                  onPress={(data, details = null) => {
-                    if (details && details.formatted_address) {
-                      setFromLocation(details.formatted_address);
-                    } else if (data && data.description) {
-                      setFromLocation(data.description);
-                    }
-                  }}
-                  query={{
-                    key: "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko", // Your Places API Key
-                    language: "en",
-                  }}
-                  styles={{
-                    textInput: {
-                      backgroundColor: "#F8F8F8",
-                      borderWidth: 1,
-                      borderColor: "#ccc",
-                      borderRadius: 5,
-                      paddingVertical: 10,
-                      paddingHorizontal: 12,
-                      fontSize: 14,
-                      color: "#000",
-                    },
-                    listView: {
-                      backgroundColor: "#fff",
-                      zIndex: 999,
-                    },
-                  }}
-                  debounce={200}
-                  enablePoweredByContainer={false}
-                /> */}
               </View>
 
               {from !== "" && (

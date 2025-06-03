@@ -115,7 +115,7 @@ export default function ConveyanceDetailScreen() {
                 { textAlign: "right" },
               ]}
             >
-              {travelItem.vehicle_category || "Not provided"}
+              {travelItem.vehicles?.[0]?.category || "Not provided"}
             </P>
           </View>
           <View style={[styles.row, spacing.pv2]}>

@@ -9,6 +9,7 @@ import {
   GET_ALL_CONVEYANCE,
   GET_CONVEYANCE_BY_ID,
   GET_BILL_BY_ID,
+  GET_ALL_VEHICLES,
 } from "../constant";
 
 export const getStateById = async (id) => {
@@ -185,5 +186,25 @@ export const getBillById = (my_id) => async (dispatch) => {
   } catch (error) {
     console.error("Failed to fetch TADA bills:", error);
     dispatch({ type: GET_BILL_BY_ID, payload: [] });
+  }
+};
+
+export const getAllVehicles = () => async (dispatch) => {
+  try {
+    const response = await axios.get("${BASE_URL}/api/all-vehicles");
+    console.log("Vehicles API Response:", response.data);
+
+    const result = response.data;
+
+    if (result.status) {
+      dispatch({
+        type: GET_ALL_VEHICLES,
+        payload: result.data,
+      });
+    } else {
+      console.warn("Failed to fetch vehicles:", result.message);
+    }
+  } catch (error) {
+    console.error("Error fetching vehicles:", error);
   }
 };

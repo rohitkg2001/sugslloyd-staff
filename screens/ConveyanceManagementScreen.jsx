@@ -70,7 +70,8 @@ export default function ConveyanceManagementScreen({ navigation }) {
                 Vehicle Type
               </P>
               <P style={typography.font12}>
-                {String(item.vehicle_category || "Not provided")}
+                {/* {String(item.vehicle_category || "Not provided")} */}
+                {item.vehicles?.[0]?.category || "Not provided"}
               </P>
             </View>
 
