@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { View, Dimensions, ActivityIndicator, Alert } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MapView, { Marker, Polyline } from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
 import * as Location from "expo-location";
 
 import { H2, P } from "../components/text";
@@ -92,8 +93,8 @@ const MapScreen = ({ route, navigation }) => {
           initialRegion={{
             latitude: (from.latitude + to.latitude) / 2,
             longitude: (from.longitude + to.longitude) / 2,
-            latitudeDelta: 0.02, 
-            longitudeDelta: 0.02, 
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.02,
           }}
           showsUserLocation={true}
           mapType="standard"
@@ -104,12 +105,20 @@ const MapScreen = ({ route, navigation }) => {
           {/* Dropoff Marker */}
           <Marker coordinate={to} title="Dropoff" pinColor="red" />
 
-          {/* Route Polyline */}
-          <Polyline
-            coordinates={[from, to]}
-            strokeColor="black"
+          {/* Route Directions */}
+          <MapViewDirections
+            origin={from}
+            destination={to}
+            apikey="AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko"
             strokeWidth={3}
-            lineDashPattern={[5, 5]}
+            strokeColor="blue"
+            onReady={(result) => {
+              console.log(`Distance: ${result.distance} km`);
+              console.log(`Duration: ${result.duration} min`);
+            }}
+            onError={(errorMessage) => {
+              console.error("MapViewDirections error: ", errorMessage);
+            }}
           />
         </MapView>
       )}

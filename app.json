@@ -20,10 +20,10 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "edgeToEdgeEnabled": true,
       "package": "com.dashandots.lloydwfm",
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json",
-      "experienceId": "",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.ACCESS_COARSE_LOCATION",
@@ -36,7 +36,6 @@
       ]
     },
     "plugins": [
-      "@config-plugins/react-native-blob-util",
       [
         "expo-camera",
         {
