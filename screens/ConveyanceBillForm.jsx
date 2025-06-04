@@ -5,8 +5,8 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  Text,
   TextInput,
+ 
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -285,6 +285,35 @@ const ConveyanceBillForm = ({ navigation, route }) => {
                   }}
                   placeholderTextColor="#999"
                 />
+                {/* <GooglePlacesAutocomplete
+                  placeholder="From"
+                  fetchDetails={true}
+                  onPress={(data, details = null) => {
+                    if (details && details.formatted_address) {
+                      setFrom(details.formatted_address);
+                    }
+                  }}
+                  onFail={(error) => console.error("From Error:", error)}
+                  onNotFound={() => console.warn("From location not found")}
+                  query={{
+                    key: "AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko",
+                    language: "en",
+                  }}
+                  predefinedPlaces={[]} // यह जोड़ें
+                  styles={{
+                    container: { flex: 0, marginBottom: 10 },
+                    textInput: {
+                      height: 45,
+                      color: "#000",
+                      fontSize: 14,
+                      backgroundColor: "#F8F8F8",
+                      borderWidth: 1,
+                      borderColor: "#ccc",
+                      borderRadius: 5,
+                      paddingHorizontal: 10,
+                    },
+                  }}
+                /> */}
               </View>
 
               {from !== "" && (

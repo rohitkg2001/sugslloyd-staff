@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { View, Dimensions, ActivityIndicator, Alert } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MapView, { Marker, Polyline } from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
+//import MapViewDirections from "react-native-maps-directions";
 import * as Location from "expo-location";
 
 import { H2, P } from "../components/text";
@@ -106,7 +106,7 @@ const MapScreen = ({ route, navigation }) => {
           <Marker coordinate={to} title="Dropoff" pinColor="red" />
 
           {/* Route Directions */}
-          <MapViewDirections
+          {/* <MapViewDirections
             origin={from}
             destination={to}
             apikey="AIzaSyA5JDAMBbrSLpX8YO__G8Br9d-Sh1camko"
@@ -119,7 +119,7 @@ const MapScreen = ({ route, navigation }) => {
             onError={(errorMessage) => {
               console.error("MapViewDirections error: ", errorMessage);
             }}
-          />
+          /> */}
         </MapView>
       )}
 

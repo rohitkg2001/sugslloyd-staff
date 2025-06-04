@@ -49,8 +49,14 @@ export default function TotalVendor() {
 
   return (
     <CardFullWidth backgroundColor={LIGHT}>
-      <View style={[styles.row, { alignItems: "center" }]}>
+      <View
+        style={[
+          styles.row,
+          { alignItems: "center", justifyContent: "space-between" },
+        ]}
+      >
         <Icon name="person-circle" size={ICON_SMALL} color={PRIMARY_COLOR} />
+
         <H6
           style={[
             typography.fontLato,
@@ -60,8 +66,12 @@ export default function TotalVendor() {
         >
           Vendors
         </H6>
+
+        <View style={{ width: ICON_SMALL }} />
       </View>
+
       <View style={[spacing.bbw05, spacing.mv2]} />
+
       <View
         style={[
           styles.row,
@@ -70,18 +80,20 @@ export default function TotalVendor() {
       >
         <TouchableOpacity
           onPress={() => navigation.navigate("totalVendorsScreen")}
-          style={{ alignItems: "center", textAlign: "center" }}
+          style={{ alignItems: "center", flex: 1 }}
         >
           <H6 style={[typography.font14, typography.fontLato]}>
             Total Vendors
           </H6>
           <H6 style={[typography.font12, spacing.m2]}>{totalVendors}</H6>
         </TouchableOpacity>
-        <View style={{ alignItems: "center" }}>
+
+        <View style={{ alignItems: "center", flex: 1 }}>
           <H6 style={[typography.font14, typography.fontLato]}>Active</H6>
           <H6 style={[typography.font12, spacing.m2]}>{activeVendors}</H6>
         </View>
-        <View style={{ alignItems: "center" }}>
+
+        <View style={{ alignItems: "center", flex: 1 }}>
           <H6 style={[typography.font14, typography.fontLato]}>Inactive</H6>
           <H6 style={[typography.font12, spacing.m2]}>{inActiveVendors}</H6>
         </View>
