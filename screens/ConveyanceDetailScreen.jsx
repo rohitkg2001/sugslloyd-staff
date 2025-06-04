@@ -299,6 +299,40 @@ export default function ConveyanceDetailScreen() {
               {"Submit"}
             </H2>
           </Button> */}
+
+          <View style={[styles.row, spacing.pv2]}>
+            <H5
+              style={[
+                typography.font14,
+                typography.fontLato,
+                { textAlign: "left" },
+              ]}
+            >
+              Status
+            </H5>
+            <P
+              style={[
+                typography.textBold,
+                typography.font16,
+                typography.fontLato,
+                { textAlign: "right" },
+                {
+                  color:
+                    travelItem.status === 1 || travelItem.status === "1"
+                      ? "#2E7D32" // Green
+                      : travelItem.status === 2 || travelItem.status === "2"
+                      ? "#C62828" // Red
+                      : "#000", // Default black
+                },
+              ]}
+            >
+              {travelItem.status === 1 || travelItem.status === "1"
+                ? "Approved"
+                : travelItem.status === 2 || travelItem.status === "2"
+                ? "Rejected"
+                : "Not provided"}
+            </P>
+          </View>
         </View>
       </ScrollView>
     </ContainerComponent>

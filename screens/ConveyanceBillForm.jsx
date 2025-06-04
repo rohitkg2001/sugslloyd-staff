@@ -36,8 +36,8 @@ const ConveyanceBillForm = ({ navigation, route }) => {
   });
 
   const vehicleCategoryMap = {
-    car: 1,
-    bike: 2,
+    bike: 1,
+    car: 2,
     publicTransport: 3,
   };
 
