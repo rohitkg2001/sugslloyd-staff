@@ -10,6 +10,7 @@ import {
   GET_ALL_CONVEYANCE,
   GET_CONVEYANCE_BY_ID,
   GET_BILL_BY_ID,
+  GET_ALL_VEHICLES,
 } from "../constant";
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   projectCount: 0,
   conveyanceList: [],
   bills: [],
+  vehicles: [],
 };
 
 export const projectReducer = (state = initialState, action) => {
@@ -64,6 +66,11 @@ export const projectReducer = (state = initialState, action) => {
 
     case GET_BILL_BY_ID:
       return { ...state, bills: action.payload };
+    case GET_ALL_VEHICLES:
+      return {
+        ...state,
+        vehicles: action.payload,
+      };
 
     default:
       return state;

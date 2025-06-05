@@ -104,7 +104,7 @@ export const menuItems = [
     page: "totalProjectsScreen",
   },
   {
-    label: "Target Management",
+    label: "target_management",
     icon: "tennisball-outline",
     page: "targetManagementScreen",
   },
@@ -115,12 +115,12 @@ export const menuItems = [
   // },
 
   {
-    label: "Conveyance Management",
+    label: "conveyance_management",
     icon: "calculator-outline",
     page: "conveyanceManagement",
   },
   {
-    label: "Travel Allowance Management",
+    label: "travel_allowance_management",
     icon: "map-outline",
     page: "travelManagement",
   },

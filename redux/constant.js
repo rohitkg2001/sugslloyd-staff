@@ -2,7 +2,6 @@ export const LOGIN_STAFF = "LOGIN_STAFF";
 export const BASE_URL = "https://slldm.com";
 //export const BASE_URL = "https://solarcrm.dashandots.tech";
 // export const BASE_URL = "http://192.168.4.107:8000";
-// export const BASE_URL = "http://192.168.31.111:8000";
 
 export const initialState = {};
 
@@ -55,3 +54,4 @@ export const ADD_BILL = "ADD_BILL";
 export const GET_ALL_CONVEYANCE = "GET_ALL_CONVEYANCE";
 export const GET_CONVEYANCE_BY_ID = "GET_CONVEYANCE_BY_ID";
 export const GET_BILL_BY_ID = "GET_BILL_BY_ID";
+export const GET_ALL_VEHICLES = "GET_ALL_VEHICLES";

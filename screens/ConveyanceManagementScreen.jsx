@@ -4,6 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
 import { getConveyanceById } from "../redux/actions/projectAction";
 
+
 // Components
 import ContainerComponent from "../components/ContainerComponent";
 import ClickableCard1 from "../components/card/ClickableCard1";
@@ -28,12 +29,13 @@ import {
 import { P, Span } from "../components/text";
 
 export default function ConveyanceManagementScreen({ navigation }) {
-  const layout = useWindowDimensions();
+  // const layout = useWindowDimensions();
   const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = useState("thisWeek");
+  const [searchText, setSearchText] = useState("");
 
   const tabs = [
-    { key: "thisWeek", title: "This Week" },
+    { key: "thisWeek", title: ("This Week") },
     { key: "thisMonth", title: "This Month" },
     { key: "approved", title: "Approved" },
     { key: "rejected", title: "Rejected" },
@@ -43,14 +45,59 @@ export default function ConveyanceManagementScreen({ navigation }) {
   const conveyances = useSelector((state) => state.project.conveyances || []);
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getConveyanceById(userId));
-    }
+    if (userId) dispatch(getConveyanceById(userId));
   }, [dispatch, userId]);
+
+  const filterConveyances = () => {
+    const now = new Date();
+    const day = now.getDay();
+    const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+    const startOfWeek = new Date(now.setDate(diff));
+    startOfWeek.setHours(0, 0, 0, 0);
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    return conveyances.filter((item) => {
+      const itemDate = new Date(item.created_at);
+      const status = item.status?.toString();
+
+      // Apply tab filter
+      let tabMatch = false;
+      switch (selectedTab) {
+        case "thisWeek":
+          tabMatch = itemDate >= startOfWeek;
+          break;
+        case "thisMonth":
+          tabMatch = itemDate >= startOfMonth;
+          break;
+        case "approved":
+          tabMatch = status === "1";
+          break;
+        case "rejected":
+          tabMatch = status === "2";
+          break;
+        default:
+          tabMatch = true;
+      }
+
+      // Apply search filter
+      const lowerSearch = searchText.toLowerCase();
+      const from = item.from?.toLowerCase() || "";
+      const to = item.to?.toLowerCase() || "";
+      const vehicle = item.vehicles?.[0]?.category?.toLowerCase() || "";
+
+      const searchMatch =
+        from.includes(lowerSearch) ||
+        to.includes(lowerSearch) ||
+        vehicle.includes(lowerSearch);
+
+      return tabMatch && searchMatch;
+    });
+  };
 
   const renderConveyances = (data) => (
     <MyFlatList
       data={data}
+      keyExtractor={(item, index) => index.toString()}
       renderItem={({ item, index }) => (
         <ClickableCard1
           key={index}
@@ -59,30 +106,21 @@ export default function ConveyanceManagementScreen({ navigation }) {
           onPress={() =>
             navigation.navigate("conveyanceDetail", { travelItem: item })
           }
-          cardStyle={{
-            backgroundColor: "#F0F0F0",
-            height: 135,
-          }}
+          cardStyle={{ backgroundColor: "#F0F0F0", height: 135 }}
         >
           <View style={[styles.row, { bottom: 30 }]}>
-            <View style={{ flex: 1, marginRight: 6 }}>
-              <P style={[typography.font12, typography.fontLato]}>
-                Vehicle Type
-              </P>
-              <P style={typography.font12}>
-                {String(item.vehicle_category || "Not provided")}
-              </P>
-            </View>
-
-            <View style={{ flex: 1, marginHorizontal: 6 }}>
-              <P style={[typography.font12, typography.fontLato]}>Kilometer</P>
-              <P style={typography.font12}>{item.kilometer ?? "N/A"}</P>
-            </View>
-
-            <View style={{ flex: 1, marginLeft: 6 }}>
-              <P style={[typography.font12, typography.fontLato]}>Time</P>
-              <P style={typography.font12}>{item.time ?? "N/A"}</P>
-            </View>
+            {[
+              { label: "Vehicle Type", value: item.vehicles?.[0]?.category },
+              { label: "Kilometer", value: item.kilometer ?? "N/A" },
+              { label: "Time", value: item.time ?? "N/A" },
+            ].map((field, i) => (
+              <View key={i} style={{ flex: 1, marginHorizontal: 6 }}>
+                <P style={[typography.font12, typography.fontLato]}>
+                  {field.label}
+                </P>
+                <P style={typography.font12}>{field.value || "Not provided"}</P>
+              </View>
+            ))}
           </View>
 
           <View
@@ -91,10 +129,7 @@ export default function ConveyanceManagementScreen({ navigation }) {
               spacing.pv1,
               spacing.ph2,
               spacing.br1,
-              {
-                backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                bottom: 16,
-              },
+              { backgroundColor: PRIMARY_COLOR_TRANSPARENT, bottom: 16 },
             ]}
           >
             <Span
@@ -121,7 +156,6 @@ export default function ConveyanceManagementScreen({ navigation }) {
           </View>
         </ClickableCard1>
       )}
-      keyExtractor={(item, index) => index.toString()}
       contentContainerStyle={[spacing.mh1, spacing.mt1]}
       showSearchBar={false}
     />
@@ -133,17 +167,15 @@ export default function ConveyanceManagementScreen({ navigation }) {
         greeting="Good morning"
         firstName={firstName}
         message="You fall under M3 category"
-        style={[
-          spacing.p2,
-          {
-            width: SCREEN_WIDTH,
-            backgroundColor: PRIMARY_COLOR,
-            height: 70,
-            borderBottomLeftRadius: 12,
-            borderBottomRightRadius: 12,
-            margin: 0,
-          },
-        ]}
+        style={{
+          width: SCREEN_WIDTH,
+          backgroundColor: PRIMARY_COLOR,
+          height: 70,
+          borderBottomLeftRadius: 12,
+          borderBottomRightRadius: 12,
+          padding: 16,
+          bottom: 8,
+        }}
         textStyle={{ color: LIGHT }}
         useEllipsis
       />
@@ -152,7 +184,12 @@ export default function ConveyanceManagementScreen({ navigation }) {
       <View
         style={[spacing.mv4, styles.row, spacing.mh1, { alignItems: "center" }]}
       >
-        <SearchBar placeholder="Search" style={{ width: SCREEN_WIDTH - 80 }} />
+        <SearchBar
+          placeholder="Search"
+          value={searchText}
+          onChangeText={(text) => setSearchText(text)}
+          style={{ width: SCREEN_WIDTH - 80 }}
+        />
         <Button
           style={[styles.btn, styles.bgPrimary, spacing.mh1, { width: 50 }]}
         >
@@ -160,15 +197,15 @@ export default function ConveyanceManagementScreen({ navigation }) {
         </Button>
       </View>
 
-      {/* Tabs - No Filtering, UI Only */}
+      {/* Tabs */}
       <SwipeTab
         tabs={tabs}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
 
-      {/* List - All Data */}
-      <View style={{ flex: 1 }}>{renderConveyances(conveyances)}</View>
+      {/* Filtered List */}
+      <View style={{ flex: 1 }}>{renderConveyances(filterConveyances())}</View>
 
       {/* Add Button */}
       <Button

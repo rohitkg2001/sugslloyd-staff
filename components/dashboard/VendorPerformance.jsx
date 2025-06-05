@@ -75,7 +75,7 @@ export default function VendorPerformance() {
             { marginRight: 150 },
           ]}
         >
-          {t("Vendor Performance")}
+          {t("vendor_performance")}
         </H6>
       </View>
 
@@ -90,7 +90,7 @@ export default function VendorPerformance() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {t("Engineer")}
+            {t("engineer")}
           </H6>
           <H6
             style={[
@@ -99,7 +99,7 @@ export default function VendorPerformance() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {t("Total")}
+            {t("total_title")}
           </H6>
           <H6
             style={[
@@ -108,7 +108,7 @@ export default function VendorPerformance() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {t("Completed")}
+            {t("completed")}
           </H6>
           <H6
             style={[
@@ -117,7 +117,7 @@ export default function VendorPerformance() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {t("Pending")}
+            {t("pending")}
           </H6>
         </View>
 
