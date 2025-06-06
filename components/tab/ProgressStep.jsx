@@ -1,3 +1,4 @@
+// import react native
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 const ProgressStep = ({ steps, activeStep, setActiveStep }) => {
