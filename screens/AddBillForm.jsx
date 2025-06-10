@@ -61,6 +61,9 @@ const AddBillForm = ({ navigation }) => {
 
   const [form, setForm] = useState({
     user_id: "",
+    visiting_to: "",
+    purpose_of_visit: "", 
+    outcome_achieved: "",
     visit_approve: "",
     objective_tour: "",
     meeting_visit: "",
@@ -141,6 +144,59 @@ const AddBillForm = ({ navigation }) => {
       setForm((prev) => ({ ...prev, is_ticket_provided: "Yes" }));
     }
   }, []);
+
+  const [ticketEntries, setTicketEntries] = useState([
+    {
+      is_ticket_provided: "",
+      from: "",
+      to: "",
+      start_journey: "",
+      end_journey: "",
+      ticket: null,
+      journey_amount: "",
+    },
+  ]);
+
+  // Handle change in ticket entry fields
+  const handleTicketEntryChange = (index, field, value) => {
+    const updated = [...ticketEntries];
+    updated[index][field] = value;
+    setTicketEntries(updated);
+  };
+
+  // Add a new ticket entry form
+  const handleAddTicketEntry = () => {
+    setTicketEntries([
+      ...ticketEntries,
+      {
+        is_ticket_provided: "",
+        from: "",
+        to: "",
+        start_journey: "",
+        end_journey: "",
+        ticket: null,
+        journey_amount: "",
+      },
+    ]);
+  };
+
+  // Upload ticket file for a specific entry
+  const handleUploadTicketFile = (index, type) => {
+    // Implement logic to handle file picker and assign to ticketEntries[index].ticket
+  };
+
+  // Remove uploaded ticket file from a specific entry
+  const handleRemoveTicketFile = (index) => {
+    const updated = [...ticketEntries];
+    updated[index].ticket = null;
+    setTicketEntries(updated);
+  };
+
+  const handleRemoveTicketEntry = (index) => {
+    const updated = [...ticketEntries];
+    updated.splice(index, 1);
+    setTicketEntries(updated);
+  };
 
   const handleUpload = async (type) => {
     try {
@@ -303,27 +359,31 @@ const AddBillForm = ({ navigation }) => {
       <ScrollView style={[spacing.p2]}>
         {activeStep === 0 && (
           <>
-            {["Visit_To", "Visit_Purpose", "outcome_achieve"].map((field) => (
-              <MyTextInput
-                key={field}
-                title={field
-                  .replace(/_/g, " ")
-                  .replace(/\b\w/g, (char) => char.toUpperCase())}
-                value={form[field]}
-                onChangeText={(text) => handleChange(field, text)}
-                placeholder={field
-                  .replace(/_/g, " ")
-                  .replace(/\b\w/g, (char) => char.toUpperCase())}
-                multiline={
-                  field === "Visit_Purpose" || field === "outcome_achieve"
-                }
-                style={
-                  field === "Visit_Purpose" || field === "outcome_achieve"
-                    ? { height: 100, textAlignVertical: "top" }
-                    : {}
-                }
-              />
-            ))}
+            {["visiting_to", " purpose_of_visit", "outcome_achieved"].map(
+              (field) => (
+                <MyTextInput
+                  key={field}
+                  title={field
+                    .replace(/_/g, " ")
+                    .replace(/\b\w/g, (char) => char.toUpperCase())}
+                  value={form[field]}
+                  onChangeText={(text) => handleChange(field, text)}
+                  placeholder={field
+                    .replace(/_/g, " ")
+                    .replace(/\b\w/g, (char) => char.toUpperCase())}
+                  multiline={
+                    field === " purpose_of_visit" ||
+                    field === "outcome_achieved"
+                  }
+                  style={
+                    field === " purpose_of_visit" ||
+                    field === "outcome_achieved"
+                      ? { height: 100, textAlignVertical: "top" }
+                      : {}
+                  }
+                />
+              )
+            )}
 
             {/* Departure Date */}
             <H6>Departure Date</H6>
@@ -395,6 +455,250 @@ const AddBillForm = ({ navigation }) => {
 
         {activeStep === 1 && (
           <ScrollView style={[spacing.p1]}>
+            {ticketEntries.map((entry, index) => (
+              <View
+                key={index}
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  padding: 10,
+                  backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                  marginBottom: 16,
+                }}
+              >
+                {/* Top Heading */}
+                <H6
+                  style={[
+                    typography.font14,
+                    typography.fontLato,
+                    typography.textBold,
+                    {
+                      letterSpacing: 0.5,
+                      color: "#333",
+                      width: SCREEN_WIDTH - 20,
+                    },
+                  ]}
+                >
+                  * Is Ticket Provided by Company?
+                </H6>
+
+                {/* Yes/No Radio */}
+                <View style={[styles.row, spacing.mv2]}>
+                  {["Yes", "No"].map((option) => {
+                    const selected = entry.is_ticket_provided === option;
+                    return (
+                      <TouchableOpacity
+                        key={option}
+                        onPress={() =>
+                          handleTicketEntryChange(
+                            index,
+                            "is_ticket_provided",
+                            option
+                          )
+                        }
+                        style={[
+                          styles.row,
+                          { alignItems: "center", marginRight: 16 },
+                        ]}
+                      >
+                        <View
+                          style={{
+                            height: 20,
+                            width: 20,
+                            borderRadius: 10,
+                            borderWidth: 1.5,
+                            borderColor: selected ? "#020409" : "#aaa",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginRight: 10,
+                          }}
+                        >
+                          {selected && (
+                            <View
+                              style={{
+                                height: 10,
+                                width: 10,
+                                backgroundColor: PRIMARY_COLOR,
+                                borderRadius: 5,
+                              }}
+                            />
+                          )}
+                        </View>
+                        <Text style={{ color: selected ? "#76885B" : "#333" }}>
+                          {option}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+
+                {/* Conditional Fields */}
+                {entry.is_ticket_provided === "Yes" && (
+                  <Image
+                    source={require("../assets/document.png")}
+                    style={{
+                      width: 200,
+                      height: 200,
+                      resizeMode: "contain",
+                      alignSelf: "center",
+                    }}
+                  />
+                )}
+
+                {entry.is_ticket_provided === "No" && (
+                  <>
+                    <MyTextInput
+                      title="From"
+                      value={entry.from}
+                      onChangeText={(text) =>
+                        handleTicketEntryChange(index, "from", text)
+                      }
+                      placeholder="Enter From Location"
+                      inputStyle={{ width: "100%" }}
+                    />
+                    <MyTextInput
+                      title="To"
+                      value={entry.to}
+                      onChangeText={(text) =>
+                        handleTicketEntryChange(index, "to", text)
+                      }
+                      placeholder="Enter To Location"
+                      inputStyle={{ width: "100%" }}
+                    />
+
+                    {["start_journey", "end_journey"].map((field) => (
+                      <View key={field} style={{ marginBottom: 15 }}>
+                        <Span style={typography.fontLato}>
+                          {field
+                            .replace(/_/g, " ")
+                            .replace(/\b\w/g, (c) => c.toUpperCase())}
+                        </Span>
+                        <Pressable
+                          onPress={() => showDatePicker(field)}
+                          style={[
+                            spacing.pv4,
+                            spacing.ph3,
+                            spacing.br1,
+                            styles.row,
+                            {
+                              borderWidth: 1,
+                              borderColor: "#ccc",
+                              backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                            },
+                          ]}
+                        >
+                          <Text
+                            style={{ color: form[field] ? "#000" : "#888" }}
+                          >
+                            {form[field] || `${field.replace(/_/g, " ")} Date`}
+                          </Text>
+                          <Icon name="calendar" size={20} color="#888" />
+                        </Pressable>
+                      </View>
+                    ))}
+
+                    {datePicker.show && (
+                      <DateTimePicker
+                        value={new Date()}
+                        mode="date"
+                        display="default"
+                        onChange={onDateChange}
+                      />
+                    )}
+
+                    <View
+                      style={{
+                        marginTop: 10,
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => handleUploadTicketFile(index, "ticket")}
+                      >
+                        <Span
+                          style={{
+                            color: "#007bff",
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          Upload Ticket
+                        </Span>
+                      </TouchableOpacity>
+                    </View>
+
+                    {entry.ticket && (
+                      <View style={{ marginTop: 5 }}>
+                        <Text style={{ color: "green" }}>
+                          Uploaded File: {entry.ticket.name}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => handleRemoveTicketFile(index)}
+                        >
+                          <Text
+                            style={{
+                              color: "red",
+                              textDecorationLine: "underline",
+                            }}
+                          >
+                            Remove
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+
+                    <MyTextInput
+                      title="Amount"
+                      value={entry.journey_amount}
+                      onChangeText={(text) =>
+                        handleTicketEntryChange(index, "journey_amount", text)
+                      }
+                      placeholder="Enter Amount"
+                      keyboardType="numeric"
+                      inputStyle={{ width: "100%" }}
+                    />
+                  </>
+                )}
+
+                {/*  REMOVE Button */}
+                <TouchableOpacity
+                  onPress={() => handleRemoveTicketEntry(index)}
+                  style={{
+                    marginTop: 10,
+                    alignSelf: "flex-end",
+                    paddingVertical: 6,
+                    paddingHorizontal: 12,
+                    backgroundColor: "#FF4C4C",
+                    borderRadius: 6,
+                  }}
+                >
+                  <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                    Remove
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: "#e8f5e9",
+                borderWidth: 1,
+                borderColor: "green",
+                borderStyle: "dotted",
+                alignItems: "center",
+                borderRadius: 8,
+              }}
+              onPress={handleAddTicketEntry}
+            >
+              <Text style={{ color: "green" }}>+ Add More</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        )}
+
+        {activeStep === 2 && (
+          <ScrollView style={[spacing.p1]}>
             <View
               style={{
                 borderWidth: 1,
@@ -416,62 +720,19 @@ const AddBillForm = ({ navigation }) => {
                   },
                 ]}
               >
-                * Is Ticket Provided by Company?
+                * Is Guest House Available?
               </H6>
             </View>
 
-            {/* <View style={[spacing.ph3]}>
-              <View style={[styles.row, spacing.mv2]}>
-                {["Yes", "No"].map((option) => {
-                  const selected = form.is_ticket_provided === option;
-                  return (
-                    <TouchableOpacity
-                      key={option}
-                      onPress={() => handleChange("is_ticket_provided", option)}
-                      style={[styles.row, { alignItems: "center" }]}
-                    >
-                      <View
-                        style={[
-                          spacing.mr2,
-                          {
-                            height: 20,
-                            width: 20,
-                            borderRadius: 10,
-                            borderWidth: 1.5,
-                            borderColor: selected ? "#020409" : "#aaa",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          },
-                        ]}
-                      >
-                        {selected && (
-                          <View
-                            style={[
-                              spacing.br1,
-                              {
-                                height: 10,
-                                width: 10,
-                                backgroundColor: PRIMARY_COLOR,
-                              },
-                            ]}
-                          />
-                        )}
-                      </View>
-                      <Text style={{ color: selected ? "#76885B" : "#333" }}>
-                        {option}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-            </View> */}
             <View style={[styles.row, spacing.mv2]}>
               {["Yes", "No"].map((option) => {
-                const selected = form.is_ticket_provided === option;
+                const selected = form.is_guest_house_available === option;
                 return (
                   <TouchableOpacity
                     key={option}
-                    onPress={() => handleChange("is_ticket_provided", option)}
+                    onPress={() =>
+                      handleChange("is_guest_house_available", option)
+                    }
                     style={[styles.row, { alignItems: "center" }]}
                   >
                     <View
@@ -509,227 +770,11 @@ const AddBillForm = ({ navigation }) => {
               })}
             </View>
 
-            {form.is_ticket_provided === "Yes" && (
-              <View style={{ alignItems: "center", marginTop: 4 }}>
-                <Image
-                  source={require("../assets/document.png")}
-                  style={{ width: 200, height: 200, resizeMode: "contain" }}
-                />
-              </View>
-            )}
-
-            {form.is_ticket_provided === "No" && (
-              <>
-                {["start_journey", "end_journey"].map((field) => (
-                  <View key={field} style={{ marginBottom: 15 }}>
-                    <Span style={typography.fontLato}>
-                      {field
-                        .replace(/_/g, " ")
-                        .replace(/\b\w/g, (char) => char.toUpperCase())}
-                    </Span>
-                    <Pressable
-                      onPress={() => showDatePicker(field)}
-                      style={[
-                        spacing.pv4,
-                        spacing.ph3,
-                        spacing.br1,
-                        styles.row,
-                        {
-                          borderWidth: 1,
-                          borderColor: "#ccc",
-                          backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                        },
-                      ]}
-                    >
-                      <Text style={{ color: form[field] ? "#000" : "#888" }}>
-                        {form[field] || `${field.replace(/_/g, " ")} Date`}
-                      </Text>
-                      <Icon name="calendar" size={20} color="#888" />
-                    </Pressable>
-                  </View>
-                ))}
-
-                {datePicker.show && (
-                  <DateTimePicker
-                    value={new Date()}
-                    mode="date"
-                    display="default"
-                    onChange={onDateChange}
-                  />
-                )}
-
-                {["start_journey_pnr", "end_journey_pnr"].map((field) => (
-                  <MyTextInput
-                    key={field}
-                    title={field
-                      .replace(/_/g, " ")
-                      .replace(/\b\w/g, (char) => char.toUpperCase())}
-                    value={form[field]}
-                    onChangeText={(text) => handleChange(field, text)}
-                    placeholder={`Enter ${field.replace(/_/g, " ")}`}
-                  />
-                ))}
-
-                <View
-                  style={[
-                    spacing.bw1,
-                    spacing.br2,
-                    {
-                      borderStyle: "dotted",
-                      marginTop: 10,
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                    },
-                  ]}
-                >
-                  <H6
-                    style={[
-                      typography.font14,
-                      typography.fontLato,
-                      spacing.mb2,
-                    ]}
-                  >
-                    Journey Ticket
-                  </H6>
-                  <TouchableOpacity
-                    onPress={() => handleUpload("ticket")}
-                    style={{ marginTop: 10, alignItems: "center" }}
-                  >
-                    <H6
-                      style={[
-                        typography.fontLato,
-                        spacing.p1,
-                        spacing.bw1,
-                        spacing.br1,
-                        spacing.mb2,
-                        typography.font16,
-                        {
-                          textAlign: "center",
-                          borderColor: "green",
-                          borderStyle: "dotted",
-                          backgroundColor: "#e8f5e9",
-                        },
-                      ]}
-                    >
-                      Upload Ticket
-                    </H6>
-                  </TouchableOpacity>
-                  {form.ticket && (
-                    <View style={{ marginTop: 10, alignItems: "center" }}>
-                      <H6 style={{ color: "green", fontSize: 14 }}>
-                        Uploaded File: {form.ticket.name}
-                      </H6>
-                      <TouchableOpacity onPress={() => handleRemove("ticket")}>
-                        <Span
-                          style={{
-                            color: "red",
-                            borderColor: "green",
-                            borderStyle: "dotted",
-                          }}
-                        >
-                          Remove
-                        </Span>
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
-
-                <MyTextInput
-                  title="Amount"
-                  value={form.journey_amount}
-                  onChangeText={(text) => handleChange("journey_amount", text)}
-                  placeholder="Enter Amount"
-                  keyboardType="numeric"
-                />
-              </>
-            )}
-          </ScrollView>
-        )}
-
-        {activeStep === 2 && (
-          <ScrollView style={[spacing.p1]}>
-            <View
-              style={{
-                borderWidth: 1,
-                borderColor: "#ccc",
-                borderRadius: 8,
-                padding: 10,
-                backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-              }}
-            >
-              <H6
-                style={[
-                  typography.font14,
-                  typography.fontLato,
-                  typography.textBold,
-                  {
-                    letterSpacing: 0.5,
-                    color: "#333",
-                    width: SCREEN_WIDTH - 20,
-                  },
-                ]}
-              >
-                * Is Guest House Available?
-              </H6>
-            </View>
-
-            {/* Yes/No Radio Buttons */}
-            <View style={{ paddingHorizontal: 15 }}>
-              <View style={[styles.row]}>
-                {["Yes", "No"].map((option) => {
-                  const selected = form.is_guest_house_available === option;
-                  return (
-                    <TouchableOpacity
-                      key={option}
-                      onPress={() =>
-                        handleChange("is_guest_house_available", option)
-                      }
-                      style={[
-                        styles.row,
-                        {
-                          alignItems: "center",
-                          marginRight: 12,
-                          top: 4,
-                        },
-                      ]}
-                    >
-                      <View
-                        style={{
-                          height: 20,
-                          width: 20,
-                          borderRadius: 10,
-                          borderWidth: 1.5,
-                          borderColor: selected ? "#020409" : "#aaa",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          marginRight: 6,
-                        }}
-                      >
-                        {selected && (
-                          <View
-                            style={{
-                              height: 10,
-                              width: 10,
-                              borderRadius: 5,
-                              backgroundColor: "#76885B",
-                            }}
-                          />
-                        )}
-                      </View>
-                      <Text style={{ color: selected ? "#76885B" : "#333" }}>
-                        {option}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-            </View>
-
             {/* Show Additional Inputs If Guest House is Available */}
             {form.is_guest_house_available === "Yes" && (
-              <>
+              <View style={{ marginTop: 14 }}>
                 {guestHouseYesEntries.map((entry, index) => (
-                  <View key={index} style={{ marginBottom: 20 }}>
+                  <View key={index} style={{ marginBottom: 14 }}>
                     <H5>Miscellaneous Transport</H5>
                     <MyTextInput
                       title="From"
@@ -756,7 +801,6 @@ const AddBillForm = ({ navigation }) => {
                       placeholder="Enter miscellaneous transport charge"
                       keyboardType="numeric"
                     />
-
                     <MyTextInput
                       title="Miscellaneous"
                       value={entry.miscellaneous}
@@ -764,7 +808,7 @@ const AddBillForm = ({ navigation }) => {
                         handleGuestHouseChangeYes(index, "miscellaneous", text)
                       }
                       placeholder="Enter miscellaneous details"
-                      style={{ height: 100, textAlignVertical: "top" }}
+                      // style={{ height: 100, textAlignVertical: "top" }}
                     />
                     <MyTextInput
                       title="Total Amount"
@@ -794,7 +838,7 @@ const AddBillForm = ({ navigation }) => {
                     borderWidth: 1,
                     borderColor: "green",
                     borderStyle: "dotted",
-                    marginBottom: 20,
+                    // marginBottom: 20,
                     alignItems: "center",
                     borderRadius: 8,
                   }}
@@ -802,50 +846,14 @@ const AddBillForm = ({ navigation }) => {
                 >
                   <Text style={{ color: "green" }}>+ Add More</Text>
                 </TouchableOpacity>
-              </>
+              </View>
             )}
 
             {form.is_guest_house_available === "No" && (
               <>
                 {guestHouseNoEntries.map((entry, index) => {
-                  const availableOptions = [
-                    { label: "Food", value: "Food" },
-                    { label: "Lodging", value: "Lodging" },
-                    { label: "Laundry", value: "Laundry" },
-                    { label: "Other", value: "Other" },
-                  ].filter(
-                    (opt) =>
-                      !guestHouseNoEntries.some(
-                        (e, i) =>
-                          e.guest_house_category === opt.value && i !== index
-                      )
-                  );
-
                   return (
                     <View key={index} style={{ marginBottom: 20 }}>
-                      <MyPickerInput
-                        title={`Guest House Category ${index + 1}`}
-                        value={entry.guest_house_category}
-                        onChange={(val) =>
-                          handleGuestHouseChangeNo(
-                            index,
-                            "guest_house_category",
-                            val
-                          )
-                        }
-                        options={availableOptions}
-                      />
-
-                      <MyTextInput
-                        title="Food Amount"
-                        value={entry.food_amount}
-                        onChangeText={(text) =>
-                          handleGuestHouseChangeNo(index, "food_amount", text)
-                        }
-                        placeholder="Enter food amount"
-                        keyboardType="numeric"
-                      />
-
                       <MyTextInput
                         title="From"
                         value={entry.from_city}
@@ -930,7 +938,7 @@ const AddBillForm = ({ navigation }) => {
                 </TouchableOpacity>
 
                 {/* Hotel Bill Upload */}
-                {/* Hotel Bill Upload */}
+
                 <View
                   style={[
                     spacing.bw1,

@@ -4,63 +4,17 @@ import { P, H6 } from "../text";
 
 const ProgressStep = ({ steps, activeStep, setActiveStep }) => {
   return (
-    // <View
-    //   style={[
-    //     styles.row,
-    //     spacing.ph2,
-    //     spacing.br1,
-    //     spacing.pv1,
-    //     {
-    //       backgroundColor: "#ebedef",
-    //     },
-    //   ]}
-    // >
-    //   {steps.map((step, index) => (
-    //     <TouchableOpacity
-    //       key={index}
-    //       onPress={() => setActiveStep(index)}
-    //       style={[
-    //         spacing.ph5,
-    //         spacing.pv2,
-    //         {
-    //           borderBottomWidth: 3,
-    //           borderColor:
-    //             index === activeStep
-    //               ? "#020409"
-    //               : index < activeStep
-    //               ? "#76885B"
-    //               : "#ccc",
-    //         },
-    //       ]}
-    //     >
-    //       <P
-    //         style={{
-    //           color:
-    //             index === activeStep
-    //               ? "#007AFF"
-    //               : index < activeStep
-    //               ? "#76885B"
-    //               : "#999",
-    //           fontWeight: "bold",
-    //           ...typography.font14,
-    //         }}
-    //       >
-    //         {step}
-    //       </P>
-    //     </TouchableOpacity>
-    //   ))}
-    // </View>
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={[styles.row, spacing.ph2]}
+      contentContainerStyle={[styles.row, spacing.ph1]}
     >
       {steps.map((step, index) => (
         <TouchableOpacity
           key={index}
           onPress={() => setActiveStep(index)}
           style={[
-            spacing.ph5,
+            spacing.ph2,
             spacing.pv2,
             {
               borderBottomWidth: 3,
