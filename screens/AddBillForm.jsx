@@ -14,7 +14,6 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
-import MyPickerInput from "../components/input/MyPickerInput";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Button from "../components/buttons/Button";
 import {
@@ -31,12 +30,13 @@ import ProgressStep, {
   NavigationButtons,
 } from "../components/tab/ProgressStep";
 import { useSelector } from "react-redux";
+import UploadDocument from "../components/input/UploadDocument";
 
 const AddBillForm = ({ navigation }) => {
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
   const staff = useSelector((state) => state.staff);
-
+  const [file, setFile] = useState(null);
   // Function to create an empty travel field
   const createEmptyTravelField = () => ({
     from: "",
@@ -62,7 +62,7 @@ const AddBillForm = ({ navigation }) => {
   const [form, setForm] = useState({
     user_id: "",
     visiting_to: "",
-    purpose_of_visit: "", 
+    purpose_of_visit: "",
     outcome_achieved: "",
     visit_approve: "",
     objective_tour: "",
@@ -153,6 +153,7 @@ const AddBillForm = ({ navigation }) => {
       start_journey: "",
       end_journey: "",
       ticket: null,
+      uploadProgress: 0,
       journey_amount: "",
     },
   ]);
@@ -181,15 +182,41 @@ const AddBillForm = ({ navigation }) => {
   };
 
   // Upload ticket file for a specific entry
-  const handleUploadTicketFile = (index, type) => {
-    // Implement logic to handle file picker and assign to ticketEntries[index].ticket
+  const handleUploadTicketFile = async (index, type) => {
+    try {
+      const { canceled, assets } = await DocumentPicker.getDocumentAsync({
+        type: "application/pdf",
+        copyToCacheDirectory: true,
+      });
+
+      if (!canceled && assets?.[0]) {
+        const { name, uri } = assets[0];
+
+        setTicketEntries((prev) => {
+          const updated = [...prev];
+          updated[index] = {
+            ...updated[index],
+            [type]: { name, uri },
+          };
+          return updated;
+        });
+      }
+    } catch (error) {
+      console.log("Error picking file:", error);
+    }
   };
 
   // Remove uploaded ticket file from a specific entry
-  const handleRemoveTicketFile = (index) => {
-    const updated = [...ticketEntries];
-    updated[index].ticket = null;
-    setTicketEntries(updated);
+  const removeTicketFile = (index) => {
+    setTicketEntries((prevEntries) => {
+      const updatedEntries = [...prevEntries];
+      updatedEntries[index] = {
+        ...updatedEntries[index],
+        ticket: null,
+        uploadProgress: 0,
+      };
+      return updatedEntries;
+    });
   };
 
   const handleRemoveTicketEntry = (index) => {
@@ -612,37 +639,47 @@ const AddBillForm = ({ navigation }) => {
                         marginTop: 10,
                         flexDirection: "row",
                         justifyContent: "flex-end",
+                        alignItems: "center",
                       }}
                     >
                       <TouchableOpacity
                         onPress={() => handleUploadTicketFile(index, "ticket")}
                       >
-                        <Span
+                        <Text
                           style={{
                             color: "#007bff",
                             textDecorationLine: "underline",
                           }}
                         >
                           Upload Ticket
-                        </Span>
+                        </Text>
                       </TouchableOpacity>
                     </View>
 
-                    {entry.ticket && (
-                      <View style={{ marginTop: 5 }}>
-                        <Text style={{ color: "green" }}>
-                          Uploaded File: {entry.ticket.name}
+                    {/* Show uploaded file name + Remove */}
+                    {ticketEntries[index]?.ticket?.name && (
+                      <View
+                        style={[
+                          styles.row,
+                          spacing.br1,
+                          spacing.p2,
+                          spacing.mt2,
+                          {
+                            borderWidth: 1,
+                            borderColor: "#28a745",
+                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                            alignItems: "center",
+                          },
+                        ]}
+                      >
+                        <Text style={{ color: "#155724", flex: 1 }}>
+                          {ticketEntries[index].ticket.name}
                         </Text>
                         <TouchableOpacity
-                          onPress={() => handleRemoveTicketFile(index)}
+                          onPress={() => removeTicketFile(index)}
                         >
-                          <Text
-                            style={{
-                              color: "red",
-                              textDecorationLine: "underline",
-                            }}
-                          >
-                            Remove
+                          <Text style={{ color: "red", marginLeft: 10 }}>
+                            X Remove
                           </Text>
                         </TouchableOpacity>
                       </View>
