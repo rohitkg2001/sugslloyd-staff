@@ -107,7 +107,12 @@ const AddBillForm = ({ navigation }) => {
     createEmptyDailyFareField(),
   ]);
 
-  const steps = ["Basic Info", "Ticket Details", "Other Info"];
+  const steps = [
+    "Basic Info",
+    "Ticket Details",
+    "Other Info",
+    "Miscellaneous Expenses",
+  ];
 
   const handleChange = (field, value, index = null) => {
     if (index !== null) {
@@ -128,17 +133,6 @@ const AddBillForm = ({ navigation }) => {
     if (selectedDate) {
       const formatted = selectedDate.toISOString().split("T")[0];
       handleChange(datePicker.field, formatted);
-    }
-  };
-
-  const showDepartureDatePicker = () => {
-    setDatePicker({ show: true });
-  };
-  const onDepartureDateChange = (event, selectedDate) => {
-    setDatePicker({ ...datePicker, show: false });
-    if (selectedDate) {
-      const formatted = selectedDate.toISOString().split("T")[0];
-      handleChange("departure_time", formatted); // Update the departure_time field
     }
   };
 
@@ -309,22 +303,17 @@ const AddBillForm = ({ navigation }) => {
       <ScrollView style={[spacing.p2]}>
         {activeStep === 0 && (
           <>
-            {["Visit_Purpose", "outcome_achieve", "category"].map((field) => (
+            {["Visit_To", "Visit_Purpose", "outcome_achieve"].map((field) => (
               <MyTextInput
                 key={field}
                 title={field
                   .replace(/_/g, " ")
                   .replace(/\b\w/g, (char) => char.toUpperCase())}
-                value={
-                  field === "staffName"
-                    ? `${staff.firstName} ${staff.lastName}`
-                    : form[field]
-                }
+                value={form[field]}
                 onChangeText={(text) => handleChange(field, text)}
                 placeholder={field
                   .replace(/_/g, " ")
                   .replace(/\b\w/g, (char) => char.toUpperCase())}
-                editable={field !== "staffName"}
                 multiline={
                   field === "Visit_Purpose" || field === "outcome_achieve"
                 }
@@ -431,7 +420,7 @@ const AddBillForm = ({ navigation }) => {
               </H6>
             </View>
 
-            <View style={[spacing.ph3]}>
+            {/* <View style={[spacing.ph3]}>
               <View style={[styles.row, spacing.mv2]}>
                 {["Yes", "No"].map((option) => {
                   const selected = form.is_ticket_provided === option;
@@ -475,13 +464,56 @@ const AddBillForm = ({ navigation }) => {
                   );
                 })}
               </View>
+            </View> */}
+            <View style={[styles.row, spacing.mv2]}>
+              {["Yes", "No"].map((option) => {
+                const selected = form.is_ticket_provided === option;
+                return (
+                  <TouchableOpacity
+                    key={option}
+                    onPress={() => handleChange("is_ticket_provided", option)}
+                    style={[styles.row, { alignItems: "center" }]}
+                  >
+                    <View
+                      style={[
+                        spacing.mr2,
+                        {
+                          height: 20,
+                          width: 20,
+                          borderRadius: 10,
+                          borderWidth: 1.5,
+                          borderColor: selected ? "#020409" : "#aaa",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        },
+                      ]}
+                    >
+                      {selected && (
+                        <View
+                          style={[
+                            spacing.br1,
+                            {
+                              height: 10,
+                              width: 10,
+                              backgroundColor: PRIMARY_COLOR,
+                            },
+                          ]}
+                        />
+                      )}
+                    </View>
+                    <Text style={{ color: selected ? "#76885B" : "#333" }}>
+                      {option}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
 
             {form.is_ticket_provided === "Yes" && (
-              <View style={{ alignItems: "center", top: 40 }}>
+              <View style={{ alignItems: "center", marginTop: 4 }}>
                 <Image
                   source={require("../assets/document.png")}
-                  style={{ width: 200, height: 260, resizeMode: "contain" }}
+                  style={{ width: 200, height: 200, resizeMode: "contain" }}
                 />
               </View>
             )}
@@ -698,32 +730,7 @@ const AddBillForm = ({ navigation }) => {
               <>
                 {guestHouseYesEntries.map((entry, index) => (
                   <View key={index} style={{ marginBottom: 20 }}>
-                    <MyPickerInput
-                      title={`Guest House Category ${index + 1}`}
-                      value={entry.guest_house_category}
-                      onChange={(val) =>
-                        handleGuestHouseChangeYes(
-                          index,
-                          "guest_house_category",
-                          val
-                        )
-                      }
-                      options={[
-                        { label: "Food", value: "Food" },
-                        { label: "Lodging", value: "Lodging" },
-                        { label: "Laundry", value: "Laundry" },
-                        { label: "Other", value: "Other" },
-                      ]}
-                    />
-                    <MyTextInput
-                      title="Food Amount"
-                      value={entry.food_amount}
-                      onChangeText={(text) =>
-                        handleGuestHouseChangeYes(index, "food_amount", text)
-                      }
-                      placeholder="Enter food amount"
-                      keyboardType="numeric"
-                    />
+                    <H5>Miscellaneous Transport</H5>
                     <MyTextInput
                       title="From"
                       value={entry.from_city}
@@ -741,14 +748,15 @@ const AddBillForm = ({ navigation }) => {
                       placeholder="Enter to location"
                     />
                     <MyTextInput
-                      title="Lodging Amount"
+                      title="Miscellaneous Transport Charge"
                       value={entry.lodging_amount}
                       onChangeText={(text) =>
                         handleGuestHouseChangeYes(index, "lodging_amount", text)
                       }
-                      placeholder="Enter lodging amount"
+                      placeholder="Enter miscellaneous transport charge"
                       keyboardType="numeric"
                     />
+
                     <MyTextInput
                       title="Miscellaneous"
                       value={entry.miscellaneous}
