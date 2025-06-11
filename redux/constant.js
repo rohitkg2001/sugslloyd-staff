@@ -1,7 +1,7 @@
 export const LOGIN_STAFF = "LOGIN_STAFF";
-// export const BASE_URL = "https://slldm.com";
+//export const BASE_URL = "https://slldm.com";
 export const BASE_URL = "https://solarcrm.dashandots.tech";
-// export const BASE_URL = "http://192.168.4.107:8000";
+//export const BASE_URL = "http://192.168.4.107:8000";
 
 export const initialState = {};
 

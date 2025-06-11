@@ -12,11 +12,15 @@ const MyTextInput = ({
   inputStyle,
   containerStyle,
   style,
+  editable = true,
+  onPress,
+  rightIcon,
   ...props
 }) => {
   return (
     <View style={(spacing.mb2, containerStyle)}>
-      <Span style={typography.fontLato}>{title}</Span>
+      <Span style={ typography.fontLato }>{ title }</Span>
+     
       <TextInput
         value={value}
         onChangeText={onChangeText}
