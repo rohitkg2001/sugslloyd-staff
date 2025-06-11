@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Pressable,
   Image,
+  Platform,
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import { useDispatch } from "react-redux";
@@ -29,13 +30,10 @@ import { addBill } from "../redux/actions/projectAction";
 import ProgressStep, {
   NavigationButtons,
 } from "../components/tab/ProgressStep";
-import { useSelector } from "react-redux";
-import UploadDocument from "../components/input/UploadDocument";
 
 const AddBillForm = ({ navigation }) => {
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
-  const staff = useSelector((state) => state.staff);
   const [file, setFile] = useState(null);
   // Function to create an empty travel field
   const createEmptyTravelField = () => ({
@@ -101,7 +99,6 @@ const AddBillForm = ({ navigation }) => {
     hotelBill: null,
     hotel_bill: null,
     certificate: null,
-    staffName: staff ? `${staff.firstName} ${staff.lastName}` : "",
   });
 
   const [datePicker, setDatePicker] = useState({ show: false, field: "" });
@@ -223,6 +220,152 @@ const AddBillForm = ({ navigation }) => {
     const updated = [...ticketEntries];
     updated.splice(index, 1);
     setTicketEntries(updated);
+  };
+
+  const [guestHouseEntries, setGuestHouseEntries] = useState([
+    {
+      is_guest_house_available: "",
+      check_in_date: "",
+      check_out_date: "",
+      certificate_by_district_incharge: "",
+      breakfast_included: "",
+      hotel_bill: "",
+      amount: "",
+      dining_cost: "",
+      total_amount: "",
+    },
+  ]);
+
+  const handleGuestHouseChange = (index, field, value) => {
+    const updated = [...guestHouseEntries];
+    updated[index][field] = value;
+    setGuestHouseEntries(updated);
+  };
+
+  const handleAddGuestHouse = () => {
+    setGuestHouseEntries([
+      ...guestHouseEntries,
+      {
+        is_guest_house_available: "",
+        check_in_date: "",
+        check_out_date: "",
+        certificate_by_district_incharge: "",
+        breakfast_included: "",
+        hotel_bill: "",
+        amount: "",
+        dining_cost: "",
+        total_amount: "",
+      },
+    ]);
+  };
+
+  const handleRemoveGuestHouse = (index) => {
+    const updated = [...guestHouseEntries];
+    updated.splice(index, 1);
+    setGuestHouseEntries(updated);
+  };
+  const [datePickerState, setDatePickerState] = useState({
+    visible: false,
+    mode: "date",
+    field: "",
+    index: null,
+  });
+  const handleOpenDatePicker = (index, field) => {
+    setDatePickerState({
+      visible: true,
+      mode: "date",
+      field,
+      index,
+    });
+  };
+
+  const handleDateChange = (event, selectedDate) => {
+    if (event.type === "set" && selectedDate) {
+      const { index, field } = datePickerState;
+      handleGuestHouseChange(
+        index,
+        field,
+        selectedDate.toISOString().split("T")[0]
+      );
+    }
+    setDatePickerState({
+      visible: false,
+      mode: "date",
+      field: "",
+      index: null,
+    });
+  };
+
+  const handleUploadHotelBillFile = async (index, type) => {
+    try {
+      const { canceled, assets } = await DocumentPicker.getDocumentAsync({
+        type: "application/pdf",
+        copyToCacheDirectory: true,
+      });
+
+      if (!canceled && assets?.[0]) {
+        const { name, uri } = assets[0];
+
+        setTicketEntries((prev) => {
+          const updated = [...prev];
+          updated[index] = {
+            ...updated[index],
+            [type]: { name, uri },
+          };
+          return updated;
+        });
+      }
+    } catch (error) {
+      console.log("Error picking hotel bill file:", error);
+    }
+  };
+
+  const removeHotelBillFile = (index) => {
+    setTicketEntries((prevEntries) => {
+      const updatedEntries = [...prevEntries];
+      updatedEntries[index] = {
+        ...updatedEntries[index],
+        hotel_bill: null,
+        uploadProgress: 0,
+      };
+      return updatedEntries;
+    });
+  };
+
+  const handleUploadCertificateFile = async (index, type) => {
+    try {
+      const { canceled, assets } = await DocumentPicker.getDocumentAsync({
+        type: "application/pdf",
+        copyToCacheDirectory: true,
+      });
+
+      if (!canceled && assets?.[0]) {
+        const { name, uri } = assets[0];
+
+        setTicketEntries((prev) => {
+          const updated = [...prev];
+          updated[index] = {
+            ...updated[index],
+            [type]: { name, uri },
+          };
+          return updated;
+        });
+      }
+    } catch (error) {
+      console.log("Error picking certificate file:", error);
+    }
+  };
+
+  const removeCertificateFile = (index) => {
+    setTicketEntries((prevEntries) => {
+      const updatedEntries = [...prevEntries];
+      updatedEntries[index] = {
+        ...updatedEntries[index],
+        certificate: null,
+        uploadProgress: 0,
+      };
+      return updatedEntries;
+    });
   };
 
   const handleUpload = async (type) => {
@@ -736,367 +879,394 @@ const AddBillForm = ({ navigation }) => {
 
         {activeStep === 2 && (
           <ScrollView style={[spacing.p1]}>
-            <View
-              style={{
-                borderWidth: 1,
-                borderColor: "#ccc",
-                borderRadius: 8,
-                padding: 10,
-                backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-              }}
-            >
-              <H6
-                style={[
-                  typography.font14,
-                  typography.fontLato,
-                  typography.textBold,
-                  {
-                    letterSpacing: 0.5,
-                    color: "#333",
-                    width: SCREEN_WIDTH - 20,
-                  },
-                ]}
+            {guestHouseEntries.map((entry, index) => (
+              <View
+                key={index}
+                style={{
+                  marginBottom: 20,
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                  width: SCREEN_WIDTH - 20,
+                }}
               >
-                * Is Guest House Available?
-              </H6>
-            </View>
-
-            <View style={[styles.row, spacing.mv2]}>
-              {["Yes", "No"].map((option) => {
-                const selected = form.is_guest_house_available === option;
-                return (
-                  <TouchableOpacity
-                    key={option}
-                    onPress={() =>
-                      handleChange("is_guest_house_available", option)
-                    }
-                    style={[styles.row, { alignItems: "center" }]}
-                  >
-                    <View
-                      style={[
-                        spacing.mr2,
-                        {
-                          height: 20,
-                          width: 20,
-                          borderRadius: 10,
-                          borderWidth: 1.5,
-                          borderColor: selected ? "#020409" : "#aaa",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        },
-                      ]}
-                    >
-                      {selected && (
-                        <View
-                          style={[
-                            spacing.br1,
-                            {
-                              height: 10,
-                              width: 10,
-                              backgroundColor: PRIMARY_COLOR,
-                            },
-                          ]}
-                        />
-                      )}
-                    </View>
-                    <Text style={{ color: selected ? "#76885B" : "#333" }}>
-                      {option}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-
-            {/* Show Additional Inputs If Guest House is Available */}
-            {form.is_guest_house_available === "Yes" && (
-              <View style={{ marginTop: 14 }}>
-                {guestHouseYesEntries.map((entry, index) => (
-                  <View key={index} style={{ marginBottom: 14 }}>
-                    <H5>Miscellaneous Transport</H5>
-                    <MyTextInput
-                      title="From"
-                      value={entry.from_city}
-                      onChangeText={(text) =>
-                        handleGuestHouseChangeYes(index, "from_city", text)
-                      }
-                      placeholder="Enter from location"
-                    />
-                    <MyTextInput
-                      title="To"
-                      value={entry.to_city}
-                      onChangeText={(text) =>
-                        handleGuestHouseChangeYes(index, "to_city", text)
-                      }
-                      placeholder="Enter to location"
-                    />
-                    <MyTextInput
-                      title="Miscellaneous Transport Charge"
-                      value={entry.lodging_amount}
-                      onChangeText={(text) =>
-                        handleGuestHouseChangeYes(index, "lodging_amount", text)
-                      }
-                      placeholder="Enter miscellaneous transport charge"
-                      keyboardType="numeric"
-                    />
-                    <MyTextInput
-                      title="Miscellaneous"
-                      value={entry.miscellaneous}
-                      onChangeText={(text) =>
-                        handleGuestHouseChangeYes(index, "miscellaneous", text)
-                      }
-                      placeholder="Enter miscellaneous details"
-                      // style={{ height: 100, textAlignVertical: "top" }}
-                    />
-                    <MyTextInput
-                      title="Total Amount"
-                      value={entry.total_amount}
-                      onChangeText={(text) =>
-                        handleGuestHouseChangeYes(index, "total_amount", text)
-                      }
-                      placeholder="Enter total amount"
-                      keyboardType="numeric"
-                    />
-                    {guestHouseYesEntries.length > 1 && (
-                      <TouchableOpacity
-                        style={{ marginTop: 10 }}
-                        onPress={() => handleRemoveGuestHouseYes(index)}
-                      >
-                        <Text style={{ color: "red", textAlign: "right" }}>
-                          Remove
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                ))}
-                <TouchableOpacity
-                  style={{
-                    padding: 10,
-                    backgroundColor: "#e8f5e9",
-                    borderWidth: 1,
-                    borderColor: "green",
-                    borderStyle: "dotted",
-                    // marginBottom: 20,
-                    alignItems: "center",
-                    borderRadius: 8,
-                  }}
-                  onPress={handleAddGuestHouseYes}
+                <H6
+                  style={[
+                    typography.font14,
+                    typography.fontLato,
+                    typography.textBold,
+                    { letterSpacing: 0.5, color: "#333", marginBottom: 8 },
+                  ]}
                 >
-                  <Text style={{ color: "green" }}>+ Add More</Text>
-                </TouchableOpacity>
-              </View>
-            )}
+                  * Is Guest House Available?
+                </H6>
 
-            {form.is_guest_house_available === "No" && (
-              <>
-                {guestHouseNoEntries.map((entry, index) => {
-                  return (
-                    <View key={index} style={{ marginBottom: 20 }}>
-                      <MyTextInput
-                        title="From"
-                        value={entry.from_city}
-                        onChangeText={(text) =>
-                          handleGuestHouseChangeNo(index, "from_city", text)
-                        }
-                        placeholder="Enter from location"
-                      />
-
-                      <MyTextInput
-                        title="To"
-                        value={entry.to_city}
-                        onChangeText={(text) =>
-                          handleGuestHouseChangeNo(index, "to_city", text)
-                        }
-                        placeholder="Enter to location"
-                      />
-
-                      <MyTextInput
-                        title="Lodging Amount"
-                        value={entry.lodging_amount}
-                        onChangeText={(text) =>
-                          handleGuestHouseChangeNo(
+                <View style={[styles.row, spacing.mv1]}>
+                  {["Yes", "No"].map((option) => {
+                    const selected = entry.is_guest_house_available === option;
+                    return (
+                      <TouchableOpacity
+                        key={option}
+                        onPress={() =>
+                          handleGuestHouseChange(
                             index,
-                            "lodging_amount",
-                            text
+                            "is_guest_house_available",
+                            option
                           )
                         }
-                        placeholder="Enter lodging amount"
-                        keyboardType="numeric"
-                      />
-
-                      <MyTextInput
-                        title="Miscellaneous"
-                        value={entry.miscellaneous}
-                        onChangeText={(text) =>
-                          handleGuestHouseChangeNo(index, "miscellaneous", text)
-                        }
-                        placeholder="Enter miscellaneous details"
-                        style={{ height: 100, textAlignVertical: "top" }}
-                      />
-
-                      <MyTextInput
-                        title="Total Amount"
-                        value={entry.total_amount}
-                        onChangeText={(text) =>
-                          handleGuestHouseChangeNo(index, "total_amount", text)
-                        }
-                        placeholder="Enter total amount"
-                        keyboardType="numeric"
-                      />
-
-                      {guestHouseNoEntries.length > 1 && (
-                        <TouchableOpacity
-                          style={{ marginTop: 10 }}
-                          onPress={() => handleRemoveGuestHouseNo(index)}
+                        style={[
+                          styles.row,
+                          { alignItems: "center", marginRight: 15 },
+                        ]}
+                      >
+                        <View
+                          style={{
+                            height: 20,
+                            width: 20,
+                            borderRadius: 10,
+                            borderWidth: 1.5,
+                            borderColor: selected ? "#020409" : "#aaa",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginRight: 6,
+                          }}
                         >
-                          <Text style={{ color: "red", textAlign: "right" }}>
-                            Remove
+                          {selected && (
+                            <View
+                              style={{
+                                height: 10,
+                                width: 10,
+                                backgroundColor: PRIMARY_COLOR,
+                                borderRadius: 5,
+                              }}
+                            />
+                          )}
+                        </View>
+                        <Text style={{ color: selected ? "#76885B" : "#333" }}>
+                          {option}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+
+                {/* YES section */}
+                {entry.is_guest_house_available === "Yes" && (
+                  <>
+                    <H6>Check In Date</H6>
+                    <Pressable
+                      onPress={() =>
+                        handleOpenDatePicker(index, "check_in_date")
+                      }
+                      style={[
+                        spacing.pv4,
+                        spacing.ph3,
+                        spacing.br1,
+                        styles.row,
+                        {
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          backgroundColor: "#F0FAF0",
+                          borderRadius: 8,
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={{ color: entry.check_in_date ? "#000" : "#888" }}
+                      >
+                        {entry.check_in_date || "Select Check In Date"}
+                      </Text>
+                      <Icon name="calendar" size={20} color="#888" />
+                    </Pressable>
+
+                    <H6>Check Out Date</H6>
+                    <Pressable
+                      onPress={() =>
+                        handleOpenDatePicker(index, "check_out_date")
+                      }
+                      style={[
+                        spacing.pv4,
+                        spacing.ph3,
+                        spacing.br1,
+                        styles.row,
+                        {
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          backgroundColor: "#F0FAF0",
+                          borderRadius: 8,
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={{
+                          color: entry.check_out_date ? "#000" : "#888",
+                        }}
+                      >
+                        {entry.check_out_date || "Select Check In Date"}
+                      </Text>
+                      <Icon name="calendar" size={20} color="#888" />
+                    </Pressable>
+                  </>
+                )}
+
+                {/* NO section */}
+                {entry.is_guest_house_available === "No" && (
+                  <>
+                    <View
+                      style={{
+                        marginTop: 10,
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() =>
+                          handleUploadCertificateFile(index, "certificate")
+                        }
+                      >
+                        <Text
+                          style={{
+                            color: "#007bff",
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          Upload Certificate
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    {/* Show uploaded certificate name + Remove */}
+                    {ticketEntries[index]?.certificate?.name && (
+                      <View
+                        style={[
+                          styles.row,
+                          spacing.br1,
+                          spacing.p2,
+                          spacing.mt2,
+                          {
+                            borderWidth: 1,
+                            borderColor: "#28a745",
+                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                            alignItems: "center",
+                          },
+                        ]}
+                      >
+                        <Text style={{ color: "#155724", flex: 1 }}>
+                          {ticketEntries[index].certificate.name}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => removeCertificateFile(index)}
+                        >
+                          <Text style={{ color: "red", marginLeft: 10 }}>
+                            X Remove
                           </Text>
                         </TouchableOpacity>
-                      )}
-                    </View>
-                  );
-                })}
+                      </View>
+                    )}
 
-                <TouchableOpacity
-                  style={{
-                    padding: 10,
-                    backgroundColor: "#e8f5e9",
-                    borderWidth: 1,
-                    borderColor: "green",
-                    borderStyle: "dotted",
-                    marginBottom: 20,
-                    alignItems: "center",
-                    borderRadius: 8,
-                  }}
-                  onPress={handleAddGuestHouseNo}
-                  disabled={guestHouseNoEntries.length >= 4} // optional: max 4 unique categories
-                >
-                  <Text style={{ color: "green" }}>+ Add More</Text>
-                </TouchableOpacity>
-
-                {/* Hotel Bill Upload */}
-
-                <View
-                  style={[
-                    spacing.bw1,
-                    spacing.br2,
-                    {
-                      borderStyle: "dotted",
-                      marginTop: 15,
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                    },
-                  ]}
-                >
-                  <H6
-                    style={[
-                      typography.font14,
-                      typography.fontLato,
-                      spacing.mb2,
-                    ]}
-                  >
-                    Hotel Bill
-                  </H6>
-                  <TouchableOpacity
-                    onPress={() => handleUpload("hotel_bill")}
-                    style={{ marginTop: 10, alignItems: "center" }}
-                  >
-                    <H6
+                    <H6>Check In Date</H6>
+                    <Pressable
+                      onPress={() =>
+                        handleOpenDatePicker(index, "check_in_date")
+                      }
                       style={[
-                        typography.fontLato,
-                        spacing.p1,
-                        spacing.bw1,
+                        spacing.pv4,
+                        spacing.ph3,
                         spacing.br1,
-                        spacing.mb2,
-                        typography.font16,
+                        styles.row,
                         {
-                          textAlign: "center",
-                          borderColor: "green",
-                          borderStyle: "dotted",
-                          backgroundColor: "#e8f5e9",
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          backgroundColor: "#F0FAF0",
+                          borderRadius: 8,
+                          justifyContent: "space-between",
+                          alignItems: "center",
                         },
                       ]}
                     >
-                      Upload Hotel Bill
-                    </H6>
-                  </TouchableOpacity>
-                  {form.hotel_bill && (
-                    <View style={{ marginTop: 10, alignItems: "center" }}>
-                      <H6 style={{ color: "green", fontSize: 14 }}>
-                        Uploaded File: {form.hotel_bill.name}
-                      </H6>
-                      <TouchableOpacity
-                        onPress={() => handleRemove("hotel_bill")}
+                      <Text
+                        style={{ color: entry.check_in_date ? "#000" : "#888" }}
                       >
-                        <Text style={{ color: "red" }}>Remove</Text>
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
+                        {entry.check_in_date || "Select Check In Date"}
+                      </Text>
+                      <Icon name="calendar" size={20} color="#888" />
+                    </Pressable>
 
-                {/* Certificate Upload */}
-                <View
-                  style={[
-                    spacing.bw1,
-                    spacing.br2,
-                    {
-                      borderStyle: "dotted",
-                      marginTop: 15,
-                      paddingHorizontal: 15,
-                      paddingVertical: 10,
-                    },
-                  ]}
-                >
-                  <H6
-                    style={[
-                      typography.font14,
-                      typography.fontLato,
-                      spacing.mb2,
-                    ]}
-                  >
-                    Certificate
-                  </H6>
-                  <TouchableOpacity
-                    onPress={() => handleUpload("certificate")}
-                    style={{ marginTop: 10, alignItems: "center" }}
-                  >
-                    <H6
+                    <H6>Check Out Date</H6>
+                    <Pressable
+                      onPress={() =>
+                        handleOpenDatePicker(index, "check_out_date")
+                      }
                       style={[
-                        typography.fontLato,
-                        spacing.p1,
-                        spacing.bw1,
+                        spacing.pv4,
+                        spacing.ph3,
                         spacing.br1,
-                        spacing.mb2,
-                        typography.font16,
+                        styles.row,
                         {
-                          textAlign: "center",
-                          borderColor: "green",
-                          borderStyle: "dotted",
-                          backgroundColor: "#e8f5e9",
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          backgroundColor: "#F0FAF0",
+                          borderRadius: 8,
+                          justifyContent: "space-between",
+                          alignItems: "center",
                         },
                       ]}
                     >
-                      Upload Certificate
-                    </H6>
-                  </TouchableOpacity>
-                  {form.certificate && (
-                    <View style={{ marginTop: 10, alignItems: "center" }}>
-                      <H6 style={{ color: "green", fontSize: 14 }}>
-                        Uploaded File: {form.certificate.name}
-                      </H6>
-                      <TouchableOpacity
-                        onPress={() => handleRemove("certificate")}
+                      <Text
+                        style={{
+                          color: entry.check_out_date ? "#000" : "#888",
+                        }}
                       >
-                        <Text style={{ color: "red" }}>Remove</Text>
+                        {entry.check_out_date || "Select Check In Date"}
+                      </Text>
+                      <Icon name="calendar" size={20} color="#888" />
+                    </Pressable>
+                    <MyTextInput
+                      title="Breakfast Included"
+                      value={entry.breakfast_included}
+                      onChangeText={(text) =>
+                        handleGuestHouseChange(
+                          index,
+                          "breakfast_included",
+                          text
+                        )
+                      }
+                      placeholder="Yes / No"
+                      inputStyle={{ width: "100%" }}
+                    />
+
+                    <View
+                      style={{
+                        marginTop: 10,
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() =>
+                          handleUploadHotelBillFile(index, "hotel_bill")
+                        }
+                      >
+                        <Text
+                          style={{
+                            color: "#007bff",
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          Upload Hotel Bill
+                        </Text>
                       </TouchableOpacity>
                     </View>
-                  )}
-                </View>
-              </>
+
+                    {/* Show uploaded file name + Remove */}
+                    {ticketEntries[index]?.hotel_bill?.name && (
+                      <View
+                        style={[
+                          styles.row,
+                          spacing.br1,
+                          spacing.p2,
+                          spacing.mt2,
+                          {
+                            borderWidth: 1,
+                            borderColor: "#28a745",
+                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                            alignItems: "center",
+                          },
+                        ]}
+                      >
+                        <Text style={{ color: "#155724", flex: 1 }}>
+                          {ticketEntries[index].hotel_bill.name}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => removeHotelBillFile(index)}
+                        >
+                          <Text style={{ color: "red", marginLeft: 10 }}>
+                            X Remove
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+
+                    <MyTextInput
+                      title="Dining Cost"
+                      value={entry.dining_cost}
+                      onChangeText={(text) =>
+                        handleGuestHouseChange(index, "dining_cost", text)
+                      }
+                      placeholder="Enter dining cost"
+                      keyboardType="numeric"
+                      inputStyle={{ width: "100%" }}
+                    />
+                    <MyTextInput
+                      title="Amount"
+                      value={entry.amount}
+                      onChangeText={(text) =>
+                        handleGuestHouseChange(index, "amount", text)
+                      }
+                      placeholder="Enter amount"
+                      keyboardType="numeric"
+                      inputStyle={{ width: "100%" }}
+                    />
+                  </>
+                )}
+
+                {guestHouseEntries.length > 1 && (
+                  <TouchableOpacity
+                    onPress={() => handleRemoveGuestHouse(index)}
+                    style={{
+                      marginTop: 10,
+                      alignSelf: "flex-end",
+                      paddingVertical: 6,
+                      paddingHorizontal: 12,
+                      backgroundColor: "#FF4C4C",
+                      borderRadius: 6,
+                    }}
+                  >
+                    <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                      Remove
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ))}
+
+            {/* DateTimePicker shown only once */}
+            {datePickerState.visible && (
+              <DateTimePicker
+                value={new Date()}
+                mode={datePickerState.mode}
+                display={Platform.OS === "ios" ? "inline" : "default"}
+                onChange={handleDateChange}
+              />
             )}
 
+            {/* Add More Button */}
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: "#e8f5e9",
+                borderWidth: 1,
+                borderColor: "green",
+                borderStyle: "dotted",
+                marginBottom: 20,
+                alignItems: "center",
+                borderRadius: 8,
+              }}
+              onPress={handleAddGuestHouse}
+            >
+              <Text style={{ color: "green" }}>+ Add More</Text>
+            </TouchableOpacity>
+
             {/* Submit Button */}
-            <Button
+            {/* <Button
               style={[
                 styles.btn,
                 styles.bgPrimary,
@@ -1109,7 +1279,7 @@ const AddBillForm = ({ navigation }) => {
               >
                 Submit
               </H2>
-            </Button>
+            </Button> */}
           </ScrollView>
         )}
       </ScrollView>
