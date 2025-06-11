@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import MyTextInput from "../components/input/MyTextInput";
+import MyPickerInput from "../components/input/MyPickerInput";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Button from "../components/buttons/Button";
 import {
@@ -34,78 +35,23 @@ import ProgressStep, {
 const AddBillForm = ({ navigation }) => {
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
-  const [file, setFile] = useState(null);
-  // Function to create an empty travel field
-  const createEmptyTravelField = () => ({
-    from: "",
-    to: "",
-    departure_time: "",
-    arrival_time: "",
-    modeoftravel: "",
-    add_total_km: "",
-    add_rate_per_km: "",
-    add_vehicle_no: "",
-    amount: "",
-    add_rent: "", // Ensure add_rent is part of the travel field
-  });
-
-  // Function to create an empty daily fare field
-  const createEmptyDailyFareField = () => ({
-    place: "",
-    HotelBillNo: "",
-    date_of_stay: null,
-    amount: "",
-  });
-
   const [form, setForm] = useState({
-    user_id: "",
     visiting_to: "",
     purpose_of_visit: "",
     outcome_achieved: "",
-    visit_approve: "",
-    objective_tour: "",
-    meeting_visit: "",
-    outcome_achieve: "",
     start_journey: "",
     end_journey: "",
-    transport: "Train", // Default transport mode
-    mode_Of: "Bus", // Default transport mode
-    return_time: "",
-    mode_Of_return: "",
-    is_ticket_provided: "Yes", // default value
-    is_guest_house_available: "Yes", // default value
-    guest_house_category: "",
-    guest_house_amount: "",
-    food_amount: "",
-    lodging_amount: "",
-    journey_amount: "",
-    from_city: "",
-    to_city: "",
-    total_amount: "",
-    miscellaneous: "",
-    total_km: "",
-    rate_per_km: "",
-    Rent: "",
-    vehicle_no: "",
-    description_category: "",
-    category: "", // Added category field
-    add_rent: "", // Added add_rent field
-    otherexpense: { meal: 0, parking: 0 },
+    mode_of_transport: "Train", // Default transport mode
+    date_of_return: "",
+
     travelfare: [],
     dailyfare: [],
-    start_journey_pnr: "",
-    end_journey_pnr: "",
-    ticket: null,
-    hotelBill: null,
-    hotel_bill: null,
+    // hotel_bill: null,
     certificate: null,
   });
 
   const [datePicker, setDatePicker] = useState({ show: false, field: "" });
-  const [formFields, setFormFields] = useState([createEmptyTravelField()]);
-  const [dailyFareFields, setDailyFareFields] = useState([
-    createEmptyDailyFareField(),
-  ]);
+  const [dailyFareFields, setDailyFareFields] = useState([]);
 
   const steps = [
     "Basic Info",
@@ -136,11 +82,11 @@ const AddBillForm = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-    if (!form.is_ticket_provided) {
-      setForm((prev) => ({ ...prev, is_ticket_provided: "Yes" }));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!form.is_ticket_provided) {
+  //     setForm((prev) => ({ ...prev, is_ticket_provided: "Yes" }));
+  //   }
+  // }, []);
 
   const [ticketEntries, setTicketEntries] = useState([
     {
@@ -222,6 +168,36 @@ const AddBillForm = ({ navigation }) => {
     setTicketEntries(updated);
   };
 
+  const [expenseEntries, setExpenseEntries] = useState([
+    { description: "", amount: "", date_of_expense: "" },
+  ]);
+
+  const [expenseDatePicker, setExpenseDatePicker] = useState({
+    show: false,
+    index: null,
+  });
+
+  const handleExpenseChange = (index, field, value) => {
+    const updated = [...expenseEntries];
+    updated[index][field] = value;
+    setExpenseEntries(updated);
+  };
+
+  const addExpenseEntry = () => {
+    setExpenseEntries((prev) => [
+      ...prev,
+      { description: "", amount: "", date_of_expense: "" },
+    ]);
+  };
+
+  const removeExpenseEntry = (index) => {
+    setExpenseEntries((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const openExpenseDatePicker = (index) => {
+    setExpenseDatePicker({ show: true, index });
+  };
+
   const [guestHouseEntries, setGuestHouseEntries] = useState([
     {
       is_guest_house_available: "",
@@ -229,10 +205,9 @@ const AddBillForm = ({ navigation }) => {
       check_out_date: "",
       certificate_by_district_incharge: "",
       breakfast_included: "",
-      hotel_bill: "",
+      hotel_bill: "null",
       amount: "",
       dining_cost: "",
-      total_amount: "",
     },
   ]);
 
@@ -251,10 +226,9 @@ const AddBillForm = ({ navigation }) => {
         check_out_date: "",
         certificate_by_district_incharge: "",
         breakfast_included: "",
-        hotel_bill: "",
+        hotel_bill: "null",
         amount: "",
         dining_cost: "",
-        total_amount: "",
       },
     ]);
   };
@@ -326,7 +300,6 @@ const AddBillForm = ({ navigation }) => {
       updatedEntries[index] = {
         ...updatedEntries[index],
         hotel_bill: null,
-        uploadProgress: 0,
       };
       return updatedEntries;
     });
@@ -362,121 +335,19 @@ const AddBillForm = ({ navigation }) => {
       updatedEntries[index] = {
         ...updatedEntries[index],
         certificate: null,
-        uploadProgress: 0,
       };
       return updatedEntries;
     });
   };
 
-  const handleUpload = async (type) => {
-    try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: "application/pdf",
-      });
-      if (result.type === "success") {
-        setForm({ ...form, [type]: { name: result.name, uri: result.uri } });
-      }
-    } catch (err) {
-      console.log("Error picking document:", err);
-    }
-  };
-
-  const handleRemove = (type) => {
-    setForm({ ...form, [type]: null });
-  };
-
-  const [guestHouseYesEntries, setGuestHouseYesEntries] = useState([
-    {
-      guest_house_category: "",
-      food_amount: "",
-      from_city: "",
-      to_city: "",
-      lodging_amount: "",
-      miscellaneous: "",
-      total_amount: "",
-    },
-  ]);
-
-  const [guestHouseNoEntries, setGuestHouseNoEntries] = useState([
-    {
-      guest_house_category: "",
-      food_amount: "",
-      from_city: "",
-      to_city: "",
-      lodging_amount: "",
-      miscellaneous: "",
-      total_amount: "",
-    },
-  ]);
-
-  const handleGuestHouseChangeYes = (index, field, value) => {
-    const updated = [...guestHouseYesEntries];
-    updated[index][field] = value;
-    setGuestHouseYesEntries(updated);
-  };
-
-  const handleGuestHouseChangeNo = (index, field, value) => {
-    const updated = [...guestHouseNoEntries];
-    updated[index][field] = value;
-    setGuestHouseNoEntries(updated);
-  };
-
-  const handleAddGuestHouseYes = () => {
-    setGuestHouseYesEntries([
-      ...guestHouseYesEntries,
-      {
-        guest_house_category: "",
-        food_amount: "",
-        from_city: "",
-        to_city: "",
-        lodging_amount: "",
-        miscellaneous: "",
-        total_amount: "",
-      },
-    ]);
-  };
-
-  const handleRemoveGuestHouseYes = (index) => {
-    const updated = [...guestHouseYesEntries];
-    updated.splice(index, 1);
-    setGuestHouseYesEntries(updated);
-  };
-
-  const handleAddGuestHouseNo = () => {
-    setGuestHouseNoEntries([
-      ...guestHouseNoEntries,
-      {
-        guest_house_category: "",
-        food_amount: "",
-        from_city: "",
-        to_city: "",
-        lodging_amount: "",
-        miscellaneous: "",
-        total_amount: "",
-      },
-    ]);
-  };
-
-  const handleRemoveGuestHouseNo = (index) => {
-    const updated = [...guestHouseNoEntries];
-    updated.splice(index, 1);
-    setGuestHouseNoEntries(updated);
-  };
-
   const handleSubmit = async () => {
     try {
-      // Check if the category field is populated
-      if (!form.category) {
-        Alert.alert("Error", "Please select a category.");
-        return; // Prevent submission if category is not set
-      }
-
       const payload = {
         ...form,
-        total_km: Number(form.total_km),
-        rate_per_km: Number(form.rate_per_km),
-        Rent: Number(form.Rent),
-        add_rent: Number(form.add_rent) || 0, // Ensure add_rent is included
+        // total_km: Number(form.total_km),
+        //  rate_per_km: Number(form.rate_per_km),
+        // Rent: Number(form.Rent),
+        // add_rent: Number(form.add_rent) || 0, // Ensure add_rent is included
         travelfare: formFields.map((field) => ({
           from: field.from || "",
           to: field.to || "",
@@ -489,7 +360,7 @@ const AddBillForm = ({ navigation }) => {
             : 0,
           add_vehicle_no: field.add_vehicle_no || "",
           amount: field.amount ? Number(field.amount) : 0,
-          add_rent: Number(field.add_rent) || 0, // Ensure add_rent is included in travel fields
+          //  add_rent: Number(field.add_rent) || 0,
         })),
         dailyfare: dailyFareFields.map((field) => ({
           place: field.place || "",
@@ -583,7 +454,7 @@ const AddBillForm = ({ navigation }) => {
             {/* Return Date */}
             <H6>Return Date</H6>
             <Pressable
-              onPress={() => showDatePicker("return_time")}
+              onPress={() => showDatePicker("date_of_return")}
               style={[
                 spacing.pv4,
                 spacing.ph3,
@@ -599,8 +470,8 @@ const AddBillForm = ({ navigation }) => {
                 },
               ]}
             >
-              <Text style={{ color: form.return_time ? "#000" : "#888" }}>
-                {form.return_time || "Select Return Date"}
+              <Text style={{ color: form.date_of_return ? "#000" : "#888" }}>
+                {form.date_of_return || "Select Return Date"}
               </Text>
               <Icon name="calendar" size={20} color="#888" />
             </Pressable>
@@ -737,7 +608,18 @@ const AddBillForm = ({ navigation }) => {
                       inputStyle={{ width: "100%" }}
                     />
 
-                    {["start_journey", "end_journey"].map((field) => (
+                    <MyPickerInput
+                      title={"Mode Of Transport"}
+                      value={form.mode_of_transport}
+                      onChange={(val) => handleChange("mode_of_transport", val)}
+                      options={[
+                        { label: "Bus", value: "Bus" },
+                        { label: "Train", value: "Train" },
+                        { label: "Flight", value: "Flight" },
+                      ]}
+                    />
+
+                    {["start_journey"].map((field) => (
                       <View key={field} style={{ marginBottom: 15 }}>
                         <Span style={typography.fontLato}>
                           {field
@@ -1264,13 +1146,143 @@ const AddBillForm = ({ navigation }) => {
             >
               <Text style={{ color: "green" }}>+ Add More</Text>
             </TouchableOpacity>
+          </ScrollView>
+        )}
+
+        {activeStep === 3 && (
+          <>
+            {expenseEntries.map((entry, index) => (
+              <View
+                key={index}
+                style={{
+                  marginBottom: 15,
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: "#F9FFF9",
+                  width: SCREEN_WIDTH - 20,
+                }}
+              >
+                {/* Description Input */}
+                <MyTextInput
+                  title="Description"
+                  value={entry.description}
+                  onChangeText={(text) =>
+                    handleExpenseChange(index, "description", text)
+                  }
+                  placeholder="Description"
+                  multiline={true}
+                  inputStyle={{ width: "100%" }}
+                  style={{
+                    height: 100, // increase this value as needed
+                    textAlignVertical: "top", // aligns text to top
+                  }}
+                />
+
+                {/* Amount Input */}
+                <MyTextInput
+                  title="Amount"
+                  value={entry.amount}
+                  onChangeText={(text) =>
+                    handleExpenseChange(index, "amount", text)
+                  }
+                  placeholder="Amount"
+                  keyboardType="numeric"
+                  inputStyle={{ width: "100%" }}
+                />
+
+                {/* Date of Expense Picker */}
+                <H6>Date of Expense</H6>
+                <Pressable
+                  onPress={() => openExpenseDatePicker(index)}
+                  style={[
+                    spacing.pv4,
+                    spacing.ph3,
+                    spacing.br1,
+                    styles.row,
+                    {
+                      borderWidth: 1,
+                      borderColor: "#ccc",
+                      backgroundColor: "#F0FAF0",
+                      borderRadius: 8,
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    },
+                  ]}
+                >
+                  <Text
+                    style={{ color: entry.date_of_expense ? "#000" : "#888" }}
+                  >
+                    {entry.date_of_expense || "Select Date of Expense"}
+                  </Text>
+                  <Icon name="calendar" size={20} color="#888" />
+                </Pressable>
+
+                {/* Remove Button */}
+                {expenseEntries.length > 1 && (
+                  <TouchableOpacity
+                    onPress={() => removeExpenseEntry(index)}
+                    style={{
+                      marginTop: 10,
+                      alignSelf: "flex-end",
+                      paddingVertical: 6,
+                      paddingHorizontal: 12,
+                      backgroundColor: "#FF4C4C",
+                      borderRadius: 6,
+                    }}
+                  >
+                    <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                      Remove
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ))}
+
+            {/* Add More Button */}
+
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: "#e8f5e9",
+                borderWidth: 1,
+                borderColor: "green",
+                borderStyle: "dotted",
+                marginBottom: 20,
+                alignItems: "center",
+                borderRadius: 8,
+              }}
+              onPress={addExpenseEntry}
+            >
+              <Text style={{ color: "green" }}>+ Add More</Text>
+            </TouchableOpacity>
+
+            {expenseDatePicker.show && (
+              <DateTimePicker
+                value={new Date()}
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setExpenseDatePicker({ ...expenseDatePicker, show: false });
+                  if (selectedDate) {
+                    const formatted = selectedDate.toISOString().split("T")[0];
+                    handleExpenseChange(
+                      expenseDatePicker.index,
+                      "date_of_expense",
+                      formatted
+                    );
+                  }
+                }}
+              />
+            )}
 
             {/* Submit Button */}
-            {/* <Button
+            <Button
               style={[
                 styles.btn,
                 styles.bgPrimary,
-                { justifyContent: "center", marginTop: 30 },
+                { justifyContent: "center", marginTop: 40 },
               ]}
               onPress={handleSubmit}
             >
@@ -1279,8 +1291,8 @@ const AddBillForm = ({ navigation }) => {
               >
                 Submit
               </H2>
-            </Button> */}
-          </ScrollView>
+            </Button>
+          </>
         )}
       </ScrollView>
       <NavigationButtons
