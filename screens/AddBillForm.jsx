@@ -26,7 +26,7 @@ import {
   PRIMARY_COLOR,
   SCREEN_WIDTH,
 } from "../styles";
-import { H2, Span, H6, H5 } from "../components/text";
+import { H2, Span, H6 } from "../components/text";
 import { addBill } from "../redux/actions/projectAction";
 import ProgressStep, {
   NavigationButtons,
@@ -43,10 +43,8 @@ const AddBillForm = ({ navigation }) => {
     end_journey: "",
     mode_of_transport: "Train", // Default transport mode
     date_of_return: "",
-
     travelfare: [],
     dailyfare: [],
-    // hotel_bill: null,
     certificate: null,
   });
 
@@ -81,12 +79,6 @@ const AddBillForm = ({ navigation }) => {
       handleChange(datePicker.field, formatted);
     }
   };
-
-  // useEffect(() => {
-  //   if (!form.is_ticket_provided) {
-  //     setForm((prev) => ({ ...prev, is_ticket_provided: "Yes" }));
-  //   }
-  // }, []);
 
   const [ticketEntries, setTicketEntries] = useState([
     {
