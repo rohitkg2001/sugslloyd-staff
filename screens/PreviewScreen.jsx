@@ -10,7 +10,13 @@ import {
 } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
-import { styles, typography, spacing, SCREEN_WIDTH, PRIMARY_COLOR } from "../styles";
+import {
+  styles,
+  typography,
+  spacing,
+  SCREEN_WIDTH,
+  PRIMARY_COLOR,
+} from "../styles";
 import { P, H6, Span, H5 } from "../components/text";
 import { useDispatch } from "react-redux";
 import { addBill } from "../redux/actions/projectAction"; // Adjust the import based on your action file
@@ -21,7 +27,7 @@ const PreviewScreen = ({ route, navigation }) => {
   // const navigation = useNavigation();
 
   const handleBack = () => {
-    navigation.goBack(); // 👈 Navigates to the previous screen
+    navigation.goBack();
   };
 
   const handleSubmitToProduction = async () => {
@@ -29,7 +35,10 @@ const PreviewScreen = ({ route, navigation }) => {
       const success = await dispatch(addBill(submittedData));
       if (success) {
         Alert.alert("Success", "Bill submitted successfully!");
-        navigation.navigate("travelManagement"); // Navigate to the desired screen after submission
+        // navigation.navigate("travelManagement");
+        navigation.navigate("travelManagement", {
+          newSubmittedData: submittedData,
+        });
       } else {
         Alert.alert("Error", "Failed to submit the bill. Please try again.");
       }

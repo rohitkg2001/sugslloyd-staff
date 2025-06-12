@@ -4,19 +4,23 @@ import { P, H6 } from "../text";
 
 const ProgressStep = ({ steps, activeStep, setActiveStep }) => {
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={[styles.row, spacing.ph1]}
-    >
-      {steps.map((step, index) => (
-        <TouchableOpacity
-          key={index}
-          onPress={() => setActiveStep(index)}
-          style={[
-            spacing.ph2,
-            spacing.pv2,
-            {
+    <View style={{ height: 50 }}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={[
+          styles.row,
+          spacing.ph1,
+          { alignItems: "flex-end" },
+        ]}
+      >
+        {steps.map((step, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => setActiveStep(index)}
+            style={{
+              paddingHorizontal: 12,
+              paddingVertical: 8,
               borderBottomWidth: 3,
               borderColor:
                 index === activeStep
@@ -24,26 +28,26 @@ const ProgressStep = ({ steps, activeStep, setActiveStep }) => {
                   : index < activeStep
                   ? "#76885B"
                   : "#ccc",
-            },
-          ]}
-        >
-          <P
-            style={{
-              color:
-                index === activeStep
-                  ? "#007AFF"
-                  : index < activeStep
-                  ? "#76885B"
-                  : "#999",
-              fontWeight: "bold",
-              ...typography.font14,
             }}
           >
-            {step}
-          </P>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+            <P
+              style={{
+                color:
+                  index === activeStep
+                    ? "#007AFF"
+                    : index < activeStep
+                    ? "#76885B"
+                    : "#999",
+                fontWeight: "bold",
+                ...typography.font14,
+              }}
+            >
+              {step}
+            </P>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+    </View>
   );
 };
 

@@ -396,12 +396,10 @@ const AddBillForm = ({ navigation }) => {
                     .replace(/_/g, " ")
                     .replace(/\b\w/g, (char) => char.toUpperCase())}
                   multiline={
-                    field === "purpose_of_visit" ||
-                    field === "outcome_achieved"
+                    field === "purpose_of_visit" || field === "outcome_achieved"
                   }
                   style={
-                    field === "purpose_of_visit" ||
-                    field === "outcome_achieved"
+                    field === "purpose_of_visit" || field === "outcome_achieved"
                       ? { height: 100, textAlignVertical: "top" }
                       : {}
                   }
@@ -489,6 +487,7 @@ const AddBillForm = ({ navigation }) => {
                   padding: 10,
                   backgroundColor: PRIMARY_COLOR_TRANSPARENT,
                   marginBottom: 16,
+                  // bottom: 29,
                 }}
               >
                 {/* Top Heading */}
