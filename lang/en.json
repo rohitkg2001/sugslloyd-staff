@@ -146,6 +146,21 @@
     "first_name": "First Name",
     "last_name": "Last Name",
     "rate": "Rate(per kw including all taxes and duties in rupees)",
-    "this_month" : "This Month"
+    "this_month": "This Month",
+    "target_management": "Target Management",
+    "conveyance_management": "Conveyance Management",
+    "travel_allowance_management": "Travel Allowance Management",
+    "team_performance": "Team Performance",
+    "vendor_performance": "Vendor Performance",
+    "vendors": "Vendors",
+    "engineer": "Engineer",
+    "backlogs": "Backlogs",
+    "active": "Active",
+    "in_active": "Inactive",
+    "task": "Task",
+    "unassigned": "Unassigned",
+    "inApproval": "In Approval",
+    "viewAll": "View All",
+    "rejected": "Rejected"
   }
 }

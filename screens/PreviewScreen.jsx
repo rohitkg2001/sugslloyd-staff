@@ -25,6 +25,11 @@ const PreviewScreen = ({ route, navigation }) => {
   const { submittedData } = route.params;
   const dispatch = useDispatch();
   // const navigation = useNavigation();
+  const today = new Date().toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
 
   const handleBack = () => {
     navigation.goBack();
@@ -74,6 +79,7 @@ const PreviewScreen = ({ route, navigation }) => {
               </Text>
               <Text>NOIDA, UTTAR PRADESH</Text>
               <Text>TRAVELLING BILL</Text>
+              <Text style={{ fontSize: 14, marginTop: 4 }}>Date: {today}</Text>
             </View>
           </View>
 

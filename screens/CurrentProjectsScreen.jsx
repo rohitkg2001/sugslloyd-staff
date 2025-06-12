@@ -65,7 +65,7 @@ export default function CurrentProjectsScreen({ navigation }) {
   return (
     <ContainerComponent>
       <MyHeader
-        title="Task"
+        title={t("task")}
         hasIcon
         isBack
         rightComponent
@@ -323,16 +323,16 @@ export default function CurrentProjectsScreen({ navigation }) {
             <TabBar
               tabs={[
                 {
-                  name: "Unassigned",
+                  name: t("unassigned"),
                   count: tasks.filter((t) => !t.vendor_id).length || "",
                 },
                 {
-                  name: "Assigned",
+                  name: t("assigned"),
                   count:
                     tasks.filter((t) => t.vendor_id && !t.image).length || "",
                 },
                 {
-                  name: "In Approval",
+                  name: t("inApproval"),
                   count:
                     tasks.filter(
                       (t) => t.image && t.vendor_id && t.status !== "Completed"
@@ -340,12 +340,12 @@ export default function CurrentProjectsScreen({ navigation }) {
                 },
 
                 {
-                  name: "Done",
+                  name: t("done"),
                   count:
                     tasks.filter((t) => t.status === "Completed").length || "",
                 },
-                { name: "View All", count: tasks.length || "" },
-                { name: "Rejected" },
+                { name: t("viewAll"), count: tasks.length || "" },
+                { name: t("rejected") },
               ].map((tab) => (tab.count ? tab : { name: tab.name }))}
               activeTab={activeTab}
               onTabSelected={handleTabSelection}

@@ -130,6 +130,27 @@
     "inactive_vendors": "निष्क्रिय विक्रेता",
     "all_task_overview": "सभी कार्य का अवलोकन",
     "to_do": "करने के लिए",
-    "project": "परियोजना"
+    "project": "परियोजना",
+    "target_management": "लक्ष्य प्रबंधन",
+    "conveyance_management": "परिवहन प्रबंधन",
+    "travel_allowance_management": "यात्रा भत्ता प्रबंधन",
+    "team_performance": "टीम प्रदर्शन",
+    "vendor_performance": "विक्रेता प्रदर्शन",
+    "vendors": "विक्रेता",
+    "engineer": "अभियंता",
+    "completed": "पूर्ण",
+    "backlogs": "बकाया कार्य",
+    "total_sites": "कुल साइटें",
+    "installation": "स्थापना",
+    "rms_status": "आरएमएस स्थिति",
+    "final_inspection": "अंतिम निरीक्षण",
+    "active": "सक्रिय",
+    "in_active": "निष्क्रिय",
+    "task": "कार्य",
+    "unassigned": "असाइन नहीं",
+    "assigned": "असाइन किया गया",
+    "inApproval": "अनुमोदन में",
+    "viewAll": "सभी देखें",
+    "rejected": "अस्वीकृत"
   }
 }

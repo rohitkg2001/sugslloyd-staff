@@ -4,6 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
 import { getConveyanceById } from "../redux/actions/projectAction";
 
+
 // Components
 import ContainerComponent from "../components/ContainerComponent";
 import ClickableCard1 from "../components/card/ClickableCard1";
@@ -34,7 +35,7 @@ export default function ConveyanceManagementScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
 
   const tabs = [
-    { key: "thisWeek", title: "This Week" },
+    { key: "thisWeek", title: ("This Week") },
     { key: "thisMonth", title: "This Month" },
     { key: "approved", title: "Approved" },
     { key: "rejected", title: "Rejected" },

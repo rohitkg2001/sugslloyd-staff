@@ -62,7 +62,7 @@ export default function TeamPerformance() {
             { marginRight: 160 },
           ]}
         >
-          {t("Team Performance")}
+          {t("team_performance")}
         </H6>
       </View>
 
@@ -77,7 +77,7 @@ export default function TeamPerformance() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {t("Engineer")}
+            {t("engineer")}
           </H6>
           <H6
             style={[
@@ -86,7 +86,7 @@ export default function TeamPerformance() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {t("Total")}
+            {t("total_title")}
           </H6>
           <H6
             style={[
@@ -95,7 +95,7 @@ export default function TeamPerformance() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {t("Completed")}
+            {t("completed")}
           </H6>
           <H6
             style={[
@@ -104,7 +104,7 @@ export default function TeamPerformance() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {"Backlogs"}
+            {t("backlogs")}
           </H6>
         </View>
 

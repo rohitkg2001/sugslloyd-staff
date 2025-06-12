@@ -22,7 +22,7 @@ const MapScreen = ({ route, navigation }) => {
     vehicle_category,
     amount,
     kilometer,
-    image,
+    photos,
     date: currentDate,
     time,
   } = route.params || {};

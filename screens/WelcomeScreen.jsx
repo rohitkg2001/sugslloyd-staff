@@ -218,7 +218,7 @@ export default function WelcomeScreen({ navigation }) {
                 { marginRight: 160 },
               ]}
             >
-              {t("Team Performance")}
+              {t("team_performance")}
             </H6>
           </View>
 
@@ -326,7 +326,7 @@ export default function WelcomeScreen({ navigation }) {
                 { marginRight: 150 },
               ]}
             >
-              {t("Vendor Performance")}
+              {t("vendor_performance")}
             </H6>
           </View>
 

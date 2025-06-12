@@ -1,4 +1,3 @@
-// import  All React native
 import { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -19,12 +18,9 @@ import Button from "../components/buttons/Button";
 import { login } from "../redux/actions/staffActions";
 import { useDispatch } from "react-redux";
 
-// import faker
-import { fakeDelete } from "../utils/faker";
-
 // import All Styles
 import { layouts, spacing, typography, styles, ICON_LARGE } from "../styles";
-import { H1, Span, H2, P } from "../components/text";
+import { Span, H2, P } from "../components/text";
 
 export default function LoginScreen({ navigation, route }) {
   const [username, setUsername] = useState("");
@@ -114,6 +110,7 @@ export default function LoginScreen({ navigation, route }) {
             </Span>
           </TouchableOpacity>
         </KeyboardAvoidingView>
+
         <Button
           style={[styles.btn, styles.bgPrimary, { justifyContent: "center" }]}
           onPress={onSubmit}

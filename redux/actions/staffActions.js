@@ -33,7 +33,11 @@ export const login = (user, pass) => async (dispatch) => {
     const { data, status } = response;
 
     if (data?.user?.id && status === 200) {
-      await AsyncStorage.setItem("userToken", String(data.token.id)); // Save the token
+      // Ensure token is correctly stored
+      await AsyncStorage.setItem("userToken", String(data.token.id));
+      console.log("Token stored:", await AsyncStorage.getItem("userToken"));
+
+      // Dispatch actions to update Redux state
       dispatch({ type: LOGIN_STAFF, payload: data.user });
       dispatch({
         type: SET_PROJECT_TYPE,
@@ -42,7 +46,7 @@ export const login = (user, pass) => async (dispatch) => {
       // return true;
       return { success: true };
     } else {
-      return { success: false, message: "Invalid credentials" }; // Return error
+      return { success: false, message: "Invalid credentials" };
     }
   } catch (err) {
     console.error("Login Error:", err);
@@ -52,6 +56,7 @@ export const login = (user, pass) => async (dispatch) => {
     };
   }
 };
+
 
 export const updatePicture = async (id, file) => {
   try {

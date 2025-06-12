@@ -92,7 +92,7 @@ export default function ProjectOverview() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {t("Completed")}
+            {t("completed")}
           </H6>
           <H6
             style={[
@@ -101,7 +101,7 @@ export default function ProjectOverview() {
               { flex: 1, textAlign: "center" },
             ]}
           >
-            {t("Pending")}
+            {t("pending")}
           </H6>
         </View>
 
