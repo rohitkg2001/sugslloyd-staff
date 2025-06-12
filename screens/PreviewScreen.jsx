@@ -19,10 +19,13 @@ import {
 } from "../styles";
 import { P, H6, Span, H5 } from "../components/text";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { addBill } from "../redux/actions/projectAction"; // Adjust the import based on your action file
 
 const PreviewScreen = ({ route, navigation }) => {
   const { submittedData } = route.params;
+  const { staff } = useSelector((state) => state);
+
   const dispatch = useDispatch();
   // const navigation = useNavigation();
   const today = new Date().toLocaleDateString("en-IN", {
@@ -57,41 +60,67 @@ const PreviewScreen = ({ route, navigation }) => {
   };
 
   return (
-    <ContainerComponent style={{ width: SCREEN_WIDTH - 32 }}>
+    <ContainerComponent>
       <MyHeader title={"Traveling Bill"} hasIcon={true} isBack={true} />
-      <ScrollView style={{ padding: 16, backgroundColor: "#fff" }}>
-        <View>
-          <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
-            <Image
-              source={require("../assets/adaptive-icon.png")}
-              style={{
-                height: 110,
-                width: 140,
-                resizeMode: "contain",
-                bottom: 15,
-                right: 20,
-              }}
-            />
-
-            <View style={{ marginLeft: 10, bottom: 40 }}>
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-                SUGS LLOYD LIMITED
-              </Text>
-              <Text>NOIDA, UTTAR PRADESH</Text>
-              <Text>TRAVELLING BILL</Text>
-              <Text style={{ fontSize: 14, marginTop: 4 }}>Date: {today}</Text>
-            </View>
-          </View>
-
-          {/* Thin line */}
-          <View
+      <ScrollView style={{ backgroundColor: "#fff" }}>
+        <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+          <Image
+            source={require("../assets/adaptive-icon.png")}
             style={{
-              borderBottomWidth: 1,
-              borderBottomColor: "#000",
-              bottom: 12,
+              height: 110,
+              width: 190,
+              resizeMode: "contain",
+              bottom: 15,
+              right: 20,
             }}
           />
+
+          <View style={{}}>
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+              SUGS LLOYD LIMITED
+            </Text>
+            <Text>NOIDA, UTTAR PRADESH</Text>
+            <Text>TRAVELLING BILL</Text>
+
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: "#000",
+                paddingVertical: 6,
+                paddingHorizontal: 12,
+                borderRadius: 6,
+                // marginTop: 8,
+                alignSelf: "flex-start",
+                top: 12,
+              }}
+            >
+              <Text style={{ fontSize: 14, fontWeight: "bold" }}>
+                Date:{" "}
+                {new Date()
+                  .toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })
+                  .replaceAll("/", "|") + "|"}
+              </Text>
+            </View>
+
+            <Text style={{ fontWeight: "bold", right: 180 }}>
+              Name: {`${staff.firstName} ${staff.lastName}`}
+            </Text>
+          </View>
         </View>
+
+        {/* Thin line */}
+        <View
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: "#000",
+            //bottom: 4,
+            top: 20,
+          }}
+        />
         <H6
           style={[
             typography.font18,
@@ -100,7 +129,7 @@ const PreviewScreen = ({ route, navigation }) => {
             { color: PRIMARY_COLOR, textAlign: "center" },
           ]}
         >
-          Basic info
+          {/* Basic info */}
         </H6>
         <View style={{ marginBottom: 20 }}>
           <Text style={{ fontSize: 16, marginBottom: 8 }}>
