@@ -39,18 +39,11 @@ const AddBillForm = ({ navigation }) => {
     visiting_to: "",
     purpose_of_visit: "",
     outcome_achieved: "",
-    start_journey: "",
-    end_journey: "",
-    mode_of_transport: "Train", // Default transport mode
+    date_of_departure: "",
     date_of_return: "",
-    travelfare: [],
-    dailyfare: [],
-    certificate: null,
   });
 
   const [datePicker, setDatePicker] = useState({ show: false, field: "" });
-  const [dailyFareFields, setDailyFareFields] = useState([]);
-
   const steps = [
     "Basic Info",
     "Ticket Details",
@@ -82,14 +75,13 @@ const AddBillForm = ({ navigation }) => {
 
   const [ticketEntries, setTicketEntries] = useState([
     {
-      is_ticket_provided: "",
+      tickets_provided_by_company: "",
       from: "",
       to: "",
-      start_journey: "",
-      end_journey: "",
+      date_of_journey: "",
+      mode_of_transport: "Train",
       ticket: null,
-      uploadProgress: 0,
-      journey_amount: "",
+      amount: "",
     },
   ]);
 
@@ -105,13 +97,13 @@ const AddBillForm = ({ navigation }) => {
     setTicketEntries([
       ...ticketEntries,
       {
-        is_ticket_provided: "",
+        tickets_provided_by_company: "",
         from: "",
         to: "",
-        start_journey: "",
-        end_journey: "",
+        date_of_journey: "",
         ticket: null,
-        journey_amount: "",
+        mode_of_transport: "Train",
+        amount: "",
       },
     ]);
   };
@@ -148,7 +140,6 @@ const AddBillForm = ({ navigation }) => {
       updatedEntries[index] = {
         ...updatedEntries[index],
         ticket: null,
-        uploadProgress: 0,
       };
       return updatedEntries;
     });
@@ -192,7 +183,7 @@ const AddBillForm = ({ navigation }) => {
 
   const [guestHouseEntries, setGuestHouseEntries] = useState([
     {
-      is_guest_house_available: "",
+      guest_house_available: "",
       check_in_date: "",
       check_out_date: "",
       certificate_by_district_incharge: "",
@@ -213,7 +204,7 @@ const AddBillForm = ({ navigation }) => {
     setGuestHouseEntries([
       ...guestHouseEntries,
       {
-        is_guest_house_available: "",
+        guest_house_available: "",
         check_in_date: "",
         check_out_date: "",
         certificate_by_district_incharge: "",
@@ -326,48 +317,52 @@ const AddBillForm = ({ navigation }) => {
       const updatedEntries = [...prevEntries];
       updatedEntries[index] = {
         ...updatedEntries[index],
-        certificate: null,
+        certificate_by_district_incharge: null,
       };
       return updatedEntries;
     });
   };
 
+  // const handleSubmit = async () => {
+  //   try {
+  //     const payload = {
+  //       ...form,
+  //       ticketEntries,
+  //       guestHouseEntries,
+  //       expenseEntries,
+  //     };
+  //     console.log("Payload to submit:", payload);
+
+  //     const success = await dispatch(addBill(payload));
+  //     if (success) {
+  //       Alert.alert("Success", "Bill submitted successfully!");
+  //       // navigation.navigate("travelManagement");
+  //       navigation.navigate("previewScreen", { submittedData: payload });
+  //     } else {
+  //       Alert.alert("Error", "Failed to submit the bill. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Submit Error:", error);
+  //     Alert.alert(
+  //       "Error",
+  //       "An unexpected error occurred: " + (error.message || "Unknown error")
+  //     );
+  //   }
+  // };
+
   const handleSubmit = async () => {
     try {
       const payload = {
         ...form,
-        travelfare: formFields.map((field) => ({
-          from: field.from || "",
-          to: field.to || "",
-          departure_time: field.departure_time || null,
-          arrival_time: field.arrival_time || null,
-          modeoftravel: field.modeoftravel || "",
-          add_total_km: field.add_total_km ? Number(field.add_total_km) : 0,
-          add_rate_per_km: field.add_rate_per_km
-            ? Number(field.add_rate_per_km)
-            : 0,
-          add_vehicle_no: field.add_vehicle_no || "",
-          amount: field.amount ? Number(field.amount) : 0,
-          //  add_rent: Number(field.add_rent) || 0,
-        })),
-        dailyfare: dailyFareFields.map((field) => ({
-          place: field.place || "",
-          HotelBillNo: field.HotelBillNo || "",
-          date_of_stay: field.date_of_stay || null,
-          amount: field.amount ? Number(field.amount) : 0,
-        })),
+        ticketEntries,
+        guestHouseEntries,
+        expenseEntries,
       };
 
-      // Log the payload to check values
       console.log("Payload to submit:", payload);
 
-      const success = await dispatch(addBill(payload));
-      if (success) {
-        Alert.alert("Success", "Bill submitted successfully!");
-        navigation.navigate("travelManagement");
-      } else {
-        Alert.alert("Error", "Failed to submit the bill. Please try again.");
-      }
+      // Navigate to PreviewScreen with the payload
+      navigation.navigate("previewScreen", { submittedData: payload });
     } catch (error) {
       console.error("Submit Error:", error);
       Alert.alert(
@@ -388,7 +383,7 @@ const AddBillForm = ({ navigation }) => {
       <ScrollView style={[spacing.p2]}>
         {activeStep === 0 && (
           <>
-            {["visiting_to", " purpose_of_visit", "outcome_achieved"].map(
+            {["visiting_to", "purpose_of_visit", "outcome_achieved"].map(
               (field) => (
                 <MyTextInput
                   key={field}
@@ -401,11 +396,11 @@ const AddBillForm = ({ navigation }) => {
                     .replace(/_/g, " ")
                     .replace(/\b\w/g, (char) => char.toUpperCase())}
                   multiline={
-                    field === " purpose_of_visit" ||
+                    field === "purpose_of_visit" ||
                     field === "outcome_achieved"
                   }
                   style={
-                    field === " purpose_of_visit" ||
+                    field === "purpose_of_visit" ||
                     field === "outcome_achieved"
                       ? { height: 100, textAlignVertical: "top" }
                       : {}
@@ -417,7 +412,7 @@ const AddBillForm = ({ navigation }) => {
             {/* Departure Date */}
             <Span style={[typography.fontLato]}>Departure Date</Span>
             <Pressable
-              onPress={() => showDatePicker("departure_time")}
+              onPress={() => showDatePicker("date_of_departure")}
               style={[
                 spacing.pv4,
                 spacing.ph3,
@@ -433,8 +428,8 @@ const AddBillForm = ({ navigation }) => {
                 },
               ]}
             >
-              <Text style={{ color: form.departure_time ? "#000" : "#888" }}>
-                {form.departure_time || "Select Departure Date"}
+              <Text style={{ color: form.date_of_departure ? "#000" : "#888" }}>
+                {form.date_of_departure || "Select Departure Date"}
               </Text>
               <Icon name="calendar" size={20} color="#888" />
             </Pressable>
@@ -515,14 +510,15 @@ const AddBillForm = ({ navigation }) => {
                 {/* Yes/No Radio */}
                 <View style={[styles.row, spacing.mv2]}>
                   {["Yes", "No"].map((option) => {
-                    const selected = entry.is_ticket_provided === option;
+                    const selected =
+                      entry.tickets_provided_by_company === option;
                     return (
                       <TouchableOpacity
                         key={option}
                         onPress={() =>
                           handleTicketEntryChange(
                             index,
-                            "is_ticket_provided",
+                            "tickets_provided_by_company",
                             option
                           )
                         }
@@ -563,7 +559,7 @@ const AddBillForm = ({ navigation }) => {
                 </View>
 
                 {/* Conditional Fields */}
-                {entry.is_ticket_provided === "Yes" && (
+                {entry.tickets_provided_by_company === "Yes" && (
                   <Image
                     source={require("../assets/document.png")}
                     style={{
@@ -575,7 +571,7 @@ const AddBillForm = ({ navigation }) => {
                   />
                 )}
 
-                {entry.is_ticket_provided === "No" && (
+                {entry.tickets_provided_by_company === "No" && (
                   <>
                     <MyTextInput
                       title="From"
@@ -597,7 +593,7 @@ const AddBillForm = ({ navigation }) => {
                     />
                     <MyPickerInput
                       title={"Mode Of Transport"}
-                      value={form.mode_of_transport}
+                      value={entry.mode_of_transport}
                       onChange={(val) => handleChange("mode_of_transport", val)}
                       options={[
                         { label: "Bus", value: "Bus" },
@@ -606,7 +602,7 @@ const AddBillForm = ({ navigation }) => {
                       ]}
                     />
 
-                    {["start_journey"].map((field) => (
+                    {["date_of_journey"].map((field) => (
                       <View key={field} style={{ marginBottom: 15 }}>
                         <Span style={typography.fontLato}>
                           {field
@@ -699,9 +695,9 @@ const AddBillForm = ({ navigation }) => {
 
                     <MyTextInput
                       title="Amount"
-                      value={entry.journey_amount}
+                      value={entry.amount}
                       onChangeText={(text) =>
-                        handleTicketEntryChange(index, "journey_amount", text)
+                        handleTicketEntryChange(index, "amount", text)
                       }
                       placeholder="Enter Amount"
                       keyboardType="numeric"
@@ -774,14 +770,14 @@ const AddBillForm = ({ navigation }) => {
 
                 <View style={[styles.row, spacing.mv1]}>
                   {["Yes", "No"].map((option) => {
-                    const selected = entry.is_guest_house_available === option;
+                    const selected = entry.guest_house_available === option;
                     return (
                       <TouchableOpacity
                         key={option}
                         onPress={() =>
                           handleGuestHouseChange(
                             index,
-                            "is_guest_house_available",
+                            "guest_house_available",
                             option
                           )
                         }
@@ -822,7 +818,7 @@ const AddBillForm = ({ navigation }) => {
                 </View>
 
                 {/* YES section */}
-                {entry.is_guest_house_available === "Yes" && (
+                {entry.guest_house_available === "Yes" && (
                   <>
                     <Span style={typography.fontLato}>Check In Date</Span>
                     <Pressable
@@ -885,7 +881,7 @@ const AddBillForm = ({ navigation }) => {
                 )}
 
                 {/* NO section */}
-                {entry.is_guest_house_available === "No" && (
+                {entry.guest_house_available === "No" && (
                   <>
                     <View
                       style={{
@@ -897,7 +893,10 @@ const AddBillForm = ({ navigation }) => {
                     >
                       <TouchableOpacity
                         onPress={() =>
-                          handleUploadCertificateFile(index, "certificate")
+                          handleUploadCertificateFile(
+                            index,
+                            "certificate_by_district_incharge"
+                          )
                         }
                       >
                         <Text
@@ -912,7 +911,8 @@ const AddBillForm = ({ navigation }) => {
                     </View>
 
                     {/* Show uploaded certificate name + Remove */}
-                    {ticketEntries[index]?.certificate?.name && (
+                    {ticketEntries[index]?.certificate_by_district_incharge
+                      ?.name && (
                       <View
                         style={[
                           styles.row,
@@ -928,7 +928,10 @@ const AddBillForm = ({ navigation }) => {
                         ]}
                       >
                         <Text style={{ color: "#155724", flex: 1 }}>
-                          {ticketEntries[index].certificate.name}
+                          {
+                            ticketEntries[index]
+                              .certificate_by_district_incharge.name
+                          }
                         </Text>
                         <TouchableOpacity
                           onPress={() => removeCertificateFile(index)}
@@ -1276,7 +1279,7 @@ const AddBillForm = ({ navigation }) => {
               <H2
                 style={[styles.btnText, styles.textLarge, typography.textLight]}
               >
-                Submit
+                Preview Details & Submit
               </H2>
             </Button>
           </>
