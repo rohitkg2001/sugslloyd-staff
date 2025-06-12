@@ -1,11 +1,12 @@
 import { View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { H5 } from "../text";
+import { H5, H6 } from "../text";
 import {
   PRIMARY_COLOR,
   PRIMARY_COLOR_TRANSPARENT,
   spacing,
   styles,
+  typography,
 } from "../../styles";
 
 export default function MyPickerInput({
@@ -17,7 +18,7 @@ export default function MyPickerInput({
 }) {
   return (
     <View>
-      <H5>{title}</H5>
+      <H6 style={typography.fontLato}>{title}</H6>
       <View
         style={[
           spacing.ph1,

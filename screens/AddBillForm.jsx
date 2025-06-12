@@ -26,7 +26,7 @@ import {
   PRIMARY_COLOR,
   SCREEN_WIDTH,
 } from "../styles";
-import { H2, Span, H6, H5 } from "../components/text";
+import { H2, Span, H6 } from "../components/text";
 import { addBill } from "../redux/actions/projectAction";
 import ProgressStep, {
   NavigationButtons,
@@ -43,10 +43,8 @@ const AddBillForm = ({ navigation }) => {
     end_journey: "",
     mode_of_transport: "Train", // Default transport mode
     date_of_return: "",
-
     travelfare: [],
     dailyfare: [],
-    // hotel_bill: null,
     certificate: null,
   });
 
@@ -81,12 +79,6 @@ const AddBillForm = ({ navigation }) => {
       handleChange(datePicker.field, formatted);
     }
   };
-
-  // useEffect(() => {
-  //   if (!form.is_ticket_provided) {
-  //     setForm((prev) => ({ ...prev, is_ticket_provided: "Yes" }));
-  //   }
-  // }, []);
 
   const [ticketEntries, setTicketEntries] = useState([
     {
@@ -344,10 +336,6 @@ const AddBillForm = ({ navigation }) => {
     try {
       const payload = {
         ...form,
-        // total_km: Number(form.total_km),
-        //  rate_per_km: Number(form.rate_per_km),
-        // Rent: Number(form.Rent),
-        // add_rent: Number(form.add_rent) || 0, // Ensure add_rent is included
         travelfare: formFields.map((field) => ({
           from: field.from || "",
           to: field.to || "",
@@ -427,7 +415,7 @@ const AddBillForm = ({ navigation }) => {
             )}
 
             {/* Departure Date */}
-            <H6>Departure Date</H6>
+            <Span style={[typography.fontLato]}>Departure Date</Span>
             <Pressable
               onPress={() => showDatePicker("departure_time")}
               style={[
@@ -452,7 +440,7 @@ const AddBillForm = ({ navigation }) => {
             </Pressable>
 
             {/* Return Date */}
-            <H6>Return Date</H6>
+            <Span style={[typography.fontLato]}>Return Date</Span>
             <Pressable
               onPress={() => showDatePicker("date_of_return")}
               style={[
@@ -607,7 +595,6 @@ const AddBillForm = ({ navigation }) => {
                       placeholder="Enter To Location"
                       inputStyle={{ width: "100%" }}
                     />
-
                     <MyPickerInput
                       title={"Mode Of Transport"}
                       value={form.mode_of_transport}
@@ -837,7 +824,7 @@ const AddBillForm = ({ navigation }) => {
                 {/* YES section */}
                 {entry.is_guest_house_available === "Yes" && (
                   <>
-                    <H6>Check In Date</H6>
+                    <Span style={typography.fontLato}>Check In Date</Span>
                     <Pressable
                       onPress={() =>
                         handleOpenDatePicker(index, "check_in_date")
@@ -865,7 +852,7 @@ const AddBillForm = ({ navigation }) => {
                       <Icon name="calendar" size={20} color="#888" />
                     </Pressable>
 
-                    <H6>Check Out Date</H6>
+                    <Span style={typography.fontLato}>Check Out Date</Span>
                     <Pressable
                       onPress={() =>
                         handleOpenDatePicker(index, "check_out_date")
@@ -953,7 +940,7 @@ const AddBillForm = ({ navigation }) => {
                       </View>
                     )}
 
-                    <H6>Check In Date</H6>
+                    <Span style={typography.fontLato}>Check In Date</Span>
                     <Pressable
                       onPress={() =>
                         handleOpenDatePicker(index, "check_in_date")
@@ -981,7 +968,7 @@ const AddBillForm = ({ navigation }) => {
                       <Icon name="calendar" size={20} color="#888" />
                     </Pressable>
 
-                    <H6>Check Out Date</H6>
+                    <Span style={typography.fontLato}>Check Out Date</Span>
                     <Pressable
                       onPress={() =>
                         handleOpenDatePicker(index, "check_out_date")
@@ -1193,7 +1180,7 @@ const AddBillForm = ({ navigation }) => {
                 />
 
                 {/* Date of Expense Picker */}
-                <H6>Date of Expense</H6>
+                <Span style={typography.fontLato}>Date of Expense</Span>
                 <Pressable
                   onPress={() => openExpenseDatePicker(index)}
                   style={[
