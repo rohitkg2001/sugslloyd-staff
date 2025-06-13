@@ -10,7 +10,7 @@ import {
   Platform,
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
@@ -34,6 +34,8 @@ import ProgressStep, {
 
 const AddBillForm = ({ navigation }) => {
   const [activeStep, setActiveStep] = useState(0);
+  const { id: userId } = useSelector((state) => state.staff);
+
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     visiting_to: "",
@@ -373,6 +375,7 @@ const AddBillForm = ({ navigation }) => {
     try {
       const payload = {
         ...form,
+        user_id: userId,
         ticketEntries,
         guestHouseEntries,
         expenseEntries,
@@ -620,7 +623,7 @@ const AddBillForm = ({ navigation }) => {
                       ]}
                     />
 
-                     <View style={{ marginBottom: 20 }}>
+                    <View style={{ marginBottom: 20 }}>
                       <Span style={[typography.fontLato]}>Date of Journey</Span>
                       <Pressable
                         onPress={() => setDatePicker({ show: true, index })}

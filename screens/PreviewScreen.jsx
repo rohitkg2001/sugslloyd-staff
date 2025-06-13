@@ -38,14 +38,67 @@ const PreviewScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
 
+  //   const handleSubmitToProduction = async () => {
+  //     try {
+  //       const success = await dispatch(addBill(submittedData));
+  //       if (success) {
+  //         Alert.alert("Success", "Bill submitted successfully!");
+  //         // navigation.navigate("travelManagement");
+  //         navigation.navigate("travelManagement", {
+  //           newSubmittedData: submittedData,
+  //         });
+  //       } else {
+  //         Alert.alert("Error", "Failed to submit the bill. Please try again.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Submit Error:", error);
+  //       Alert.alert(
+  //         "Error",
+  //         "An unexpected error occurred: " + (error.message || "Unknown error")
+  //       );
+  //     }
+  //   };
+
   const handleSubmitToProduction = async () => {
     try {
-      const success = await dispatch(addBill(submittedData));
+      const processedData = {
+        ...submittedData,
+
+        ticketEntries: submittedData.ticketEntries.map((entry) => ({
+          ...entry,
+          tickets_provided_by_company:
+            (entry.tickets_provided_by_company || "")
+              .toString()
+              .toLowerCase() === "yes"
+              ? 1
+              : 0,
+          date_of_journey: entry.date_of_journey
+            ? new Date(entry.date_of_journey).toISOString().split("T")[0]
+            : null,
+        })),
+
+        // Fix guestHouseEntries formatting
+        guestHouseEntries: submittedData.guestHouseEntries.map((entry) => ({
+          ...entry,
+          guest_house_available:
+            (entry.guest_house_available || "").toString().toLowerCase() ===
+            "yes"
+              ? 1
+              : 0,
+          check_in_date: entry.check_in_date
+            ? new Date(entry.check_in_date).toISOString().split("T")[0]
+            : null,
+          check_out_date: entry.check_out_date
+            ? new Date(entry.check_out_date).toISOString().split("T")[0]
+            : null,
+        })),
+      };
+
+      const success = await dispatch(addBill(processedData));
       if (success) {
         Alert.alert("Success", "Bill submitted successfully!");
-        // navigation.navigate("travelManagement");
         navigation.navigate("travelManagement", {
-          newSubmittedData: submittedData,
+          newSubmittedData: processedData,
         });
       } else {
         Alert.alert("Error", "Failed to submit the bill. Please try again.");
