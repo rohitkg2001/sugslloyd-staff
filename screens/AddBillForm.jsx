@@ -43,7 +43,7 @@ const AddBillForm = ({ navigation }) => {
     date_of_return: "",
   });
 
-  const [datePicker, setDatePicker] = useState({ show: false, field: "" });
+  // const [datePicker, setDatePicker] = useState({ show: false, field: "" });
   const steps = [
     "Basic Info",
     "Ticket Details",
@@ -84,6 +84,24 @@ const AddBillForm = ({ navigation }) => {
       amount: "",
     },
   ]);
+  const [datePicker, setDatePicker] = useState({
+    show: false,
+    index: null, // track which entry's date is being edited
+  });
+
+  const handleTicketDateChange = (event, selectedDate) => {
+    if (selectedDate && datePicker.index !== null) {
+      const updatedEntries = [...ticketEntries];
+
+      // Format date to YYYY-MM-DD
+      const formattedDate = selectedDate.toISOString().split("T")[0];
+
+      updatedEntries[datePicker.index].date_of_journey = formattedDate;
+      setTicketEntries(updatedEntries);
+    }
+
+    setDatePicker({ show: false, index: null });
+  };
 
   // Handle change in ticket entry fields
   const handleTicketEntryChange = (index, field, value) => {
@@ -601,15 +619,13 @@ const AddBillForm = ({ navigation }) => {
                       ]}
                     />
 
-                    {["date_of_journey"].map((field) => (
-                      <View key={field} style={{ marginBottom: 15 }}>
-                        <Span style={typography.fontLato}>
-                          {field
-                            .replace(/_/g, " ")
-                            .replace(/\b\w/g, (c) => c.toUpperCase())}
+                    {ticketEntries.map((entry, index) => (
+                      <View key={index} style={{ marginBottom: 20 }}>
+                        <Span style={[typography.fontLato]}>
+                          Date of Journey
                         </Span>
                         <Pressable
-                          onPress={() => showDatePicker(field)}
+                          onPress={() => setDatePicker({ show: true, index })}
                           style={[
                             spacing.pv4,
                             spacing.ph3,
@@ -619,13 +635,21 @@ const AddBillForm = ({ navigation }) => {
                               borderWidth: 1,
                               borderColor: "#ccc",
                               backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                              justifyContent: "space-between",
+                              alignItems: "center",
                             },
                           ]}
                         >
                           <Text
-                            style={{ color: form[field] ? "#000" : "#888" }}
+                            style={{
+                              color: entry.date_of_journey ? "#000" : "#888",
+                            }}
                           >
-                            {form[field] || `${field.replace(/_/g, " ")} Date`}
+                            {entry.date_of_journey
+                              ? new Date(
+                                  entry.date_of_journey
+                                ).toLocaleDateString()
+                              : "Select Date"}
                           </Text>
                           <Icon name="calendar" size={20} color="#888" />
                         </Pressable>
@@ -637,7 +661,7 @@ const AddBillForm = ({ navigation }) => {
                         value={new Date()}
                         mode="date"
                         display="default"
-                        onChange={onDateChange}
+                        onChange={handleTicketDateChange}
                       />
                     )}
 
@@ -1294,4 +1318,4 @@ const AddBillForm = ({ navigation }) => {
   );
 };
 
-export default AddBillForm; 
+export default AddBillForm;

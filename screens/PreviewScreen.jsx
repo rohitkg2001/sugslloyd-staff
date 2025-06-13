@@ -189,7 +189,7 @@ const PreviewScreen = ({ route, navigation }) => {
                 To: {entry.to}
               </Text>
               <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Date of Journey: {entry.date_of_journey}
+                Date of Journey: {entry.date_of_journey || "Not selected"}
               </Text>
               <Text style={{ fontSize: 16, marginBottom: 8 }}>
                 Mode of Transport: {entry.mode_of_transport}
