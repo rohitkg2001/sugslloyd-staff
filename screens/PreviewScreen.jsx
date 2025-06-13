@@ -209,7 +209,7 @@ const PreviewScreen = ({ route, navigation }) => {
                   }}
                 >
                   {entry.tickets_provided_by_company.toLowerCase() === "yes"
-                    ? "N/A"
+                    ? "-"
                     : entry.mode_of_transport}
                 </Text>
                 <Text
@@ -220,7 +220,7 @@ const PreviewScreen = ({ route, navigation }) => {
                   }}
                 >
                   {entry.tickets_provided_by_company.toLowerCase() === "yes"
-                    ? "N/A"
+                    ? "-"
                     : entry.amount}
                 </Text>
               </View>
@@ -245,7 +245,7 @@ const PreviewScreen = ({ route, navigation }) => {
                   }}
                 >
                   {entry.tickets_provided_by_company.toLowerCase() === "yes"
-                    ? "N/A"
+                    ? "-"
                     : `${entry.from} To ${entry.to}`}
                 </Text>
                 <Text
@@ -256,7 +256,7 @@ const PreviewScreen = ({ route, navigation }) => {
                   }}
                 >
                   {entry.tickets_provided_by_company.toLowerCase() === "yes"
-                    ? "N/A"
+                    ? "-"
                     : entry.date_of_journey}
                 </Text>
               </View>
@@ -278,7 +278,7 @@ const PreviewScreen = ({ route, navigation }) => {
               { color: PRIMARY_COLOR, textAlign: "center", top: 12 },
             ]}
           >
-            Other Info
+            Stay Details
           </H6>
 
           {/* Display guest house entries */}
@@ -287,7 +287,7 @@ const PreviewScreen = ({ route, navigation }) => {
               key={index}
               style={{
                 marginBottom: 16,
-                padding: 10,
+                padding: 0,
                 borderWidth: 1,
                 borderColor: "#ccc",
                 borderRadius: 8,
@@ -295,21 +295,67 @@ const PreviewScreen = ({ route, navigation }) => {
                 top: 20,
               }}
             >
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Guest House Available: {entry.guest_house_available}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Check In Date: {entry.check_in_date}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Check Out Date: {entry.check_out_date}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Breakfast Included: {entry.breakfast_included}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Amount: {entry.amount}
-              </Text>
+              {/* First Row: Availability and Check-in/out */}
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    flex: 1,
+                    fontSize: 16,
+                    padding: 8,
+                    borderRightWidth: 1,
+                    borderColor: "#ccc",
+                  }}
+                >
+                  Availability: {entry.guest_house_available}
+                </Text>
+                <Text
+                  style={{
+                    flex: 2,
+                    fontSize: 16,
+                    padding: 8,
+                  }}
+                >
+                  {entry.check_in_date} to {entry.check_out_date}
+                </Text>
+              </View>
+
+              {/* Horizontal divider */}
+              <View
+                style={{
+                  height: 1,
+                  backgroundColor: "#ccc",
+                }}
+              />
+
+              {/* Second Row: Breakfast and Amount */}
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    flex: 2,
+                    fontSize: 16,
+                    padding: 8,
+                    borderRightWidth: 1,
+                    borderColor: "#ccc",
+                  }}
+                >
+                  With Meals:{" "}
+                  {entry.guest_house_available?.trim().toLowerCase() === "yes"
+                    ? "-"
+                    : entry.breakfast_included}
+                </Text>
+                <Text
+                  style={{
+                    flex: 2,
+                    fontSize: 16,
+                    padding: 8,
+                  }}
+                >
+                  {" "}
+                  {entry.guest_house_available?.trim().toLowerCase() === "yes"
+                    ? "-"
+                    : entry.amount}
+                </Text>
+              </View>
             </View>
           ))}
 
@@ -337,7 +383,7 @@ const PreviewScreen = ({ route, navigation }) => {
               key={index}
               style={{
                 marginBottom: 16,
-                padding: 10,
+                padding: 0,
                 borderWidth: 1,
                 borderColor: "#ccc",
                 borderRadius: 8,
@@ -345,15 +391,41 @@ const PreviewScreen = ({ route, navigation }) => {
                 top: 20,
               }}
             >
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Description: {entry.description}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Amount: {entry.amount}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Date of Expense: {entry.date_of_expense}
-              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    flex: 2,
+                    fontSize: 16,
+                    padding: 8,
+                    borderRightWidth: 1,
+                    borderColor: "#ccc",
+                  }}
+                >
+                  {entry.description}
+                </Text>
+                <Text
+                  style={{
+                    flex: 1,
+                    fontSize: 16,
+                    padding: 8,
+                    borderRightWidth: 1,
+                    borderColor: "#ccc",
+                    textAlign: "center",
+                  }}
+                >
+                  {entry.amount}
+                </Text>
+                <Text
+                  style={{
+                    flex: 1.5,
+                    fontSize: 16,
+                    padding: 8,
+                    textAlign: "center",
+                  }}
+                >
+                  {entry.date_of_expense}
+                </Text>
+              </View>
             </View>
           ))}
         </View>
@@ -375,6 +447,7 @@ const PreviewScreen = ({ route, navigation }) => {
               alignItems: "center",
               flex: 1,
               marginRight: 10,
+              marginTop: 15,
             }}
             onPress={handleBack}
           >
@@ -390,6 +463,7 @@ const PreviewScreen = ({ route, navigation }) => {
               alignItems: "center",
               flex: 1,
               marginLeft: 10,
+              marginTop: 15,
             }}
             onPress={handleSubmitToProduction}
           >
