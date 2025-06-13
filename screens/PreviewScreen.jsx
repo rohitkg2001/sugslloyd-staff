@@ -132,20 +132,27 @@ const PreviewScreen = ({ route, navigation }) => {
           {/* Basic info */}
         </H6>
         <View style={{ marginBottom: 20 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginBottom: 8,
+            }}
+          >
+            <Text style={{ fontSize: 16, flex: 1 }}>
+              {submittedData.visiting_to}
+            </Text>
+            <Text style={{ fontSize: 16, flex: 2, textAlign: "right" }}>
+              {submittedData.date_of_departure} To{" "}
+              {submittedData.date_of_return}
+            </Text>
+          </View>
+
           <Text style={{ fontSize: 16, marginBottom: 8 }}>
-            Visiting To: {submittedData.visiting_to}
+            Purpose: {submittedData.purpose_of_visit}
           </Text>
           <Text style={{ fontSize: 16, marginBottom: 8 }}>
-            Purpose of Visit: {submittedData.purpose_of_visit}
-          </Text>
-          <Text style={{ fontSize: 16, marginBottom: 8 }}>
-            Outcome Achieved: {submittedData.outcome_achieved}
-          </Text>
-          <Text style={{ fontSize: 16, marginBottom: 8 }}>
-            Departure Date: {submittedData.date_of_departure}
-          </Text>
-          <Text style={{ fontSize: 16, marginBottom: 8 }}>
-            Return Date: {submittedData.date_of_return}
+            Outcome: {submittedData.outcome_achieved}
           </Text>
 
           <View
@@ -171,7 +178,7 @@ const PreviewScreen = ({ route, navigation }) => {
               key={index}
               style={{
                 marginBottom: 16,
-                padding: 10,
+                padding: 0, // remove padding from parent to let rows handle their own
                 borderWidth: 1,
                 borderColor: "#ccc",
                 borderRadius: 8,
@@ -179,24 +186,80 @@ const PreviewScreen = ({ route, navigation }) => {
                 top: 18,
               }}
             >
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Ticket Provided by Company: {entry.tickets_provided_by_company}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                From: {entry.from}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                To: {entry.to}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Date of Journey: {entry.date_of_journey || "Not selected"}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Mode of Transport: {entry.mode_of_transport}
-              </Text>
-              <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                Amount: {entry.amount}
-              </Text>
+              {/* First Row: Company-paid, Mode, Amount */}
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    flex: 2,
+                    fontSize: 16,
+                    padding: 8,
+                    borderRightWidth: 1,
+                    borderColor: "#ccc",
+                  }}
+                >
+                  Company-paid: {entry.tickets_provided_by_company}
+                </Text>
+                <Text
+                  style={{
+                    flex: 1,
+                    fontSize: 16,
+                    padding: 8,
+                    borderRightWidth: 1,
+                    borderColor: "#ccc",
+                  }}
+                >
+                  {entry.tickets_provided_by_company.toLowerCase() === "yes"
+                    ? "N/A"
+                    : entry.mode_of_transport}
+                </Text>
+                <Text
+                  style={{
+                    flex: 1,
+                    fontSize: 16,
+                    padding: 8,
+                  }}
+                >
+                  {entry.tickets_provided_by_company.toLowerCase() === "yes"
+                    ? "N/A"
+                    : entry.amount}
+                </Text>
+              </View>
+
+              {/* Horizontal divider */}
+              <View
+                style={{
+                  height: 1,
+                  backgroundColor: "#ccc",
+                }}
+              />
+
+              {/* Second Row: From-To and Date */}
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    flex: 2,
+                    fontSize: 16,
+                    padding: 8,
+                    borderRightWidth: 1,
+                    borderColor: "#ccc",
+                  }}
+                >
+                  {entry.tickets_provided_by_company.toLowerCase() === "yes"
+                    ? "N/A"
+                    : `${entry.from} To ${entry.to}`}
+                </Text>
+                <Text
+                  style={{
+                    flex: 1,
+                    fontSize: 16,
+                    padding: 8,
+                  }}
+                >
+                  {entry.tickets_provided_by_company.toLowerCase() === "yes"
+                    ? "N/A"
+                    : entry.date_of_journey}
+                </Text>
+              </View>
             </View>
           ))}
 

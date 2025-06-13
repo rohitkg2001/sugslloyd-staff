@@ -79,7 +79,7 @@ const AddBillForm = ({ navigation }) => {
       from: "",
       to: "",
       date_of_journey: "",
-      mode_of_transport: "Train",
+      mode_of_transport: "",
       ticket: null,
       amount: "",
     },
@@ -120,7 +120,7 @@ const AddBillForm = ({ navigation }) => {
         to: "",
         date_of_journey: "",
         ticket: null,
-        mode_of_transport: "Train",
+        mode_of_transport: "",
         amount: "",
       },
     ]);
@@ -613,6 +613,11 @@ const AddBillForm = ({ navigation }) => {
                       value={entry.mode_of_transport}
                       onChange={(val) => handleChange("mode_of_transport", val)}
                       options={[
+                        {
+                          label: "Select Mode of Transport",
+                          value: "",
+                          enabled: false,
+                        },
                         { label: "Bus", value: "Bus" },
                         { label: "Train", value: "Train" },
                         { label: "Flight", value: "Flight" },
