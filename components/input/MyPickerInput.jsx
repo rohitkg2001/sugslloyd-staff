@@ -42,8 +42,7 @@ export default function MyPickerInput({
         >
           {options.map((option, index) => (
             <Picker.Item
-              enabled={option.enabled !== false}
-              //  enabled={option.enabled}
+              enabled={option.enabled}
               label={option.label}
               value={option.value}
               key={index}

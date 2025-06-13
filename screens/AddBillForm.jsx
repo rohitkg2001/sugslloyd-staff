@@ -43,7 +43,7 @@ const AddBillForm = ({ navigation }) => {
     date_of_return: "",
   });
 
-  // const [datePicker, setDatePicker] = useState({ show: false, field: "" });
+  const [datePicker, setDatePicker] = useState({ show: false, field: "" });
   const steps = [
     "Basic Info",
     "Ticket Details",
@@ -79,15 +79,16 @@ const AddBillForm = ({ navigation }) => {
       from: "",
       to: "",
       date_of_journey: "",
-      mode_of_transport: "",
+      mode_of_transport: "Train",
       ticket: null,
       amount: "",
     },
   ]);
-  const [datePicker, setDatePicker] = useState({
-    show: false,
-    index: null, // track which entry's date is being edited
-  });
+
+  // const [datePicker, setDatePicker] = useState({
+  //   show: false,
+  //   index: null, // track which entry's date is being edited
+  // });
 
   const handleTicketDateChange = (event, selectedDate) => {
     if (selectedDate && datePicker.index !== null) {
@@ -120,7 +121,7 @@ const AddBillForm = ({ navigation }) => {
         to: "",
         date_of_journey: "",
         ticket: null,
-        mode_of_transport: "",
+        mode_of_transport: "Train",
         amount: "",
       },
     ]);
@@ -613,53 +614,44 @@ const AddBillForm = ({ navigation }) => {
                       value={entry.mode_of_transport}
                       onChange={(val) => handleChange("mode_of_transport", val)}
                       options={[
-                        {
-                          label: "Select Mode of Transport",
-                          value: "",
-                          enabled: false,
-                        },
                         { label: "Bus", value: "Bus" },
                         { label: "Train", value: "Train" },
                         { label: "Flight", value: "Flight" },
                       ]}
                     />
 
-                    {ticketEntries.map((entry, index) => (
-                      <View key={index} style={{ marginBottom: 20 }}>
-                        <Span style={[typography.fontLato]}>
-                          Date of Journey
-                        </Span>
-                        <Pressable
-                          onPress={() => setDatePicker({ show: true, index })}
-                          style={[
-                            spacing.pv4,
-                            spacing.ph3,
-                            spacing.br1,
-                            styles.row,
-                            {
-                              borderWidth: 1,
-                              borderColor: "#ccc",
-                              backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            },
-                          ]}
+                    <View style={{ marginBottom: 20 }}>
+                      <Span style={[typography.fontLato]}>Date of Journey</Span>
+                      <Pressable
+                        onPress={() => setDatePicker({ show: true, index })}
+                        style={[
+                          spacing.pv4,
+                          spacing.ph3,
+                          spacing.br1,
+                          styles.row,
+                          {
+                            borderWidth: 1,
+                            borderColor: "#ccc",
+                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          },
+                        ]}
+                      >
+                        <Text
+                          style={{
+                            color: entry.date_of_journey ? "#000" : "#888",
+                          }}
                         >
-                          <Text
-                            style={{
-                              color: entry.date_of_journey ? "#000" : "#888",
-                            }}
-                          >
-                            {entry.date_of_journey
-                              ? new Date(
-                                  entry.date_of_journey
-                                ).toLocaleDateString()
-                              : "Select Date"}
-                          </Text>
-                          <Icon name="calendar" size={20} color="#888" />
-                        </Pressable>
-                      </View>
-                    ))}
+                          {entry.date_of_journey
+                            ? new Date(
+                                entry.date_of_journey
+                              ).toLocaleDateString()
+                            : "Select Date"}
+                        </Text>
+                        <Icon name="calendar" size={20} color="#888" />
+                      </Pressable>
+                    </View>
 
                     {datePicker.show && (
                       <DateTimePicker
