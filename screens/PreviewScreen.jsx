@@ -346,11 +346,28 @@ const PreviewScreen = ({ route, navigation }) => {
                 <Text
                   style={{
                     flex: 2,
-                    fontSize: 16,
+                    fontSize: 14,
                     padding: 8,
+                    borderRightWidth: 1,
+                    borderColor: "#ccc",
                   }}
                 >
-                  {" "}
+                  Dining Cost:{" "}
+                  {entry.guest_house_available?.trim().toLowerCase() === "yes"
+                    ? "-"
+                    : entry.dining_cost}
+                </Text>
+
+                <Text
+                  style={{
+                    flex: 2,
+                    fontSize: 14,
+                    padding: 8,
+                    borderRightWidth: 1,
+                    borderColor: "#ccc",
+                  }}
+                >
+                  Amount :{" "}
                   {entry.guest_house_available?.trim().toLowerCase() === "yes"
                     ? "-"
                     : entry.amount}

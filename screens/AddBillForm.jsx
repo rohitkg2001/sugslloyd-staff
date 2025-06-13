@@ -620,7 +620,7 @@ const AddBillForm = ({ navigation }) => {
                       ]}
                     />
 
-                    <View style={{ marginBottom: 20 }}>
+                     <View style={{ marginBottom: 20 }}>
                       <Span style={[typography.fontLato]}>Date of Journey</Span>
                       <Pressable
                         onPress={() => setDatePicker({ show: true, index })}
