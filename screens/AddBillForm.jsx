@@ -620,6 +620,7 @@ const AddBillForm = ({ navigation }) => {
                         { label: "Bus", value: "Bus" },
                         { label: "Train", value: "Train" },
                         { label: "Flight", value: "Flight" },
+                        { label: "car", value: "Car" },
                       ]}
                     />
 

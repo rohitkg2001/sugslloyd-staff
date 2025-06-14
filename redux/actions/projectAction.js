@@ -142,31 +142,68 @@ export const getAllConveyance = () => async (dispatch) => {
   }
 };
 
+// export const addBill = (billData) => async (dispatch) => {
+//   try {
+//     console.log("Sending bill data:", JSON.stringify(billData));
+
+//     const response = await axios.post(`${BASE_URL}/api/tadas`, billData);
+
+//     console.log("Response:", response.status, response.data);
+
+//     dispatch({ type: ADD_BILL, payload: response.data });
+//     return true;
+//   } catch (error) {
+//     console.error("Add Bill Error:", error);
+
+//     if (error.response) {
+//       // The server responded with an error status
+//       console.error(
+//         "Server responded with:",
+//         error.response.status,
+//         error.response.data
+//       );
+//     } else if (error.request) {
+//       // The request was made but no response received
+//       console.error("No response received:", error.request);
+//     } else {
+//       // Something else caused the error
+//       console.error("Error setting up request:", error.message);
+//     }
+
+//     return false;
+//   }
+// };
 export const addBill = (billData) => async (dispatch) => {
   try {
-    console.log("Sending bill data:", JSON.stringify(billData));
+    console.log("Sending bill data:", JSON.stringify(billData, null, 2)); // prettier logging
 
     const response = await axios.post(`${BASE_URL}/api/tadas`, billData);
 
     console.log("Response:", response.status, response.data);
 
-    dispatch({ type: ADD_BILL, payload: response.data });
+    // ✅ Safe check before dispatch
+    if (response?.data) {
+      dispatch({ type: ADD_BILL, payload: response.data });
+    } else {
+      console.warn("Response data is undefined!");
+    }
+
     return true;
   } catch (error) {
-    console.error("Add Bill Error:", error);
+    console.error("Add Bill Error:", error?.message || error);
 
     if (error.response) {
-      // The server responded with an error status
+      // ✅ Server responded but with error status (e.g. 400/500)
       console.error(
         "Server responded with:",
         error.response.status,
         error.response.data
       );
     } else if (error.request) {
-      // The request was made but no response received
+      // ✅ Request made but no response
       console.error("No response received:", error.request);
     } else {
-      // Something else caused the error
+      // ✅ Setup or config error
       console.error("Error setting up request:", error.message);
     }
 
