@@ -38,32 +38,10 @@ const PreviewScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
 
-  //   const handleSubmitToProduction = async () => {
-  //     try {
-  //       const success = await dispatch(addBill(submittedData));
-  //       if (success) {
-  //         Alert.alert("Success", "Bill submitted successfully!");
-  //         // navigation.navigate("travelManagement");
-  //         navigation.navigate("travelManagement", {
-  //           newSubmittedData: submittedData,
-  //         });
-  //       } else {
-  //         Alert.alert("Error", "Failed to submit the bill. Please try again.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Submit Error:", error);
-  //       Alert.alert(
-  //         "Error",
-  //         "An unexpected error occurred: " + (error.message || "Unknown error")
-  //       );
-  //     }
-  //   };
-
   const handleSubmitToProduction = async () => {
     try {
       const processedData = {
         ...submittedData,
-
         ticketEntries: submittedData.ticketEntries.map((entry) => ({
           ...entry,
           tickets_provided_by_company:
@@ -76,8 +54,6 @@ const PreviewScreen = ({ route, navigation }) => {
             ? new Date(entry.date_of_journey).toISOString().split("T")[0]
             : null,
         })),
-
-        // Fix guestHouseEntries formatting
         guestHouseEntries: submittedData.guestHouseEntries.map((entry) => ({
           ...entry,
           guest_house_available:
@@ -97,9 +73,15 @@ const PreviewScreen = ({ route, navigation }) => {
       const success = await dispatch(addBill(processedData));
       if (success) {
         Alert.alert("Success", "Bill submitted successfully!");
-        navigation.navigate("travelManagement", {
-          newSubmittedData: processedData,
-        });
+
+        // Fetch the updated bills after submission
+        await dispatch(getBillById(userId)); // Fetch the latest data
+
+        // navigation.navigate("travelManagement", {
+        //   newSubmittedData: processedData,
+        // });
+
+        navigation.navigate("travelManagement");
       } else {
         Alert.alert("Error", "Failed to submit the bill. Please try again.");
       }
