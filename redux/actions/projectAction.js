@@ -212,23 +212,6 @@ export const addBill = (billData) => async (dispatch) => {
   }
 };
 
-// export const getBillById = (my_id) => async (dispatch) => {
-//   try {
-//     const { data } = await axios.get(`${BASE_URL}/api/tadas/${my_id}`);
-
-//     console.log("Fetched TADA Data:", data);
-
-//     if (data?.status && Array.isArray(data.data)) {
-//       dispatch({ type: GET_BILL_BY_ID, payload: data.data });
-//     } else {
-//       dispatch({ type: GET_BILL_BY_ID, payload: [] });
-//     }
-//   } catch (error) {
-//     console.error("Failed to fetch TADA bills:", error);
-//     dispatch({ type: GET_BILL_BY_ID, payload: [] });
-//   }
-// };
-
 export const getBillById = (my_id) => async (dispatch) => {
   try {
     const { data } = await axios.get(`${BASE_URL}/api/tadas/${my_id}`);

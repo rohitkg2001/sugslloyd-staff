@@ -1,679 +1,391 @@
-import { View, ScrollView, Text } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { View, ScrollView, Text, Image } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
-import MyHeader from "../components/header/MyHeader";
-import Button from "../components/buttons/Button";
+import { PRIMARY_COLOR } from "../styles";
 import { useSelector } from "react-redux";
-import { SCREEN_WIDTH, spacing, styles, typography } from "../styles";
-import { P, H5 } from "../components/text";
+import { useRoute } from "@react-navigation/native";
 
-const TravelDetailScreen = ({ navigation }) => {
+export default function TravelDetailScreen() {
   const route = useRoute();
-  const { billPayload } = route.params;
-  const { travelfare = [], dailyfare = [], ...tada } = billPayload || {};
+  const { billPayload, staff = {} } = route.params || {};
+
   const { firstName, lastName } = useSelector((state) => state.staff);
 
-  const formatDate = (date) => {
-    if (!date) return "N/A";
-    return new Date(date).toLocaleDateString();
+  if (!billPayload) {
+    return (
+      <ContainerComponent>
+        <Text style={{ textAlign: "center", marginTop: 20 }}>
+          No data available.
+        </Text>
+      </ContainerComponent>
+    );
+  }
+
+  const {
+    visiting_to,
+    purpose_of_visit,
+    date_of_departure,
+    date_of_return,
+    outcome_achieved,
+    journey = [],
+    hotel_expense = [],
+    miscellaneous = [],
+  } = billPayload;
+
+  const formatDateForDisplay = (date) => {
+    if (!date || date === "1970-01-01") {
+      return "-";
+    }
+    return date;
   };
 
-  const handleSubmit = () => {
-    navigation.navigate("travelManagement", {
-      travelData: route.params?.formData || {},
-    });
-  };
+  const formatDate = (dateStr) =>
+    dateStr ? new Date(dateStr).toLocaleDateString("en-IN") : "N/A";
 
-  const fare = travelfare[0] || {};
-  const dailyFare = dailyfare[0] || {};
+  const isCompanyPaid = (value) =>
+    typeof value === "string" && value.toLowerCase() === "yes";
 
   return (
     <ContainerComponent>
-      <MyHeader title="TRAVELLING BILL" hasIcon={true} isBack={true} />
-      <ScrollView style={[{ width: SCREEN_WIDTH - 16 }]}>
-        {/* Main TADA Info */}
-
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            paddingVertical: 8,
-            paddingHorizontal: 12,
-            backgroundColor: "#fff",
-          }}
-        >
-          <Text style={{ fontSize: 16, color: "black" }}>
-            {firstName} {lastName}
-          </Text>
-
-          <View
+      <ScrollView style={{ paddingTop: 12 }}>
+        <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+          <Image
+            source={require("../assets/adaptive-icon.png")}
             style={{
-              backgroundColor: "#f0f0f0",
-              paddingVertical: 6,
-              paddingHorizontal: 10,
-              borderRadius: 8,
-            }}
-          >
-            <P style={[typography.font14, typography.fontLato]}>
-              {formatDate(tada.start_journey)}
-            </P>
-          </View>
-        </View>
-
-        <View
-          style={{
-            height: 1,
-            backgroundColor: "#ccc",
-          }}
-        />
-
-        <View
-          style={[
-            styles.row,
-            {
-              // paddingVertical: 6,
-              paddingHorizontal: 12,
-              backgroundColor: "#fff",
-            },
-          ]}
-        >
-          <P
-            style={[
-              typography.font12,
-              typography.fontLato,
-              typography.textBold,
-            ]}
-          >
-            Journey To:
-          </P>
-          <P
-            style={[
-              typography.font14,
-              typography.fontLato,
-              {
-                right: 40,
-              },
-            ]}
-          >
-            {tada.from_city} to {tada.to_city}
-          </P>
-        </View>
-
-        <View
-          style={[
-            styles.row,
-            {
-              paddingVertical: 4,
-              paddingHorizontal: 12,
-              backgroundColor: "#fff",
-            },
-          ]}
-        >
-          <P
-            style={[
-              typography.font12,
-              typography.fontLato,
-              typography.textBold,
-            ]}
-          >
-            Visit Purpose:
-          </P>
-          <P
-            style={[
-              typography.font14,
-              typography.fontLato,
-              {
-                right: 140,
-              },
-            ]}
-          >
-            {tada.meeting_visit}
-          </P>
-        </View>
-
-        <View
-          style={[
-            styles.row,
-            {
-              paddingHorizontal: 12,
-              backgroundColor: "#fff",
-              paddingVertical: 6,
-            },
-          ]}
-        >
-          <View style={{ flex: 1, paddingRight: 8 }}>
-            <Text
-              style={{
-                fontSize: 12,
-                color: "gray",
-                textTransform: "uppercase",
-              }}
-            >
-              Start Date
-            </Text>
-            <Text style={{ fontSize: 14 }}>
-              {formatDate(tada.start_journey)}
-            </Text>
-          </View>
-
-          <View style={{ flex: 1, paddingRight: 8 }}>
-            <Text
-              style={{
-                fontSize: 12,
-                color: "gray",
-                textTransform: "uppercase",
-              }}
-            >
-              End Date
-            </Text>
-            <Text style={{ fontSize: 14 }}>{formatDate(tada.end_journey)}</Text>
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 12, color: "gray" }}>Transport</Text>
-            <Text style={{ fontSize: 14 }}>{tada.transport}</Text>
-          </View>
-        </View>
-
-        <View
-          style={[
-            styles.row,
-            {
-              paddingHorizontal: 12,
-              backgroundColor: "#fff",
-              paddingVertical: 6,
-            },
-          ]}
-        >
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 12,
-                color: "gray",
-                textTransform: "uppercase",
-              }}
-            >
-              Start Pnr
-            </Text>
-            <Text style={{ fontSize: 14 }}>{tada.start_journey_pnr}</Text>
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 12,
-                color: "gray",
-                textTransform: "uppercase",
-              }}
-            >
-              End Pnr
-            </Text>
-            <Text style={{ fontSize: 14 }}>{tada.end_journey_pnr}</Text>
-          </View>
-        </View>
-
-        <View
-          style={[
-            styles.row,
-            {
-              paddingHorizontal: 12,
-              backgroundColor: "#fff",
-              paddingVertical: 6,
-            },
-          ]}
-        >
-          <View style={{ flex: 1, paddingRight: 8 }}>
-            <Text
-              style={{
-                fontSize: 12,
-                color: "gray",
-                textTransform: "uppercase",
-              }}
-            >
-              Vehicle No
-            </Text>
-            <Text style={{ fontSize: 14 }}>{tada.vehicle_no}</Text>
-          </View>
-
-          <View style={{ flex: 1, paddingRight: 8 }}>
-            <Text
-              style={{
-                fontSize: 12,
-                color: "gray",
-                textTransform: "uppercase",
-              }}
-            >
-              Rate per KM
-            </Text>
-            <Text style={{ fontSize: 14 }}>{tada.rate_per_km}</Text>
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 12, color: "gray" }}>Total KM</Text>
-            <Text style={{ fontSize: 14 }}>{tada.total_km}</Text>
-          </View>
-        </View>
-
-        <View
-          style={[
-            styles.row,
-            {
-              paddingVertical: 6,
-              paddingHorizontal: 12,
-              backgroundColor: "#fff",
-            },
-          ]}
-        >
-          <P
-            style={[
-              typography.font12,
-              typography.fontLato,
-              typography.textBold,
-            ]}
-          >
-            Objective of Tour:
-          </P>
-          <P style={[typography.font14, typography.fontLato]}>
-            {tada.objective_tour}
-          </P>
-        </View>
-        <View
-          style={[
-            styles.row,
-            {
-              paddingVertical: 6,
-              paddingHorizontal: 12,
-              backgroundColor: "#fff",
-            },
-          ]}
-        >
-          <P
-            style={[
-              typography.font12,
-              typography.fontLato,
-              typography.textBold,
-            ]}
-          >
-            Outcome Achieved:
-          </P>
-          <P style={[typography.font14, typography.fontLato]}>
-            {tada.outcome_achieve}
-          </P>
-        </View>
-        <View
-          style={[
-            styles.row,
-            {
-              paddingVertical: 6,
-              paddingHorizontal: 12,
-              backgroundColor: "#fff",
-            },
-          ]}
-        >
-          <P
-            style={[
-              typography.font12,
-              typography.fontLato,
-              typography.textBold,
-            ]}
-          >
-            Description Category:
-          </P>
-          <P style={[typography.font14, typography.fontLato]}>
-            {tada.description_category}
-          </P>
-        </View>
-
-        <View>
-          <View
-            style={[
-              styles.row,
-              {
-                paddingVertical: 6,
-                paddingHorizontal: 12,
-                backgroundColor: "#fff",
-              },
-            ]}
-          >
-            <P
-              style={[
-                typography.font12,
-                typography.fontLato,
-                typography.textBold,
-              ]}
-            >
-              Other Expense:
-            </P>
-            <P style={[typography.font14, typography.fontLato]}>
-              {tada.otherexpense ? JSON.stringify(tada.otherexpense) : "N/A"}
-            </P>
-          </View>
-
-          <View
-            style={{
-              height: 2,
-              backgroundColor: "#ccc",
+              height: 110,
+              width: 190,
+              resizeMode: "contain",
+              bottom: 15,
+              right: 20,
             }}
           />
-        </View>
 
-        {/* Travel Fare Section */}
-
-        <View style={[spacing.mt2]}>
-          <View style={[spacing.ph2, { alignSelf: "flex-start" }]}>
-            <H5 style={[typography.font14, typography.textBold]}>
-              Travel Fare Details *
-            </H5>
+          <View>
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+              SUGS LLOYD LIMITED
+            </Text>
+            <Text>NOIDA, UTTAR PRADESH</Text>
+            <Text>TRAVELLING BILL</Text>
 
             <View
               style={{
-                height: 1,
-                backgroundColor: "#ccc",
+                borderWidth: 1,
+                borderColor: "#000",
+                paddingVertical: 6,
+                paddingHorizontal: 12,
+                borderRadius: 6,
+                top: 12,
+                alignSelf: "flex-start",
               }}
-            />
-          </View>
-        </View>
-
-        <View style={{ marginBottom: 10, backgroundColor: "white" }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingVertical: 4,
-              paddingHorizontal: 8,
-            }}
-          >
-            {/* From */}
-            <View style={{ flex: 1 }}>
-              <P style={[typography.font12]}>From</P>
-              <P>{fare.from}</P>
-            </View>
-
-            {/* To */}
-            <View style={{ flex: 1 }}>
-              <P style={[typography.font12]}>To</P>
-              <P>{fare.to}</P>
-            </View>
-          </View>
-          <View
-            style={{
-              height: 1,
-              backgroundColor: "#ccc",
-            }}
-          />
-
-          <View
-            style={[
-              styles.row,
-              {
-                paddingVertical: 4,
-                paddingHorizontal: 8,
-              },
-            ]}
-          >
-            {/* Departure */}
-            <View style={{ flex: 1 }}>
-              <P
-                style={[
-                  typography.font10,
-                  typography.fontLato,
-                  typography.textBold,
-                  spacing.mb1,
-                ]}
-              >
-                Departure
-              </P>
-              <P style={{ fontSize: 12, color: "#555" }}>
-                <Text style={{ fontWeight: "600" }}>Date: </Text>
-                {formatDate(fare.departure_date) || "N/A"}
-              </P>
-              <Text style={{ fontSize: 12, color: "#555" }}>
-                <Text style={{ fontWeight: "600" }}>Time: </Text>
-                {fare.departure_time || "N/A"}
+            >
+              <Text style={{ fontSize: 14, fontWeight: "bold" }}>
+                Date:{" "}
+                {new Date()
+                  .toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })
+                  .replaceAll("/", "|") + "|"}
               </Text>
             </View>
 
-            {/* Arrival */}
-            <View style={{ flex: 1 }}>
-              <P
-                style={[
-                  typography.font10,
-                  typography.fontLato,
-                  typography.textBold,
-                  spacing.mb1,
-                ]}
-              >
-                Arrival
-              </P>
-              <Text style={{ fontSize: 12, color: "#555" }}>
-                <Text style={{ fontWeight: "600" }}>Date: </Text>
-                {formatDate(fare.arrival_date) || "N/A"}
-              </Text>
-              <Text style={{ fontSize: 12, color: "#555" }}>
-                <Text style={{ fontWeight: "600" }}>Time: </Text>
-                {fare.arrival_time || "N/A"}
-              </Text>
-            </View>
-
-            {/* Mode of Travel */}
-            <View style={{ flex: 1 }}>
-              <P
-                style={[
-                  typography.font10,
-                  typography.fontLato,
-                  typography.textBold,
-                  spacing.mb1,
-                ]}
-              >
-                Mode
-              </P>
-              <Text style={{ fontSize: 12, color: "#555" }}>
-                {fare.modeoftravel || "N/A"}
-              </Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              height: 1,
-              backgroundColor: "#ccc",
-            }}
-          />
-
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingVertical: 4,
-              paddingHorizontal: 8,
-            }}
-          >
-            {/* Vehicle No */}
-            <View style={{ flex: 1 }}>
-              <P
-                style={[
-                  typography.font10,
-                  typography.fontLato,
-                  typography.textBold,
-                ]}
-              >
-                Vehicle No
-              </P>
-              <P>{fare.add_vehicle_no || "N/A"}</P>
-            </View>
-
-            {/* Total KM */}
-            <View style={{ flex: 1 }}>
-              <P
-                style={[
-                  typography.font10,
-                  typography.fontLato,
-                  typography.textBold,
-                ]}
-              >
-                Total KM
-              </P>
-              <P>{fare.add_total_km || "N/A"}</P>
-            </View>
-
-            {/* Rate per KM */}
-            <View style={{ flex: 1 }}>
-              <P
-                style={[
-                  typography.font10,
-                  typography.fontLato,
-                  typography.textBold,
-                ]}
-              >
-                Rate per KM
-              </P>
-              <P>{fare.add_rate_per_km || "N/A"}</P>
-            </View>
-
-            {/* Rent */}
-            <View style={{ flex: 1, left: 12 }}>
-              <P
-                style={[
-                  typography.font10,
-                  typography.fontLato,
-                  typography.textBold,
-                ]}
-              >
-                Rent
-              </P>
-              <P>{fare.add_rent || "N/A"}</P>
-            </View>
-          </View>
-          <View
-            style={{
-              height: 1,
-              backgroundColor: "#ccc",
-            }}
-          />
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingVertical: 4,
-              paddingHorizontal: 8,
-            }}
-          >
-            <Text style={{ fontWeight: "600" }}>Amount</Text>
-            <Text>{fare.amount}</Text>
-          </View>
-          <View
-            style={{
-              height: 2,
-              backgroundColor: "#ccc",
-            }}
-          />
-        </View>
-
-        {/* Daily Fare Section */}
-
-        <View style={[spacing.ph2, { alignSelf: "flex-start" }]}>
-          <H5 style={[typography.font14, typography.textBold]}>
-            Daily Fare Details *
-          </H5>
-
-          <View
-            style={{
-              height: 1,
-              backgroundColor: "#ccc",
-            }}
-          />
-        </View>
-
-        <View
-          style={{
-            marginBottom: 10,
-            paddingHorizontal: 8,
-            backgroundColor: "white",
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingVertical: 4,
-              paddingHorizontal: 8,
-            }}
-          >
-            {/* Place */}
-            <View style={{ flex: 1 }}>
-              <P
-                style={[
-                  typography.font10,
-                  typography.fontLato,
-                  typography.textBold,
-                  spacing.mb1,
-                ]}
-              >
-                Place
-              </P>
-              <Text>{dailyFare.place || "N/A"}</Text>
-            </View>
-
-            {/* Hotel Bill No */}
-            <View style={{ flex: 1 }}>
-              <P
-                style={[
-                  typography.font10,
-                  typography.fontLato,
-                  typography.textBold,
-                  spacing.mb1,
-                ]}
-              >
-                Hotel Bill No
-              </P>
-              <P>{dailyFare.HotelBillNo || "N/A"}</P>
-            </View>
-
-            {/* Date Of Stay */}
-            <View style={{ flex: 1 }}>
-              <P
-                style={[
-                  typography.font10,
-                  typography.fontLato,
-                  typography.textBold,
-                  spacing.mb1,
-                ]}
-              >
-                Date Of Stay
-              </P>
-              <P>{formatDate(dailyFare.date_of_stay) || "N/A"}</P>
-            </View>
-          </View>
-          <View
-            style={{
-              height: 1,
-              backgroundColor: "#ccc",
-            }}
-          />
-
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingVertical: 4,
-            }}
-          >
-            <Text style={{ fontWeight: "600" }}>Amount</Text>
-            <Text>
-              {dailyFare.amount !== undefined
-                ? dailyFare.amount.toString()
-                : "N/A"}
+            <Text style={{ fontWeight: "bold", right: 180, bottom: 12 }}>
+              {firstName} {lastName}
             </Text>
           </View>
         </View>
 
-        <View style={{ marginTop: 30, paddingHorizontal: 8, marginBottom: 20 }}>
-          <Button title="Submit" onPress={handleSubmit} />
+        <View
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: "#000",
+          }}
+        />
+
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{ fontSize: 16, marginRight: 10 }}>{visiting_to}</Text>
+          <Text style={{ fontSize: 16, marginLeft: 80 }}>
+            {formatDate(date_of_departure)} To {formatDate(date_of_return)}
+          </Text>
         </View>
+
+        <Text style={{ fontSize: 16, marginBottom: 8 }}>
+          Purpose: {purpose_of_visit || "N/A"}
+        </Text>
+        <Text style={{ fontSize: 16, marginBottom: 8 }}>
+          Outcome: {outcome_achieved || "N/A"}
+        </Text>
+
+        <View
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: "#000",
+            marginBottom: 12,
+          }}
+        />
+
+        {journey.length > 0 && (
+          <View style={{ marginBottom: 16 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+                color: PRIMARY_COLOR,
+                textAlign: "center",
+              }}
+            >
+              Ticket Details
+            </Text>
+            {journey.map((entry, index) => {
+              const isPaidByCompany = isCompanyPaid(
+                entry.tickets_provided_by_company
+              );
+              return (
+                <View
+                  key={index}
+                  style={{
+                    marginBottom: 16,
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    borderRadius: 8,
+                    backgroundColor: "#f9f9f9",
+                  }}
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        flex: 2,
+                        fontSize: 16,
+                        padding: 8,
+                        borderRightWidth: 1,
+                        borderColor: "#ccc",
+                      }}
+                    >
+                      Company-paid: {String(entry.tickets_provided_by_company)}
+                    </Text>
+                    <Text
+                      style={{
+                        flex: 1,
+                        fontSize: 16,
+                        padding: 8,
+                        borderRightWidth: 1,
+                        borderColor: "#ccc",
+                      }}
+                    >
+                      {isPaidByCompany ? "-" : entry.mode_of_transport}
+                    </Text>
+                    <Text style={{ flex: 1, fontSize: 16, padding: 8 }}>
+                      {isPaidByCompany ? "-" : entry.amount}
+                    </Text>
+                  </View>
+                  <View style={{ height: 1, backgroundColor: "#ccc" }} />
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        flex: 2,
+                        fontSize: 16,
+                        padding: 8,
+                        borderRightWidth: 1,
+                        borderColor: "#ccc",
+                      }}
+                    >
+                      {isPaidByCompany ? "-" : `${entry.from} To ${entry.to}`}
+                    </Text>
+                    <Text style={{ flex: 1, fontSize: 16, padding: 8 }}>
+                      {isPaidByCompany
+                        ? "-"
+                        : formatDateForDisplay(entry.date_of_journey)}
+                    </Text>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        )}
+
+        <View
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: "#000",
+            marginBottom: 12,
+          }}
+        />
+
+        {hotel_expense.length > 0 && (
+              <View style={{ marginBottom: 16 }}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "bold",
+                    color: PRIMARY_COLOR,
+                    textAlign: "center",
+                    marginBottom: 12,
+                  }}
+                >
+                  Stay Details
+                </Text>
+
+                {hotel_expense.map((entry, index) => {
+                  // Convert guest_house_available (1/0) to Yes/No
+                  const guestHouseStatus =
+                    String(entry.guest_house_available) === "1" ? "Yes" : "No";
+
+                  const isGuestHouseYes = guestHouseStatus === "Yes";
+
+                  return (
+                    <View
+                      key={index}
+                      style={{
+                        marginBottom: 16,
+                        padding: 0,
+                        borderWidth: 1,
+                        borderColor: "#ccc",
+                        borderRadius: 8,
+                        backgroundColor: "#f9f9f9",
+                      }}
+                    >
+                      {/* First Row: Availability and Check-in/out */}
+                      <View style={{ flexDirection: "row" }}>
+                        <Text
+                          style={{
+                            flex: 1,
+                            fontSize: 16,
+                            padding: 8,
+                            borderRightWidth: 1,
+                            borderColor: "#ccc",
+                          }}
+                        >
+                          {/* ✅ Replaced raw value with Yes/No */}
+                          Hotel: {guestHouseStatus}
+                        </Text>
+                        <Text
+                          style={{
+                            flex: 2,
+                            fontSize: 16,
+                            padding: 8,
+                          }}
+                        >
+                          {formatDate(entry.check_in_date)} to{" "}
+                          {formatDate(entry.check_out_date)}
+                        </Text>
+                      </View>
+
+                      {/* Divider */}
+                      <View style={{ height: 1, backgroundColor: "#ccc" }} />
+
+                      {/* Second Row: Meals and Amount */}
+                      <View style={{ flexDirection: "row" }}>
+                        <Text
+                          style={{
+                            flex: 2,
+                            fontSize: 16,
+                            padding: 8,
+                            borderRightWidth: 1,
+                            borderColor: "#ccc",
+                          }}
+                        >
+                          With Meals:{" "}
+                          {isGuestHouseYes ? "-" : entry.breakfast_included}
+                        </Text>
+                        <Text
+                          style={{
+                            flex: 2,
+                            fontSize: 14,
+                            padding: 8,
+                            borderRightWidth: 1,
+                            borderColor: "#ccc",
+                          }}
+                        >
+                          Dining Cost:{" "}
+                          {isGuestHouseYes ? "-" : entry.dining_cost}
+                        </Text>
+                        <Text
+                          style={{
+                            flex: 2,
+                            fontSize: 14,
+                            padding: 8,
+                          }}
+                        >
+                          Amount: {isGuestHouseYes ? "-" : entry.amount}
+                        </Text>
+                      </View>
+                    </View>
+                  );
+                })}
+              </View>
+            )}
+        <View
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: "#000",
+            marginBottom: 12,
+          }}
+        />
+
+        {miscellaneous.length > 0 && (
+          <View style={{ marginBottom: 16 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+                color: PRIMARY_COLOR,
+                textAlign: "center",
+                marginBottom: 12,
+              }}
+            >
+              Miscellaneous Expenses
+            </Text>
+            {miscellaneous.map((entry, index) => (
+              <View
+                key={index}
+                style={{
+                  marginBottom: 16,
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: "#f9f9f9",
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      flex: 2,
+                      fontSize: 16,
+                      padding: 8,
+                      borderRightWidth: 1,
+                      borderColor: "#ccc",
+                    }}
+                  >
+                    {entry.description}
+                  </Text>
+                  <Text
+                    style={{
+                      flex: 1,
+                      fontSize: 16,
+                      padding: 8,
+                      borderRightWidth: 1,
+                      borderColor: "#ccc",
+                      textAlign: "center",
+                    }}
+                  >
+                    ₹{entry.amount}
+                  </Text>
+                  <Text
+                    style={{
+                      flex: 1.5,
+                      fontSize: 16,
+                      padding: 8,
+                      textAlign: "center",
+                    }}
+                  >
+                    {formatDate(entry.date_of_expense)}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        )}
       </ScrollView>
     </ContainerComponent>
   );
-};
-
-export default TravelDetailScreen;
+}

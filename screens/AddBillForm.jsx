@@ -140,6 +140,15 @@ const AddBillForm = ({ navigation }) => {
       if (!canceled && assets?.[0]) {
         const { name, uri } = assets[0];
 
+        // setTicketEntries((prev) => {
+        //   const updated = [...prev];
+        //   updated[index] = {
+        //     ...updated[index],
+        //     [type]: { name, uri },
+        //   };
+        //   return updated;
+        // });
+
         setTicketEntries((prev) => {
           const updated = [...prev];
           updated[index] = {
@@ -155,6 +164,16 @@ const AddBillForm = ({ navigation }) => {
   };
 
   // Remove uploaded ticket file from a specific entry
+  // const removeTicketFile = (index) => {
+  //   setTicketEntries((prevEntries) => {
+  //     const updatedEntries = [...prevEntries];
+  //     updatedEntries[index] = {
+  //       ...updatedEntries[index],
+  //       ticket: null,
+  //     };
+  //     return updatedEntries;
+  //   });
+  // };
   const removeTicketFile = (index) => {
     setTicketEntries((prevEntries) => {
       const updatedEntries = [...prevEntries];
@@ -164,12 +183,6 @@ const AddBillForm = ({ navigation }) => {
       };
       return updatedEntries;
     });
-  };
-
-  const handleRemoveTicketEntry = (index) => {
-    const updated = [...ticketEntries];
-    updated.splice(index, 1);
-    setTicketEntries(updated);
   };
 
   const [expenseEntries, setExpenseEntries] = useState([
@@ -274,6 +287,29 @@ const AddBillForm = ({ navigation }) => {
     });
   };
 
+  // const handleUploadHotelBillFile = async (index, type) => {
+  //   try {
+  //     const { canceled, assets } = await DocumentPicker.getDocumentAsync({
+  //       type: "application/pdf",
+  //       copyToCacheDirectory: true,
+  //     });
+
+  //     if (!canceled && assets?.[0]) {
+  //       const { name, uri } = assets[0];
+
+  //       setTicketEntries((prev) => {
+  //         const updated = [...prev];
+  //         updated[index] = {
+  //           ...updated[index],
+  //           [type]: { name, uri },
+  //         };
+  //         return updated;
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log("Error picking hotel bill file:", error);
+  //   }
+  // };
   const handleUploadHotelBillFile = async (index, type) => {
     try {
       const { canceled, assets } = await DocumentPicker.getDocumentAsync({
@@ -284,11 +320,11 @@ const AddBillForm = ({ navigation }) => {
       if (!canceled && assets?.[0]) {
         const { name, uri } = assets[0];
 
-        setTicketEntries((prev) => {
+        setGuestHouseEntries((prev) => {
           const updated = [...prev];
           updated[index] = {
             ...updated[index],
-            [type]: { name, uri },
+            [type]: { name, uri }, // i.e. "hotel_bill"
           };
           return updated;
         });
@@ -299,7 +335,7 @@ const AddBillForm = ({ navigation }) => {
   };
 
   const removeHotelBillFile = (index) => {
-    setTicketEntries((prevEntries) => {
+    setGuestHouseEntries((prevEntries) => {
       const updatedEntries = [...prevEntries];
       updatedEntries[index] = {
         ...updatedEntries[index],
@@ -309,7 +345,30 @@ const AddBillForm = ({ navigation }) => {
     });
   };
 
-  const handleUploadCertificateFile = async (index, type) => {
+  // const handleUploadCertificateFile = async (index, type) => {
+  //   try {
+  //     const { canceled, assets } = await DocumentPicker.getDocumentAsync({
+  //       type: "application/pdf",
+  //       copyToCacheDirectory: true,
+  //     });
+
+  //     if (!canceled && assets?.[0]) {
+  //       const { name, uri } = assets[0];
+
+  //       setTicketEntries((prev) => {
+  //         const updated = [...prev];
+  //         updated[index] = {
+  //           ...updated[index],
+  //           [type]: { name, uri },
+  //         };
+  //         return updated;
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log("Error picking certificate file:", error);
+  //   }
+  // };
+  const handleUploadCertificateFile = async (index, fieldKey) => {
     try {
       const { canceled, assets } = await DocumentPicker.getDocumentAsync({
         type: "application/pdf",
@@ -319,11 +378,12 @@ const AddBillForm = ({ navigation }) => {
       if (!canceled && assets?.[0]) {
         const { name, uri } = assets[0];
 
-        setTicketEntries((prev) => {
+        // ✅ Update guestHouseEntries instead of ticketEntries
+        setGuestHouseEntries((prev) => {
           const updated = [...prev];
           updated[index] = {
             ...updated[index],
-            [type]: { name, uri },
+            [fieldKey]: { name, uri },
           };
           return updated;
         });
@@ -333,14 +393,24 @@ const AddBillForm = ({ navigation }) => {
     }
   };
 
+  // const removeCertificateFile = (index) => {
+  //   setTicketEntries((prevEntries) => {
+  //     const updatedEntries = [...prevEntries];
+  //     updatedEntries[index] = {
+  //       ...updatedEntries[index],
+  //       certificate_by_district_incharge: null,
+  //     };
+  //     return updatedEntries;
+  //   });
+  // };
   const removeCertificateFile = (index) => {
-    setTicketEntries((prevEntries) => {
-      const updatedEntries = [...prevEntries];
-      updatedEntries[index] = {
-        ...updatedEntries[index],
-        certificate_by_district_incharge: null,
+    setGuestHouseEntries((prevEntries) => {
+      const updated = [...prevEntries];
+      updated[index] = {
+        ...updated[index],
+        certificate_by_district_incharge: null, // remove the file
       };
-      return updatedEntries;
+      return updated;
     });
   };
 
@@ -612,17 +682,6 @@ const AddBillForm = ({ navigation }) => {
                       placeholder="Enter To Location"
                       inputStyle={{ width: "100%" }}
                     />
-                    {/* <MyPickerInput
-                      title={"Mode Of Transport"}
-                      value={entry.mode_of_transport}
-                      onChange={(val) => handleChange("mode_of_transport", val)}
-                      options={[
-                        { label: "Bus", value: "Bus" },
-                        { label: "Train", value: "Train" },
-                        { label: "Flight", value: "Flight" },
-                        { label: "car", value: "Car" },
-                      ]}
-                    /> */}
 
                     <MyPickerInput
                       title={"Mode Of Transport"}
@@ -921,6 +980,33 @@ const AddBillForm = ({ navigation }) => {
                 {/* NO section */}
                 {entry.guest_house_available === "No" && (
                   <>
+                    {/* <View
+                      style={{
+                        marginTop: 10,
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() =>
+                          handleUploadCertificateFile(
+                            index,
+                            "certificate_by_district_incharge"
+                          )
+                        }
+                      >
+                        <Text
+                          style={{
+                            color: "#007bff",
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          Upload Occupancy certificate
+                        </Text>
+                      </TouchableOpacity>
+                    </View> */}
+
                     <View
                       style={{
                         marginTop: 10,
@@ -943,13 +1029,45 @@ const AddBillForm = ({ navigation }) => {
                             textDecorationLine: "underline",
                           }}
                         >
-                          Upload Certificate
+                          Upload Occupancy Certificate
                         </Text>
                       </TouchableOpacity>
                     </View>
 
+                    {/* ✅ Show uploaded certificate name below the button */}
+                    {guestHouseEntries[index]?.certificate_by_district_incharge
+                      ?.name && (
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          backgroundColor: "#e6f7e6",
+                          borderWidth: 1,
+                          borderColor: "#28a745",
+                          borderRadius: 6,
+                          marginTop: 8,
+                          padding: 8,
+                          marginLeft: 4,
+                          marginRight: 4,
+                        }}
+                      >
+                        <Text style={{ color: "#155724", flex: 1 }}>
+                          {
+                            guestHouseEntries[index]
+                              .certificate_by_district_incharge.name
+                          }
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => removeCertificateFile(index)}
+                          style={{ marginLeft: 10 }}
+                        >
+                          <Text style={{ color: "red" }}>X Remove</Text>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+
                     {/* Show uploaded certificate name + Remove */}
-                    {ticketEntries[index]?.certificate_by_district_incharge
+                    {/* {guestHouseEntries[index]?.certificate_by_district_incharge
                       ?.name && (
                       <View
                         style={[
@@ -967,7 +1085,7 @@ const AddBillForm = ({ navigation }) => {
                       >
                         <Text style={{ color: "#155724", flex: 1 }}>
                           {
-                            ticketEntries[index]
+                            guestHouseEntries[index]
                               .certificate_by_district_incharge.name
                           }
                         </Text>
@@ -979,7 +1097,7 @@ const AddBillForm = ({ navigation }) => {
                           </Text>
                         </TouchableOpacity>
                       </View>
-                    )}
+                    )} */}
 
                     <Span style={typography.fontLato}>Check In Date</Span>
                     <Pressable
@@ -1052,6 +1170,59 @@ const AddBillForm = ({ navigation }) => {
                       inputStyle={{ width: "100%" }}
                     />
 
+                    {/* <View
+                      style={{
+                        marginTop: 10,
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() =>
+                          handleUploadHotelBillFile(index, "hotel_bill")
+                        }
+                      >
+                        <Text
+                          style={{
+                            color: "#007bff",
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          Upload Hotel Bill
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
+                   
+                    {ticketEntries[index]?.hotel_bill?.name && (
+                      <View
+                        style={[
+                          styles.row,
+                          spacing.br1,
+                          spacing.p2,
+                          spacing.mt2,
+                          {
+                            borderWidth: 1,
+                            borderColor: "#28a745",
+                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                            alignItems: "center",
+                          },
+                        ]}
+                      >
+                        <Text style={{ color: "#155724", flex: 1 }}>
+                          {ticketEntries[index].hotel_bill.name}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => removeHotelBillFile(index)}
+                        >
+                          <Text style={{ color: "red", marginLeft: 10 }}>
+                            X Remove
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    )} */}
+
                     <View
                       style={{
                         marginTop: 10,
@@ -1076,8 +1247,8 @@ const AddBillForm = ({ navigation }) => {
                       </TouchableOpacity>
                     </View>
 
-                    {/* Show uploaded file name + Remove */}
-                    {ticketEntries[index]?.hotel_bill?.name && (
+                    {/* ✅ Show uploaded file name from guestHouseEntries + Remove */}
+                    {guestHouseEntries[index]?.hotel_bill?.name && (
                       <View
                         style={[
                           styles.row,
@@ -1093,7 +1264,7 @@ const AddBillForm = ({ navigation }) => {
                         ]}
                       >
                         <Text style={{ color: "#155724", flex: 1 }}>
-                          {ticketEntries[index].hotel_bill.name}
+                          {guestHouseEntries[index].hotel_bill.name}
                         </Text>
                         <TouchableOpacity
                           onPress={() => removeHotelBillFile(index)}
