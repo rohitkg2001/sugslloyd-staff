@@ -87,11 +87,6 @@ const AddBillForm = ({ navigation }) => {
     },
   ]);
 
-  // const [datePicker, setDatePicker] = useState({
-  //   show: false,
-  //   index: null, // track which entry's date is being edited
-  // });
-
   const handleTicketDateChange = (event, selectedDate) => {
     if (selectedDate && datePicker.index !== null) {
       const updatedEntries = [...ticketEntries];
@@ -129,6 +124,12 @@ const AddBillForm = ({ navigation }) => {
     ]);
   };
 
+  const handleRemoveTicketEntry = (index) => {
+    const updated = [...ticketEntries];
+    updated.splice(index, 1);
+    setTicketEntries(updated);
+  };
+
   // Upload ticket file for a specific entry
   const handleUploadTicketFile = async (index, type) => {
     try {
@@ -139,15 +140,6 @@ const AddBillForm = ({ navigation }) => {
 
       if (!canceled && assets?.[0]) {
         const { name, uri } = assets[0];
-
-        // setTicketEntries((prev) => {
-        //   const updated = [...prev];
-        //   updated[index] = {
-        //     ...updated[index],
-        //     [type]: { name, uri },
-        //   };
-        //   return updated;
-        // });
 
         setTicketEntries((prev) => {
           const updated = [...prev];
@@ -164,16 +156,7 @@ const AddBillForm = ({ navigation }) => {
   };
 
   // Remove uploaded ticket file from a specific entry
-  // const removeTicketFile = (index) => {
-  //   setTicketEntries((prevEntries) => {
-  //     const updatedEntries = [...prevEntries];
-  //     updatedEntries[index] = {
-  //       ...updatedEntries[index],
-  //       ticket: null,
-  //     };
-  //     return updatedEntries;
-  //   });
-  // };
+
   const removeTicketFile = (index) => {
     setTicketEntries((prevEntries) => {
       const updatedEntries = [...prevEntries];
@@ -287,29 +270,6 @@ const AddBillForm = ({ navigation }) => {
     });
   };
 
-  // const handleUploadHotelBillFile = async (index, type) => {
-  //   try {
-  //     const { canceled, assets } = await DocumentPicker.getDocumentAsync({
-  //       type: "application/pdf",
-  //       copyToCacheDirectory: true,
-  //     });
-
-  //     if (!canceled && assets?.[0]) {
-  //       const { name, uri } = assets[0];
-
-  //       setTicketEntries((prev) => {
-  //         const updated = [...prev];
-  //         updated[index] = {
-  //           ...updated[index],
-  //           [type]: { name, uri },
-  //         };
-  //         return updated;
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log("Error picking hotel bill file:", error);
-  //   }
-  // };
   const handleUploadHotelBillFile = async (index, type) => {
     try {
       const { canceled, assets } = await DocumentPicker.getDocumentAsync({
@@ -345,29 +305,6 @@ const AddBillForm = ({ navigation }) => {
     });
   };
 
-  // const handleUploadCertificateFile = async (index, type) => {
-  //   try {
-  //     const { canceled, assets } = await DocumentPicker.getDocumentAsync({
-  //       type: "application/pdf",
-  //       copyToCacheDirectory: true,
-  //     });
-
-  //     if (!canceled && assets?.[0]) {
-  //       const { name, uri } = assets[0];
-
-  //       setTicketEntries((prev) => {
-  //         const updated = [...prev];
-  //         updated[index] = {
-  //           ...updated[index],
-  //           [type]: { name, uri },
-  //         };
-  //         return updated;
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log("Error picking certificate file:", error);
-  //   }
-  // };
   const handleUploadCertificateFile = async (index, fieldKey) => {
     try {
       const { canceled, assets } = await DocumentPicker.getDocumentAsync({
@@ -378,7 +315,6 @@ const AddBillForm = ({ navigation }) => {
       if (!canceled && assets?.[0]) {
         const { name, uri } = assets[0];
 
-        // ✅ Update guestHouseEntries instead of ticketEntries
         setGuestHouseEntries((prev) => {
           const updated = [...prev];
           updated[index] = {
@@ -393,53 +329,16 @@ const AddBillForm = ({ navigation }) => {
     }
   };
 
-  // const removeCertificateFile = (index) => {
-  //   setTicketEntries((prevEntries) => {
-  //     const updatedEntries = [...prevEntries];
-  //     updatedEntries[index] = {
-  //       ...updatedEntries[index],
-  //       certificate_by_district_incharge: null,
-  //     };
-  //     return updatedEntries;
-  //   });
-  // };
   const removeCertificateFile = (index) => {
     setGuestHouseEntries((prevEntries) => {
       const updated = [...prevEntries];
       updated[index] = {
         ...updated[index],
-        certificate_by_district_incharge: null, // remove the file
+        certificate_by_district_incharge: null,
       };
       return updated;
     });
   };
-
-  // const handleSubmit = async () => {
-  //   try {
-  //     const payload = {
-  //       ...form,
-  //       ticketEntries,
-  //       guestHouseEntries,
-  //       expenseEntries,
-  //     };
-  //     console.log("Payload to submit:", payload);
-
-  //     const success = await dispatch(addBill(payload));
-  //     if (success) {
-  //       Alert.alert("Success", "Bill submitted successfully!");
-  //       // navigation.navigate("travelManagement");
-  //       navigation.navigate("previewScreen", { submittedData: payload });
-  //     } else {
-  //       Alert.alert("Error", "Failed to submit the bill. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Submit Error:", error);
-  //     Alert.alert(
-  //       "Error",
-  //       "An unexpected error occurred: " + (error.message || "Unknown error")
-  //     );
-  //   }
-  // };
 
   const handleSubmit = async () => {
     try {
@@ -567,7 +466,7 @@ const AddBillForm = ({ navigation }) => {
           </>
         )}
 
-        {activeStep === 1 && (
+        {/* {activeStep === 1 && (
           <ScrollView style={[spacing.p1]}>
             {ticketEntries.map((entry, index) => (
               <View
@@ -582,7 +481,6 @@ const AddBillForm = ({ navigation }) => {
                   // bottom: 29,
                 }}
               >
-                {/* Top Heading */}
                 <H6
                   style={[
                     typography.font14,
@@ -598,7 +496,6 @@ const AddBillForm = ({ navigation }) => {
                   * Is Ticket Provided by Company?
                 </H6>
 
-                {/* Yes/No Radio */}
                 <View style={[styles.row, spacing.mv2]}>
                   {["Yes", "No"].map((option) => {
                     const selected =
@@ -649,7 +546,6 @@ const AddBillForm = ({ navigation }) => {
                   })}
                 </View>
 
-                {/* Conditional Fields */}
                 {entry.tickets_provided_by_company === "Yes" && (
                   <Image
                     source={require("../assets/document.png")}
@@ -761,7 +657,6 @@ const AddBillForm = ({ navigation }) => {
                       </TouchableOpacity>
                     </View>
 
-                    {/* Show uploaded file name + Remove */}
                     {ticketEntries[index]?.ticket?.name && (
                       <View
                         style={[
@@ -803,7 +698,6 @@ const AddBillForm = ({ navigation }) => {
                   </>
                 )}
 
-                {/*  REMOVE Button */}
                 <TouchableOpacity
                   onPress={() => handleRemoveTicketEntry(index)}
                   style={{
@@ -822,6 +716,278 @@ const AddBillForm = ({ navigation }) => {
               </View>
             ))}
 
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: "#e8f5e9",
+                borderWidth: 1,
+                borderColor: "green",
+                borderStyle: "dotted",
+                alignItems: "center",
+                borderRadius: 8,
+              }}
+              onPress={handleAddTicketEntry}
+            >
+              <Text style={{ color: "green" }}>+ Add More</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        )} */}
+        {activeStep === 1 && (
+          <ScrollView style={[spacing.p1]}>
+            {ticketEntries.map((entry, index) => (
+              <View
+                key={index}
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  padding: 10,
+                  backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                  marginBottom: 16,
+                }}
+              >
+                {/* Top Heading */}
+                <H6
+                  style={[
+                    typography.font14,
+                    typography.fontLato,
+                    typography.textBold,
+                    {
+                      letterSpacing: 0.5,
+                      color: "#333",
+                      width: SCREEN_WIDTH - 20,
+                    },
+                  ]}
+                >
+                  * Is Ticket Provided by Company?
+                </H6>
+
+                {/* Yes/No Radio */}
+                <View style={[styles.row, spacing.mv2]}>
+                  {["Yes", "No"].map((option) => {
+                    const selected =
+                      entry.tickets_provided_by_company === option;
+                    return (
+                      <TouchableOpacity
+                        key={option}
+                        onPress={() =>
+                          handleTicketEntryChange(
+                            index,
+                            "tickets_provided_by_company",
+                            option
+                          )
+                        }
+                        style={[
+                          styles.row,
+                          { alignItems: "center", marginRight: 16 },
+                        ]}
+                      >
+                        <View
+                          style={{
+                            height: 20,
+                            width: 20,
+                            borderRadius: 10,
+                            borderWidth: 1.5,
+                            borderColor: selected ? "#020409" : "#aaa",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginRight: 10,
+                          }}
+                        >
+                          {selected && (
+                            <View
+                              style={{
+                                height: 10,
+                                width: 10,
+                                backgroundColor: PRIMARY_COLOR,
+                                borderRadius: 5,
+                              }}
+                            />
+                          )}
+                        </View>
+                        <Text style={{ color: selected ? "#76885B" : "#333" }}>
+                          {option}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+
+                {/* Common Fields for both Yes and No */}
+                <MyTextInput
+                  title="From"
+                  value={entry.from}
+                  onChangeText={(text) =>
+                    handleTicketEntryChange(index, "from", text)
+                  }
+                  placeholder="Enter From Location"
+                  inputStyle={{ width: "100%" }}
+                />
+                <MyTextInput
+                  title="To"
+                  value={entry.to}
+                  onChangeText={(text) =>
+                    handleTicketEntryChange(index, "to", text)
+                  }
+                  placeholder="Enter To Location"
+                  inputStyle={{ width: "100%" }}
+                />
+
+                {entry.tickets_provided_by_company === "No" && (
+                  <MyPickerInput
+                    title={"Mode Of Transport"}
+                    value={entry.mode_of_transport}
+                    onChange={(val) =>
+                      handleTicketEntryChange(index, "mode_of_transport", val)
+                    }
+                    options={[
+                      { label: "Bus", value: "Bus" },
+                      { label: "Train", value: "Train" },
+                      { label: "Flight", value: "Flight" },
+                      { label: "Car", value: "Car" },
+                    ]}
+                  />
+                )}
+
+                <View style={{ marginBottom: 20 }}>
+                  <Span style={[typography.fontLato]}>Date of Journey</Span>
+                  <Pressable
+                    onPress={() => setDatePicker({ show: true, index })}
+                    style={[
+                      spacing.pv4,
+                      spacing.ph3,
+                      spacing.br1,
+                      styles.row,
+                      {
+                        borderWidth: 1,
+                        borderColor: "#ccc",
+                        backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={{
+                        color: entry.date_of_journey ? "#000" : "#888",
+                      }}
+                    >
+                      {entry.date_of_journey
+                        ? new Date(entry.date_of_journey).toLocaleDateString()
+                        : "Select Date"}
+                    </Text>
+                    <Icon name="calendar" size={20} color="#888" />
+                  </Pressable>
+                </View>
+
+                {datePicker.show && (
+                  <DateTimePicker
+                    value={new Date()}
+                    mode="date"
+                    display="default"
+                    onChange={handleTicketDateChange}
+                  />
+                )}
+
+                {/* Upload Ticket File */}
+                <View
+                  style={{
+                    marginTop: 10,
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => handleUploadTicketFile(index, "ticket")}
+                  >
+                    <Text
+                      style={{
+                        color: "#007bff",
+                        textDecorationLine: "underline",
+                      }}
+                    >
+                      Upload Ticket
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                {ticketEntries[index]?.ticket?.name && (
+                  <View
+                    style={[
+                      styles.row,
+                      spacing.br1,
+                      spacing.p2,
+                      spacing.mt2,
+                      {
+                        borderWidth: 1,
+                        borderColor: "#28a745",
+                        backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                        alignItems: "center",
+                      },
+                    ]}
+                  >
+                    <Text style={{ color: "#155724", flex: 1 }}>
+                      {ticketEntries[index].ticket.name}
+                    </Text>
+                    <TouchableOpacity onPress={() => removeTicketFile(index)}>
+                      <Text style={{ color: "red", marginLeft: 10 }}>
+                        X Remove
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+
+                {/* Amount field for both Yes and No */}
+                {/* <MyTextInput
+                  title="Amount"
+                  value={entry.amount}
+                  onChangeText={(text) =>
+                    handleTicketEntryChange(index, "amount", text)
+                  }
+                  placeholder="Enter Amount"
+                  keyboardType="numeric"
+                  inputStyle={{ width: "100%" }}
+                /> */}
+
+                <MyTextInput
+                  title="Amount"
+                  value={
+                    entry.tickets_provided_by_company === "Yes"
+                      ? "0"
+                      : entry.amount
+                  }
+                  onChangeText={(text) =>
+                    entry.tickets_provided_by_company === "No"
+                      ? handleTicketEntryChange(index, "amount", text)
+                      : null
+                  }
+                  placeholder="0"
+                  keyboardType="numeric"
+                  inputStyle={{ width: "100%" }}
+                  editable={entry.tickets_provided_by_company === "No"}
+                />
+
+                {/* REMOVE Button */}
+                <TouchableOpacity
+                  onPress={() => handleRemoveTicketEntry(index)}
+                  style={{
+                    marginTop: 10,
+                    alignSelf: "flex-end",
+                    paddingVertical: 6,
+                    paddingHorizontal: 12,
+                    backgroundColor: "#FF4C4C",
+                    borderRadius: 6,
+                  }}
+                >
+                  <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                    Remove
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+
+            {/* Add More Button */}
             <TouchableOpacity
               style={{
                 padding: 10,
@@ -980,33 +1146,6 @@ const AddBillForm = ({ navigation }) => {
                 {/* NO section */}
                 {entry.guest_house_available === "No" && (
                   <>
-                    {/* <View
-                      style={{
-                        marginTop: 10,
-                        flexDirection: "row",
-                        justifyContent: "flex-end",
-                        alignItems: "center",
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() =>
-                          handleUploadCertificateFile(
-                            index,
-                            "certificate_by_district_incharge"
-                          )
-                        }
-                      >
-                        <Text
-                          style={{
-                            color: "#007bff",
-                            textDecorationLine: "underline",
-                          }}
-                        >
-                          Upload Occupancy certificate
-                        </Text>
-                      </TouchableOpacity>
-                    </View> */}
-
                     <View
                       style={{
                         marginTop: 10,
@@ -1034,7 +1173,7 @@ const AddBillForm = ({ navigation }) => {
                       </TouchableOpacity>
                     </View>
 
-                    {/* ✅ Show uploaded certificate name below the button */}
+                    {/* Show uploaded certificate name below the button */}
                     {guestHouseEntries[index]?.certificate_by_district_incharge
                       ?.name && (
                       <View
@@ -1065,39 +1204,6 @@ const AddBillForm = ({ navigation }) => {
                         </TouchableOpacity>
                       </View>
                     )}
-
-                    {/* Show uploaded certificate name + Remove */}
-                    {/* {guestHouseEntries[index]?.certificate_by_district_incharge
-                      ?.name && (
-                      <View
-                        style={[
-                          styles.row,
-                          spacing.br1,
-                          spacing.p2,
-                          spacing.mt2,
-                          {
-                            borderWidth: 1,
-                            borderColor: "#28a745",
-                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                            alignItems: "center",
-                          },
-                        ]}
-                      >
-                        <Text style={{ color: "#155724", flex: 1 }}>
-                          {
-                            guestHouseEntries[index]
-                              .certificate_by_district_incharge.name
-                          }
-                        </Text>
-                        <TouchableOpacity
-                          onPress={() => removeCertificateFile(index)}
-                        >
-                          <Text style={{ color: "red", marginLeft: 10 }}>
-                            X Remove
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    )} */}
 
                     <Span style={typography.fontLato}>Check In Date</Span>
                     <Pressable
@@ -1170,59 +1276,6 @@ const AddBillForm = ({ navigation }) => {
                       inputStyle={{ width: "100%" }}
                     />
 
-                    {/* <View
-                      style={{
-                        marginTop: 10,
-                        flexDirection: "row",
-                        justifyContent: "flex-end",
-                        alignItems: "center",
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() =>
-                          handleUploadHotelBillFile(index, "hotel_bill")
-                        }
-                      >
-                        <Text
-                          style={{
-                            color: "#007bff",
-                            textDecorationLine: "underline",
-                          }}
-                        >
-                          Upload Hotel Bill
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-
-                   
-                    {ticketEntries[index]?.hotel_bill?.name && (
-                      <View
-                        style={[
-                          styles.row,
-                          spacing.br1,
-                          spacing.p2,
-                          spacing.mt2,
-                          {
-                            borderWidth: 1,
-                            borderColor: "#28a745",
-                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                            alignItems: "center",
-                          },
-                        ]}
-                      >
-                        <Text style={{ color: "#155724", flex: 1 }}>
-                          {ticketEntries[index].hotel_bill.name}
-                        </Text>
-                        <TouchableOpacity
-                          onPress={() => removeHotelBillFile(index)}
-                        >
-                          <Text style={{ color: "red", marginLeft: 10 }}>
-                            X Remove
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    )} */}
-
                     <View
                       style={{
                         marginTop: 10,
@@ -1247,7 +1300,7 @@ const AddBillForm = ({ navigation }) => {
                       </TouchableOpacity>
                     </View>
 
-                    {/* ✅ Show uploaded file name from guestHouseEntries + Remove */}
+                    {/* Show uploaded file name from guestHouseEntries + Remove */}
                     {guestHouseEntries[index]?.hotel_bill?.name && (
                       <View
                         style={[

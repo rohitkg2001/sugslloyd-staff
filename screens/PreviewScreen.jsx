@@ -180,7 +180,6 @@ const PreviewScreen = ({ route, navigation }) => {
           </View>
         </View>
 
-        {/* Thin line */}
         <View
           style={{
             borderBottomWidth: 0.5,
@@ -194,9 +193,7 @@ const PreviewScreen = ({ route, navigation }) => {
             typography.textBold,
             { color: PRIMARY_COLOR, textAlign: "center" },
           ]}
-        >
-          {/* Basic info */}
-        </H6>
+        ></H6>
         <View style={{ marginBottom: 20 }}>
           <View
             style={{
@@ -238,8 +235,8 @@ const PreviewScreen = ({ route, navigation }) => {
           >
             Ticket Details
           </H6>
-          {/* Display ticket entries */}
-          {submittedData.ticketEntries.map((entry, index) => (
+
+          {/* {submittedData.ticketEntries.map((entry, index) => (
             <View
               key={index}
               style={{
@@ -252,7 +249,7 @@ const PreviewScreen = ({ route, navigation }) => {
                 top: 18,
               }}
             >
-              {/* First Row: Company-paid, Mode, Amount */}
+            
               <View style={{ flexDirection: "row" }}>
                 <Text
                   style={{
@@ -291,7 +288,7 @@ const PreviewScreen = ({ route, navigation }) => {
                 </Text>
               </View>
 
-              {/* Horizontal divider */}
+            
               <View
                 style={{
                   height: 1,
@@ -299,7 +296,7 @@ const PreviewScreen = ({ route, navigation }) => {
                 }}
               />
 
-              {/* Second Row: From-To and Date */}
+             
               <View style={{ flexDirection: "row" }}>
                 <Text
                   style={{
@@ -326,7 +323,7 @@ const PreviewScreen = ({ route, navigation }) => {
                     : entry.date_of_journey}
                 </Text>
               </View>
-              {/* Uploaded Ticket File Display */}
+             
               {entry.ticket?.name && (
                 <View
                   style={{
@@ -341,7 +338,118 @@ const PreviewScreen = ({ route, navigation }) => {
                 </View>
               )}
             </View>
-          ))}
+          ))} */}
+
+          {submittedData.ticketEntries.map((entry, index) => {
+            const isCompanyProvided =
+              entry.tickets_provided_by_company === "Yes";
+
+            return (
+              <View
+                key={index}
+                style={{
+                  marginBottom: 16,
+                  padding: 0,
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: "#f9f9f9",
+                  top: 20,
+                }}
+              >
+                {/* First Row: Company-Paid, Mode, Amount */}
+                <View style={{ flexDirection: "row" }}>
+                  <H5
+                    style={[
+                      typography.font12,
+                      {
+                        flex: 1,
+                        padding: 8,
+                        borderRightWidth: 1,
+                        borderColor: "#ccc",
+                      },
+                    ]}
+                  >
+                    Company-Paid: {entry.tickets_provided_by_company || "N/A"}
+                  </H5>
+
+                  <Text
+                    style={{
+                      flex: 1,
+                      fontSize: 12,
+                      padding: 8,
+                      borderRightWidth: 1,
+                      borderColor: "#ccc",
+                    }}
+                  >
+                    Mode:{" "}
+                    {isCompanyProvided ? "-" : entry.mode_of_transport || "N/A"}
+                  </Text>
+
+                  <Text
+                    style={{
+                      flex: 1,
+                      fontSize: 14,
+                      padding: 8,
+                    }}
+                  >
+                    Amount: {isCompanyProvided ? "-" : entry.amount || "0"}
+                  </Text>
+                </View>
+
+                {/* Divider */}
+                <View style={{ height: 1, backgroundColor: "#ccc" }} />
+
+                {/* Second Row: From - To, Journey Date */}
+                <View style={{ flexDirection: "row" }}>
+                  <P
+                    style={[
+                      typography.font14,
+                      typography.fontLato,
+                      {
+                        flex: 2,
+                        padding: 8,
+                        borderRightWidth: 1,
+                        borderColor: "#ccc",
+                      },
+                    ]}
+                  >
+                    {entry.from || "-"} To {entry.to || "-"}
+                  </P>
+
+                  <Text
+                    style={{
+                      flex: 2,
+                      fontSize: 14,
+                      padding: 8,
+                    }}
+                  >
+                    Journey Date:{" "}
+                    {entry.date_of_journey
+                      ? new Date(entry.date_of_journey).toLocaleDateString()
+                      : "N/A"}
+                  </Text>
+                </View>
+
+                {/* Third Row: Uploaded Ticket File */}
+                {entry.ticket?.name && (
+                  <Text
+                    style={{
+                      color: "green",
+                      fontSize: 14,
+                      marginLeft: 8,
+                      marginBottom: 6,
+                      marginTop: 4,
+                      borderTopWidth: 1,
+                      borderColor: "#ccc",
+                    }}
+                  >
+                    Uploaded Ticket: {entry.ticket.name}
+                  </Text>
+                )}
+              </View>
+            );
+          })}
 
           <View
             style={{
@@ -384,7 +492,6 @@ const PreviewScreen = ({ route, navigation }) => {
                   top: 20,
                 }}
               >
-                {/* First Row: Availability and Check-in/out */}
                 <View style={{ flexDirection: "row" }}>
                   <Text
                     style={{
@@ -409,10 +516,8 @@ const PreviewScreen = ({ route, navigation }) => {
                   </Text>
                 </View>
 
-                {/* Divider */}
                 <View style={{ height: 1, backgroundColor: "#ccc" }} />
 
-                {/* Second Row: Meals and Amount */}
                 <View style={{ flexDirection: "row" }}>
                   <Text
                     style={{
@@ -451,7 +556,6 @@ const PreviewScreen = ({ route, navigation }) => {
                   </Text>
                 </View>
 
-                {/* Show uploaded Occupancy Certificate */}
                 {!isGuestHouseYes &&
                   entry.certificate_by_district_incharge?.name && (
                     <Text
@@ -469,7 +573,6 @@ const PreviewScreen = ({ route, navigation }) => {
                     </Text>
                   )}
 
-                {/*  Show uploaded Hotel Bill */}
                 {!isGuestHouseYes && entry.hotel_bill?.name && (
                   <Text
                     style={{
