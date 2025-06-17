@@ -81,16 +81,11 @@ const AddBillForm = ({ navigation }) => {
       from: "",
       to: "",
       date_of_journey: "",
-      mode_of_transport: "Train",
+      mode_of_transport: "",
       ticket: null,
       amount: "",
     },
   ]);
-
-  // const [datePicker, setDatePicker] = useState({
-  //   show: false,
-  //   index: null, // track which entry's date is being edited
-  // });
 
   const handleTicketDateChange = (event, selectedDate) => {
     if (selectedDate && datePicker.index !== null) {
@@ -123,10 +118,16 @@ const AddBillForm = ({ navigation }) => {
         to: "",
         date_of_journey: "",
         ticket: null,
-        mode_of_transport: "Train",
+        mode_of_transport: "",
         amount: "",
       },
     ]);
+  };
+
+  const handleRemoveTicketEntry = (index) => {
+    const updated = [...ticketEntries];
+    updated.splice(index, 1);
+    setTicketEntries(updated);
   };
 
   // Upload ticket file for a specific entry
@@ -155,6 +156,7 @@ const AddBillForm = ({ navigation }) => {
   };
 
   // Remove uploaded ticket file from a specific entry
+
   const removeTicketFile = (index) => {
     setTicketEntries((prevEntries) => {
       const updatedEntries = [...prevEntries];
@@ -164,12 +166,6 @@ const AddBillForm = ({ navigation }) => {
       };
       return updatedEntries;
     });
-  };
-
-  const handleRemoveTicketEntry = (index) => {
-    const updated = [...ticketEntries];
-    updated.splice(index, 1);
-    setTicketEntries(updated);
   };
 
   const [expenseEntries, setExpenseEntries] = useState([
@@ -284,11 +280,11 @@ const AddBillForm = ({ navigation }) => {
       if (!canceled && assets?.[0]) {
         const { name, uri } = assets[0];
 
-        setTicketEntries((prev) => {
+        setGuestHouseEntries((prev) => {
           const updated = [...prev];
           updated[index] = {
             ...updated[index],
-            [type]: { name, uri },
+            [type]: { name, uri }, // i.e. "hotel_bill"
           };
           return updated;
         });
@@ -299,7 +295,7 @@ const AddBillForm = ({ navigation }) => {
   };
 
   const removeHotelBillFile = (index) => {
-    setTicketEntries((prevEntries) => {
+    setGuestHouseEntries((prevEntries) => {
       const updatedEntries = [...prevEntries];
       updatedEntries[index] = {
         ...updatedEntries[index],
@@ -309,7 +305,7 @@ const AddBillForm = ({ navigation }) => {
     });
   };
 
-  const handleUploadCertificateFile = async (index, type) => {
+  const handleUploadCertificateFile = async (index, fieldKey) => {
     try {
       const { canceled, assets } = await DocumentPicker.getDocumentAsync({
         type: "application/pdf",
@@ -319,11 +315,11 @@ const AddBillForm = ({ navigation }) => {
       if (!canceled && assets?.[0]) {
         const { name, uri } = assets[0];
 
-        setTicketEntries((prev) => {
+        setGuestHouseEntries((prev) => {
           const updated = [...prev];
           updated[index] = {
             ...updated[index],
-            [type]: { name, uri },
+            [fieldKey]: { name, uri },
           };
           return updated;
         });
@@ -334,42 +330,15 @@ const AddBillForm = ({ navigation }) => {
   };
 
   const removeCertificateFile = (index) => {
-    setTicketEntries((prevEntries) => {
-      const updatedEntries = [...prevEntries];
-      updatedEntries[index] = {
-        ...updatedEntries[index],
+    setGuestHouseEntries((prevEntries) => {
+      const updated = [...prevEntries];
+      updated[index] = {
+        ...updated[index],
         certificate_by_district_incharge: null,
       };
-      return updatedEntries;
+      return updated;
     });
   };
-
-  // const handleSubmit = async () => {
-  //   try {
-  //     const payload = {
-  //       ...form,
-  //       ticketEntries,
-  //       guestHouseEntries,
-  //       expenseEntries,
-  //     };
-  //     console.log("Payload to submit:", payload);
-
-  //     const success = await dispatch(addBill(payload));
-  //     if (success) {
-  //       Alert.alert("Success", "Bill submitted successfully!");
-  //       // navigation.navigate("travelManagement");
-  //       navigation.navigate("previewScreen", { submittedData: payload });
-  //     } else {
-  //       Alert.alert("Error", "Failed to submit the bill. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Submit Error:", error);
-  //     Alert.alert(
-  //       "Error",
-  //       "An unexpected error occurred: " + (error.message || "Unknown error")
-  //     );
-  //   }
-  // };
 
   const handleSubmit = async () => {
     try {
@@ -497,7 +466,7 @@ const AddBillForm = ({ navigation }) => {
           </>
         )}
 
-        {activeStep === 1 && (
+        {/* {activeStep === 1 && (
           <ScrollView style={[spacing.p1]}>
             {ticketEntries.map((entry, index) => (
               <View
@@ -510,6 +479,271 @@ const AddBillForm = ({ navigation }) => {
                   backgroundColor: PRIMARY_COLOR_TRANSPARENT,
                   marginBottom: 16,
                   // bottom: 29,
+                }}
+              >
+                <H6
+                  style={[
+                    typography.font14,
+                    typography.fontLato,
+                    typography.textBold,
+                    {
+                      letterSpacing: 0.5,
+                      color: "#333",
+                      width: SCREEN_WIDTH - 20,
+                    },
+                  ]}
+                >
+                  * Is Ticket Provided by Company?
+                </H6>
+
+                <View style={[styles.row, spacing.mv2]}>
+                  {["Yes", "No"].map((option) => {
+                    const selected =
+                      entry.tickets_provided_by_company === option;
+                    return (
+                      <TouchableOpacity
+                        key={option}
+                        onPress={() =>
+                          handleTicketEntryChange(
+                            index,
+                            "tickets_provided_by_company",
+                            option
+                          )
+                        }
+                        style={[
+                          styles.row,
+                          { alignItems: "center", marginRight: 16 },
+                        ]}
+                      >
+                        <View
+                          style={{
+                            height: 20,
+                            width: 20,
+                            borderRadius: 10,
+                            borderWidth: 1.5,
+                            borderColor: selected ? "#020409" : "#aaa",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginRight: 10,
+                          }}
+                        >
+                          {selected && (
+                            <View
+                              style={{
+                                height: 10,
+                                width: 10,
+                                backgroundColor: PRIMARY_COLOR,
+                                borderRadius: 5,
+                              }}
+                            />
+                          )}
+                        </View>
+                        <Text style={{ color: selected ? "#76885B" : "#333" }}>
+                          {option}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+
+                {entry.tickets_provided_by_company === "Yes" && (
+                  <Image
+                    source={require("../assets/document.png")}
+                    style={{
+                      width: 200,
+                      height: 200,
+                      resizeMode: "contain",
+                      alignSelf: "center",
+                    }}
+                  />
+                )}
+
+                {entry.tickets_provided_by_company === "No" && (
+                  <>
+                    <MyTextInput
+                      title="From"
+                      value={entry.from}
+                      onChangeText={(text) =>
+                        handleTicketEntryChange(index, "from", text)
+                      }
+                      placeholder="Enter From Location"
+                      inputStyle={{ width: "100%" }}
+                    />
+                    <MyTextInput
+                      title="To"
+                      value={entry.to}
+                      onChangeText={(text) =>
+                        handleTicketEntryChange(index, "to", text)
+                      }
+                      placeholder="Enter To Location"
+                      inputStyle={{ width: "100%" }}
+                    />
+
+                    <MyPickerInput
+                      title={"Mode Of Transport"}
+                      value={entry.mode_of_transport}
+                      onChange={(val) =>
+                        handleTicketEntryChange(index, "mode_of_transport", val)
+                      }
+                      options={[
+                        { label: "Bus", value: "Bus" },
+                        { label: "Train", value: "Train" },
+                        { label: "Flight", value: "Flight" },
+                        { label: "Car", value: "Car" },
+                      ]}
+                    />
+
+                    <View style={{ marginBottom: 20 }}>
+                      <Span style={[typography.fontLato]}>Date of Journey</Span>
+                      <Pressable
+                        onPress={() => setDatePicker({ show: true, index })}
+                        style={[
+                          spacing.pv4,
+                          spacing.ph3,
+                          spacing.br1,
+                          styles.row,
+                          {
+                            borderWidth: 1,
+                            borderColor: "#ccc",
+                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          },
+                        ]}
+                      >
+                        <Text
+                          style={{
+                            color: entry.date_of_journey ? "#000" : "#888",
+                          }}
+                        >
+                          {entry.date_of_journey
+                            ? new Date(
+                                entry.date_of_journey
+                              ).toLocaleDateString()
+                            : "Select Date"}
+                        </Text>
+                        <Icon name="calendar" size={20} color="#888" />
+                      </Pressable>
+                    </View>
+
+                    {datePicker.show && (
+                      <DateTimePicker
+                        value={new Date()}
+                        mode="date"
+                        display="default"
+                        onChange={handleTicketDateChange}
+                      />
+                    )}
+
+                    <View
+                      style={{
+                        marginTop: 10,
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => handleUploadTicketFile(index, "ticket")}
+                      >
+                        <Text
+                          style={{
+                            color: "#007bff",
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          Upload Ticket
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    {ticketEntries[index]?.ticket?.name && (
+                      <View
+                        style={[
+                          styles.row,
+                          spacing.br1,
+                          spacing.p2,
+                          spacing.mt2,
+                          {
+                            borderWidth: 1,
+                            borderColor: "#28a745",
+                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                            alignItems: "center",
+                          },
+                        ]}
+                      >
+                        <Text style={{ color: "#155724", flex: 1 }}>
+                          {ticketEntries[index].ticket.name}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => removeTicketFile(index)}
+                        >
+                          <Text style={{ color: "red", marginLeft: 10 }}>
+                            X Remove
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+
+                    <MyTextInput
+                      title="Amount"
+                      value={entry.amount}
+                      onChangeText={(text) =>
+                        handleTicketEntryChange(index, "amount", text)
+                      }
+                      placeholder="Enter Amount"
+                      keyboardType="numeric"
+                      inputStyle={{ width: "100%" }}
+                    />
+                  </>
+                )}
+
+                <TouchableOpacity
+                  onPress={() => handleRemoveTicketEntry(index)}
+                  style={{
+                    marginTop: 10,
+                    alignSelf: "flex-end",
+                    paddingVertical: 6,
+                    paddingHorizontal: 12,
+                    backgroundColor: "#FF4C4C",
+                    borderRadius: 6,
+                  }}
+                >
+                  <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                    Remove
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: "#e8f5e9",
+                borderWidth: 1,
+                borderColor: "green",
+                borderStyle: "dotted",
+                alignItems: "center",
+                borderRadius: 8,
+              }}
+              onPress={handleAddTicketEntry}
+            >
+              <Text style={{ color: "green" }}>+ Add More</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        )} */}
+        {activeStep === 1 && (
+          <ScrollView style={[spacing.p1]}>
+            {ticketEntries.map((entry, index) => (
+              <View
+                key={index}
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  padding: 10,
+                  backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                  marginBottom: 16,
                 }}
               >
                 {/* Top Heading */}
@@ -579,158 +813,162 @@ const AddBillForm = ({ navigation }) => {
                   })}
                 </View>
 
-                {/* Conditional Fields */}
-                {entry.tickets_provided_by_company === "Yes" && (
-                  <Image
-                    source={require("../assets/document.png")}
-                    style={{
-                      width: 200,
-                      height: 200,
-                      resizeMode: "contain",
-                      alignSelf: "center",
-                    }}
+                {/* Common Fields for both Yes and No */}
+                <MyTextInput
+                  title="From"
+                  value={entry.from}
+                  onChangeText={(text) =>
+                    handleTicketEntryChange(index, "from", text)
+                  }
+                  placeholder="Enter From Location"
+                  inputStyle={{ width: "100%" }}
+                />
+                <MyTextInput
+                  title="To"
+                  value={entry.to}
+                  onChangeText={(text) =>
+                    handleTicketEntryChange(index, "to", text)
+                  }
+                  placeholder="Enter To Location"
+                  inputStyle={{ width: "100%" }}
+                />
+
+                {entry.tickets_provided_by_company === "No" && (
+                  <MyPickerInput
+                    title={"Mode Of Transport"}
+                    value={entry.mode_of_transport}
+                    onChange={(val) =>
+                      handleTicketEntryChange(index, "mode_of_transport", val)
+                    }
+                    options={[
+                      { label: "Bus", value: "Bus" },
+                      { label: "Train", value: "Train" },
+                      { label: "Flight", value: "Flight" },
+                      { label: "Car", value: "Car" },
+                    ]}
                   />
                 )}
 
-                {entry.tickets_provided_by_company === "No" && (
-                  <>
-                    <MyTextInput
-                      title="From"
-                      value={entry.from}
-                      onChangeText={(text) =>
-                        handleTicketEntryChange(index, "from", text)
-                      }
-                      placeholder="Enter From Location"
-                      inputStyle={{ width: "100%" }}
-                    />
-                    <MyTextInput
-                      title="To"
-                      value={entry.to}
-                      onChangeText={(text) =>
-                        handleTicketEntryChange(index, "to", text)
-                      }
-                      placeholder="Enter To Location"
-                      inputStyle={{ width: "100%" }}
-                    />
-                    <MyPickerInput
-                      title={"Mode Of Transport"}
-                      value={entry.mode_of_transport}
-                      onChange={(val) => handleChange("mode_of_transport", val)}
-                      options={[
-                        { label: "Bus", value: "Bus" },
-                        { label: "Train", value: "Train" },
-                        { label: "Flight", value: "Flight" },
-                        { label: "car", value: "Car" },
-                      ]}
-                    />
-
-                    <View style={{ marginBottom: 20 }}>
-                      <Span style={[typography.fontLato]}>Date of Journey</Span>
-                      <Pressable
-                        onPress={() => setDatePicker({ show: true, index })}
-                        style={[
-                          spacing.pv4,
-                          spacing.ph3,
-                          spacing.br1,
-                          styles.row,
-                          {
-                            borderWidth: 1,
-                            borderColor: "#ccc",
-                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          },
-                        ]}
-                      >
-                        <Text
-                          style={{
-                            color: entry.date_of_journey ? "#000" : "#888",
-                          }}
-                        >
-                          {entry.date_of_journey
-                            ? new Date(
-                                entry.date_of_journey
-                              ).toLocaleDateString()
-                            : "Select Date"}
-                        </Text>
-                        <Icon name="calendar" size={20} color="#888" />
-                      </Pressable>
-                    </View>
-
-                    {datePicker.show && (
-                      <DateTimePicker
-                        value={new Date()}
-                        mode="date"
-                        display="default"
-                        onChange={handleTicketDateChange}
-                      />
-                    )}
-
-                    <View
-                      style={{
-                        marginTop: 10,
-                        flexDirection: "row",
-                        justifyContent: "flex-end",
+                <View style={{ marginBottom: 20 }}>
+                  <Span style={[typography.fontLato]}>Date of Journey</Span>
+                  <Pressable
+                    onPress={() => setDatePicker({ show: true, index })}
+                    style={[
+                      spacing.pv4,
+                      spacing.ph3,
+                      spacing.br1,
+                      styles.row,
+                      {
+                        borderWidth: 1,
+                        borderColor: "#ccc",
+                        backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                        justifyContent: "space-between",
                         alignItems: "center",
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={{
+                        color: entry.date_of_journey ? "#000" : "#888",
                       }}
                     >
-                      <TouchableOpacity
-                        onPress={() => handleUploadTicketFile(index, "ticket")}
-                      >
-                        <Text
-                          style={{
-                            color: "#007bff",
-                            textDecorationLine: "underline",
-                          }}
-                        >
-                          Upload Ticket
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
+                      {entry.date_of_journey
+                        ? new Date(entry.date_of_journey).toLocaleDateString()
+                        : "Select Date"}
+                    </Text>
+                    <Icon name="calendar" size={20} color="#888" />
+                  </Pressable>
+                </View>
 
-                    {/* Show uploaded file name + Remove */}
-                    {ticketEntries[index]?.ticket?.name && (
-                      <View
-                        style={[
-                          styles.row,
-                          spacing.br1,
-                          spacing.p2,
-                          spacing.mt2,
-                          {
-                            borderWidth: 1,
-                            borderColor: "#28a745",
-                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                            alignItems: "center",
-                          },
-                        ]}
-                      >
-                        <Text style={{ color: "#155724", flex: 1 }}>
-                          {ticketEntries[index].ticket.name}
-                        </Text>
-                        <TouchableOpacity
-                          onPress={() => removeTicketFile(index)}
-                        >
-                          <Text style={{ color: "red", marginLeft: 10 }}>
-                            X Remove
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    )}
-
-                    <MyTextInput
-                      title="Amount"
-                      value={entry.amount}
-                      onChangeText={(text) =>
-                        handleTicketEntryChange(index, "amount", text)
-                      }
-                      placeholder="Enter Amount"
-                      keyboardType="numeric"
-                      inputStyle={{ width: "100%" }}
-                    />
-                  </>
+                {datePicker.show && (
+                  <DateTimePicker
+                    value={new Date()}
+                    mode="date"
+                    display="default"
+                    onChange={handleTicketDateChange}
+                  />
                 )}
 
-                {/*  REMOVE Button */}
+                {/* Upload Ticket File */}
+                <View
+                  style={{
+                    marginTop: 10,
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => handleUploadTicketFile(index, "ticket")}
+                  >
+                    <Text
+                      style={{
+                        color: "#007bff",
+                        textDecorationLine: "underline",
+                      }}
+                    >
+                      Upload Ticket
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                {ticketEntries[index]?.ticket?.name && (
+                  <View
+                    style={[
+                      styles.row,
+                      spacing.br1,
+                      spacing.p2,
+                      spacing.mt2,
+                      {
+                        borderWidth: 1,
+                        borderColor: "#28a745",
+                        backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                        alignItems: "center",
+                      },
+                    ]}
+                  >
+                    <Text style={{ color: "#155724", flex: 1 }}>
+                      {ticketEntries[index].ticket.name}
+                    </Text>
+                    <TouchableOpacity onPress={() => removeTicketFile(index)}>
+                      <Text style={{ color: "red", marginLeft: 10 }}>
+                        X Remove
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+
+                {/* Amount field for both Yes and No */}
+                {/* <MyTextInput
+                  title="Amount"
+                  value={entry.amount}
+                  onChangeText={(text) =>
+                    handleTicketEntryChange(index, "amount", text)
+                  }
+                  placeholder="Enter Amount"
+                  keyboardType="numeric"
+                  inputStyle={{ width: "100%" }}
+                /> */}
+
+                <MyTextInput
+                  title="Amount"
+                  value={
+                    entry.tickets_provided_by_company === "Yes"
+                      ? "0"
+                      : entry.amount
+                  }
+                  onChangeText={(text) =>
+                    entry.tickets_provided_by_company === "No"
+                      ? handleTicketEntryChange(index, "amount", text)
+                      : null
+                  }
+                  placeholder="0"
+                  keyboardType="numeric"
+                  inputStyle={{ width: "100%" }}
+                  editable={entry.tickets_provided_by_company === "No"}
+                />
+
+                {/* REMOVE Button */}
                 <TouchableOpacity
                   onPress={() => handleRemoveTicketEntry(index)}
                   style={{
@@ -749,6 +987,7 @@ const AddBillForm = ({ navigation }) => {
               </View>
             ))}
 
+            {/* Add More Button */}
             <TouchableOpacity
               style={{
                 padding: 10,
@@ -901,6 +1140,17 @@ const AddBillForm = ({ navigation }) => {
                       </Text>
                       <Icon name="calendar" size={20} color="#888" />
                     </Pressable>
+
+                    <MyTextInput
+                      title="Daily Allowances"
+                      value={entry.dining_cost}
+                      onChangeText={(text) =>
+                        handleGuestHouseChange(index, "dining_cost", text)
+                      }
+                      placeholder="Daily Allowances"
+                      keyboardType="numeric"
+                      inputStyle={{ width: "100%" }}
+                    />
                   </>
                 )}
 
@@ -929,40 +1179,39 @@ const AddBillForm = ({ navigation }) => {
                             textDecorationLine: "underline",
                           }}
                         >
-                          Upload Certificate
+                          Upload Occupancy Certificate
                         </Text>
                       </TouchableOpacity>
                     </View>
 
-                    {/* Show uploaded certificate name + Remove */}
-                    {ticketEntries[index]?.certificate_by_district_incharge
+                    {/* Show uploaded certificate name below the button */}
+                    {guestHouseEntries[index]?.certificate_by_district_incharge
                       ?.name && (
                       <View
-                        style={[
-                          styles.row,
-                          spacing.br1,
-                          spacing.p2,
-                          spacing.mt2,
-                          {
-                            borderWidth: 1,
-                            borderColor: "#28a745",
-                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                            alignItems: "center",
-                          },
-                        ]}
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          backgroundColor: "#e6f7e6",
+                          borderWidth: 1,
+                          borderColor: "#28a745",
+                          borderRadius: 6,
+                          marginTop: 8,
+                          padding: 8,
+                          marginLeft: 4,
+                          marginRight: 4,
+                        }}
                       >
                         <Text style={{ color: "#155724", flex: 1 }}>
                           {
-                            ticketEntries[index]
+                            guestHouseEntries[index]
                               .certificate_by_district_incharge.name
                           }
                         </Text>
                         <TouchableOpacity
                           onPress={() => removeCertificateFile(index)}
+                          style={{ marginLeft: 10 }}
                         >
-                          <Text style={{ color: "red", marginLeft: 10 }}>
-                            X Remove
-                          </Text>
+                          <Text style={{ color: "red" }}>X Remove</Text>
                         </TouchableOpacity>
                       </View>
                     )}
@@ -1024,7 +1273,7 @@ const AddBillForm = ({ navigation }) => {
                       </Text>
                       <Icon name="calendar" size={20} color="#888" />
                     </Pressable>
-                    <MyTextInput
+                    {/* <MyTextInput
                       title="Breakfast Included"
                       value={entry.breakfast_included}
                       onChangeText={(text) =>
@@ -1036,7 +1285,7 @@ const AddBillForm = ({ navigation }) => {
                       }
                       placeholder="Yes / No"
                       inputStyle={{ width: "100%" }}
-                    />
+                    /> */}
 
                     <View
                       style={{
@@ -1062,8 +1311,8 @@ const AddBillForm = ({ navigation }) => {
                       </TouchableOpacity>
                     </View>
 
-                    {/* Show uploaded file name + Remove */}
-                    {ticketEntries[index]?.hotel_bill?.name && (
+                    {/* Show uploaded file name from guestHouseEntries + Remove */}
+                    {guestHouseEntries[index]?.hotel_bill?.name && (
                       <View
                         style={[
                           styles.row,
@@ -1079,7 +1328,7 @@ const AddBillForm = ({ navigation }) => {
                         ]}
                       >
                         <Text style={{ color: "#155724", flex: 1 }}>
-                          {ticketEntries[index].hotel_bill.name}
+                          {guestHouseEntries[index].hotel_bill.name}
                         </Text>
                         <TouchableOpacity
                           onPress={() => removeHotelBillFile(index)}
@@ -1092,16 +1341,16 @@ const AddBillForm = ({ navigation }) => {
                     )}
 
                     <MyTextInput
-                      title="Dining Cost"
+                      title="Daily Allowances"
                       value={entry.dining_cost}
                       onChangeText={(text) =>
                         handleGuestHouseChange(index, "dining_cost", text)
                       }
-                      placeholder="Enter dining cost"
+                      placeholder="Daily Allowances"
                       keyboardType="numeric"
                       inputStyle={{ width: "100%" }}
                     />
-                    <MyTextInput
+                    {/* <MyTextInput
                       title="Amount"
                       value={entry.amount}
                       onChangeText={(text) =>
@@ -1110,7 +1359,7 @@ const AddBillForm = ({ navigation }) => {
                       placeholder="Enter amount"
                       keyboardType="numeric"
                       inputStyle={{ width: "100%" }}
-                    />
+                    /> */}
                   </>
                 )}
 

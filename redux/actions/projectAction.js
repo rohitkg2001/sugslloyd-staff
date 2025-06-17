@@ -173,6 +173,7 @@ export const getAllConveyance = () => async (dispatch) => {
 //     return false;
 //   }
 // };
+
 export const addBill = (billData) => async (dispatch) => {
   try {
     console.log("Sending bill data:", JSON.stringify(billData, null, 2)); // prettier logging
@@ -181,7 +182,7 @@ export const addBill = (billData) => async (dispatch) => {
 
     console.log("Response:", response.status, response.data);
 
-    // ✅ Safe check before dispatch
+    // Safe check before dispatch
     if (response?.data) {
       dispatch({ type: ADD_BILL, payload: response.data });
     } else {
@@ -193,17 +194,17 @@ export const addBill = (billData) => async (dispatch) => {
     console.error("Add Bill Error:", error?.message || error);
 
     if (error.response) {
-      // ✅ Server responded but with error status (e.g. 400/500)
+      // Server responded but with error status (e.g. 400/500)
       console.error(
         "Server responded with:",
         error.response.status,
         error.response.data
       );
     } else if (error.request) {
-      // ✅ Request made but no response
+      // Request made but no response
       console.error("No response received:", error.request);
     } else {
-      // ✅ Setup or config error
+      // Setup or config error
       console.error("Error setting up request:", error.message);
     }
 
@@ -215,13 +216,16 @@ export const getBillById = (my_id) => async (dispatch) => {
   try {
     const { data } = await axios.get(`${BASE_URL}/api/tadas/${my_id}`);
 
-    if (data?.status && Array.isArray(data.data)) {
-      dispatch({ type: GET_BILL_BY_ID, payload: data.data });
+    // Extract 'tadas' from the response
+    const tadas = data?.tadas;
+
+    if (Array.isArray(tadas)) {
+      dispatch({ type: GET_BILL_BY_ID, payload: tadas });
     } else {
       dispatch({ type: GET_BILL_BY_ID, payload: [] });
     }
   } catch (error) {
-    console.error("Failed to fetch TADA bills:", error);
+    console.error("Failed to fetch bills:", error);
     dispatch({ type: GET_BILL_BY_ID, payload: [] });
   }
 };

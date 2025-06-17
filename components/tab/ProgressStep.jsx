@@ -57,7 +57,7 @@ export const NavigationButtons = ({
   goToPrevious,
   goToNext,
 }) => (
-  <View style={[styles.row, spacing.pv3]}>
+  <View style={[styles.row, spacing.pv5, spacing.mb5]}>
     <TouchableOpacity
       onPress={goToPrevious}
       style={[

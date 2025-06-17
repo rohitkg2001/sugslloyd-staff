@@ -24,16 +24,19 @@ import {
   SCREEN_WIDTH,
   PRIMARY_COLOR,
   ICON_MEDIUM,
+  typography,
 } from "../styles";
+import { H5, H6 } from "../components/text";
 
-export default function TravelManagement({ navigation, route }) {
+export default function TravelManagement({ navigation }) {
   const dispatch = useDispatch();
 
-  const { firstName, id: my_id } = useSelector((state) => state.staff);
+  const { firstName, id: userId } = useSelector((state) => state.staff);
+  const billsData = useSelector((state) => state.project.bills);
+
   const [travelPlans, setTravelPlans] = useState([]);
   const [selectedTab, setSelectedTab] = useState("week");
   const [searchText, setSearchText] = useState("");
-  const { newSubmittedData } = route.params || {};
 
   const tabOptions = [
     { key: "week", title: "This Week" },
@@ -43,36 +46,24 @@ export default function TravelManagement({ navigation, route }) {
   ];
 
   useEffect(() => {
-    dispatch(getBillById(my_id));
-  }, [dispatch, my_id]);
-
-  const { bills } = useSelector((state) => state.project);
+    dispatch(getBillById(userId));
+  }, [dispatch, userId]);
 
   useEffect(() => {
-    if (bills?.length > 0) {
-      const transformed = bills.map((item) => ({
-        ...item?.tada,
-        travelfare: item?.travelfare?.map((travel) => ({ ...travel })) || [],
-        dailyfare: item?.dailyfare?.map((daily) => ({ ...daily })) || [],
-      }));
-      setTravelPlans(transformed);
+    console.log("Fetched Bills:", billsData);
+    if (Array.isArray(billsData)) {
+      setTravelPlans(billsData);
     }
-  }, [bills]);
-
-  // const filterTravelPlans = () => {
-  //   // All tabs return full data for now
-  //   return travelPlans;
-  // };
+  }, [billsData]);
 
   const filterTravelPlans = () => {
-    return travelPlans.filter((item) => {
-      const search = searchText.toLowerCase();
-      return (
-        item?.from_city?.toLowerCase().includes(search) ||
-        item?.to_city?.toLowerCase().includes(search) ||
-        item?.transport?.toLowerCase().includes(search)
-      );
-    });
+    const search = searchText.toLowerCase();
+    return travelPlans.filter(
+      (item) =>
+        (item.visiting_to || "").toLowerCase().includes(search) ||
+        (item.purpose_of_visit || "").toLowerCase().includes(search) ||
+        (item.outcome_achieved || "").toLowerCase().includes(search)
+    );
   };
 
   return (
@@ -98,7 +89,7 @@ export default function TravelManagement({ navigation, route }) {
         <SearchBar
           placeholder="Search"
           value={searchText}
-          onChangeText={(text) => setSearchText(text)}
+          onChangeText={setSearchText}
           style={{ width: SCREEN_WIDTH - 80 }}
         />
         <Button
@@ -108,7 +99,6 @@ export default function TravelManagement({ navigation, route }) {
         </Button>
       </View>
 
-      {/* Swipe Tab */}
       <SwipeTab
         tabs={tabOptions}
         selectedTab={selectedTab}
@@ -117,57 +107,85 @@ export default function TravelManagement({ navigation, route }) {
 
       <MyFlatList
         data={filterTravelPlans()}
-        renderItem={({ item, index }) => (
-          <ClickableCard1
-            key={index}
-            title={`${item.from_city} ➜ ${item.to_city}`}
-            subtitle={`Transport: ${item.transport}`}
-            onPress={() =>
-              navigation.navigate("travelDetailScreen", {
-                billPayload: {
-                  ...item,
-                  travelfare: item.travelfare || [],
-                  dailyfare: item.dailyfare || [],
-                },
-              })
-            }
-          >
-            <View style={[styles.row, { marginTop: 10 }]}>
-              <View style={{ flex: 1 }}>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: "gray",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Start Date
-                </Text>
-                <Text style={{ fontSize: 14 }}>
-                  {new Date(item.start_journey).toLocaleDateString()}
-                </Text>
+        renderItem={({ item }) => {
+          const start = item.date_of_departure
+            ? new Date(item.date_of_departure).toLocaleDateString()
+            : "N/A";
+          const end = item.date_of_return
+            ? new Date(item.date_of_return).toLocaleDateString()
+            : "N/A";
+
+          const modeOfTransportList = (item.journey || [])
+            .filter((j) => j.mode_of_transport)
+            .map((j, idx) => `${j.mode_of_transport}`)
+            .join("\n");
+
+          return (
+            <ClickableCard1
+              title={`To: ${item.visiting_to || "N/A"}`}
+              subtitle={`Purpose: ${item.purpose_of_visit || "N/A"}`}
+              onPress={() =>
+                navigation.navigate("travelDetailScreen", {
+                  billPayload: item,
+                })
+              }
+            >
+              {/* Row: Start Date | End Date */}
+              <View style={[styles.row, { marginBottom: 4 }]}>
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: "gray",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Start Date
+                  </Text>
+                  <Text style={{ fontSize: 13 }}>{start}</Text>
+                </View>
+
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: "gray",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    End Date
+                  </Text>
+                  <Text style={{ fontSize: 13 }}>{end}</Text>
+                </View>
               </View>
 
-              <View style={{ flex: 1 }}>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: "gray",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  End Date
-                </Text>
-                <Text style={{ fontSize: 14 }}>
-                  {new Date(item.end_journey).toLocaleDateString()}
-                </Text>
-              </View>
-            </View>
-          </ClickableCard1>
-        )}
-        keyExtractor={(item, index) => index.toString()}
+              {/* Mode of Transport Top Right */}
+              {modeOfTransportList.length > 0 && (
+                <View style={{ alignItems: "flex-end", bottom: 90 }}>
+                  <H6
+                    style={[
+                      typography.font14,
+                      typography.fontLato,
+                      {
+                        textAlign: "right",
+                      },
+                    ]}
+                  >
+                    {modeOfTransportList}
+                  </H6>
+                </View>
+              )}
+            </ClickableCard1>
+          );
+        }}
+        keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={[spacing.mh1, spacing.mt1]}
         showSearchBar={false}
+        ListEmptyComponent={() => (
+          <Text style={{ padding: 20, textAlign: "center" }}>
+            No travel plans found.
+          </Text>
+        )}
       />
 
       <Button
