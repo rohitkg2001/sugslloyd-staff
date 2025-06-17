@@ -11,6 +11,7 @@ import {
   GET_CONVEYANCE_BY_ID,
   GET_BILL_BY_ID,
   GET_ALL_VEHICLES,
+  GET_ALLOWED_EXPENSE,
 } from "../constant";
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
   conveyanceList: [],
   bills: [],
   vehicles: [],
+  allowedExpense: null,
 };
 
 export const projectReducer = (state = initialState, action) => {
@@ -71,7 +73,11 @@ export const projectReducer = (state = initialState, action) => {
         ...state,
         vehicles: action.payload,
       };
-
+    case GET_ALLOWED_EXPENSE:
+      return {
+        ...state,
+        allowedExpense: action.payload,
+      };
     default:
       return state;
   }

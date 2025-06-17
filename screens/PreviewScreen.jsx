@@ -106,13 +106,17 @@ const PreviewScreen = ({ route, navigation }) => {
   return (
     <ContainerComponent>
       <MyHeader title={"Traveling Bill"} hasIcon={true} isBack={true} />
-      <ScrollView style={{ backgroundColor: LIGHT }}>
+      <ScrollView
+        style={{ backgroundColor: LIGHT }}
+        horizontal={false}
+        showsHorizontalScrollIndicator={false}
+      >
         <View style={[styles.row]}>
           <Image
             source={require("../assets/adaptive-icon.png")}
             style={{
               height: 110,
-              width: 200,
+              width: 210,
               resizeMode: "contain",
               bottom: 15,
               right: 40,
@@ -235,110 +239,6 @@ const PreviewScreen = ({ route, navigation }) => {
           >
             Ticket Details
           </H6>
-
-          {/* {submittedData.ticketEntries.map((entry, index) => (
-            <View
-              key={index}
-              style={{
-                marginBottom: 16,
-                padding: 0, // remove padding from parent to let rows handle their own
-                borderWidth: 1,
-                borderColor: "#ccc",
-                borderRadius: 8,
-                backgroundColor: "#f9f9f9",
-                top: 18,
-              }}
-            >
-            
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    flex: 2,
-                    fontSize: 16,
-                    padding: 8,
-                    borderRightWidth: 1,
-                    borderColor: "#ccc",
-                  }}
-                >
-                  Company-paid: {entry.tickets_provided_by_company}
-                </Text>
-                <Text
-                  style={{
-                    flex: 1,
-                    fontSize: 16,
-                    padding: 8,
-                    borderRightWidth: 1,
-                    borderColor: "#ccc",
-                  }}
-                >
-                  {entry.tickets_provided_by_company.toLowerCase() === "yes"
-                    ? "-"
-                    : entry.mode_of_transport}
-                </Text>
-                <Text
-                  style={{
-                    flex: 1,
-                    fontSize: 16,
-                    padding: 8,
-                  }}
-                >
-                  {entry.tickets_provided_by_company.toLowerCase() === "yes"
-                    ? "-"
-                    : entry.amount}
-                </Text>
-              </View>
-
-            
-              <View
-                style={{
-                  height: 1,
-                  backgroundColor: "#ccc",
-                }}
-              />
-
-             
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    flex: 2,
-                    fontSize: 16,
-                    padding: 8,
-                    borderRightWidth: 1,
-                    borderColor: "#ccc",
-                  }}
-                >
-                  {entry.tickets_provided_by_company.toLowerCase() === "yes"
-                    ? "-"
-                    : `${entry.from} To ${entry.to}`}
-                </Text>
-                <Text
-                  style={{
-                    flex: 1,
-                    fontSize: 16,
-                    padding: 8,
-                  }}
-                >
-                  {entry.tickets_provided_by_company.toLowerCase() === "yes"
-                    ? "-"
-                    : entry.date_of_journey}
-                </Text>
-              </View>
-             
-              {entry.ticket?.name && (
-                <View
-                  style={{
-                    padding: 8,
-                    borderTopWidth: 1,
-                    borderColor: "#ccc",
-                  }}
-                >
-                  <Text style={{ fontSize: 14, color: "green" }}>
-                    Uploaded Ticket: {entry.ticket.name}
-                  </Text>
-                </View>
-              )}
-            </View>
-          ))} */}
 
           {submittedData.ticketEntries.map((entry, index) => {
             const isCompanyProvided =
@@ -531,18 +431,7 @@ const PreviewScreen = ({ route, navigation }) => {
                     With Meals:{" "}
                     {isGuestHouseYes ? "-" : entry.breakfast_included || "N/A"}
                   </Text>
-                  <Text
-                    style={{
-                      flex: 2,
-                      fontSize: 14,
-                      padding: 8,
-                      borderRightWidth: 1,
-                      borderColor: "#ccc",
-                    }}
-                  >
-                    Dining Cost:{" "}
-                    {isGuestHouseYes ? "-" : entry.dining_cost || "N/A"}
-                  </Text>
+
                   <Text
                     style={{
                       flex: 2,
@@ -661,94 +550,46 @@ const PreviewScreen = ({ route, navigation }) => {
               </View>
             </View>
           ))}
-        </View>
 
-        {/* Submitted Documents Section */}
-        <View style={{ marginTop: 20 }}>
-          <H6
-            style={[
-              typography.font18,
-              typography.fontLato,
-              typography.textBold,
-              {
-                color: PRIMARY_COLOR,
-                textAlign: "center",
-                marginBottom: 10,
-              },
-            ]}
-          >
-            Submitted Documents
-          </H6>
-
-          {submittedData?.submittedDocuments?.length > 0 ? (
-            submittedData.submittedDocuments.map((doc, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => {
-                  // Open PDF or navigate to PDF viewer if required
-                  Alert.alert("PDF Clicked", `Open document: ${doc.name}`);
-                }}
-                style={{
-                  padding: 12,
-                  marginBottom: 10,
-                  backgroundColor: "#f1f1f1",
-                  borderRadius: 8,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  source={require("../assets/pdf-icon.png")} 
-                  style={{ width: 24, height: 24, marginRight: 10 }}
-                />
-                <Text style={{ fontSize: 16, color: "#333" }}>{doc.name}</Text>
-              </TouchableOpacity>
-            ))
-          ) : (
-            <Text style={{ textAlign: "center", color: "#777" }}>
-              No documents submitted.
-            </Text>
-          )}
-        </View>
-
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginBottom: 50,
-          }}
-        >
-          {/* Back Button */}
-          <TouchableOpacity
+          <View
             style={{
-              padding: 10,
-              backgroundColor: "#6c757d",
-              borderRadius: 8,
-              alignItems: "center",
-              flex: 1,
-              marginRight: 10,
-              marginTop: 15,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginBottom: 10,
             }}
-            onPress={handleBack}
           >
-            <Text style={{ color: "#fff", fontWeight: "bold" }}>Edit</Text>
-          </TouchableOpacity>
+            {/* Back Button */}
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: "#6c757d",
+                borderRadius: 8,
+                alignItems: "center",
+                flex: 1,
+                marginRight: 10,
+                marginTop: 15,
+              }}
+              onPress={handleBack}
+            >
+              <Text style={{ color: "#fff", fontWeight: "bold" }}>Edit</Text>
+            </TouchableOpacity>
 
-          {/* Submit Button */}
-          <TouchableOpacity
-            style={{
-              padding: 10,
-              backgroundColor: PRIMARY_COLOR,
-              borderRadius: 8,
-              alignItems: "center",
-              flex: 1,
-              marginLeft: 10,
-              marginTop: 15,
-            }}
-            onPress={handleSubmitToProduction}
-          >
-            <Text style={{ color: "#fff", fontWeight: "bold" }}>Submit</Text>
-          </TouchableOpacity>
+            {/* Submit Button */}
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: PRIMARY_COLOR,
+                borderRadius: 8,
+                alignItems: "center",
+                flex: 1,
+                marginLeft: 10,
+                marginTop: 15,
+              }}
+              onPress={handleSubmitToProduction}
+            >
+              <Text style={{ color: "#fff", fontWeight: "bold" }}>Submit</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </ContainerComponent>

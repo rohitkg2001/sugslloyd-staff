@@ -10,6 +10,7 @@ import {
   GET_CONVEYANCE_BY_ID,
   GET_BILL_BY_ID,
   GET_ALL_VEHICLES,
+  GET_ALLOWED_EXPENSE,
 } from "../constant";
 
 export const getStateById = async (id) => {
@@ -142,38 +143,6 @@ export const getAllConveyance = () => async (dispatch) => {
   }
 };
 
-// export const addBill = (billData) => async (dispatch) => {
-//   try {
-//     console.log("Sending bill data:", JSON.stringify(billData));
-
-//     const response = await axios.post(`${BASE_URL}/api/tadas`, billData);
-
-//     console.log("Response:", response.status, response.data);
-
-//     dispatch({ type: ADD_BILL, payload: response.data });
-//     return true;
-//   } catch (error) {
-//     console.error("Add Bill Error:", error);
-
-//     if (error.response) {
-//       // The server responded with an error status
-//       console.error(
-//         "Server responded with:",
-//         error.response.status,
-//         error.response.data
-//       );
-//     } else if (error.request) {
-//       // The request was made but no response received
-//       console.error("No response received:", error.request);
-//     } else {
-//       // Something else caused the error
-//       console.error("Error setting up request:", error.message);
-//     }
-
-//     return false;
-//   }
-// };
-
 export const addBill = (billData) => async (dispatch) => {
   try {
     console.log("Sending bill data:", JSON.stringify(billData, null, 2)); // prettier logging
@@ -209,6 +178,30 @@ export const addBill = (billData) => async (dispatch) => {
     }
 
     return false;
+  }
+};
+
+export const getAllowedExpense = (my_id, city) => async (dispatch) => {
+  try {
+    console.log(my_id, city);
+
+    const URL = `${BASE_URL}/api/allow-expense?user_id=${my_id}&city=${city}`;
+    console.log(URL);
+    const res = await axios.get(URL);
+    console.log(res.data);
+
+    console.log("Allowed Expense Data:", JSON.stringify(res.data, null, 2));
+
+    dispatch({
+      type: GET_ALLOWED_EXPENSE,
+      payload: res.data,
+    });
+  } catch (error) {
+    console.error("Error fetching allowed expense:", error.message);
+    dispatch({
+      type: GET_ALLOWED_EXPENSE,
+      payload: null,
+    });
   }
 };
 

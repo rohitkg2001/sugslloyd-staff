@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import CustomMenu from "../TargetScreen/CustomMenu";
 import { Menu, Divider } from "react-native-paper";
+import { useSelector } from "react-redux";
 
 // import styles
 import { H4, P, Span } from "../text";
@@ -44,6 +45,9 @@ export default function DashboardHeader({
       title: "Export",
     },
   ];
+
+  const { allowedExpense } = useSelector((state) => state.project);
+
   return (
     <View
       style={[
@@ -54,13 +58,9 @@ export default function DashboardHeader({
       ]}
     >
       <View>
-        {/* <H4 style={typography.fontLato}>
-          {greeting},{firstName}
-        </H4> */}
         <H4 style={[typography.fontLato, textStyle]}>
           {greeting}, {firstName}
         </H4>
-
         {message && (
           <P style={[spacing.ml1, typography.fontLato, textStyle]}>{message}</P>
         )}
@@ -130,7 +130,10 @@ export default function DashboardHeader({
                 style={{ paddingVertical: 8 }}
               >
                 <P
-                  style={{ color: item.disabled ? "gray" : "black", fontSize:16 }}
+                  style={{
+                    color: item.disabled ? "gray" : "black",
+                    fontSize: 16,
+                  }}
                 >
                   {item.title}
                 </P>

@@ -33,6 +33,7 @@ export default function TravelManagement({ navigation }) {
 
   const { firstName, id: userId } = useSelector((state) => state.staff);
   const billsData = useSelector((state) => state.project.bills);
+  const { allowedExpense } = useSelector((state) => state.project);
 
   const [travelPlans, setTravelPlans] = useState([]);
   const [selectedTab, setSelectedTab] = useState("week");
@@ -71,7 +72,12 @@ export default function TravelManagement({ navigation }) {
       <DashboardHeader
         greeting="Good morning"
         firstName={firstName}
-        message="You fall under M3 category"
+        //  message="You fall under M3 category"
+        message={
+          allowedExpense?.user_category
+            ? `You fall under ${allowedExpense.user_category} category`
+            : "You fall under -- category"
+        }
         style={{
           width: SCREEN_WIDTH,
           backgroundColor: PRIMARY_COLOR,

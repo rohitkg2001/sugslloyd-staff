@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   Alert,
   TouchableOpacity,
   Pressable,
-  Image,
   Platform,
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
@@ -18,6 +17,7 @@ import MyTextInput from "../components/input/MyTextInput";
 import MyPickerInput from "../components/input/MyPickerInput";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Button from "../components/buttons/Button";
+import { getAllowedExpense } from "../redux/actions/projectAction";
 import {
   styles,
   typography,
@@ -27,7 +27,6 @@ import {
   SCREEN_WIDTH,
 } from "../styles";
 import { H2, Span, H6 } from "../components/text";
-import { addBill } from "../redux/actions/projectAction";
 import ProgressStep, {
   NavigationButtons,
 } from "../components/tab/ProgressStep";
@@ -44,6 +43,18 @@ const AddBillForm = ({ navigation }) => {
     date_of_departure: "",
     date_of_return: "",
   });
+
+  const { allowedExpense } = useSelector((state) => state.project);
+
+  useEffect(() => {
+    if (form.visiting_to && userId) {
+      dispatch(getAllowedExpense(userId, form.visiting_to));
+    }
+  }, [form.visiting_to]);
+
+  useEffect(() => {
+    console.log("allowedExpense from store:", allowedExpense);
+  }, [allowedExpense]);
 
   const [datePicker, setDatePicker] = useState({ show: false, field: "" });
   const steps = [
@@ -398,6 +409,13 @@ const AddBillForm = ({ navigation }) => {
               )
             )}
 
+            <MyTextInput
+              title="Allowed Expense"
+              value={allowedExpense?.allowed_expense || ""}
+              editable={false}
+              placeholder="Allowed Expense will appear here"
+            />
+
             {/* Departure Date */}
             <Span style={[typography.fontLato]}>Departure Date</Span>
             <Pressable
@@ -466,272 +484,6 @@ const AddBillForm = ({ navigation }) => {
           </>
         )}
 
-        {/* {activeStep === 1 && (
-          <ScrollView style={[spacing.p1]}>
-            {ticketEntries.map((entry, index) => (
-              <View
-                key={index}
-                style={{
-                  borderWidth: 1,
-                  borderColor: "#ccc",
-                  borderRadius: 8,
-                  padding: 10,
-                  backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                  marginBottom: 16,
-                  // bottom: 29,
-                }}
-              >
-                <H6
-                  style={[
-                    typography.font14,
-                    typography.fontLato,
-                    typography.textBold,
-                    {
-                      letterSpacing: 0.5,
-                      color: "#333",
-                      width: SCREEN_WIDTH - 20,
-                    },
-                  ]}
-                >
-                  * Is Ticket Provided by Company?
-                </H6>
-
-                <View style={[styles.row, spacing.mv2]}>
-                  {["Yes", "No"].map((option) => {
-                    const selected =
-                      entry.tickets_provided_by_company === option;
-                    return (
-                      <TouchableOpacity
-                        key={option}
-                        onPress={() =>
-                          handleTicketEntryChange(
-                            index,
-                            "tickets_provided_by_company",
-                            option
-                          )
-                        }
-                        style={[
-                          styles.row,
-                          { alignItems: "center", marginRight: 16 },
-                        ]}
-                      >
-                        <View
-                          style={{
-                            height: 20,
-                            width: 20,
-                            borderRadius: 10,
-                            borderWidth: 1.5,
-                            borderColor: selected ? "#020409" : "#aaa",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            marginRight: 10,
-                          }}
-                        >
-                          {selected && (
-                            <View
-                              style={{
-                                height: 10,
-                                width: 10,
-                                backgroundColor: PRIMARY_COLOR,
-                                borderRadius: 5,
-                              }}
-                            />
-                          )}
-                        </View>
-                        <Text style={{ color: selected ? "#76885B" : "#333" }}>
-                          {option}
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-
-                {entry.tickets_provided_by_company === "Yes" && (
-                  <Image
-                    source={require("../assets/document.png")}
-                    style={{
-                      width: 200,
-                      height: 200,
-                      resizeMode: "contain",
-                      alignSelf: "center",
-                    }}
-                  />
-                )}
-
-                {entry.tickets_provided_by_company === "No" && (
-                  <>
-                    <MyTextInput
-                      title="From"
-                      value={entry.from}
-                      onChangeText={(text) =>
-                        handleTicketEntryChange(index, "from", text)
-                      }
-                      placeholder="Enter From Location"
-                      inputStyle={{ width: "100%" }}
-                    />
-                    <MyTextInput
-                      title="To"
-                      value={entry.to}
-                      onChangeText={(text) =>
-                        handleTicketEntryChange(index, "to", text)
-                      }
-                      placeholder="Enter To Location"
-                      inputStyle={{ width: "100%" }}
-                    />
-
-                    <MyPickerInput
-                      title={"Mode Of Transport"}
-                      value={entry.mode_of_transport}
-                      onChange={(val) =>
-                        handleTicketEntryChange(index, "mode_of_transport", val)
-                      }
-                      options={[
-                        { label: "Bus", value: "Bus" },
-                        { label: "Train", value: "Train" },
-                        { label: "Flight", value: "Flight" },
-                        { label: "Car", value: "Car" },
-                      ]}
-                    />
-
-                    <View style={{ marginBottom: 20 }}>
-                      <Span style={[typography.fontLato]}>Date of Journey</Span>
-                      <Pressable
-                        onPress={() => setDatePicker({ show: true, index })}
-                        style={[
-                          spacing.pv4,
-                          spacing.ph3,
-                          spacing.br1,
-                          styles.row,
-                          {
-                            borderWidth: 1,
-                            borderColor: "#ccc",
-                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          },
-                        ]}
-                      >
-                        <Text
-                          style={{
-                            color: entry.date_of_journey ? "#000" : "#888",
-                          }}
-                        >
-                          {entry.date_of_journey
-                            ? new Date(
-                                entry.date_of_journey
-                              ).toLocaleDateString()
-                            : "Select Date"}
-                        </Text>
-                        <Icon name="calendar" size={20} color="#888" />
-                      </Pressable>
-                    </View>
-
-                    {datePicker.show && (
-                      <DateTimePicker
-                        value={new Date()}
-                        mode="date"
-                        display="default"
-                        onChange={handleTicketDateChange}
-                      />
-                    )}
-
-                    <View
-                      style={{
-                        marginTop: 10,
-                        flexDirection: "row",
-                        justifyContent: "flex-end",
-                        alignItems: "center",
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => handleUploadTicketFile(index, "ticket")}
-                      >
-                        <Text
-                          style={{
-                            color: "#007bff",
-                            textDecorationLine: "underline",
-                          }}
-                        >
-                          Upload Ticket
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-
-                    {ticketEntries[index]?.ticket?.name && (
-                      <View
-                        style={[
-                          styles.row,
-                          spacing.br1,
-                          spacing.p2,
-                          spacing.mt2,
-                          {
-                            borderWidth: 1,
-                            borderColor: "#28a745",
-                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-                            alignItems: "center",
-                          },
-                        ]}
-                      >
-                        <Text style={{ color: "#155724", flex: 1 }}>
-                          {ticketEntries[index].ticket.name}
-                        </Text>
-                        <TouchableOpacity
-                          onPress={() => removeTicketFile(index)}
-                        >
-                          <Text style={{ color: "red", marginLeft: 10 }}>
-                            X Remove
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    )}
-
-                    <MyTextInput
-                      title="Amount"
-                      value={entry.amount}
-                      onChangeText={(text) =>
-                        handleTicketEntryChange(index, "amount", text)
-                      }
-                      placeholder="Enter Amount"
-                      keyboardType="numeric"
-                      inputStyle={{ width: "100%" }}
-                    />
-                  </>
-                )}
-
-                <TouchableOpacity
-                  onPress={() => handleRemoveTicketEntry(index)}
-                  style={{
-                    marginTop: 10,
-                    alignSelf: "flex-end",
-                    paddingVertical: 6,
-                    paddingHorizontal: 12,
-                    backgroundColor: "#FF4C4C",
-                    borderRadius: 6,
-                  }}
-                >
-                  <Text style={{ color: "#fff", fontWeight: "bold" }}>
-                    Remove
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            ))}
-
-            <TouchableOpacity
-              style={{
-                padding: 10,
-                backgroundColor: "#e8f5e9",
-                borderWidth: 1,
-                borderColor: "green",
-                borderStyle: "dotted",
-                alignItems: "center",
-                borderRadius: 8,
-              }}
-              onPress={handleAddTicketEntry}
-            >
-              <Text style={{ color: "green" }}>+ Add More</Text>
-            </TouchableOpacity>
-          </ScrollView>
-        )} */}
         {activeStep === 1 && (
           <ScrollView style={[spacing.p1]}>
             {ticketEntries.map((entry, index) => (
@@ -1081,6 +833,82 @@ const AddBillForm = ({ navigation }) => {
                 </View>
 
                 {/* YES section */}
+                {/* {entry.guest_house_available === "Yes" && (
+                  <>
+                    <Span style={typography.fontLato}>Check In Date</Span>
+                    <Pressable
+                      onPress={() =>
+                        handleOpenDatePicker(index, "check_in_date")
+                      }
+                      style={[
+                        spacing.pv4,
+                        spacing.ph3,
+                        spacing.br1,
+                        styles.row,
+                        {
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          backgroundColor: "#F0FAF0",
+                          borderRadius: 8,
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={{ color: entry.check_in_date ? "#000" : "#888" }}
+                      >
+                        {entry.check_in_date || "Select Check In Date"}
+                      </Text>
+                      <Icon name="calendar" size={20} color="#888" />
+                    </Pressable>
+
+                    <Span style={typography.fontLato}>Check Out Date</Span>
+                    <Pressable
+                      onPress={() =>
+                        handleOpenDatePicker(index, "check_out_date")
+                      }
+                      style={[
+                        spacing.pv4,
+                        spacing.ph3,
+                        spacing.br1,
+                        styles.row,
+                        {
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          backgroundColor: "#F0FAF0",
+                          borderRadius: 8,
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={{
+                          color: entry.check_out_date ? "#000" : "#888",
+                        }}
+                      >
+                        {entry.check_out_date || "Select Check In Date"}
+                      </Text>
+                      <Icon name="calendar" size={20} color="#888" />
+                    </Pressable>
+
+                   
+
+                    <MyTextInput
+                      title="Daily Allowances"
+                      value={entry.amount}
+                      onChangeText={(text) =>
+                        handleGuestHouseChange(index, "amount", text)
+                      }
+                      placeholder="Enter amount"
+                      keyboardType="numeric"
+                      inputStyle={{ width: "100%" }}
+                    />
+                  </>
+                )} */}
+
+                {/* YES section */}
                 {entry.guest_house_available === "Yes" && (
                   <>
                     <Span style={typography.fontLato}>Check In Date</Span>
@@ -1141,16 +969,78 @@ const AddBillForm = ({ navigation }) => {
                       <Icon name="calendar" size={20} color="#888" />
                     </Pressable>
 
-                    <MyTextInput
-                      title="Daily Allowances"
-                      value={entry.dining_cost}
-                      onChangeText={(text) =>
-                        handleGuestHouseChange(index, "dining_cost", text)
-                      }
-                      placeholder="Daily Allowances"
-                      keyboardType="numeric"
-                      inputStyle={{ width: "100%" }}
-                    />
+                    {/* Duration and 30% Allowed Expense Display */}
+                    {entry.check_in_date && entry.check_out_date && (
+                      <View style={{ marginTop: 10 }}>
+                        {(() => {
+                          const checkIn = new Date(entry.check_in_date);
+                          const checkOut = new Date(entry.check_out_date);
+                          const diffInMs = checkOut - checkIn;
+                          const numDays =
+                            Math.ceil(diffInMs / (1000 * 60 * 60 * 24)) || 0;
+                          const perDayAllowance =
+                            allowedExpense?.allowed_expense || 0;
+                          const finalAmount = (
+                            perDayAllowance *
+                            0.3 *
+                            numDays
+                          ).toFixed(2);
+
+                          const isInvalid =
+                            parseFloat(entry.amount || "0") >
+                            parseFloat(finalAmount);
+
+                          return (
+                            <>
+                              {/* Info Display */}
+                              <View
+                                style={{
+                                  padding: 10,
+                                  backgroundColor: "#e6f7ff",
+                                  borderRadius: 6,
+                                  marginBottom: 10,
+                                }}
+                              >
+                                <Text style={{ color: "#333" }}>
+                                  Stay Duration: {numDays} day
+                                  {numDays > 1 ? "s" : ""}
+                                </Text>
+                                <Text
+                                  style={{ color: "#333", fontWeight: "bold" }}
+                                >
+                                  Allowed Expense: ₹{finalAmount}
+                                </Text>
+                              </View>
+
+                              {/* Daily Allowance Entry with Validation */}
+                              <MyTextInput
+                                title="Daily Allowances"
+                                value={entry.amount}
+                                onChangeText={(text) =>
+                                  handleGuestHouseChange(index, "amount", text)
+                                }
+                                placeholder="Enter amount"
+                                keyboardType="numeric"
+                                inputStyle={{
+                                  width: "100%",
+                                  borderColor: isInvalid ? "red" : "#ccc",
+                                  borderWidth: 1,
+                                  borderRadius: 6,
+                                  padding: 10,
+                                }}
+                              />
+
+                              {/* Error Message if Invalid */}
+                              {isInvalid && (
+                                <Text style={{ color: "red", marginTop: 4 }}>
+                                  You cannot enter more than ₹{finalAmount}
+                                </Text>
+                              )}
+                            </>
+                          );
+                        })()}
+                      </View>
+                    )}
                   </>
                 )}
 
@@ -1216,7 +1106,7 @@ const AddBillForm = ({ navigation }) => {
                       </View>
                     )}
 
-                    <Span style={typography.fontLato}>Check In Date</Span>
+                    {/* <Span style={typography.fontLato}>Check In Date</Span>
                     <Pressable
                       onPress={() =>
                         handleOpenDatePicker(index, "check_in_date")
@@ -1272,20 +1162,111 @@ const AddBillForm = ({ navigation }) => {
                         {entry.check_out_date || "Select Check In Date"}
                       </Text>
                       <Icon name="calendar" size={20} color="#888" />
-                    </Pressable>
-                    {/* <MyTextInput
-                      title="Breakfast Included"
-                      value={entry.breakfast_included}
-                      onChangeText={(text) =>
-                        handleGuestHouseChange(
-                          index,
-                          "breakfast_included",
-                          text
-                        )
+                    </Pressable> */}
+
+                    <Span style={typography.fontLato}>Check In Date</Span>
+                    <Pressable
+                      onPress={() =>
+                        handleOpenDatePicker(index, "check_in_date")
                       }
-                      placeholder="Yes / No"
-                      inputStyle={{ width: "100%" }}
-                    /> */}
+                      style={[
+                        spacing.pv4,
+                        spacing.ph3,
+                        spacing.br1,
+                        styles.row,
+                        {
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          backgroundColor: "#F0FAF0",
+                          borderRadius: 8,
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={{ color: entry.check_in_date ? "#000" : "#888" }}
+                      >
+                        {entry.check_in_date || "Select Check In Date"}
+                      </Text>
+                      <Icon name="calendar" size={20} color="#888" />
+                    </Pressable>
+
+                    <Span style={typography.fontLato}>Check Out Date</Span>
+                    <Pressable
+                      onPress={() =>
+                        handleOpenDatePicker(index, "check_out_date")
+                      }
+                      style={[
+                        spacing.pv4,
+                        spacing.ph3,
+                        spacing.br1,
+                        styles.row,
+                        {
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          backgroundColor: "#F0FAF0",
+                          borderRadius: 8,
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={{
+                          color: entry.check_out_date ? "#000" : "#888",
+                        }}
+                      >
+                        {entry.check_out_date || "Select Check Out Date"}
+                      </Text>
+                      <Icon name="calendar" size={20} color="#888" />
+                    </Pressable>
+
+                    {/* ✅ Stay Duration and Allowed Expense Calculation */}
+                    {entry.check_in_date && entry.check_out_date && (
+                      <View
+                        style={{
+                          padding: 10,
+                          backgroundColor: "#e6f7ff",
+                          borderRadius: 6,
+                          marginBottom: 10,
+                          marginTop: 10,
+                        }}
+                      >
+                        {(() => {
+                          const checkIn = new Date(entry.check_in_date);
+                          const checkOut = new Date(entry.check_out_date);
+                          const diffInMs = checkOut - checkIn;
+                          const numDays =
+                            Math.ceil(diffInMs / (1000 * 60 * 60 * 24)) || 0;
+
+                          const allowedPerDay = parseFloat(
+                            allowedExpense?.allowed_expense || 0
+                          );
+                          const finalAmount = (allowedPerDay * numDays).toFixed(
+                            2
+                          );
+
+                          return (
+                            <>
+                              <Text style={{ color: "#333" }}>
+                                Stay Duration: {numDays} day
+                                {numDays > 1 ? "s" : ""}
+                              </Text>
+                              <Text
+                                style={{
+                                  color: "#333",
+                                  fontWeight: "bold",
+                                  marginTop: 4,
+                                }}
+                              >
+                                Total Allowed Expense: ₹{finalAmount}
+                              </Text>
+                            </>
+                          );
+                        })()}
+                      </View>
+                    )}
 
                     <View
                       style={{
@@ -1340,16 +1321,18 @@ const AddBillForm = ({ navigation }) => {
                       </View>
                     )}
 
-                    <MyTextInput
+                    {/* <MyTextInput
                       title="Daily Allowances"
-                      value={entry.dining_cost}
+                      // value={entry.dining_cost}
+                      value={allowedExpense?.allowed_expense || ""}
+                      editable={false}
                       onChangeText={(text) =>
                         handleGuestHouseChange(index, "dining_cost", text)
                       }
                       placeholder="Daily Allowances"
                       keyboardType="numeric"
                       inputStyle={{ width: "100%" }}
-                    />
+                    /> */}
                     {/* <MyTextInput
                       title="Amount"
                       value={entry.amount}
@@ -1360,6 +1343,36 @@ const AddBillForm = ({ navigation }) => {
                       keyboardType="numeric"
                       inputStyle={{ width: "100%" }}
                     /> */}
+                    {(() => {
+                      const isInvalid = parseFloat(entry.amount || "0") > 1000;
+
+                      return (
+                        <>
+                          <MyTextInput
+                            title="Amount"
+                            value={entry.amount}
+                            onChangeText={(text) =>
+                              handleGuestHouseChange(index, "amount", text)
+                            }
+                            placeholder="Enter amount"
+                            keyboardType="numeric"
+                            inputStyle={{
+                              width: "100%",
+                              borderColor: isInvalid ? "red" : "#ccc",
+                              borderWidth: 1,
+                              borderRadius: 6,
+                              padding: 10,
+                            }}
+                          />
+
+                          {isInvalid && (
+                            <Text style={{ color: "red", marginTop: 4 }}>
+                              You cannot enter more than ₹1000
+                            </Text>
+                          )}
+                        </>
+                      );
+                    })()}
                   </>
                 )}
 
