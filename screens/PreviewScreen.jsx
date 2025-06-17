@@ -500,6 +500,54 @@ const PreviewScreen = ({ route, navigation }) => {
           ))}
         </View>
 
+        {/* Submitted Documents Section */}
+        <View style={{ marginTop: 20 }}>
+          <H6
+            style={[
+              typography.font18,
+              typography.fontLato,
+              typography.textBold,
+              {
+                color: PRIMARY_COLOR,
+                textAlign: "center",
+                marginBottom: 10,
+              },
+            ]}
+          >
+            Submitted Documents
+          </H6>
+
+          {submittedData?.submittedDocuments?.length > 0 ? (
+            submittedData.submittedDocuments.map((doc, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => {
+                  // Open PDF or navigate to PDF viewer if required
+                  Alert.alert("PDF Clicked", `Open document: ${doc.name}`);
+                }}
+                style={{
+                  padding: 12,
+                  marginBottom: 10,
+                  backgroundColor: "#f1f1f1",
+                  borderRadius: 8,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  source={require("../assets/pdf-icon.png")} 
+                  style={{ width: 24, height: 24, marginRight: 10 }}
+                />
+                <Text style={{ fontSize: 16, color: "#333" }}>{doc.name}</Text>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text style={{ textAlign: "center", color: "#777" }}>
+              No documents submitted.
+            </Text>
+          )}
+        </View>
+
         <View
           style={{
             flexDirection: "row",
