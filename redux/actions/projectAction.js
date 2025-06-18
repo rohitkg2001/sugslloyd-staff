@@ -143,40 +143,56 @@ export const getAllConveyance = () => async (dispatch) => {
   }
 };
 
+// export const addBill = (billData) => async (dispatch) => {
+//   try {
+//     console.log("Sending bill data:", JSON.stringify(billData, null, 2)); // prettier logging
+
+//     const response = await axios.post(`${BASE_URL}/api/tadas`, billData);
+
+//     console.log("Response:", response.status, response.data);
+
+//     // Safe check before dispatch
+//     if (response?.data) {
+//       dispatch({ type: ADD_BILL, payload: response.data });
+//     } else {
+//       console.warn("Response data is undefined!");
+//     }
+
+//     return true;
+//   } catch (error) {
+//     console.error("Add Bill Error:", error?.message || error);
+
+//     if (error.response) {
+//       // Server responded but with error status (e.g. 400/500)
+//       console.error(
+//         "Server responded with:",
+//         error.response.status,
+//         error.response.data
+//       );
+//     } else if (error.request) {
+//       // Request made but no response
+//       console.error("No response received:", error.request);
+//     } else {
+//       // Setup or config error
+//       console.error("Error setting up request:", error.message);
+//     }
+
+//     return false;
+//   }
+// };
+
 export const addBill = (billData) => async (dispatch) => {
   try {
-    console.log("Sending bill data:", JSON.stringify(billData, null, 2)); // prettier logging
-
     const response = await axios.post(`${BASE_URL}/api/tadas`, billData);
 
-    console.log("Response:", response.status, response.data);
-
-    // Safe check before dispatch
-    if (response?.data) {
-      dispatch({ type: ADD_BILL, payload: response.data });
+    if (response.status === 201) {
+      dispatch({ type: "ADD_BILL_SUCCESS", payload: response.data });
+      return true;
     } else {
-      console.warn("Response data is undefined!");
+      return false;
     }
-
-    return true;
   } catch (error) {
-    console.error("Add Bill Error:", error?.message || error);
-
-    if (error.response) {
-      // Server responded but with error status (e.g. 400/500)
-      console.error(
-        "Server responded with:",
-        error.response.status,
-        error.response.data
-      );
-    } else if (error.request) {
-      // Request made but no response
-      console.error("No response received:", error.request);
-    } else {
-      // Setup or config error
-      console.error("Error setting up request:", error.message);
-    }
-
+    console.error("Redux Add Bill Error:", error);
     return false;
   }
 };

@@ -13,12 +13,14 @@ import MyHeader from "../components/header/MyHeader";
 import { styles, typography, spacing, PRIMARY_COLOR, LIGHT } from "../styles";
 import { P, H6, Span, H5 } from "../components/text";
 import { useDispatch, useSelector } from "react-redux";
-import { addBill } from "../redux/actions/projectAction"; // Adjust the import based on your action file
+import { addBill } from "../redux/actions/projectAction"; // Adjust the import based on your action
+import { getBillById } from "../redux/actions/projectAction";
 
 const PreviewScreen = ({ route, navigation }) => {
   const { submittedData } = route.params;
   const { staff } = useSelector((state) => state);
   const { allowedExpense } = useSelector((state) => state.project);
+  const { firstName, id: userId } = useSelector((state) => state.staff);
 
   const dispatch = useDispatch();
 
@@ -26,12 +28,80 @@ const PreviewScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
 
+  // const handleSubmitToProduction = async () => {
+  //   try {
+  //     const processedData = {
+  //       ...submittedData,
+
+  //       // Ticket Entries: Safe conversions
+  //       ticketEntries: (submittedData.ticketEntries || []).map((entry) => ({
+  //         ...entry,
+  //         tickets_provided_by_company:
+  //           (entry.tickets_provided_by_company || "")
+  //             .toString()
+  //             .toLowerCase() === "yes"
+  //             ? 1
+  //             : 0,
+  //         date_of_journey:
+  //           entry.date_of_journey && !isNaN(new Date(entry.date_of_journey))
+  //             ? new Date(entry.date_of_journey).toISOString().split("T")[0]
+  //             : null,
+  //       })),
+
+  //       // Guest House Entries: Safe conversions
+  //       guestHouseEntries: (submittedData.guestHouseEntries || []).map(
+  //         (entry) => ({
+  //           ...entry,
+  //           guest_house_available:
+  //             (entry.guest_house_available || "").toString().toLowerCase() ===
+  //             "yes"
+  //               ? 1
+  //               : 0,
+  //           breakfast_included:
+  //             (entry.breakfast_included || "").toString().toLowerCase() ===
+  //             "yes"
+  //               ? 1
+  //               : 0,
+  //           certificate_by_district_incharge:
+  //             (entry.certificate_by_district_incharge || "")
+  //               .toString()
+  //               .toLowerCase() === "yes"
+  //               ? 1
+  //               : 0,
+  //           check_in_date:
+  //             entry.check_in_date && !isNaN(new Date(entry.check_in_date))
+  //               ? new Date(entry.check_in_date).toISOString().split("T")[0]
+  //               : null,
+  //           check_out_date:
+  //             entry.check_out_date && !isNaN(new Date(entry.check_out_date))
+  //               ? new Date(entry.check_out_date).toISOString().split("T")[0]
+  //               : null,
+  //         })
+  //       ),
+  //     };
+
+  //     const success = await dispatch(addBill(processedData));
+
+  //     if (success) {
+  //       Alert.alert("Success", "Bill submitted successfully!");
+  //       await dispatch(getBillById(userId));
+  //       navigation.navigate("travelManagement");
+  //     } else {
+  //       Alert.alert("Error", "Failed to submit the bill. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Submit Error:", error);
+  //     Alert.alert(
+  //       "Error",
+  //       "An unexpected error occurred: " + (error.message || "Unknown error")
+  //     );
+  //   }
+  // };
   const handleSubmitToProduction = async () => {
     try {
       const processedData = {
         ...submittedData,
 
-        // Ticket Entries: Safe conversions
         ticketEntries: (submittedData.ticketEntries || []).map((entry) => ({
           ...entry,
           tickets_provided_by_company:
@@ -46,7 +116,6 @@ const PreviewScreen = ({ route, navigation }) => {
               : null,
         })),
 
-        // Guest House Entries: Safe conversions
         guestHouseEntries: (submittedData.guestHouseEntries || []).map(
           (entry) => ({
             ...entry,
@@ -78,12 +147,14 @@ const PreviewScreen = ({ route, navigation }) => {
         ),
       };
 
+      console.log("Sending bill data:", processedData);
+
       const success = await dispatch(addBill(processedData));
 
-      if (success) {
+      if (success === true) {
         Alert.alert("Success", "Bill submitted successfully!");
         await dispatch(getBillById(userId));
-        navigation.navigate("travelManagement");
+        navigation.navigate("travelManagement"); // ✅ Navigate if successful
       } else {
         Alert.alert("Error", "Failed to submit the bill. Please try again.");
       }
@@ -91,7 +162,7 @@ const PreviewScreen = ({ route, navigation }) => {
       console.error("Submit Error:", error);
       Alert.alert(
         "Error",
-        "An unexpected error occurred: " + (error.message || "Unknown error")
+        "An unexpected error occurred: " + (error?.message || "Unknown error")
       );
     }
   };
