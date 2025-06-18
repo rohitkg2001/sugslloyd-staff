@@ -212,108 +212,108 @@ export default function TravelDetailScreen() {
         />
 
         {hotel_expense.length > 0 && (
-              <View style={{ marginBottom: 16 }}>
-                <Text
+          <View style={{ marginBottom: 16 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+                color: PRIMARY_COLOR,
+                textAlign: "center",
+                marginBottom: 12,
+              }}
+            >
+              Stay Details
+            </Text>
+
+            {hotel_expense.map((entry, index) => {
+              const guestHouseStatus =
+                String(entry.guest_house_available) === "1" ? "Yes" : "No";
+
+              const isGuestHouseYes = guestHouseStatus === "Yes";
+
+              return (
+                <View
+                  key={index}
                   style={{
-                    fontSize: 18,
-                    fontWeight: "bold",
-                    color: PRIMARY_COLOR,
-                    textAlign: "center",
-                    marginBottom: 12,
+                    marginBottom: 16,
+                    padding: 0,
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    borderRadius: 8,
+                    backgroundColor: "#f9f9f9",
                   }}
                 >
-                  Stay Details
-                </Text>
-
-                {hotel_expense.map((entry, index) => {
-                  // Convert guest_house_available (1/0) to Yes/No
-                  const guestHouseStatus =
-                    String(entry.guest_house_available) === "1" ? "Yes" : "No";
-
-                  const isGuestHouseYes = guestHouseStatus === "Yes";
-
-                  return (
-                    <View
-                      key={index}
+                  {/* First Row: Availability and Check-in/out */}
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
                       style={{
-                        marginBottom: 16,
-                        padding: 0,
-                        borderWidth: 1,
+                        flex: 1,
+                        fontSize: 16,
+                        padding: 8,
+                        borderRightWidth: 1,
                         borderColor: "#ccc",
-                        borderRadius: 8,
-                        backgroundColor: "#f9f9f9",
                       }}
                     >
-                      {/* First Row: Availability and Check-in/out */}
-                      <View style={{ flexDirection: "row" }}>
-                        <Text
-                          style={{
-                            flex: 1,
-                            fontSize: 16,
-                            padding: 8,
-                            borderRightWidth: 1,
-                            borderColor: "#ccc",
-                          }}
-                        >
-                          {/* ✅ Replaced raw value with Yes/No */}
-                          Hotel: {guestHouseStatus}
-                        </Text>
-                        <Text
-                          style={{
-                            flex: 2,
-                            fontSize: 16,
-                            padding: 8,
-                          }}
-                        >
-                          {formatDate(entry.check_in_date)} to{" "}
-                          {formatDate(entry.check_out_date)}
-                        </Text>
-                      </View>
+                      Hotel: {guestHouseStatus}
+                    </Text>
+                    <Text
+                      style={{
+                        flex: 2,
+                        fontSize: 16,
+                        padding: 8,
+                      }}
+                    >
+                      {formatDate(entry.check_in_date)} to{" "}
+                      {formatDate(entry.check_out_date)}
+                    </Text>
+                  </View>
 
-                      {/* Divider */}
-                      <View style={{ height: 1, backgroundColor: "#ccc" }} />
+                  {/* Divider */}
+                  <View style={{ height: 1, backgroundColor: "#ccc" }} />
 
-                      {/* Second Row: Meals and Amount */}
-                      <View style={{ flexDirection: "row" }}>
-                        <Text
-                          style={{
-                            flex: 2,
-                            fontSize: 16,
-                            padding: 8,
-                            borderRightWidth: 1,
-                            borderColor: "#ccc",
-                          }}
-                        >
-                          With Meals:{" "}
-                          {isGuestHouseYes ? "-" : entry.breakfast_included}
-                        </Text>
-                        <Text
-                          style={{
-                            flex: 2,
-                            fontSize: 14,
-                            padding: 8,
-                            borderRightWidth: 1,
-                            borderColor: "#ccc",
-                          }}
-                        >
-                          Dining Cost:{" "}
-                          {isGuestHouseYes ? "-" : entry.dining_cost}
-                        </Text>
-                        <Text
-                          style={{
-                            flex: 2,
-                            fontSize: 14,
-                            padding: 8,
-                          }}
-                        >
-                          Amount: {isGuestHouseYes ? "-" : entry.amount}
-                        </Text>
-                      </View>
-                    </View>
-                  );
-                })}
-              </View>
-            )}
+                  {/* Second Row: Meals and Amount */}
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        flex: 2,
+                        fontSize: 16,
+                        padding: 8,
+                        borderRightWidth: 1,
+                        borderColor: "#ccc",
+                      }}
+                    >
+                      With Meals:{" "}
+                      {String(entry.breakfast_included) === "1" ? "Yes" : "No"}
+                    </Text>
+
+                    {/* <Text
+                      style={{
+                        flex: 2,
+                        fontSize: 14,
+                        padding: 8,
+                        borderRightWidth: 1,
+                        borderColor: "#ccc",
+                      }}
+                    >
+                      Dining Cost:{" "}
+                      {entry.dining_cost ? `₹${entry.dining_cost}` : "-"}
+                    </Text> */}
+
+                    <Text
+                      style={{
+                        flex: 2,
+                        fontSize: 14,
+                        padding: 8,
+                      }}
+                    >
+                      Amount: ₹{entry.amount || "0.00"}
+                    </Text>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        )}
         <View
           style={{
             borderBottomWidth: 1,

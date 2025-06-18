@@ -416,6 +416,13 @@ const AddBillForm = ({ navigation }) => {
               placeholder="Allowed Expense will appear here"
             />
 
+            <MyTextInput
+              title="Travel Class"
+              value={allowedExpense?.travel_class || ""}
+              editable={false}
+              placeholder="Travel class"
+            />
+
             {/* Departure Date */}
             <Span style={[typography.fontLato]}>Departure Date</Span>
             <Pressable
@@ -970,6 +977,7 @@ const AddBillForm = ({ navigation }) => {
                     </Pressable>
 
                     {/* Duration and 30% Allowed Expense Display */}
+
                     {entry.check_in_date && entry.check_out_date && (
                       <View style={{ marginTop: 10 }}>
                         {(() => {
@@ -978,8 +986,10 @@ const AddBillForm = ({ navigation }) => {
                           const diffInMs = checkOut - checkIn;
                           const numDays =
                             Math.ceil(diffInMs / (1000 * 60 * 60 * 24)) || 0;
-                          const perDayAllowance =
-                            allowedExpense?.allowed_expense || 0;
+
+                          const perDayAllowance = parseFloat(
+                            allowedExpense?.allowed_expense || 0
+                          );
                           const finalAmount = (
                             perDayAllowance *
                             0.3 *
@@ -990,9 +1000,13 @@ const AddBillForm = ({ navigation }) => {
                             parseFloat(entry.amount || "0") >
                             parseFloat(finalAmount);
 
+                          // Save the valid amount for YES display
+                          if (!isInvalid && entry.amount) {
+                            entry.final_amount_for_yes = entry.amount;
+                          }
+
                           return (
                             <>
-                              {/* Info Display */}
                               <View
                                 style={{
                                   padding: 10,
@@ -1011,8 +1025,6 @@ const AddBillForm = ({ navigation }) => {
                                   Allowed Expense: ₹{finalAmount}
                                 </Text>
                               </View>
-
-                              {/* Daily Allowance Entry with Validation */}
                               <MyTextInput
                                 title="Daily Allowances"
                                 value={entry.amount}
@@ -1029,8 +1041,6 @@ const AddBillForm = ({ navigation }) => {
                                   padding: 10,
                                 }}
                               />
-
-                              {/* Error Message if Invalid */}
                               {isInvalid && (
                                 <Text style={{ color: "red", marginTop: 4 }}>
                                   You cannot enter more than ₹{finalAmount}
@@ -1222,7 +1232,7 @@ const AddBillForm = ({ navigation }) => {
                       <Icon name="calendar" size={20} color="#888" />
                     </Pressable>
 
-                    {/* ✅ Stay Duration and Allowed Expense Calculation */}
+                    {/*Stay Duration and Allowed Expense Calculation */}
                     {entry.check_in_date && entry.check_out_date && (
                       <View
                         style={{
@@ -1246,6 +1256,9 @@ const AddBillForm = ({ navigation }) => {
                           const finalAmount = (allowedPerDay * numDays).toFixed(
                             2
                           );
+
+                          // Store finalAmount in entry object for later use
+                          entry.calculatedAllowedAmount = finalAmount;
 
                           return (
                             <>
@@ -1333,18 +1346,13 @@ const AddBillForm = ({ navigation }) => {
                       keyboardType="numeric"
                       inputStyle={{ width: "100%" }}
                     /> */}
-                    {/* <MyTextInput
-                      title="Amount"
-                      value={entry.amount}
-                      onChangeText={(text) =>
-                        handleGuestHouseChange(index, "amount", text)
-                      }
-                      placeholder="Enter amount"
-                      keyboardType="numeric"
-                      inputStyle={{ width: "100%" }}
-                    /> */}
+
                     {(() => {
-                      const isInvalid = parseFloat(entry.amount || "0") > 1000;
+                      const allowedLimit = parseFloat(
+                        entry.calculatedAllowedAmount || "0"
+                      );
+                      const enteredAmount = parseFloat(entry.amount || "0");
+                      const isInvalid = enteredAmount > allowedLimit;
 
                       return (
                         <>
@@ -1367,7 +1375,7 @@ const AddBillForm = ({ navigation }) => {
 
                           {isInvalid && (
                             <Text style={{ color: "red", marginTop: 4 }}>
-                              You cannot enter more than ₹1000
+                              You cannot enter more than ₹{allowedLimit}
                             </Text>
                           )}
                         </>
