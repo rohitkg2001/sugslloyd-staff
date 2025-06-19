@@ -592,7 +592,21 @@ const AddBillForm = ({ navigation }) => {
                   inputStyle={{ width: "100%" }}
                 />
 
-                {entry.tickets_provided_by_company === "No" && (
+                <MyPickerInput
+                  title={"Mode Of Transport"}
+                  value={entry.mode_of_transport}
+                  onChange={(val) =>
+                    handleTicketEntryChange(index, "mode_of_transport", val)
+                  }
+                  options={[
+                    { label: "Bus", value: "Bus" },
+                    { label: "Train", value: "Train" },
+                    { label: "Flight", value: "Flight" },
+                    { label: "Car", value: "Car" },
+                  ]}
+                />
+
+                {/* {entry.tickets_provided_by_company === "No" && (
                   <MyPickerInput
                     title={"Mode Of Transport"}
                     value={entry.mode_of_transport}
@@ -606,7 +620,7 @@ const AddBillForm = ({ navigation }) => {
                       { label: "Car", value: "Car" },
                     ]}
                   />
-                )}
+                )} */}
 
                 <View style={{ marginBottom: 20 }}>
                   <Span style={[typography.fontLato]}>Date of Journey</Span>
@@ -1199,19 +1213,6 @@ const AddBillForm = ({ navigation }) => {
                         </TouchableOpacity>
                       </View>
                     )}
-
-                    {/* <MyTextInput
-                      title="Daily Allowances"
-                      // value={entry.dining_cost}
-                      value={allowedExpense?.allowed_expense || ""}
-                      editable={false}
-                      onChangeText={(text) =>
-                        handleGuestHouseChange(index, "dining_cost", text)
-                      }
-                      placeholder="Daily Allowances"
-                      keyboardType="numeric"
-                      inputStyle={{ width: "100%" }}
-                    /> */}
 
                     {(() => {
                       const allowedLimit = parseFloat(
