@@ -20,7 +20,7 @@ const PreviewScreen = ({ route, navigation }) => {
   const { submittedData } = route.params;
   const { staff } = useSelector((state) => state);
   const { allowedExpense } = useSelector((state) => state.project);
-  const { firstName, id: userId } = useSelector((state) => state.staff);
+  const { id: userId } = useSelector((state) => state.staff);
 
   const dispatch = useDispatch();
 
@@ -154,7 +154,7 @@ const PreviewScreen = ({ route, navigation }) => {
       if (success === true) {
         Alert.alert("Success", "Bill submitted successfully!");
         await dispatch(getBillById(userId));
-        navigation.navigate("travelManagement"); // ✅ Navigate if successful
+        navigation.navigate("travelManagement");
       } else {
         Alert.alert("Error", "Failed to submit the bill. Please try again.");
       }
@@ -234,40 +234,45 @@ const PreviewScreen = ({ route, navigation }) => {
                   .replaceAll("/", "|")}
               </H6>
             </View>
-
-            <H6
-              style={[
-                typography.font12,
-                typography.fontLato,
-                typography.textBold,
-                { right: 180 },
-              ]}
-            >
-              Name: {`${staff.firstName} ${staff.lastName}`}
-            </H6>
           </View>
         </View>
+        <H6
+          style={[
+            typography.font12,
+            typography.fontLato,
+            typography.textBold,
+            { bottom: 14 },
+          ]}
+        >
+          Name: {`${staff.firstName} ${staff.lastName}`} |{" "}
+          <P style={[typography.font12, typography.fontLato]}>
+            {allowedExpense?.user_category
+              ? `You fall under ${allowedExpense.user_category} category`
+              : "You fall under -- category"}
+          </P>
+        </H6>
 
         <View
           style={{
             borderBottomWidth: 0.5,
             borderBottomColor: "#000",
+            bottom: 8,
           }}
         />
-        <H6
+        {/* <H6
           style={[
             typography.font18,
             typography.fontLato,
             typography.textBold,
             { color: PRIMARY_COLOR, textAlign: "center" },
           ]}
-        ></H6>
+        ></H6> */}
         <View style={{ marginBottom: 20 }}>
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              marginBottom: 8,
+              // marginBottom: 8,
             }}
           >
             <Text style={{ fontSize: 16, flex: 1 }}>
@@ -434,116 +439,6 @@ const PreviewScreen = ({ route, navigation }) => {
           </H6>
 
           {/* Display guest house entries */}
-          {/* {submittedData.guestHouseEntries.map((entry, index) => {
-            const guestHouseAvailable = String(
-              entry.guest_house_available || ""
-            )
-              .trim()
-              .toLowerCase();
-
-            const isGuestHouseYes = guestHouseAvailable === "yes";
-
-            return (
-              <View
-                key={index}
-                style={{
-                  marginBottom: 16,
-                  padding: 0,
-                  borderWidth: 1,
-                  borderColor: "#ccc",
-                  borderRadius: 8,
-                  backgroundColor: "#f9f9f9",
-                  top: 20,
-                }}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      flex: 1,
-                      fontSize: 16,
-                      padding: 8,
-                      borderRightWidth: 1,
-                      borderColor: "#ccc",
-                    }}
-                  >
-                    Availability: {entry.guest_house_available || "N/A"}
-                  </Text>
-                  <Text
-                    style={{
-                      flex: 2,
-                      fontSize: 16,
-                      padding: 8,
-                    }}
-                  >
-                    {entry.check_in_date || "N/A"} to{" "}
-                    {entry.check_out_date || "N/A"}
-                  </Text>
-                </View>
-
-                <View style={{ height: 1, backgroundColor: "#ccc" }} />
-
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      flex: 2,
-                      fontSize: 16,
-                      padding: 8,
-                      borderRightWidth: 1,
-                      borderColor: "#ccc",
-                    }}
-                  >
-                    With Meals:{" "}
-                    {isGuestHouseYes ? "-" : entry.breakfast_included || "N/A"}
-                  </Text>
-
-                  <Text
-                    style={{
-                      flex: 2,
-                      fontSize: 14,
-                      padding: 8,
-                      borderRightWidth: 1,
-                      borderColor: "#ccc",
-                    }}
-                  >
-                    Amount : {isGuestHouseYes ? "-" : entry.amount || "N/A"}
-                  </Text>
-                </View>
-
-                {!isGuestHouseYes &&
-                  entry.certificate_by_district_incharge?.name && (
-                    <Text
-                      style={{
-                        color: "green",
-                        fontSize: 14,
-                        marginLeft: 8,
-                        marginTop: 4,
-                        borderTopWidth: 1,
-                        borderColor: "#ccc",
-                      }}
-                    >
-                      Occupancy Certificate:{" "}
-                      {entry.certificate_by_district_incharge.name}
-                    </Text>
-                  )}
-
-                {!isGuestHouseYes && entry.hotel_bill?.name && (
-                  <Text
-                    style={{
-                      color: "green",
-                      fontSize: 14,
-                      marginLeft: 8,
-                      marginBottom: 6,
-                      marginTop: 4,
-                      borderTopWidth: 1,
-                      borderColor: "#ccc",
-                    }}
-                  >
-                    Hotel Bill: {entry.hotel_bill.name}
-                  </Text>
-                )}
-              </View>
-            );
-          })} */}
 
           {submittedData.guestHouseEntries.map((entry, index) => {
             const guestHouseAvailable = String(
@@ -569,45 +464,55 @@ const PreviewScreen = ({ route, navigation }) => {
               >
                 {/* Top Row: Availability and Dates */}
                 <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      flex: 1,
-                      fontSize: 16,
-                      padding: 8,
-                      borderRightWidth: 1,
-                      borderColor: "#ccc",
-                    }}
+                  <Span
+                    style={[
+                      typography.font14,
+                      typography.fontLato,
+                      spacing.p2,
+                      {
+                        flex: 1,
+                        borderRightWidth: 1,
+                        borderColor: "#ccc",
+                      },
+                    ]}
                   >
-                    Availability: {entry.guest_house_available || "N/A"}
-                  </Text>
-                  <Text
-                    style={{
-                      flex: 2,
-                      fontSize: 16,
-                      padding: 8,
-                    }}
+                    Guest House Availability:{" "}
+                    {entry.guest_house_available || "N/A"}
+                  </Span>
+                  <P
+                    style={[
+                      typography.font14,
+                      spacing.p2,
+                      {
+                        flex: 2,
+                        // fontSize: 16,
+                        // padding: 8,
+                      },
+                    ]}
                   >
                     {entry.check_in_date || "N/A"} to{" "}
                     {entry.check_out_date || "N/A"}
-                  </Text>
+                  </P>
                 </View>
 
                 <View style={{ height: 1, backgroundColor: "#ccc" }} />
 
                 {/* Second Row: Meals and Amount */}
                 <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      flex: 2,
-                      fontSize: 16,
-                      padding: 8,
-                      borderRightWidth: 1,
-                      borderColor: "#ccc",
-                    }}
+                  <P
+                    style={[
+                      typography.font14,
+                      spacing.p2,
+                      {
+                        flex: 2,
+                        borderRightWidth: 1,
+                        borderColor: "#ccc",
+                      },
+                    ]}
                   >
                     With Meals:{" "}
                     {isGuestHouseYes ? "-" : entry.breakfast_included || "N/A"}
-                  </Text>
+                  </P>
 
                   <Text
                     style={{
