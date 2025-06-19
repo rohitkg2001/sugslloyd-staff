@@ -42,8 +42,7 @@ export default function TravelManagement({ navigation }) {
   const tabOptions = [
     { key: "week", title: "This Week" },
     { key: "month", title: "This Month" },
-    { key: "approved", title: "Approved" },
-    { key: "rejected", title: "Rejected" },
+    { key: "all_time", title: "All Time" },
   ];
 
   useEffect(() => {

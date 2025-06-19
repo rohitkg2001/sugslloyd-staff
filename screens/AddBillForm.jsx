@@ -30,6 +30,7 @@ import { H2, Span, H6 } from "../components/text";
 import ProgressStep, {
   NavigationButtons,
 } from "../components/tab/ProgressStep";
+import moment from "moment";
 
 const AddBillForm = ({ navigation }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -76,6 +77,25 @@ const AddBillForm = ({ navigation }) => {
 
   const showDatePicker = (field) => {
     setDatePicker({ show: true, field });
+  };
+
+  const getMinimumDate = () => {
+    const index = datePickerState.index;
+
+    const previousCheckOut =
+      index > 0 && guestHouseEntries[index - 1]?.check_out_date
+        ? moment(guestHouseEntries[index - 1].check_out_date)
+        : null;
+
+    const departureDate = moment(form.date_of_departure);
+
+    return moment
+      .max([departureDate, previousCheckOut || departureDate])
+      .toDate();
+  };
+
+  const getMaximumDate = () => {
+    return moment(form.date_of_return).toDate();
   };
 
   const onDateChange = (event, selectedDate) => {
@@ -207,6 +227,7 @@ const AddBillForm = ({ navigation }) => {
 
   const openExpenseDatePicker = (index) => {
     setExpenseDatePicker({ show: true, index });
+    console.log(`Showing Expense for ${index}`);
   };
 
   const [guestHouseEntries, setGuestHouseEntries] = useState([
@@ -374,6 +395,10 @@ const AddBillForm = ({ navigation }) => {
     }
   };
 
+  useEffect(() => {
+    console.log(form.date_of_departure);
+  }, [form]);
+
   return (
     <ContainerComponent>
       <MyHeader title={"Add Bill"} hasIcon={true} isBack={true} />
@@ -409,19 +434,19 @@ const AddBillForm = ({ navigation }) => {
               )
             )}
 
-            <MyTextInput
+            {/* <MyTextInput
               title="Allowed Expense"
               value={allowedExpense?.allowed_expense || ""}
               editable={false}
               placeholder="Allowed Expense will appear here"
-            />
+            /> */}
 
-            <MyTextInput
+            {/* <MyTextInput
               title="Travel Class"
               value={allowedExpense?.travel_class || ""}
               editable={false}
               placeholder="Travel class"
-            />
+            /> */}
 
             {/* Departure Date */}
             <Span style={[typography.fontLato]}>Departure Date</Span>
@@ -443,7 +468,8 @@ const AddBillForm = ({ navigation }) => {
               ]}
             >
               <Text style={{ color: form.date_of_departure ? "#000" : "#888" }}>
-                {form.date_of_departure || "Select Departure Date"}
+                {moment(form.date_of_departure).format("DD-MM-yyyy") ||
+                  "Select Departure Date"}
               </Text>
               <Icon name="calendar" size={20} color="#888" />
             </Pressable>
@@ -468,7 +494,8 @@ const AddBillForm = ({ navigation }) => {
               ]}
             >
               <Text style={{ color: form.date_of_return ? "#000" : "#888" }}>
-                {form.date_of_return || "Select Return Date"}
+                {moment(form.date_of_return).format("DD-MM-yyyy") ||
+                  "Select Return Date"}
               </Text>
               <Icon name="calendar" size={20} color="#888" />
             </Pressable>
@@ -482,8 +509,8 @@ const AddBillForm = ({ navigation }) => {
                 onChange={(event, selectedDate) => {
                   setDatePicker({ ...datePicker, show: false });
                   if (selectedDate) {
-                    const formatted = selectedDate.toISOString().split("T")[0];
-                    handleChange(datePicker.field, formatted);
+                    // const formatted = selectedDate.toISOString().split("T")[0];
+                    handleChange(datePicker.field, selectedDate);
                   }
                 }}
               />
@@ -646,7 +673,7 @@ const AddBillForm = ({ navigation }) => {
                       }}
                     >
                       {entry.date_of_journey
-                        ? new Date(entry.date_of_journey).toLocaleDateString()
+                        ? moment(entry.date_of_journey).format("DD-MM-YYYY")
                         : "Select Date"}
                     </Text>
                     <Icon name="calendar" size={20} color="#888" />
@@ -656,6 +683,8 @@ const AddBillForm = ({ navigation }) => {
                 {datePicker.show && (
                   <DateTimePicker
                     value={new Date()}
+                    minimumDate={new Date(form.date_of_departure)}
+                    maximumDate={new Date(form.date_of_return)}
                     mode="date"
                     display="default"
                     onChange={handleTicketDateChange}
@@ -879,7 +908,8 @@ const AddBillForm = ({ navigation }) => {
                       <Text
                         style={{ color: entry.check_in_date ? "#000" : "#888" }}
                       >
-                        {entry.check_in_date || "Select Check In Date"}
+                        {moment(entry.check_in_date).format("DD-MM-YYYY") ||
+                          "Select Check In Date"}
                       </Text>
                       <Icon name="calendar" size={20} color="#888" />
                     </Pressable>
@@ -909,7 +939,8 @@ const AddBillForm = ({ navigation }) => {
                           color: entry.check_out_date ? "#000" : "#888",
                         }}
                       >
-                        {entry.check_out_date || "Select Check In Date"}
+                        {moment(entry.check_out_date).format("DD-MM-YYYY") ||
+                          "Select Check In Date"}
                       </Text>
                       <Icon name="calendar" size={20} color="#888" />
                     </Pressable>
@@ -1077,7 +1108,8 @@ const AddBillForm = ({ navigation }) => {
                       <Text
                         style={{ color: entry.check_in_date ? "#000" : "#888" }}
                       >
-                        {entry.check_in_date || "Select Check In Date"}
+                        {moment(entry.check_in_date).format("DD-MM-YYYY") ||
+                          "Select Check In Date"}
                       </Text>
                       <Icon name="calendar" size={20} color="#888" />
                     </Pressable>
@@ -1107,7 +1139,8 @@ const AddBillForm = ({ navigation }) => {
                           color: entry.check_out_date ? "#000" : "#888",
                         }}
                       >
-                        {entry.check_out_date || "Select Check Out Date"}
+                        {moment(entry.check_out_date).format("DD-MM-YYYY") ||
+                          "Select Check Out Date"}
                       </Text>
                       <Icon name="calendar" size={20} color="#888" />
                     </Pressable>
@@ -1124,18 +1157,16 @@ const AddBillForm = ({ navigation }) => {
                         }}
                       >
                         {(() => {
-                          const checkIn = new Date(entry.check_in_date);
-                          const checkOut = new Date(entry.check_out_date);
-                          const diffInMs = checkOut - checkIn;
-                          const numDays =
-                            Math.ceil(diffInMs / (1000 * 60 * 60 * 24)) || 0;
-
                           const allowedPerDay = parseFloat(
                             allowedExpense?.allowed_expense || 0
                           );
-                          const finalAmount = (allowedPerDay * numDays).toFixed(
-                            2
-                          );
+                          const finalAmount = parseFloat(
+                            allowedPerDay *
+                              moment(entry.check_out_date).diff(
+                                entry.check_in_date,
+                                "days"
+                              )
+                          ).toFixed(2);
 
                           // Store finalAmount in entry object for later use
                           entry.calculatedAllowedAmount = finalAmount;
@@ -1143,8 +1174,12 @@ const AddBillForm = ({ navigation }) => {
                           return (
                             <>
                               <Text style={{ color: "#333" }}>
-                                Stay Duration: {numDays} day
-                                {numDays > 1 ? "s" : ""}
+                                Stay Duration:{" "}
+                                {moment(entry.check_out_date).diff(
+                                  entry.check_in_date,
+                                  "days"
+                                )}{" "}
+                                day(s)
                               </Text>
                               <Text
                                 style={{
@@ -1224,7 +1259,11 @@ const AddBillForm = ({ navigation }) => {
                       return (
                         <>
                           <MyTextInput
-                            title="Amount"
+                            title={
+                              entry.guest_house_available === "No"
+                                ? "Hotel Charges"
+                                : "Expense"
+                            }
                             value={entry.amount}
                             onChangeText={(text) =>
                               handleGuestHouseChange(index, "amount", text)
@@ -1248,6 +1287,63 @@ const AddBillForm = ({ navigation }) => {
                         </>
                       );
                     })()}
+
+                    {entry.guest_house_available === "No" &&
+                      (() => {
+                        const allowed = parseFloat(
+                          entry.calculatedAllowedAmount || "0"
+                        );
+                        const amount = parseFloat(entry.amount || "0");
+
+                        let other_charges_limit = 0;
+
+                        if (amount >= 0.6 * allowed) {
+                          // Case 1: amount is 60% or more
+                          other_charges_limit = Math.max(allowed - amount, 0);
+                        } else {
+                          // Case 2: amount is less than 60%, maintain 60:40 ratio
+                          const total = amount / 0.6;
+                          other_charges_limit = Math.max(total - amount, 0);
+                        }
+
+                        const enteredOtherCharges = parseFloat(
+                          entry.other_charges || "0"
+                        );
+                        const isInvalid =
+                          enteredOtherCharges > other_charges_limit;
+
+                        return (
+                          <>
+                            <MyTextInput
+                              title="Other Charges"
+                              value={entry.other_charges}
+                              onChangeText={(text) =>
+                                handleGuestHouseChange(
+                                  index,
+                                  "other_charges",
+                                  text
+                                )
+                              }
+                              placeholder="Enter amount"
+                              keyboardType="numeric"
+                              inputStyle={{
+                                width: "100%",
+                                borderColor: isInvalid ? "red" : "#ccc",
+                                borderWidth: 1,
+                                borderRadius: 6,
+                                padding: 10,
+                              }}
+                            />
+
+                            {isInvalid && (
+                              <Text style={{ color: "red", marginTop: 4 }}>
+                                You cannot enter more than ₹
+                                {other_charges_limit.toFixed(2)}
+                              </Text>
+                            )}
+                          </>
+                        );
+                      })()}
                   </>
                 )}
 
@@ -1275,6 +1371,8 @@ const AddBillForm = ({ navigation }) => {
             {datePickerState.visible && (
               <DateTimePicker
                 value={new Date()}
+                minimumDate={getMinimumDate()}
+                maximumDate={getMaximumDate()}
                 mode={datePickerState.mode}
                 display={Platform.OS === "ios" ? "inline" : "default"}
                 onChange={handleDateChange}
@@ -1302,94 +1400,122 @@ const AddBillForm = ({ navigation }) => {
 
         {activeStep === 3 && (
           <>
-            {expenseEntries.map((entry, index) => (
-              <View
-                key={index}
-                style={{
-                  marginBottom: 15,
-                  padding: 10,
-                  borderWidth: 1,
-                  borderColor: "#ccc",
-                  borderRadius: 8,
-                  backgroundColor: "#F9FFF9",
-                  width: SCREEN_WIDTH - 20,
-                }}
-              >
-                {/* Description Input */}
-                <MyTextInput
-                  title="Description"
-                  value={entry.description}
-                  onChangeText={(text) =>
-                    handleExpenseChange(index, "description", text)
-                  }
-                  placeholder="Description"
-                  multiline={true}
-                  inputStyle={{ width: "100%" }}
+            {expenseEntries.map((entry, index) => {
+              const restrictedWordsRegex =
+                /\b(food|dine|dinner|lunch|breakfast|snack|meals?)\b/i;
+
+              const isInvalidDescription = (description) => {
+                return restrictedWordsRegex.test(description);
+              };
+
+              return (
+                <View
+                  key={index}
                   style={{
-                    height: 100, // increase this value as needed
-                    textAlignVertical: "top", // aligns text to top
+                    marginBottom: 15,
+                    padding: 10,
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    borderRadius: 8,
+                    backgroundColor: "#F9FFF9",
+                    width: SCREEN_WIDTH - 20,
                   }}
-                />
-
-                {/* Amount Input */}
-                <MyTextInput
-                  title="Amount"
-                  value={entry.amount}
-                  onChangeText={(text) =>
-                    handleExpenseChange(index, "amount", text)
-                  }
-                  placeholder="Amount"
-                  keyboardType="numeric"
-                  inputStyle={{ width: "100%" }}
-                />
-
-                {/* Date of Expense Picker */}
-                <Span style={typography.fontLato}>Date of Expense</Span>
-                <Pressable
-                  onPress={() => openExpenseDatePicker(index)}
-                  style={[
-                    spacing.pv4,
-                    spacing.ph3,
-                    spacing.br1,
-                    styles.row,
-                    {
-                      borderWidth: 1,
-                      borderColor: "#ccc",
-                      backgroundColor: "#F0FAF0",
-                      borderRadius: 8,
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    },
-                  ]}
                 >
-                  <Text
-                    style={{ color: entry.date_of_expense ? "#000" : "#888" }}
-                  >
-                    {entry.date_of_expense || "Select Date of Expense"}
-                  </Text>
-                  <Icon name="calendar" size={20} color="#888" />
-                </Pressable>
-
-                {/* Remove Button */}
-                {expenseEntries.length > 1 && (
-                  <TouchableOpacity
-                    onPress={() => removeExpenseEntry(index)}
-                    style={{
-                      marginTop: 10,
-                      alignSelf: "flex-end",
-                      paddingVertical: 6,
-                      paddingHorizontal: 12,
-                      backgroundColor: "#FF4C4C",
+                  {/* Description Input */}
+                  <MyTextInput
+                    title="Description"
+                    value={entry.description}
+                    onChangeText={(text) =>
+                      handleExpenseChange(index, "description", text)
+                    }
+                    placeholder="Description"
+                    multiline={true}
+                    inputStyle={{
+                      width: "100%",
+                      borderColor: restrictedWordsRegex.test(
+                        entry.description || ""
+                      )
+                        ? "red"
+                        : "#ccc",
+                      borderWidth: 1,
                       borderRadius: 6,
+                      padding: 10,
                     }}
-                  >
-                    <Text style={{ color: "#fff", fontWeight: "bold" }}>
-                      Remove
+                    style={{
+                      height: 100,
+                      textAlignVertical: "top",
+                    }}
+                  />
+
+                  {/* Show validation error */}
+                  {restrictedWordsRegex.test(entry.description || "") && (
+                    <Text style={{ color: "red", marginTop: 4 }}>
+                      Miscellaneous expenses cannot include food, lunch, dinner,
+                      etc.
                     </Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-            ))}
+                  )}
+
+                  {/* Amount Input */}
+                  <MyTextInput
+                    title="Amount"
+                    value={entry.amount}
+                    onChangeText={(text) =>
+                      handleExpenseChange(index, "amount", text)
+                    }
+                    placeholder="Amount"
+                    keyboardType="numeric"
+                    inputStyle={{ width: "100%" }}
+                  />
+
+                  {/* Date of Expense Picker */}
+                  <Span style={typography.fontLato}>Date of Expense</Span>
+                  <Pressable
+                    onPress={() => openExpenseDatePicker(index)}
+                    style={[
+                      spacing.pv4,
+                      spacing.ph3,
+                      spacing.br1,
+                      styles.row,
+                      {
+                        borderWidth: 1,
+                        borderColor: "#ccc",
+                        backgroundColor: "#F0FAF0",
+                        borderRadius: 8,
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={{ color: entry.date_of_expense ? "#000" : "#888" }}
+                    >
+                      {moment(entry.date_of_expense).format("DD-MM-YYYY") ||
+                        "Select Date of Expense"}
+                    </Text>
+                    <Icon name="calendar" size={20} color="#888" />
+                  </Pressable>
+
+                  {/* Remove Button */}
+                  {expenseEntries.length > 1 && (
+                    <TouchableOpacity
+                      onPress={() => removeExpenseEntry(index)}
+                      style={{
+                        marginTop: 10,
+                        alignSelf: "flex-end",
+                        paddingVertical: 6,
+                        paddingHorizontal: 12,
+                        backgroundColor: "#FF4C4C",
+                        borderRadius: 6,
+                      }}
+                    >
+                      <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                        Remove
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              );
+            })}
 
             {/* Add More Button */}
 
@@ -1412,6 +1538,8 @@ const AddBillForm = ({ navigation }) => {
             {expenseDatePicker.show && (
               <DateTimePicker
                 value={new Date()}
+                minimumDate={moment(form.date_of_departure).toDate()}
+                maximumDate={moment(form.date_of_return).toDate()}
                 mode="date"
                 display="default"
                 onChange={(event, selectedDate) => {
