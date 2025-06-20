@@ -8,6 +8,7 @@ import {
   Alert,
   Image,
 } from "react-native";
+import moment from "moment";
 import ContainerComponent from "../components/ContainerComponent";
 import MyHeader from "../components/header/MyHeader";
 import { styles, typography, spacing, PRIMARY_COLOR, LIGHT } from "../styles";
@@ -28,75 +29,6 @@ const PreviewScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
 
-  // const handleSubmitToProduction = async () => {
-  //   try {
-  //     const processedData = {
-  //       ...submittedData,
-
-  //       // Ticket Entries: Safe conversions
-  //       ticketEntries: (submittedData.ticketEntries || []).map((entry) => ({
-  //         ...entry,
-  //         tickets_provided_by_company:
-  //           (entry.tickets_provided_by_company || "")
-  //             .toString()
-  //             .toLowerCase() === "yes"
-  //             ? 1
-  //             : 0,
-  //         date_of_journey:
-  //           entry.date_of_journey && !isNaN(new Date(entry.date_of_journey))
-  //             ? new Date(entry.date_of_journey).toISOString().split("T")[0]
-  //             : null,
-  //       })),
-
-  //       // Guest House Entries: Safe conversions
-  //       guestHouseEntries: (submittedData.guestHouseEntries || []).map(
-  //         (entry) => ({
-  //           ...entry,
-  //           guest_house_available:
-  //             (entry.guest_house_available || "").toString().toLowerCase() ===
-  //             "yes"
-  //               ? 1
-  //               : 0,
-  //           breakfast_included:
-  //             (entry.breakfast_included || "").toString().toLowerCase() ===
-  //             "yes"
-  //               ? 1
-  //               : 0,
-  //           certificate_by_district_incharge:
-  //             (entry.certificate_by_district_incharge || "")
-  //               .toString()
-  //               .toLowerCase() === "yes"
-  //               ? 1
-  //               : 0,
-  //           check_in_date:
-  //             entry.check_in_date && !isNaN(new Date(entry.check_in_date))
-  //               ? new Date(entry.check_in_date).toISOString().split("T")[0]
-  //               : null,
-  //           check_out_date:
-  //             entry.check_out_date && !isNaN(new Date(entry.check_out_date))
-  //               ? new Date(entry.check_out_date).toISOString().split("T")[0]
-  //               : null,
-  //         })
-  //       ),
-  //     };
-
-  //     const success = await dispatch(addBill(processedData));
-
-  //     if (success) {
-  //       Alert.alert("Success", "Bill submitted successfully!");
-  //       await dispatch(getBillById(userId));
-  //       navigation.navigate("travelManagement");
-  //     } else {
-  //       Alert.alert("Error", "Failed to submit the bill. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Submit Error:", error);
-  //     Alert.alert(
-  //       "Error",
-  //       "An unexpected error occurred: " + (error.message || "Unknown error")
-  //     );
-  //   }
-  // };
   const handleSubmitToProduction = async () => {
     try {
       const processedData = {
@@ -224,14 +156,7 @@ const PreviewScreen = ({ route, navigation }) => {
                   typography.textBold,
                 ]}
               >
-                Date:
-                {new Date()
-                  .toLocaleDateString("en-IN", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                  })
-                  .replaceAll("/", "|")}
+                Date: {moment().format("DD-MM-YYYY")}
               </H6>
             </View>
           </View>
@@ -259,14 +184,7 @@ const PreviewScreen = ({ route, navigation }) => {
             bottom: 8,
           }}
         />
-        {/* <H6
-          style={[
-            typography.font18,
-            typography.fontLato,
-            typography.textBold,
-            { color: PRIMARY_COLOR, textAlign: "center" },
-          ]}
-        ></H6> */}
+
         <View style={{ marginBottom: 20 }}>
           <View
             style={{
@@ -278,9 +196,10 @@ const PreviewScreen = ({ route, navigation }) => {
             <Text style={{ fontSize: 16, flex: 1 }}>
               {submittedData.visiting_to}
             </Text>
+
             <Text style={{ fontSize: 16, flex: 2, textAlign: "right" }}>
-              {submittedData.date_of_departure} To{" "}
-              {submittedData.date_of_return}
+              {moment(submittedData.date_of_departure).format("DD-MM-YYYY")} To{" "}
+              {moment(submittedData.date_of_return).format("DD-MM-YYYY")}
             </Text>
           </View>
 
@@ -310,9 +229,6 @@ const PreviewScreen = ({ route, navigation }) => {
           </H6>
 
           {submittedData.ticketEntries.map((entry, index) => {
-            const isCompanyProvided =
-              entry.tickets_provided_by_company === "Yes";
-
             return (
               <View
                 key={index}
@@ -351,8 +267,7 @@ const PreviewScreen = ({ route, navigation }) => {
                       borderColor: "#ccc",
                     }}
                   >
-                    Mode:{" "}
-                    {isCompanyProvided ? "-" : entry.mode_of_transport || "N/A"}
+                    Mode: {entry.mode_of_transport || "N/A"}
                   </Text>
 
                   <Text
@@ -362,7 +277,7 @@ const PreviewScreen = ({ route, navigation }) => {
                       padding: 8,
                     }}
                   >
-                    Amount: {isCompanyProvided ? "-" : entry.amount || "0"}
+                    Amount: {entry.amount || "0"}
                   </Text>
                 </View>
 
@@ -395,7 +310,7 @@ const PreviewScreen = ({ route, navigation }) => {
                   >
                     Journey Date:{" "}
                     {entry.date_of_journey
-                      ? new Date(entry.date_of_journey).toLocaleDateString()
+                      ? moment(entry.date_of_journey).format("DD-MM-YYYY")
                       : "N/A"}
                   </Text>
                 </View>
@@ -479,19 +394,35 @@ const PreviewScreen = ({ route, navigation }) => {
                     Guest House Availability:{" "}
                     {entry.guest_house_available || "N/A"}
                   </Span>
+                  {/* <P
+                    style={[
+                      typography.font14,
+                      spacing.p2,
+                      {
+                        flex: 2,
+                      },
+                    ]}
+                  >
+                    {entry.check_in_date || "N/A"} to{" "}
+                    {entry.check_out_date || "N/A"}
+                  </P> */}
+
                   <P
                     style={[
                       typography.font14,
                       spacing.p2,
                       {
                         flex: 2,
-                        // fontSize: 16,
-                        // padding: 8,
                       },
                     ]}
                   >
-                    {entry.check_in_date || "N/A"} to{" "}
-                    {entry.check_out_date || "N/A"}
+                    {entry.check_in_date
+                      ? moment(entry.check_in_date).format("DD-MM-YYYY")
+                      : "N/A"}{" "}
+                    to{" "}
+                    {entry.check_out_date
+                      ? moment(entry.check_out_date).format("DD-MM-YYYY")
+                      : "N/A"}
                   </P>
                 </View>
 
@@ -625,6 +556,7 @@ const PreviewScreen = ({ route, navigation }) => {
                 >
                   {entry.amount}
                 </Text>
+
                 <Text
                   style={{
                     flex: 1.5,
@@ -633,7 +565,9 @@ const PreviewScreen = ({ route, navigation }) => {
                     textAlign: "center",
                   }}
                 >
-                  {entry.date_of_expense}
+                  {entry.date_of_expense
+                    ? moment(entry.date_of_expense).format("DD-MM-YYYY")
+                    : "N/A"}
                 </Text>
               </View>
             </View>
@@ -643,7 +577,8 @@ const PreviewScreen = ({ route, navigation }) => {
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              marginBottom: 10,
+              marginTop: 20,
+              marginBottom: 40,
             }}
           >
             {/* Back Button */}
@@ -655,7 +590,6 @@ const PreviewScreen = ({ route, navigation }) => {
                 alignItems: "center",
                 flex: 1,
                 marginRight: 10,
-                marginTop: 15,
               }}
               onPress={handleBack}
             >
@@ -671,7 +605,6 @@ const PreviewScreen = ({ route, navigation }) => {
                 alignItems: "center",
                 flex: 1,
                 marginLeft: 10,
-                marginTop: 15,
               }}
               onPress={handleSubmitToProduction}
             >

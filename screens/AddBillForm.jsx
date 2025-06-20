@@ -633,22 +633,6 @@ const AddBillForm = ({ navigation }) => {
                   ]}
                 />
 
-                {/* {entry.tickets_provided_by_company === "No" && (
-                  <MyPickerInput
-                    title={"Mode Of Transport"}
-                    value={entry.mode_of_transport}
-                    onChange={(val) =>
-                      handleTicketEntryChange(index, "mode_of_transport", val)
-                    }
-                    options={[
-                      { label: "Bus", value: "Bus" },
-                      { label: "Train", value: "Train" },
-                      { label: "Flight", value: "Flight" },
-                      { label: "Car", value: "Car" },
-                    ]}
-                  />
-                )} */}
-
                 <View style={{ marginBottom: 20 }}>
                   <Span style={[typography.fontLato]}>Date of Journey</Span>
                   <Pressable
