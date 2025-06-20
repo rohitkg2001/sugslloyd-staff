@@ -31,8 +31,63 @@ const PreviewScreen = ({ route, navigation }) => {
 
   const handleSubmitToProduction = async () => {
     try {
+      // const processedData = {
+      //   ...submittedData,
+
+      //   ticketEntries: (submittedData.ticketEntries || []).map((entry) => ({
+      //     ...entry,
+      //     tickets_provided_by_company:
+      //       (entry.tickets_provided_by_company || "")
+      //         .toString()
+      //         .toLowerCase() === "yes"
+      //         ? 1
+      //         : 0,
+      //     date_of_journey:
+      //       entry.date_of_journey && !isNaN(new Date(entry.date_of_journey))
+      //         ? new Date(entry.date_of_journey).toISOString().split("T")[0]
+      //         : null,
+      //   })),
+
+      //   guestHouseEntries: (submittedData.guestHouseEntries || []).map(
+      //     (entry) => ({
+      //       ...entry,
+      //       guest_house_available:
+      //         (entry.guest_house_available || "").toString().toLowerCase() ===
+      //         "yes"
+      //           ? 1
+      //           : 0,
+      //       breakfast_included:
+      //         (entry.breakfast_included || "").toString().toLowerCase() ===
+      //         "yes"
+      //           ? 1
+      //           : 0,
+      //       certificate_by_district_incharge:
+      //         (entry.certificate_by_district_incharge || "")
+      //           .toString()
+      //           .toLowerCase() === "yes"
+      //           ? 1
+      //           : 0,
+      //       check_in_date:
+      //         entry.check_in_date && !isNaN(new Date(entry.check_in_date))
+      //           ? new Date(entry.check_in_date).toISOString().split("T")[0]
+      //           : null,
+      //       check_out_date:
+      //         entry.check_out_date && !isNaN(new Date(entry.check_out_date))
+      //           ? new Date(entry.check_out_date).toISOString().split("T")[0]
+      //           : null,
+      //     })
+      //   ),
+      // };
+
       const processedData = {
         ...submittedData,
+
+        date_of_departure: moment(submittedData.date_of_departure).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
+        date_of_return: moment(submittedData.date_of_return).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
 
         ticketEntries: (submittedData.ticketEntries || []).map((entry) => ({
           ...entry,
@@ -40,12 +95,14 @@ const PreviewScreen = ({ route, navigation }) => {
             (entry.tickets_provided_by_company || "")
               .toString()
               .toLowerCase() === "yes"
-              ? 1
-              : 0,
+              ? false
+              : false,
           date_of_journey:
             entry.date_of_journey && !isNaN(new Date(entry.date_of_journey))
-              ? new Date(entry.date_of_journey).toISOString().split("T")[0]
+              ? moment(entry.date_of_journey).format("YYYY-MM-DD HH:mm:ss")
               : null,
+          pnr: entry.pnr_number || "", // FIXED
+          amount: Number(entry.amount) || 0, // ENSURE NUMBER
         })),
 
         guestHouseEntries: (submittedData.guestHouseEntries || []).map(
@@ -54,29 +111,49 @@ const PreviewScreen = ({ route, navigation }) => {
             guest_house_available:
               (entry.guest_house_available || "").toString().toLowerCase() ===
               "yes"
-                ? 1
-                : 0,
+                ? false
+                : false,
             breakfast_included:
               (entry.breakfast_included || "").toString().toLowerCase() ===
               "yes"
-                ? 1
-                : 0,
+                ? true
+                : false,
             certificate_by_district_incharge:
-              (entry.certificate_by_district_incharge || "")
-                .toString()
-                .toLowerCase() === "yes"
-                ? 1
-                : 0,
+              typeof entry.certificate_by_district_incharge === "string"
+                ? entry.certificate_by_district_incharge
+                : "/uploads/" +
+                  (entry.certificate_by_district_incharge?.name || ""),
+            hotel_bill:
+              typeof entry.hotel_bill === "string"
+                ? entry.hotel_bill
+                : "/uploads/" + (entry.hotel_bill?.name || ""),
+            bill_number: entry.bill_number || "",
             check_in_date:
               entry.check_in_date && !isNaN(new Date(entry.check_in_date))
-                ? new Date(entry.check_in_date).toISOString().split("T")[0]
+                ? moment(entry.check_in_date).format("YYYY-MM-DD HH:mm:ss")
                 : null,
             check_out_date:
               entry.check_out_date && !isNaN(new Date(entry.check_out_date))
-                ? new Date(entry.check_out_date).toISOString().split("T")[0]
+                ? moment(entry.check_out_date).format("YYYY-MM-DD HH:mm:ss")
                 : null,
+            other_charges: entry.other_charges
+              ? Number(entry.other_charges)
+              : 0,
+            amount: Number(entry.amount) || 0,
           })
         ),
+
+        miscallaneous_expenses: (submittedData.expenseEntries || []).map(
+          (entry) => ({
+            ...entry,
+            amount: Number(entry.amount) || 0,
+            date_of_expense: moment(entry.date_of_expense).format(
+              "YYYY-MM-DD HH:mm:ss"
+            ),
+          })
+        ),
+
+        user_id: userId,
       };
 
       console.log("Sending bill data:", processedData);
@@ -433,7 +510,7 @@ const PreviewScreen = ({ route, navigation }) => {
 
                 <View style={{ height: 1, backgroundColor: "#ccc" }} />
 
-                {/* Second Row: Meals and Amount */}
+                {/* Second Row: Meals, Amount, Other Charges */}
                 <View style={{ flexDirection: "row" }}>
                   <P
                     style={[
@@ -466,6 +543,18 @@ const PreviewScreen = ({ route, navigation }) => {
                       ? `₹${entry.amount}`
                       : "N/A"}
                   </Text>
+
+                  {!isGuestHouseYes && (
+                    <Text
+                      style={{
+                        flex: 2,
+                        fontSize: 14,
+                        padding: 8,
+                      }}
+                    >
+                      Other Charges: ₹{entry.other_charges || "0.00"}
+                    </Text>
+                  )}
                 </View>
 
                 {/* Optional Details */}

@@ -237,12 +237,13 @@ const AddBillForm = ({ navigation }) => {
       guest_house_available: "",
       check_in_date: "",
       check_out_date: "",
-      certificate_by_district_incharge: "",
+      certificate_by_district_incharge: null,
       breakfast_included: "",
-      hotel_bill: "null",
+      hotel_bill: null,
       amount: "",
       dining_cost: "",
       bill_number: "",
+      other_charges: "",
     },
   ]);
 
@@ -259,12 +260,13 @@ const AddBillForm = ({ navigation }) => {
         guest_house_available: "",
         check_in_date: "",
         check_out_date: "",
-        certificate_by_district_incharge: "",
+        certificate_by_district_incharge: null,
         breakfast_included: "",
-        hotel_bill: "null",
+        hotel_bill: null,
         amount: "",
         dining_cost: "",
         bill_number: "",
+        other_charges: "",
       },
     ]);
   };
@@ -1277,8 +1279,6 @@ const AddBillForm = ({ navigation }) => {
                             }}
                           />
 
-                         
-
                           {isInvalid && (
                             <Text style={{ color: "red", marginTop: 4 }}>
                               You cannot enter more than ₹{allowedLimit}
@@ -1316,12 +1316,12 @@ const AddBillForm = ({ navigation }) => {
                           <>
                             <MyTextInput
                               title="Other Charges"
-                              value={entry.other_charges}
+                              value={entry.other_charges?.toString() || ""}
                               onChangeText={(text) =>
                                 handleGuestHouseChange(
                                   index,
                                   "other_charges",
-                                  text
+                                  Number(text)
                                 )
                               }
                               placeholder="Enter amount"
@@ -1462,10 +1462,6 @@ const AddBillForm = ({ navigation }) => {
                       borderRadius: 6,
                       padding: 10,
                     }}
-                    style={{
-                      height: 100,
-                      textAlignVertical: "top",
-                    }}
                   />
 
                   {/* Show validation error */}
@@ -1476,45 +1472,62 @@ const AddBillForm = ({ navigation }) => {
                     </Text>
                   )}
 
-                  {/* Amount Input */}
-                  <MyTextInput
-                    title="Amount"
-                    value={entry.amount}
-                    onChangeText={(text) =>
-                      handleExpenseChange(index, "amount", text)
-                    }
-                    placeholder="Amount"
-                    keyboardType="numeric"
-                    inputStyle={{ width: "100%" }}
-                  />
-
-                  {/* Date of Expense Picker */}
-                  <Span style={typography.fontLato}>Date of Expense</Span>
-                  <Pressable
-                    onPress={() => openExpenseDatePicker(index)}
-                    style={[
-                      spacing.pv4,
-                      spacing.ph3,
-                      spacing.br1,
-                      styles.row,
-                      {
-                        borderWidth: 1,
-                        borderColor: "#ccc",
-                        backgroundColor: "#F0FAF0",
-                        borderRadius: 8,
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      },
-                    ]}
+                  {/* Row: Amount + Date */}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      gap: 10,
+                      marginTop: 10,
+                    }}
                   >
-                    <Text
-                      style={{ color: entry.date_of_expense ? "#000" : "#888" }}
-                    >
-                      {moment(entry.date_of_expense).format("DD-MM-YYYY") ||
-                        "Select Date of Expense"}
-                    </Text>
-                    <Icon name="calendar" size={20} color="#888" />
-                  </Pressable>
+                    {/* Amount Input */}
+                    <View style={{ flex: 1 }}>
+                      <MyTextInput
+                        title="Amount"
+                        value={entry.amount}
+                        onChangeText={(text) =>
+                          handleExpenseChange(index, "amount", text)
+                        }
+                        placeholder="Amount"
+                        keyboardType="numeric"
+                        inputStyle={{ width: "100%" }}
+                      />
+                    </View>
+
+                    {/* Date of Expense Picker */}
+                    <View style={{ flex: 1 }}>
+                      <Span style={typography.fontLato}>Date of Expense</Span>
+                      <Pressable
+                        onPress={() => openExpenseDatePicker(index)}
+                        style={[
+                          spacing.mv1,
+                          spacing.ph3,
+                          spacing.br1,
+                          styles.row,
+                          typography.font18,
+                          {
+                            borderWidth: 1,
+                            borderColor: PRIMARY_COLOR,
+                            backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                            alignItems: "center",
+                            height: 54,
+                          },
+                        ]}
+                      >
+                        <Text
+                          style={{
+                            color: entry.date_of_expense ? "#000" : "#888",
+                          }}
+                        >
+                          {entry.date_of_expense
+                            ? moment(entry.date_of_expense).format("DD-MM-YYYY")
+                            : "Select Date "}
+                        </Text>
+                        <Icon name="calendar" size={20} color="#888" />
+                      </Pressable>
+                    </View>
+                  </View>
 
                   {/* Remove Button */}
                   {expenseEntries.length > 1 && (
@@ -1539,7 +1552,6 @@ const AddBillForm = ({ navigation }) => {
             })}
 
             {/* Add More Button */}
-
             <TouchableOpacity
               style={{
                 padding: 10,
@@ -1556,6 +1568,7 @@ const AddBillForm = ({ navigation }) => {
               <Text style={{ color: "green" }}>+ Add More</Text>
             </TouchableOpacity>
 
+            {/* Date Picker Modal */}
             {expenseDatePicker.show && (
               <DateTimePicker
                 value={new Date()}
