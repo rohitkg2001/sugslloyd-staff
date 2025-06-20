@@ -115,6 +115,7 @@ const AddBillForm = ({ navigation }) => {
       mode_of_transport: "",
       ticket: null,
       amount: "",
+      pnr_number: "",
     },
   ]);
 
@@ -151,6 +152,7 @@ const AddBillForm = ({ navigation }) => {
         ticket: null,
         mode_of_transport: "",
         amount: "",
+        pnr_number: "",
       },
     ]);
   };
@@ -240,6 +242,7 @@ const AddBillForm = ({ navigation }) => {
       hotel_bill: "null",
       amount: "",
       dining_cost: "",
+      bill_number: "",
     },
   ]);
 
@@ -261,6 +264,7 @@ const AddBillForm = ({ navigation }) => {
         hotel_bill: "null",
         amount: "",
         dining_cost: "",
+        bill_number: "",
       },
     ]);
   };
@@ -631,6 +635,16 @@ const AddBillForm = ({ navigation }) => {
                     { label: "Flight", value: "Flight" },
                     { label: "Car", value: "Car" },
                   ]}
+                />
+
+                <MyTextInput
+                  title="PNR Number"
+                  value={entry.pnr_number}
+                  onChangeText={(text) =>
+                    handleTicketEntryChange(index, "pnr_number", text)
+                  }
+                  placeholder="Enter PNR Number"
+                  inputStyle={{ width: "100%" }}
                 />
 
                 <View style={{ marginBottom: 20 }}>
@@ -1263,6 +1277,8 @@ const AddBillForm = ({ navigation }) => {
                             }}
                           />
 
+                         
+
                           {isInvalid && (
                             <Text style={{ color: "red", marginTop: 4 }}>
                               You cannot enter more than ₹{allowedLimit}
@@ -1316,6 +1332,27 @@ const AddBillForm = ({ navigation }) => {
                                 borderWidth: 1,
                                 borderRadius: 6,
                                 padding: 10,
+                              }}
+                            />
+
+                            <MyTextInput
+                              title="Bill Number"
+                              value={entry.bill_number}
+                              onChangeText={(text) =>
+                                handleGuestHouseChange(
+                                  index,
+                                  "bill_number",
+                                  text
+                                )
+                              }
+                              placeholder="Enter Bill Number"
+                              inputStyle={{
+                                width: "100%",
+                                borderColor: "#ccc",
+                                borderWidth: 1,
+                                borderRadius: 6,
+                                padding: 10,
+                                marginTop: 10,
                               }}
                             />
 

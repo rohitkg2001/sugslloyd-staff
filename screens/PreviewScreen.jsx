@@ -315,6 +315,23 @@ const PreviewScreen = ({ route, navigation }) => {
                   </Text>
                 </View>
 
+                {/* Divider */}
+                <View style={{ height: 1, backgroundColor: "#ccc" }} />
+
+                {/* Third Row: PNR Number */}
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      flex: 1,
+                      fontSize: 14,
+                      padding: 8,
+                      color: "#000",
+                    }}
+                  >
+                    PNR Number: {entry.pnr_number || "N/A"}
+                  </Text>
+                </View>
+
                 {/* Third Row: Uploaded Ticket File */}
                 {entry.ticket?.name && (
                   <Text
@@ -394,18 +411,6 @@ const PreviewScreen = ({ route, navigation }) => {
                     Guest House Availability:{" "}
                     {entry.guest_house_available || "N/A"}
                   </Span>
-                  {/* <P
-                    style={[
-                      typography.font14,
-                      spacing.p2,
-                      {
-                        flex: 2,
-                      },
-                    ]}
-                  >
-                    {entry.check_in_date || "N/A"} to{" "}
-                    {entry.check_out_date || "N/A"}
-                  </P> */}
 
                   <P
                     style={[
@@ -494,6 +499,22 @@ const PreviewScreen = ({ route, navigation }) => {
                     }}
                   >
                     Hotel Bill: {entry.hotel_bill.name}
+                  </Text>
+                )}
+
+                {!isGuestHouseYes && entry.bill_number && (
+                  <Text
+                    style={{
+                      color: "green",
+                      fontSize: 14,
+                      marginLeft: 8,
+                      marginBottom: 6,
+                      marginTop: 4,
+                      borderTopWidth: 1,
+                      borderColor: "#ccc",
+                    }}
+                  >
+                    Bill Number: {entry.bill_number}
                   </Text>
                 )}
               </View>
