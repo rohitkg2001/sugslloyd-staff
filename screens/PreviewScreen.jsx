@@ -247,11 +247,19 @@ const PreviewScreen = ({ route, navigation }) => {
           ]}
         >
           Name: {`${staff.firstName} ${staff.lastName}`} |{" "}
-          <P style={[typography.font12, typography.fontLato]}>
-            {allowedExpense?.user_category
-              ? `You fall under ${allowedExpense.user_category} category`
-              : "You fall under -- category"}
+          <P
+            style={[
+              typography.font12,
+              typography.fontLato,
+              typography.textBold,
+            ]}
+          >
+            Category {allowedExpense?.user_category || "--"}
           </P>
+          {"  "} |{" "}
+          <Text style={[typography.font12, typography.fontLato]}>
+            Department: Electrical
+          </Text>
         </H6>
 
         <View
@@ -299,7 +307,7 @@ const PreviewScreen = ({ route, navigation }) => {
               typography.font18,
               typography.fontLato,
               typography.textBold,
-              { color: PRIMARY_COLOR, textAlign: "center", top: 12 },
+              { color: PRIMARY_COLOR, top: 12 },
             ]}
           >
             Ticket Details
@@ -441,7 +449,8 @@ const PreviewScreen = ({ route, navigation }) => {
               typography.font18,
               typography.fontLato,
               typography.textBold,
-              { color: PRIMARY_COLOR, textAlign: "center", top: 12 },
+              spacing.mt2,
+              { color: PRIMARY_COLOR, top: 12 },
             ]}
           >
             Stay Details
@@ -620,9 +629,9 @@ const PreviewScreen = ({ route, navigation }) => {
           <H6
             style={[
               typography.font18,
-              typography.fontLato,
+              typography.fontLato, spacing.mt2,
               typography.textBold,
-              { color: PRIMARY_COLOR, textAlign: "center", top: 12 },
+              { color: PRIMARY_COLOR, top: 12 },
             ]}
           >
             Miscellaneous Expenses

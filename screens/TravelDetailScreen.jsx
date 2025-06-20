@@ -1,8 +1,9 @@
 import { View, ScrollView, Text, Image } from "react-native";
 import ContainerComponent from "../components/ContainerComponent";
-import { PRIMARY_COLOR } from "../styles";
+import { PRIMARY_COLOR, spacing, typography } from "../styles";
 import { useSelector } from "react-redux";
 import { useRoute } from "@react-navigation/native";
+import { H5 } from "../components/text";
 
 export default function TravelDetailScreen() {
   const route = useRoute();
@@ -126,16 +127,19 @@ export default function TravelDetailScreen() {
 
         {journey.length > 0 && (
           <View style={{ marginBottom: 16 }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                color: PRIMARY_COLOR,
-                textAlign: "center",
-              }}
+            <H5
+              style={[
+                typography.font16,
+                typography.fontLato,
+                typography.textBold,
+                spacing.mb1,
+                {
+                  color: PRIMARY_COLOR,
+                },
+              ]}
             >
               Ticket Details
-            </Text>
+            </H5>
             {journey.map((entry, index) => {
               const isPaidByCompany = isCompanyPaid(
                 entry.tickets_provided_by_company
@@ -226,18 +230,24 @@ export default function TravelDetailScreen() {
         />
 
         {hotel_expense.length > 0 && (
-          <View style={{ marginBottom: 16 }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                color: PRIMARY_COLOR,
-                textAlign: "center",
-                marginBottom: 12,
-              }}
+          <View style={{ marginBottom: 12 }}>
+            <H5
+              style={[
+                typography.font16,
+                typography.fontLato,
+                typography.textBold,
+                spacing.mb1,
+                {
+                  //  fontSize: 16,
+                  //  fontWeight: "bold",
+                  color: PRIMARY_COLOR,
+                  // textAlign: "center",
+                  // marginBottom: 12,
+                },
+              ]}
             >
               Stay Details
-            </Text>
+            </H5>
 
             {hotel_expense.map((entry, index) => {
               const guestHouseStatus =
@@ -342,17 +352,19 @@ export default function TravelDetailScreen() {
 
         {miscellaneous.length > 0 && (
           <View style={{ marginBottom: 16 }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                color: PRIMARY_COLOR,
-                textAlign: "center",
-                marginBottom: 12,
-              }}
+            <H5
+              style={[
+                typography.font16,
+                typography.fontLato,
+                typography.textBold,
+                spacing.mb1,
+                {
+                  color: PRIMARY_COLOR,
+                },
+              ]}
             >
               Miscellaneous Expenses
-            </Text>
+            </H5>
             {miscellaneous.map((entry, index) => (
               <View
                 key={index}

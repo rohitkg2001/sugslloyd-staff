@@ -8,6 +8,7 @@ import {
   Pressable,
   Platform,
 } from "react-native";
+import { Checkbox } from "react-native-paper";
 import * as DocumentPicker from "expo-document-picker";
 import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -26,7 +27,7 @@ import {
   PRIMARY_COLOR,
   SCREEN_WIDTH,
 } from "../styles";
-import { H2, Span, H6 } from "../components/text";
+import { H2, Span, H6, P } from "../components/text";
 import ProgressStep, {
   NavigationButtons,
 } from "../components/tab/ProgressStep";
@@ -35,6 +36,7 @@ import moment from "moment";
 const AddBillForm = ({ navigation }) => {
   const [activeStep, setActiveStep] = useState(0);
   const { id: userId } = useSelector((state) => state.staff);
+  const [agree, setAgree] = useState(false);
 
   const dispatch = useDispatch();
   const [form, setForm] = useState({
@@ -1421,6 +1423,31 @@ const AddBillForm = ({ navigation }) => {
 
         {activeStep === 3 && (
           <>
+            {/* User-friendly heading with context */}
+
+            <View
+              style={[
+                spacing.mb1,
+                spacing.p2,
+                spacing.br1,
+                {
+                  backgroundColor: "#e3f2fd",
+                  borderLeftWidth: 5,
+                  borderLeftColor: PRIMARY_COLOR,
+                },
+              ]}
+            >
+              <H6
+                style={[
+                  typography.font12,
+                  typography.fontLato,
+                  typography.textBold,
+                ]}
+              >
+                * Other Travel-Related Expenses (Non-Food)
+              </H6>
+            </View>
+
             {expenseEntries.map((entry, index) => {
               const restrictedWordsRegex =
                 /\b(food|dine|dinner|lunch|breakfast|snack|meals?)\b/i;
@@ -1433,7 +1460,7 @@ const AddBillForm = ({ navigation }) => {
                 <View
                   key={index}
                   style={{
-                    marginBottom: 15,
+                    marginBottom: 8,
                     padding: 10,
                     borderWidth: 1,
                     borderColor: "#ccc",
@@ -1590,12 +1617,78 @@ const AddBillForm = ({ navigation }) => {
               />
             )}
 
+            <View
+              style={{
+                marginBottom: 10,
+                padding: 12,
+                backgroundColor: "#e3f2fd",
+                borderLeftWidth: 5,
+                borderLeftColor: PRIMARY_COLOR,
+                borderRadius: 6,
+              }}
+            >
+              <P
+                style={[
+                  typography.font12,
+                  typography.fontLato,
+                  typography.textBold,
+                  {
+                    color: "#0d47a1",
+                  },
+                ]}
+              >
+                Please read the following before adding Miscellaneous Expenses:
+              </P>
+
+              <P style={[typography.font12, typography.fontLato, spacing.mb1]}>
+                • Add only expenses not covered under Tickets or Stay.
+              </P>
+              <P
+                style={[
+                  typography.font12,
+                  typography.fontLato,
+                  spacing.mb1,
+                  { color: "red" },
+                ]}
+              >
+                • Do not include food, lunch, dinner, snacks, or similar items.
+              </P>
+              <P style={[typography.font12, typography.fontLato, spacing.mb1]}>
+                • Only genuine additional costs like printing, taxi, courier
+                etc. are allowed.
+              </P>
+            </View>
+
+            <View
+              style={[
+                {
+                  flexDirection: "row",
+                  alignItems: "center",
+                },
+              ]}
+            >
+              <Checkbox
+                status={agree ? "checked" : "unchecked"}
+                onPress={() => setAgree(!agree)}
+                color={PRIMARY_COLOR}
+              />
+              <P
+                style={[
+                  typography.font12,
+                  typography.fontLato,
+                  typography.textBold,
+                ]}
+              >
+                I agree Terms & Conditions
+              </P>
+            </View>
+
             {/* Submit Button */}
             <Button
               style={[
                 styles.btn,
                 styles.bgPrimary,
-                { justifyContent: "center", marginTop: 40 },
+                { justifyContent: "center" },
               ]}
               onPress={handleSubmit}
             >

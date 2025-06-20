@@ -43,6 +43,7 @@ export default function TravelManagement({ navigation }) {
     { key: "week", title: "This Week" },
     { key: "month", title: "This Month" },
     { key: "all_time", title: "All Time" },
+    { key: "status", title: "Status" },
   ];
 
   useEffect(() => {
