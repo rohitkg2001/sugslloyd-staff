@@ -512,7 +512,7 @@ const PreviewScreen = ({ route, navigation }) => {
 
                 {/* Second Row: Meals, Amount, Other Charges */}
                 <View style={{ flexDirection: "row" }}>
-                  <P
+                  {/* <P
                     style={[
                       typography.font14,
                       spacing.p2,
@@ -525,7 +525,7 @@ const PreviewScreen = ({ route, navigation }) => {
                   >
                     With Meals:{" "}
                     {isGuestHouseYes ? "-" : entry.breakfast_included || "N/A"}
-                  </P>
+                  </P> */}
 
                   <Text
                     style={{

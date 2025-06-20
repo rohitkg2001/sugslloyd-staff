@@ -175,7 +175,7 @@ export default function TravelDetailScreen() {
                       {isPaidByCompany ? "-" : entry.mode_of_transport}
                     </Text>
                     <Text style={{ flex: 1, fontSize: 16, padding: 8 }}>
-                      {isPaidByCompany ? "-" : entry.amount}
+                      ₹ {isPaidByCompany ? "-" : entry.amount}
                     </Text>
                   </View>
                   <View style={{ height: 1, backgroundColor: "#ccc" }} />
@@ -195,6 +195,20 @@ export default function TravelDetailScreen() {
                       {isPaidByCompany
                         ? "-"
                         : formatDateForDisplay(entry.date_of_journey)}
+                    </Text>
+                  </View>
+                  {/* Divider */}
+                  <View style={{ height: 1, backgroundColor: "#ccc" }} />
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        flex: 1,
+                        fontSize: 16,
+                        padding: 8,
+                        color: "#000",
+                      }}
+                    >
+                      PNR Number: {entry.pnr || entry.pnr_number || "N/A"}
                     </Text>
                   </View>
                 </View>
@@ -272,43 +286,47 @@ export default function TravelDetailScreen() {
                   <View style={{ height: 1, backgroundColor: "#ccc" }} />
 
                   {/* Second Row: Meals and Amount */}
-                  <View style={{ flexDirection: "row" }}>
-                    <Text
-                      style={{
-                        flex: 2,
-                        fontSize: 16,
-                        padding: 8,
-                        borderRightWidth: 1,
-                        borderColor: "#ccc",
-                      }}
-                    >
-                      With Meals:{" "}
-                      {String(entry.breakfast_included) === "1" ? "Yes" : "No"}
-                    </Text>
+                  {!isGuestHouseYes && (
+                    <>
+                      <View style={{ height: 1, backgroundColor: "#ccc" }} />
 
-                    {/* <Text
-                      style={{
-                        flex: 2,
-                        fontSize: 14,
-                        padding: 8,
-                        borderRightWidth: 1,
-                        borderColor: "#ccc",
-                      }}
-                    >
-                      Dining Cost:{" "}
-                      {entry.dining_cost ? `₹${entry.dining_cost}` : "-"}
-                    </Text> */}
+                      <View style={{ flexDirection: "row" }}>
+                        <Text
+                          style={{
+                            flex: 1,
+                            fontSize: 14,
+                            padding: 8,
+                            borderRightWidth: 1,
+                            borderColor: "#ccc",
+                          }}
+                        >
+                          Amount ₹{entry.amount || "0.00"}
+                        </Text>
 
-                    <Text
-                      style={{
-                        flex: 2,
-                        fontSize: 14,
-                        padding: 8,
-                      }}
-                    >
-                      Amount: ₹{entry.amount || "0.00"}
-                    </Text>
-                  </View>
+                        <Text
+                          style={{
+                            flex: 1,
+                            fontSize: 14,
+                            padding: 8,
+                            borderRightWidth: 1,
+                            borderColor: "#ccc",
+                          }}
+                        >
+                          Hotel Bill No: {entry.hotel_bill_no || "N/A"}
+                        </Text>
+
+                        <Text
+                          style={{
+                            flex: 1,
+                            fontSize: 14,
+                            padding: 8,
+                          }}
+                        >
+                          Other Charges: ₹{entry.other_charges || "0.00"}
+                        </Text>
+                      </View>
+                    </>
+                  )}
                 </View>
               );
             })}
