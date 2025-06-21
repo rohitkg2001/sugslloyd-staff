@@ -29,56 +29,31 @@ const PreviewScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
 
+  const totalTicketAmount = submittedData.ticketEntries?.reduce(
+    (sum, entry) => sum + (Number(entry.amount) || 0),
+    0
+  );
+
+  const totalStayAmount = submittedData.guestHouseEntries?.reduce(
+    (sum, entry) => {
+      const stayAmount =
+        entry.guest_house_available === "yes"
+          ? Number(entry.final_amount_for_yes) || 0
+          : (Number(entry.amount) || 0) + (Number(entry.other_charges) || 0);
+      return sum + stayAmount;
+    },
+    0
+  );
+
+  const totalMiscAmount = submittedData.expenseEntries?.reduce(
+    (sum, entry) => sum + (Number(entry.amount) || 0),
+    0
+  );
+
+  const grandTotal = totalTicketAmount + totalStayAmount + totalMiscAmount;
+
   const handleSubmitToProduction = async () => {
     try {
-      // const processedData = {
-      //   ...submittedData,
-
-      //   ticketEntries: (submittedData.ticketEntries || []).map((entry) => ({
-      //     ...entry,
-      //     tickets_provided_by_company:
-      //       (entry.tickets_provided_by_company || "")
-      //         .toString()
-      //         .toLowerCase() === "yes"
-      //         ? 1
-      //         : 0,
-      //     date_of_journey:
-      //       entry.date_of_journey && !isNaN(new Date(entry.date_of_journey))
-      //         ? new Date(entry.date_of_journey).toISOString().split("T")[0]
-      //         : null,
-      //   })),
-
-      //   guestHouseEntries: (submittedData.guestHouseEntries || []).map(
-      //     (entry) => ({
-      //       ...entry,
-      //       guest_house_available:
-      //         (entry.guest_house_available || "").toString().toLowerCase() ===
-      //         "yes"
-      //           ? 1
-      //           : 0,
-      //       breakfast_included:
-      //         (entry.breakfast_included || "").toString().toLowerCase() ===
-      //         "yes"
-      //           ? 1
-      //           : 0,
-      //       certificate_by_district_incharge:
-      //         (entry.certificate_by_district_incharge || "")
-      //           .toString()
-      //           .toLowerCase() === "yes"
-      //           ? 1
-      //           : 0,
-      //       check_in_date:
-      //         entry.check_in_date && !isNaN(new Date(entry.check_in_date))
-      //           ? new Date(entry.check_in_date).toISOString().split("T")[0]
-      //           : null,
-      //       check_out_date:
-      //         entry.check_out_date && !isNaN(new Date(entry.check_out_date))
-      //           ? new Date(entry.check_out_date).toISOString().split("T")[0]
-      //           : null,
-      //     })
-      //   ),
-      // };
-
       const processedData = {
         ...submittedData,
 
@@ -302,16 +277,19 @@ const PreviewScreen = ({ route, navigation }) => {
               top: 4,
             }}
           />
-          <H6
+
+          <H5
             style={[
-              typography.font18,
+              typography.font16,
               typography.fontLato,
               typography.textBold,
-              { color: PRIMARY_COLOR, top: 12 },
+              spacing.mt4,
+
+              { color: PRIMARY_COLOR },
             ]}
           >
             Ticket Details
-          </H6>
+          </H5>
 
           {submittedData.ticketEntries.map((entry, index) => {
             return (
@@ -444,17 +422,19 @@ const PreviewScreen = ({ route, navigation }) => {
               top: 10,
             }}
           />
-          <H6
+
+          <H5
             style={[
-              typography.font18,
+              typography.font16,
               typography.fontLato,
               typography.textBold,
-              spacing.mt2,
-              { color: PRIMARY_COLOR, top: 12 },
+              spacing.mt4,
+
+              { color: PRIMARY_COLOR },
             ]}
           >
             Stay Details
-          </H6>
+          </H5>
 
           {/* Display guest house entries */}
 
@@ -521,21 +501,6 @@ const PreviewScreen = ({ route, navigation }) => {
 
                 {/* Second Row: Meals, Amount, Other Charges */}
                 <View style={{ flexDirection: "row" }}>
-                  {/* <P
-                    style={[
-                      typography.font14,
-                      spacing.p2,
-                      {
-                        flex: 2,
-                        borderRightWidth: 1,
-                        borderColor: "#ccc",
-                      },
-                    ]}
-                  >
-                    With Meals:{" "}
-                    {isGuestHouseYes ? "-" : entry.breakfast_included || "N/A"}
-                  </P> */}
-
                   <Text
                     style={{
                       flex: 2,
@@ -626,16 +591,18 @@ const PreviewScreen = ({ route, navigation }) => {
               top: 10,
             }}
           />
-          <H6
+          <H5
             style={[
-              typography.font18,
-              typography.fontLato, spacing.mt2,
+              typography.font16,
+              typography.fontLato,
               typography.textBold,
-              { color: PRIMARY_COLOR, top: 12 },
+              spacing.mt4,
+
+              { color: PRIMARY_COLOR },
             ]}
           >
             Miscellaneous Expenses
-          </H6>
+          </H5>
 
           {/* Display expense entries */}
           {submittedData.expenseEntries.map((entry, index) => (
@@ -691,6 +658,32 @@ const PreviewScreen = ({ route, navigation }) => {
               </View>
             </View>
           ))}
+
+          <View
+            style={{
+              marginTop: 20,
+              padding: 8,
+              backgroundColor: "#e3f2fd",
+              borderLeftWidth: 5,
+              borderLeftColor: PRIMARY_COLOR,
+              borderRadius: 6,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                Total Amount
+              </Text>
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                ₹{grandTotal.toFixed(2)}
+              </Text>
+            </View>
+          </View>
 
           <View
             style={{
