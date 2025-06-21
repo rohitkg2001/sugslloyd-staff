@@ -110,7 +110,10 @@ export default function ConveyanceManagementScreen({ navigation }) {
         >
           <View style={[styles.row, { bottom: 30 }]}>
             {[
-              { label: "Vehicle Type", value: item.vehicles?.[0]?.category },
+              {
+                label: "Vehicle Type",
+                value: item.vehicle_category?.[0]?.category,
+              },
               { label: "Kilometer", value: item.kilometer ?? "N/A" },
               { label: "Time", value: item.time ?? "N/A" },
             ].map((field, i) => (
@@ -166,7 +169,7 @@ export default function ConveyanceManagementScreen({ navigation }) {
       <DashboardHeader
         greeting="Good morning"
         firstName={firstName}
-        message="You fall under M3 category"
+        message="You fall under M4 category"
         style={{
           width: SCREEN_WIDTH,
           backgroundColor: PRIMARY_COLOR,
