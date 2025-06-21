@@ -442,20 +442,6 @@ const AddBillForm = ({ navigation }) => {
               )
             )}
 
-            {/* <MyTextInput
-              title="Allowed Expense"
-              value={allowedExpense?.allowed_expense || ""}
-              editable={false}
-              placeholder="Allowed Expense will appear here"
-            /> */}
-
-            {/* <MyTextInput
-              title="Travel Class"
-              value={allowedExpense?.travel_class || ""}
-              editable={false}
-              placeholder="Travel class"
-            /> */}
-
             {/* Departure Date */}
             <Span style={[typography.fontLato]}>Departure Date</Span>
             <Pressable
@@ -465,21 +451,21 @@ const AddBillForm = ({ navigation }) => {
                 spacing.ph3,
                 spacing.br1,
                 styles.row,
+                spacing.bw1,
+                spacing.mv1,
                 {
-                  borderWidth: 1,
-                  borderColor: "#ccc",
-                  backgroundColor: "#F0FAF0",
-                  borderRadius: 8,
+                  borderColor: PRIMARY_COLOR,
+                  backgroundColor: PRIMARY_COLOR_TRANSPARENT,
                   justifyContent: "space-between",
                   alignItems: "center",
                 },
               ]}
             >
-              <Text style={{ color: form.date_of_departure ? "#000" : "#888" }}>
+              <Span style={{ color: form.date_of_departure ? "#000" : "#888" }}>
                 {moment(form.date_of_departure).format("DD-MM-yyyy") ||
                   "Select Departure Date"}
-              </Text>
-              <Icon name="calendar" size={20} color="#888" />
+              </Span>
+              <Icon name="calendar" size={20} />
             </Pressable>
 
             {/* Return Date */}
@@ -491,21 +477,21 @@ const AddBillForm = ({ navigation }) => {
                 spacing.ph3,
                 spacing.br1,
                 styles.row,
+                spacing.bw1,
+                spacing.mv1,
                 {
-                  borderWidth: 1,
-                  borderColor: "#ccc",
-                  backgroundColor: "#F0FAF0",
-                  borderRadius: 8,
+                  borderColor: PRIMARY_COLOR,
+                  backgroundColor: PRIMARY_COLOR_TRANSPARENT,
                   justifyContent: "space-between",
                   alignItems: "center",
                 },
               ]}
             >
-              <Text style={{ color: form.date_of_return ? "#000" : "#888" }}>
+              <Span style={{ color: form.date_of_return ? "#000" : "#888" }}>
                 {moment(form.date_of_return).format("DD-MM-yyyy") ||
                   "Select Return Date"}
-              </Text>
-              <Icon name="calendar" size={20} color="#888" />
+              </Span>
+              <Icon name="calendar" size={20} />
             </Pressable>
 
             {/* Single Date Picker Instance */}
@@ -660,9 +646,10 @@ const AddBillForm = ({ navigation }) => {
                       spacing.ph3,
                       spacing.br1,
                       styles.row,
+                      spacing.bw1,
+                      spacing.mv1,
                       {
-                        borderWidth: 1,
-                        borderColor: "#ccc",
+                        borderColor: PRIMARY_COLOR,
                         backgroundColor: PRIMARY_COLOR_TRANSPARENT,
                         justifyContent: "space-between",
                         alignItems: "center",
@@ -678,7 +665,7 @@ const AddBillForm = ({ navigation }) => {
                         ? moment(entry.date_of_journey).format("DD-MM-YYYY")
                         : "Select Date"}
                     </Text>
-                    <Icon name="calendar" size={20} color="#888" />
+                    <Icon name="calendar" size={20} />
                   </Pressable>
                 </View>
 
@@ -897,11 +884,11 @@ const AddBillForm = ({ navigation }) => {
                         spacing.ph3,
                         spacing.br1,
                         styles.row,
+                        spacing.bw1,
+                        spacing.mv1,
                         {
-                          borderWidth: 1,
-                          borderColor: "#ccc",
-                          backgroundColor: "#F0FAF0",
-                          borderRadius: 8,
+                          borderColor: PRIMARY_COLOR,
+                          backgroundColor: PRIMARY_COLOR_TRANSPARENT,
                           justifyContent: "space-between",
                           alignItems: "center",
                         },
@@ -913,7 +900,7 @@ const AddBillForm = ({ navigation }) => {
                         {moment(entry.check_in_date).format("DD-MM-YYYY") ||
                           "Select Check In Date"}
                       </Text>
-                      <Icon name="calendar" size={20} color="#888" />
+                      <Icon name="calendar" size={20} />
                     </Pressable>
 
                     <Span style={typography.fontLato}>Check Out Date</Span>
@@ -926,11 +913,11 @@ const AddBillForm = ({ navigation }) => {
                         spacing.ph3,
                         spacing.br1,
                         styles.row,
+                        spacing.bw1,
+                        spacing.mv1,
                         {
-                          borderWidth: 1,
-                          borderColor: "#ccc",
-                          backgroundColor: "#F0FAF0",
-                          borderRadius: 8,
+                          borderColor: PRIMARY_COLOR,
+                          backgroundColor: PRIMARY_COLOR_TRANSPARENT,
                           justifyContent: "space-between",
                           alignItems: "center",
                         },
@@ -944,7 +931,7 @@ const AddBillForm = ({ navigation }) => {
                         {moment(entry.check_out_date).format("DD-MM-YYYY") ||
                           "Select Check In Date"}
                       </Text>
-                      <Icon name="calendar" size={20} color="#888" />
+                      <Icon name="calendar" size={20} />
                     </Pressable>
 
                     {/* Duration and 30% Allowed Expense Display */}
@@ -1097,11 +1084,11 @@ const AddBillForm = ({ navigation }) => {
                         spacing.ph3,
                         spacing.br1,
                         styles.row,
+                        spacing.bw1,
+                        spacing.mv1,
                         {
-                          borderWidth: 1,
-                          borderColor: "#ccc",
-                          backgroundColor: "#F0FAF0",
-                          borderRadius: 8,
+                          borderColor: PRIMARY_COLOR,
+                          backgroundColor: PRIMARY_COLOR_TRANSPARENT,
                           justifyContent: "space-between",
                           alignItems: "center",
                         },
@@ -1113,7 +1100,7 @@ const AddBillForm = ({ navigation }) => {
                         {moment(entry.check_in_date).format("DD-MM-YYYY") ||
                           "Select Check In Date"}
                       </Text>
-                      <Icon name="calendar" size={20} color="#888" />
+                      <Icon name="calendar" size={20} />
                     </Pressable>
 
                     <Span style={typography.fontLato}>Check Out Date</Span>
@@ -1126,11 +1113,11 @@ const AddBillForm = ({ navigation }) => {
                         spacing.ph3,
                         spacing.br1,
                         styles.row,
+                        spacing.bw1,
+                        spacing.mv1,
                         {
-                          borderWidth: 1,
-                          borderColor: "#ccc",
-                          backgroundColor: "#F0FAF0",
-                          borderRadius: 8,
+                          borderColor: PRIMARY_COLOR,
+                          backgroundColor: PRIMARY_COLOR_TRANSPARENT,
                           justifyContent: "space-between",
                           alignItems: "center",
                         },
@@ -1144,7 +1131,7 @@ const AddBillForm = ({ navigation }) => {
                         {moment(entry.check_out_date).format("DD-MM-YYYY") ||
                           "Select Check Out Date"}
                       </Text>
-                      <Icon name="calendar" size={20} color="#888" />
+                      <Icon name="calendar" size={20} />
                     </Pressable>
 
                     {/*Stay Duration and Allowed Expense Calculation */}
@@ -1275,9 +1262,12 @@ const AddBillForm = ({ navigation }) => {
                             inputStyle={{
                               width: "100%",
                               borderColor: isInvalid ? "red" : "#ccc",
-                              borderWidth: 1,
+                              backgroundColor: "#F0FAF0",
                               borderRadius: 6,
-                              padding: 10,
+                              height: 54,
+                              fontSize: 18,
+                              borderColor: PRIMARY_COLOR,
+                              borderWidth: 1,
                             }}
                           />
 
@@ -1331,9 +1321,13 @@ const AddBillForm = ({ navigation }) => {
                               inputStyle={{
                                 width: "100%",
                                 borderColor: isInvalid ? "red" : "#ccc",
-                                borderWidth: 1,
+
+                                backgroundColor: "#F0FAF0",
                                 borderRadius: 6,
-                                padding: 10,
+                                height: 54,
+                                fontSize: 18,
+                                borderColor: PRIMARY_COLOR,
+                                borderWidth: 1,
                               }}
                             />
 
@@ -1351,10 +1345,13 @@ const AddBillForm = ({ navigation }) => {
                               inputStyle={{
                                 width: "100%",
                                 borderColor: "#ccc",
-                                borderWidth: 1,
+
+                                backgroundColor: "#F0FAF0",
                                 borderRadius: 6,
-                                padding: 10,
-                                marginTop: 10,
+                                height: 54,
+                                fontSize: 18,
+                                borderColor: PRIMARY_COLOR,
+                                borderWidth: 1,
                               }}
                             />
 
