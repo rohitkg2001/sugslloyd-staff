@@ -37,6 +37,15 @@ const AddBillForm = ({ navigation }) => {
   const [activeStep, setActiveStep] = useState(0);
   const { id: userId } = useSelector((state) => state.staff);
   const [agree, setAgree] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [timeField, setTimeField] = useState({ index: null, type: "" });
+
+  const [showGuestHouseTimePicker, setShowGuestHouseTimePicker] =
+    useState(false);
+  const [timePickerMeta, setTimePickerMeta] = useState({
+    index: null,
+    type: "",
+  });
 
   const dispatch = useDispatch();
   const [form, setForm] = useState({
@@ -79,6 +88,26 @@ const AddBillForm = ({ navigation }) => {
 
   const showDatePicker = (field) => {
     setDatePicker({ show: true, field });
+  };
+
+  const handleTimeChange = (event, selectedTime) => {
+    setShowTimePicker(false);
+    if (selectedTime && timeField.index !== null) {
+      const time = moment(selectedTime).format("hh:mm A");
+      handleGuestHouseChange(timeField.index, timeField.type, time);
+    }
+  };
+
+  const onGuestHouseTimeChange = (event, selectedTime) => {
+    setShowGuestHouseTimePicker(false);
+    if (selectedTime && timePickerMeta.index !== null) {
+      const formattedTime = moment(selectedTime).format("hh:mm A");
+      handleGuestHouseChange(
+        timePickerMeta.index,
+        timePickerMeta.type,
+        formattedTime
+      );
+    }
   };
 
   const getMinimumDate = () => {
@@ -246,6 +275,8 @@ const AddBillForm = ({ navigation }) => {
       dining_cost: "",
       bill_number: "",
       other_charges: "",
+      check_in_time: "",
+      check_out_time: "",
     },
   ]);
 
@@ -269,6 +300,8 @@ const AddBillForm = ({ navigation }) => {
         dining_cost: "",
         bill_number: "",
         other_charges: "",
+        check_in_time: "",
+        check_out_time: "",
       },
     ]);
   };
@@ -903,6 +936,33 @@ const AddBillForm = ({ navigation }) => {
                       <Icon name="calendar" size={20} />
                     </Pressable>
 
+                    <Span style={typography.fontLato}>Check In Time</Span>
+                    <Pressable
+                      onPress={() => {
+                        setTimeField({ index, type: "check_in_time" });
+                        setShowTimePicker(true);
+                      }}
+                      style={[
+                        spacing.pv4,
+                        spacing.ph3,
+                        spacing.br1,
+                        styles.row,
+                        spacing.bw1,
+                        spacing.mv1,
+                        {
+                          borderColor: PRIMARY_COLOR,
+                          backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        },
+                      ]}
+                    >
+                      <Text style={{ color: "#000" }}>
+                        {entry.check_in_time || "Select check in time"}
+                      </Text>
+                      <Icon name="clock-o" size={20} />
+                    </Pressable>
+
                     <Span style={typography.fontLato}>Check Out Date</Span>
                     <Pressable
                       onPress={() =>
@@ -933,6 +993,43 @@ const AddBillForm = ({ navigation }) => {
                       </Text>
                       <Icon name="calendar" size={20} />
                     </Pressable>
+
+                    <Span style={typography.fontLato}>Check Out Time</Span>
+                    <Pressable
+                      onPress={() => {
+                        setTimeField({ index, type: "check_out_time" });
+                        setShowTimePicker(true);
+                      }}
+                      style={[
+                        spacing.pv4,
+                        spacing.ph3,
+                        spacing.br1,
+                        styles.row,
+                        spacing.bw1,
+                        spacing.mv1,
+                        {
+                          borderColor: PRIMARY_COLOR,
+                          backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        },
+                      ]}
+                    >
+                      <Text style={{ color: "#000" }}>
+                        {entry.check_out_time || "Select check out time"}
+                      </Text>
+                      <Icon name="clock-o" size={20} />
+                    </Pressable>
+
+                    {showTimePicker && (
+                      <DateTimePicker
+                        value={new Date()}
+                        mode="time"
+                        is24Hour={false}
+                        display="default"
+                        onChange={handleTimeChange}
+                      />
+                    )}
 
                     {/* Duration and 30% Allowed Expense Display */}
 
@@ -1103,6 +1200,33 @@ const AddBillForm = ({ navigation }) => {
                       <Icon name="calendar" size={20} />
                     </Pressable>
 
+                    <Span style={typography.fontLato}>Check In Time</Span>
+                    <Pressable
+                      onPress={() => {
+                        setTimePickerMeta({ index, type: "check_in_time" });
+                        setShowGuestHouseTimePicker(true);
+                      }}
+                      style={[
+                        spacing.pv4,
+                        spacing.ph3,
+                        spacing.br1,
+                        styles.row,
+                        spacing.bw1,
+                        spacing.mv1,
+                        {
+                          borderColor: PRIMARY_COLOR,
+                          backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        },
+                      ]}
+                    >
+                      <Text style={{ color: "#000" }}>
+                        {entry.check_in_time || "Select check in time"}
+                      </Text>
+                      <Icon name="clock-o" size={20} />
+                    </Pressable>
+
                     <Span style={typography.fontLato}>Check Out Date</Span>
                     <Pressable
                       onPress={() =>
@@ -1133,6 +1257,43 @@ const AddBillForm = ({ navigation }) => {
                       </Text>
                       <Icon name="calendar" size={20} />
                     </Pressable>
+
+                    <Span style={typography.fontLato}>Check Out Time</Span>
+                    <Pressable
+                      onPress={() => {
+                        setTimePickerMeta({ index, type: "check_out_time" });
+                        setShowGuestHouseTimePicker(true);
+                      }}
+                      style={[
+                        spacing.pv4,
+                        spacing.ph3,
+                        spacing.br1,
+                        styles.row,
+                        spacing.bw1,
+                        spacing.mv1,
+                        {
+                          borderColor: PRIMARY_COLOR,
+                          backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        },
+                      ]}
+                    >
+                      <Text style={{ color: "#000" }}>
+                        {entry.check_out_time || "Select check out time"}
+                      </Text>
+                      <Icon name="clock-o" size={20} />
+                    </Pressable>
+
+                    {showGuestHouseTimePicker && (
+                      <DateTimePicker
+                        value={new Date()}
+                        mode="time"
+                        is24Hour={false}
+                        display="default"
+                        onChange={onGuestHouseTimeChange}
+                      />
+                    )}
 
                     {/*Stay Duration and Allowed Expense Calculation */}
                     {entry.check_in_date && entry.check_out_date && (
@@ -1282,7 +1443,8 @@ const AddBillForm = ({ navigation }) => {
 
                     {entry.guest_house_available === "No" &&
                       (() => {
-                        const allowed = parseFloat(
+                        {
+                          /* const allowed = parseFloat(
                           entry.calculatedAllowedAmount || "0"
                         );
                         const amount = parseFloat(entry.amount || "0");
@@ -1302,11 +1464,29 @@ const AddBillForm = ({ navigation }) => {
                           entry.other_charges || "0"
                         );
                         const isInvalid =
-                          enteredOtherCharges > other_charges_limit;
+                          enteredOtherCharges > other_charges_limit; */
+                        }
+
+                        const allowed = parseFloat(
+                          entry.calculatedAllowedAmount || "0"
+                        );
+                        const hotelAmount = parseFloat(entry.amount || "0");
+
+                        // Calculate 40% of hotel charges
+                        const maxOtherCharges = parseFloat(
+                          (hotelAmount * 0.4).toFixed(2)
+                        );
+                        const enteredOtherCharges = parseFloat(
+                          entry.other_charges || "0"
+                        );
+
+                        // Check if user input is greater than allowed 40%
+                        const isOtherChargeInvalid =
+                          enteredOtherCharges > maxOtherCharges;
 
                         return (
                           <>
-                            <MyTextInput
+                            {/* <MyTextInput
                               title="Other Charges"
                               value={entry.other_charges?.toString() || ""}
                               onChangeText={(text) =>
@@ -1329,7 +1509,39 @@ const AddBillForm = ({ navigation }) => {
                                 borderColor: PRIMARY_COLOR,
                                 borderWidth: 1,
                               }}
+                            /> */}
+
+                            <MyTextInput
+                              title="Other Charges"
+                              value={entry.other_charges?.toString() || ""}
+                              onChangeText={(text) =>
+                                handleGuestHouseChange(
+                                  index,
+                                  "other_charges",
+                                  Number(text)
+                                )
+                              }
+                              placeholder={`Max allowed: ₹${maxOtherCharges}`}
+                              keyboardType="numeric"
+                              inputStyle={{
+                                width: "100%",
+                                borderColor: isOtherChargeInvalid
+                                  ? "red"
+                                  : "#ccc",
+                                backgroundColor: "#F0FAF0",
+                                borderRadius: 6,
+                                height: 54,
+                                fontSize: 18,
+                                borderWidth: 1,
+                              }}
                             />
+
+                            {/* Show error if other charges exceed 40% */}
+                            {isOtherChargeInvalid && (
+                              <Text style={{ color: "red", marginTop: 4 }}>
+                                You cannot enter more than ₹{maxOtherCharges}.
+                              </Text>
+                            )}
 
                             <MyTextInput
                               title="Bill Number"
@@ -1355,12 +1567,12 @@ const AddBillForm = ({ navigation }) => {
                               }}
                             />
 
-                            {isInvalid && (
+                            {/* {isInvalid && (
                               <Text style={{ color: "red", marginTop: 4 }}>
                                 You cannot enter more than ₹
                                 {other_charges_limit.toFixed(2)}
                               </Text>
-                            )}
+                            )} */}
                           </>
                         );
                       })()}
